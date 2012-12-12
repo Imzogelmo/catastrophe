@@ -26,6 +26,8 @@ BlendMode BlendMode::Alpha				= BlendMode( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA 
 BlendMode BlendMode::PreMultipliedAlpha = BlendMode( GL_ONE, GL_ONE_MINUS_SRC_ALPHA );
 BlendMode BlendMode::Additive			= BlendMode( GL_SRC_ALPHA, GL_ONE );
 BlendMode BlendMode::Subtractive		= BlendMode( GL_ZERO, GL_ONE_MINUS_SRC_COLOR );
+BlendMode BlendMode::Multiply			= BlendMode( GL_DST_COLOR, GL_ZERO );
+BlendMode BlendMode::InverseAlpha		= BlendMode( GL_ONE_MINUS_DST_ALPHA, GL_DST_ALPHA );
 
 
 void BlendMode::Apply() const

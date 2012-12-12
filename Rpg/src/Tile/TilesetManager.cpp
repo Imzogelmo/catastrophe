@@ -34,8 +34,8 @@ bool TilesetManager::AddTileset( Tileset* tileset )
 
 Tileset* TilesetManager::GetTileset( size_t index ) const
 {
-	if( insex < m_tilesets.size() )
-		return m_tilesets[i];
+	if( index < m_tilesets.size() )
+		return m_tilesets[index];
 
 	return 0;
 }
@@ -43,7 +43,7 @@ Tileset* TilesetManager::GetTileset( size_t index ) const
 
 Tileset* TilesetManager::GetTileset( const fc::string& name ) const
 {
-	for( vec_type::iterator it = m_tilesets.begin(); it != m_tilesets.end(); ++it )
+	for( vec_type::const_iterator it = m_tilesets.begin(); it != m_tilesets.end(); ++it )
 	{
 		if( (*it)->GetName() == name )
 			return *it;

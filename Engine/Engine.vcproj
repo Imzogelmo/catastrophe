@@ -499,6 +499,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\Catastrophe\Graphics\Blendmode.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\Catastrophe\Graphics\FBORenderTarget.h"
 					>
 				</File>

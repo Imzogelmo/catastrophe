@@ -3,10 +3,17 @@
 
 
 
-Map::Map() : m_name(), m_layers(), m_selectedLayer(0), m_width(0), m_height(0)
+//Map::Map() : m_name(), m_layers(), m_selectedLayer(0), m_width(0), m_height(0)
+//{
+//}
+
+Map::Map( const fc::string& mapName, size_t numLayers, size_t mapWidth, size_t mapHeight ) :
+	m_name(),
+	m_layers(),
+	m_width(0),
+	m_height(0)
 {
 }
-
 
 
 void Map::Clear()

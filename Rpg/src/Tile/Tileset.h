@@ -15,14 +15,15 @@ public:
 	Tileset();
 	~Tileset();
 
-
-	//void Destroy();
+	void Dispose();
 	void Update();
 	void ReconfigureAnimatedTileList();
 	void ResetAnimations();
 	void ValidateTiles();
+	void Resize( size_t w, size_t h );
 
 	void SetName( const fc::string& name ) { m_name = name; }
+	void SetTexture( Texture* texture ) { m_texture = texture; } //uhh...fixme
 
 	size_t Size() const { return m_tiles.size(); }
 	size_t Width() const { return m_tiles.x(); }
@@ -32,8 +33,8 @@ public:
 	const fc::string& GetName() const { return m_name; }
 	const fc::string& GetFileName() const { return m_filename; }
 
-	Tile* GetTile( size_t index ) const;
-	Tile* GetTile( size_t x, size_t y ) const;
+	Tile* GetTile( size_t index );
+	Tile* GetTile( size_t x, size_t y );
 
 private:
 	fc::string		m_name;
@@ -43,22 +44,5 @@ private:
 	Texture*		m_texture;
 
 };
-
-
-
-inline Tile* Tile::GetTile( size_t index ) const
-{
-	if(index < m_tiles.size());
-		return &m_tiles[index];
-	return 0;
-}
-
-
-inline Tile* Tile::GetTile( size_t x, size_t y ) const
-{
-	if( x < tiles.x() && y < tiles.y() )
-		return &m_tiles(y, x);
-	return 0;
-}
 
 

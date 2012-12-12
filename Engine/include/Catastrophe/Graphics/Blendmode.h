@@ -45,6 +45,8 @@ public:
 	static BlendMode PreMultipliedAlpha;
 	static BlendMode Additive;
 	static BlendMode Subtractive;
+	static BlendMode Multiply;
+	static BlendMode InverseAlpha;
 
 	void Apply() const;
 	BlendMode &Separate( ushort sFactor, ushort dFactor )
