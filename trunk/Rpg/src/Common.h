@@ -10,6 +10,11 @@ USING_NAMESPACE_CE
 #define ASSERT CE_ASSERT
 
 
+class Tile;
+class Tileset;
+class TilesetManager;
+class Map;
+class MapLayer;
 
 
 struct MonsterData;

@@ -274,6 +274,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\src\Script\asGuiInterface.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\src\Script\asInputInterface.cpp"
 						>
 					</File>
@@ -306,6 +310,22 @@
 			<Filter
 				Name="Tile"
 				>
+				<File
+					RelativePath=".\src\Tile\Map.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Tile\MapLayer.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Tile\Tileset.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Tile\TilesetManager.cpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -436,6 +456,38 @@
 			<Filter
 				Name="Tile"
 				>
+				<File
+					RelativePath=".\src\Tile\CollisionLayer.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Tile\Map.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Tile\MapLayer.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Tile\MapProperties.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Tile\Tile.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Tile\TileProperties.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Tile\Tileset.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Tile\TilesetManager.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter

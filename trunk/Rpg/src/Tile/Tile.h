@@ -1,7 +1,8 @@
 
 #pragma once
 
-//#include <fc/type_traits.h>
+#include "../Common.h"
+#include <Catastrophe/Graphics/Animation.h>
 
 
 //Maybe split this into two tile classes: one for animated..? (memory vs performance cost?)
@@ -17,24 +18,24 @@ public:
 	//Animation	animation;
 	//Color	tint;
 	int		flags;
-	int		id;
 
 	Tile( Tileset* parent = 0 ) :
 		//tint(Color::White()),
-		flags(0), id(0),
+		flags(0), m_id(0),
 		m_parent(parent)
 	{
 	}
 
 	//void Update() { animation.Update(); }
 	void SetTileset(Tileset* parent) { m_parent = parent; }
-	void SetIndex(int index) { id = index; }
+	void SetIndex(size_t index) { m_id = index; }
 
 	Tileset* GetTileset() const { return m_parent; }
-	int GetIndex() { return id; }
+	size_t GetIndex() { return m_id; }
 
 protected:
-	Tileset* m_parent;
+	Tileset*	m_parent;
+	size_t		m_id;
 
 };
 

@@ -3,9 +3,10 @@
 #include "MapLayer.h"
 
 
-MapLayer::MapLayer() :
+MapLayer::MapLayer( Map* parent ) :
+	m_parent(parent),
 	m_tiles(),
-	m_blendmode(),
+	m_blendmode(BlendMode::Alpha),
 	m_visible(true)
 {
 }

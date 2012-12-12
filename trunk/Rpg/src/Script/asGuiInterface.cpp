@@ -4,31 +4,21 @@
 #include <cassert>
 #include <angelscript.h>
 
-#include <Catastrophe/Math/Math.h>
-#include <Catastrophe/MathTypes.h>
+#include <Catastrophe/Gui/Widget.h>
 
 #include "asBindUtil.h"
 #include "ScriptEngine.h"
 
 
-
 namespace script
 {
-	Texture* TextureConstructor()
+	Widget* WidgetConstructor()
 	{
-		static Texture uninitializedTexture = Texture();
-		return &uninitializedTexture;
+		static Widget uninitializedWidget = Widget();
+		return &uninitializedWidget;
 	}
 
 } //namespace script
-
-
-template <class T, class U>
-void RegisterImplicitRefCast( asIScriptEngine* engine, const char* t, const char* u )
-{
-	engine->RegisterObjectBehaviour(classNameT, asBEHAVE_IMPLICIT_REF_CAST, (t + "@ f()").c_str(), asFUNCTION((RefCast<T, U>)), asCALL_CDECL_OBJLAST);
-	engine->RegisterObjectBehaviour(classNameU, asBEHAVE_IMPLICIT_REF_CAST, (u + "@ f()").c_str(), asFUNCTION((RefCast<U, T>)), asCALL_CDECL_OBJLAST);
-}
 
 
 template <class T>
@@ -38,12 +28,13 @@ void RegisterWidgetType( asIScriptEngine* engine, const char* name )
 	fc::string const_ref = "const " + decl + " &in";
 	fc::string opAssignString(decl).append(" &opAssign(").append(const_ref).append(")");
 
+	//todo:these need to be memory pooled or ref counted.
 	int r(0);
 	using namespace script;
 	r = engine->RegisterObjectType( name, 0, asOBJ_REF | asOBJ_SCOPED ); assert( r >= 0 );
-	r = engine->RegisterObjectBehaviour( name, asBEHAVE_FACTORY, "texture@ f()", asFUNCTION(TextureConstructor), asCALL_CDECL); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour( name, asBEHAVE_FACTORY, "texture@ f()", asFUNCTION(WidgetConstructor), asCALL_CDECL); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour( name, asBEHAVE_RELEASE, "void f()", asFUNCTION(DummyReleaseRef), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
-	r = engine->RegisterObjectMethod( name, opAssignString.c_str(), asFUNCTION((RefAssignment<Texture, Texture>)), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( name, opAssignString.c_str(), asFUNCTION((RefAssignment<Widget, Widget>)), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
 
 	engine->RegisterObjectMethod( name, "void set_x(int)", asMETHOD(T, SetX), asCALL_THISCALL );
 	engine->RegisterObjectMethod( name, "void set_y(int)", asMETHOD(T, SetY), asCALL_THISCALL );
@@ -77,11 +68,8 @@ void RegisterWidgetType( asIScriptEngine* engine, const char* name )
 	engine->RegisterObjectMethod( name, "void remove_child(widget@)", asMETHOD(T, RemoveChild), asCALL_THISCALL );
 	engine->RegisterObjectMethod( name, "void remove()", asMETHOD(T, Remove), asCALL_THISCALL );
 
-	RegisterImplicitRefCast<T, Widget>(engine, name, "widget")
-	engine->RegisterObjectBehaviour( name, asBEHAVE_IMPLICIT_REF_CAST, (t + "@ f()").c_str(), asFUNCTION((RefCast<T, U>)), asCALL_CDECL_OBJLAST );
-	engine->RegisterObjectBehaviour( classNameU, asBEHAVE_IMPLICIT_REF_CAST, (u + "@ f()").c_str(), asFUNCTION((RefCast<U, T>)), asCALL_CDECL_OBJLAST );
-
-
+	//engine->RegisterObjectBehaviour( name, asBEHAVE_IMPLICIT_REF_CAST, (decl + "@ f()").c_str(), asFUNCTION((RefCast<T, U>)), asCALL_CDECL_OBJLAST );
+	//engine->RegisterObjectBehaviour( "widget", asBEHAVE_IMPLICIT_REF_CAST, "widget@ f()", asFUNCTION((RefCast<U, T>)), asCALL_CDECL_OBJLAST );
 
 }
 
