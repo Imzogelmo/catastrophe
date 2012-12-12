@@ -15,23 +15,21 @@ public:
 
 	MapLayer( Map* parent = 0 );
 
-	bool IsVisible() const { return m_visible; }
 	void SetVisible( bool enable = true ) { m_visible = enable; }
-
-
-	Color GetColor() const { return m_color; }
 	void SetColor( const Color& color ) { m_color = color; }
-
+	void SetMap( Map* map ) { m_parent = map; }
+	
 	void Resize( size_t w, size_t h );
+	void Clear();
 
 	size_t Size() const { return m_tiles.size(); }
 	size_t Width() const { return m_tiles.x(); }
 	size_t Height() const { return m_tiles.y(); }
 
-	Tile* GetTile(size_t x, size_t y) const { return m_tiles.at(y, x); }
-
-	void SetMap( Map* map ) { m_map = map; }
-	Map* GetMap() { return m_map; }
+	bool IsVisible() const { return m_visible; }
+	Color GetColor() const { return m_color; }
+	Tile* GetTile( size_t x, size_t y ) const { return m_tiles.at(y, x); }
+	Map* GetMap() const { return m_parent; }
 
 	array_type& GetTileArray() { return m_tiles; }
 	const array_type& GetTileArray() const { return m_tiles; }
@@ -40,7 +38,7 @@ public:
 	void Render();
 
 protected:
-	Map*		m_map;
+	Map*		m_parent;
 	array_type	m_tiles;
 	BlendMode	m_blendmode;
 	//float		m_opacity; //why stop at opacity only?
