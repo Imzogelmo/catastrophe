@@ -3,7 +3,7 @@
 
 
 
-//Map::Map() : m_name(), m_layers(), m_selectedLayer(0), m_width(0), m_height(0)
+//Map::Map() : m_name(), m_layers(), m_width(0), m_height(0)
 //{
 //}
 
@@ -16,29 +16,37 @@ Map::Map( const fc::string& mapName, size_t numLayers, size_t mapWidth, size_t m
 }
 
 
-void Map::Clear()
+Map::~Map()
 {
-	for( vec_type::iterator it = m_layers.begin(); it != m_layers.end(); ++it )
-		(*it)->Clear();
+	Dispose();
 }
 
 
-void Map::Resize( size_t w, size_t h )
+void Map::Dispose()
 {
-	m_width = w;
-	m_height = h;
 	for( vec_type::iterator it = m_layers.begin(); it != m_layers.end(); ++it )
 	{
-		(*it)->Resize(w, h);
+		delete *it;
+	}
+
+	m_layers.clear();
+}
+
+
+void Map::Clear()
+{
+	for( vec_type::iterator it = m_layers.begin(); it != m_layers.end(); ++it )
+	{
+		(*it)->Clear();
 	}
 }
 
 
 void Map::Resize( size_t w, size_t h, size_t numLayers )
 {
-	numLayers = fc::clamp( numLayers, 0, MaxLayers );
+	if( numLayers = size_t(-1) )
+		numLayers = m_layers.size();
 
-	//if new layer size is less, then we have to free memory.
 	if( numLayers < m_layers.size() )
 	{
 		for( size_t i(numLayers); i < m_layers.size(); ++i )
@@ -51,29 +59,68 @@ void Map::Resize( size_t w, size_t h, size_t numLayers )
 			AddLayer();
 	}
 
-	Resize(w, h);
+	m_width = w;
+	m_height = h;
+	for( vec_type::iterator it = m_layers.begin(); it != m_layers.end(); ++it )
+	{
+		(*it)->Resize(w, h);
+	}
 }
 
 
 
-void Map::AddLayer()
+bool Map::AddLayer( MapLayer* layer )
 {
 	if( NumLayers() >= MaxLayers )
-		return;
+	{
+		Log("Map: Unable to add layer.");
+		return false;
+	}
 
-	MapLayer* layer = new MapLayer(this);
-	layer->Resize( Width(), Height() );
+	if( !layer )
+	{
+		layer = new MapLayer(this);
+	}
+	else
+	{
+		for( vec_type::iterator it = m_layers.begin(); it != m_layers.end(); ++it )
+		{
+			//if it already exists deep copy it.
+			if( layer == *it )
+			{
+				layer = new MapLayer(*(*it));
+				//*layer = *(*it);
+				break;
+			}
+		}
+	}
+
+	layer->Resize(Width(), Height());
 	m_layers.push_back(layer);
+	return true;
 }
 
 
-void Map::RemoveLayer( size_t layer )
+void Map::RemoveLayer( size_t index )
 {
-	if( layer >= NumLayers() )
+	if( index >= NumLayers() )
 		return;
 
-	delete m_layers[i];
-	m_layers.erase_at(i);
+	delete m_layers[index];
+	m_layers.erase_at(index);
+}
+
+
+void Map::RemoveLayer( MapLayer* layer )
+{
+	for( vec_type::iterator it = m_layers.begin(); it != m_layers.end(); ++it )
+	{
+		if( layer == *it )
+		{
+			RemoveLayer( size_t(it - m_layers.begin()) );
+			break;
+		}
+	}
 }
 
 
