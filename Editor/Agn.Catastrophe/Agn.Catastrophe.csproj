@@ -1,15 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2B247100-5ECD-4FD0-980F-961FCED3CF1A}</ProjectGuid>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{85BA06BB-5CF9-4932-9898-A78D11F898F5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Agn.Catastrophe</RootNamespace>
     <AssemblyName>Agn.Catastrophe</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -73,10 +74,10 @@
     <Compile Include="Views\SourceFileView.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="license.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\Agn.Core\Agn.Core.csproj">
+      <Project>{CB6E14D8-8EA2-49FF-92CA-293238C918D5}</Project>
+      <Name>Agn.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\ProjectNavigator.resx">
@@ -87,14 +88,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Agn.Catastrophe.Interop\Agn.Catastrophe.Interop.vcxproj">
-      <Project>{b6822a5e-07f9-4e39-9156-688efabdd954}</Project>
-      <Name>Agn.Catastrophe.Interop</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Agn.Core\Agn.Core.csproj">
-      <Project>{eb440c99-8291-4419-963a-4564b179d5c7}</Project>
-      <Name>Agn.Core</Name>
-    </ProjectReference>
+    <Content Include="license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
