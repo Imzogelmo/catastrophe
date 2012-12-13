@@ -40,10 +40,8 @@ public:
 	void SetVertexShader( VertexShader* vertex_shader );
 	void SetFragmentShader( FragmentShader* fragment_shader );
 
-	VertexShader* GetVertexShader() { return m_vertex_shader; }
-	FragmentShader* GetFragmentShader() { return m_fragment_shader; }
-	const VertexShader* GetVertexShader() const { return m_vertex_shader; }
-	const FragmentShader* GetFragmentShader() const { return m_fragment_shader; }
+	VertexShader* GetVertexShader() const { return m_vertex_shader; }
+	FragmentShader* GetFragmentShader() const { return m_fragment_shader; }
 
 	void Begin();
 	void End();

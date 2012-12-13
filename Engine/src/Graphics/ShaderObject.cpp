@@ -75,7 +75,7 @@ bool ShaderObjectBase::LoadFromFile( const fc::string& filename )
 	File f(filename, FileRead);
 	if(!f.IsOpen())
 	{
-		//Log( "Failed to open %s " + filename );
+		Log("Shader Object Error: Failed to open %s ", filename.c_str());
 		return false;
 	}
 
@@ -83,7 +83,7 @@ bool ShaderObjectBase::LoadFromFile( const fc::string& filename )
 	m_source.resize(size);
 	if( f.Read(&m_source[0], size) != size )
 	{
-		printf( "Failed to load shader program." );
+		Log("Failed to load shader program.");
 		return false;
 	}
 
@@ -106,7 +106,8 @@ bool ShaderObjectBase::Compile()
 	m_is_compiled = (status == GL_TRUE ? true : false);
 	if(!m_is_compiled)
 	{
-		//Log("Fail");
+		Log("Shader comilation failed.");
+		Log(GetInfoLog().c_str());
 	}
 
 	return m_is_compiled;
