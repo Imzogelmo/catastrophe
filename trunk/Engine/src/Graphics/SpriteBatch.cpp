@@ -54,7 +54,7 @@ void SpriteBatch::Reserve( size_t reserve )
 
 void SpriteBatch::Clear()
 {
-	m_queue.clear();
+	m_queue.clear_uninitialized();
 }
 
 

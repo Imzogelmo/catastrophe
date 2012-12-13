@@ -39,6 +39,18 @@ Shader::Shader( VertexShader* vertex_shader, FragmentShader* fragment_shader ) :
 	m_linked(false),
 	m_link_error(false)
 {
+	//link it if we recieved valid shader objects.
+	if( m_vertex_shader && m_fragment_shader )
+	{
+		if( m_vertex_shader->IsCompiled() && m_fragment_shader->IsCompiled() )
+		{
+			if( !Link() )
+			{
+				Log("Shader Link Error.");
+				Log(GetInfoLog().c_str());
+			}
+		}
+	}
 }
 
 

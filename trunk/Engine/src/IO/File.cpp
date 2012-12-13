@@ -89,7 +89,7 @@ size_t File::Read(void* dest, size_t size)
 
 	if(!m_handle)
 	{
-		Log("File not open");
+		Log("Error: File not open");
 		return 0;
 	}
 
@@ -112,7 +112,7 @@ size_t File::Seek(size_t position)
 
 	if (!m_handle)
 	{
-		Log("File not open");
+		Log("Error: File not open");
 		return 0;
 	}
 

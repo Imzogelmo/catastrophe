@@ -69,24 +69,37 @@ void perspectiveOrthographicProjection
 
 #include "hsv_wheel.h"
 #include "splines.h"
+#include "glsl.h"
 
 HSV_Test* hsvTest = 0;
 Spline_Test* splineTest = 0;
-
+GLSL_Test* glslTest = 0;
 
 void init_tests()
 {
 	hsvTest = new HSV_Test();
 	splineTest = new Spline_Test();
+	glslTest = new GLSL_Test();
 }
 
 void do_tests()
 {
-	//hsvTest->Update();
-	//hsvTest->Render();
-	splineTest->Update();
-	splineTest->Render();
-
+	int num = 2;
+	if(num == 0)
+	{
+		hsvTest->Update();
+		hsvTest->Render();
+	}
+	else if(num == 1)
+	{
+		splineTest->Update();
+		splineTest->Render();
+	}
+	else if(num == 2)
+	{
+		glslTest->Update();
+		glslTest->Render();
+	}
 
 };
 
@@ -94,6 +107,7 @@ void end_tests()
 {
 	delete hsvTest;
 	delete splineTest;
+	delete glslTest;
 
 }
 
