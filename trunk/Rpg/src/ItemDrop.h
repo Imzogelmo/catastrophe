@@ -39,9 +39,7 @@ public:
 	void SerializeXml(XmlWriter* xml);
 	void DeserializeXml(XmlReader* xml);
 
-	//remove me...
-	Item* item;
-
+	Item* item; //...remove me still.
 protected:
 	int		m_itemIndex;
 	int		m_dropRate;

@@ -27,7 +27,9 @@ public:
 	int LoadByteCode( const fc::string filename );
 
 	asIScriptEngine* GetEngine() const { return m_engine; }
-	//const asIScriptEngine* GetEngine() const { return m_engine; }
+
+	void SetGame( Game* parent ) { m_gamePtr = parent; }
+	Game* GetGame() const { return m_gamePtr; }
  
 private:
 	void RegisterScriptInterfaces();
@@ -90,6 +92,7 @@ private:
 	//ScriptCompiler _precompiler;
 	asIScriptEngine*		m_engine;
 	asIScriptEngine*		engine;
+	Game*					m_gamePtr;
 
 	ScriptEngine(const ScriptEngine &);
 	ScriptEngine &operator = (const ScriptEngine &);

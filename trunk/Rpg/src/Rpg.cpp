@@ -7,6 +7,8 @@
 #include "GlobalSettings.h"
 #include "Game.h"
 
+#include "ResourceManager.h"
+
 
 //for memory leak checking
 #include <crtdbg.h>
@@ -53,10 +55,11 @@ int main(int argc, char* argv[])
 	// read config file and parse command-line arguments.
 	LoadConfigSettings(argc, argv);
 
-	Game game;
-	if( game.Initialize() != 0 )
-		return -1;
+	//Game game;
+	//if( game.Initialize() != 0 )
+	//	return -1;
 
+	ResourceManager rm;
 
 	Window* window = System::CreateWindow();
 	if( !window || !window->IsOpen() )
@@ -64,6 +67,16 @@ int main(int argc, char* argv[])
 		LogError("Fatal error: Window could not be created.");
 		exit(1);
 	}
+
+	Texture* t = 0;
+	t = rm.LoadTexture("../Engine/Tests/tiles.png");
+	t = rm.LoadTexture("../Engine/Tests/tiles.png");
+	rm.SetBaseDirectory("../Engine/");
+	rm.SetTextureDirectory("Tests/");
+	t = rm.LoadTexture("tiles.png");
+	t = 0;
+
+	rm.DeleteResources();
 
 	// TODO: Need to handle loading +
 	// Splash screen here...

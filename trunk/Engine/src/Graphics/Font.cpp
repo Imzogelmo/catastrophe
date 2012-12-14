@@ -33,9 +33,10 @@ Font::Font() : m_texture(), m_face_size(0)
 {
 }
 
-Font::Font( const fc::string& filename, int faceSize )
+
+Font::Font( const fc::string& filename, int faceSize ) : m_face_size(0)
 {
-	Load(filename, faceSize);
+	LoadFromFile(filename, faceSize);
 }
 
 
@@ -45,7 +46,7 @@ Font::~Font()
 }
 
 
-int Font::Load( const fc::string& filename, int faceSize )
+int Font::LoadFromFile( const fc::string& filename, int faceSize )
 {
 
 	// current limitation

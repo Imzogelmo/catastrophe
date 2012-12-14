@@ -119,7 +119,7 @@ public:
 	Font( const fc::string& filename, int faceSize );
 	~Font();
 
-	int Load( const fc::string& filename, int faceSize );
+	int LoadFromFile( const fc::string& filename, int faceSize );
 	int CreateFromBitmapFontTexture( gluint texture, uint width, uint height );
 	int CreateFromPixelData( const ubyte* pixels, uint pixelFormat, uint width, uint height );
 
