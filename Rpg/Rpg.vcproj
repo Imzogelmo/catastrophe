@@ -129,7 +129,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="Engine.lib glfw.lib mcppd.lib angelscript.lib tinyxml2.lib glew32s.lib OpenGL32.lib glu32.lib"
+				AdditionalDependencies="Engine.lib glfw.lib mcppd.lib angelscript.lib glew32s.lib OpenGL32.lib glu32.lib"
 				AdditionalLibraryDirectories="&quot;../Release&quot;"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
@@ -212,7 +212,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\ResourceManager.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Rpg.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Screen.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\ScreenManager.cpp"
 				>
 			</File>
 			<Filter
@@ -383,6 +395,18 @@
 			</File>
 			<File
 				RelativePath=".\src\MonsterData.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\ResourceManager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Screen.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\ScreenManager.h"
 				>
 			</File>
 			<Filter

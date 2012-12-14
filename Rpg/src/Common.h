@@ -27,6 +27,9 @@ class InventoryItem;
 class Inventory;
 class Equipment;
 
+class Screen;
+class ScreenManager;
+class Game;
 
 
 // angelscript forward declarations

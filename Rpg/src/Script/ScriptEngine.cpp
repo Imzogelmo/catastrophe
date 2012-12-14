@@ -28,6 +28,8 @@ ScriptEngine::~ScriptEngine()
 
 void ScriptEngine::Initialize()
 {
+	ASSERT(m_gamePtr != 0);
+
 	// this should be the ONLY place where the engine is created.
 	if(!m_engine)
 		m_engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);

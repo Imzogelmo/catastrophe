@@ -10,7 +10,7 @@ class Tileset
 {
 public:
 	typedef fc::dynamic_array2d<Tile>	array_type;
-	typedef fc::vector<Tile*>			anim_vec_type;
+	typedef fc::vector<Tile*>		anim_vec_type;
 
 	Tileset();
 	~Tileset();

@@ -6,6 +6,7 @@
 
 #include "Common.h"
 #include "GlobalSettings.h"
+#include "ScreenManager.h"
 
 #include "Script/ScriptEngine.h"
 
@@ -35,6 +36,8 @@ public:
 	GameSettings* GetSettings() { return &m_settings; }
 	ScriptEngine* GetScriptEngine() { return &m_scriptEngine; }
 
+	void Update();
+	void Render();
 
 protected:
 	int InternalInitScriptEngine();
@@ -44,6 +47,7 @@ protected:
 protected:
 	GameSettings	m_settings;
 	ScriptEngine	m_scriptEngine;
+	ScreenManager	m_screenManager;
 
 };
 

@@ -22,7 +22,7 @@ int Game::Initialize()
 int Game::InternalInitScriptEngine()
 {
 	ScriptEngine* engine = GetScriptEngine();
-
+	engine->SetGame(this);
 	engine->Initialize();
 	engine->SetDefaultEngineProperties();
 	engine->RegisterScriptingInterfaces();
@@ -31,7 +31,7 @@ int Game::InternalInitScriptEngine()
 	Log( "Compiling scripts..." );
 	for( bool exit(false); exit != true; )
 	{
-		if( engine->Compile("Scripts/Main.cpp", fc::vector<fc::string>()) != 0 )
+		if( engine->Compile("Scripts/Game.cpp", fc::vector<fc::string>()) != 0 )
 		{
 			printf("-press [c] to recompile, or any key to exit.");
 			int c = _getch();
@@ -45,4 +45,19 @@ int Game::InternalInitScriptEngine()
 
 	return 0;
 }
+
+
+
+
+
+
+void Game::Update()
+{
+}
+
+
+void Game::Render()
+{
+}
+
 
