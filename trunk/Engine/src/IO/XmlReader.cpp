@@ -43,7 +43,8 @@ XmlReader::XmlReader(const fc::string& filename) :
 
 XmlReader::~XmlReader()
 {
-	Close();
+	if(IsOpen())
+		Close();
 }
 
 
@@ -53,14 +54,12 @@ bool XmlReader::Open( const fc::string& filename )
 		Close();
 
 	m_filename = filename;
-	//tell tinyxml to not condense whitespace by default.
-	//TiXmlBase::SetCondenseWhiteSpace(condenseWhitespace);
-
 	m_document = new XmlDocument_t();
+
 	if( m_document->LoadFile(filename.c_str()) != 0 )
 	{
 		Close();
-		//Log("XmlReader::Open(): Failed to open file \"%s\"!\n", filename.c_str());
+		Log("Failed to open file (%s)", filename.c_str());
 		return false;
 	}
 
@@ -71,11 +70,13 @@ bool XmlReader::Open( const fc::string& filename )
 
 void XmlReader::Close()
 {
-	CE_ASSERT(m_document != 0);
+	if(m_document)
+	{
+		delete m_document;
+		m_document = 0;
+	}
 
-	delete m_document;
 	m_filename.clear();
-	m_document = 0;
 	m_element = 0;
 }
 
@@ -107,6 +108,12 @@ bool XmlReader::NextChild( const fc::string& name )
 	CE_ASSERT(m_element != 0);
 
 	XmlElement_t* sibling = m_element->NextSiblingElement(name.c_str());
+	if(!sibling) 
+	{
+		//get the next child element if no sibling is found.
+		sibling = m_element->FirstChildElement(name.c_str());
+	}
+
 	if(sibling)
 	{
 		m_element = sibling;

@@ -62,7 +62,8 @@ bool XmlWriter::Open( const fc::string& filename )
 	m_document = new XmlDocument_t;
 
 	// <?xml version="1.0" encoding="UTF-8"?>
-	m_document->NewDeclaration();
+	tinyxml2::XMLDeclaration* declaration = m_document->NewDeclaration();
+	m_document->LinkEndChild(declaration);
 
 	return true;
 }
