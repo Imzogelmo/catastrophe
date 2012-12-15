@@ -13,6 +13,7 @@ namespace Agn.UI.Host
         {
             using (form)
             {
+                form.StartPosition = FormStartPosition.CenterScreen;
                 form.ShowDialog();
             }
         }

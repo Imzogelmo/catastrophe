@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -53,11 +54,20 @@
     <Compile Include="IDocument.cs" />
     <Compile Include="IDocumentManager.cs" />
     <Compile Include="Navigation\AboutApplication.cs" />
+    <Compile Include="Navigation\ShowConversionTool.cs" />
     <Compile Include="Navigation\ExitApplication.cs" />
     <Compile Include="Navigation\NewProject.cs" />
     <Compile Include="Navigation\OpenProject.cs" />
     <Compile Include="Navigation\ShowProjectNavigator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\ConvertFile.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\ConvertFile.Designer.cs">
+      <DependentUpon>ConvertFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConvertFileView.cs" />
+    <Compile Include="Views\ConvertFileViewModel.cs" />
     <Compile Include="Views\ProjectNavigator.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -74,12 +84,19 @@
     <Compile Include="Views\SourceFileView.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Agn.Catastrophe.Interop\Agn.Catastrophe.Interop.vcxproj">
+      <Project>{b6822a5e-07f9-4e39-9156-688efabdd954}</Project>
+      <Name>Agn.Catastrophe.Interop %28Visual Studio 2010%29</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Agn.Core\Agn.Core.csproj">
       <Project>{CB6E14D8-8EA2-49FF-92CA-293238C918D5}</Project>
       <Name>Agn.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Views\ConvertFile.resx">
+      <DependentUpon>ConvertFile.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\ProjectNavigator.resx">
       <DependentUpon>ProjectNavigator.cs</DependentUpon>
     </EmbeddedResource>

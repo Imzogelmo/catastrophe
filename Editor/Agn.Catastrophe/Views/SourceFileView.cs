@@ -20,6 +20,10 @@ namespace Agn.Catastrophe.Editor.Views
         {
             var fileName = context.Parameters["fileName"];
 
+            FileConverter converter = new FileConverter();
+            string error = null;
+            converter.Convert("Test", "Asdf", ref error);
+
             // TODO Translate file name.
 
             fileName = @"C:\temp\20121205_1111_19.txt";
