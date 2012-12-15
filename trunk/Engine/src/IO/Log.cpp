@@ -169,7 +169,7 @@ void Logger::CloseDebugConsole()
 }
 
 
-void __Internal_Log_Write( const char* format, ... )
+FC_NO_INLINE void __Internal_Log_Write( const char* format, ... )
 {
 	char buffer[ 1024 ];
 
@@ -181,7 +181,7 @@ void __Internal_Log_Write( const char* format, ... )
 	Logger::GetInstance().Write( buffer );
 }
 
-void __Internal_Log_Write( const fc::string& message )
+FC_NO_INLINE void __Internal_Log_Write( const fc::string& message )
 {
 	Logger::GetInstance().Write( message );
 }

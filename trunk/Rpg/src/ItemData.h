@@ -6,6 +6,7 @@
 #include "Common.h"
 #include "Attributes.h"
 #include "AttributeFlags.h"
+#include "DataList.h"
 
 
 struct ItemData
@@ -39,3 +40,22 @@ struct ItemData
 	void DeserializeXml( XmlReader* xml );
 
 };
+
+
+
+class ItemList : public DataList<ItemData>
+{
+public:
+	typedef DataList<ItemData>	base_type;
+
+	ItemList() : base_type()
+	{}
+
+	ItemData& GetItem( size_t index ) { return base_type::operator [](index);  }
+	const ItemData& GetItem( size_t index ) const { return base_type::operator [](index);  }
+
+	bool SerializeXml( const fc::string& filename );
+	bool DeserializeXml( const fc::string& filename );
+
+};
+

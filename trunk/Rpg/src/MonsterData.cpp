@@ -5,9 +5,9 @@
 
 
 
-////////////////////////////////////////////
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //             MonsterData
-////////////////////////////////////////////
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 void MonsterData::SerializeXml( XmlWriter* xml )
 {
@@ -30,6 +30,7 @@ void MonsterData::DeserializeXml( XmlReader* xml )
 	if( !xml->NextChild("Monster") )
 	{
 		Log("----debug error---- MonsterData::DeserializeXml()");
+		return;
 	}
 
 	name = xml->GetString("name");
@@ -43,9 +44,9 @@ void MonsterData::DeserializeXml( XmlReader* xml )
 
 
 
-////////////////////////////////////////////
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //             MonsterGroupData
-////////////////////////////////////////////
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 void MonsterGroupData::Validate()
 {
@@ -74,9 +75,9 @@ void MonsterGroupData::DeserializeXml( XmlReader* xml )
 
 
 
-////////////////////////////////////////////
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //             MonsterPartyData
-////////////////////////////////////////////
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 MonsterPartyData::MonsterPartyData() :
 	m_groups()
@@ -144,9 +145,9 @@ void MonsterPartyData::DeserializeXml( XmlReader* xml )
 
 
 
-////////////////////////////////////////////
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //             MonsterList
-////////////////////////////////////////////
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 bool MonsterList::SerializeXml( const fc::string& filename )
 {
@@ -194,12 +195,12 @@ bool MonsterList::DeserializeXml( const fc::string& filename )
 		for( size_t i(0); i < n; ++i )
 		{
 			m_items[i].DeserializeXml(&xml);
-			//if(!xml.NextChild())
-			//{
-				//if( i < n ) ...
-			//	break;
-			//}
 		}
+	}
+	else
+	{
+		Log("Error parsing (%s). Root item not found", filename.c_str());
+		return false;
 	}
 
 	xml.Close();
