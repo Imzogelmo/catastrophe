@@ -39,6 +39,9 @@ void LoadConfigSettings( int argc, char *argv[] )
 
 }
 
+//temp includes
+#include "MonsterData.h"
+
 
 int main(int argc, char* argv[])
 {
@@ -67,6 +70,13 @@ int main(int argc, char* argv[])
 		LogError("Fatal error: Window could not be created.");
 		exit(1);
 	}
+
+	MonsterList ml;
+	bool retval = ml.DeserializeXml("test.xml");
+	foreachi(i, 10)
+		ml.Add( MonsterData() );
+
+	retval = ml.SerializeXml("test.xml");
 
 	Texture* t = 0;
 	t = rm.LoadTexture("../Engine/Tests/tiles.png");

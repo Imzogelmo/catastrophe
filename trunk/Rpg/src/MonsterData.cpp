@@ -1,5 +1,4 @@
 
-#pragma once
 
 #include <Catastrophe/FileIO.h>
 #include "MonsterData.h"
@@ -10,7 +9,7 @@
 //             MonsterData
 ////////////////////////////////////////////
 
-void MonsterData::SerializeXml(XmlWriter* xml)
+void MonsterData::SerializeXml( XmlWriter* xml )
 {
 	xml->BeginNode("Monster");
 
@@ -26,8 +25,13 @@ void MonsterData::SerializeXml(XmlWriter* xml)
 }
 
 
-void MonsterData::DeserializeXml(XmlReader* xml)
+void MonsterData::DeserializeXml( XmlReader* xml )
 {
+	if( !xml->NextChild("Monster") )
+	{
+		Log("----debug error---- MonsterData::DeserializeXml()");
+	}
+
 	name = xml->GetString("name");
 	script = xml->GetString("script");
 	description = xml->GetString("description");
@@ -51,7 +55,7 @@ void MonsterGroupData::Validate()
 }
 
 
-void MonsterGroupData::SerializeXml(XmlWriter* xml)
+void MonsterGroupData::SerializeXml( XmlWriter* xml )
 {
 	xml->BeginNode("MonsterGroup");
 	xml->SetInt("monster_index", monster_index);
@@ -61,7 +65,7 @@ void MonsterGroupData::SerializeXml(XmlWriter* xml)
 }
 
 
-void MonsterGroupData::DeserializeXml(XmlReader* xml)
+void MonsterGroupData::DeserializeXml( XmlReader* xml )
 {
 	monster_index = xml->GetInt("monster_index");
 	min = xml->GetInt("min");
@@ -80,20 +84,20 @@ MonsterPartyData::MonsterPartyData() :
 }
 
 
-void MonsterPartyData::AddGroup(const MonsterGroupData& group)
+void MonsterPartyData::AddGroup( const MonsterGroupData& group )
 {
 	m_groups.push_back(group);
 }
 
 
-void MonsterPartyData::RemoveGroup(size_t index)
+void MonsterPartyData::RemoveGroup( size_t index )
 {
 	if( index < NumGroups() )
 		m_groups.erase_at(index);
 }
 
 
-MonsterGroupData& MonsterPartyData::GetGroup(size_t index)
+MonsterGroupData& MonsterPartyData::GetGroup( size_t index )
 {
 	ASSERT(index < NumGroups());
 	return m_groups[index];
@@ -107,7 +111,7 @@ const MonsterGroupData& MonsterPartyData::GetGroup(size_t index) const
 }
 
 
-void MonsterPartyData::SerializeXml(XmlWriter* xml)
+void MonsterPartyData::SerializeXml( XmlWriter* xml )
 {
 	xml->BeginNode("MonsterTroop");
 	xml->SetUInt("num_groups", m_groups.size());
@@ -121,7 +125,7 @@ void MonsterPartyData::SerializeXml(XmlWriter* xml)
 }
 
 
-void MonsterPartyData::DeserializeXml(XmlReader* xml)
+void MonsterPartyData::DeserializeXml( XmlReader* xml )
 {
 	size_t numGroups = xml->GetUInt("num_groups");
 	m_groups.resize(numGroups);
@@ -138,3 +142,67 @@ void MonsterPartyData::DeserializeXml(XmlReader* xml)
 }
 
 
+
+
+////////////////////////////////////////////
+//             MonsterList
+////////////////////////////////////////////
+
+bool MonsterList::SerializeXml( const fc::string& filename )
+{
+	XmlWriter xml(filename);
+	if( !xml.IsOpen() )
+	{
+		Log("Could not open file (%s)", filename.c_str());
+		return false;
+	}
+
+	xml.BeginNode("MonsterList");
+	xml.SetString("ver", "1.0");
+	xml.SetUInt("count", m_items.size());
+
+	for( size_t i(0); i < m_items.size(); ++i )
+	{
+		m_items[i].SerializeXml(&xml);
+	}
+
+	xml.EndNode();
+	xml.Close();
+
+	return true;
+}
+
+
+bool MonsterList::DeserializeXml( const fc::string& filename )
+{
+	XmlReader xml(filename);
+	if( !xml.IsOpen() )
+	{
+		Log("Could not open file (%s)", filename.c_str());
+		return false;
+	}
+
+	if( xml.GetCurrentNodeName() == "MonsterList" )
+	{
+		size_t n = xml.GetUInt("count");
+		if( n == 0 )
+			return false;
+
+		m_items.clear();
+		m_items.resize(n);
+
+		for( size_t i(0); i < n; ++i )
+		{
+			m_items[i].DeserializeXml(&xml);
+			//if(!xml.NextChild())
+			//{
+				//if( i < n ) ...
+			//	break;
+			//}
+		}
+	}
+
+	xml.Close();
+
+	return true;
+}

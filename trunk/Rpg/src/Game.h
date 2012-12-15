@@ -35,6 +35,7 @@ public:
 
 	GameSettings* GetSettings() { return &m_settings; }
 	ScriptEngine* GetScriptEngine() { return &m_scriptEngine; }
+	ScreenManager* GetScreenManager() { return &m_screenManager; }
 
 	void Update();
 	void Render();

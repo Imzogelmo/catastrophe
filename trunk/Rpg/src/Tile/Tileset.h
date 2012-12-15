@@ -12,7 +12,7 @@ public:
 	typedef fc::dynamic_array2d<Tile>	array_type;
 	typedef fc::vector<Tile*>		anim_vec_type;
 
-	Tileset();
+	Tileset( const fc::string& name );
 	~Tileset();
 
 	void Dispose();
@@ -23,7 +23,7 @@ public:
 	void Resize( size_t w, size_t h );
 
 	void SetName( const fc::string& name ) { m_name = name; }
-	void SetTexture( Texture* texture ) { m_texture = texture; } //uhh...fixme
+	void SetTexture( Texture* texture ) { m_texture = texture; }
 
 	size_t Size() const { return m_tiles.size(); }
 	size_t Width() const { return m_tiles.x(); }
@@ -31,16 +31,16 @@ public:
 
 	Texture* GetTexture() const { return m_texture; }
 	const fc::string& GetName() const { return m_name; }
-	const fc::string& GetFileName() const { return m_filename; }
+	//const fc::string& GetFileName() const { return m_filename; }
 
 	Tile* GetTile( size_t index );
 	Tile* GetTile( size_t x, size_t y );
 
 private:
 	fc::string		m_name;
-	fc::string		m_filename;
-	anim_vec_type	m_ptr_animated_tiles;
+	//fc::string		m_filename;
 	array_type		m_tiles;
+	anim_vec_type	m_ptr_animated_tiles;
 	Texture*		m_texture;
 
 };

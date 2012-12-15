@@ -18,11 +18,11 @@ Map::Map( const fc::string& mapName, size_t numLayers, size_t mapWidth, size_t m
 
 Map::~Map()
 {
-	Dispose();
+	DeleteLayers();
 }
 
 
-void Map::Dispose()
+void Map::DeleteLayers()
 {
 	for( vec_type::iterator it = m_layers.begin(); it != m_layers.end(); ++it )
 	{
