@@ -41,6 +41,7 @@ void LoadConfigSettings( int argc, char *argv[] )
 
 //temp includes
 #include "MonsterData.h"
+#include "ItemData.h"
 
 
 int main(int argc, char* argv[])
@@ -71,8 +72,15 @@ int main(int argc, char* argv[])
 		exit(1);
 	}
 
+	ItemList il;
+	bool retval;// = ml.DeserializeXml("test.xml");
+	foreachi(i, 10)
+		il.Add( ItemData() );
+
+	retval = il.SerializeXml("test.xml");
+
 	MonsterList ml;
-	bool retval = ml.DeserializeXml("test.xml");
+	retval = ml.DeserializeXml("test.xml");
 	foreachi(i, 10)
 		ml.Add( MonsterData() );
 

@@ -3,10 +3,10 @@
 
 #include <fc/vector.h>
 #include "Common.h"
-#include "DataList.h"
 #include "Attributes.h"
 #include "AttributeFlags.h"
 #include "ItemDrop.h"
+#include "DataList.h"
 
 
 
@@ -37,6 +37,7 @@ struct MonsterData
 };
 
 
+
 struct MonsterGroupData
 {
 	int		monster_index;
@@ -56,6 +57,7 @@ struct MonsterGroupData
 	void DeserializeXml(XmlReader* xml);
 
 };
+
 
 
 /**
@@ -88,7 +90,6 @@ public:
 protected:
 	vec_type	m_groups;
 };
-
 
 
 

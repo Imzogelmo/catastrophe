@@ -80,7 +80,7 @@ typedef long long			int64;
 CE_NAMESPACE_BEGIN
 
 //logging functions
-extern void __Internal_Log_Write( const char* format, ... );
+extern FC_NO_INLINE void __Internal_Log_Write( const char* format, ... );
 //extern void __Internal_Log_Write( const fc::basic_string<char>& message );
 
 
