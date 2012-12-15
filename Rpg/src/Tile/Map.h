@@ -22,7 +22,7 @@ public:
 	Map( const fc::string& mapName, size_t numLayers, size_t mapWidth, size_t mapHeight );
 	~Map();
 
-	void Dispose();
+	void DeleteLayers();
 	void Clear();
 
 	size_t Size() const { return m_width * m_height; }

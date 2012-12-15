@@ -3,7 +3,10 @@
 
 
 
-Tileset::Tileset() : m_tiles(), m_ptr_animated_tiles()
+Tileset::Tileset( const fc::string& name ) :
+	m_name(name),
+	m_tiles(),
+	m_ptr_animated_tiles()
 {}
 
 

@@ -3,6 +3,7 @@
 
 #include <fc/vector.h>
 #include "Common.h"
+#include "DataList.h"
 #include "Attributes.h"
 #include "AttributeFlags.h"
 #include "ItemDrop.h"
@@ -81,12 +82,33 @@ public:
 	vec_type& GetGroups() { return m_groups; }
 	const vec_type& GetGroups() const { return m_groups; }
 	
-
 	void SerializeXml(XmlWriter* xml);
 	void DeserializeXml(XmlReader* xml);
 
 protected:
 	vec_type	m_groups;
+};
+
+
+
+
+/**
+ * A collection of all stored MonsterData objects.
+ */
+class MonsterList : public DataList<MonsterData>
+{
+public:
+	typedef DataList<MonsterData>	base_type;
+
+	MonsterList() : base_type()
+	{}
+
+	MonsterData& GetMonster( size_t index ) { return base_type::operator [](index);  }
+	const MonsterData& GetMonster( size_t index ) const { return base_type::operator [](index);  }
+
+	bool SerializeXml( const fc::string& filename );
+	bool DeserializeXml( const fc::string& filename );
+
 };
 
 

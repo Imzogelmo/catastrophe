@@ -4,11 +4,11 @@
 
 TilesetManager::~TilesetManager()
 {
-	Dispose();
+	DeleteTilesets();
 }
 
 
-void TilesetManager::Dispose()
+void TilesetManager::DeleteTilesets()
 {
 	for( vec_type::iterator it = m_tilesets.begin(); it != m_tilesets.end(); ++it )
 		delete *it;
@@ -17,18 +17,34 @@ void TilesetManager::Dispose()
 }
 
 
-bool TilesetManager::AddTileset( Tileset* tileset )
+bool TilesetManager::DeleteTileset( Tileset* tileset )
 {
-	//doesn't support unnamed tilesets.
-	if( !tileset || tileset->GetName().empty() )
-		return false;
+	for( vec_type::iterator it = m_tilesets.begin(); it != m_tilesets.end(); ++it )
+	{
+		if( tileset == *it )
+		{
+			delete *it;
+			m_tilesets.erase(it);
+			return true;
+		}
+	}
 
-	//tileset with the same name already exists.
-	if( GetTileset(tileset->GetName()) != 0 )
-		return false;
+	return false;
+}
 
+
+Tileset* TilesetManager::CreateTileset( const fc::string& name )
+{
+	Tileset* tileset = GetTileset(name);
+
+	//check for empty or existing name
+	if( name.empty() || tileset != 0 )
+		return 0;
+
+	tileset = new Tileset(name);
 	m_tilesets.push_back(tileset);
-	return true;
+
+	return tileset;
 }
 
 
