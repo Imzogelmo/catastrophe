@@ -77,16 +77,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Agn.Catastrophe.Interop.h" />
+    <ClInclude Include="agn.h" />
+    <ClInclude Include="FileConverter.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
+    <ClInclude Include="StringWrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Agn.Catastrophe.Interop.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="FileConverter.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="StringWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.ico" />
