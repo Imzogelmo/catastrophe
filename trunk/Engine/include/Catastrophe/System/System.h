@@ -39,7 +39,7 @@ public:
 	static void SetOpenGLVersion( int major, int minor );
 
 	static Window* CreateWindow(int w = 640, int h = 480, bool fullscreen = false, bool resizable = true,
-		const Color& bits = Color(8,8,8,8), int depth_buffer_bits = 8, int stencil_bits = 0, int multisample_level = 0);
+		int depth_buffer_bits = 8, int stencil_bits = 0, int multisample_level = 0);
 	static Window* GetWindow();
 
 protected:

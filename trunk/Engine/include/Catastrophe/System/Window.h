@@ -38,7 +38,7 @@ public:
 	virtual ~Window() {}
 
 	virtual bool Open(int w = 640, int h = 480, bool fullscreen = false, bool resizable = true,
-		const Color& bits = Color(8,8,8,8), int depth_buffer_bits = 8, int stencil_bits = 0, int multisample_level = 0) = 0;
+		int depth_buffer_bits = 8, int stencil_bits = 0, int multisample_level = 0) = 0;
 
 	virtual void Close() = 0;
 	virtual double GetTime() const = 0;
@@ -73,15 +73,16 @@ public:
 	virtual Rect GetViewport() const { return m_viewport; }
 
 
+	float GetAspectRatio() const;
 	void SetDefaultOpenGLState();
 	void KeepAspectRatio( bool enable = true );
 	void EnableAntiAliasing( bool enable = true );
-	void SetPixelScaleBias( const Colorf& scale = Colorf::White(), const Colorf& bias = Colorf::Black(0.0f) );
 	void ClearColor( const Colorf& color = Colorf::Black() );
 
 	void SetViewport( const Rect& view );
 	void SetOrthographicProjection();
 	void SetOrthographicProjection( float left, float right, float bottom, float top, float zNear = -1.f, float zFar = 1.f );
+	void SetPerspectiveProjection( float fov, float aspect, float up, float zNear, float zFar );
 
 protected:
 	void InternalResize( const Point& windowSize );

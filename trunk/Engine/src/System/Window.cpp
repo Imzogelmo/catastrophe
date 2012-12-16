@@ -44,6 +44,10 @@ Window::Window() :
 {
 }
 
+float Window::GetAspectRatio() const
+{
+	return (float(m_size.x) / float(m_size.y));
+}
 
 void Window::ClearColor( const Colorf& color )
 {
@@ -77,21 +81,7 @@ void Window::SetDefaultOpenGLState()
 	glEnableClientState( GL_VERTEX_ARRAY );
 	glEnableClientState( GL_COLOR_ARRAY );
 
-	SetPixelScaleBias();
 	EnableAntiAliasing( HasAntialiasing() );
-}
-
-
-void Window::SetPixelScaleBias( const Colorf& scale, const Colorf& bias )
-{
-	glPixelTransferf( GL_RED_SCALE, scale.r );
-	glPixelTransferf( GL_RED_BIAS, bias.r );
-	glPixelTransferf( GL_GREEN_SCALE, scale.g );
-	glPixelTransferf( GL_GREEN_BIAS, bias.g );
-	glPixelTransferf( GL_BLUE_SCALE, scale.b );
-	glPixelTransferf( GL_BLUE_BIAS, bias.b );
-	glPixelTransferf( GL_ALPHA_SCALE, scale.a );
-	glPixelTransferf( GL_ALPHA_BIAS, bias.a );
 }
 
 
@@ -154,6 +144,16 @@ void Window::SetOrthographicProjection( float left, float right, float bottom, f
 	Matrix ortho = Matrix::CreateOrthographic( left, right, bottom, top, zNear, zFar );
 	glMatrixMode( GL_PROJECTION );
 	glLoadMatrixf( &ortho[0] );
+	glMatrixMode( GL_MODELVIEW );
+	glLoadIdentity();
+}
+
+
+void Window::SetPerspectiveProjection( float fov, float aspect, float up, float zNear, float zFar )
+{
+	Matrix perspective = Matrix::CreatePerspective( fov, aspect, up, zNear, zFar );
+	glMatrixMode( GL_PROJECTION );
+	glLoadMatrixf( &perspective[0] );
 	glMatrixMode( GL_MODELVIEW );
 	glLoadIdentity();
 }

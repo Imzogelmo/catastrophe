@@ -39,6 +39,50 @@ void LoadConfigSettings( int argc, char *argv[] )
 
 }
 
+
+Window* CreateWindow()
+{
+	ConfigSetting* setting = g_settings.GetConfigFile()->GetSettings();
+
+	bool vsync			= setting[ ConfigSetting::Vsync ].value ? true : false;
+	bool keep_aspect	= setting[ ConfigSetting::KeepAspect ].value ? true : false;
+	bool keep_scale		= setting[ ConfigSetting::KeepScale ].value ? true : false;
+	bool antialias		= setting[ ConfigSetting::Antialiasing ].value ? true : false;
+	bool fullscreen		= setting[ ConfigSetting::Fullscreen ].value ? true : false;
+
+	int resx			= setting[ ConfigSetting::ResX ].value;
+	int resy			= setting[ ConfigSetting::ResY ].value;
+	int multisample		= setting[ ConfigSetting::Multisample ].value;
+	int scale			= setting[ ConfigSetting::Scale ].value;
+
+
+	Window* window = System::CreateWindow(
+		resx,
+		resy,
+		fullscreen,
+		true,		//resizable
+		8,			//depth
+		0,			//stencyl
+		multisample
+	);
+
+	if( !window || !window->IsOpen() )
+	{
+		LogError("Fatal error: Window could not be created.");
+		exit(1);
+	}
+
+	window->SetVSync(vsync);
+	window->KeepAspectRatio(keep_aspect);
+	//window->SetScale(scale); todo
+
+	if( window->HasAntialiasing() != antialias )
+		window->EnableAntiAliasing(antialias);
+
+	return window;
+}
+
+
 //temp includes
 #include "MonsterData.h"
 #include "ItemData.h"
@@ -54,7 +98,7 @@ int main(int argc, char* argv[])
 
 	// initialize system and sub-systems.
 	System::Init();
-	System::InitLogging("debug.log", true);
+	System::InitLogging("debug.log", true); //todo put this after config..
 
 	// read config file and parse command-line arguments.
 	LoadConfigSettings(argc, argv);
@@ -63,38 +107,8 @@ int main(int argc, char* argv[])
 	//if( game.Initialize() != 0 )
 	//	return -1;
 
-	ResourceManager rm;
+	Window* window = CreateWindow();
 
-	Window* window = System::CreateWindow();
-	if( !window || !window->IsOpen() )
-	{
-		LogError("Fatal error: Window could not be created.");
-		exit(1);
-	}
-
-	//ItemList il;
-	bool retval;// = ml.DeserializeXml("test.xml");
-	//foreachi(i, 10)
-	//	il.Add( ItemData() );
-
-	//retval = il.SerializeXml("test.xml");
-
-	MonsterList ml;
-	//retval = ml.DeserializeXml("test.xml");
-	foreachi(i, 10)
-		ml.Add( MonsterData() );
-
-	retval = ml.SerializeXml("test.xml");
-
-	Texture* t = 0;
-	t = rm.LoadTexture("../Engine/Tests/tiles.png");
-	t = rm.LoadTexture("../Engine/Tests/tiles.png");
-	rm.SetBaseDirectory("../Engine/");
-	rm.SetTextureDirectory("Tests/");
-	t = rm.LoadTexture("tiles.png");
-	t = 0;
-
-	rm.DeleteResources();
 
 	// TODO: Need to handle loading +
 	// Splash screen here...

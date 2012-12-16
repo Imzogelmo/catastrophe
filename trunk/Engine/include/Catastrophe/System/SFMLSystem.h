@@ -33,7 +33,7 @@ public:
 
 	//virtual bool CreateWindow(const Point& size = Point(640, 480), bool fullscreen = false, bool resizable = true) = 0;
 	bool CreateWindow(const Point& size = Point(640, 480), bool fullscreen = false, bool resizable = true,
-		const Color& bits = Color(8,8,8,8), int depth_buffer_bits = 8, int stencil_bits = 0);
+		int depth_buffer_bits = 8, int stencil_bits = 0);
 
 	void CloseWindow();
 	double GetTime();
