@@ -72,15 +72,15 @@ int main(int argc, char* argv[])
 		exit(1);
 	}
 
-	ItemList il;
+	//ItemList il;
 	bool retval;// = ml.DeserializeXml("test.xml");
-	foreachi(i, 10)
-		il.Add( ItemData() );
+	//foreachi(i, 10)
+	//	il.Add( ItemData() );
 
-	retval = il.SerializeXml("test.xml");
+	//retval = il.SerializeXml("test.xml");
 
 	MonsterList ml;
-	retval = ml.DeserializeXml("test.xml");
+	//retval = ml.DeserializeXml("test.xml");
 	foreachi(i, 10)
 		ml.Add( MonsterData() );
 

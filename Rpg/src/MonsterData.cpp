@@ -186,15 +186,13 @@ bool MonsterList::DeserializeXml( const fc::string& filename )
 	if( xml.GetCurrentNodeName() == "MonsterList" )
 	{
 		size_t n = xml.GetUInt("count");
-		if( n == 0 )
-			return false;
-
 		m_items.clear();
-		m_items.resize(n);
+		m_items.reserve(n);
 
 		for( size_t i(0); i < n; ++i )
 		{
-			m_items[i].DeserializeXml(&xml);
+			m_items.push_back();
+			m_items.back().DeserializeXml(&xml);
 		}
 	}
 	else

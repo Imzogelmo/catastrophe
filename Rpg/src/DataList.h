@@ -22,6 +22,7 @@ public:
 	DataList() : m_items()
 	{}
 
+	bool Empty() const { return m_items.empty(); }
 	size_t Size() const { return m_items.size(); }
 
 	void Add( const T& object )
@@ -51,12 +52,6 @@ public:
 	{
 		DATALIST_ASSERT(i < m_items.size());
 		return m_items[i];
-	}
-
-	T GetCopy( size_t index ) const
-	{
-		DATALIST_ASSERT(index < m_items.size());
-		return m_items[index];
 	}
 
 protected:
