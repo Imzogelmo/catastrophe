@@ -60,10 +60,10 @@ System* System::GetInstance()
 
 
 Window* System::CreateWindow(int w, int h, bool fullscreen, bool resizable,
-	const Color& bits, int depth_buffer_bits, int stencil_bits, int multisample_level)
+	int depth_buffer_bits, int stencil_bits, int multisample_level)
 {
 	System* s = GetInstance();
-	s->m_window->Open(w, h, fullscreen, resizable, bits, depth_buffer_bits, stencil_bits, multisample_level);
+	s->m_window->Open(w, h, fullscreen, resizable, depth_buffer_bits, stencil_bits, multisample_level);
 	if(s->m_window->IsOpen())
 	{
 		s->InitOpenGL();

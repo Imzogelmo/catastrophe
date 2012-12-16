@@ -18,7 +18,7 @@ public:
 		FrameSkip,
 		ResX,
 		ResY,
-		Windowed,
+		Fullscreen,
 		KeepAspect,
 		KeepScale,
 		Scale,

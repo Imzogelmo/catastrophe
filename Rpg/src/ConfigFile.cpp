@@ -26,7 +26,7 @@ void ConfigFile::InitDefaultValues()
 
 	cfg[ ConfigSetting::ResX			].Set( "resx"			, 640 );
 	cfg[ ConfigSetting::ResY			].Set( "resy"			, 480 );
-	cfg[ ConfigSetting::Windowed		].Set( "windowed"		, 1 );
+	cfg[ ConfigSetting::Fullscreen		].Set( "fullscreen"		, 0 );
 	cfg[ ConfigSetting::KeepAspect		].Set( "keep_aspect"	, 0 );
 	cfg[ ConfigSetting::KeepScale		].Set( "keep_scale"		, 0 );
 	cfg[ ConfigSetting::Scale			].Set( "scale"			, 0 );

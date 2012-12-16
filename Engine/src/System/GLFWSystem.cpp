@@ -120,7 +120,7 @@ void GLFWWindow::SwapBuffers()
 }
 
 bool GLFWWindow::Open(int w, int h, bool fullscreen, bool resizable,
-	const Color& bits, int depth_buffer_bits, int stencil_bits, int multisample_level)
+	int depth_buffer_bits, int stencil_bits, int multisample_level)
 {
 	if( IsOpen() )
 		Close();
@@ -133,7 +133,7 @@ bool GLFWWindow::Open(int w, int h, bool fullscreen, bool resizable,
 	glfwOpenWindowHint( GLFW_FSAA_SAMPLES, multisample_level );
 
 	int mode = fullscreen ? GLFW_FULLSCREEN : GLFW_WINDOW;
-	m_isOpen = glfwOpenWindow(w, h, (int)bits.r, (int)bits.g, (int)bits.b, (int)bits.a, depth_buffer_bits, stencil_bits, mode) != 0;
+	m_isOpen = glfwOpenWindow(w, h, 8, 8, 8, 8, depth_buffer_bits, stencil_bits, mode) != 0;
 	if(!m_isOpen)
 	{
 		return false;
