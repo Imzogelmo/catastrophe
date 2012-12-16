@@ -11,7 +11,16 @@
 
 //It's safe to use this globally withouth causing pollution.
 USING_NAMESPACE_CE
+
+
 #define ASSERT CE_ASSERT
+
+#if defined (CE_DEBUG) && !defined (NDEBUG)
+	#define TRACE(cond, message) { if(cond) { Log(message); } }
+#else
+	#define TRACE(cond, message)
+#endif
+#define Trace TRACE
 
 
 // forward declarations
@@ -31,6 +40,7 @@ class EncounterGroupData;
 
 class ItemList;
 class MonsterList;
+class MonsterPartyList;
 class EncounterGroupList;
 class Database;
 

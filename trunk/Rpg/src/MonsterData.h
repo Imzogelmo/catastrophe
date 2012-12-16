@@ -37,64 +37,8 @@ struct MonsterData
 };
 
 
-
-struct MonsterGroupData
-{
-	int		monster_index;
-	int		min;
-	int		max;
-
-	MonsterGroupData(int monsterIndex = 0, int minNum = 1, int maxNum = 1) :
-		monster_index(monsterIndex),
-		min(minNum),
-		max(maxNum)
-	{}
-
-	//simply to ensure data is sane before saving.
-	void Validate();
-
-	void SerializeXml(XmlWriter* xml);
-	void DeserializeXml(XmlReader* xml);
-
-};
-
-
-
-/**
- * A Monster Party is simply a collection of Monster Groups
- * together which form a complete party.
- */
-class MonsterPartyData
-{
-public:
-	typedef fc::vector<MonsterGroupData> vec_type;
-
-	MonsterPartyData();
-
-	bool Empty() const { return m_groups.empty(); }
-	size_t NumGroups() const { return m_groups.size(); }
-
-	void AddGroup( const MonsterGroupData& group );
-	void RemoveGroup(size_t index);
-
-	MonsterGroupData& GetGroup(size_t index);
-	const MonsterGroupData& GetGroup(size_t index) const;
-
-	//direct access is useful for editor functions
-	vec_type& GetGroups() { return m_groups; }
-	const vec_type& GetGroups() const { return m_groups; }
-	
-	void SerializeXml(XmlWriter* xml);
-	void DeserializeXml(XmlReader* xml);
-
-protected:
-	vec_type	m_groups;
-};
-
-
-
-/**
- * A collection of all stored MonsterData objects.
+/*
+ * A collection of stored MonsterData objects.
  */
 class MonsterList : public DataList<MonsterData>
 {

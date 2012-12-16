@@ -200,6 +200,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\MonsterPartyData.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\ResourceManager.cpp"
 				>
 			</File>
@@ -391,6 +395,10 @@
 			</File>
 			<File
 				RelativePath=".\src\ItemDrop.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\MonsterPartyData.h"
 				>
 			</File>
 			<File
