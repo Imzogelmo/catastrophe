@@ -5,6 +5,10 @@
 
 
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//               EncounterData
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 void EncounterData::SerializeXml( XmlWriter* xml )
 {
 	xml->BeginNode("Encounter");
@@ -27,7 +31,12 @@ void EncounterData::DeserializeXml( XmlReader* xml )
 
 
 
-EncounterGroupData::EncounterGroupData() :
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//             EncounterGroupData
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+EncounterGroupData::EncounterGroupData( const fc::string& name ) :
+	m_name(name),
 	m_encounters()
 {
 }
@@ -62,8 +71,9 @@ const EncounterData& EncounterGroupData::GetEncounter( size_t index ) const
 
 void EncounterGroupData::SerializeXml( XmlWriter* xml )
 {
-	xml->BeginNode("EncounterGroup");
+	xml->BeginNode("Region");
 	xml->SetString("name", m_name.c_str());
+	xml->SetUInt("num_encounters", m_encounters.size());
 
 	for( vec_type::iterator it = m_encounters.begin(); it != m_encounters.end(); ++it )
 	{
@@ -76,11 +86,85 @@ void EncounterGroupData::SerializeXml( XmlWriter* xml )
 
 void EncounterGroupData::DeserializeXml( XmlReader* xml )
 {
-	//size_t numGroups = xml->GetUInt("num_groups");
-	//m_encounters.resize(numGroups);
+	size_t n = xml->GetUInt("num_encounters");
+	m_encounters.clear();
+	m_encounters.reserve(n);
 
-	for( vec_type::iterator it = m_encounters.begin(); it < m_encounters.end(); ++it )
+	while( xml->NextChild("Encounter") )
 	{
-		//it->DeserializeXml(xml);
+		m_encounters.push_back();
+		m_encounters.back().DeserializeXml(xml);
+	}
+
+	if( m_encounters.size() != n )
+	{
+		LogWarning("Region: num_encounters does not match.");
 	}
 }
+
+
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//             EncounterGroupList
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+bool EncounterGroupList::SerializeXml( const fc::string& filename )
+{
+	XmlWriter xml(filename);
+	if( !xml.IsOpen() )
+	{
+		Log("Could not open file (%s)", filename.c_str());
+		return false;
+	}
+
+	xml.BeginNode("MonsterEncounters");
+	xml.SetString("ver", "1.0");
+	xml.SetUInt("count", m_items.size());
+
+	for( size_t i(0); i < m_items.size(); ++i )
+	{
+		m_items[i].SerializeXml(&xml);
+	}
+
+	xml.EndNode();
+	xml.Close();
+
+	return true;
+}
+
+
+bool EncounterGroupList::DeserializeXml( const fc::string& filename )
+{
+	XmlReader xml(filename);
+	if( !xml.IsOpen() )
+	{
+		Log("Could not open file (%s)", filename.c_str());
+		return false;
+	}
+
+	if( xml.GetCurrentNodeName() == "MonsterEncounters" )
+	{
+		size_t n = xml.GetUInt("count");
+		m_items.clear();
+		m_items.reserve(n);
+
+		while( xml.NextChild("Region") )
+		{
+			m_items.push_back();
+			m_items.back().DeserializeXml(&xml);
+		}
+	}
+	else
+	{
+		Log("Error parsing (%s). Root item not found", filename.c_str());
+		return false;
+	}
+
+	xml.Close();
+
+	return true;
+}
+
+
+

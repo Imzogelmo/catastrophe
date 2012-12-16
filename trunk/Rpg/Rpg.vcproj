@@ -180,14 +180,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\Database.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\EncounterData.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\Equipment.cpp"
 				>
 			</File>
@@ -204,15 +196,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\ItemData.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\ItemDrop.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\MonsterData.cpp"
 				>
 			</File>
 			<File
@@ -343,6 +327,26 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Database"
+				>
+				<File
+					RelativePath=".\src\Database.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\EncounterData.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\ItemData.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\MonsterData.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -366,18 +370,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\Database.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\DataList.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\EncounterData.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\Equipment.h"
 				>
 			</File>
@@ -398,15 +390,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\ItemData.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\ItemDrop.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\MonsterData.h"
 				>
 			</File>
 			<File
@@ -522,6 +506,30 @@
 				</File>
 				<File
 					RelativePath=".\src\Tile\TilesetManager.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Database"
+				>
+				<File
+					RelativePath=".\src\Database.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\DataList.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\EncounterData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\ItemData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\MonsterData.h"
 					>
 				</File>
 			</Filter>
