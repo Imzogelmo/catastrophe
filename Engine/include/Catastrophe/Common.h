@@ -71,6 +71,7 @@ typedef long long			int64;
 
 
 #define Log			__Internal_Log_Write
+#define LogInfo		__Internal_Log_Write
 #define LogError	__Internal_Log_Write
 #define LogWarning	__Internal_Log_Write
 

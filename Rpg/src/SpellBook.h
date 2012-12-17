@@ -11,12 +11,32 @@
 
 #pragma once
 
-#include "Tile.h"
+#include <fc/vector.h>
 
 
-struct TileProperties
+class Spell
 {
-	int flags;
-	//int user_flags;
+};
+
+
+class SpellBook
+{
+public:
+	typedef fc::vector<Spell*>		vec_type;
+
+
+	bool HasLearned()
+	{
+	}
+
+	void Learn()
+	{
+	}
+
+
+protected:
+	vec_type	m_spells;
 
 };
+
+

@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "../Common.h"
+#include "Common.h"
 #include "Preprocessor.h"
 
 #include <mcpp.h>
