@@ -235,6 +235,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Script\ScriptGarbage.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Script\ScriptObject.cpp"
 					>
 				</File>
@@ -390,6 +394,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\Entity.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Equipment.h"
 				>
 			</File>
@@ -437,11 +445,19 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Script\Common.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Script\ContextPool.h"
 					>
 				</File>
 				<File
 					RelativePath=".\src\Script\ScriptEngine.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Script\ScriptGarbage.h"
 					>
 				</File>
 				<File

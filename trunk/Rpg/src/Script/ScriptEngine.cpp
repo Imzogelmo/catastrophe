@@ -26,6 +26,12 @@ ScriptEngine::~ScriptEngine()
 }
 
 
+void ScriptEngine::Update()
+{
+	m_gc.Update();
+}
+
+
 void ScriptEngine::Initialize()
 {
 	ASSERT(m_gamePtr != 0);
@@ -35,6 +41,8 @@ void ScriptEngine::Initialize()
 		m_engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
 
 	ASSERT(m_engine);
+
+	m_gc.SetEngine(m_engine);
 	m_engine->SetUserData(this);
 	m_engine->SetMessageCallback( asFUNCTION(MessageCallback), 0, asCALL_CDECL );
 	SetDefaultEngineProperties();
