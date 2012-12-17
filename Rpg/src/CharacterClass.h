@@ -5,20 +5,19 @@
 
 #include "Common.h"
 #include "AttributeData.h"
-#include "ItemDrop.h"
 #include "DataList.h"
 
 
 
-struct MonsterData : public AttributeData
+struct CharacterClass : public AttributeData
 {
 	typedef AttributeData	base_type;
 
 	//int sprite_index;
 	//Sprite			sprite;
-	ItemDropSet		item_dropset;
+	//SpellBook			spells;
 
-	MonsterData() : base_type()
+	CharacterClass() : base_type()
 	{}
 
 	void SerializeXml( XmlWriter* xml );
@@ -30,20 +29,19 @@ struct MonsterData : public AttributeData
 /*
  * A collection of stored MonsterData objects.
  */
-class MonsterList : public DataList<MonsterData>
+class CharacterClassList : public DataList<CharacterClass>
 {
 public:
-	typedef DataList<MonsterData>	base_type;
+	typedef DataList<CharacterClass>	base_type;
 
-	MonsterList() : base_type()
+	CharacterClassList() : base_type()
 	{}
 
-	MonsterData& GetMonster( size_t index ) { return base_type::operator [](index);  }
-	const MonsterData& GetMonster( size_t index ) const { return base_type::operator [](index);  }
+	CharacterClass& GetCharacterClass( size_t index ) { return base_type::operator [](index);  }
+	const CharacterClass& GetCharacterClass( size_t index ) const { return base_type::operator [](index);  }
 
 	bool SerializeXml( const fc::string& filename );
 	bool DeserializeXml( const fc::string& filename );
 
 };
-
 

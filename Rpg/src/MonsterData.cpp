@@ -13,12 +13,7 @@ void MonsterData::SerializeXml( XmlWriter* xml )
 {
 	xml->BeginNode("Monster");
 
-	xml->SetString("name", name.c_str());
-	xml->SetString("script", script.c_str());
-	xml->SetString("description", description.c_str());
-
-	attributes.SerializeXml(xml);
-	attribute_flags.SerializeXml(xml);
+	base_type::SerializeXml(xml);
 	item_dropset.SerializeXml(xml);
 
 	xml->EndNode();
@@ -27,18 +22,7 @@ void MonsterData::SerializeXml( XmlWriter* xml )
 
 void MonsterData::DeserializeXml( XmlReader* xml )
 {
-	if( !xml->NextChild("Monster") )
-	{
-		Log("----debug error---- MonsterData::DeserializeXml()");
-		return;
-	}
-
-	name = xml->GetString("name");
-	script = xml->GetString("script");
-	description = xml->GetString("description");
-
-	attributes.DeserializeXml(xml);
-	attribute_flags.DeserializeXml(xml);
+	base_type::DeserializeXml(xml);
 	item_dropset.DeserializeXml(xml);
 }
 
