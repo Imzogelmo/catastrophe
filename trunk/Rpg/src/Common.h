@@ -13,7 +13,9 @@
 USING_NAMESPACE_CE
 
 
-#define ASSERT CE_ASSERT
+#define FORCE_INLINE	FC_FORCE_INLINE
+#define NO_INLINE		FC_NO_INLINE
+#define ASSERT			CE_ASSERT
 
 #if defined (CE_DEBUG) && !defined (NDEBUG)
 	#define TRACE(cond, message) { if(cond) { Log(message); } }
@@ -30,18 +32,25 @@ class TilesetManager;
 class Map;
 class MapLayer;
 
+struct AttributeData;
 struct ItemData;
+struct SpellData;
 struct MonsterData;
 struct MonsterGroupData;
 struct EncounterData;
+struct CharacterClass;
+struct MonsterGroupData;
 
 class MonsterPartyData;
 class EncounterGroupData;
 
 class ItemList;
+class SpellList;
 class MonsterList;
 class MonsterPartyList;
 class EncounterGroupList;
+class EncounterGroupList;
+class CharacterClassList;
 class Database;
 
 

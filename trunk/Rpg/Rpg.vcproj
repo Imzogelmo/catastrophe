@@ -200,10 +200,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\MonsterPartyData.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\ResourceManager.cpp"
 				>
 			</File>
@@ -217,6 +213,10 @@
 			</File>
 			<File
 				RelativePath=".\src\ScreenManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\SpellBook.cpp"
 				>
 			</File>
 			<Filter
@@ -335,6 +335,14 @@
 				Name="Database"
 				>
 				<File
+					RelativePath=".\src\AttributeData.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\CharacterClass.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Database.cpp"
 					>
 				</File>
@@ -348,6 +356,14 @@
 				</File>
 				<File
 					RelativePath=".\src\MonsterData.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\MonsterPartyData.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\SpellData.cpp"
 					>
 				</File>
 			</Filter>
@@ -398,10 +414,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\MonsterPartyData.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\ResourceManager.h"
 				>
 			</File>
@@ -411,6 +423,10 @@
 			</File>
 			<File
 				RelativePath=".\src\ScreenManager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\SpellBook.h"
 				>
 			</File>
 			<Filter
@@ -521,6 +537,14 @@
 				Name="Database"
 				>
 				<File
+					RelativePath=".\src\AttributeData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\CharacterClass.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Database.h"
 					>
 				</File>
@@ -538,6 +562,14 @@
 				</File>
 				<File
 					RelativePath=".\src\MonsterData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\MonsterPartyData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\SpellData.h"
 					>
 				</File>
 			</Filter>

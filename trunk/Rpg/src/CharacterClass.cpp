@@ -1,39 +1,35 @@
 
-#pragma once
 
 #include <Catastrophe/FileIO.h>
-#include "ItemData.h"
+#include "CharacterClass.h"
 
 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//               ItemData
+//             CharacterClass
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-void ItemData::SerializeXml( XmlWriter* xml )
+void CharacterClass::SerializeXml( XmlWriter* xml )
 {
-	xml->BeginNode("Item");
-
+	xml->BeginNode("Character");
 	base_type::SerializeXml(xml);
-	//item usage...
-
 	xml->EndNode();
 }
 
 
-void ItemData::DeserializeXml( XmlReader* xml )
+void CharacterClass::DeserializeXml( XmlReader* xml )
 {
 	base_type::DeserializeXml(xml);
-	//item usage...
 }
 
 
 
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//               ItemList
+//             CharacterClassList
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-bool ItemList::SerializeXml( const fc::string& filename )
+bool CharacterClassList::SerializeXml( const fc::string& filename )
 {
 	XmlWriter xml(filename);
 	if( !xml.IsOpen() )
@@ -42,7 +38,7 @@ bool ItemList::SerializeXml( const fc::string& filename )
 		return false;
 	}
 
-	xml.BeginNode("ItemList");
+	xml.BeginNode("CharacterList");
 	xml.SetString("ver", "1.0");
 	xml.SetUInt("count", m_items.size());
 
@@ -58,7 +54,7 @@ bool ItemList::SerializeXml( const fc::string& filename )
 }
 
 
-bool ItemList::DeserializeXml( const fc::string& filename )
+bool CharacterClassList::DeserializeXml( const fc::string& filename )
 {
 	XmlReader xml(filename);
 	if( !xml.IsOpen() )
@@ -67,18 +63,16 @@ bool ItemList::DeserializeXml( const fc::string& filename )
 		return false;
 	}
 
-	if( xml.GetCurrentNodeName() == "ItemList" )
+	if( xml.GetCurrentNodeName() == "CharacterList" )
 	{
 		size_t n = xml.GetUInt("count");
-		if( n == 0 )
-			return false;
-
 		m_items.clear();
-		m_items.resize(n);
+		m_items.reserve(n);
 
-		for( size_t i(0); i < n; ++i )
+		while( xml.NextChild("Character") )
 		{
-			m_items[i].DeserializeXml(&xml);
+			m_items.push_back();
+			m_items.back().DeserializeXml(&xml);
 		}
 	}
 	else
@@ -91,3 +85,4 @@ bool ItemList::DeserializeXml( const fc::string& filename )
 
 	return true;
 }
+
