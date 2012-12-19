@@ -19,6 +19,8 @@
 #include "ScreenManager.h"
 
 #include "Script/ScriptEngine.h"
+#include "Entity.h"
+#include "Object.h"
 
 /*
  * Game specific settings class.
