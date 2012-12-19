@@ -11,8 +11,6 @@
 
 #pragma once
 
-#include <fc/vector.h>
-
 #include "Common.h"
 #include "AttributeData.h"
 #include "ItemDrop.h"
