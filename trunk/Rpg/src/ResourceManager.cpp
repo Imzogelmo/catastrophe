@@ -1,6 +1,102 @@
 
+#include <Catastrophe/Graphics/Texture.h>
+#include <Catastrophe/Graphics/Font.h>
 #include "ResourceManager.h"
 
+
+ResourceCache::ResourceCache()
+{
+	m_resources.reserve(256);
+}
+
+
+void ResourceCache::SetDirectory( const fc::string& directory )
+{
+	ASSERT(m_resources.empty());
+	m_directory = directory;
+}
+
+
+template <class T>
+void ResourceCache::DeleteResources()
+{
+	for( vec_type::iterator it = m_resources.begin(); it != m_resources.end(); ++it )
+	{
+		DeleteResource<T>(it);
+	}
+
+	m_resources.clear();
+	m_free_store.clear();
+}
+
+
+template <class T>
+void ResourceCache::DeleteResource( Resource* resource )
+{
+	if( resource && m_resources.iterator_is_valid(resource) )
+	{
+		//dont delete previously deleted resources.
+		if( resource->ptr )
+		{
+			((T*)resource->ptr)->Dispose();
+			delete resource->ptr;
+			*resource = Resource();
+			m_free_store.push_back( size_t(resource - m_resources.begin()) );
+		}
+	}
+}
+
+
+Resource* ResourceCache::GetResource( const fc::string& name )
+{
+	if( name.empty() )
+		return 0;
+
+	Resource* res = 0;
+	for( vec_type::iterator it = m_resources.begin(); it != m_resources.end(); ++it )
+	{
+		if( it->name == name )
+		{
+			res = &(*it);
+			break;
+		}
+	}
+
+	return res;
+}
+
+
+Resource* ResourceCache::GetResource( const void* ptr )
+{
+	if(!ptr)
+		return 0;
+
+	Resource* res = 0;
+	for( vec_type::iterator it = m_resources.begin(); it != m_resources.end(); ++it )
+	{
+		if( it->ptr == ptr )
+		{
+			res = &(*it);
+			break;
+		}
+	}
+
+	return res;
+}
+
+
+void ResourceCache::AddResource( const Resource& resource )
+{
+	if( !m_free_store.empty() )
+	{
+		m_resources[ m_free_store.back() ] = resource;
+		m_free_store.pop_back();
+	}
+	else
+	{
+		m_resources.push_back(resource);
+	}
+}
 
 
 ResourceManager::ResourceManager()
@@ -16,71 +112,36 @@ ResourceManager::~ResourceManager()
 
 void ResourceManager::SetBaseDirectory( const fc::string& directory )
 {
+	//ASSERT(m_textures.empty() && m_fonts.empty());
 	m_baseDirectory = directory;
-	//m_resourceDirectory = GetNativePath(resourceDirectoryBase);
-	//if( !m_directory.empty() && (m_directory.back() != '/' || m_directory.back() != '\\' )
-	{
-		//todo: native paths.
-	//	m_baseDirectory.push_back('/');
-	}
-}
-
-
-void ResourceManager::SetTextureDirectory( const fc::string& directory )
-{
-	m_textureDirectory = directory;
-}
-
-
-void ResourceManager::SetFontDirectory( const fc::string& directory )
-{
-	m_fontDirectory = directory;
 }
 
 
 void ResourceManager::DeleteResources()
 {
 	//releases all gpu data and deletes all resources.
-	DeleteTextures();
-	DeleteFonts();
+	m_textureCache.DeleteResources<Texture>();
+	m_fontCache.DeleteResources<Font>();
 
-}
-
-
-void ResourceManager::DeleteTextures()
-{
-	for( texture_vec_type::iterator it = m_textures.begin(); it != m_textures.end(); ++it )
-	{
-		((Texture*)it->ptr)->Dispose();
-		delete it->ptr;
-	}
-
-	m_textures.clear();
-}
-
-
-void ResourceManager::DeleteFonts()
-{
-	for( font_vec_type::iterator it = m_fonts.begin(); it != m_fonts.end(); ++it )
-	{
-		((Font*)it->ptr)->Dispose();
-		delete it->ptr;
-	}
-
-	m_fonts.clear();
 }
 
 
 Texture* ResourceManager::LoadTexture( const fc::string& filename )
 {
-	Texture* texture = GetTexture(filename);
-	if( !texture )
+	Resource* resource = m_textureCache.GetResource(filename);
+	Texture* texture = 0;
+	if( resource != 0 )
+	{
+		resource->AddRef();
+		texture = (Texture*)resource->ptr;
+	}
+	else
 	{
 		texture = new Texture();
 
 		fc::string fn;
-		fn.reserve(m_baseDirectory.size() + m_textureDirectory.size() + filename.size() + 1);
-		fn.append(m_baseDirectory).append(m_textureDirectory).append(filename);
+		fn.reserve(m_baseDirectory.size() + GetTextureDirectory().size() + filename.size() + 1);
+		fn.append(m_baseDirectory).append(GetTextureDirectory()).append(filename);
 
 		if( !texture->LoadFromFile(fn) )
 		{
@@ -90,7 +151,7 @@ Texture* ResourceManager::LoadTexture( const fc::string& filename )
 		}
 		else
 		{
-			m_textures.push_back(Resource(texture, filename));
+			m_textureCache.AddResource( Resource(texture, filename) );
 		}
 	}
 
@@ -101,14 +162,20 @@ Texture* ResourceManager::LoadTexture( const fc::string& filename )
 Font* ResourceManager::LoadFont( const fc::string& filename, int faceSize )
 {
 	//Fixme: You can load the same font multiple times with different face sizes...
-	Font* font = GetFont(filename);
-	if( !font )
+	Resource* resource = m_fontCache.GetResource(filename);
+	Font* font = 0;
+	if( resource != 0 )
+	{
+		resource->AddRef();
+		font = (Font*)resource->ptr;
+	}
+	else
 	{
 		font = new Font();
 
 		fc::string fn;
-		fn.reserve(m_baseDirectory.size() + m_fontDirectory.size() + filename.size() + 1);
-		fn.append(m_baseDirectory).append(m_fontDirectory).append(filename);
+		fn.reserve(m_baseDirectory.size() + GetFontDirectory().size() + filename.size() + 1);
+		fn.append(m_baseDirectory).append(GetFontDirectory()).append(filename);
 
 		if( !font->LoadFromFile(fn, faceSize) )
 		{
@@ -118,7 +185,7 @@ Font* ResourceManager::LoadFont( const fc::string& filename, int faceSize )
 		}
 		else
 		{
-			m_fonts.push_back(Resource(font, filename));
+			m_fontCache.AddResource( Resource(font, filename) );
 		}
 	}
 
@@ -126,36 +193,31 @@ Font* ResourceManager::LoadFont( const fc::string& filename, int faceSize )
 }
 
 
-
-Texture* ResourceManager::GetTexture( const fc::string& filename )
+void ResourceManager::UnloadTexture( const fc::string& filename )
 {
-	Texture* texture = 0;
-	for( texture_vec_type::iterator it = m_textures.begin(); it != m_textures.end(); ++it )
+	Resource* resource = m_textureCache.GetResource(filename);
+	if( resource )
 	{
-		if( it->name == filename )
+		resource->ReleaseRef();
+		if( resource->GetRefCount() == 0 )
 		{
-			texture = (Texture*)it->ptr;
-			break;
+			m_textureCache.DeleteResource<Texture>(resource);
 		}
 	}
-
-	return texture;
 }
 
 
-Font* ResourceManager::GetFont( const fc::string& filename )
+void ResourceManager::UnloadFont( const fc::string& filename )
 {
-	Font* font = 0;
-	for( font_vec_type::iterator it = m_fonts.begin(); it != m_fonts.end(); ++it )
+	Resource* resource = m_fontCache.GetResource(filename);
+	if( resource )
 	{
-		if( it->name == filename )
+		resource->ReleaseRef();
+		if( resource->GetRefCount() == 0 )
 		{
-			font = (Font*)it->ptr;
-			break;
+			m_fontCache.DeleteResource<Font>(resource);
 		}
 	}
-
-	return font;
 }
 
 
