@@ -9,6 +9,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
+#include <Catastrophe/IO/XmlWriter.h>
+#include <Catastrophe/IO/XmlReader.h>
 #include "Map.h"
 
 
@@ -54,23 +56,25 @@ void Map::Clear()
 
 void Map::Resize( size_t w, size_t h, size_t numLayers )
 {
+	m_width = w;
+	m_height = h;
+
 	if( numLayers = size_t(-1) )
+	{
 		numLayers = m_layers.size();
+	}
 
 	if( numLayers < m_layers.size() )
 	{
 		for( size_t i(numLayers); i < m_layers.size(); ++i )
 			RemoveLayer(i);
 	}
-
 	else if( numLayers > m_layers.size() )
 	{
 		for( size_t i(m_layers.size()); i < numLayers; ++i )
 			AddLayer();
 	}
 
-	m_width = w;
-	m_height = h;
 	for( vec_type::iterator it = m_layers.begin(); it != m_layers.end(); ++it )
 	{
 		(*it)->Resize(w, h);
@@ -99,7 +103,6 @@ bool Map::AddLayer( MapLayer* layer )
 			if( layer == *it )
 			{
 				layer = new MapLayer(*(*it));
-				//*layer = *(*it);
 				break;
 			}
 		}
@@ -140,6 +143,75 @@ void Map::SwapLayer( size_t first, size_t second )
 		return;
 
 	fc::swap( m_layers[first], m_layers[second] );
+}
+
+
+bool Map::SerializeXml( const fc::string& filename )
+{
+	XmlWriter xml(filename);
+	if( !xml.IsOpen() )
+	{
+		Log("Could not open file (%s)", filename.c_str());
+		return false;
+	}
+
+	xml.BeginNode("Map");
+	xml.SetString("name", m_name.c_str());
+	xml.SetUInt("num_layers", m_layers.size());
+	xml.SetUInt("width", m_width);
+	xml.SetUInt("height", m_height);
+
+	for( size_t i(0); i < m_layers.size(); ++i )
+	{
+		xml.BeginNode("Layer");
+		m_layers[i]->SerializeXml(&xml);
+		xml.EndNode();
+	}
+
+	xml.EndNode();
+	xml.Close();
+
+	return true;
+}
+
+
+bool Map::DeserializeXml( const fc::string& filename )
+{
+	XmlReader xml(filename);
+	if( !xml.IsOpen() )
+	{
+		Log("Could not open file (%s)", filename.c_str());
+		return false;
+	}
+
+	if( xml.GetCurrentNodeName() == "Map" )
+	{
+		m_name = xml.GetString("name");
+		size_t n = xml.GetUInt("num_layers");
+		m_width = xml.GetUInt("width");
+		m_height = xml.GetUInt("height");
+
+		DeleteLayers();
+		m_layers.reserve( fc::clamp<size_t>(n, 0, MaxLayers) );
+
+		while( xml.NextChild("Layer") )
+		{
+			if( AddLayer() )
+			{
+				//only deserialize if the layer was added.
+				m_layers.back()->DeserializeXml(&xml);
+			}
+		}
+	}
+	else
+	{
+		Log("Error parsing (%s). Root item not found", filename.c_str());
+		return false;
+	}
+
+	xml.Close();
+
+	return true;
 }
 
 

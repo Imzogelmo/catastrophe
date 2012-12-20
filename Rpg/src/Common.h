@@ -74,6 +74,10 @@ class ScreenManager;
 class Game;
 
 
+class Resource;
+class ResourceCache;
+class ResourceManager;
+
 
 //utility macros (normally only for testing)
 #define foreachv(vec_type, it, container) \

@@ -53,6 +53,8 @@ public:
 	const fc::string& GetName() const { return m_name; }
 
 	//void Render( SpriteBatch* spriteBatch, Rect viewRect, size_t tileSize );
+	bool SerializeXml( const fc::string& filename );
+	bool DeserializeXml( const fc::string& filename );
 
 public:
 	fc::string		m_name;

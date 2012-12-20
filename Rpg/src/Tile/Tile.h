@@ -24,25 +24,24 @@ public:
 		FlipVertical	= 2
 	};
 
-	Tileset* parent;
-	size_t id;
-	int	flags;
-
-	Tile( Tileset* parent = 0 ) :
-		flags(0), m_id(0),
-		m_parent(parent)
-	{
-	}
-
-	void SetTileset( Tileset* parent ) { m_parent = parent; }
-	void SetIndex(size_t index) { m_id = index; }
-
-	Tileset* GetTileset() const { return m_parent; }
-	size_t GetIndex() { return m_id; }
-
-protected:
 	Tileset*	parent;
 	size_t		id;
+	int			flags;
+
+	Tile( Tileset* parent = 0, size_t id = 0, int flags = 0 ) :
+		parent(parent), id(id), flags(flags)
+	{}
+
+	void SetTileset( Tileset* tilset ) { parent = tilset; }
+	void SetIndex(size_t index) { id = index; }
+	void SetFlags(size_t index) { id = index; }
+
+	Tileset* GetTileset() const { return parent; }
+	size_t GetIndex() { return id; }
+	int GetFlags() { return flags; }
+
+	void SerializeXml( XmlWriter* xml );
+	void DeserializeXml( XmlReader* xml );
 
 };
 

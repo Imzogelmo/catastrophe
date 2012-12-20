@@ -89,7 +89,10 @@ const Animation* AnimationSet::GetCurrentAnimation() const
 
 void AnimationSet::AddAnimation( Animation* anim )
 {
-	m_animations.push_back(anim);
+	if( anim != 0 )
+	{
+		m_animations.push_back(anim);
+	}
 }
 
 

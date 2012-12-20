@@ -9,7 +9,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include <Catastrophe/FileIO.h>
+#include <Catastrophe/IO/XmlWriter.h>
+#include <Catastrophe/IO/XmlReader.h>
 #include "EncounterData.h"
 
 

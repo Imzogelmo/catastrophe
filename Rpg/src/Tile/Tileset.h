@@ -13,6 +13,8 @@
 
 #include <fc/dynamic_array2d.h>
 #include <fc/vector.h>
+
+#include "../Common.h"
 #include "Tile.h"
 
 
@@ -20,7 +22,7 @@ class Tileset
 {
 public:
 	typedef fc::dynamic_array2d<Tile>	array_type;
-	typedef fc::vector<Tile*>		anim_vec_type;
+	typedef fc::vector<Tile*>			anim_vec_type;
 
 	Tileset( const fc::string& name );
 	~Tileset();
@@ -33,6 +35,7 @@ public:
 	void Resize( size_t w, size_t h );
 
 	void SetName( const fc::string& name ) { m_name = name; }
+	void SetId( int id ) { m_id = id; }
 	void SetTexture( Texture* texture ) { m_texture = texture; }
 
 	size_t Size() const { return m_tiles.size(); }
@@ -41,12 +44,17 @@ public:
 
 	Texture* GetTexture() const { return m_texture; }
 	const fc::string& GetName() const { return m_name; }
+	int GetId() const { return m_id; }
 
 	Tile* GetTile( size_t index );
 	Tile* GetTile( size_t x, size_t y );
 
+	bool SerializeXml( const fc::string& filename );
+	bool DeserializeXml( const fc::string& filename );
+
 private:
 	fc::string		m_name;
+	int				m_id;
 	array_type		m_tiles;
 	anim_vec_type	m_ptr_animated_tiles;
 	Texture*		m_texture;

@@ -47,13 +47,14 @@ public:
 	void Update();
 	void Render();
 
+	void SerializeXml( XmlWriter* xml );
+	void DeserializeXml( XmlReader* xml );
+
 protected:
 	Map*		m_parent;
 	array_type	m_tiles;
 	BlendMode	m_blendmode;
-	//float		m_opacity; //why stop at opacity only?
 	Color		m_color;
-	//ubyte		m_opacityBytes;
 	//Point		m_offset;
 	bool		m_visible;
 	//bool		m_parallax;
