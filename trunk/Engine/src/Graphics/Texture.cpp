@@ -17,6 +17,7 @@
 // THE SOFTWARE.
 
 #include <fc/string.h>
+#include <fc/math.h>
 
 #include "Math/Rect.h"
 
@@ -168,31 +169,37 @@ Vector2 Texture::GetUV( int x, int y ) const
 }
 
 
-Rectf Texture::GetUVRect( const Rect& r ) const
+Rectf Texture::GetUVRect( const Rect& sourceRect ) const
 {
 	CE_ASSERT(m_width > 0 && m_height > 0);
 	const float w = (float)m_width;
 	const float h = (float)m_height;
 
 	return Rectf(
-			r.pos.x / w,
-			r.pos.y / h,
-			r.Right() / w,
-			r.Bottom() / h
-		);
+		(float)sourceRect.Left() / w,
+		(float)sourceRect.Top() / h,
+		(float)sourceRect.Right() / w,
+		(float)sourceRect.Bottom() / h
+	);
 }
 
 
-void Texture::GetUVRect( const Rect& r, float* uv ) const
+Rect Texture::GetSourceRect( const Rectf& uv ) const
 {
-	CE_ASSERT(m_width > 0 && m_height > 0);
 	const float w = (float)m_width;
 	const float h = (float)m_height;
 
-	uv[0] = uv[2] = r.Left() / w;
-	uv[1] = uv[7] = r.Top() / h;
-	uv[4] = uv[6] = r.Right() / w;
-	uv[3] = uv[5] = r.Bottom() / h;
+	int min_x = fc::iround(w * uv.Left());
+	int min_y = fc::iround(h * uv.Top());
+	int max_x = fc::iround(w * uv.Right());
+	int max_y = fc::iround(h * uv.Bottom());
+
+	return Rect(
+		min_x,
+		min_y,
+		max_x - min_x,
+		max_y - min_y
+	);
 }
 
 

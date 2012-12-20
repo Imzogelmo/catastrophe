@@ -26,7 +26,7 @@ Tileset::~Tileset()
 }
 
 
-void Tileset::Dispose()
+void Tileset::Clear()
 {
 	m_tiles.resize(0, 0);
 	m_ptr_animated_tiles.clear();

@@ -49,22 +49,18 @@ public:
 	bool IsVisible() const { return m_visible; }
 	bool IsPopup() const { return m_popup; }
 	bool IsBlocking() const { return m_blocking; }
-	bool IsHidden() const { return m_hidden; }
 	bool IsTop();
 
 	ScreenManager* GetScreenManager() const { return m_screenManager; }
 
 protected:
-	friend class ScreenManager;
-	void SetHidden( bool enable = true );
-
 	ScreenManager*	m_screenManager;
 	//ScreenState		m_state;
-	bool			m_active;
-	bool			m_visible;
+
+	bool			m_active;	//is this screen being updated?
+	bool			m_visible;	//is this screen being rendered?
 	bool			m_popup;	//is this rendered on top of other screens?
 	bool			m_blocking; //is this blocking update logic to underneath screens?
-	bool			m_hidden; //manager will notify state if hidden from view.
 
 };
 

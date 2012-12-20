@@ -22,7 +22,7 @@
 /**
  * class that can be indexed by another class
  */
-template<class T = unsigned int>
+template <class T = unsigned int>
 class Indexable
 {
 public:

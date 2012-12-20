@@ -41,7 +41,7 @@ Screen* ScreenManager::GetActive() const
 {
 	for( vec_type::const_iterator it = m_screens.end() - 1; it >= m_screens.begin(); --it )
 	{
-		if( (*it)->IsActive() )
+		if( (*it)->IsActive() ) //hmm this is really the top..
 		{
 			return *it;
 		}
@@ -84,12 +84,63 @@ void ScreenManager::Remove( Screen* screen )
 
 void ScreenManager::Update()
 {
+	if( m_screens.empty() )
+		return;
 
+	//iterate through our screens and only update the ones
+	//that are not being blocked by other game states.
+	for( int i = int(m_screens.size() - 1); i >= 0; --i )
+	{
+		m_screens[i]->SetActive(true);
+		if( m_screens[i]->IsBlocking() )
+		{
+			for( --i; i >= 0; --i )
+			{
+				m_screens[i]->SetActive(false);
+			}
+
+			break;
+		}
+	}
+
+	for( vec_type::iterator it = m_screens.begin(); it != m_screens.end(); ++it )
+	{
+		if( (*it)->IsActive() )
+		{
+			(*it)->Update();
+		}
+	}
 }
 
 
 void ScreenManager::Render()
 {
+	if( m_screens.empty() )
+		return;
+
+	//iterate through our screens and only render the ones
+	//that are not hidden from view.
+	for( int i = int(m_screens.size() - 1); i >= 0; --i )
+	{
+		m_screens[i]->SetVisible(true);
+		if( !m_screens[i]->IsPopup() )
+		{
+			for( --i; i >= 0; --i )
+			{
+				m_screens[i]->SetVisible(false);
+			}
+
+			break;
+		}
+	}
+
+	for( vec_type::iterator it = m_screens.begin(); it != m_screens.end(); ++it )
+	{
+		if( (*it)->IsVisible() )
+		{
+			(*it)->Render();
+		}
+	}
 }
 
 

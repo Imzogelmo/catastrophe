@@ -113,9 +113,9 @@ int main(int argc, char* argv[])
 	// read config file and parse command-line arguments.
 	LoadConfigSettings(argc, argv);
 
-	//Game game;
-	//if( game.Initialize() != 0 )
-	//	return -1;
+	Game* game = new Game();
+	if( game->Initialize() != 0 )
+		return -1;
 
 	Window* window = CreateWindow();
 
@@ -128,12 +128,14 @@ int main(int argc, char* argv[])
 		window->ClearColor();
 		window->Update();
 
+		game->Update();
 
 		window->Sleep(16);
 		window->SwapBuffers();
 	}
 
 
+	delete game;
 
 	// shut down all sub-systems and release resources.
 	System::Terminate();

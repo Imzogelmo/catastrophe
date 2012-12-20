@@ -25,7 +25,7 @@ public:
 	Tileset( const fc::string& name );
 	~Tileset();
 
-	void Dispose();
+	void Clear();
 	void Update();
 	void ReconfigureAnimatedTileList();
 	void ResetAnimations();
@@ -41,14 +41,12 @@ public:
 
 	Texture* GetTexture() const { return m_texture; }
 	const fc::string& GetName() const { return m_name; }
-	//const fc::string& GetFileName() const { return m_filename; }
 
 	Tile* GetTile( size_t index );
 	Tile* GetTile( size_t x, size_t y );
 
 private:
 	fc::string		m_name;
-	//fc::string		m_filename;
 	array_type		m_tiles;
 	anim_vec_type	m_ptr_animated_tiles;
 	Texture*		m_texture;

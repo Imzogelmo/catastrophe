@@ -130,7 +130,8 @@ int main(int argc, char* argv[])
 	Texture tex;
 	Image image;
 	Font font;
-	if( font.Load("sansation.ttf", 22) != 0 )
+	const char* fontName = "sansation.ttf";
+	if( font.LoadFromFile(fontName, 24) != 0 )
 		exit(9);
 /*
 	font.SetAdvance(16);
@@ -261,7 +262,7 @@ menu.SetPosition(100,0);
 		sb.Render();
 		sb.End();
 
-/*
+
 		sb.Begin();
 		//
 		sb.Draw( tex.GetTextureID(),
@@ -273,25 +274,32 @@ menu.SetPosition(100,0);
 		//	Rectf(0.f, 0.f, 1.f, 1.f)
 		//	);
 
-		sb.DrawSprite(sprite, Vector2(200.f));
+		//sb.DrawSprite(sprite, Vector2(200.f));
 		sprite.Update();
 
 		sb.DrawString( &font, "Test text CAPS. .. \n A newline?", Vector2(200.f, 0.f) );
-		sb.DrawTexture(font.GetTexture(), Vector2(0.f));
+		//sb.DrawTexture(font.GetTexture(), Vector2(0.f));
 
 		//
 
 		text->Update();
-		//text->Render(&sb);
+		text->Render(&sb);
 		menu.Render(&sb);
 
 		sb.Render();
 		sb.End();
-*/
+
 
 		glDisable(GL_TEXTURE_2D);
-		do_tests();
-
+		//do_tests();
+/*
+		glEnable(GL_TEXTURE_2D);
+		sb.Begin();
+		text->Update();
+		text->Render(&sb);
+		sb.Render();
+		sb.End();
+*/
 Input::Update();
 		window->Sleep(16);
 		window->SwapBuffers();
