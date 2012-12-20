@@ -60,6 +60,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AbstractComposerTest.cs" />
+    <Compile Include="ArgumentsTest.cs" />
+    <Compile Include="LogExtensionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
