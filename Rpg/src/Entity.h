@@ -11,38 +11,26 @@
 
 #pragma once
 
-#include "../Common.h"
-#include <Catastrophe/Graphics/Animation.h>
 
-
-class Tile : public Animation
+class Entity
 {
 public:
-	enum TileFlags
+	enum EntityType
 	{
-		FlipHorizontal	= 1,
-		FlipVertical	= 2
+		TypeEntity, //null
+		TypeObject
 	};
 
-	Tileset* parent;
-	size_t id;
-	int	flags;
+	//this is much faster than dynamic_cast.
+	const int type;
 
-	Tile( Tileset* parent = 0 ) :
-		flags(0), m_id(0),
-		m_parent(parent)
-	{
-	}
+	Entity( EntityType derivedType ) : type(derivedType) {}
+	virtual ~Entity()
+	{}
 
-	void SetTileset( Tileset* parent ) { m_parent = parent; }
-	void SetIndex(size_t index) { m_id = index; }
-
-	Tileset* GetTileset() const { return m_parent; }
-	size_t GetIndex() { return m_id; }
-
-protected:
-	Tileset*	parent;
-	size_t		id;
+	virtual void Update() = 0;
+	virtual void Render() = 0;
 
 };
+
 

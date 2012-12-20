@@ -39,7 +39,7 @@ public:
 		++m_ref_count;
 	}
 
-	void Release()
+	void ReleaseRef()
 	{
 		if(--m_ref_count < 1)
 		{

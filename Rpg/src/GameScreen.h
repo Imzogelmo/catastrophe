@@ -11,38 +11,28 @@
 
 #pragma once
 
-#include "../Common.h"
-#include <Catastrophe/Graphics/Animation.h>
+#include "Screen.h"
 
-
-class Tile : public Animation
+/*
+ * GameScreen
+ * base screen class for screens which can contain
+ * scripts, camera movement, collisions, sprites, 
+ * and other normal game mechanics;
+ */
+class GameScreen : public Screen
 {
 public:
-	enum TileFlags
-	{
-		FlipHorizontal	= 1,
-		FlipVertical	= 2
-	};
+	GameScreen( ScreenManager* parent );
+	virtual ~GameScreen()
+	{}
+	
+	virtual void Update();
+	virtual void Render();
 
-	Tileset* parent;
-	size_t id;
-	int	flags;
-
-	Tile( Tileset* parent = 0 ) :
-		flags(0), m_id(0),
-		m_parent(parent)
-	{
-	}
-
-	void SetTileset( Tileset* parent ) { m_parent = parent; }
-	void SetIndex(size_t index) { m_id = index; }
-
-	Tileset* GetTileset() const { return m_parent; }
-	size_t GetIndex() { return m_id; }
 
 protected:
-	Tileset*	parent;
-	size_t		id;
+	//list of	m_entities;
+	//other stuff.
 
 };
 

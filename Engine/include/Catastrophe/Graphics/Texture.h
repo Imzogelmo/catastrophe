@@ -62,8 +62,9 @@ public:
 
 	Vector2 GetUV( const Point& pos ) const;
 	Vector2 GetUV( int x, int y ) const;
-	Rectf GetUVRect( const Rect& r ) const;
-	void GetUVRect( const Rect& r, float* uv ) const;
+	Rectf GetUVRect( const Rect& sourceRect ) const;
+	//void GetUVRect( const Rect& r, float* uv ) const;
+	Rect GetSourceRect( const Rectf& uv ) const;
 
 protected:
 	gluint	m_texture;

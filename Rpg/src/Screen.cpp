@@ -60,9 +60,3 @@ void Screen::SetVisible( bool enable )
 }
 
 
-void Screen::SetHidden( bool enable )
-{
-	m_hidden = enable;
-}
-
-
