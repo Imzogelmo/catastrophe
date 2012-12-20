@@ -161,6 +161,7 @@ Texture* ResourceManager::LoadTexture( const fc::string& filename )
 		}
 		else
 		{
+			texture->SetName(filename);
 			m_textureCache.AddResource( Resource(texture, filename) );
 		}
 	}
@@ -195,11 +196,36 @@ Font* ResourceManager::LoadFont( const fc::string& filename, int faceSize )
 		}
 		else
 		{
+			font->GetTexture()->SetName(filename);
 			m_fontCache.AddResource( Resource(font, filename) );
 		}
 	}
 
 	return font;
+}
+
+
+Texture* ResourceManager::GetTexture( const fc::string& filename )
+{
+	Resource* resource = m_textureCache.GetResource(filename);
+	if( resource )
+	{
+		return (Texture*)resource->ptr;
+	}
+
+	return 0;
+}
+
+
+Font* ResourceManager::GetFont( const fc::string& filename )
+{
+	Resource* resource = m_fontCache.GetResource(filename);
+	if( resource )
+	{
+		return (Font*)resource->ptr;
+	}
+
+	return 0;
 }
 
 

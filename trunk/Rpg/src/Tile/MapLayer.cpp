@@ -10,7 +10,10 @@
 // GNU General Public License for more details.
 
 
+#include <Catastrophe/IO/XmlWriter.h>
+#include <Catastrophe/IO/XmlReader.h>
 #include "MapLayer.h"
+#include "Tileset.h"
 
 
 MapLayer::MapLayer( Map* parent ) :
@@ -60,4 +63,55 @@ void MapLayer::Resize( size_t w, size_t h )
 		}
 	}
 }
+
+
+void MapLayer::SerializeXml( XmlWriter* xml )
+{
+	xml->SetUInt("width", m_tiles.x());
+	xml->SetUInt("height", m_tiles.y());
+	xml->SetUInt("color", m_color.packed_value);
+	xml->SetUInt("blend", m_blendmode.value);
+
+	for( array_type::iterator it = m_tiles.begin(); it != m_tiles.end(); ++it )
+	{
+		xml->BeginNode("Tile");
+
+		int id = -1, tileset_id = -1;
+		if(*it)
+		{
+			id = (*it)->id;
+			tileset_id = (*it)->GetTileset()->GetId();
+		}
+
+		xml->SetInt("id", id);
+		xml->SetInt("tid", tileset_id);
+		xml->EndNode();
+	}
+}
+
+
+void MapLayer::DeserializeXml( XmlReader* xml )
+{
+	m_tiles.resize(0, 0);
+
+	size_t w = xml->GetUInt("width");
+	size_t h = xml->GetUInt("height");
+	m_color.packed_value = xml->GetUInt("color");
+	m_blendmode.value = xml->GetUInt("blend");
+
+	m_tiles.resize(w, h);
+	m_tiles.assign((Tile*)0);
+
+	while( xml->NextChild("Tile") )
+	{
+		int id = xml->GetInt("id", -1);
+		int tileset_id = xml->GetInt("tid", -1);
+		if( tileset_id != -1 )
+		{
+			//get tileset pointer
+			//get tile pointer
+		}
+	}
+}
+
 

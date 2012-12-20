@@ -163,7 +163,7 @@ void ScriptEngine::RegisterFont()
 	r = engine->RegisterObjectBehaviour( "font", asBEHAVE_RELEASE, "void f()", asFUNCTION(DummyReleaseRef), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( "font", "font &opAssign(const font &in)", asFUNCTION((RefAssignment<Font, Font>)), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
 	//r = engine->RegisterObjectMethod( "font", "bool is_valid()", asMETHOD(Font, IsValid), asCALL_THISCALL ); assert( r >= 0 );
-	r = engine->RegisterObjectMethod( "font", "texture@ get_texture()", asMETHOD(Font, GetTexture), asCALL_THISCALL ); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( "font", "texture@ get_texture()", asMETHODPR(Font, GetTexture, () const, const Texture*), asCALL_THISCALL ); assert( r >= 0 );
 
 }
 

@@ -128,6 +128,7 @@ public:
 	int GetTextWidth( const fc::string& text ) const;
 	int GetTextWidth( const char* first, const char* last ) const;
 
+	Texture* GetTexture() { return &m_texture; }
 	const Texture* GetTexture() const { return &m_texture; }
 	gluint GetTextureID() const { return m_texture.GetTextureID(); }
 	gluint GetFaceSize() const { return m_face_size; }

@@ -16,10 +16,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#include <fc/tokenizer.h>
 #include "xml/tinyxml2.h"
 
 #include "Common.h"
-#include "IO/XMLReader.h"
+#include "IO/XmlReader.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -159,42 +160,42 @@ fc::string XmlReader::GetString( const fc::string& name ) const
 }
 
 
-bool XmlReader::GetBool( const fc::string& name ) const
+bool XmlReader::GetBool( const fc::string& name, bool defaultValue ) const
 {
 	CE_ASSERT(m_element != 0);
-	bool ret(false);
+	bool ret(defaultValue);
 	m_element->QueryBoolAttribute(name.c_str(), &ret);
 
 	return ret;
 }
 
 
-short XmlReader::GetShort( const fc::string& name ) const
+short XmlReader::GetShort( const fc::string& name, short defaultValue ) const
 {
-	return (short)GetInt(name);
+	return (short)GetInt(name, defaultValue);
 }
 
 
-int XmlReader::GetInt( const fc::string& name ) const
+int XmlReader::GetInt( const fc::string& name, int defaultValue ) const
 {
 	CE_ASSERT(m_element != 0);
-	int ret(0);
+	int ret(defaultValue);
 	m_element->QueryIntAttribute(name.c_str(), &ret);
 
 	return ret;
 }
 
 
-size_t XmlReader::GetUInt( const fc::string& name ) const
+size_t XmlReader::GetUInt( const fc::string& name, size_t defaultValue ) const
 {
-	return (size_t)GetInt(name);
+	return (size_t)GetInt(name, defaultValue);
 }
 
 
-float XmlReader::GetFloat( const fc::string& name ) const
+float XmlReader::GetFloat( const fc::string& name, float defaultValue ) const
 {
 	CE_ASSERT(m_element != 0);
-	float ret(0.0f);
+	float ret(defaultValue);
 	m_element->QueryFloatAttribute(name.c_str(), &ret);
 
 	return ret;
@@ -205,7 +206,6 @@ fc::string XmlReader::ReadText() const
 {
 	CE_ASSERT(m_element != 0);
 
-	fc::string ret;
 	XmlNode_t* child = m_element->FirstChild();
 	if(!child)
 		return fc::string();

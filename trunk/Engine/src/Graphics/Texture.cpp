@@ -37,6 +37,7 @@ Texture::Texture() :
 	m_wrapmode		(GL_CLAMP), //OPENGL_ES - GL_CLAMP_TO_EDGE
 	m_minfilter		(GL_NEAREST),
 	m_magfilter		(GL_NEAREST),//(GL_LINEAR),
+	//m_userdata		(0),
 	m_mipmaps		(false)
 {
 }

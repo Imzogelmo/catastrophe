@@ -9,12 +9,15 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
+#include <Catastrophe/IO/XmlWriter.h>
+#include <Catastrophe/IO/XmlReader.h>
 #include "Tileset.h"
 
 
 
 Tileset::Tileset( const fc::string& name ) :
 	m_name(name),
+	m_id(-1),
 	m_tiles(),
 	m_ptr_animated_tiles()
 {}
@@ -22,7 +25,7 @@ Tileset::Tileset( const fc::string& name ) :
 
 Tileset::~Tileset()
 {
-	Dispose();
+	//Clear();
 }
 
 
@@ -103,4 +106,72 @@ Tile* Tileset::GetTile( size_t x, size_t y )
 }
 
 
+bool Tileset::SerializeXml( const fc::string& filename )
+{
+	XmlWriter xml(filename);
+	if( !xml.IsOpen() )
+	{
+		Log("Could not open file (%s)", filename.c_str());
+		return false;
+	}
+
+	xml.BeginNode("Tileset");
+	xml.SetString("name", m_name.c_str());
+	xml.SetUInt("width", m_tiles.x());
+	xml.SetUInt("height", m_tiles.y());
+	//texture...
+
+	for( size_t i(0); i < m_tiles.size(); ++i )
+	{
+		xml.BeginNode("Tile");
+		//xml.SetInt("flags", m_tiles[i].flags);
+		//xml.SetInt("flags", m_tiles[i].);
+
+		xml.EndNode();
+	}
+
+	xml.EndNode();
+	xml.Close();
+
+	return true;
+}
+
+
+bool Tileset::DeserializeXml( const fc::string& filename )
+{
+	XmlReader xml(filename);
+	if( !xml.IsOpen() )
+	{
+		Log("Could not open file (%s)", filename.c_str());
+		return false;
+	}
+
+	if( xml.GetCurrentNodeName() == "Tileset" )
+	{
+		m_name = xml.GetString("name");
+		size_t w = xml.GetUInt("width");
+		size_t h = xml.GetUInt("height");
+		//texture...
+
+		m_tiles.resize(h, w);
+		while( xml.NextChild("Tile") )
+		{
+			//m_items.push_back();
+			//m_items.back().DeserializeXml(&xml);
+		}
+
+		ValidateTiles();
+		ReconfigureAnimatedTileList();
+		ResetAnimations();
+	}
+	else
+	{
+		Log("Error parsing (%s). Root item not found", filename.c_str());
+		return false;
+	}
+
+	xml.Close();
+
+	return true;
+}
 

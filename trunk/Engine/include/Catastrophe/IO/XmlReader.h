@@ -19,8 +19,6 @@
 #pragma once
 
 #include <fc/string.h>
-#include <fc/tokenizer.h>
-
 #include "../Common.h"
 
 CE_NAMESPACE_BEGIN
@@ -57,11 +55,11 @@ public:
 	template <class T> bool ReadBlock( T* ptr, size_t n, bool isIntegral = true );
 
 	fc::string GetString( const fc::string& name ) const;
-	bool GetBool( const fc::string& name ) const;
-	short GetShort( const fc::string& name ) const;
-	int GetInt( const fc::string& name ) const;
-	size_t GetUInt( const fc::string& name ) const;
-	float GetFloat( const fc::string& name ) const;
+	bool GetBool( const fc::string& name, bool defaultValue = false ) const;
+	short GetShort( const fc::string& name, short defaultValue = 0 ) const;
+	int GetInt( const fc::string& name, int defaultValue = 0 ) const;
+	size_t GetUInt( const fc::string& name, size_t defaultValue = 0 ) const;
+	float GetFloat( const fc::string& name, float defaultValue = 0.f ) const;
 
 	bool IsOpen() const { return (m_document != 0); }
 

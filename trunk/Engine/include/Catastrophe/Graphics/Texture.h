@@ -51,11 +51,14 @@ public:
 	bool LoadFromFile( const fc::string& filename );
 
 	ubyte* GetPixels();
+	void SetName( const fc::string& name ) { m_name = name; }
 	void SetMinFilter( int filter );
 	void SetMagFilter( int filter );
 	void Bind();
 	bool IsValid() const;
 
+	const fc::string& GetName() const { return m_name; }
+	//void* GetUserData() const { return m_userdata; }
 	gluint GetTextureID() const { return m_texture; }
 	int Width() const { return m_width; }
 	int Height() const { return m_height; }
@@ -63,10 +66,10 @@ public:
 	Vector2 GetUV( const Point& pos ) const;
 	Vector2 GetUV( int x, int y ) const;
 	Rectf GetUVRect( const Rect& sourceRect ) const;
-	//void GetUVRect( const Rect& r, float* uv ) const;
 	Rect GetSourceRect( const Rectf& uv ) const;
 
 protected:
+	fc::string m_name;
 	gluint	m_texture;
 	int		m_width;
 	int		m_height;
@@ -75,6 +78,7 @@ protected:
 	int		m_wrapmode;
 	int		m_minfilter;
 	int		m_magfilter;
+	//void	m_userdata;
 	bool	m_mipmaps;
 };
 

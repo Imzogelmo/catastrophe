@@ -101,6 +101,9 @@ public:
 	Texture*	LoadTexture( const fc::string& filename );
 	Font*		LoadFont( const fc::string& filename, int faceSize );
 
+	Texture*	GetTexture( const fc::string& filename );
+	Font*		GetFont( const fc::string& filename );
+
 	void UnloadTexture( const fc::string& filename );
 	void UnloadFont( const fc::string& filename );
 
@@ -114,6 +117,15 @@ protected:
 	ResourceCache		m_fontCache;
 
 	fc::string			m_baseDirectory;
+
+private:
+	//ResourceManager does NOT follow the singleton pattern...
+	//...though there could be use for one....
+	//static ResourceManager m_singleton;
+
+	//at any rate, this cannot be allowed to share resources.
+	ResourceManager( const ResourceManager& );
+	ResourceManager& operator =( const ResourceManager& );
 };
 
 

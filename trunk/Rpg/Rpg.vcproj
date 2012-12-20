@@ -331,6 +331,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Tile\Tile.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Tile\Tileset.cpp"
 					>
 				</File>
@@ -380,6 +384,14 @@
 				>
 				<File
 					RelativePath=".\src\Shmup\BulletManager.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Util"
+				>
+				<File
+					RelativePath=".\src\Util\Serialization.cpp"
 					>
 				</File>
 			</Filter>
@@ -630,6 +642,14 @@
 				</File>
 				<File
 					RelativePath=".\src\Shmup\PODBulletManager.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Util"
+				>
+				<File
+					RelativePath=".\src\Util\Serialization.h"
 					>
 				</File>
 			</Filter>
