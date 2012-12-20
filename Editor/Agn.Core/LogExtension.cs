@@ -9,7 +9,7 @@ namespace Agn
 {
     public static class LogExtension
     {
-        public static void Debug(this ILog log, Func<object> thunk)
+        public static void DebugDelay(this ILog log, Func<object> thunk)
         {
             if (log.IsDebugEnabled)
             {
@@ -17,7 +17,7 @@ namespace Agn
             }
         }
 
-        public static void Error(this ILog log, Func<object> thunk)
+        public static void ErrorDelay(this ILog log, Func<object> thunk)
         {
             if (log.IsErrorEnabled)
             {
@@ -25,7 +25,7 @@ namespace Agn
             }
         }
 
-        public static void Fatal(this ILog log, Func<object> thunk)
+        public static void FatalDelay(this ILog log, Func<object> thunk)
         {
             if (log.IsFatalEnabled)
             {
@@ -33,7 +33,7 @@ namespace Agn
             }
         }
 
-        public static void Info(this ILog log, Func<object> thunk)
+        public static void InfoDelay(this ILog log, Func<object> thunk)
         {
             if (log.IsInfoEnabled)
             {
@@ -41,7 +41,7 @@ namespace Agn
             }
         }
 
-        public static void Warn(this ILog log, Func<object> thunk)
+        public static void WarnDelay(this ILog log, Func<object> thunk)
         {
             if (log.IsWarnEnabled)
             {
