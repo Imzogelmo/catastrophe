@@ -79,7 +79,7 @@ void MapLayer::SerializeXml( XmlWriter* xml )
 		int id = -1, tileset_id = -1;
 		if(*it)
 		{
-			id = (*it)->id;
+			id = (*it)->GetIndex();
 			tileset_id = (*it)->GetTileset()->GetId();
 		}
 
