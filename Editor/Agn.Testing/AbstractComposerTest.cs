@@ -13,9 +13,9 @@ namespace Agn
     {
         private static AbstractComposer Create()
         {
-            var codeBase = typeof(AbstractComposerTest).Assembly.GetName()
-                                                                .CodeBase;
-            var localPath = new Uri(codeBase).LocalPath;
+            var localPath = typeof(AbstractComposerTest).Assembly
+                                                        .GetName()
+                                                        .GetLocalPath();
             return new AbstractComposer(localPath);
         }
 

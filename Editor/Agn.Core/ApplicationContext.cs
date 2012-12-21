@@ -14,7 +14,8 @@ namespace Agn
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(ApplicationContext));
 
-        internal ApplicationContext() { }
+        // TODO Change to internal, add signing and allow Agn.Testing access to internals.
+        public ApplicationContext() { }
 
         static ApplicationContext()
         {
