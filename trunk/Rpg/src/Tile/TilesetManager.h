@@ -21,7 +21,7 @@
 class TilesetManager
 {
 public:
-	typedef fc::vector<Tileset*>		vec_type;
+	typedef fc::vector<Tileset*>	vec_type;
 
 	~TilesetManager();
 
@@ -34,8 +34,15 @@ public:
 	Tileset* GetTileset( size_t index ) const;
 	Tileset* GetTileset( const fc::string& name ) const;
 
+	void SetDirectory( const fc::string& directory );
+	const fc::string& GetDirectory() const { return m_directory; };
+
+	NO_INLINE bool LoadTilesetXml( const fc::string& filename );
+	NO_INLINE bool SaveTilesetXml( Tileset* tileset );
+	NO_INLINE bool SaveAllTilesetsXml();
 
 protected:
+	fc::string	m_directory;
 	vec_type	m_tilesets;
 
 };

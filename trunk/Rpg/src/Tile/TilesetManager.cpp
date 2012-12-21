@@ -35,6 +35,13 @@ bool TilesetManager::DeleteTileset( Tileset* tileset )
 		{
 			delete *it;
 			m_tilesets.erase(it);
+
+			//decrement tileset id
+			for( ; it != m_tilesets.end(); ++it )
+			{
+				(*it)->SetId( (*it)->GetId() - 1 );
+			}
+
 			return true;
 		}
 	}
@@ -51,7 +58,8 @@ Tileset* TilesetManager::CreateTileset( const fc::string& name )
 	if( name.empty() || tileset != 0 )
 		return 0;
 
-	tileset = new Tileset(name);
+	tileset = new Tileset(this, name);
+	tileset->SetId( (int)m_tilesets.size() );
 	m_tilesets.push_back(tileset);
 
 	return tileset;
@@ -76,6 +84,51 @@ Tileset* TilesetManager::GetTileset( const fc::string& name ) const
 	}
 
 	return 0;
+}
+
+
+void TilesetManager::SetDirectory( const fc::string& directory )
+{
+	//ASSERT(m_tilesets.empty());
+	m_directory = directory;
+}
+
+
+bool TilesetManager::LoadTilesetXml( const fc::string& filename )
+{
+	Tileset* tileset = CreateTileset(filename);
+	if( tileset )
+	{
+		if( tileset->DeserializeXml(m_directory) )
+			return true;
+	}
+
+	return false;
+}
+
+
+bool TilesetManager::SaveTilesetXml( Tileset* tileset )
+{
+	if( tileset->SerializeXml(m_directory) )
+	{
+		Log("Error saving tileset (%s)(%s).", m_directory.c_str(), tileset->GetName() );
+		return false;
+	}
+
+	return false;
+}
+
+
+bool TilesetManager::SaveAllTilesetsXml()
+{
+	bool completeSuccess = true;
+	for( vec_type::iterator it = m_tilesets.begin(); it != m_tilesets.end(); ++it )
+	{
+		if( !SaveTilesetXml(*it) )
+			completeSuccess = false;
+	}
+
+	return completeSuccess;
 }
 
 

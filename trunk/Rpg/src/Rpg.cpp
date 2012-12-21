@@ -96,6 +96,17 @@ Window* CreateWindow()
 //temp includes
 #include "MonsterData.h"
 #include "ItemData.h"
+#include "Tile/TilesetManager.h"
+
+void DoTests()
+{
+	TilesetManager tm;
+	Tileset* t = tm.CreateTileset("testTileset.xml");
+	t->Resize(4, 4); //16 tiles
+	bool r = t->SerializeXml("");
+	return;
+
+}
 
 
 int main(int argc, char* argv[])
@@ -113,12 +124,17 @@ int main(int argc, char* argv[])
 	// read config file and parse command-line arguments.
 	LoadConfigSettings(argc, argv);
 
+
+	//DoTests(); //some quick and dirty testing.
+
+
 	Game* game = new Game();
-	if( game->Initialize() != 0 )
-		return -1;
+	//if( game->Initialize() != 0 )
+	//	return -1;
 
 	Window* window = CreateWindow();
 
+	DoTests(); //some quick and dirty testing.
 
 	// TODO: Need to handle loading +
 	// Splash screen here...

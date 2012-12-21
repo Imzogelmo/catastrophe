@@ -15,7 +15,9 @@
 
 
 
-Tileset::Tileset( const fc::string& name ) :
+Tileset::Tileset( TilesetManager* parent, const fc::string& name ) :
+	m_parent(parent),
+	m_texture(0),
 	m_name(name),
 	m_id(-1),
 	m_tiles(),
@@ -106,14 +108,21 @@ Tile* Tileset::GetTile( size_t x, size_t y )
 }
 
 
-bool Tileset::SerializeXml( const fc::string& filename )
+bool Tileset::SerializeXml( const fc::string& directory )
 {
+	fc::string filename;
+	filename.reserve(directory.size() + m_name.size() + 1);
+	filename.append(directory).append(m_name);
+
 	XmlWriter xml(filename);
 	if( !xml.IsOpen() )
 	{
 		Log("Could not open file (%s)", filename.c_str());
 		return false;
 	}
+
+	//if the texture is null we certainly cannot proceed.
+	ASSERT(m_texture);
 
 	xml.BeginNode("Tileset");
 	xml.SetString("name", m_name.c_str());
@@ -124,9 +133,7 @@ bool Tileset::SerializeXml( const fc::string& filename )
 	for( size_t i(0); i < m_tiles.size(); ++i )
 	{
 		xml.BeginNode("Tile");
-		//xml.SetInt("flags", m_tiles[i].flags);
-		//xml.SetInt("flags", m_tiles[i].);
-
+		m_tiles[i].SerializeXml(&xml);
 		xml.EndNode();
 	}
 
@@ -137,8 +144,12 @@ bool Tileset::SerializeXml( const fc::string& filename )
 }
 
 
-bool Tileset::DeserializeXml( const fc::string& filename )
+bool Tileset::DeserializeXml( const fc::string& directory )
 {
+	fc::string filename;
+	filename.reserve(directory.size() + m_name.size() + 1);
+	filename.append(directory).append(m_name);
+
 	XmlReader xml(filename);
 	if( !xml.IsOpen() )
 	{
@@ -151,13 +162,12 @@ bool Tileset::DeserializeXml( const fc::string& filename )
 		m_name = xml.GetString("name");
 		size_t w = xml.GetUInt("width");
 		size_t h = xml.GetUInt("height");
-		//texture...
+		//TODO get texture here...
 
 		m_tiles.resize(h, w);
-		while( xml.NextChild("Tile") )
+		for( int i(0); xml.NextChild("Tile"); ++i )
 		{
-			//m_items.push_back();
-			//m_items.back().DeserializeXml(&xml);
+			m_tiles[i].DeserializeXml(&xml);
 		}
 
 		ValidateTiles();

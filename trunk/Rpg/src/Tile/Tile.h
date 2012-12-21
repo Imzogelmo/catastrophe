@@ -11,37 +11,64 @@
 
 #pragma once
 
+#include <fc/fixed_vector.h>
+
 #include "../Common.h"
 #include <Catastrophe/Graphics/Animation.h>
+#include <Catastrophe/Math/Rectf.h>
 
-
-class Tile : public Animation
+/*
+ * @Tile (animated tile)
+ * 44 bytes + 16 bytes per frame of animation.
+ * these are optimized heavily for both cases, and
+ * non-animated tiles will never allocate memory.
+ */
+class Tile
 {
 public:
+	typedef fc::fixed_vector<Rectf, 1>	vec_type;
 	enum TileFlags
 	{
 		FlipHorizontal	= 1,
 		FlipVertical	= 2
 	};
 
-	Tileset*	parent;
-	size_t		id;
-	int			flags;
+	Tile( Tileset* parent = 0, size_t id = 0 );
 
-	Tile( Tileset* parent = 0, size_t id = 0, int flags = 0 ) :
-		parent(parent), id(id), flags(flags)
-	{}
+	void SetTileset( Tileset* parent ) { m_parent = parent; }
+	void SetIndex( size_t index ) { m_id = index; }
+	void SetFrameData( Rect sourceRect, int numberOfFrames = 1 );
+	void SetTileSize( int size ) { m_tileSize = size; }
+	void SetCurrentFrame( short frame );
+	void SetAnimationSpeed( short frameDelay );
+	void Update();
 
-	void SetTileset( Tileset* tilset ) { parent = tilset; }
-	void SetIndex(size_t index) { id = index; }
-	void SetFlags(size_t index) { id = index; }
 
-	Tileset* GetTileset() const { return parent; }
-	size_t GetIndex() { return id; }
-	int GetFlags() { return flags; }
+	Tileset*	GetTileset() const { return m_parent; }
+	size_t		GetIndex() const { return m_id; }
+	short		GetCurrentFrame() const { return frame; }
+	short		GetAnimationSpeed() const { return anim_speed; }
+	short		GetFlags() const { return flags; }
+	int			GetTileSize() const { return m_tileSize; }
+	inline bool IsAnimated() const { return m_uv.has_overflowed(); }
+	inline size_t NumFrames() const { return m_uv.size(); }
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
+	NO_INLINE void SerializeXml( XmlWriter* xml );
+	NO_INLINE void DeserializeXml( XmlReader* xml );
 
+public:
+	short counter;
+	short frame;
+	short anim_speed;
+	short flags;
+
+protected:
+	Tileset*	m_parent;
+	vec_type	m_uv;
+	size_t		m_id;
+
+private:
+	//This value should never change.
+	static int m_tileSize;
 };
 
