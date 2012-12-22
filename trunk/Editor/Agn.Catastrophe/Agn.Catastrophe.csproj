@@ -68,6 +68,12 @@
     </Compile>
     <Compile Include="Views\ConvertFileView.cs" />
     <Compile Include="Views\ConvertFileViewModel.cs" />
+    <Compile Include="Views\NativeDrawTarget.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\NativeDrawTarget.Designer.cs">
+      <DependentUpon>NativeDrawTarget.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\ProjectNavigator.cs">
       <SubType>UserControl</SubType>
     </Compile>

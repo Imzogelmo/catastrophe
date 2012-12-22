@@ -78,7 +78,9 @@
   <ItemGroup>
     <ClInclude Include="Agn.Catastrophe.Interop.h" />
     <ClInclude Include="agn.h" />
+    <ClInclude Include="DrawableWrapper.h" />
     <ClInclude Include="FileConverter.h" />
+    <ClInclude Include="IDrawTarget.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
     <ClInclude Include="StringWrapper.h" />
@@ -86,6 +88,7 @@
   <ItemGroup>
     <ClCompile Include="Agn.Catastrophe.Interop.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="DrawableWrapper.cpp" />
     <ClCompile Include="FileConverter.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
