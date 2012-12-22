@@ -353,6 +353,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Util"
+				>
+				<File
+					RelativePath=".\src\Util\TexturePacker.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Util\Timer.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -632,6 +644,50 @@
 				</File>
 				<File
 					RelativePath=".\include\Catastrophe\Gui\Widget.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Util"
+				>
+				<File
+					RelativePath=".\include\Catastrophe\Util\BasicTimer.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Catastrophe\Util\GarbageCollect.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Catastrophe\Util\Indexable.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Catastrophe\Util\MinMax.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Catastrophe\Util\NonCopyable.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Catastrophe\Util\ReferenceCounted.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Catastrophe\Util\Singleton.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Catastrophe\Util\TexturePacker.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Catastrophe\Util\Timer.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Catastrophe\Util\UniqueID.h"
 					>
 				</File>
 			</Filter>
