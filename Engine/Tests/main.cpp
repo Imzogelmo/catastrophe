@@ -3,6 +3,7 @@
 #include "main.h"
 
 #include <crtdbg.h>
+#include <Catastrophe/Util/Timer.h>
 
 
 Matrix createPerspectiveFOV( float& zoff, float fov, float aspectRatio, float up, float zNear, float zFar )
@@ -149,6 +150,7 @@ int main(int argc, char* argv[])
 
 	init_tests();
 
+	Timer timer;
 
 	PrimitiveObject prim;
 	prim.SetPrimitiveType(ptQUADS);
@@ -301,7 +303,19 @@ menu.SetPosition(100,0);
 		sb.End();
 */
 Input::Update();
+
+		//timer.Reset();
+		//Log("start");
 		window->Sleep(16);
+		/*
+		Log(" ticks %i, ms: %d, milli: %d, seconds %0.5f, minutes %0.5f, ",
+			(int)timer.ElapsedTicks(),
+			(int)timer.ElapsedMicroseconds(),
+			(int)timer.ElapsedMilliseconds(),
+			(float)timer.ElapsedSeconds(),
+			(float)timer.ElapsedMinutes()
+			);
+		*/
 		window->SwapBuffers();
 	}
 

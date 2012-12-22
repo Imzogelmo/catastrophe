@@ -18,6 +18,37 @@
 
 #pragma once
 
-#include "System/System.h"
-#include "System/Window.h"
+#include "../Common.h"
+
+
+class Timer
+{
+public:
+	struct Time
+	{
+		uint64 clock;
+		uint64 ref;
+		uint64 freq;
+		double oofreq;
+	};
+
+	Timer();
+	~Timer();
+
+	void Reset();
+	uint64 Frequency();
+	uint64 TicksPerSecond();
+
+	uint64 ElapsedTicks();
+	uint64 ElapsedMilliseconds();
+	uint64 ElapsedMicroseconds();
+	double ElapsedSeconds();
+	double ElapsedMinutes();
+
+protected:
+	Time		m_time;
+	uint64		m_last;
+	static bool m_timer_init;
+};
+
 

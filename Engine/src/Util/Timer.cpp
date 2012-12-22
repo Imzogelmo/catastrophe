@@ -16,8 +16,78 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#pragma once
 
-#include "System/System.h"
-#include "System/Window.h"
+#include "Util/Timer.h"
+#include "timer_lib/timer.c"
+
+
+bool Timer::m_timer_init = false;
+
+
+Timer::Timer()
+{
+	if( !m_timer_init )
+	{
+		m_timer_init = true;
+		timer_lib_initialize();
+	}
+
+	timer_initialize( (timer*)&m_time );
+}
+
+
+Timer::~Timer()
+{
+}
+
+
+uint64 Timer::Frequency()
+{
+	return m_time.freq;
+}
+
+
+uint64 Timer::TicksPerSecond()
+{
+	return m_time.freq;
+}
+
+
+void Timer::Reset()
+{
+	timer_reset( (timer*)&m_time );
+}
+
+
+uint64 Timer::ElapsedTicks()
+{
+	return timer_elapsed_ticks( (timer*)&m_time, 0 );
+}
+
+
+uint64 Timer::ElapsedMilliseconds()
+{
+	return ((uint64)1000 * ElapsedTicks()) / TicksPerSecond();
+}
+
+
+uint64 Timer::ElapsedMicroseconds()
+{
+	return ((uint64)1000000 * ElapsedTicks()) / TicksPerSecond();
+}
+
+
+double Timer::ElapsedSeconds()
+{
+	return timer_elapsed( (timer*)&m_time, 0 );
+}
+
+
+double Timer::ElapsedMinutes()
+{
+	return ElapsedSeconds() / 60.0;
+}
+
+
+
 
