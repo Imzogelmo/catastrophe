@@ -4,6 +4,8 @@
 
 #include <crtdbg.h>
 #include <Catastrophe/Util/Timer.h>
+#include <Catastrophe/Sound/SoundEngine.h>
+#include <Catastrophe/Sound/FmodSoundEngine.h>
 
 
 Matrix createPerspectiveFOV( float& zoff, float fov, float aspectRatio, float up, float zNear, float zFar )
@@ -197,6 +199,13 @@ menu.AddItem(&te3);
 menu.AddItem(&te4);
 menu.SetPosition(100,0);
 
+	//test sound;
+	FmodSoundEngine se;
+	se.Initialize();
+	Sound* sound = se.LoadFromFile( Sound::TypeMidi, "wtcf2.mid" );
+	assert(sound);
+	sound->Play();
+
 	while(!window->RequestClose())
 	{
 		window->ClearColor();
@@ -292,6 +301,10 @@ menu.SetPosition(100,0);
 		sb.End();
 
 
+		//sound->Stop();
+		//sound->Play();
+
+		se.Update();
 		glDisable(GL_TEXTURE_2D);
 		//do_tests();
 /*
@@ -323,6 +336,7 @@ Input::Update();
 	System::Terminate();
 
 
+	se.Shutdown();
 	delete text;
 	//...
 	_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
