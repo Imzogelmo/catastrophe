@@ -8,7 +8,7 @@ using namespace std;
 using namespace System::Runtime::InteropServices;
 
 // TODO Remove once the drawable factory is created.
-void mock_draw(unsigned char* pointer, int width, int height) {
+void mock_draw(time_t dt, unsigned char* pointer, int width, int height) {
 	int index = 0;
 
 	// Draw all green.
@@ -21,10 +21,15 @@ void mock_draw(unsigned char* pointer, int width, int height) {
 	}
 }
 
-Agn::Catastrophe::DrawableWrapper::DrawableWrapper(IDrawTarget^ target) {
+Agn::Catastrophe::DrawableWrapper::DrawableWrapper(IDrawTarget^ target, Drawable drawable) {
+	this->_last_time = 0;
 	this->_target = target;
 	// TODO Replace with a mechanism to discover the appropriate drawing routine.
-	this->draw = &mock_draw;
+	switch (drawable) {
+	case Drawable::Mock:
+		this->draw = &mock_draw;
+		break;
+	}
 }
 
 void Agn::Catastrophe::DrawableWrapper::Draw() {
@@ -43,9 +48,17 @@ void Agn::Catastrophe::DrawableWrapper::Draw() {
 		// Get the width/height.
 		int height = this->_target->Height;
 		int width = this->_target->Width;
+
+		// Calculate delta-time.
+		time_t dt = 0;
+		time_t current = time(NULL);
+		if (this->_last_time != 0) {
+			dt = this->_last_time - current;
+		}
+		this->_last_time = current;
 		
 		// Call the delegate to the drawing routine.
-		this->draw(pointer, width, height);
+		this->draw(dt, pointer, width, height);
 
 	} finally {
 		handle.Free();

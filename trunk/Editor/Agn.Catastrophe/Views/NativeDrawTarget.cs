@@ -28,7 +28,7 @@ namespace Agn.Catastrophe.Views
         {
             InitializeComponent();
 
-            this.drawable = new DrawableWrapper(this);
+            this.drawable = new DrawableWrapper(this, Drawable.Mock);
         }
 
         #region Properties
