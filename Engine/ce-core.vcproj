@@ -20,7 +20,6 @@
 			OutputDirectory="$(ProjectDir)lib"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
-			InheritedPropertySheets=".\catastrophe.vsprops"
 			CharacterSet="0"
 			>
 			<Tool
@@ -85,7 +84,6 @@
 			OutputDirectory="$(ProjectDir)lib"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
-			InheritedPropertySheets=".\catastrophe.vsprops"
 			CharacterSet="0"
 			WholeProgramOptimization="0"
 			>
@@ -311,26 +309,6 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="System"
-				>
-				<File
-					RelativePath=".\src\System\GLFWSystem.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\System\SFMLSystem.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\System\System.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\System\Window.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
 				Name="Gui"
 				>
 				<File
@@ -347,18 +325,6 @@
 				</File>
 				<File
 					RelativePath=".\src\Gui\Widget.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Input"
-				>
-				<File
-					RelativePath=".\src\Input\Input.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Input\Keyboard.cpp"
 					>
 				</File>
 			</Filter>
@@ -589,50 +555,6 @@
 				</File>
 				<File
 					RelativePath=".\include\Catastrophe\Graphics\VertexArray.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="System"
-				>
-				<File
-					RelativePath=".\include\Catastrophe\System\GLFWSystem.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\Catastrophe\System\SFMLSystem.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\Catastrophe\System\System.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\Catastrophe\System\Window.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Input"
-				>
-				<File
-					RelativePath=".\include\Catastrophe\Input\Input.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\Catastrophe\Input\Joystick.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\Catastrophe\Input\Keyboard.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\Catastrophe\Input\Keys.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\Catastrophe\Input\Mouse.h"
 					>
 				</File>
 			</Filter>

@@ -38,8 +38,14 @@ typedef long long			int64;
 #endif
 
 
-#define CE_NAMESPACE_BEGIN //namespace ce {
-#define CE_NAMESPACE_END //}
+//CE_WANT_NAMESPACE must be defined in both lib and client.
+#ifdef CE_WANT_NAMESPACE
+#define CE_NAMESPACE_BEGIN namespace ce {
+#define CE_NAMESPACE_END }
+#else
+#define CE_NAMESPACE_BEGIN
+#define CE_NAMESPACE_END
+#endif
 
 #define USING_NAMESPACE_CE //
 
@@ -121,6 +127,11 @@ class Texture;
 class BlendMode;
 class Font;
 class SpriteBatch;
+class Primitive;
+class PrimitiveBatch;
+class ShaderObjectBase;
+class VertexShader;
+class FragmentShader;
 class Shader;
 class TextureLoader;
 class Viewport;
@@ -134,7 +145,6 @@ class AnimatedSprite;
 
 struct VertexColor;
 struct VertexColorTexture;
-
 
 class Serializer;
 class Deserializer;
