@@ -47,7 +47,6 @@ public:
 
 protected:
 	Time		m_time;
-	uint64		m_last;
 	static bool m_timer_init;
 };
 

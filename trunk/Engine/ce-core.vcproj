@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="Engine"
+	Name="ce-core"
 	ProjectGUID="{8896BFA8-8888-4A61-8225-683568711CD1}"
 	RootNamespace="Engine"
 	TargetFrameworkVersion="196613"
@@ -17,9 +17,10 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="$(ProjectDir)lib"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
+			InheritedPropertySheets=".\catastrophe.vsprops"
 			CharacterSet="0"
 			>
 			<Tool
@@ -41,9 +42,11 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;include\Catastrophe&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
+				ProgramDataBaseFileName="$(OutDir)\$(ProjectName)-d.pdb"
 				WarningLevel="4"
 				DebugInformationFormat="4"
 			/>
@@ -59,7 +62,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="glfwd.lib glew32sd.lib freetype.lib $(NOINHERIT)"
+				OutputFile="$(OutDir)\$(ProjectName)-d.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -79,9 +82,10 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="$(ProjectDir)lib"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
+			InheritedPropertySheets=".\catastrophe.vsprops"
 			CharacterSet="0"
 			WholeProgramOptimization="0"
 			>
@@ -105,10 +109,15 @@
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="&quot;C:\Documents and Settings\Nathaniel\My Documents\Visual Studio 2008\Projects\Catastrophe\Engine\include\Catastrophe&quot;"
+				AdditionalIncludeDirectories="&quot;include\Catastrophe&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
+				StringPooling="true"
+				MinimalRebuild="true"
 				RuntimeLibrary="2"
+				BufferSecurityCheck="false"
 				EnableFunctionLevelLinking="true"
 				FloatingPointModel="2"
+				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
