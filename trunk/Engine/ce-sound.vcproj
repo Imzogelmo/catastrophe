@@ -2,9 +2,10 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="Tests"
-	ProjectGUID="{F035CA65-94D2-440C-BF4C-F0ECCDBC6ECB}"
-	RootNamespace="Tests"
+	Name="ce-sound"
+	ProjectGUID="{9557A9DF-F752-4983-88CA-CAD03F01905F}"
+	RootNamespace="Catastrophe"
+	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
 	<Platforms>
@@ -17,10 +18,10 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="$(ProjectDir)lib"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="1"
-			CharacterSet="0"
+			ConfigurationType="4"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -40,10 +41,13 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;../include&quot;"
+				AdditionalIncludeDirectories="&quot;include\Catastrophe&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
+				UsePrecompiledHeader="0"
+				ProgramDataBaseFileName="$(OutDir)\$(ProjectName)-d.pdb"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 			/>
@@ -57,17 +61,11 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="ce-system-d.lib ce-core-d.lib ce-sound-d.lib glfwd.lib freetype.lib glew32s.lib OpenGL32.lib glu32.lib"
-				AdditionalLibraryDirectories="&quot;../lib&quot;"
-				GenerateDebugInformation="true"
-				TargetMachine="1"
+				Name="VCLibrarianTool"
+				OutputFile="$(OutDir)\$(ProjectName)-d.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -79,19 +77,16 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="$(ProjectDir)lib"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="1"
-			CharacterSet="2"
-			WholeProgramOptimization="1"
+			ConfigurationType="4"
+			CharacterSet="1"
+			WholeProgramOptimization="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -112,9 +107,13 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;../include&quot;"
+				WholeProgramOptimization="false"
+				AdditionalIncludeDirectories="&quot;include\Catastrophe&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
+				UsePrecompiledHeader="0"
+				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -128,19 +127,10 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="ce-system.lib ce-core.lib glfw.lib freetype.lib glew32s.lib OpenGL32.lib glu32.lib"
-				AdditionalLibraryDirectories="&quot;../lib&quot;"
-				GenerateDebugInformation="true"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				TargetMachine="1"
+				Name="VCLibrarianTool"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -150,9 +140,6 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -168,7 +155,23 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\main.cpp"
+				RelativePath=".\src\Sound\BassSound.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Sound\BassSoundEngine.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Sound\FmodSound.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Sound\FmodSoundEngine.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Sound\SoundEngine.cpp"
 				>
 			</File>
 		</Filter>
@@ -178,19 +181,27 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\glsl.h"
+				RelativePath=".\include\Catastrophe\Sound\BassSound.h"
 				>
 			</File>
 			<File
-				RelativePath=".\hsv_wheel.h"
+				RelativePath=".\include\Catastrophe\Sound\BassSoundEngine.h"
 				>
 			</File>
 			<File
-				RelativePath=".\main.h"
+				RelativePath=".\include\Catastrophe\Sound\FmodSound.h"
 				>
 			</File>
 			<File
-				RelativePath=".\splines.h"
+				RelativePath=".\include\Catastrophe\Sound\FmodSoundEngine.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\Catastrophe\Sound\Sound.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\Catastrophe\Sound\SoundEngine.h"
 				>
 			</File>
 		</Filter>
