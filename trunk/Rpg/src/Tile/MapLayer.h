@@ -38,6 +38,7 @@ public:
 
 	bool IsVisible() const { return m_visible; }
 	Color GetColor() const { return m_color; }
+	BlendMode GetBlendMode() const { return m_blendmode; }
 	Tile* GetTile( size_t x, size_t y ) const { return m_tiles.at(y, x); }
 	Map* GetMap() const { return m_parent; }
 

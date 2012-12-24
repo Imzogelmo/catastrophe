@@ -58,8 +58,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="Engine.lib mcppd.lib angelscriptd.lib tinyxml2d.lib freetype.lib glew32sd.lib OpenGL32.lib glu32.lib"
-				AdditionalLibraryDirectories="&quot;../Debug&quot;"
+				AdditionalDependencies="ce-core-d.lib ce-system-d.lib glfwd.lib mcppd.lib angelscriptd.lib freetype.lib glew32sd.lib OpenGL32.lib glu32.lib"
+				AdditionalLibraryDirectories="&quot;../Engine/lib&quot;"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
@@ -129,8 +129,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="Engine.lib glfw.lib mcppd.lib angelscript.lib glew32s.lib OpenGL32.lib glu32.lib"
-				AdditionalLibraryDirectories="&quot;../Release&quot;"
+				AdditionalDependencies="ce-core.lib ce-system.lib glfw.lib mcppd.lib angelscript.lib glew32s.lib OpenGL32.lib glu32.lib"
+				AdditionalLibraryDirectories="&quot;../Engine/lib&quot;"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -277,6 +277,10 @@
 				<Filter
 					Name="Bindings"
 					>
+					<File
+						RelativePath=".\src\Script\asGameInterface.cpp"
+						>
+					</File>
 					<File
 						RelativePath=".\src\Script\asGlobalInterface.cpp"
 						>
@@ -451,6 +455,10 @@
 			</File>
 			<File
 				RelativePath=".\src\ItemDrop.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Object.h"
 				>
 			</File>
 			<File

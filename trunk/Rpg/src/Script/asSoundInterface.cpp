@@ -10,7 +10,15 @@
 // GNU General Public License for more details.
 
 
-/*
+#include <cassert>
+#include <angelscript.h>
+#include <Catastrophe/Sound.h>
+
+#include "asBindUtil.h"
+#include "ScriptEngine.h"
+
+
+
 namespace script
 {
 	Sound* SoundConstructor()
@@ -50,4 +58,11 @@ void ScriptEngine::RegisterSound()
 	r = engine->RegisterObjectMethod( "sound", "void set_position(int)", asMETHOD(Sound, SetPosition), asCALL_THISCALL ); assert( r >= 0 );
 
 }
-*/
+
+
+void ScriptEngine::RegisterSoundInterface()
+{
+	RegisterSound();
+}
+
+

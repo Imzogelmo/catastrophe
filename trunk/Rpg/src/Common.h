@@ -90,3 +90,7 @@ class ResourceManager;
 #define foreachi(i, loops) \
 	for( int i(0); i < loops; ++i )
 
+
+//global functions
+Game* gGetGameInstance();
+

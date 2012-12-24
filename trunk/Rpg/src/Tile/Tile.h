@@ -19,7 +19,7 @@
 
 /*
  * @Tile (animated tile)
- * 44 bytes + 16 bytes per frame of animation.
+ * 48 bytes + 16 bytes per frame of animation.
  * these are optimized heavily for both cases, and
  * non-animated tiles will never allocate memory.
  */
