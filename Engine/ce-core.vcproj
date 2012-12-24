@@ -350,6 +350,26 @@
 				RelativePath=".\include\Catastrophe\Common.h"
 				>
 			</File>
+			<File
+				RelativePath=".\include\Catastrophe\FileIO.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\Catastrophe\Graphics.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\Catastrophe\Gui.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\Catastrophe\MathTypes.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\Catastrophe\Util.h"
+				>
+			</File>
 			<Filter
 				Name="Math"
 				>

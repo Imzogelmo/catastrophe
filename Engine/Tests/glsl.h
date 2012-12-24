@@ -62,9 +62,9 @@ public:
 	{
 		shader->SetUniform("angle", angle);
 		shader->SetUniform("radius", radius);
-		shader->Begin();
+		shader->Bind();
 		p.Render();
-		shader->End();
+		shader->Unbind();
 	}
 
 };

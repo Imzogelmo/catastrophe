@@ -86,7 +86,7 @@ void Shader::SetFragmentShader( FragmentShader* fragment_shader )
 }
 
 
-void Shader::Begin()
+void Shader::Bind()
 {
 	if( !m_fragment_shader || !m_vertex_shader )
 	{
@@ -113,7 +113,7 @@ void Shader::Begin()
 }
 
 
-void Shader::End()
+void Shader::Unbind()
 {
 	glUseProgram(0);
 }
