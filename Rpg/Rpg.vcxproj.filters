@@ -6,56 +6,56 @@
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="Source Files\Script">
-      <UniqueIdentifier>{8bbbd330-6c06-4ad8-86ed-07ac9d62284b}</UniqueIdentifier>
+      <UniqueIdentifier>{2ad88f9e-1f23-4dfc-86d1-b26c8427c455}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Script\Collections">
-      <UniqueIdentifier>{2366cab0-0a91-4cb1-a44d-215789a5d2a9}</UniqueIdentifier>
+      <UniqueIdentifier>{83de063c-4f71-4e92-8005-0d672b31dc11}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Script\Bindings">
-      <UniqueIdentifier>{66c732e3-68e2-4d0c-8d21-4c77b16c0a56}</UniqueIdentifier>
+      <UniqueIdentifier>{2fcb1a2d-39c0-4b0f-a002-49038e3e86ad}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Script\Compiler">
-      <UniqueIdentifier>{8e540738-82e2-4253-a21f-3a1c2c33030a}</UniqueIdentifier>
+      <UniqueIdentifier>{9be62bea-f30a-4b3c-b6cd-c8589fc695ed}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Tile">
-      <UniqueIdentifier>{02bdc772-3aec-4a51-8e02-dd310e476f5a}</UniqueIdentifier>
+      <UniqueIdentifier>{fd4491ce-06d7-4a27-893e-ea5ccf7a0722}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Database">
-      <UniqueIdentifier>{3cf63e32-1486-40cc-84fb-0e5a5c852e89}</UniqueIdentifier>
+      <UniqueIdentifier>{6ff9a7e0-bc7e-4933-ab75-e87de254f85d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Shmup">
-      <UniqueIdentifier>{4bc1a563-03af-42e7-b4ce-98848a5395bd}</UniqueIdentifier>
+      <UniqueIdentifier>{2ccde90a-04ac-4058-a6cd-02fbf527e68a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Util">
-      <UniqueIdentifier>{f1194441-9125-4609-9733-6e700481a8cd}</UniqueIdentifier>
+      <UniqueIdentifier>{b077a2eb-4bd9-4db0-bc6f-343e923f2abb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
     <Filter Include="Header Files\Script">
-      <UniqueIdentifier>{e2909f02-89a3-410b-b7ae-b6e06f287772}</UniqueIdentifier>
+      <UniqueIdentifier>{3f160b7e-37fa-4203-9743-b112b9229fa2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Script\Collections">
-      <UniqueIdentifier>{6aca82a0-e2e6-490c-aafa-96d60b6c6ddf}</UniqueIdentifier>
+      <UniqueIdentifier>{146d9e49-e289-40ab-9656-1a52927d4229}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Script\Compiler">
-      <UniqueIdentifier>{5c999bb1-7013-407a-9b16-5691f33659cf}</UniqueIdentifier>
+      <UniqueIdentifier>{06fd4316-225b-44e4-bf98-9fa3af75f40a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Script\Bindings">
-      <UniqueIdentifier>{bfbae3c2-237b-48ab-b2c3-0e8421da68e5}</UniqueIdentifier>
+      <UniqueIdentifier>{f085bca3-1f1e-4220-b8b8-92fd2aaeb9ba}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Tile">
-      <UniqueIdentifier>{d8675682-f0d4-4606-84f2-e0682228ec3d}</UniqueIdentifier>
+      <UniqueIdentifier>{3b5dc38e-eca6-4cd8-85f2-3e8c3be5157d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Database">
-      <UniqueIdentifier>{1e181726-1675-4e93-8c6f-3b6759d4e5af}</UniqueIdentifier>
+      <UniqueIdentifier>{61b6b54b-e779-427c-a448-cb5015e8e5c8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Shmup">
-      <UniqueIdentifier>{8f4c9468-0367-4783-9832-036ca26bc0ee}</UniqueIdentifier>
+      <UniqueIdentifier>{0f243d29-093f-4498-917e-f615294bdeb0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Util">
-      <UniqueIdentifier>{fcc51dcf-f63e-4fcc-a839-a52a6f17c707}</UniqueIdentifier>
+      <UniqueIdentifier>{d0c33378-d5f0-45c3-84d6-63b0c5cbfbdf}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
@@ -137,6 +137,9 @@
     </ClCompile>
     <ClCompile Include="src\Script\asVectorTemplate.cpp">
       <Filter>Source Files\Script\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\asGameInterface.cpp">
+      <Filter>Source Files\Script\Bindings</Filter>
     </ClCompile>
     <ClCompile Include="src\Script\asGlobalInterface.cpp">
       <Filter>Source Files\Script\Bindings</Filter>
@@ -249,6 +252,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ItemDrop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ResourceManager.h">

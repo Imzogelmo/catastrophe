@@ -6,38 +6,38 @@
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="Source Files\Math">
-      <UniqueIdentifier>{761ba6d3-cad9-4324-ba77-19eca5a76933}</UniqueIdentifier>
+      <UniqueIdentifier>{89104fb8-ebf8-4adb-8525-5b9f44564b06}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\IO">
-      <UniqueIdentifier>{03e76845-3b7e-4b4d-989b-fda124f191ee}</UniqueIdentifier>
+      <UniqueIdentifier>{84e6b714-14b9-4e8b-9ea8-a1cfd7ac6ca7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Graphics">
-      <UniqueIdentifier>{7d99cc1b-5d56-41ba-bdf2-e5ee40b530ec}</UniqueIdentifier>
+      <UniqueIdentifier>{479b8a32-5ac1-45be-9dfa-cb19d3e5e05f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Gui">
-      <UniqueIdentifier>{b456a8d8-5c91-4abd-8e91-dfbe877d1c92}</UniqueIdentifier>
+      <UniqueIdentifier>{8cffcc95-9cf7-4b74-b6d1-55a2e1c0637b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Util">
-      <UniqueIdentifier>{dbcccf6d-b0e8-4703-8c37-d38328b8e0cc}</UniqueIdentifier>
+      <UniqueIdentifier>{fb7925d6-1b3b-4912-881f-0d462881595b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
     <Filter Include="Header Files\Math">
-      <UniqueIdentifier>{beab7104-7604-4363-94dd-90e599e10033}</UniqueIdentifier>
+      <UniqueIdentifier>{28bbbba2-c508-457e-8658-da4110b8f8db}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\IO">
-      <UniqueIdentifier>{364d8c6b-f2fc-451a-99f0-178da87db977}</UniqueIdentifier>
+      <UniqueIdentifier>{cca26090-2a45-4978-ba50-2ebf0cc0d39d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Graphics">
-      <UniqueIdentifier>{6e671f77-00a5-47a5-a1f5-d2e03928dc81}</UniqueIdentifier>
+      <UniqueIdentifier>{341690aa-7c13-42aa-a8e8-8c371c65df43}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Gui">
-      <UniqueIdentifier>{8a09f3cb-d3ee-4894-9ad4-7d353f691829}</UniqueIdentifier>
+      <UniqueIdentifier>{fe2d90cf-4485-4476-b0f9-7a9270930256}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Util">
-      <UniqueIdentifier>{a116b0cb-4e27-4181-9c56-8dc30dd9d8d3}</UniqueIdentifier>
+      <UniqueIdentifier>{be583587-b890-4f03-b0a8-97dd6e8c5805}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
@@ -171,6 +171,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Catastrophe\Common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Catastrophe\FileIO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Catastrophe\Graphics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Catastrophe\Gui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Catastrophe\MathTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Catastrophe\Util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Catastrophe\Math\BoundingBox.h">
