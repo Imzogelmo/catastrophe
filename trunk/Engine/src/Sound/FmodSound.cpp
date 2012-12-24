@@ -77,7 +77,7 @@ void FmodSound::Play( bool restart )
 		//	Stop();
 
 		FMOD_CHANNELINDEX channelID = FMOD_CHANNEL_FREE;
-		if( m_channel && m_type != TypeSfx )
+		if( m_channel && (m_type != TypeSfx || restart) )
 		{
 			channelID = FMOD_CHANNEL_REUSE;
 		}

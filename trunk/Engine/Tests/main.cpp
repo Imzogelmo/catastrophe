@@ -202,7 +202,8 @@ menu.SetPosition(100,0);
 	//test sound;
 	FmodSoundEngine se;
 	se.Initialize();
-	Sound* sound = se.LoadFromFile( Sound::TypeMidi, "wtcf2.mid" );
+	//Sound* sound = se.LoadFromFile( Sound::TypeMidi, "wtcf2.mid" );
+	Sound* sound = se.LoadFromFile( Sound::TypeSfx, "DTA.mp3" );
 	assert(sound);
 	sound->Play();
 
@@ -300,9 +301,12 @@ menu.SetPosition(100,0);
 		sb.Render();
 		sb.End();
 
+		static int _cnt = 0;
+		_cnt++;
+		if(_cnt % 240 == 230)
+			sound->Play();
 
 		//sound->Stop();
-		//sound->Play();
 
 		se.Update();
 		glDisable(GL_TEXTURE_2D);

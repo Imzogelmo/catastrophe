@@ -43,8 +43,8 @@ public:
 	VertexShader* GetVertexShader() const { return m_vertex_shader; }
 	FragmentShader* GetFragmentShader() const { return m_fragment_shader; }
 
-	void Begin();
-	void End();
+	void Bind();
+	void Unbind();
 
 	bool Link();
 	bool IsLinked() const { return m_linked; }

@@ -67,7 +67,7 @@ void SpriteBatch::Begin()
 void SpriteBatch::End()
 {
 	if(m_attached_shader)
-		m_attached_shader->End();
+		m_attached_shader->Unbind();
 }
 
 void SpriteBatch::SetMaxHardwareBatchSize( size_t maxHardwareBatch )
@@ -380,7 +380,7 @@ void SpriteBatch::Render()
 	}
 
 	if(m_attached_shader)
-		m_attached_shader->Begin();
+		m_attached_shader->Bind();
 
 
 	glEnable( GL_TEXTURE_2D );

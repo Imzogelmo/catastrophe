@@ -19,8 +19,6 @@
 #pragma once
 
 #include "Common.h"
-#include <math.h>
-
 
 #include "Math/Common.h"
 #include "Math/Vector2.h"
