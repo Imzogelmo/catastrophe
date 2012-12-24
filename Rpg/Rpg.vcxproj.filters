@@ -1,0 +1,381 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Script">
+      <UniqueIdentifier>{8bbbd330-6c06-4ad8-86ed-07ac9d62284b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Script\Collections">
+      <UniqueIdentifier>{2366cab0-0a91-4cb1-a44d-215789a5d2a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Script\Bindings">
+      <UniqueIdentifier>{66c732e3-68e2-4d0c-8d21-4c77b16c0a56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Script\Compiler">
+      <UniqueIdentifier>{8e540738-82e2-4253-a21f-3a1c2c33030a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tile">
+      <UniqueIdentifier>{02bdc772-3aec-4a51-8e02-dd310e476f5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Database">
+      <UniqueIdentifier>{3cf63e32-1486-40cc-84fb-0e5a5c852e89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Shmup">
+      <UniqueIdentifier>{4bc1a563-03af-42e7-b4ce-98848a5395bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Util">
+      <UniqueIdentifier>{f1194441-9125-4609-9733-6e700481a8cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Script">
+      <UniqueIdentifier>{e2909f02-89a3-410b-b7ae-b6e06f287772}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Script\Collections">
+      <UniqueIdentifier>{6aca82a0-e2e6-490c-aafa-96d60b6c6ddf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Script\Compiler">
+      <UniqueIdentifier>{5c999bb1-7013-407a-9b16-5691f33659cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Script\Bindings">
+      <UniqueIdentifier>{bfbae3c2-237b-48ab-b2c3-0e8421da68e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tile">
+      <UniqueIdentifier>{d8675682-f0d4-4606-84f2-e0682228ec3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Database">
+      <UniqueIdentifier>{1e181726-1675-4e93-8c6f-3b6759d4e5af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Shmup">
+      <UniqueIdentifier>{8f4c9468-0367-4783-9832-036ca26bc0ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Util">
+      <UniqueIdentifier>{fcc51dcf-f63e-4fcc-a839-a52a6f17c707}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\AttributeFlags.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Attributes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ConfigFile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Equipment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Inventory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\InventoryItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ItemDrop.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ResourceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Rpg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Screen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ScreenManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SpellBook.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\Bytecode.cpp">
+      <Filter>Source Files\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\ContextPool.cpp">
+      <Filter>Source Files\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\ScriptEngine.cpp">
+      <Filter>Source Files\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\ScriptGarbage.cpp">
+      <Filter>Source Files\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\ScriptObject.cpp">
+      <Filter>Source Files\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\asArray.cpp">
+      <Filter>Source Files\Script\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\asArrayTemplate.cpp">
+      <Filter>Source Files\Script\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\asScriptTemplate.cpp">
+      <Filter>Source Files\Script\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\asString.cpp">
+      <Filter>Source Files\Script\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\asVector.cpp">
+      <Filter>Source Files\Script\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\asVectorTemplate.cpp">
+      <Filter>Source Files\Script\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\asGlobalInterface.cpp">
+      <Filter>Source Files\Script\Bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\asGraphicsInterface.cpp">
+      <Filter>Source Files\Script\Bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\asGuiInterface.cpp">
+      <Filter>Source Files\Script\Bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\asInputInterface.cpp">
+      <Filter>Source Files\Script\Bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\asMathInterface.cpp">
+      <Filter>Source Files\Script\Bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\asSoundInterface.cpp">
+      <Filter>Source Files\Script\Bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\Compiler.cpp">
+      <Filter>Source Files\Script\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\PostProcessor.cpp">
+      <Filter>Source Files\Script\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\Preprocessor.cpp">
+      <Filter>Source Files\Script\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tile\Map.cpp">
+      <Filter>Source Files\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tile\MapLayer.cpp">
+      <Filter>Source Files\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tile\Tile.cpp">
+      <Filter>Source Files\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tile\Tileset.cpp">
+      <Filter>Source Files\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tile\TilesetManager.cpp">
+      <Filter>Source Files\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AttributeData.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CharacterClass.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Database.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EncounterData.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ItemData.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MonsterData.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MonsterPartyData.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SpellData.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shmup\BulletManager.cpp">
+      <Filter>Source Files\Shmup</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Util\Serialization.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\AttributeFlags.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Attributes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AttributeStrings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ConfigFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Entity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Equipment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FixedAttributeArray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Inventory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\InventoryItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ItemDrop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ResourceManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Screen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ScreenManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SpellBook.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Script\Bytecode.h">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Script\Common.h">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Script\ContextPool.h">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Script\ScriptEngine.h">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Script\ScriptGarbage.h">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Script\ScriptObject.h">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Script\asArray.h">
+      <Filter>Header Files\Script\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Script\asArrayTemplate.h">
+      <Filter>Header Files\Script\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Script\asScriptTemplate.h">
+      <Filter>Header Files\Script\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Script\asVector.h">
+      <Filter>Header Files\Script\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Script\asVectorTemplate.h">
+      <Filter>Header Files\Script\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Script\Compiler.h">
+      <Filter>Header Files\Script\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Script\PostProcessor.h">
+      <Filter>Header Files\Script\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Script\Preprocessor.h">
+      <Filter>Header Files\Script\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Script\asBindUtil.h">
+      <Filter>Header Files\Script\Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tile\CollisionLayer.h">
+      <Filter>Header Files\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tile\Map.h">
+      <Filter>Header Files\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tile\MapLayer.h">
+      <Filter>Header Files\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tile\MapProperties.h">
+      <Filter>Header Files\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tile\Tile.h">
+      <Filter>Header Files\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tile\TileProperties.h">
+      <Filter>Header Files\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tile\Tileset.h">
+      <Filter>Header Files\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tile\TilesetManager.h">
+      <Filter>Header Files\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AttributeData.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CharacterClass.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Database.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DataList.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EncounterData.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ItemData.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MonsterData.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MonsterPartyData.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SpellData.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shmup\Bullet.h">
+      <Filter>Header Files\Shmup</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shmup\BulletManager.h">
+      <Filter>Header Files\Shmup</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shmup\BulletPool.h">
+      <Filter>Header Files\Shmup</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shmup\PODBullet.h">
+      <Filter>Header Files\Shmup</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shmup\PODBulletManager.h">
+      <Filter>Header Files\Shmup</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Util\Serialization.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E92EC01E-0F58-45A1-97A0-9C0600830480}</ProjectGuid>
+    <RootNamespace>Rpg</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>Engine.lib;mcppd.lib;angelscriptd.lib;tinyxml2d.lib;freetype.lib;glew32sd.lib;OpenGL32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>Engine.lib;glfw.lib;mcppd.lib;angelscript.lib;glew32s.lib;OpenGL32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\AttributeFlags.cpp" />
+    <ClCompile Include="src\Attributes.cpp" />
+    <ClCompile Include="src\ConfigFile.cpp" />
+    <ClCompile Include="src\Equipment.cpp" />
+    <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\GameScreen.cpp" />
+    <ClCompile Include="src\Inventory.cpp" />
+    <ClCompile Include="src\InventoryItem.cpp" />
+    <ClCompile Include="src\ItemDrop.cpp" />
+    <ClCompile Include="src\ResourceManager.cpp" />
+    <ClCompile Include="src\Rpg.cpp" />
+    <ClCompile Include="src\Screen.cpp" />
+    <ClCompile Include="src\ScreenManager.cpp" />
+    <ClCompile Include="src\SpellBook.cpp" />
+    <ClCompile Include="src\Script\Bytecode.cpp" />
+    <ClCompile Include="src\Script\ContextPool.cpp" />
+    <ClCompile Include="src\Script\ScriptEngine.cpp" />
+    <ClCompile Include="src\Script\ScriptGarbage.cpp" />
+    <ClCompile Include="src\Script\ScriptObject.cpp" />
+    <ClCompile Include="src\Script\asArray.cpp" />
+    <ClCompile Include="src\Script\asArrayTemplate.cpp" />
+    <ClCompile Include="src\Script\asScriptTemplate.cpp" />
+    <ClCompile Include="src\Script\asString.cpp" />
+    <ClCompile Include="src\Script\asVector.cpp" />
+    <ClCompile Include="src\Script\asVectorTemplate.cpp" />
+    <ClCompile Include="src\Script\asGlobalInterface.cpp" />
+    <ClCompile Include="src\Script\asGraphicsInterface.cpp" />
+    <ClCompile Include="src\Script\asGuiInterface.cpp" />
+    <ClCompile Include="src\Script\asInputInterface.cpp" />
+    <ClCompile Include="src\Script\asMathInterface.cpp" />
+    <ClCompile Include="src\Script\asSoundInterface.cpp" />
+    <ClCompile Include="src\Script\Compiler.cpp" />
+    <ClCompile Include="src\Script\PostProcessor.cpp" />
+    <ClCompile Include="src\Script\Preprocessor.cpp" />
+    <ClCompile Include="src\Tile\Map.cpp" />
+    <ClCompile Include="src\Tile\MapLayer.cpp" />
+    <ClCompile Include="src\Tile\Tile.cpp" />
+    <ClCompile Include="src\Tile\Tileset.cpp" />
+    <ClCompile Include="src\Tile\TilesetManager.cpp" />
+    <ClCompile Include="src\AttributeData.cpp" />
+    <ClCompile Include="src\CharacterClass.cpp" />
+    <ClCompile Include="src\Database.cpp" />
+    <ClCompile Include="src\EncounterData.cpp" />
+    <ClCompile Include="src\ItemData.cpp" />
+    <ClCompile Include="src\MonsterData.cpp" />
+    <ClCompile Include="src\MonsterPartyData.cpp" />
+    <ClCompile Include="src\SpellData.cpp" />
+    <ClCompile Include="src\Shmup\BulletManager.cpp" />
+    <ClCompile Include="src\Util\Serialization.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\AttributeFlags.h" />
+    <ClInclude Include="src\Attributes.h" />
+    <ClInclude Include="src\AttributeStrings.h" />
+    <ClInclude Include="src\Common.h" />
+    <ClInclude Include="src\ConfigFile.h" />
+    <ClInclude Include="src\Entity.h" />
+    <ClInclude Include="src\Equipment.h" />
+    <ClInclude Include="src\FixedAttributeArray.h" />
+    <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\GameScreen.h" />
+    <ClInclude Include="src\Inventory.h" />
+    <ClInclude Include="src\InventoryItem.h" />
+    <ClInclude Include="src\ItemDrop.h" />
+    <ClInclude Include="src\ResourceManager.h" />
+    <ClInclude Include="src\Screen.h" />
+    <ClInclude Include="src\ScreenManager.h" />
+    <ClInclude Include="src\SpellBook.h" />
+    <ClInclude Include="src\Script\Bytecode.h" />
+    <ClInclude Include="src\Script\Common.h" />
+    <ClInclude Include="src\Script\ContextPool.h" />
+    <ClInclude Include="src\Script\ScriptEngine.h" />
+    <ClInclude Include="src\Script\ScriptGarbage.h" />
+    <ClInclude Include="src\Script\ScriptObject.h" />
+    <ClInclude Include="src\Script\asArray.h" />
+    <ClInclude Include="src\Script\asArrayTemplate.h" />
+    <ClInclude Include="src\Script\asScriptTemplate.h" />
+    <ClInclude Include="src\Script\asVector.h" />
+    <ClInclude Include="src\Script\asVectorTemplate.h" />
+    <ClInclude Include="src\Script\Compiler.h" />
+    <ClInclude Include="src\Script\PostProcessor.h" />
+    <ClInclude Include="src\Script\Preprocessor.h" />
+    <ClInclude Include="src\Script\asBindUtil.h" />
+    <ClInclude Include="src\Tile\CollisionLayer.h" />
+    <ClInclude Include="src\Tile\Map.h" />
+    <ClInclude Include="src\Tile\MapLayer.h" />
+    <ClInclude Include="src\Tile\MapProperties.h" />
+    <ClInclude Include="src\Tile\Tile.h" />
+    <ClInclude Include="src\Tile\TileProperties.h" />
+    <ClInclude Include="src\Tile\Tileset.h" />
+    <ClInclude Include="src\Tile\TilesetManager.h" />
+    <ClInclude Include="src\AttributeData.h" />
+    <ClInclude Include="src\CharacterClass.h" />
+    <ClInclude Include="src\Database.h" />
+    <ClInclude Include="src\DataList.h" />
+    <ClInclude Include="src\EncounterData.h" />
+    <ClInclude Include="src\ItemData.h" />
+    <ClInclude Include="src\MonsterData.h" />
+    <ClInclude Include="src\MonsterPartyData.h" />
+    <ClInclude Include="src\SpellData.h" />
+    <ClInclude Include="src\Shmup\Bullet.h" />
+    <ClInclude Include="src\Shmup\BulletManager.h" />
+    <ClInclude Include="src\Shmup\BulletPool.h" />
+    <ClInclude Include="src\Shmup\PODBullet.h" />
+    <ClInclude Include="src\Shmup\PODBulletManager.h" />
+    <ClInclude Include="src\Util\Serialization.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
