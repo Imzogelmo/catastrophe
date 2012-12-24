@@ -42,7 +42,7 @@ struct AttributeData
 	Attributes& GetAttributes() { return attributes; }
 	AttributeFlags& GetAttributeFlags() { return attribute_flags; }
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
+	NO_INLINE void SerializeXml( XmlWriter* xml );
+	NO_INLINE void DeserializeXml( XmlReader* xml );
 
 };

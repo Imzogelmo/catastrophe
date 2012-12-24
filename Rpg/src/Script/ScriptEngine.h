@@ -90,8 +90,14 @@ private:
 	void RegisterAnimatedSprite();
 
 	//sound
+	void RegisterSoundInterface();
+	void RegisterSound();
 
+	//game
+	void RegisterGameInterface();
+	void RegisterGame();
 
+	//global
 	void RegisterGlobalFunctions();
 
 

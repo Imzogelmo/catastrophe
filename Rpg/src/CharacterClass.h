@@ -50,8 +50,8 @@ public:
 	CharacterClass& GetCharacterClass( size_t index ) { return base_type::operator [](index);  }
 	const CharacterClass& GetCharacterClass( size_t index ) const { return base_type::operator [](index);  }
 
-	bool SerializeXml( const fc::string& filename );
-	bool DeserializeXml( const fc::string& filename );
+	NO_INLINE bool SerializeXml( const fc::string& filename );
+	NO_INLINE bool DeserializeXml( const fc::string& filename );
 
 };
 

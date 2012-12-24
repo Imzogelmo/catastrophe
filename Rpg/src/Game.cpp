@@ -12,9 +12,23 @@
 #include "Game.h"
 
 
+Game* __gCurrentGameInstance = 0;
+Game* gGetGameInstance()
+{
+	// I don't plan on allowing multiple game instances
+	// to be active at once, though it is possible.
+	return __gCurrentGameInstance;
+}
+
 
 int Game::Initialize()
 {
+	__gCurrentGameInstance = this;
+
+	m_resourceManager.SetBaseDirectory("game/");
+	m_resourceManager.SetTextureDirectory("textures/");
+	m_resourceManager.SetFontDirectory("fonts/");
+
 	int ret(0);
 	ret = InternalInitScriptEngine();
 	if(ret != 0)

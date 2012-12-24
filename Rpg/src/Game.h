@@ -17,10 +17,12 @@
 #include "Common.h"
 #include "GlobalSettings.h"
 #include "ScreenManager.h"
+#include "ResourceManager.h"
 
 #include "Script/ScriptEngine.h"
 #include "Entity.h"
 #include "Object.h"
+
 
 /*
  * Game specific settings class.
@@ -48,6 +50,7 @@ public:
 	GameSettings* GetSettings() { return &m_settings; }
 	ScriptEngine* GetScriptEngine() { return &m_scriptEngine; }
 	ScreenManager* GetScreenManager() { return &m_screenManager; }
+	ResourceManager* GetResourceManager() { return &m_resourceManager; }
 
 	void Update();
 	void Render();
@@ -61,8 +64,8 @@ protected:
 	GameSettings	m_settings;
 	ScriptEngine	m_scriptEngine;
 	ScreenManager	m_screenManager;
+	ResourceManager	m_resourceManager;
 
 };
-
 
 
