@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Interop">
+      <UniqueIdentifier>{54b24e31-cb57-4039-85ff-424179e40b12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Interop">
+      <UniqueIdentifier>{3ae1ac2d-62d3-4861-8f14-b4d85f775428}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Agn.Catastrophe.Interop.h">
@@ -39,6 +45,12 @@
     <ClInclude Include="DrawableWrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ResourceManagerWrapper.h">
+      <Filter>Header Files\Interop</Filter>
+    </ClInclude>
+    <ClInclude Include="ITexture.h">
+      <Filter>Header Files\Interop</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Agn.Catastrophe.Interop.cpp">
@@ -58,6 +70,9 @@
     </ClCompile>
     <ClCompile Include="DrawableWrapper.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManagerWrapper.cpp">
+      <Filter>Source Files\Interop</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

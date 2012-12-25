@@ -51,11 +51,11 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <AdditionalIncludeDirectories>..\..\Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>
-      </AdditionalDependencies>
+      <AdditionalDependencies>..\..\Engine\lib\ce-core-d.lib;..\..\Engine\lib\ce-sound-d.lib;..\..\Engine\lib\ce-system-d.lib;..\..\Engine\lib\angelscriptd.lib;..\..\Engine\lib\glew32sd.lib;..\..\Engine\lib\glfwd.lib;..\..\Engine\lib\mcppd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -81,7 +81,9 @@
     <ClInclude Include="DrawableWrapper.h" />
     <ClInclude Include="FileConverter.h" />
     <ClInclude Include="IDrawTarget.h" />
+    <ClInclude Include="ITexture.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="ResourceManagerWrapper.h" />
     <ClInclude Include="Stdafx.h" />
     <ClInclude Include="StringWrapper.h" />
   </ItemGroup>
@@ -90,6 +92,7 @@
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="DrawableWrapper.cpp" />
     <ClCompile Include="FileConverter.cpp" />
+    <ClCompile Include="ResourceManagerWrapper.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
