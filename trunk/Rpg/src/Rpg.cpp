@@ -125,16 +125,13 @@ int main(int argc, char* argv[])
 	LoadConfigSettings(argc, argv);
 
 
-	//DoTests(); //some quick and dirty testing.
-
-
 	Game* game = new Game();
-	//if( game->Initialize() != 0 )
-	//	return -1;
+	if( game->Initialize() != 0 )
+		return -1;
 
 	Window* window = CreateWindow();
 
-	DoTests(); //some quick and dirty testing.
+	//DoTests(); //some quick and dirty testing.
 
 	// TODO: Need to handle loading +
 	// Splash screen here...

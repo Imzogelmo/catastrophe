@@ -55,7 +55,7 @@ int Game::InternalInitScriptEngine()
 	Log( "Compiling scripts..." );
 	for( bool exit(false); exit != true; )
 	{
-		if( engine->Compile("Scripts/Game.cpp", fc::vector<fc::string>()) != 0 )
+		if( engine->Compile("script/TestCompile.cpp", fc::vector<fc::string>()) != 0 )
 		{
 			printf("-press [c] to recompile, or any key to exit.");
 			int c = _getch();

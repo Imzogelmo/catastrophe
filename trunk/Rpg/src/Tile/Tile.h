@@ -16,6 +16,8 @@
 #include "../Common.h"
 #include <Catastrophe/Graphics/Animation.h>
 #include <Catastrophe/Math/Rectf.h>
+#include <Catastrophe/Util/Indexable.h>
+
 
 /*
  * @Tile (animated tile)
@@ -23,7 +25,7 @@
  * these are optimized heavily for both cases, and
  * non-animated tiles will never allocate memory.
  */
-class Tile
+class Tile : public Indexable<> //todo; ..I think index can be safely removed...
 {
 public:
 	typedef fc::fixed_vector<Rectf, 1>	vec_type;
@@ -36,22 +38,23 @@ public:
 	Tile( Tileset* parent = 0, size_t id = 0 );
 
 	void SetTileset( Tileset* parent ) { m_parent = parent; }
-	void SetIndex( size_t index ) { m_id = index; }
 	void SetFrameData( Rect sourceRect, int numberOfFrames = 1 );
 	void SetTileSize( int size ) { m_tileSize = size; }
 	void SetCurrentFrame( short frame );
 	void SetAnimationSpeed( short frameDelay );
 	void Update();
 
-
-	Tileset*	GetTileset() const { return m_parent; }
-	size_t		GetIndex() const { return m_id; }
 	short		GetCurrentFrame() const { return frame; }
 	short		GetAnimationSpeed() const { return anim_speed; }
 	short		GetFlags() const { return flags; }
 	int			GetTileSize() const { return m_tileSize; }
 	inline bool IsAnimated() const { return m_uv.has_overflowed(); }
 	inline size_t NumFrames() const { return m_uv.size(); }
+
+	inline Tileset*	GetTileset() const { return m_parent; }
+	Texture* GetTexture() const;
+	gluint GetTextureID() const;
+	inline const Rectf&	GetUVRect() const { return m_uv[frame]; }
 
 	NO_INLINE void SerializeXml( XmlWriter* xml );
 	NO_INLINE void DeserializeXml( XmlReader* xml );
@@ -65,7 +68,6 @@ public:
 protected:
 	Tileset*	m_parent;
 	vec_type	m_uv;
-	size_t		m_id;
 
 private:
 	//This value should never change.

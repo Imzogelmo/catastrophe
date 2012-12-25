@@ -26,10 +26,21 @@ Tile::Tile( Tileset* parent, size_t id ) :
 	anim_speed(16),
 	flags(0),
 	m_parent(parent),
-	m_uv(),
-	m_id(id)
+	m_uv()
 {
 	m_uv.push_back(Rectf::Zero);
+}
+
+
+Texture* Tile::GetTexture() const
+{
+	return m_parent->GetTexture();
+}
+
+
+gluint Tile::GetTextureID() const
+{
+	return m_parent->GetTexture()->GetTextureID();
 }
 
 
