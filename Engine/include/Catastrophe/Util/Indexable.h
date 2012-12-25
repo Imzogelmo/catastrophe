@@ -28,7 +28,7 @@ class Indexable
 public:
 	Indexable() : m_index(T(0)) {}
 
-	inline T GetIndex() { return m_index; }
+	inline T GetIndex() const { return m_index; }
 	inline void SetIndex( T index ) { m_index = index; }
 
 protected:

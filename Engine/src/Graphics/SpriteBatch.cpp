@@ -196,6 +196,13 @@ void SpriteBatch::DrawTexture( const Texture* texture, const Vector2& pos )
 }
 
 
+void SpriteBatch::DrawSpriteData( const SpriteData& data )
+{
+	//it doesn't get any faster than this.
+	m_queue.push_back_uninitialized() = data;
+}
+
+
 // Text rendering
 void SpriteBatch::DrawString( Font* font, const fc::string& text, const Vector2& pos, const Color& c, TextAlignment alignment, int face_size, int depth )
 {
