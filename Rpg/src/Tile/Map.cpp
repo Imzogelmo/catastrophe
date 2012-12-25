@@ -108,6 +108,7 @@ bool Map::AddLayer( MapLayer* layer )
 		}
 	}
 
+	layer->SetIndex(m_layers.size());
 	layer->Resize(Width(), Height());
 	m_layers.push_back(layer);
 	return true;
@@ -121,6 +122,11 @@ void Map::RemoveLayer( size_t index )
 
 	delete m_layers[index];
 	m_layers.erase_at(index);
+
+	for( ; index < m_layers.size(); ++index )
+	{
+		m_layers[index]->SetIndex(index);
+	}
 }
 
 
@@ -143,6 +149,17 @@ void Map::SwapLayer( size_t first, size_t second )
 		return;
 
 	fc::swap( m_layers[first], m_layers[second] );
+	m_layers[first]->SetIndex(second);
+	m_layers[second]->SetIndex(first);
+}
+
+
+MapLayer* Map::GetLayer( size_t index ) const
+{
+	if( index < m_layers.size() )
+		return m_layers[index];
+
+	return 0;
 }
 
 

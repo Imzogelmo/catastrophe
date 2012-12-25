@@ -14,11 +14,12 @@
 #include <fc/dynamic_array2d.h>
 #include <Catastrophe/Math/Color.h>
 #include <Catastrophe/Graphics/BlendMode.h>
+#include <Catastrophe/Util/Indexable.h>
 
 #include "Tile.h"
 
 
-class MapLayer
+class MapLayer : public Indexable<>
 {
 public:
 	typedef fc::dynamic_array2d<Tile*> array_type;

@@ -41,18 +41,16 @@ public:
 	size_t NumLayers() const { return m_layers.size(); }
 
 	bool AddLayer( MapLayer* layer = 0 );
-	//void InsertLayer( MapLayer* layer, size_t index );
 	void RemoveLayer( MapLayer* layer );
 	void RemoveLayer( size_t index = size_t(-1) );
 	void Resize( size_t w, size_t h, size_t numLayers = size_t(-1) );
 	void SwapLayer( size_t first, size_t second );
 
-	MapLayer* GetLayer( size_t layer ) const;
+	MapLayer* GetLayer( size_t index ) const;
 
 	fc::string&	GetName() { return m_name; }
 	const fc::string& GetName() const { return m_name; }
 
-	//void Render( SpriteBatch* spriteBatch, Rect viewRect, size_t tileSize );
 	bool SerializeXml( const fc::string& filename );
 	bool DeserializeXml( const fc::string& filename );
 
