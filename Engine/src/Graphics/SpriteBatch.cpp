@@ -261,7 +261,7 @@ void SpriteBatch::InternalQueueString
 			InternalQueueSprite( font->GetTextureID(), 0.f, 1.f, 0.f, Rectf(translation, translation + size), glyph->uv, c, depth );
 		}
 
-		pos.x += (float(glyph->advance.x) * scale.x);
+		pos.x += (float(glyph->advance) * scale.x);
 	}
 }
 
