@@ -186,7 +186,7 @@ void Message::UpdateText()
 			currentWordSize++;
 		}
 
-		textWidth += (int)glyph.advance.x;
+		textWidth += (int)glyph.advance;
 		if( textWidth > w )
 		{
 			if( numWordsInRow == 0 )

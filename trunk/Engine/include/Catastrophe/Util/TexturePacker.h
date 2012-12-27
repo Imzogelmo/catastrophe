@@ -33,6 +33,7 @@ public:
 	Point Size() { return m_size; }
 
 	virtual bool Pack( int w, int h, Point& outPos ) = 0;
+
 protected:
 	Point m_size;
 };
