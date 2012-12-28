@@ -24,6 +24,9 @@
 #include "Object.h"
 
 
+
+const unsigned char* gGetSystemFontString();
+
 /*
  * Game specific settings class.
  */

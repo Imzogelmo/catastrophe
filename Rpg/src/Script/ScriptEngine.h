@@ -111,6 +111,7 @@ private:
 	asIScriptEngine*		engine;
 	Game*					m_gamePtr;
 	ScriptGarbage			m_gc;
+	ContextPool*			m_contextPool;
 
 	ScriptEngine(const ScriptEngine &);
 	ScriptEngine &operator = (const ScriptEngine &);

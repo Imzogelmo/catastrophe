@@ -50,12 +50,12 @@ typedef long long			int64;
 #if defined CE_WANT_NAMESPACE
 #define CE_NAMESPACE_BEGIN namespace ce {
 #define CE_NAMESPACE_END }
+#define USING_NAMESPACE_CE using namespace ce;
 #else
 #define CE_NAMESPACE_BEGIN
 #define CE_NAMESPACE_END
+#define USING_NAMESPACE_CE
 #endif
-
-#define USING_NAMESPACE_CE using namespace ce;
 
 #define CE_TRUE		1
 #define CE_FALSE	0

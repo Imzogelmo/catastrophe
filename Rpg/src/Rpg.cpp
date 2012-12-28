@@ -97,6 +97,7 @@ Window* CreateWindow()
 #include "MonsterData.h"
 #include "ItemData.h"
 #include "Tile/TilesetManager.h"
+#include <Catastrophe/IO/File.h>
 
 void DoTests()
 {
@@ -116,7 +117,20 @@ int main(int argc, char* argv[])
 	crtDebugflags |= (crtDebugflags & 0x0000FFFF) | _CRTDBG_CHECK_ALWAYS_DF;
 	_CrtSetDbgFlag(crtDebugflags);
 
+	/*
+	File f("sansation.ttf");
+	File out("out.txt", FileWriteText);
+	int i(0);
+	while(!f.IsEof())
+	{
+		ubyte c = f.ReadByte();
+		out.WriteLine(fc::to_string(int(c)) + ",", (++i % 30) == 0);
+	}
 
+	f.Close();
+	out.Close();
+	return 0;
+*/
 	// initialize system and sub-systems.
 	System::Init();
 	System::InitLogging("debug.log", true); //todo put this after config..
@@ -136,6 +150,8 @@ int main(int argc, char* argv[])
 	// TODO: Need to handle loading +
 	// Splash screen here...
 
+	//Font font;
+	//font.LoadFromFile(fc::string(), 32);
 	while( !window->RequestClose() )
 	{
 		window->ClearColor();
