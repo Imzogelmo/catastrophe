@@ -21,7 +21,7 @@
 #include "../Common.h"
 
 
-class Timer
+class CE_API Timer
 {
 public:
 	struct Time

@@ -24,7 +24,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class Ray
+class CE_API Ray
 {
 public:
 	Vector3 pos;

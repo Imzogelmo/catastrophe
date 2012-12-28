@@ -26,8 +26,7 @@
 CE_NAMESPACE_BEGIN
 
 
-
-class Quaternion
+class CE_API Quaternion
 {
 public:
 	float x, y, z, w;

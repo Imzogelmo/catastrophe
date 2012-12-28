@@ -57,7 +57,7 @@ enum TextAlignment
 };
 
 
-class Font
+class CE_API Font
 {
 public:
 	typedef fc::vector<Glyph>	vec_type;
@@ -76,8 +76,8 @@ public:
 	~Font();
 
 	int LoadFromFile( const fc::string& filename, int faceSize, int dpi = DefaultDpi );
-	int CreateFromBitmapFontTexture( gluint texture, uint width, uint height );
-	int CreateFromPixelData( const ubyte* pixels, uint pixelFormat, uint width, uint height );
+	//int CreateFromBitmapFontTexture( gluint texture, uint width, uint height );
+	//int CreateFromPixelData( const ubyte* pixels, uint pixelFormat, uint width, uint height );
 
 	void SetAdvance( int advance );
 	void SetLineHeight( int height );
@@ -98,6 +98,7 @@ public:
 
 protected:
 	void InternalInitialize();
+	int InternalLoadGenericBitmapFont( const fc::string& filename, int startCode = 32 );
 
 	vec_type	m_glyphs;
 	int			m_glyph_map[256];

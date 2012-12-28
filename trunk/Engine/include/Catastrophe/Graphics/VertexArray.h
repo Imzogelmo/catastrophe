@@ -83,18 +83,6 @@ public:
 		}
 	}
 
-	Rectf GetBoundingRect() const
-	{
-		Rectf r = Rectf::Zero;
-		if( !m_vertices.empty() )
-		{
-			for( vec_type::iterator it = m_vertices.begin(); it != m_vertices.end(); ++it )
-				r.Merge(it->pos.x);
-		}
-
-		return r;
-	}
-
 protected:
 	vec_type m_vertices;
 };

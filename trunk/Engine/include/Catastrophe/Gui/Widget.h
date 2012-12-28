@@ -28,7 +28,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class Widget // todo: should be ref counted?? ..
+class CE_API Widget // todo: should be ref counted?? ..
 {
 public:
 	typedef fc::fixed_vector<Widget*, 8>		child_vec_type; //todo: use memory pools instead.

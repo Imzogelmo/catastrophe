@@ -28,7 +28,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class BlendMode
+class CE_API BlendMode
 {
 public:
 

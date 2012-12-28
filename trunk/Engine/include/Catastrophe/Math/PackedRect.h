@@ -25,7 +25,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class PackedRect
+class CE_API PackedRect
 {
 public:
 	PackedPoint pos, size;

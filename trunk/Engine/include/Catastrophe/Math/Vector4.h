@@ -26,7 +26,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class Vector4 
+class CE_API Vector4 
 {
 public:
 	float x, y, z, w;

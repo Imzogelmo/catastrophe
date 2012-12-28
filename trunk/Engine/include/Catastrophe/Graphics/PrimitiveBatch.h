@@ -26,7 +26,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class PrimitiveBatch
+class CE_API PrimitiveBatch
 {
 public:
 	typedef fc::vector<Primitive>		vec_type;

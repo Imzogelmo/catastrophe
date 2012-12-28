@@ -81,7 +81,7 @@ struct SpriteData
 FC_MAKE_TRAIT(SpriteData, is_pod);
 
 
-class SpriteBatch
+class CE_API SpriteBatch
 {
 public:
 	typedef fc::vector<SpriteData> vec_type;
@@ -145,14 +145,12 @@ public:
 
 	void DrawString( Font* font, const fc::string& text, const Vector2& pos, const Color& c = Color::White(), TextAlignment alignment = AlignLeft, int face_size = Font::DefaultFaceSize, int depth = 0 );
 	void DrawString( Font* font, const fc::string& text, size_t textPos, size_t amount, const Vector2& pos, const Color& c = Color::White(), TextAlignment alignment = AlignLeft, int face_size = Font::DefaultFaceSize, int depth = 0 );
-
 	void DrawString( Font* font, const fc::string& text, const Vector2& scale, const Vector2& pos, const Color& c = Color::White(), TextAlignment alignment = AlignLeft, int face_size = Font::DefaultFaceSize, int depth = 0 );
 
 	void DrawSprite( const Sprite& sprite, const Vector2& pos );
 	void DrawAnimatedSprite( const AnimatedSprite& sprite, const Vector2& pos );
 	void DrawTexture( const Texture* texture, const Vector2& pos );
 	void DrawSpriteData( const SpriteData& data );
-
 
 	void Render();
 	void Render( const Matrix& transformation );
@@ -164,7 +162,6 @@ private:
 	void InternalQueueSprite( gluint texture, float rotation, const Vector2& scale, const Vector2& origin, const Rectf& vertices, const Rectf& uv, const Color& c, int depth );
 	void InternalQueueSprite( gluint texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, size_t numQuads, int depth );
 	void InternalQueueSprite( gluint texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, const ushort *quadsIndices, size_t numQuads, int depth );
-
 	void InternalQueueString( Font* font, const char* first, const char* last, const Vector2& scale, Vector2 pos, const Color& c, TextAlignment alignment, int face_size, int depth );
 
 	void InternalFlush( gluint texture, size_t blendmodevalue, size_t first, size_t count );

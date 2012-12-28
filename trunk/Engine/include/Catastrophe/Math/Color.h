@@ -31,7 +31,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class Color
+class CE_API Color
 {
 public:
 	Color()												: packed_value(0xff000000) {}

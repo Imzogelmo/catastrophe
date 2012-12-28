@@ -38,7 +38,7 @@ enum eTextureFilter
 };
 */
 
-class Texture
+class CE_API Texture
 {
 public:
 	Texture();

@@ -30,7 +30,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class Primitive : public VertexArray<VertexColor>
+class CE_API Primitive : public VertexArray<VertexColor>
 {
 public:
 	typedef VertexArray<VertexColor>		base_type;
@@ -52,6 +52,7 @@ public:
 	PrimitiveType GetPrimitiveType() const { return m_primType; }
 	Vector2 GetCenter() const;
 	Vector2 GetCenter( size_t start, size_t n ) const;
+	Rectf GetBoundingRect() const;
 
 	void RotateVertices( float rotation, const Vector2 &origin );
 	void ScaleVertices( const Vector2 &scale, const Vector2 &origin );
@@ -77,7 +78,7 @@ protected:
 
 
 
-class PrimitiveObject : protected Primitive
+class CE_API PrimitiveObject : protected Primitive
 {
 public:
 	typedef Primitive				base_type;

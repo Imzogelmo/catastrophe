@@ -24,7 +24,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class AnimationSet
+class CE_API AnimationSet
 {
 public:
 	typedef fc::vector<Animation*> vec_type;

@@ -23,7 +23,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class Point
+class CE_API Point
 {
 public:
 	int x, y;

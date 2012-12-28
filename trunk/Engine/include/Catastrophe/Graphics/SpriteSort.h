@@ -90,32 +90,32 @@ public:
 		{
 			default:
 			case (Deferred):
-				break;
+			break;
 			case (TextureSort):
-				{
-					fc::sort( first, last, SpriteTextureSorter<T>() );
-				}
-				break;
+			{
+				fc::sort( first, last, SpriteTextureSorter<T>() );
+			}
+			break;
 			case (YSort):
-				{
-					fc::sort( first, last, SpriteYSorter<T>() );
-				}
-				break;
+			{
+				fc::sort( first, last, SpriteYSorter<T>() );
+			}
+			break;
 			case (BlendSort):
-				{
-					fc::sort( first, last, SpriteBlendSorter<T>() );
-				}
-				break;
+			{
+				fc::sort( first, last, SpriteBlendSorter<T>() );
+			}
+			break;
 			case (BackToFrontSort):
-				{
-					fc::sort( first, last, SpriteBackToFrontSorter<T>() );
-				}
-				break;
+			{
+				fc::sort( first, last, SpriteBackToFrontSorter<T>() );
+			}
+			break;
 			case (FrontToBackSort):
-				{
-					fc::sort( first, last, SpriteFrontToBackSorter<T>() );
-				}
-				break;
+			{
+				fc::sort( first, last, SpriteFrontToBackSorter<T>() );
+			}
+			break;
 		}
 	}
 };

@@ -24,7 +24,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class Plane
+class CE_API Plane
 {
 public:
 	Vector3 normal;

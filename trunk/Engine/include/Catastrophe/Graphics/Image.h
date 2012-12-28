@@ -28,7 +28,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class Image //TODO: should inherit from Texture...
+class CE_API Image //TODO: should inherit from Texture...
 {
 public:
 	typedef fc::dynamic_array2d<Color> array_type;

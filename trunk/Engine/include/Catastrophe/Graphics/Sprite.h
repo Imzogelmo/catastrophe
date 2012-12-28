@@ -73,7 +73,7 @@ public:
  * @Sprite
  * 
  */
-class Sprite : public SpriteBase
+class CE_API Sprite : public SpriteBase
 {
 public:
 	Sprite( const Texture* texture = 0, const Rect& sourceRect = Rect::Zero );
@@ -93,7 +93,7 @@ protected:
 };
 
 
-class AnimatedSprite : public SpriteBase, public Animation
+class CE_API AnimatedSprite : public SpriteBase, public Animation
 {
 public:
 	AnimatedSprite( const Texture* texture = 0, bool loopAnim = true, bool startPaused = false );

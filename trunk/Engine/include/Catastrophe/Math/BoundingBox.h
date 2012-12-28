@@ -27,7 +27,7 @@ CE_NAMESPACE_BEGIN
 
 
 
-class BoundingBox
+class CE_API BoundingBox
 {
 public:
 	Vector3 min, max;

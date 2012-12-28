@@ -35,7 +35,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class Frustum
+class CE_API Frustum
 {
 public:
 	enum FrustumPlane
