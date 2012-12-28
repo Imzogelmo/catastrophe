@@ -25,7 +25,7 @@ public:
 protected:
 	//todo implement camera class.
 	void DrawMap( const Map* map, const Vector2& pos, const Rect& viewRect );
-	void DrawMapLayer( SpriteBatch* spriteBatch, const MapLayer* layer, Vector2 pos, const Rect& viewRect );
+	void DrawMapLayer( SpriteBatch* spriteBatch, const MapLayer* layer, const Vector2& tilePos, const Rect& viewRect );
 
 };
 

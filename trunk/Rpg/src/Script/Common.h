@@ -31,3 +31,9 @@ struct asSMessageInfo;
 
 struct GCStatistics;
 class ScriptGarbage;
+class ContextPool;
+class ScriptObject;
+class ScriptFunction;
+class ScriptEngine;
+
+

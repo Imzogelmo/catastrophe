@@ -54,8 +54,8 @@ void RegisterWidgetType( asIScriptEngine* engine, const char* name )
 	engine->RegisterObjectMethod( name, "void set_size(const point &in)", asMETHODPR(T, SetPosition, (const Point &), void), asCALL_THISCALL );
 	engine->RegisterObjectMethod( name, "void set_color(const color &in)", asMETHOD(T, SetColor), asCALL_THISCALL );
 	engine->RegisterObjectMethod( name, "void set_visible(bool)", asMETHOD(T, SetVisible), asCALL_THISCALL );
-	engine->RegisterObjectMethod( name, "void set_selected(bool)", asMETHOD(T, SetSelected), asCALL_THISCALL );
-	engine->RegisterObjectMethod( name, "void set_active(bool)", asMETHOD(T, SetActive), asCALL_THISCALL );
+	//engine->RegisterObjectMethod( name, "void set_selected(bool)", asMETHOD(T, SetSelected), asCALL_THISCALL );
+	//engine->RegisterObjectMethod( name, "void set_active(bool)", asMETHOD(T, SetActive), asCALL_THISCALL );
 	
 	engine->RegisterObjectMethod( name, "int get_x() const", asMETHOD(T, GetX), asCALL_THISCALL );
 	engine->RegisterObjectMethod( name, "int get_y() const", asMETHOD(T, GetY), asCALL_THISCALL );
@@ -69,8 +69,8 @@ void RegisterWidgetType( asIScriptEngine* engine, const char* name )
 	engine->RegisterObjectMethod( name, "widget@ get_parent() const", asMETHOD(T, GetParent), asCALL_THISCALL );
 	engine->RegisterObjectMethod( name, "widget@ get_root() const", asMETHOD(T, GetRoot), asCALL_THISCALL );
 	engine->RegisterObjectMethod( name, "bool get_visible() const", asMETHOD(T, IsVisible), asCALL_THISCALL );
-	engine->RegisterObjectMethod( name, "bool get_selected() const", asMETHOD(T, IsSelected), asCALL_THISCALL );
-	engine->RegisterObjectMethod( name, "bool get_active() const", asMETHOD(T, IsActive), asCALL_THISCALL );
+	//engine->RegisterObjectMethod( name, "bool get_selected() const", asMETHOD(T, IsSelected), asCALL_THISCALL );
+	//engine->RegisterObjectMethod( name, "bool get_active() const", asMETHOD(T, IsActive), asCALL_THISCALL );
 	engine->RegisterObjectMethod( name, "int get_num_children() const", asFUNCTION(GetNumChildren), asCALL_CDECL_OBJLAST );
 
 	engine->RegisterObjectMethod( name, "void add_child(widget@)", asMETHOD(T, AddChild), asCALL_THISCALL );

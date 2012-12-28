@@ -42,7 +42,7 @@ void RenderEngine::DrawMap( const Map* map, const Vector2& pos, const Rect& view
 }
 
 
-void RenderEngine::DrawMapLayer( SpriteBatch* spriteBatch, const MapLayer* layer, Vector2 pos, const Rect& viewRect )
+void RenderEngine::DrawMapLayer( SpriteBatch* spriteBatch, const MapLayer* layer, const Vector2& tilePos, const Rect& viewRect )
 {
 	const int TILE_SIZE = 16;//fixme
 	const float TILE_SIZEf = 16.f;//fixme
@@ -70,6 +70,7 @@ void RenderEngine::DrawMapLayer( SpriteBatch* spriteBatch, const MapLayer* layer
 	sd.data[1].color = layerColor;
 	sd.data[2].color = layerColor;
 	sd.data[3].color = layerColor;
+	Vector2 pos = tilePos;
 
 	for( int y(y1); y < y2; ++y )
 	{
@@ -97,6 +98,7 @@ void RenderEngine::DrawMapLayer( SpriteBatch* spriteBatch, const MapLayer* layer
 			pos.x += TILE_SIZEf;
 		}
 
+		pos.x = tilePos.x;
 		pos.y += TILE_SIZEf;
 	}
 }

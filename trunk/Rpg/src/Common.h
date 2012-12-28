@@ -33,6 +33,7 @@ USING_NAMESPACE_CE
 	#define TRACE(cond, message)
 #endif
 #define Trace TRACE
+#define SAFE_DELETE(p) { delete p; p = 0; }
 
 
 // forward declarations

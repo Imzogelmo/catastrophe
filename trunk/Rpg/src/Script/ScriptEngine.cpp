@@ -15,6 +15,7 @@
 #include "ScriptEngine.h"
 #include "Compiler.h"
 #include "ByteCode.h"
+#include "ContextPool.h"
 
 
 #ifdef _MSC_VER
@@ -23,8 +24,9 @@
 #endif
 
 
-ScriptEngine::ScriptEngine()
-	: m_engine(0)
+ScriptEngine::ScriptEngine() :
+	m_engine(0),
+	m_contextPool(0)
 {
 }
 
@@ -33,6 +35,8 @@ ScriptEngine::~ScriptEngine()
 {
 	if(m_engine)
 		m_engine->Release();
+
+	SAFE_DELETE(m_contextPool);
 }
 
 
@@ -56,6 +60,8 @@ void ScriptEngine::Initialize()
 	m_engine->SetUserData(this);
 	m_engine->SetMessageCallback( asFUNCTION(MessageCallback), 0, asCALL_CDECL );
 	SetDefaultEngineProperties();
+
+	m_contextPool = new ContextPool(m_engine);
 
 	engine = m_engine; //fixme;
 }

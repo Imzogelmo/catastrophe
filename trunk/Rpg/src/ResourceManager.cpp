@@ -11,6 +11,7 @@
 
 #include <Catastrophe/Graphics/Texture.h>
 #include <Catastrophe/Graphics/Font.h>
+#include <Catastrophe/Graphics/ShaderObject.h>
 #include "ResourceManager.h"
 
 
@@ -95,17 +96,37 @@ Resource* ResourceCache::GetResource( const void* ptr )
 }
 
 
-void ResourceCache::AddResource( const Resource& resource )
+Resource* ResourceCache::GetResource( int id )
 {
+	Resource* res = 0;
+	if( (size_t)id < m_resources.size() )
+	{
+		if( res->ptr )
+			res = &m_resources[id];
+	}
+
+	return res;
+}
+
+
+int ResourceCache::AddResource( const Resource& resource )
+{
+	int id = -1;
 	if( !m_free_store.empty() )
 	{
+		id = (int)m_free_store.back();
 		m_resources[ m_free_store.back() ] = resource;
 		m_free_store.pop_back();
 	}
 	else
 	{
+		ASSERT(!m_resources.full());
+
+		id = (int)m_resources.size();
 		m_resources.push_back(resource);
 	}
+
+	return id;
 }
 
 
@@ -132,11 +153,12 @@ void ResourceManager::DeleteResources()
 	//releases all gpu data and deletes all resources.
 	m_textureCache.DeleteResources<Texture>();
 	m_fontCache.DeleteResources<Font>();
+	m_shaderCache.DeleteResources<Font>();
 
 }
 
 
-Texture* ResourceManager::LoadTexture( const fc::string& filename )
+Texture* ResourceManager::LoadTexture( const fc::string& filename, int* id  )
 {
 	Resource* resource = m_textureCache.GetResource(filename);
 	Texture* texture = 0;
@@ -156,13 +178,17 @@ Texture* ResourceManager::LoadTexture( const fc::string& filename )
 		if( !texture->LoadFromFile(fn) )
 		{
 			LogError("Failed to load resource (%s)", fn.c_str());
-			delete texture;
-			texture = 0;
+			SAFE_DELETE(texture);
 		}
 		else
 		{
 			texture->SetName(filename);
-			m_textureCache.AddResource( Resource(texture, filename) );
+			int resourceID = m_textureCache.AddResource( Resource(texture, filename) );
+			if( id != 0 )
+			{
+				//the caller wants the resource id.
+				*id = resourceID;
+			}
 		}
 	}
 
@@ -170,7 +196,7 @@ Texture* ResourceManager::LoadTexture( const fc::string& filename )
 }
 
 
-Font* ResourceManager::LoadFont( const fc::string& filename, int faceSize )
+Font* ResourceManager::LoadFont( const fc::string& filename, int faceSize, int* id  )
 {
 	//Fixme: You can load the same font multiple times with different face sizes...
 	Resource* resource = m_fontCache.GetResource(filename);
@@ -191,17 +217,64 @@ Font* ResourceManager::LoadFont( const fc::string& filename, int faceSize )
 		if( !font->LoadFromFile(fn, faceSize) )
 		{
 			LogError("Failed to load resource (%s)", fn.c_str());
-			delete font;
-			font = 0;
+			SAFE_DELETE(font);
 		}
 		else
 		{
 			font->GetTexture()->SetName(filename);
-			m_fontCache.AddResource( Resource(font, filename) );
+			int resourceID = m_fontCache.AddResource( Resource(font, filename) );
+			if( id != 0 )
+			{
+				//the caller wants the resource id.
+				*id = resourceID;
+			}
 		}
 	}
 
 	return font;
+}
+
+
+ShaderObject* ResourceManager::LoadShaderObject( const fc::string& filename, int shaderType, int* id  )
+{
+	Resource* resource = m_shaderCache.GetResource(filename);
+	ShaderObject* shader = 0;
+	if( resource != 0 )
+	{
+		resource->AddRef();
+		shader = (ShaderObject*)resource->ptr;
+	}
+	else
+	{
+		if( shaderType == VertexShaderType ) shader = new VertexShader();
+		else if( shaderType == FragmentShaderType ) shader = new FragmentShader();
+		else
+		{
+			LogError("Error: shader type unknown.");
+			return 0;
+		}
+
+		fc::string fn;
+		fn.reserve(m_baseDirectory.size() + GetShaderDirectory().size() + filename.size() + 1);
+		fn.append(m_baseDirectory).append(GetShaderDirectory()).append(filename);
+
+		if( !shader->LoadFromFile(fn) )
+		{
+			LogError("Failed to load resource (%s)", fn.c_str());
+			SAFE_DELETE(shader);
+		}
+		else
+		{
+			int resourceID = m_shaderCache.AddResource( Resource(shader, filename) );
+			if( id != 0 )
+			{
+				//the caller wants the resource id.
+				*id = resourceID;
+			}
+		}
+	}
+
+	return shader;
 }
 
 
@@ -223,6 +296,54 @@ Font* ResourceManager::GetFont( const fc::string& filename )
 	if( resource )
 	{
 		return (Font*)resource->ptr;
+	}
+
+	return 0;
+}
+
+
+ShaderObject* ResourceManager::GetShaderObject( const fc::string& filename )
+{
+	Resource* resource = m_shaderCache.GetResource(filename);
+	if( resource )
+	{
+		return (ShaderObject*)resource->ptr;
+	}
+
+	return 0;
+}
+
+
+Texture* ResourceManager::GetTexture( int id )
+{
+	Resource* resource = m_textureCache.GetResource(id);
+	if( resource )
+	{
+		return (Texture*)resource->ptr;
+	}
+
+	return 0;
+}
+
+
+Font* ResourceManager::GetFont( int id )
+{
+	Resource* resource = m_fontCache.GetResource(id);
+	if( resource )
+	{
+		return (Font*)resource->ptr;
+	}
+
+	return 0;
+}
+
+
+ShaderObject* ResourceManager::GetShaderObject( int id )
+{
+	Resource* resource = m_shaderCache.GetResource(id);
+	if( resource )
+	{
+		return (ShaderObject*)resource->ptr;
 	}
 
 	return 0;
@@ -252,6 +373,20 @@ void ResourceManager::UnloadFont( const fc::string& filename )
 		if( resource->GetRefCount() == 0 )
 		{
 			m_fontCache.DeleteResource<Font>(resource);
+		}
+	}
+}
+
+
+void ResourceManager::UnloadShaderObject( const fc::string& filename )
+{
+	Resource* resource = m_fontCache.GetResource(filename);
+	if( resource )
+	{
+		resource->ReleaseRef();
+		if( resource->GetRefCount() == 0 )
+		{
+			m_shaderCache.DeleteResource<ShaderObject>(resource);
 		}
 	}
 }

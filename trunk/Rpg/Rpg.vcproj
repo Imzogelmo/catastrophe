@@ -188,10 +188,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\GameScreen.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\Inventory.cpp"
 				>
 			</File>
@@ -216,14 +212,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\Screen.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\ScreenManager.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\SpellBook.cpp"
 				>
 			</File>
@@ -236,6 +224,10 @@
 				</File>
 				<File
 					RelativePath=".\src\Script\ContextPool.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Script\ScriptClass.cpp"
 					>
 				</File>
 				<File
@@ -403,6 +395,22 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Screens"
+				>
+				<File
+					RelativePath=".\src\GameScreen.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Screen.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\ScreenManager.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -498,6 +506,10 @@
 				</File>
 				<File
 					RelativePath=".\src\Script\ContextPool.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Script\ScriptClass.h"
 					>
 				</File>
 				<File
