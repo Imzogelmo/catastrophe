@@ -129,7 +129,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ce-system.lib ce-core.lib glfw.lib freetype.lib glew32s.lib OpenGL32.lib glu32.lib"
+				AdditionalDependencies="ce-system.lib ce-core.lib ce-sound.lib glfw.lib freetype.lib glew32s.lib OpenGL32.lib glu32.lib"
 				AdditionalLibraryDirectories="&quot;../lib&quot;"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
