@@ -28,7 +28,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class AnimationFrames
+class CE_API AnimationFrames
 {
 public:
 	typedef fc::fixed_vector<Rectf, 1> vec_type;

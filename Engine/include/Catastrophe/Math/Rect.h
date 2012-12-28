@@ -26,7 +26,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class Rect
+class CE_API Rect
 {
 public:
 	Point pos, size;

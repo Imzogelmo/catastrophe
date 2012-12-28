@@ -41,7 +41,7 @@ enum ImageFileFormat
 };
 
 
-class TextureLoader
+class CE_API TextureLoader
 {
 public:
 	//TextureLoader& GetInstance();

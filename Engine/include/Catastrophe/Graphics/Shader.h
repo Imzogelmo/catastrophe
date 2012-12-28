@@ -29,7 +29,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class Shader
+class CE_API Shader
 {
 public:
 	typedef fc::vector_map<fc::string, glint> map_type;

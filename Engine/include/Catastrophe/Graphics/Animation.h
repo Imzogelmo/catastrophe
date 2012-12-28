@@ -23,7 +23,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class Animation : public AnimationFrames
+class CE_API Animation : public AnimationFrames
 {
 public:
 	Animation( const Texture* texture = 0, bool loop = true, bool startPaused = false ) :

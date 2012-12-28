@@ -36,7 +36,7 @@ enum FileMode
 };
 
 
-class File : public Deserializer, public Serializer
+class CE_API File : public Deserializer, public Serializer
 {
 public:
 	File();

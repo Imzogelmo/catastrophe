@@ -28,7 +28,7 @@ extern void __Internal_Log_Write( const char* format, ... );
 extern void __Internal_Log_Write( const fc::string& message );
 
 
-class Logger
+class CE_API Logger
 {
 public:
 	Logger();

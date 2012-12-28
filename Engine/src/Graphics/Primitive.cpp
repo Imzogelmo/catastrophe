@@ -61,6 +61,19 @@ Vector2 Primitive::GetCenter() const
 }
 
 
+Rectf Primitive::GetBoundingRect() const
+{
+	Rectf r = Rectf::Zero;
+	if( !m_vertices.empty() )
+	{
+		for( vec_type::const_iterator it = m_vertices.begin(); it != m_vertices.end(); ++it )
+			r.Merge(it->pos.x);
+	}
+
+	return r;
+}
+
+
 void Primitive::RotateVertices( float rotation, const Vector2 &origin )
 {
 	Vector2 rot = Math::SinCos(rotation);

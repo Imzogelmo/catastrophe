@@ -25,7 +25,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class Line
+class CE_API Line
 {
 public:
 	Vector2 p1, p2;

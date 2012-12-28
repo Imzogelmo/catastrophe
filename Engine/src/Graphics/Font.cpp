@@ -313,6 +313,53 @@ int Font::LoadFromFile( const fc::string& filename, int faceSize, int dpi )
 }
 
 
+int Font::InternalLoadGenericBitmapFont( const fc::string& filename, int startCode )
+{
+	// generic bitmap fonts contain no font metrics and
+	// are basically a bunch of rectangles inside a bitmap.
+
+	m_texture.SetMagFilter( 0x2601 );
+	if( !m_texture.LoadFromFile(filename) )
+		return -1;
+
+	int w = m_texture.Width();
+	int h = m_texture.Height();
+	int glyphSize = w / 16;
+	int numRows = h / glyphSize;
+	int numGlyphs = fc::min(numRows * 16, 256 - startCode);
+
+	for( int i(startCode); i < numGlyphs + startCode; ++i )
+		m_glyph_map[i] = i - startCode;
+
+	m_glyphs.resize(numGlyphs);
+	for( int i(0); i < numGlyphs; ++i )
+	{
+		m_glyph_map[i + 32] = i;
+
+		Glyph& glyph = m_glyphs[i];
+		glyph.size.x = (float)glyphSize;
+		glyph.size.y = (float)glyphSize;
+		glyph.translation.x = (float)glyphSize;
+		glyph.translation.y = (float)glyphSize;
+		glyph.advance = (float)glyphSize;
+
+		float xPos = float((i % 16) * glyphSize);
+		float yPos = float(((i & 240) / 16) * glyphSize);
+
+		glyph.uv.min.x = xPos / (float)w;
+		glyph.uv.min.y = yPos / (float)h;
+		glyph.uv.max.x = (xPos + glyphSize) / (float)w;
+		glyph.uv.max.y = (yPos + glyphSize) / (float)h;
+	}
+
+	m_face_size = glyphSize;
+	m_max_advance = glyphSize;
+	m_line_height = glyphSize;
+
+	return 0;
+}
+
+
 void Font::SetAdvance( int advance )
 {
 	float a = (float)advance;

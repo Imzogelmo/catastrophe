@@ -23,7 +23,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class Message : public TextElement
+class CE_API Message : public TextElement
 {
 public:
 	static const int FastForwardSpeed = 4;

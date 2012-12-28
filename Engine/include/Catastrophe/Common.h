@@ -26,7 +26,7 @@ typedef unsigned short		ushort;
 typedef unsigned long		ulong;
 typedef unsigned int		uint;
 typedef unsigned int		gluint;
-typedef unsigned int		glenum; //?
+typedef unsigned int		glenum;
 typedef int					glint;
 
 #ifdef _MSC_VER
@@ -37,9 +37,17 @@ typedef unsigned long long	uint64;
 typedef long long			int64;
 #endif
 
+//CE_API 
+#if defined CE_EXPORT
+	#define CE_API __declspec(dllexport)
+#elif defined CE_IMPORT
+	#define CE_API __declspec(dllimport)
+#else
+	#define CE_API		  
+#endif
 
 //CE_WANT_NAMESPACE must be defined in both lib and client.
-#ifdef CE_WANT_NAMESPACE
+#if defined CE_WANT_NAMESPACE
 #define CE_NAMESPACE_BEGIN namespace ce {
 #define CE_NAMESPACE_END }
 #else
@@ -47,7 +55,7 @@ typedef long long			int64;
 #define CE_NAMESPACE_END
 #endif
 
-#define USING_NAMESPACE_CE //
+#define USING_NAMESPACE_CE using namespace ce;
 
 #define CE_TRUE		1
 #define CE_FALSE	0
@@ -75,20 +83,26 @@ typedef long long			int64;
 #define CE_LIKELY		FC_LIKELY
 #define CE_UNLIKELY		FC_UNLIKELY
 
-
 #define Log			__Internal_Log_Write
 #define LogInfo		__Internal_Log_Write
 #define LogError	__Internal_Log_Write
 #define LogWarning	__Internal_Log_Write
 
 
-//#include <fc/string.h>
+//forward declare the fc::string type.
+namespace fc
+{
+	//template <class T> class allocator;
+	//template < class T, size_t BufferSize = FC_DEFAULT_STRING_BUFFER_SIZE, class Alloc = allocator<T> > class basic_string_with_buffer_storage;
+	//template < class T, class Storage = basic_string_with_buffer_storage<T> > class basic_string;
+}
+
 
 CE_NAMESPACE_BEGIN
 
 //logging functions
 extern FC_NO_INLINE void __Internal_Log_Write( const char* format, ... );
-//extern void __Internal_Log_Write( const fc::basic_string<char>& message );
+//extern FC_NO_INLINE void __Internal_Log_Write( const fc::basic_string<char>& message );
 
 
 /* Forward Declarations */
@@ -118,7 +132,6 @@ class Plane;
 class Ray;
 class Frustum;
 
-
 struct Glyph;
 class Font;
 
@@ -129,7 +142,7 @@ class Font;
 class SpriteBatch;
 class Primitive;
 class PrimitiveBatch;
-class ShaderObjectBase;
+class ShaderObject;
 class VertexShader;
 class FragmentShader;
 class Shader;
@@ -178,15 +191,10 @@ FC_MAKE_TRAIT(Color, is_pod);
 FC_MAKE_TRAIT(Colorf, is_pod);
 FC_MAKE_TRAIT(HSVColor, is_pod);
 FC_MAKE_TRAIT(HSLColor, is_pod);
-
-
 FC_MAKE_TRAIT(VertexColor, is_pod);
 FC_MAKE_TRAIT(VertexColorTexture, is_pod);
 
-
 FC_MAKE_TRAIT(Glyph, is_pod);
-
-
 FC_MAKE_TRAIT(Sprite, is_pod);
 
 

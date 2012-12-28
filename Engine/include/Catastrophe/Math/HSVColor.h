@@ -24,7 +24,7 @@ CE_NAMESPACE_BEGIN
 
 
 
-class HSVColor
+class CE_API HSVColor
 {
 public:
 	float h, s, v, a;

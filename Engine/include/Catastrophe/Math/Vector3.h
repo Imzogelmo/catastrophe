@@ -25,7 +25,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class Vector3 
+class CE_API Vector3 
 {
 public:
 	float x, y, z;

@@ -25,7 +25,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class Deserializer
+class CE_API Deserializer
 {
 public:
 	virtual ~Deserializer() {}

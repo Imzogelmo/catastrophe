@@ -26,7 +26,7 @@ CE_NAMESPACE_BEGIN
 
 
 
-class Rectf
+class CE_API Rectf
 {
 public:
 	Vector2 min, max;

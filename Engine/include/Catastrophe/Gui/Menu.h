@@ -23,7 +23,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class Menu : public Widget
+class CE_API Menu : public Widget
 {
 public:
 	Menu();

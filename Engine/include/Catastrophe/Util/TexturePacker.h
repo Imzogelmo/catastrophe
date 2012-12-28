@@ -43,7 +43,7 @@ protected:
  * Basic packing algorithm that fits rectangles using rows.
  * @note - this is not efficient if the input sizes vary by large amounts.
  */
-class RectangleTexturePacker : public TexturePackerBase
+class CE_API RectangleTexturePacker : public TexturePackerBase
 {
 public:
 	RectangleTexturePacker(int w, int h)
@@ -63,21 +63,14 @@ protected:
  * Basic packing algorithm similar to RectangleTexturePacker except
  * that all output rects are aligned to a size grid.
  */
-class GridTexturePacker : public RectangleTexturePacker
+class CE_API GridTexturePacker : public RectangleTexturePacker
 {
 public:
 	GridTexturePacker(int w, int h, int gridSize = 16)
 		: RectangleTexturePacker(w, h), m_gridSize(gridSize)
 	{}
 
-	bool Pack( int w, int h, Point& outPos )
-	{
-		//extend size to be a multiple or gridSize.
-		w = int((w + m_gridSize - 1) / m_gridSize) * m_gridSize;
-		h = int((h + m_gridSize - 1) / m_gridSize) * m_gridSize;
-
-		return this->RectangleTexturePacker::Pack(w, h, outPos);
-	}
+	bool Pack( int w, int h, Point& outPos );
 
 protected:
 	int	m_gridSize;

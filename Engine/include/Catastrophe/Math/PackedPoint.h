@@ -28,7 +28,7 @@
 #endif
 
 
-class PackedPoint
+class CE_API PackedPoint
 {
 public:
 	union {

@@ -25,7 +25,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class XmlWriter
+class CE_API XmlWriter
 {
 public:
 	XmlWriter();

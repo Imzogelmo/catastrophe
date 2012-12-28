@@ -25,25 +25,31 @@
 CE_NAMESPACE_BEGIN
 
 
-ShaderObjectBase::ShaderObjectBase()
-	: m_name(), m_source(), m_infolog(), m_shader_object(0), m_program_type(0), m_is_compiled(false)
+ShaderObject::ShaderObject( ShaderType type ) :
+	//m_type(type),
+	m_name(),
+	m_source(),
+	m_infolog(),
+	m_shader_object(0),
+	m_program_type(type),
+	m_is_compiled(false)
 {
 }
 
 
-VertexShader::VertexShader() : ShaderObjectBase()
+VertexShader::VertexShader() : ShaderObject(VertexShaderType)
 {
-	m_program_type = GL_VERTEX_SHADER;
+	//m_program_type = GL_VERTEX_SHADER;
 }
 
 
-FragmentShader::FragmentShader() : ShaderObjectBase()
+FragmentShader::FragmentShader() : ShaderObject(FragmentShaderType)
 {
-	m_program_type = GL_FRAGMENT_SHADER;
+	//m_program_type = GL_FRAGMENT_SHADER;
 }
 
 
-void ShaderObjectBase::Dispose()
+void ShaderObject::Dispose()
 {
 	if( m_shader_object > 0 )
 	{
@@ -59,7 +65,7 @@ void ShaderObjectBase::Dispose()
 }
 
 
-bool ShaderObjectBase::LoadFromMemory( const fc::string& code )
+bool ShaderObject::LoadFromMemory( const fc::string& code )
 {
 	Dispose();
 	m_source = code;
@@ -68,7 +74,7 @@ bool ShaderObjectBase::LoadFromMemory( const fc::string& code )
 }
 
 
-bool ShaderObjectBase::LoadFromFile( const fc::string& filename )
+bool ShaderObject::LoadFromFile( const fc::string& filename )
 {
 	Dispose();
 
@@ -91,7 +97,7 @@ bool ShaderObjectBase::LoadFromFile( const fc::string& filename )
 }
 
 
-bool ShaderObjectBase::Compile()
+bool ShaderObject::Compile()
 {
 	InternalCreateShaderObject();
 
@@ -114,7 +120,7 @@ bool ShaderObjectBase::Compile()
 }
 
 
-const fc::string& ShaderObjectBase::GetInfoLog()
+const fc::string& ShaderObject::GetInfoLog()
 {
 	int infolog_length(0);
 	int length(0);
@@ -131,13 +137,13 @@ const fc::string& ShaderObjectBase::GetInfoLog()
 }
 
 
-const fc::string& ShaderObjectBase::GetSource()
+const fc::string& ShaderObject::GetSource()
 {
 	return m_source;
 }
 
 
-void ShaderObjectBase::InternalCreateShaderObject()
+void ShaderObject::InternalCreateShaderObject()
 {
 	if( m_shader_object == 0 && m_program_type > 0)
 	{

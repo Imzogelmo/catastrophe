@@ -24,7 +24,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class XmlReader
+class CE_API XmlReader
 {
 public:
 	enum eTokenType

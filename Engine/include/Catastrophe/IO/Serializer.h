@@ -25,7 +25,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class Serializer
+class CE_API Serializer
 {
 public:
 	virtual ~Serializer() {}

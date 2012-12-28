@@ -24,7 +24,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class TextElement : public Widget
+class CE_API TextElement : public Widget
 {
 public:
 	TextElement( const fc::string& text = "", Font* font = 0, TextAlignment alignment = AlignLeft );

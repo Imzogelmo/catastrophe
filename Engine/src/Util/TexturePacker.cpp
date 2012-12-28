@@ -46,5 +46,15 @@ bool RectangleTexturePacker::Pack( int w, int h, Point& outPos )
 }
 
 
+bool GridTexturePacker::Pack( int w, int h, Point& outPos )
+{
+	//extend size to be a multiple or gridSize.
+	w = int((w + m_gridSize - 1) / m_gridSize) * m_gridSize;
+	h = int((h + m_gridSize - 1) / m_gridSize) * m_gridSize;
+
+	return this->RectangleTexturePacker::Pack(w, h, outPos);
+}
+
+
 CE_NAMESPACE_END
 

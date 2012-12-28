@@ -24,11 +24,17 @@
 
 CE_NAMESPACE_BEGIN
 
+enum ShaderType
+{
+	VertexShaderType = 0x8B31,
+	FragmentShaderType = 0x8B30
+};
 
-class ShaderObjectBase
+
+class CE_API ShaderObject
 {
 public:
-	ShaderObjectBase();
+	ShaderObject( ShaderType type );
 
 	void Dispose();
 	bool LoadFromFile( const fc::string& filename );
@@ -43,23 +49,24 @@ public:
 protected:
 	void InternalCreateShaderObject();
 
+	//ShaderType	m_type;
 	fc::string	m_name;
 	fc::string	m_source;
 	fc::string	m_infolog;
 	gluint		m_shader_object;
-	glint		m_program_type;
+	ShaderType	m_program_type;
 	bool		m_is_compiled;
 };
 
 
-class VertexShader : public ShaderObjectBase
+class CE_API VertexShader : public ShaderObject
 {
 public:
 	VertexShader();
 };
 
 
-class FragmentShader : public ShaderObjectBase
+class CE_API FragmentShader : public ShaderObject
 {
 public:
 	FragmentShader();

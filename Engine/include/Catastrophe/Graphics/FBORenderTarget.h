@@ -23,7 +23,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class FBORenderTarget //: public RenderTarget
+class CE_API FBORenderTarget //: public RenderTarget
 {
 public:
     FBORenderTarget();

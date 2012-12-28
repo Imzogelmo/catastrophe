@@ -24,7 +24,7 @@ CE_NAMESPACE_BEGIN
 
 
 
-class Colorf
+class CE_API Colorf
 {
 public:
 	float r, g, b, a;

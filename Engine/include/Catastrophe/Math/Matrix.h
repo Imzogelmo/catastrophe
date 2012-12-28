@@ -29,7 +29,7 @@ CE_NAMESPACE_BEGIN
 
 
 
-class Matrix
+class CE_API Matrix
 {
 public:
 	float m[16];

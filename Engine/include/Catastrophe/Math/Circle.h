@@ -25,7 +25,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class Circle
+class CE_API Circle
 {
 public:
 	Vector2 pos;
