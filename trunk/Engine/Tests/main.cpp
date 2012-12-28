@@ -8,6 +8,8 @@
 #include <Catastrophe/Sound/FmodSoundEngine.h>
 
 
+#include "out.cpp"
+
 Matrix createPerspectiveFOV( float& zoff, float fov, float aspectRatio, float up, float zNear, float zFar )
 {
 	float h = zNear * (1.f / tanf( fov / 2.f * CE_TO_RADIANS ));
@@ -134,16 +136,24 @@ int main(int argc, char* argv[])
 	Image image;
 	Font font;
 	const char* fontName = "sansation.ttf";
+	//const char* fontName = "fonts/final_fantasy_36.ttf";
+	//const char* fontName = (const char*)__system_font_string_;
+	//fc::string fontStr(fontName, fontName + 28912);
 	if( font.LoadFromFile(fontName, 24) != 0 )
+	//if( font.LoadFromFile(fontName, 24) != 0 )
 		exit(9);
-/*
-	font.SetAdvance(16);
+
+	/*
+	font.SetAdvance(20);
+	font.SetLineHeight(20);
 	font.GetGlyph('i').translation.x += 3;
 	font.GetGlyph('I').translation.x += 3;
 	font.GetGlyph('j').translation.x += 3;
 	font.GetGlyph('J').translation.x += 3;
 	font.GetGlyph('f').translation.x += 2;
 	font.GetGlyph('F').translation.x += 2;
+	font.GetGlyph('t').translation.x += 2;
+	font.GetGlyph('T').translation.x += 2;
 */
 	if(!tex.LoadFromFile("tiles.png"))
 	{
@@ -203,9 +213,9 @@ menu.SetPosition(100,0);
 	FmodSoundEngine se;
 	se.Initialize();
 	//Sound* sound = se.LoadFromFile( Sound::TypeMidi, "wtcf2.mid" );
-	Sound* sound = se.LoadFromFile( Sound::TypeSfx, "DTA.mp3" );
+	Sound* sound = se.LoadFromFile( Sound::TypeStream, "DTA.mp3" );
 	assert(sound);
-	sound->Play();
+	//sound->Play();
 
 	while(!window->RequestClose())
 	{
@@ -277,10 +287,10 @@ menu.SetPosition(100,0);
 
 		sb.Begin();
 		//
-		sb.Draw( tex.GetTextureID(),
-			Rectf(0.f, 0.f, 128.f, 512.f),
-			Rectf(0.f, 0.f, 1.f, 1.f)
-			);
+	//	sb.Draw( tex.GetTextureID(),
+	//		Rectf(0.f, 0.f, 128.f, 512.f),
+	//		Rectf(0.f, 0.f, 1.f, 1.f)
+	//		);
 		//sb.Draw( tex.GetTextureID(),
 		//	Rectf(-128.f, -512.f, 128.f, 512.f),
 		//	Rectf(0.f, 0.f, 1.f, 1.f)
@@ -289,22 +299,22 @@ menu.SetPosition(100,0);
 		//sb.DrawSprite(sprite, Vector2(200.f));
 		sprite.Update();
 
-		sb.DrawString( &font, "Test text CAPS. .. \n A newline?", Vector2(200.f, 0.f) );
-		//sb.DrawTexture(font.GetTexture(), Vector2(0.f));
+		//sb.DrawString( &font, "Test text CAPS. .. \n A newline?", Vector2(200.f, 0.f) );
+	//	sb.DrawTexture(font.GetTexture(), Vector2(0.f));
 
 		//
 
 		text->Update();
 		text->Render(&sb);
-		menu.Render(&sb);
+		//menu.Render(&sb);
 
 		sb.Render();
 		sb.End();
 
 		static int _cnt = 0;
 		_cnt++;
-		if(_cnt % 240 == 230)
-			sound->Play();
+		//if(_cnt % 240 == 230)
+		//	sound->Play();
 
 		//sound->Stop();
 

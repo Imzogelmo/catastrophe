@@ -30,13 +30,69 @@
 CE_NAMESPACE_BEGIN
 
 
+class FreetypeLibrary
+{
+public:
+	static FreetypeLibrary& GetInstance() 
+	{
+		return m_instance;
+	}
+
+	static FT_Library& GetFTLibrary() 
+	{
+		CE_ASSERT(m_instance.m_refCount > 0);
+		return m_instance.m_library;
+	}
+
+	void AddRef()
+	{
+		CE_ASSERT(m_refCount >= 0);
+
+		if( m_refCount == 0 )
+		{
+			FT_Error error = FT_Init_FreeType(&m_library);
+			if( error )
+			{
+				LogError("FT_Init_FreeType error");
+			}
+		}
+
+		++m_refCount;
+	}
+
+	void ReleaseRef()
+	{
+		CE_ASSERT(m_refCount > 0);
+
+		--m_refCount;
+		if( m_refCount == 0 )
+		{
+			FT_Done_FreeType( m_library );
+		}
+	}
+
+private:
+	FreetypeLibrary() : m_library(0), m_refCount(0) {}
+	FreetypeLibrary( const FreetypeLibrary& ) {}
+	FreetypeLibrary& operator =( const FreetypeLibrary& );
+
+	// the freetype library is itself a singleton.
+	static FreetypeLibrary m_instance;
+
+	FT_Library	m_library;
+	int			m_refCount;
+
+};
+
+FreetypeLibrary FreetypeLibrary::m_instance;
+
+
 
 Font::Font() :
 	m_texture(),
 	m_face_size(0)
 {
-	for( int i(0); i < 256; ++i )
-		m_glyph_map[i] = 0;
+	InternalInitialize();
 }
 
 
@@ -44,15 +100,14 @@ Font::Font( const fc::string& filename, int faceSize, int dpi ) :
 	m_texture(),
 	m_face_size(0)
 {
-	for( int i(0); i < 256; ++i )
-		m_glyph_map[i] = 0;
-
+	InternalInitialize();
 	LoadFromFile(filename, faceSize, dpi);
 }
 
 
 Font::~Font()
 {
+	FreetypeLibrary::GetInstance().ReleaseRef();
 	Dispose();
 }
 
@@ -63,18 +118,24 @@ void Font::Dispose()
 }
 
 
+void Font::InternalInitialize()
+{
+	FreetypeLibrary::GetInstance().AddRef();
+	::memset( m_glyph_map, 0, sizeof(int) * 256 );
+}
+
+
+
 int Font::LoadFromFile( const fc::string& filename, int faceSize, int dpi )
 {
 	// current limitation
 	if( (size_t)faceSize > MaxGlyphSize )
 		faceSize = MaxGlyphSize;
 
-	// todo: break these up for easier reload
-	FT_Library library;
-	FT_Error error = FT_Init_FreeType(&library);
-	if( error )
+	FT_Error error = 0;
+	FT_Library library = FreetypeLibrary::GetInstance().GetFTLibrary();
+	if( !library )
 	{
-		LogError("FT_Init_FreeType error");
 		return -1;
 	}
 
@@ -113,7 +174,8 @@ int Font::LoadFromFile( const fc::string& filename, int faceSize, int dpi )
 		charcode = FT_Get_Next_Char(face, charcode, (FT_UInt*)&glyph_index);
 	}
 
-	//get the closest fit without going under.
+	// get the closest fit without going under.
+	// (if possible this gets optimized later)
 	int squareDimensions = faceSize * (int)::ceilf(::sqrtf((float)max_glyphs));
 	int tWidth = Math::Min<int>( (int)Math::NextPowerOfTwo(squareDimensions), MaxTextureSize );
 	int tHeight = Math::Min<int>( (int)Math::NextPowerOfTwo(squareDimensions), MaxTextureSize );
@@ -178,10 +240,15 @@ int Font::LoadFromFile( const fc::string& filename, int faceSize, int dpi )
 				for( int x(0); x < size.x; ++x )
 				{
 					//only set the alpha channel.
-					glyphPixels(y, x).a = bitmapPixels[x];
+					size_t i = glyphPixels.offset(y, x);
+					glyphPixels[i].a = bitmapPixels[x];
+					if( glyphPixels[i].a == 0 )
+						glyphPixels[i] = Color::Black(0);
 				}
 			}
 
+			// we add a single pixel to the rendered glyphs so that we
+			// can use texture filtering on the font faces.
 			Point sourcePos = Point::Zero;
 			if( !texturePacker.Pack(size.x + 1, size.y + 1, sourcePos) )
 			{
@@ -197,30 +264,51 @@ int Font::LoadFromFile( const fc::string& filename, int faceSize, int dpi )
 				glyphPixels 
 			);
 
-			glyph.uv.min.x = (float)sourcePos.x / (float)tWidth;
-			glyph.uv.min.y = (float)sourcePos.y / (float)tHeight;
-			glyph.uv.max.x = (float)(sourcePos.x + size.x) / (float)tWidth;
-			glyph.uv.max.y = (float)(sourcePos.y + size.y) / (float)tHeight;
+			// store the position and size in the glyph so we can access it later.
+			glyph.uv.min.x = (float)sourcePos.x;
+			glyph.uv.min.y = (float)sourcePos.y;
 		}
-
 	}
 
-    m_face_size = faceSize;
+	m_face_size = faceSize;
 	m_max_advance = maxGlyphTranslationY;
-    m_line_height = (face->size->metrics.height + 63) >> 6;
+	m_line_height = face->size->metrics.height >> 6;
+	//m_line_height = (face->size->metrics.height + 63) >> 6;
 	if( m_line_height < maxGlyphHeight )
 	{
 		m_line_height = maxGlyphHeight;
-		Log("info: face height lied");
 	}
 
+	// we can now try to compress the texture size further.
+	int compressedHeight = tHeight;
+	while( compressedHeight > faceSize && ((compressedHeight / 2) > texturePacker.GetUsedHeight()) )
+	{
+		compressedHeight /= 2;
+	}
+
+	if( compressedHeight != tHeight )
+	{
+		tHeight = compressedHeight;
+	}
+
+	// now that we know the final texture size, we can
+	// iterate through the glyphs and calculate the texture coordinates.
+	for( vec_type::iterator it = m_glyphs.begin(); it != m_glyphs.end(); ++it )
+	{
+		float x = it->uv.min.x;
+		float y = it->uv.min.y;
+		it->uv.min.x = x / (float)tWidth;
+		it->uv.min.y = y / (float)tHeight;
+		it->uv.max.x = (x + it->size.x) / (float)tWidth;
+		it->uv.max.y = (y + it->size.y) / (float)tHeight;
+	}
+
+	// todo: make this optional.
 	m_texture.SetMagFilter( 0x2601 );
-	if( !m_texture.CreateTexture( pixels.data(), pixels.x(), pixels.y() ) )
-		;
+	if( !m_texture.CreateTexture( pixels.data(), tWidth, tHeight ) )
+		return -12;
 
 	FT_Done_Face( face );
-	FT_Done_FreeType( library );
-
 	return 0;
 }
 

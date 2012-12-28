@@ -28,9 +28,9 @@ class TexturePackerBase
 public:
 	TexturePackerBase(int w, int h) : m_size(w, h) {}
 
-	int Width() { return m_size.x; }
-	int Height() { return m_size.y; }
-	Point Size() { return m_size; }
+	int Width() const { return m_size.x; }
+	int Height() const { return m_size.y; }
+	Point Size() const { return m_size; }
 
 	virtual bool Pack( int w, int h, Point& outPos ) = 0;
 
@@ -51,6 +51,7 @@ public:
 	{}
 
 	bool Pack( int w, int h, Point& outPos );
+	int GetUsedHeight() const { return m_pos.y + m_yoffset; }
 
 protected:
 	Point	m_pos;

@@ -97,6 +97,8 @@ public:
 	void Dispose();
 
 protected:
+	void InternalInitialize();
+
 	vec_type	m_glyphs;
 	int			m_glyph_map[256];
 	Texture		m_texture;
