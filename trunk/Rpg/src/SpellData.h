@@ -18,7 +18,7 @@
 #include "DataList.h"
 
 
-struct SpellData : public AttributeData
+struct RPG_API SpellData : public AttributeData
 {
 	typedef AttributeData	base_type;
 
@@ -34,7 +34,7 @@ struct SpellData : public AttributeData
 
 
 
-class SpellList : public DataList<SpellData>
+class RPG_API SpellList : public DataList<SpellData>
 {
 public:
 	typedef DataList<SpellData>	base_type;

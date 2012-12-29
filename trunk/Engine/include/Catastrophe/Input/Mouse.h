@@ -24,7 +24,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class Mouse
+class CE_API Mouse
 {
 public:
 	enum

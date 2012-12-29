@@ -24,7 +24,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class Joystick
+class CE_API Joystick
 {
 public:
 	enum

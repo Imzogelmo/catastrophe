@@ -25,7 +25,7 @@
 #include <fc/vector_map.h>
 
 
-class Keyboard
+class CE_API Keyboard
 {
 public:
 

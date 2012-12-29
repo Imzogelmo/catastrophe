@@ -19,7 +19,7 @@
 #include "Tile.h"
 
 
-class MapLayer : public Indexable<>
+class RPG_API MapLayer : public Indexable<>
 {
 public:
 	typedef fc::dynamic_array2d<Tile*> array_type;

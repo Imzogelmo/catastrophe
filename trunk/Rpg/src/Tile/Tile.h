@@ -25,7 +25,7 @@
  * these are optimized heavily for both cases, and
  * non-animated tiles will never allocate memory.
  */
-class Tile : public Indexable<> //todo; ..I think index can be safely removed...
+class RPG_API Tile : public Indexable<> //todo; ..I think index can be safely removed...
 {
 public:
 	typedef fc::fixed_vector<Rectf, 1>	vec_type;

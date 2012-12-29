@@ -40,7 +40,7 @@ namespace FMOD
 }
 
 
-class FmodSound : public Sound
+class CE_API FmodSound : public Sound
 {
 public:
 	friend class FmodSoundEngine;

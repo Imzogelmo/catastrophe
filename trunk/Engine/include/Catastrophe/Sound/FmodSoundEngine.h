@@ -28,7 +28,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class FmodSoundEngine : public SoundEngine
+class CE_API FmodSoundEngine : public SoundEngine
 {
 public:
 	typedef fc::vector<FmodSound*>	vec_type;

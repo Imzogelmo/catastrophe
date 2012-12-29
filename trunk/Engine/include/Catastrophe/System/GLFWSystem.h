@@ -24,7 +24,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class GLFWSystem : public System
+class CE_API GLFWSystem : public System
 {
 protected:
 	bool InternalInit();
@@ -33,7 +33,7 @@ protected:
 };
 
 
-class GLFWWindow : public Window
+class CE_API GLFWWindow : public Window
 {
 public:
 	virtual ~GLFWWindow();

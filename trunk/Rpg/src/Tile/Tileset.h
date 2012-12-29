@@ -18,7 +18,7 @@
 #include "Tile.h"
 
 
-class Tileset
+class RPG_API Tileset
 {
 public:
 	typedef fc::dynamic_array2d<Tile>	array_type;

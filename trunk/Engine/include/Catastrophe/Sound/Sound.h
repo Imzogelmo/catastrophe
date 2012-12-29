@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "../Common.h"
+#include "Common.h"
 
 CE_NAMESPACE_BEGIN
 

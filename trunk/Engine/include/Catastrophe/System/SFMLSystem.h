@@ -25,7 +25,7 @@
 class sf::Window;
 
 
-class SFMLSystem
+class CE_API SFMLSystem
 {
 public:
 	virtual ~SFMLSystem()

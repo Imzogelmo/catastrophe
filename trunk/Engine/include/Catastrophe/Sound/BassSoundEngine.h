@@ -28,7 +28,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class BassSoundEngine : public SoundEngine
+class CE_API BassSoundEngine : public SoundEngine
 {
 public:
 	typedef fc::vector<BassSound*>	vec_type;

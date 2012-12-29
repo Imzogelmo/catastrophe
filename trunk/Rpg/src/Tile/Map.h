@@ -17,7 +17,7 @@
 
 
 
-class Map
+class RPG_API Map
 {
 public:
 	enum : size_t

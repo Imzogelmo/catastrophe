@@ -18,7 +18,7 @@
 #include "Tileset.h"
 
 
-class TilesetManager
+class RPG_API TilesetManager
 {
 public:
 	typedef fc::vector<Tileset*>	vec_type;

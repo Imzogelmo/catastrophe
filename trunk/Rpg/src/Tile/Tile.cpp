@@ -97,10 +97,10 @@ void Tile::SetAnimationSpeed( short frameDelay )
 
 void Tile::Update()
 {
-	//animation speed is fixed point 16 : 1. this means
-	//that one second (60 frames) is equal to 960 fixed point.
-	//therefore the longest animation delay we can have is
-	//34 seconds (2167 - 16 = 2151 frames).
+	// animation speed is fixed point 16 : 1. this means
+	// that one second (60 frames) is equal to 960 fixed point.
+	// therefore the longest animation delay we can have is
+	// 34 seconds (2167 - 16 = 2151 frames).
 	counter += 16;
 	if( counter >= anim_speed )
 	{

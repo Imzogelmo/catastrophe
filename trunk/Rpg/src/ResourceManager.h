@@ -48,7 +48,7 @@ protected:
 };
 
 
-class ResourceCache
+class RPG_API ResourceCache
 {
 public:
 	typedef	fc::vector<Resource>	vec_type;
@@ -85,7 +85,7 @@ protected:
 };
 
 
-class ResourceManager
+class RPG_API ResourceManager
 {
 public:
 	ResourceManager();
@@ -132,12 +132,20 @@ public:
 	void UnloadFont( const fc::string& filename );
 	void UnloadShaderObject( const fc::string& filename );
 
+	void UnloadTexture( int id );
+	void UnloadFont( int id );
+	void UnloadShaderObject( int id );
+
 	// when we lose OpenGL context or switch video modes (ie; to-from fullscreen),
 	// this invalidates all gpu data, so we must reload them.
 	// *this will not invalidate any pointers*
 	void ReloadGraphicsResources();
 
 protected:
+	void InternalReleaseTexture( Resource* resource );
+	void InternalReleaseFont( Resource* resource );
+	void InternalReleaseShaderObject( Resource* resource );
+
 	ResourceCache		m_textureCache;
 	ResourceCache		m_fontCache;
 	ResourceCache		m_shaderCache;
