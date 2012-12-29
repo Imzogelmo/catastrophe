@@ -23,10 +23,10 @@
 CE_NAMESPACE_BEGIN
 
 
-class CE_API Menu : public Widget
+class CE_API MenuElement : public Widget
 {
 public:
-	Menu();
+	MenuElement();
 
 	void Update();
 	void Render( SpriteBatch* spritebatch );

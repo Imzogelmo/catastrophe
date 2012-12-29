@@ -19,7 +19,7 @@
 
 
 
-struct CharacterClass : public AttributeData
+struct RPG_API CharacterClass : public AttributeData
 {
 	typedef AttributeData	base_type;
 
@@ -37,9 +37,9 @@ struct CharacterClass : public AttributeData
 
 
 /*
- * A collection of stored MonsterData objects.
+ * A collection of stored character classes.
  */
-class CharacterClassList : public DataList<CharacterClass>
+class RPG_API CharacterClassList : public DataList<CharacterClass>
 {
 public:
 	typedef DataList<CharacterClass>	base_type;

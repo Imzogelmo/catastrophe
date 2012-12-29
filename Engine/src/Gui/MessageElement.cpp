@@ -18,13 +18,13 @@
 
 #pragma once
 
-#include "Gui/Message.h"
+#include "Gui/MessageElement.h"
 #include "Graphics/SpriteBatch.h"
 
 CE_NAMESPACE_BEGIN
 
 
-Message::Message( const fc::string& text, Font* font, TextAlignment alignment, int rowHeight ) :
+MessageElement::MessageElement( const fc::string& text, Font* font, TextAlignment alignment, int rowHeight ) :
 	TextElement(text, font, alignment),
 	m_rowHeight(rowHeight)
 {
@@ -32,7 +32,7 @@ Message::Message( const fc::string& text, Font* font, TextAlignment alignment, i
 
 
 
-void Message::Update()
+void MessageElement::Update()
 {
 	if( m_currentChar < m_text.size() )
 	{
@@ -65,7 +65,7 @@ void Message::Update()
 }
 
 
-void Message::Render( SpriteBatch* spritebatch )
+void MessageElement::Render( SpriteBatch* spritebatch )
 {
 	if( !m_font || m_text.empty() )
 		return;
@@ -101,7 +101,7 @@ void Message::Render( SpriteBatch* spritebatch )
 }
 
 
-void Message::SetFont( Font* font )
+void MessageElement::SetFont( Font* font )
 {
 	if(font)
 	{
@@ -111,7 +111,7 @@ void Message::SetFont( Font* font )
 }
 
 
-void Message::SetText( const fc::string& text )
+void MessageElement::SetText( const fc::string& text )
 {
 	m_text = text;
 	//if( IsTextInstantaneous() )
@@ -128,7 +128,7 @@ void Message::SetText( const fc::string& text )
 }
 
 
-void Message::UpdateText()
+void MessageElement::UpdateText()
 {
 	//Here we have to generate all our row information for the
 	//current text. By caching this data we can speed up font rendering.

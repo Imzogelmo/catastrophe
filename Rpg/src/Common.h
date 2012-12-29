@@ -35,6 +35,14 @@ USING_NAMESPACE_CE
 #define Trace TRACE
 #define SAFE_DELETE(p) { delete p; p = 0; }
 
+//RPG_API
+#if defined RPG_EXPORT
+	#define RPG_API __declspec(dllexport)
+#elif defined RPG_IMPORT
+	#define RPG_API __declspec(dllimport)
+#else
+	#define RPG_API
+#endif
 
 // forward declarations
 class Tile;

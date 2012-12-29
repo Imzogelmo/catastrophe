@@ -21,7 +21,7 @@
  * *note* - Item* is allowed to be null.
  * (for Inventories with blank spots for example)
  */
-class InventoryItem
+class RPG_API InventoryItem
 {
 public:
 	InventoryItem( Item* item = 0, int amount = 0, int maxAmount = 99 );

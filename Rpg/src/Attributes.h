@@ -24,7 +24,7 @@ typedef FixedAttributeArray<short, MAX_ELEMENTS>	ElementalArrayType;
 typedef FixedAttributeArray<short, MAX_STATUS>		StatusArrayType;
 
 
-struct Attributes
+struct RPG_API Attributes
 {
 	typedef Attributes			this_type;
 

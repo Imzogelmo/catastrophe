@@ -26,7 +26,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class Input
+class CE_API Input
 {
 public:
 	enum

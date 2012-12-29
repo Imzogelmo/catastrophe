@@ -352,7 +352,42 @@ ShaderObject* ResourceManager::GetShaderObject( int id )
 
 void ResourceManager::UnloadTexture( const fc::string& filename )
 {
-	Resource* resource = m_textureCache.GetResource(filename);
+	InternalReleaseTexture( m_textureCache.GetResource(filename) );
+}
+
+
+void ResourceManager::UnloadFont( const fc::string& filename )
+{
+	InternalReleaseFont( m_fontCache.GetResource(filename) );
+}
+
+
+void ResourceManager::UnloadShaderObject( const fc::string& filename )
+{
+	InternalReleaseShaderObject( m_shaderCache.GetResource(filename) );
+}
+
+
+void ResourceManager::UnloadTexture( int id )
+{
+	InternalReleaseTexture( m_textureCache.GetResource(id) );
+}
+
+
+void ResourceManager::UnloadFont( int id )
+{
+	InternalReleaseFont( m_fontCache.GetResource(id) );
+}
+
+
+void ResourceManager::UnloadShaderObject( int id )
+{
+	InternalReleaseShaderObject( m_shaderCache.GetResource(id) );
+}
+
+
+void ResourceManager::InternalReleaseTexture( Resource* resource )
+{
 	if( resource )
 	{
 		resource->ReleaseRef();
@@ -364,9 +399,8 @@ void ResourceManager::UnloadTexture( const fc::string& filename )
 }
 
 
-void ResourceManager::UnloadFont( const fc::string& filename )
+void ResourceManager::InternalReleaseFont( Resource* resource )
 {
-	Resource* resource = m_fontCache.GetResource(filename);
 	if( resource )
 	{
 		resource->ReleaseRef();
@@ -378,9 +412,8 @@ void ResourceManager::UnloadFont( const fc::string& filename )
 }
 
 
-void ResourceManager::UnloadShaderObject( const fc::string& filename )
+void ResourceManager::InternalReleaseShaderObject( Resource* resource )
 {
-	Resource* resource = m_fontCache.GetResource(filename);
 	if( resource )
 	{
 		resource->ReleaseRef();
@@ -390,6 +423,8 @@ void ResourceManager::UnloadShaderObject( const fc::string& filename )
 		}
 	}
 }
+
+
 
 
 void ResourceManager::ReloadGraphicsResources()

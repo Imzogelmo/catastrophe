@@ -43,7 +43,7 @@ typedef long long			int64;
 #elif defined CE_IMPORT
 	#define CE_API __declspec(dllimport)
 #else
-	#define CE_API		  
+	#define CE_API
 #endif
 
 //CE_WANT_NAMESPACE must be defined in both lib and client.
@@ -166,6 +166,9 @@ class PackFile;
 class VectorBuffer;
 class XmlReader;
 class XmlWriter;
+
+class Sound;
+class SoundEngine;
 
 
 // optimize for use with algorithms and containers

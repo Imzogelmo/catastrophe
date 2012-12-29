@@ -18,7 +18,7 @@
 #include "DataList.h"
 
 
-struct ItemData : public AttributeData
+struct RPG_API ItemData : public AttributeData
 {
 	typedef AttributeData	base_type;
 
@@ -37,7 +37,7 @@ struct ItemData : public AttributeData
 
 
 
-class ItemList : public DataList<ItemData>
+class RPG_API ItemList : public DataList<ItemData>
 {
 public:
 	typedef DataList<ItemData>	base_type;

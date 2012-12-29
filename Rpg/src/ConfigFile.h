@@ -56,7 +56,7 @@ public:
 };
 
 
-class ConfigFile
+class RPG_API ConfigFile
 {
 public:
 	ConfigFile();

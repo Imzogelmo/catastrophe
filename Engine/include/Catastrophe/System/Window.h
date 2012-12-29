@@ -29,7 +29,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class Window
+class CE_API Window
 {
 public:
 	friend class System;

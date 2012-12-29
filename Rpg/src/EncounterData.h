@@ -20,7 +20,7 @@
 /**
  * EncounterData - holds an ID to a monster party and an encounter rate.
  */
-struct EncounterData
+struct RPG_API EncounterData
 {
 	int	troop_index;
 	int	rate;
@@ -50,7 +50,7 @@ struct EncounterData
  * An encounter "group" simply consists of a collection of possible
  * random monster party encounters within a given map region.
  */
-class EncounterGroupData 
+class RPG_API EncounterGroupData 
 {
 public:
 	typedef fc::vector<EncounterData>	vec_type;
@@ -81,7 +81,7 @@ protected:
 
 
 
-class EncounterGroupList : public DataList<EncounterGroupData>
+class RPG_API EncounterGroupList : public DataList<EncounterGroupData>
 {
 public:
 	typedef DataList<EncounterGroupData>	base_type;

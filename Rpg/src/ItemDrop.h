@@ -21,7 +21,7 @@
  * between min/max at a probability of rate out of maxRate. Ex;
  * a drop rate of 2 out of 50 would result in a 1 in 25 chance of drop.
  */
-class ItemDrop
+class RPG_API ItemDrop
 {
 public:
 	ItemDrop(int itemIndex = 0, int dropRate = 0, int maxRate = 100, int minAmount = 1, int maxAmount = 1) :
@@ -60,7 +60,7 @@ protected:
 };
 
 
-class ItemDropSet
+class RPG_API ItemDropSet
 {
 public:
 	typedef fc::fixed_vector<ItemDrop, 8> vec_type;

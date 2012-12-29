@@ -16,7 +16,7 @@
 #include "Attributes.h"
 
 
-class Equipment
+class RPG_API Equipment
 {
 public:
 	typedef fc::vector<Item*> vec_type;

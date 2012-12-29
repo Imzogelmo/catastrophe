@@ -21,7 +21,7 @@
 
 #include "Sound/BassSound.h"
 #include "Sound/BassSoundEngine.h"
-#include <Bass.h>
+#include <bass.h>
 
 CE_NAMESPACE_BEGIN
 

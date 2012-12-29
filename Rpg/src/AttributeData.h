@@ -18,7 +18,7 @@
 #include "AttributeFlags.h"
 
 
-struct AttributeData
+struct RPG_API AttributeData
 {
 	fc::string		name;
 	fc::string		script;

@@ -18,7 +18,7 @@
  * @database
  * 
  */
-class Database
+class RPG_API Database
 {
 public:
 	Database();

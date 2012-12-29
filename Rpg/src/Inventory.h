@@ -19,7 +19,7 @@
 
 
 
-class Inventory
+class RPG_API Inventory
 {
 public:
 	typedef fc::vector<InventoryItem> vec_type;

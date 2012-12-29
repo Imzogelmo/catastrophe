@@ -24,7 +24,7 @@
 CE_NAMESPACE_BEGIN
 
 
-class SoundEngine
+class CE_API SoundEngine
 {
 public:
 	SoundEngine() : m_volume(1.f) {}

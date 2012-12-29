@@ -23,12 +23,12 @@
 CE_NAMESPACE_BEGIN
 
 
-class CE_API Message : public TextElement
+class CE_API MessageElement : public TextElement
 {
 public:
 	static const int FastForwardSpeed = 4;
 
-	Message( const fc::string& text = "", Font* font = 0, TextAlignment alignment = AlignLeft, int rowHeight = -1 );
+	MessageElement( const fc::string& text = "", Font* font = 0, TextAlignment alignment = AlignLeft, int rowHeight = -1 );
 	
 	virtual void Update();
 	virtual void Render( SpriteBatch* spritebatch );

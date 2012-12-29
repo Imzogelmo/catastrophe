@@ -17,7 +17,7 @@
 #include "DataList.h"
 
 
-struct MonsterGroupData
+struct RPG_API MonsterGroupData
 {
 	int		monster_index;
 	int		min;
@@ -40,7 +40,7 @@ struct MonsterGroupData
  * A MonsterParty (aka Monster Troop)
  * is simply a collection of Monster Groups.
  */
-class MonsterPartyData
+class RPG_API MonsterPartyData
 {
 public:
 	typedef fc::vector<MonsterGroupData> vec_type;
@@ -69,7 +69,7 @@ protected:
 /*
  * A collection of stored MonsterPartyData objects.
  */
-class MonsterPartyList : public DataList<MonsterPartyData>
+class RPG_API MonsterPartyList : public DataList<MonsterPartyData>
 {
 public:
 	typedef DataList<MonsterPartyData>	base_type;
