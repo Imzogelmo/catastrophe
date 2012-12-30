@@ -6,20 +6,20 @@
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="Source Files\System">
-      <UniqueIdentifier>{a629f441-1dd4-48b3-b5a4-3983aadf4954}</UniqueIdentifier>
+      <UniqueIdentifier>{65a8df3a-e166-41fe-a7f6-80d7563a4492}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Input">
-      <UniqueIdentifier>{3915217b-8642-4afb-87d4-4d6dce5140d6}</UniqueIdentifier>
+      <UniqueIdentifier>{29860d50-0d8b-424e-af91-cdff679deb28}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
     <Filter Include="Header Files\System">
-      <UniqueIdentifier>{73b3dce9-ca35-4ad6-bb93-35e8f7ec5034}</UniqueIdentifier>
+      <UniqueIdentifier>{9c8e537d-8f48-44f2-9b6f-a1c3ed90faff}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Input">
-      <UniqueIdentifier>{e1a6a153-ca9b-41ea-9674-4c1c6eecc0b3}</UniqueIdentifier>
+      <UniqueIdentifier>{95f62660-3215-44d1-807d-8931ac8a2436}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
