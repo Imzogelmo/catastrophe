@@ -106,7 +106,7 @@ extern FC_NO_INLINE void __Internal_Log_Write( const char* format, ... );
 
 
 /* Forward Declarations */
-class System;
+//class System;
 class Window;
 
 class Vector2;

@@ -6,38 +6,44 @@
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="Source Files\Math">
-      <UniqueIdentifier>{004895cc-51df-44ec-bf35-267f6294da47}</UniqueIdentifier>
+      <UniqueIdentifier>{e642c5ed-e128-4406-8d15-388ffe37fe17}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\IO">
-      <UniqueIdentifier>{1a1045f9-a133-4034-9abf-9684c06eceed}</UniqueIdentifier>
+      <UniqueIdentifier>{3cfad9b3-a0af-4e09-935e-b389880ef946}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Graphics">
-      <UniqueIdentifier>{ae6b2956-849f-435e-814c-1879dae8164a}</UniqueIdentifier>
+      <UniqueIdentifier>{6d1a2fc3-63c1-4e45-b667-07b2e44b9f89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System">
+      <UniqueIdentifier>{fe262798-d42c-4b3c-95df-e6a3bf646b7c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Gui">
-      <UniqueIdentifier>{87ecfd58-240a-452b-8d5d-10268fbb3cb5}</UniqueIdentifier>
+      <UniqueIdentifier>{834c1101-3382-4345-83a0-2de0d17d71d2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Util">
-      <UniqueIdentifier>{670d30dd-1de9-4861-be8d-fc4bce9972dd}</UniqueIdentifier>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{234a9710-e5f5-4ad7-b736-d266cb9857ba}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
     <Filter Include="Header Files\Math">
-      <UniqueIdentifier>{6b01e77d-66e1-4556-922a-2ef935f53636}</UniqueIdentifier>
+      <UniqueIdentifier>{a2edfb10-0a62-4071-945a-d865fb0589a0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\IO">
-      <UniqueIdentifier>{2b811e72-bd64-42a9-a534-13d5fa9ef647}</UniqueIdentifier>
+      <UniqueIdentifier>{300def5b-3f48-427d-951e-5d3de483ecab}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Graphics">
-      <UniqueIdentifier>{a77c89c8-6b68-4d52-97f6-195c06b892ed}</UniqueIdentifier>
+      <UniqueIdentifier>{001d7243-233b-4f65-8df0-dc67bca39951}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System">
+      <UniqueIdentifier>{d9ad8234-b6b7-41ab-8cf0-932571dd889e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{1bd9be2f-ae14-4f75-ae42-2c2476c61807}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Gui">
-      <UniqueIdentifier>{bc660daf-f3ff-400c-93ca-4758bc6415ba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Util">
-      <UniqueIdentifier>{945fe418-9725-411a-b32d-6958d192349c}</UniqueIdentifier>
+      <UniqueIdentifier>{4358f507-bd5e-4670-b848-0614f40df50b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
@@ -150,6 +156,18 @@
     <ClCompile Include="src\Graphics\TextureLoader.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="src\System\GLFWSystem.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\SFMLSystem.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\System.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\Window.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
     <ClCompile Include="src\Gui\Menu.cpp">
       <Filter>Source Files\Gui</Filter>
     </ClCompile>
@@ -162,30 +180,15 @@
     <ClCompile Include="src\Gui\Widget.cpp">
       <Filter>Source Files\Gui</Filter>
     </ClCompile>
-    <ClCompile Include="src\Util\TexturePacker.cpp">
-      <Filter>Source Files\Util</Filter>
+    <ClCompile Include="src\Input\Input.cpp">
+      <Filter>Source Files\Input</Filter>
     </ClCompile>
-    <ClCompile Include="src\Util\Timer.cpp">
-      <Filter>Source Files\Util</Filter>
+    <ClCompile Include="src\Input\Keyboard.cpp">
+      <Filter>Source Files\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Catastrophe\Common.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Catastrophe\FileIO.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Catastrophe\Graphics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Catastrophe\Gui.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Catastrophe\MathTypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Catastrophe\Util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Catastrophe\Math\BoundingBox.h">
@@ -335,6 +338,33 @@
     <ClInclude Include="include\Catastrophe\Graphics\VertexArray.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="include\Catastrophe\System\GLFWSystem.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Catastrophe\System\SFMLSystem.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Catastrophe\System\System.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Catastrophe\System\Window.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Catastrophe\Input\Input.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Catastrophe\Input\Joystick.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Catastrophe\Input\Keyboard.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Catastrophe\Input\Keys.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Catastrophe\Input\Mouse.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
     <ClInclude Include="include\Catastrophe\Gui\Menu.h">
       <Filter>Header Files\Gui</Filter>
     </ClInclude>
@@ -346,36 +376,6 @@
     </ClInclude>
     <ClInclude Include="include\Catastrophe\Gui\Widget.h">
       <Filter>Header Files\Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Catastrophe\Util\BasicTimer.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Catastrophe\Util\GarbageCollect.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Catastrophe\Util\Indexable.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Catastrophe\Util\MinMax.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Catastrophe\Util\NonCopyable.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Catastrophe\Util\ReferenceCounted.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Catastrophe\Util\Singleton.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Catastrophe\Util\TexturePacker.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Catastrophe\Util\Timer.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Catastrophe\Util\UniqueID.h">
-      <Filter>Header Files\Util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

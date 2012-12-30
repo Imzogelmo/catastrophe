@@ -43,7 +43,7 @@ public:
 	void Remove()
 	{
 		if( !m_items.empty() )
-			m_items.erase_at(index);
+			m_items.erase_at(0);
 	}
 
 	void Remove( size_t index )
