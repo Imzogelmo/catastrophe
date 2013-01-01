@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <Catastrophe/Graphics/Sprite.h>
 #include "Common.h"
 #include "AttributeData.h"
 #include "ItemDrop.h"
@@ -23,8 +24,8 @@ struct RPG_API MonsterData : public AttributeData
 	typedef AttributeData	base_type;
 
 	//int sprite_index;
-	//Sprite			sprite;
 	ItemDropSet		item_dropset;
+	AnimatedSprite	sprite;
 
 	MonsterData() : base_type()
 	{}

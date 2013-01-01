@@ -16,7 +16,8 @@
 #include <Catastrophe/Math/Point.h>
 #include <Catastrophe/Math/Rect.h>
 #include <Catastrophe/Graphics/Animation.h>
-#include <Catastrophe/Graphics/Animation.h>
+#include <Catastrophe/Graphics/Sprite.h>
+#include <fc/math.h>
 
 #include "Serialization.h"
 #include "../ResourceManager.h"
@@ -27,6 +28,13 @@ namespace Util
 	//yes, this is "global", but it is well hidden.
 	ResourceManager* currentResourceManager = 0;
 
+	// TODO
+	// system needs the following types available:
+	// -blank (dummy) texture, default shader, and system font.
+	// this will allow me to optimize some low-level stuff further
+	// and prevent potential crashes.
+
+	// todo: remove this.
 	void SetResourceManager( ResourceManager* current )
 	{
 		currentResourceManager = current;
@@ -45,6 +53,19 @@ namespace Util
 		xml->SetInt("y", r.pos.y);
 		xml->SetInt("w", r.size.x);
 		xml->SetInt("h", r.size.y);
+	}
+
+	void SerializeAnimatedSprite( XmlWriter* xml, const AnimatedSprite& a )
+	{
+		// don't need to serialize the per-instance variables.
+		xml->SetInt("width", fc::iround(a.size.x));
+		xml->SetInt("height", fc::iround(a.size.y));
+		xml->SetUInt("color", a.tint.packed_value);
+		xml->SetUInt("blendmode", a.blendmode.value);
+
+		xml->BeginNode("Animation");
+		SerializeAnimation(xml, a);
+		xml->EndNode();
 	}
 
 	void SerializeAnimation( XmlWriter* xml, const Animation& a )
@@ -110,6 +131,21 @@ namespace Util
 		r.size.y = xml->GetInt("h");
 	}
 
+	void DeserializeAnimatedSprite( XmlReader* xml, AnimatedSprite& a )
+	{
+		// don't need to serialize the per-instance variables.
+		a.size.x = (float)xml->GetInt("width");
+		a.size.y = (float)xml->GetInt("height");
+		a.tint.packed_value = xml->GetUInt("color");
+		a.blendmode.value = xml->GetUInt("blendmode");
+
+		if( xml->NextChild("Animation") )
+		{
+			DeserializeAnimation(xml, a);
+			xml->SetToParent();
+		}
+	}
+
 	void DeserializeAnimation( XmlReader* xml, Animation& a )
 	{
 		float speed = xml->GetFloat("speed");
@@ -147,7 +183,7 @@ namespace Util
 		if( !texture )
 		{
 			//it's not a fatal error, but it's not good either.
-			Log("Error: Texture (%s) not found. Could not load Animation.", textureName.c_str());
+			LogError("Error: Texture (%s) not found. Could not load Animation.", textureName.c_str());
 		}
 		else
 		{

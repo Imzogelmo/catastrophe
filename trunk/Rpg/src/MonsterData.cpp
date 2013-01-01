@@ -13,6 +13,7 @@
 #include <Catastrophe/IO/XmlWriter.h>
 #include <Catastrophe/IO/XmlReader.h>
 #include "MonsterData.h"
+#include "Util/Serialization.h"
 
 
 
@@ -22,11 +23,11 @@
 
 void MonsterData::SerializeXml( XmlWriter* xml )
 {
-	xml->BeginNode("Monster");
-
 	base_type::SerializeXml(xml);
 	item_dropset.SerializeXml(xml);
 
+	xml->BeginNode("AnimatedSprite");
+	Util::SerializeAnimatedSprite(xml, sprite);
 	xml->EndNode();
 }
 
@@ -35,6 +36,16 @@ void MonsterData::DeserializeXml( XmlReader* xml )
 {
 	base_type::DeserializeXml(xml);
 	item_dropset.DeserializeXml(xml);
+
+	if( xml->NextChild("AnimatedSprite") )
+	{
+		Util::DeserializeAnimation(xml, sprite);
+		xml->SetToParent();
+	}
+	else
+	{
+		//todo initialize potential invalid data
+	}
 }
 
 
@@ -59,7 +70,9 @@ bool MonsterList::SerializeXml( const fc::string& filename )
 
 	for( size_t i(0); i < m_items.size(); ++i )
 	{
+		xml.BeginNode("Monster");
 		m_items[i].SerializeXml(&xml);
+		xml.EndNode();
 	}
 
 	xml.EndNode();
