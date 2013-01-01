@@ -15,6 +15,8 @@
 #include "MonsterPartyData.h"
 
 
+extern MonsterList gMonsterList; //temp for gererating data.
+#include "MonsterData.h"
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //             MonsterGroupData
@@ -31,7 +33,7 @@ void MonsterGroupData::Validate()
 void MonsterGroupData::SerializeXml( XmlWriter* xml )
 {
 	xml->BeginNode("Monster");
-	xml->SetInt("monster_index", monster_index);
+	xml->SetInt("index", monster_index);
 	xml->SetInt("min", min);
 	xml->SetInt("max", max);
 	xml->EndNode();
@@ -40,7 +42,25 @@ void MonsterGroupData::SerializeXml( XmlWriter* xml )
 
 void MonsterGroupData::DeserializeXml( XmlReader* xml )
 {
-	monster_index = xml->GetInt("monster_index");
+	/*
+	bool found = false;
+	fc::string str = xml->GetString("name");
+	for( int i(0); i < gMonsterList.Size(); ++i )
+	{
+		if( str == gMonsterList[i].GetName() )
+		{
+			found = true;
+			monster_index = i;
+		}
+	}
+
+	if(!found)
+	{
+		Log(str.c_str());
+	}
+	*/
+
+	monster_index = xml->GetInt("index");
 	min = xml->GetInt("min");
 	max = xml->GetInt("max");
 }
@@ -111,7 +131,7 @@ void MonsterPartyData::DeserializeXml( XmlReader* xml )
 		m_groups.back().DeserializeXml(xml);
 	}
 
-	//xml->SetToParent();
+	xml->SetToParent(); //fixme
 }
 
 

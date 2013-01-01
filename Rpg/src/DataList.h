@@ -36,14 +36,9 @@ public:
 	size_t Size() const { return m_items.size(); }
 
 	void Add( const T& object )
+	void Add( const T& object = T() )
 	{
 		m_items.push_back(object);
-	}
-
-	void Remove()
-	{
-		if( !m_items.empty() )
-			m_items.erase_at(0);
 	}
 
 	void Remove( size_t index )
@@ -64,6 +59,9 @@ public:
 		return m_items[i];
 	}
 
+	vec_type& GetVector() { return m_items; }
+	const vec_type& GetVector() const { return m_items; }
+	
 protected:
 	vec_type m_items;
 
