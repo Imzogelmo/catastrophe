@@ -151,4 +151,14 @@ namespace script
 	}
 
 
+
+	//...
+	template <class T, class U> inline
+	T& ScopedAssignment( const U &other, T *self )
+	{
+		*self = other;
+		return *self;
+	}
+
+
 } //namespace script
