@@ -49,8 +49,8 @@ void ScriptEngine::RegisterGame()
 	int r(0);
 	using namespace script;
 	r = engine->SetDefaultNamespace("game"); assert( r >= 0 );
-	r = engine->RegisterGlobalFunction( "int load_texture(const string&)", asFUNCTION(LoadTeaxture), asCALL_CDECL); assert( r >= 0 );
-	r = engine->RegisterGlobalFunction( "int load_font(const string&, int)", asFUNCTION(LoadFont), asCALL_CDECL); assert( r >= 0 );
+	r = engine->RegisterGlobalFunction( "int load_texture(const ::string& in)", asFUNCTION(LoadTeaxture), asCALL_CDECL); assert( r >= 0 );
+	r = engine->RegisterGlobalFunction( "int load_font(const ::string& in, int)", asFUNCTION(LoadFont), asCALL_CDECL); assert( r >= 0 );
 	//r = engine->RegisterGlobalFunction( "::map@ get_map(int)", asFUNCTION(GetMap), asCALL_CDECL); assert( r >= 0 );
 	r = engine->SetDefaultNamespace(""); assert( r >= 0 );
 }

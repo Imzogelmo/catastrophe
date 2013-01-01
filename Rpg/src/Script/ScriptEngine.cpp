@@ -33,10 +33,10 @@ ScriptEngine::ScriptEngine() :
 
 ScriptEngine::~ScriptEngine()
 {
+	SAFE_DELETE(m_contextPool);
 	if(m_engine)
 		m_engine->Release();
 
-	SAFE_DELETE(m_contextPool);
 }
 
 

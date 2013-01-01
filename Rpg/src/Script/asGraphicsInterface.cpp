@@ -154,12 +154,23 @@ void ScriptEngine::RegisterTexture()
 }
 
 
+namespace script
+{
+	Font* FontConstructor()
+	{
+		//todo returns system font.
+		return 0;
+	}
+
+} //namespace script
+
+
 void ScriptEngine::RegisterFont()
 {
 	int r(0);
 	using namespace script;
 	r = engine->RegisterObjectType( "font", 0, asOBJ_REF | asOBJ_SCOPED ); assert( r >= 0 );
-	r = engine->RegisterObjectBehaviour( "font", asBEHAVE_FACTORY, "font@ f()", asFUNCTION(TextureConstructor), asCALL_CDECL); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour( "font", asBEHAVE_FACTORY, "font@ f()", asFUNCTION(FontConstructor), asCALL_CDECL); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour( "font", asBEHAVE_RELEASE, "void f()", asFUNCTION(DummyReleaseRef), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( "font", "font &opAssign(const font &in)", asFUNCTION((RefAssignment<Font, Font>)), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
 	//r = engine->RegisterObjectMethod( "font", "bool is_valid()", asMETHOD(Font, IsValid), asCALL_THISCALL ); assert( r >= 0 );
@@ -184,8 +195,8 @@ void ScriptEngine::RegisterSpriteBase( const char* name )
 	r = engine->RegisterObjectBehaviour( name, asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(ValueConstruct<T>), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour( name, asBEHAVE_DESTRUCT, "void f()", asFUNCTION(ValueDestruct<T>), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 
-	r = engine->RegisterObjectMethod( "sprite", "void set_texture(const texture &in)", asMETHODPR(T, SetTexture, (const Texture*), void), asCALL_THISCALL); assert( r >= 0 );
-	r = engine->RegisterObjectMethod( "sprite", "texture get_texture() const", asMETHODPR(T, GetTexture, () const, const Texture*), asCALL_THISCALL); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( name, "void set_texture(const texture &in)", asMETHODPR(T, SetTexture, (const Texture*), void), asCALL_THISCALL); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( name, "texture@ get_texture() const", asMETHODPR(T, GetTexture, () const, const Texture*), asCALL_THISCALL); assert( r >= 0 );
 
 	fc::string method_decl = name + fc::string(" &opAssign(const ") + name + fc::string(" &in)");
 	r = engine->RegisterObjectMethod( name, method_decl.c_str(), asFUNCTION((ValueAssignment<T, T>)), asCALL_CDECL_OBJLAST); assert( r >= 0 );
@@ -352,8 +363,8 @@ void ScriptEngine::RegisterGraphicsInterface()
 	RegisterFont();
 	//RegisterVertex();
 
-	void RegisterSprite();
-	void RegisterAnimatedSprite();
+	RegisterSprite();
+	RegisterAnimatedSprite();
 
 }
 

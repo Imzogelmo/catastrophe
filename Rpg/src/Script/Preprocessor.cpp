@@ -111,7 +111,9 @@ int CppPreprocessor::ProcessFile
 		Log("%s", error_string);
 	}
 
-	printf( "Preprocessor finished with status: %d. Elapsed time: %d minutes, %.2f seconds.\n",
+	// free the memory allocated by mcpp, and log output.
+	mcpp::use_mem_buffers(0);
+	Log( "Preprocessor finished with status: %d. Elapsed time: %d minutes, %.2f seconds.\n",
 		return_value, timer.GetMinutes(), timer.GetSeconds() );
 
 	return return_value;
