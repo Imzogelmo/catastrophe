@@ -32,6 +32,7 @@ public:
 	DataList() : m_items()
 	{}
 
+	void SetCapacity( size_t capacity ) const { m_items.reserve(capacity); }
 	bool Empty() const { return m_items.empty(); }
 	size_t Size() const { return m_items.size(); }
 

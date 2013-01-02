@@ -206,7 +206,20 @@ int main(int argc, char* argv[])
 /*
 
 #define WIN32_LEAN_AND_MEAN
-#include <windows.h>
+//#include <windows.h>
+//windows crap
+#if !defined(_68K_) && !defined(_MPPC_) && !defined(_X86_) && !defined(_IA64_) && !defined(_AMD64_) && defined(_M_IX86)
+#define _X86_
+#endif
+
+//more windows crap
+#define WIN32_LEAN_AND_MEAN
+#define WIN32_EXTRA_LEAN
+#define NOGDI
+#include <windef.h>
+#include <winbase.h>
+
+
 #include <stdio.h>
 #include <Catastrophe/Graphics/Image.h>
 #include <Catastrophe/Graphics/TextureLoader.h>
