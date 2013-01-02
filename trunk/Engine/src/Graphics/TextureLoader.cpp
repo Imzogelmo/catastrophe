@@ -43,7 +43,7 @@ uchar* TextureLoader::LoadFromFile( const fc::string& filename, Point& size, Tex
 	uchar* ptr = stbi_load( filename.c_str(), &width, &height, &channels, STBI_rgb_alpha );
 	if(!ptr)
 	{
-		//Log( "Image: " + filename + " failed to load. " + GetErrorMsg() );
+		Log("Error loading file (%s), %s.", filename.c_str(), stbi_failure_reason() );
 		return 0;
 	}
 

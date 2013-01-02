@@ -30,6 +30,10 @@ public:
 
 	Point() {}
 	Point( int x, int y )	: x(x), y(y) {}
+	Point( const Vector2& v );
+
+	Point &operator = ( int n ) { x = n; y = n; return *this; }
+	Point &operator = ( const Vector2 &v ) { *this = Point(v); return *this; }
 
 	int			&operator [] ( const int i )		{ return *( &x + i ); }
 	const int	&operator [] ( const int i ) const  { return *( &x + i ); }

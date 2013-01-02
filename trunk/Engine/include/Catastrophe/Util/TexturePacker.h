@@ -51,6 +51,7 @@ public:
 	{}
 
 	bool Pack( int w, int h, Point& outPos );
+	void IncrementRow();
 	int GetUsedHeight() const { return m_pos.y + m_yoffset; }
 
 protected:

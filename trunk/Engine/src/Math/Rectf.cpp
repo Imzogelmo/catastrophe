@@ -16,6 +16,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#include "Math/Rect.h"
 #include "Math/Rectf.h"
 
 
@@ -23,6 +24,33 @@ CE_NAMESPACE_BEGIN
 
 Rectf Rectf::Zero = Rectf(0.f, 0.f, 0.f, 0.f);
 Rectf Rectf::One = Rectf(0.f, 0.f, 1.f, 1.f);
+
+
+Rectf::Rectf( const Rect& r )
+{
+	min.x = (float)r.pos.x;
+	min.y = (float)r.pos.y;
+	max.x = min.x + (float)r.size.x;
+	max.y = min.y + (float)r.size.y;
+}
+
+
+void Rectf::Merge( const Rectf& r )
+{
+	if(r.min.x < min.x) min.x = r.min.x;
+	if(r.max.x > max.x) max.x = r.max.x;
+	if(r.min.y < min.y) min.y = r.min.y;
+	if(r.max.y > max.y) max.y = r.max.y;
+}
+
+
+void Rectf::Merge( const Vector2& p )
+{
+	if(p.x < min.x) min.x = p.x;
+	if(p.x > max.x) max.x = p.x;
+	if(p.y < min.y) min.y = p.y;
+	if(p.y > max.y) max.y = p.y;
+}
 
 
 bool Rectf::IntersectsCircle( const Vector2& point, float radius )

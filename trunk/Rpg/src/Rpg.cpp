@@ -93,22 +93,46 @@ Window* CreateWindow()
 }
 
 
+//I use this periodically to test/accum data.
+//just make sure that Tests() is commented out
+//before running it.
+
 //temp includes
 #include "MonsterData.h"
+#include "MonsterPartyData.h"
 #include "ItemData.h"
 #include "Tile/TilesetManager.h"
 #include <Catastrophe/IO/File.h>
 
+MonsterList gMonsterList; //temp for gererating data.
+
 void DoTests()
 {
+	bool r;
+	/*
 	TilesetManager tm;
 	Tileset* t = tm.CreateTileset("testTileset.xml");
 	t->Resize(4, 4); //16 tiles
 	bool r = t->SerializeXml("");
 	return;
+	*/
 
+	r = gMonsterList.DeserializeXml("monst.h");
+	assert(r);
+
+	MonsterPartyList mpl;
+	r = mpl.DeserializeXml("monster_troops.h");
+	r = mpl.SerializeXml("ml.xml");
+
+	if(!r)
+		r = ! r;
+	return; //for debug stepping.
 }
 
+
+void DoAtlasPack();
+void DoAtlasPack2();
+void DoAtlasPack3();
 
 int main(int argc, char* argv[])
 {
@@ -135,20 +159,25 @@ int main(int argc, char* argv[])
 	System::Init();
 	System::InitLogging("debug.log", true); //todo put this after config..
 
+
+	//DoTests();
+
+
 	// read config file and parse command-line arguments.
 	LoadConfigSettings(argc, argv);
 
 
 	Game* game = new Game();
-	if( game->Initialize() != 0 )
-		return -1;
+	//if( game->Initialize() != 0 )
+	//	return -1;
 
 	Window* window = CreateWindow();
 
 	//DoTests(); //some quick and dirty testing.
 
-	// TODO: Need to handle loading +
-	// Splash screen here...
+
+	//DoAtlasPack3();
+	//return 0;
 
 	//Font font;
 	//font.LoadFromFile(fc::string(), 32);
@@ -171,4 +200,559 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
+
+
+
+/*
+
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#include <stdio.h>
+#include <Catastrophe/Graphics/Image.h>
+#include <Catastrophe/Graphics/TextureLoader.h>
+#include <Catastrophe/Util/TexturePacker.h>
+
+#include <fc/dynamic_array2d.h>
+#include <fc/sort.h>
+#include "Util/StringAlias.h"
+
+#include <cstdlib>
+
+int hexStrToInt( const fc::string& s) {
+    char * p;
+    long n = strtol( s.c_str(), & p, 16 );
+    assert(p);
+	return (int)n;
+}
+
+class FileGetter{
+    WIN32_FIND_DATAA found; 
+    HANDLE hfind;
+    char folderstar[255];       
+    int chk;
+
+public:
+    FileGetter(char* folder){       
+        sprintf(folderstar,"%s\\*.*",folder);
+        hfind = FindFirstFileA(folderstar,&found);
+        //skip .
+        FindNextFileA(hfind,&found);        
+    }
+
+    int getNextFile(char* fname){
+        //skips .. when called for the first time
+        chk=FindNextFileA(hfind,&found);
+        if (chk)
+            strcpy(fname, found.cFileName);     
+        return chk;
+    }
+
+};
+
+
+void DoAtlasPack() //let's do it!
+{
+	const int W = 1024;
+	const int H = 1024;
+	const int MAX_EN = 204;
+
+	bool r = gMonsterList.DeserializeXml("monsters.xml");
+	assert(r);
+
+	StringAliasList strAlias;
+	strAlias.DeserializeXml( "monster_compat.xml" );
+
+	for(int u(0); u < gMonsterList.Size(); ++ u )
+	{
+		gMonsterList[u].attributes.attributes[0] = 1; //lv
+	}
+
+	for(int u(0); u < strAlias.GetList().size(); ++ u )
+	{
+		bool found = false;
+		for(int w(0); w < gMonsterList.Size(); ++ w )
+		{
+			if( gMonsterList.GetMonster(w).GetName().to_lower() == strAlias.GetList()[u].alias )
+			{
+				found = true;
+				break;
+			}
+		}
+
+		if(!found)
+		{
+			Log("!!!correct alias (%s)", strAlias.GetList()[u].alias.c_str() );
+			//exit(1);
+		}
+	}
+
+
+	FileGetter fg("ff1");
+	TextureLoader tl;
+
+	//Image image;
+	//image.CreateFromPixels(1024, 1024, 0); //blank image (all black)
+	//image.GetPixelArray();
+
+	fc::dynamic_array2d<Color> pixels(H,W);
+	pixels.assign(Color::Black(0)); //0,0,0,0 color
+	fc::dynamic_array2d<Color> temp[128];
+	fc::string str[128];
+
+	int i(0);
+	char buf[255];
+	while( fg.getNextFile(buf) )
+	{
+		Point size = Point::Zero;
+		fc::string s = buf;
+		if(s == "Thumbs.db" || s == "thumbs.db")
+			continue;
+
+		str[i] = s;
+		str[i].erase(str[i].size() - 4, 4); //erase ".png"
+
+		if( !strAlias.ContainsName(str[i]) )
+		{
+			Log("no name (%s) found.", str[i].c_str());
+		}
+
+		s.insert(0, "ff1/");
+		ubyte* data = tl.LoadFromFile(s, size);
+		if(data)
+		{
+			temp[i].resize(size.y, size.x);
+			temp[i].assign(Color::Black(0));
+
+			int q(0);
+			for( int k(0); k < size.y; ++k )
+			{
+				for( int j(0); j < size.x; ++j )
+				{
+					Color *pixel = & temp[i]( k, j );
+					(*pixel).r = *(data + q++);
+					(*pixel).g = *(data + q++);
+					(*pixel).b = *(data + q++);
+					(*pixel).a = *(data + q++);
+				}
+			}
+
+			Color mask = temp[i][0];
+			if( str[i] == "coctrice" || str[i] == "perilisk" )
+			{
+				mask = temp[i](15,0);
+			}
+
+			for( int  j(0); j < temp[i].size(); ++j )
+			{
+				if( temp[i][j] == mask )
+				{
+					temp[i][j] = Color::Black(0);
+				}
+			}
+
+			tl.FreePtr(data);
+		}
+
+		i++;
+	}
+
+	struct arrStr{
+		fc::dynamic_array2d<Color>* p;
+		fc::string* s;
+	};
+
+	struct sortstructx{ //sort by x pos.
+		bool operator()( const arrStr& a, const arrStr& b ) const{
+			return a.p->x() < b.p->x();
+		}
+	};
+
+	struct sortstructy{ //sort by x pos.
+		bool operator()( const arrStr& a, const arrStr& b ) const{
+			return a.p->y() < b.p->y();
+		}
+	};
+
+	struct sortstructxy{
+		bool operator()( const arrStr& a, const arrStr& b ) const{
+			return (a.p->y() * a.p->x()) < (b.p->y() * b.p->x());
+		}
+	};
+
+	arrStr as[128];
+	for( int  j(0); j < 128; ++j )
+	{
+		as[j].p = &temp[j];
+		as[j].s = &str[j];
+	}
+
+	//sort pointers to arrays.
+	fc::insertion_sort( as, as + 128, sortstructy() );
+	fc::insertion_sort( as, as + 128, sortstructx() );
+	fc::insertion_sort( as, as + 128, sortstructxy() );
+
+	//align to grid for extensibility.
+	GridTexturePacker texPack(W,H);
+	Rect sourceRects[128];
+
+	bool firstInc = false;
+	bool secInc = false;
+	for( int  j(0); j < 128; ++j )
+	{
+		if( !firstInc && as[j].p->y() > 32 )
+		{
+			firstInc = true;
+			texPack.IncrementRow();
+		}
+		else if( !secInc && as[j].p->y() > 48 )
+		{
+			secInc = true;
+			texPack.IncrementRow();
+		}
+
+		Point pos = Point::Zero;
+		assert( texPack.Pack(as[j].p->x(), as[j].p->y(), pos) );
+
+		sourceRects[j] = Rect( pos, Point(as[j].p->x(), as[j].p->y()) );
+		//gMonsterList[u].sprite.SetFrameData(
+		//	Rect(pos.x, pos.y)
+		//);
+
+		//copy to our texture atlas
+		pixels.write_region( pos.x, pos.y, as[j].p->x(), as[j].p->y(), *as[j].p );
+	}
+
+
+	Texture tex;
+	tex.CreateTexture(pixels.data(), pixels.x(), pixels.y());
+	tex.SetName("monsters.png");
+
+	for(int u(0); u < 128; ++ u )
+	{
+		gMonsterList.GetMonster(u).sprite.SetTexture(&tex);
+	}
+
+	for(int u(0); u < 128; ++ u )
+	{
+		fc::string al;
+		bool suc = strAlias.GetAlias(*as[u].s, al);
+		//assert(suc);
+
+		bool found = false;
+		for(int w(0); w < gMonsterList.Size(); ++ w )
+		{
+			if( gMonsterList.GetMonster(w).GetName().to_lower() == al )
+			{
+				gMonsterList.GetMonster(w).sprite.SetFrameData(sourceRects[u]);
+				gMonsterList.GetMonster(w).sprite.size = sourceRects[u].size;
+				found = true;
+				break;
+			}
+		}
+
+		if(!found)
+		{
+			Log("Not found (%s)", al.c_str());
+		}
+
+	}
+
+	gMonsterList.SerializeXml("new_m.xml");
+	for(int u(0); u < 128; ++ u )
+	{
+		if(gMonsterList[u].sprite.size.x > 300)
+		{
+			Log("%s", gMonsterList[u].name.c_str());
+		}
+	}
+	//..finally save the atlas.
+	tl.SaveToFile( "monsters.png", pixels.data(), pixels.x(), pixels.y() );
+}
+
+
+
+void DoAtlasPack2()
+{
+	const int W = 2048;
+	const int H = 1024;
+	const int MAX_EN = 175;
+
+	bool r = gMonsterList.DeserializeXml("monsters.xml");
+	assert(r);
+
+	FileGetter fg("ENEMY");
+	TextureLoader tl;
+
+	//Image image;
+	//image.CreateFromPixels(1024, 1024, 0); //blank image (all black)
+	//image.GetPixelArray();
+
+	fc::dynamic_array2d<Color> pixels(H,W);
+	pixels.assign(Color::Black(0)); //0,0,0,0 color
+	fc::dynamic_array2d<Color> temp[MAX_EN];
+	fc::string str[MAX_EN];
+
+	int i(0);
+	char buf[255];
+	while( fg.getNextFile(buf) )
+	{
+		Point size = Point::Zero;
+		fc::string s = buf;
+		if(s == "Thumbs.db" || s == "thumbs.db")
+			continue;
+
+		str[i] = s;
+		str[i].erase(str[i].size() - 4, 4); //erase ".png"
+		str[i].erase(0, 3);
+
+		s.insert(0, "ENEMY/");
+		ubyte* data = tl.LoadFromFile(s, size);
+		if(data)
+		{
+			temp[i].resize(size.y, size.x);
+			temp[i].assign(Color::Black(0));
+
+			int q(0);
+			for( int k(0); k < size.y; ++k )
+			{
+				for( int j(0); j < size.x; ++j )
+				{
+					Color *pixel = & temp[i]( k, j );
+					(*pixel).r = *(data + q++);
+					(*pixel).g = *(data + q++);
+					(*pixel).b = *(data + q++);
+					(*pixel).a = *(data + q++);
+				}
+			}
+
+			tl.FreePtr(data);
+		}
+
+		i++;
+	}
+
+	struct arrStr{
+		fc::dynamic_array2d<Color>* p;
+		fc::string* s;
+	};
+
+	struct sortstructx{ //sort by x pos.
+		bool operator()( const arrStr& a, const arrStr& b ) const{
+			return a.p->x() < b.p->x();
+		}
+	};
+
+	struct sortstructy{ //sort by x pos.
+		bool operator()( const arrStr& a, const arrStr& b ) const{
+			return a.p->y() < b.p->y();
+		}
+	};
+
+	struct sortstructxy{
+		bool operator()( const arrStr& a, const arrStr& b ) const{
+			return (a.p->y() * a.p->x()) < (b.p->y() * b.p->x());
+		}
+	};
+
+	arrStr as[MAX_EN];
+	for( int  j(0); j < MAX_EN; ++j )
+	{
+		as[j].p = &temp[j];
+		as[j].s = &str[j];
+	}
+
+	//sort pointers to arrays.
+	//fc::insertion_sort( as, as + MAX_EN, sortstructy() );
+	//fc::insertion_sort( as, as + MAX_EN, sortstructx() );
+	fc::insertion_sort( as, as + MAX_EN, sortstructxy() );
+
+	//align to grid for extensibility.
+	GridTexturePacker texPack(W,H);
+	Rect sourceRects[MAX_EN];
+
+	bool inc[3] = { false, false, false };
+	for( int  j(0); j < MAX_EN; ++j )
+	{
+		if( !inc[0] && as[j].p->y() > 64 )
+		{
+			inc[0] = true;
+			texPack.IncrementRow();
+		}
+		else if( !inc[1] && as[j].p->y() > 96 )
+		{
+			inc[1] = true;
+			texPack.IncrementRow();
+		}
+
+		Point pos = Point::Zero;
+		assert( texPack.Pack(as[j].p->x(), as[j].p->y(), pos) );
+
+		sourceRects[j] = Rect( pos, Point(as[j].p->x(), as[j].p->y()) );
+		//gMonsterList[u].sprite.SetFrameData(
+		//	Rect(pos.x, pos.y)
+		//);
+
+		//copy to our texture atlas
+		pixels.write_region( pos.x, pos.y, as[j].p->x(), as[j].p->y(), *as[j].p );
+	}
+
+	Texture tex;
+	tex.CreateTexture(pixels.data(), pixels.x(), pixels.y());
+	tex.SetName("monsters2.png");
+
+	for( int  u(0); u < 128; ++u )
+	{
+		gMonsterList.GetMonster(u).sprite.SetTexture(&tex);
+	}
+	for( int  u(0); u < MAX_EN; ++u )
+	{
+		if(as[u].s->empty())
+			continue;
+
+		int n = hexStrToInt(*as[u].s);
+		if(n < 128 )
+		{
+			gMonsterList.GetMonster(n).sprite.SetFrameData(sourceRects[u]);
+			gMonsterList.GetMonster(n).sprite.size = sourceRects[u].size;
+		}
+	}
+
+	//..finally save the atlas.
+	tl.SaveToFile( "monsters.png", pixels.data(), pixels.x(), pixels.y() );
+
+	gMonsterList.SerializeXml("m2.xml");
+}
+
+
+void DoAtlasPack3()
+{
+	const int W = 2048;
+	const int H = 1024;
+	const int MAX_EN = 304;
+
+	FileGetter fg("dw7");
+	TextureLoader tl;
+
+	fc::dynamic_array2d<Color> pixels(H,W);
+	pixels.assign(Color::Black(0)); //0,0,0,0 color
+	fc::dynamic_array2d<Color> temp[MAX_EN];
+	fc::string str[MAX_EN];
+
+	int i(0);
+	char buf[255];
+	while( fg.getNextFile(buf) )
+	{
+		Point size = Point::Zero;
+		fc::string s = buf;
+		if(s == "Thumbs.db" || s == "thumbs.db")
+			continue;
+
+		str[i] = s;
+		str[i].erase(str[i].size() - 4, 4); //erase ".png"
+		s.insert(0, "dw7/");
+		ubyte* data = tl.LoadFromFile(s, size);
+		if(data)
+		{
+			temp[i].resize(size.y, size.x);
+			temp[i].assign(Color::Black(0));
+
+			int q(0);
+			for( int k(0); k < size.y; ++k )
+			{
+				for( int j(0); j < size.x; ++j )
+				{
+					Color *pixel = & temp[i]( k, j );
+					(*pixel).r = *(data + q++);
+					(*pixel).g = *(data + q++);
+					(*pixel).b = *(data + q++);
+					(*pixel).a = *(data + q++);
+				}
+			}
+
+			tl.FreePtr(data);
+		}
+
+		i++;
+	}
+
+	struct arrStr{
+		fc::dynamic_array2d<Color>* p;
+		fc::string* s;
+	};
+
+	struct sortstructx{ //sort by x pos.
+		bool operator()( const arrStr& a, const arrStr& b ) const{
+			return a.p->x() < b.p->x();
+		}
+	};
+
+	struct sortstructy{ //sort by x pos.
+		bool operator()( const arrStr& a, const arrStr& b ) const{
+			return a.p->y() < b.p->y();
+		}
+	};
+
+	struct sortstructxy{
+		bool operator()( const arrStr& a, const arrStr& b ) const{
+			return (a.p->y() * a.p->x()) < (b.p->y() * b.p->x());
+		}
+	};
+
+	arrStr as[MAX_EN];
+	for( int  j(0); j < MAX_EN; ++j )
+	{
+		as[j].p = &temp[j];
+		as[j].s = &str[j];
+	}
+
+	//sort pointers to arrays.
+	fc::insertion_sort( as, as + MAX_EN, sortstructx() );
+	fc::insertion_sort( as, as + MAX_EN, sortstructy() );
+	fc::insertion_sort( as, as + MAX_EN, sortstructxy() );
+	fc::insertion_sort( as, as + MAX_EN, sortstructy() );
+
+	//align to grid for extensibility.
+	GridTexturePacker texPack(W,H);
+	Rect sourceRects[MAX_EN];
+
+	bool inc[3] = { false, false, false };
+	for( int  j(0); j < MAX_EN; ++j )
+	{
+		Point pos = Point::Zero;
+		assert( texPack.Pack(as[j].p->x(), as[j].p->y(), pos) );
+
+		sourceRects[j] = Rect( pos, Point(as[j].p->x(), as[j].p->y()) );
+
+		//copy to our texture atlas
+		pixels.write_region( pos.x, pos.y, as[j].p->x(), as[j].p->y(), *as[j].p );
+	}
+
+	Texture tex;
+	tex.CreateTexture(pixels.data(), pixels.x(), pixels.y());
+	tex.SetName("dw7.png");
+
+	for( int u(0); u < MAX_EN; ++u )
+	{
+		if(as[u].s->empty())
+		{
+			assert(true);
+			continue;
+		}
+
+		MonsterData m;
+		m.SetName(*as[u].s);
+		m.SetScript(*as[u].s);
+		m.sprite.SetTexture(&tex);
+		m.sprite.SetFrameData(sourceRects[u]);
+		m.sprite.size = sourceRects[u].size;
+		gMonsterList.Add(m);
+	}
+
+	//..finally save the atlas.
+	tl.SaveToFile( "dw7.png", pixels.data(), pixels.x(), pixels.y() );
+
+	gMonsterList.SerializeXml("dw7.xml");
+}
+
+*/
 

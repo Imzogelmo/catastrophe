@@ -30,9 +30,7 @@ bool RectangleTexturePacker::Pack( int w, int h, Point& outPos )
 
 	if( m_pos.x + w > Width() )
 	{
-		m_pos.x = 0;
-		m_pos.y += m_yoffset;
-		m_yoffset = 0;
+		IncrementRow();
 	}
 
 	//use current position.
@@ -43,6 +41,14 @@ bool RectangleTexturePacker::Pack( int w, int h, Point& outPos )
 		m_yoffset = h;
 
 	return true;
+}
+
+
+void RectangleTexturePacker::IncrementRow()
+{
+	m_pos.x = 0;
+	m_pos.y += m_yoffset;
+	m_yoffset = 0;
 }
 
 

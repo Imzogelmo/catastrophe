@@ -312,11 +312,11 @@
 				Name="Gui"
 				>
 				<File
-					RelativePath=".\src\Gui\Menu.cpp"
+					RelativePath=".\src\Gui\MenuElement.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Gui\Message.cpp"
+					RelativePath=".\src\Gui\MessageElement.cpp"
 					>
 				</File>
 				<File
@@ -582,11 +582,11 @@
 				Name="Gui"
 				>
 				<File
-					RelativePath=".\include\Catastrophe\Gui\Menu.h"
+					RelativePath=".\include\Catastrophe\Gui\MenuElement.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\Catastrophe\Gui\Message.h"
+					RelativePath=".\include\Catastrophe\Gui\MessageElement.h"
 					>
 				</File>
 				<File
