@@ -21,6 +21,7 @@
 #include "Math/PackedRect.h"
 #include "Math/Point.h"
 #include "Math/Rect.h"
+#include "Math/Vector2.h"
 #include "Math/Rectf.h"
 
 CE_NAMESPACE_BEGIN
@@ -31,6 +32,12 @@ Point		Point::Zero			= Point(0, 0);
 
 PackedRect	PackedRect::Zero	= PackedRect(0, 0, 0, 0);
 Rect		Rect::Zero			= Rect(0, 0, 0, 0);
+
+
+Point::Point( const Vector2& v ) :
+	x((int)v.x), y((int)v.y)
+{
+}
 
 
 Rect::Rect( const Rectf& r )

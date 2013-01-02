@@ -92,7 +92,7 @@ public:
 	}
 
 	void Merge( const Rect& r );
-	Rectf ToRectf() const;
+	Rectf ToRectf() const; //todo...
 
 	static Rect Zero;
 };

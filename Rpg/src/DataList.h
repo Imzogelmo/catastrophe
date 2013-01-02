@@ -35,7 +35,6 @@ public:
 	bool Empty() const { return m_items.empty(); }
 	size_t Size() const { return m_items.size(); }
 
-	void Add( const T& object )
 	void Add( const T& object = T() )
 	{
 		m_items.push_back(object);

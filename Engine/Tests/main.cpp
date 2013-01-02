@@ -360,24 +360,3 @@ Input::Update();
 	return 0;
 }
 
-
-
-#if defined CE_EXPORT
-	#define CE_API __declspec(dllexport)
-#elif defined CE_IMPORT
-	#define CE_API __declspec(dllimport)
-#else
-	#define CE_API		  
-#endif
-
-
-
-#ifdef GLEW_STATIC
-#  define GLEWAPI extern
-#else
-#  ifdef GLEW_BUILD
-#    define GLEWAPI extern __declspec(dllexport)
-#  else
-#    define GLEWAPI extern __declspec(dllimport)
-#  endif
-#endif

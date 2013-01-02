@@ -38,6 +38,7 @@ public:
 	Vector2( const Point &p );
 
 	Vector2 &operator = ( float n ) { x = n; y = n; return *this; }
+	Vector2 &operator = ( const Point &p ) { *this = Vector2(p); return *this; }
 
 	float		&operator [] ( const int i )		{ return *( &x + i ); }
 	const float &operator [] ( const int i ) const  { return *( &x + i ); }

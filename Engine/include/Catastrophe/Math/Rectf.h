@@ -34,6 +34,9 @@ public:
 	Rectf() {}
 	Rectf( const Vector2& min, const Vector2& max )	: min(min), max(max) {}
 	Rectf( float x1, float y1, float x2, float y2 )	: min(x1,y1), max(x2,y2) {}
+	Rectf( const Rect& r );
+
+	Rectf &operator = ( const Rect &r ) { *this = Rectf(r); }
 
 	float		&operator [] ( int i )			{ return *( &min.x + i ); }
 	const float &operator [] ( int i ) const	{ return *( &min.x + i ); }
@@ -125,22 +128,8 @@ public:
 		return( r.min.x > min.x && r.max.x <= max.x && r.min.y > min.y && r.max.y <= max.y );
 	}
 
-	void Merge( const Rectf& r )
-	{
-		if(r.min.x < min.x) min.x = r.min.x;
-		if(r.max.x > max.x) max.x = r.max.x;
-		if(r.min.y < min.y) min.y = r.min.y;
-		if(r.max.y > max.y) max.y = r.max.y;
-	}
-
-	void Merge( const Vector2& p )
-	{
-		if(p.x < min.x) min.x = p.x;
-		if(p.x > max.x) max.x = p.x;
-		if(p.y < min.y) min.y = p.y;
-		if(p.y > max.y) max.y = p.y;
-	}
-
+	void Merge( const Rectf& r );
+	void Merge( const Vector2& p );
 	bool IntersectsCircle( const Vector2& point, float radius );
 
 	static Rectf Zero;

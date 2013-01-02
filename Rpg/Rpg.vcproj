@@ -129,7 +129,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ce-core.lib ce-system.lib glfw.lib mcppd.lib angelscript.lib glew32s.lib OpenGL32.lib glu32.lib"
+				AdditionalDependencies="ce-core.lib ce-system.lib ce-sound.lib glfw.lib freetype.lib mcpp.lib angelscript.lib glew32s.lib OpenGL32.lib glu32.lib"
 				AdditionalLibraryDirectories="&quot;../Engine/lib&quot;"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
@@ -360,6 +360,10 @@
 				</File>
 				<File
 					RelativePath=".\src\EncounterData.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\ExpTable.cpp"
 					>
 				</File>
 				<File
@@ -630,6 +634,10 @@
 				</File>
 				<File
 					RelativePath=".\src\EncounterData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\ExpTable.h"
 					>
 				</File>
 				<File
