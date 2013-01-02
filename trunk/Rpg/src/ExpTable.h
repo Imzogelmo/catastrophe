@@ -11,25 +11,24 @@
 
 #pragma once
 
-#include <fc/vector.h>
-
 #include "Common.h"
-#include "AttributeData.h"
 #include "DataList.h"
 
 
-
-struct RPG_API CharacterClass : public AttributeData
+struct RPG_API ExpTable
 {
-	typedef AttributeData	base_type;
+	typedef fc::vector<int>		vec_type;
 
-	int exp_table_index;
-	//Sprite			sprite; //needs SpriteSet? 
-	//SpellBook			spells;
-	//Inventory...
+	// valid exp table indices start at 1.
+	// zero is equivelent to lv 0. (0 exp)
+	vec_type table;
 
-	CharacterClass() : base_type()
-	{}
+	int& operator []( int lv ) { return table.at(lv); }
+	const int& operator []( int lv ) const { return table.at(lv); }
+
+	int GetExpForLevel( int lv );
+	int GetExpDeltaForLevel( int lv ); // get the difference of lv and previous lv.
+	void Resize( int maxLv );
 
 	void SerializeXml( XmlWriter* xml );
 	void DeserializeXml( XmlReader* xml );
@@ -38,18 +37,18 @@ struct RPG_API CharacterClass : public AttributeData
 
 
 /*
- * A collection of stored character classes.
+ * A collection of stored MonsterData objects.
  */
-class RPG_API CharacterClassList : public DataList<CharacterClass>
+class RPG_API ExpTableList : public DataList<ExpTable>
 {
 public:
-	typedef DataList<CharacterClass>	base_type;
+	typedef DataList<ExpTable>	base_type;
 
-	CharacterClassList() : base_type()
+	ExpTableList() : base_type()
 	{}
 
-	CharacterClass& GetCharacterClass( size_t index ) { return base_type::operator [](index);  }
-	const CharacterClass& GetCharacterClass( size_t index ) const { return base_type::operator [](index);  }
+	ExpTable& GetExpTable( size_t index ) { return base_type::operator [](index);  }
+	const ExpTable& GetExpTable( size_t index ) const { return base_type::operator [](index);  }
 
 	NO_INLINE bool SerializeXml( const fc::string& filename );
 	NO_INLINE bool DeserializeXml( const fc::string& filename );
