@@ -28,12 +28,12 @@
 CE_NAMESPACE_BEGIN
 
 
-class CE_API Widget // todo: should be ref counted?? ..
+class CE_API Widget
 {
 public:
-	typedef fc::vector<Widget*>		child_vec_type; //todo: use memory pools instead.
+	typedef fc::vector<Widget*>		child_vec_type;
 
-	Widget( Point pos = Point::Zero, Point size = Point::Zero ); //zero...?
+	Widget( Point pos = Point::Zero, Point size = Point::Zero );
 
 	virtual ~Widget();
 	virtual void Update();
@@ -41,10 +41,6 @@ public:
 
 	virtual void UpdateChildren();
 	virtual void RenderChildren( SpriteBatch* spritebatch );
-
-	//virtual void OnInput( InputStates i ); //not easy to do right now...
-	//bool SerializeXml();
-	//bool DeserializeXml();
 
 	void SetPosition( const Point& position );
 	void SetPosition( int x, int y ) { SetPosition( Point(x, y) ); }
@@ -97,13 +93,16 @@ public:
 	template <class Compare>
 	void SortChildren( Compare comp );
 
+	void AddRef() { ++m_ref_count; }
+	void ReleaseRef() { --m_ref_count; }
+
 protected:
 	Widget*			m_parent;
 	child_vec_type	m_children;
 
 	Point			m_pos;
 	Point			m_size;
-	Color			m_color; //move me: ...
+	Color			m_color;
 
 	int				m_ref_count;
 	bool			m_active;
