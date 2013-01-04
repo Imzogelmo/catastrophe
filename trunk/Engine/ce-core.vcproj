@@ -312,6 +312,10 @@
 				Name="Gui"
 				>
 				<File
+					RelativePath=".\src\Gui\Frame.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Gui\MenuElement.cpp"
 					>
 				</File>
@@ -581,6 +585,10 @@
 			<Filter
 				Name="Gui"
 				>
+				<File
+					RelativePath=".\include\Catastrophe\Gui\Frame.h"
+					>
+				</File>
 				<File
 					RelativePath=".\include\Catastrophe\Gui\MenuElement.h"
 					>
