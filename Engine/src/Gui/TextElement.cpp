@@ -38,7 +38,7 @@ void TextElement::Render( SpriteBatch* spritebatch )
 	if( !m_font || m_text.empty() )
 		return;
 
-	Vector2 pos = GetScreenPositionAsVector2();
+	Vector2 pos = GetScreenPosition();
 	pos.x += (float)GetTextAlignmentOffset();
 
 	spritebatch->DrawString( m_font,

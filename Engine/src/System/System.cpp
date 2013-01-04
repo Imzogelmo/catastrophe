@@ -155,9 +155,19 @@ void System::InitOpenGL()
 // Win32 main entry point defined, for portability.
 #ifdef _WIN32
 
+//windows crap
+#if !defined(_68K_) && !defined(_MPPC_) && !defined(_X86_) && !defined(_IA64_) && !defined(_AMD64_) && defined(_M_IX86)
+#define _X86_
+#endif
+
+//more windows crap
 #define WIN32_LEAN_AND_MEAN
 #define WIN32_EXTRA_LEAN
-#include <windows.h>
+#define NOGDI
+#include <windef.h>
+#include <winbase.h>
+//#include <wincon.h>
+
 
 extern int main(int argc, char* argv[]);
 
@@ -165,6 +175,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 {
 	return main(__argc, __argv);
 }
+
+
 
 #endif
 
