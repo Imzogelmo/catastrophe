@@ -234,6 +234,7 @@ int Font::LoadFromFile( const fc::string& filename, int faceSize, int dpi )
 		}
 		else
 		{
+			glyphPixels.assign( Color::White(0) );
 			for( int y(0); y < size.y; ++y )
 			{
 				ubyte* bitmapPixels = slot->bitmap.buffer + slot->bitmap.pitch * y;

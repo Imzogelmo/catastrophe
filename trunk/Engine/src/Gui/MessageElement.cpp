@@ -26,32 +26,53 @@ CE_NAMESPACE_BEGIN
 
 MessageElement::MessageElement( const fc::string& text, Font* font, TextAlignment alignment, int rowHeight ) :
 	TextElement(text, font, alignment),
-	m_rowHeight(rowHeight)
+	m_rowHeight(rowHeight),
+	m_fastForwardSpeed(4),
+	m_textSpeed(3.f)
+
 {
 }
 
+
+void MessageElement::SetFastForwardSpeed( int speed )
+{
+	m_fastForwardSpeed = (size_t)speed;
+}
+
+
+void MessageElement::FastForward()
+{
+	m_currentChar += (size_t)m_fastForwardSpeed;
+	if( m_currentChar >= m_text.size() )
+	{
+		m_currentChar = m_text.size();
+		m_textDisplayFinished = true;
+	}
+}
+
+
+bool MessageElement::IsTextInstantaneous() const
+{
+	return Math::EpsilonCompare(m_textSpeed, 0.f, 0.001f);
+}
 
 
 void MessageElement::Update()
 {
 	if( m_currentChar < m_text.size() )
 	{
-		int textSpeed = 270;//Gui::GetTextSpeed()
-		if( textSpeed != 0 )
+		if( IsTextInstantaneous() )
 		{
-			m_textSpeedCounter += 100;
-			while( m_textSpeedCounter > textSpeed )
-			{
-				m_textSpeedCounter -= textSpeed;
-				++m_currentChar;
-			}
+			m_currentChar = m_text.size();
+			m_textDisplayFinished = true;
 		}
-
-		if( HasFocus() )
+		else
 		{
-			//if( Input::IsKeyPressed() )
+			++m_textSpeedCounter;
+			while( m_textSpeedCounter > m_textSpeed )
 			{
-				//m_currentChar += FastForwardSpeed;
+				m_textSpeedCounter -= m_textSpeed;
+				++m_currentChar;
 			}
 		}
 
@@ -70,18 +91,18 @@ void MessageElement::Render( SpriteBatch* spritebatch )
 	if( !m_font || m_text.empty() )
 		return;
 
-	Vector2 pos = GetScreenPositionAsVector2();
+	Vector2 pos = GetScreenPosition();
 	pos.x += (float)GetTextAlignmentOffset();
 
 	size_t size = m_textRows.size();
 
 	for( size_t i(0); i < size; ++i )
 	{
-		if( m_currentChar < m_textRows[i].x )
+		if( (int)m_currentChar < m_textRows[i].x )
 			break;
 
 		int amount = abs(m_textRows[i].y - m_textRows[i].x);
-		if( m_currentChar < m_textRows[i].x + amount )
+		if( (int)m_currentChar < m_textRows[i].x + amount )
 			amount -= m_textRows[i].x + amount - m_currentChar;
 
 		spritebatch->DrawString( m_font,
@@ -114,16 +135,8 @@ void MessageElement::SetFont( Font* font )
 void MessageElement::SetText( const fc::string& text )
 {
 	m_text = text;
-	//if( IsTextInstantaneous() )
-	{
-		//m_currentChar = text.size();
-	}
-	//else
-	{
-		m_currentChar = 0;
-	}
-
-	m_textSpeedCounter = 0;
+	m_currentChar = 0;
+	m_textSpeedCounter = 0.f;
 	UpdateText();
 }
 

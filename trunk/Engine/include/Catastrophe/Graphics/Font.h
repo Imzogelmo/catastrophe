@@ -67,7 +67,7 @@ public:
 		DefaultFaceSize = -1,
 		MinTextureSize = 256,
 		MaxTextureSize = 2048,
-		DefaultDpi = 96,
+		DefaultDpi = 72,
 		MaxGlyphSize = Glyph::MaxSize
 	};
 

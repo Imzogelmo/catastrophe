@@ -34,6 +34,7 @@ Widget::Widget( Point pos, Point size ) :
 	m_pos(pos),
 	m_size(size),
 	m_color(Color::White()),
+	m_ref_count(1),
 	m_active(false),
 	m_selected(false),
 	m_visible(true),
@@ -100,19 +101,6 @@ void Widget::SetDimensions( const Rect& rect )
 {
 	SetPosition( rect.pos );
 	SetSize( rect.size );
-}
-
-
-Vector2 Widget::GetScreenPositionAsVector2() const
-{
-	Point p = GetScreenPosition();
-	return Vector2( (float)p.x, (float)p.y );
-}
-
-
-Vector2 Widget::GetSizeAsVector2() const
-{
-	return Vector2( (float)m_size.x, (float)m_size.y );
 }
 
 

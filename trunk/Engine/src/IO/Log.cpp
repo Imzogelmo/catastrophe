@@ -19,18 +19,28 @@
 #include "Common.h"
 #include "IO/Log.h"
 
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-#include <iostream>
-#include <stdio.h>
-#include <fcntl.h>
-#include <io.h>
-
+#if !defined(_68K_) && !defined(_MPPC_) && !defined(_X86_) && !defined(_IA64_) && !defined(_AMD64_) && defined(_M_IX86)
+	#define _X86_
+#endif
 
 #ifdef _MSC_VER
 	#pragma warning ( push )
 	#pragma warning ( disable : 4996 )
+	#pragma warning ( disable : 4201 )
 #endif
+
+
+#define NOGDI
+#include <cstdarg>
+#include <fcntl.h>
+#include <io.h>
+#include <stdio.h>
+#include <stdarg.h>
+#include <windef.h>
+#include <winbase.h>
+#include <wincon.h>
+//#include <iostream> //for sync_with_io
+
 
 CE_NAMESPACE_BEGIN
 
@@ -158,7 +168,7 @@ void Logger::OpenDebugConsole()
 	setvbuf( stderr, NULL, _IONBF, 0 );
 
 	//for cout, wcout, cin, wcin, wcerr, cerr, wclog and clog
-	std::ios::sync_with_stdio();
+	//std::ios::sync_with_stdio();
 	m_console = true;
 }
 

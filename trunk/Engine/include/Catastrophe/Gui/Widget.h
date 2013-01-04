@@ -31,7 +31,7 @@ CE_NAMESPACE_BEGIN
 class CE_API Widget // todo: should be ref counted?? ..
 {
 public:
-	typedef fc::fixed_vector<Widget*, 8>		child_vec_type; //todo: use memory pools instead.
+	typedef fc::vector<Widget*>		child_vec_type; //todo: use memory pools instead.
 
 	Widget( Point pos = Point::Zero, Point size = Point::Zero ); //zero...?
 
@@ -62,9 +62,6 @@ public:
 	void SetVisible( bool enable );
 	void SetFocusable( bool enable );
 
-	//void BringToFront();
-	//bool IsFront(); 
-
 	void AddChild( Widget* element );
 	void InsertChild( size_t index, Widget* element );
 	void RemoveChild( Widget* element );
@@ -78,9 +75,6 @@ public:
 	int GetHeight() const { return m_size.y; }
 	Rect GetDimensions() const;
 	Point GetScreenPosition() const;
-	Vector2 GetScreenPositionAsVector2() const;
-	Vector2 GetSizeAsVector2() const;
-
 	const Color& GetColor() const { return m_color; }
 
 	bool HasFocus() const;
@@ -111,6 +105,7 @@ protected:
 	Point			m_size;
 	Color			m_color; //move me: ...
 
+	int				m_ref_count;
 	bool			m_active;
 	bool			m_selected;
 	bool			m_visible;
