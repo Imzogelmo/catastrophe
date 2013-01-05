@@ -16,6 +16,7 @@
 #include "MonsterPartyData.h"
 #include "EncounterData.h"
 #include "CharacterClass.h"
+#include "ExpTable.h"
 
 
 Database::Database()
@@ -26,6 +27,7 @@ Database::Database()
 	m_monsterPartyList = new MonsterPartyList();
 	m_encounterList = new EncounterGroupList();
 	m_characterClassList = new CharacterClassList();
+	m_expTableList = new ExpTableList();
 
 }
 
@@ -38,6 +40,7 @@ Database::~Database()
 	delete m_monsterPartyList;
 	delete m_encounterList;
 	delete m_characterClassList;
+	delete m_expTableList;
 
 }
 

@@ -94,7 +94,7 @@ private:
 	void RegisterSound();
 
 	//ui
-	void RegisterUIInterface();
+	void RegisterGuiInterface();
 	template <class T> void RegisterWidgetType( const char* name );
 	void RegisterFrame();
 

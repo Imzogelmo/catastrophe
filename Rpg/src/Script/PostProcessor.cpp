@@ -11,11 +11,28 @@
 
 
 #include <fc/tokenizer.h>
+#include <Catastrophe/IO/File.h>
 
 #include "Common.h"
 #include "PostProcessor.h"
 
 
+
+void __SaveDebugFile( const fc::string& original_filename, const fc::string& debug_code )
+{
+	File f;
+	fc::string debugfilename = "__" + original_filename;
+	f.Open( debugfilename, FileWriteText );
+	if( f.IsOpen() )
+	{
+		f.WriteString(debug_code);
+		f.Close();
+	}
+	else
+	{
+		Log("debug error: cannot open %s.", debugfilename.c_str());
+	}
+}
 
 Postprocessor::Postprocessor()
 {
@@ -145,13 +162,37 @@ void Postprocessor::ExpandScriptBehaviors( fc::string& code )
 		}
 		*/
 
+		// game namespace
+		else if( c == 'g' )
+		{
+			char previous = code[ offset - 1 ];
+			if( previous == ' ' || previous == '\t' )
+			{
+				size_t index = offset;
+				fc::tokenizer::get_token( code, " \n\t\r.:-\\/<>", index, token );
+
+				if( token == "game" )
+				{
+					offset = index;
+					const char next = code[offset]; //fixme
+					if( next == '.' )
+					{
+						code[offset] = ':';
+						code.insert( offset, ':' );
+					}
+				}
+			}
+			++offset;
+		}
+
+
 		//fixme;
 		size_t offpos = offset;
-		offset = code.find_first_of( "\"[]np-", offset );
+		offset = code.find_first_of( "\"[]npg-", offset );
 		if( offpos == offset )
 		{
 			offset++;
-			offset = code.find_first_of( "\"[]np-", offset );
+			offset = code.find_first_of( "\"[]npg-", offset );
 		}
 	}
 }
@@ -295,6 +336,8 @@ void Postprocessor::Process( const fc::string& code_filename, fc::string& code, 
 	// Pass 2 - Implement our own custum script behaviors
 	ExpandScriptBehaviors( code ); //todo: do each section seperately
 
+	//__SaveDebugFile("outppp.txt", code);
+
 	// Pass 3 - Clean up the preprocessed file and re-format our line-endings
 	while( !eof )
 	{
@@ -350,6 +393,9 @@ void Postprocessor::Process( const fc::string& code_filename, fc::string& code, 
 	{
 		//...maybe not.
 		//(*it).second.code.push_back('\n');
+		//__SaveDebugFile("outppp.txt", (*it).second.code);
+		break;
 	}
+
 
 }

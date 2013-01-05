@@ -82,6 +82,17 @@ class Main
 
 	Main()
 	{
+/*
+		int id = game::load_texture("null");
+		texture tex = game::texture[id];
+		id = game::load_font("null", 32);
+		font fnt = game::font[id];
+*/
+		int id = game.load_texture("null");
+		texture tex = game::get_texture(id);
+		id = game::load_font("null", 32);
+		font fnt = game::get_font(id);
+
 		point a();
 		point b(0,0);
 		point c = a + b;
@@ -113,5 +124,17 @@ class Main
 		//test.Update();
 	}
 
-}
+};
+
+
+
+
+
+
+
+
+
+
+
+
 

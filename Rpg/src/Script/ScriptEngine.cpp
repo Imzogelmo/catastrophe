@@ -261,6 +261,7 @@ void ScriptEngine::RegisterScriptingInterfaces()
 	RegisterInputInterface();
 	RegisterGraphicsInterface();
 	RegisterSoundInterface();
+	RegisterGuiInterface();
 	RegisterGameInterface();
 
 	RegisterScriptArrayTemplateSpecializations();
