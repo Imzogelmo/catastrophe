@@ -51,9 +51,10 @@ void ScriptEngine::RegisterWidgetType( const char* name )
 
 	int r(0);
 	using namespace script;
-	r = engine->RegisterObjectType( name, 0, asOBJ_REF | asOBJ_SCOPED ); assert( r >= 0 );
+	r = engine->RegisterObjectType( name, 0, asOBJ_REF ); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour( name, asBEHAVE_FACTORY, factory_decl.c_str(), asFUNCTION(WidgetConstructor), asCALL_CDECL); assert( r >= 0 );
-	r = engine->RegisterObjectBehaviour( name, asBEHAVE_RELEASE, "void f()", asFUNCTION(DummyReleaseRef), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour( name, asBEHAVE_ADDREF, "void f()", asMETHOD(T, AddRef), asCALL_THISCALL ); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour( name, asBEHAVE_RELEASE, "void f()", asMETHOD(T, ReleaseRef), asCALL_THISCALL ); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( name, opAssignString.c_str(), asFUNCTION((RefAssignment<Widget, Widget>)), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
 
 	//r = engine->RegisterObjectMethod( name, "void set_x(int)", asMETHOD(T, SetX), asCALL_THISCALL ); assert( r >= 0 );
@@ -105,7 +106,7 @@ void ScriptEngine::RegisterFrame()
 }
 
 
-void ScriptEngine::RegisterUIInterface()
+void ScriptEngine::RegisterGuiInterface()
 {
 	RegisterWidgetType<Widget>("widget");
 	RegisterFrame();

@@ -58,7 +58,7 @@ struct MonsterData;
 struct MonsterGroupData;
 struct EncounterData;
 struct CharacterClass;
-struct MonsterGroupData;
+struct ExpTable;
 
 class MonsterPartyData;
 class EncounterGroupData;
@@ -70,6 +70,7 @@ class MonsterPartyList;
 class EncounterGroupList;
 class EncounterGroupList;
 class CharacterClassList;
+class ExpTableList;
 class Database;
 
 
@@ -77,16 +78,32 @@ class Item;
 class InventoryItem;
 class Inventory;
 class Equipment;
+class ItemDrop;
+class ItemDropSet;
+
+class AttributeStrings;
 
 class Screen;
 class ScreenManager;
 class Game;
+class GameScreen;
+
+class RenderEngine;
+class Entity;
 
 
 class Resource;
 class ResourceCache;
 class ResourceManager;
+class ConfigSetting;
+class ConfigFile;
 
+
+struct PODBullet;
+struct Bullet;
+class BulletManager;
+class PODBulletManager;
+class BulletPool;
 
 //utility macros (normally only for testing)
 #define foreachv(vec_type, it, container) \
@@ -101,5 +118,9 @@ class ResourceManager;
 
 
 //global functions
-Game* gGetGameInstance();
+void gSetActiveGame( Game* game );
+void gSetActiveResourceManager( ResourceManager* resourceManager );
+
+Game*				gGetActiveGame();
+ResourceManager*	gGetActiveResourceManager();
 

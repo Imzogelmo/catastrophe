@@ -12,18 +12,43 @@
 #include "Game.h"
 
 
-Game* __gCurrentGameInstance = 0;
-Game* gGetGameInstance()
+Game*				__gCurrentGameInstance = 0;
+ResourceManager*	__gCurrentResourceManager = 0;
+
+void gSetActiveGame( Game* game )
+{
+	ASSERT(game != 0);
+	__gCurrentGameInstance = game;
+}
+
+void gSetActiveResourceManager( ResourceManager* resourceManager )
+{
+	ASSERT(resourceManager != 0);
+	__gCurrentResourceManager = resourceManager;
+}
+
+Game* gGetActiveGame()
 {
 	// I don't plan on allowing multiple game instances
 	// to be active at once, though it is possible.
 	return __gCurrentGameInstance;
 }
 
+ResourceManager* gGetActiveResourceManager()
+{
+	// This may be called from loading functions.
+	// In the player, this will always return
+	// the current game's resource manager.
+	return __gCurrentResourceManager ? __gCurrentResourceManager :
+		gGetActiveGame()->GetResourceManager();
+}
+
+
 
 int Game::Initialize()
 {
-	__gCurrentGameInstance = this;
+	gSetActiveGame(this);
+	gSetActiveResourceManager(&m_resourceManager);
 
 	m_resourceManager.SetBaseDirectory("game/");
 	m_resourceManager.SetTextureDirectory("textures/");

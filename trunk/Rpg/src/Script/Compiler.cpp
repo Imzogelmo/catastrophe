@@ -28,7 +28,7 @@ void ScriptCompiler::SaveDebugFile( const fc::string& original_filename, const f
 {
 	File f;
 	fc::string debugfilename = "__" + original_filename;
-	f.Open( debugfilename, FileWrite );
+	f.Open( debugfilename, FileWriteText );
 	if( f.IsOpen() )
 	{
 		f.WriteString(debug_code);

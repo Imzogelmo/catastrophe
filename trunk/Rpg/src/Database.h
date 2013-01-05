@@ -38,6 +38,7 @@ private:
 	MonsterPartyList*	m_monsterPartyList;
 	EncounterGroupList*	m_encounterList;
 	CharacterClassList* m_characterClassList;
+	ExpTableList*		m_expTableList;
 
 };
 

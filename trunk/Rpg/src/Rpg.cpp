@@ -168,8 +168,8 @@ int main(int argc, char* argv[])
 
 
 	Game* game = new Game();
-	//if( game->Initialize() != 0 )
-	//	return -1;
+	if( game->Initialize() != 0 )
+		return -1;
 
 	Window* window = CreateWindow();
 
@@ -766,6 +766,24 @@ void DoAtlasPack3()
 
 	gMonsterList.SerializeXml("dw7.xml");
 }
+*/
+/*
+#include <Catastrophe/Gui/Frame.h>
 
+void DoBestiary()
+{
+	static Frame frame;
+	static bool init = false;
+	if(!init)
+	{
+		init = true;
+		Frame* f = new Frame();
+		frame.AddChild(f);
+	}
+
+
+
+
+};
 */
 

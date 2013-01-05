@@ -25,20 +25,11 @@
 
 namespace Util
 {
-	//yes, this is "global", but it is well hidden.
-	ResourceManager* currentResourceManager = 0;
-
 	// TODO
 	// system needs the following types available:
 	// -blank (dummy) texture, default shader, and system font.
 	// this will allow me to optimize some low-level stuff further
 	// and prevent potential crashes.
-
-	// todo: remove this.
-	void SetResourceManager( ResourceManager* current )
-	{
-		currentResourceManager = current;
-	}
 
 
 	void SerializePoint( XmlWriter* xml, const Point& p )
@@ -172,16 +163,22 @@ namespace Util
 		fc::string textureName = xml->GetString("texture");
 		if( !textureName.empty() )
 		{
-			ASSERT(currentResourceManager != 0);
-			texture = currentResourceManager->GetTexture(textureName);
+			ResourceManager* resourceManager = gGetActiveResourceManager();
+			ASSERT(resourceManager != 0);
+
+			texture = resourceManager->GetTexture(textureName);
 			if( !texture )
 			{
-				texture = currentResourceManager->LoadTexture(textureName.c_str());
+				texture = resourceManager->LoadTexture(textureName.c_str());
 			}
 		}
 
 		if( !texture )
 		{
+			//TODO set default texture to sprite...
+			// ..better yet, initialize sprites to default texture when created... 
+			// (this would save a lot of extra crap in the long run)..
+
 			//it's not a fatal error, but it's not good either.
 			LogError("Error: Texture (%s) not found. Could not load Animation.", textureName.c_str());
 		}

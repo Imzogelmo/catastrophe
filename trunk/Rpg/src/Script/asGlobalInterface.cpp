@@ -59,11 +59,6 @@ namespace script
 		return typeID;
 	}
 
-	int LoadTexture( const fc::string& filename )
-	{
-		return 0;
-	}
-
 	bool RegisterCallback( const fc::string& func, int type )
 	{
 		return false;
@@ -84,13 +79,13 @@ namespace script
 
 } //namespace script
 
-
+/*
 void ScriptEngine::RegisterScriptInterfaces()
 {
 	int r = engine->RegisterInterface( "IGameObject" );
 	assert( r >= 0 );
 }
-
+*/
 
 void ScriptEngine::RegisterGlobalFunctions()
 {
@@ -106,7 +101,7 @@ void ScriptEngine::RegisterGlobalFunctions()
 	r = engine->RegisterGlobalFunction( "void __assert(bool, const string &in, const string &in, int)", asFUNCTIONPR(Assert, (bool, const fc::string &, const fc::string &, int), void), asCALL_CDECL); assert( r >= 0 );
 
 	r = engine->RegisterGlobalFunction( "int get_class_id(const string &in)", asFUNCTIONPR(GetScriptClassTypeIDByDecl, (const fc::string &), int), asCALL_CDECL); assert( r >= 0 );
-	//r = engine->RegisterGlobalFunction( "int load_texture(const String& in)", asFUNCTIONPR(LoadTilesheet, (const std::string &), int), asCALL_CDECL); assert( r >= 0 );
+
 	//GC.
 	r = engine->RegisterGlobalFunction( "void garbage_collect(int)", asFUNCTIONPR(GarbageCollect, (int), void), asCALL_CDECL); assert( r >= 0 );
 
