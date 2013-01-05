@@ -93,6 +93,11 @@ private:
 	void RegisterSoundInterface();
 	void RegisterSound();
 
+	//ui
+	void RegisterUIInterface();
+	template <class T> void RegisterWidgetType( const char* name );
+	void RegisterFrame();
+
 	//game
 	void RegisterGameInterface();
 	void RegisterGame();

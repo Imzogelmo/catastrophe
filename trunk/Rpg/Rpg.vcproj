@@ -180,6 +180,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\Dialogue.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Equipment.cpp"
 				>
 			</File>
@@ -442,6 +446,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\Dialogue.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Entity.h"
 				>
 			</File>
@@ -455,10 +463,6 @@
 			</File>
 			<File
 				RelativePath=".\src\Game.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\GameScreen.h"
 				>
 			</File>
 			<File
@@ -483,14 +487,6 @@
 			</File>
 			<File
 				RelativePath=".\src\ResourceManager.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Screen.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\ScreenManager.h"
 				>
 			</File>
 			<File
@@ -686,6 +682,22 @@
 				>
 				<File
 					RelativePath=".\src\Util\Serialization.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Screens"
+				>
+				<File
+					RelativePath=".\src\GameScreen.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Screen.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\ScreenManager.h"
 					>
 				</File>
 			</Filter>
