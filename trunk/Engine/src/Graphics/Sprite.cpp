@@ -39,9 +39,7 @@ Sprite::Sprite( const Texture* texture, const Rect& sourceRect )
 {
 	if(texture)
 	{
-		SetTexture(texture);
-		SetSourceRect(sourceRect);
-		SetSize( Vector2((float)sourceRect.Width(), (float)sourceRect.Height()) );
+		Init(texture, sourceRect);
 	}
 }
 
@@ -58,6 +56,14 @@ Sprite::Sprite( const Texture* texture, const Rectf& uv )
 			uv.Height() * (float)texture->Height())
 		);
 	}
+}
+
+
+void Sprite::Init( const Texture* texture, const Rect& sourceRect )
+{
+	SetTexture(texture);
+	SetSourceRect(sourceRect);
+	SetSize( Vector2(sourceRect.size) );
 }
 
 

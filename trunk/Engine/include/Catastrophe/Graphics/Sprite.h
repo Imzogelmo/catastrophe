@@ -82,6 +82,7 @@ public:
 	void SetTexture( const Texture* texture );
 	void SetSourceRect( const Rect& sourceRect );
 	void SetUVRect( const Rectf& uv ) { m_uv = uv; }
+	void Init( const Texture* texture, const Rect& sourceRect );
 
 	inline const Rectf& GetUVRect() const { return m_uv; }
 	inline const Texture* GetTexture() const { return m_texture; }

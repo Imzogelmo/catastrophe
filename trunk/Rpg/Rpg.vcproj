@@ -302,6 +302,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\src\Script\asRpgInterface.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\src\Script\asSoundInterface.cpp"
 						>
 					</File>

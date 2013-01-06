@@ -128,6 +128,11 @@ namespace script
 		return &uninitializedTexture;
 	}
 
+	void DrawTexture( Texture* texture, const Vector2& pos )
+	{
+		(void*)texture;
+	}
+
 } //namespace script
 
 
@@ -150,6 +155,7 @@ void ScriptEngine::RegisterTexture()
 	r = engine->RegisterObjectMethod( "texture", "vec2 uv(const point& in)", asMETHODPR(Texture, GetUV, (const Point &) const, Vector2), asCALL_THISCALL ); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( "texture", "vec2 uv(int, int)", asMETHODPR(Texture, GetUV, (int, int) const, Vector2), asCALL_THISCALL ); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( "texture", "rectf uv_rect(const rect& in)", asMETHODPR(Texture, GetUVRect, (const Rect &) const, Rectf), asCALL_THISCALL ); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( "texture", "void draw(const vec2& in) const", asFUNCTION(DrawTexture), asCALL_CDECL_OBJFIRST); assert( r >= 0 );
 
 }
 
@@ -210,13 +216,31 @@ void ScriptEngine::RegisterSpriteBase( const char* name )
 }
 
 
+namespace script
+{
+	void CreateSprite( Sprite* sprite, const Texture& texture, const Rect& sourceRect )
+	{
+		sprite->Init(&texture, sourceRect);
+	}
+
+	void DrawSprite( Sprite* sprite )
+	{
+		(void*)sprite;
+	}
+
+} //namespace script
+
+
 void ScriptEngine::RegisterSprite()
 {
 	int r;
 	using namespace script;
 	RegisterSpriteBase<Sprite>("sprite");
 	r = engine->RegisterObjectMethod( "sprite", "void set_uv(const rectf &in)", asMETHODPR(Sprite, SetUVRect, (const Rectf&), void), asCALL_THISCALL); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( "sprite", "void set_source_rect(const rect &in)", asMETHODPR(Sprite, SetSourceRect, (const Rect&), void), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( "sprite", "const rectf& get_uv() const", asMETHODPR(Sprite, GetUVRect, () const, const Rectf&), asCALL_THISCALL); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( "sprite", "void create(const texture& in, const rect &in) const", asFUNCTION(CreateSprite), asCALL_CDECL_OBJFIRST); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( "sprite", "void draw() const", asFUNCTION(DrawSprite), asCALL_CDECL_OBJFIRST); assert( r >= 0 );
 
 }
 

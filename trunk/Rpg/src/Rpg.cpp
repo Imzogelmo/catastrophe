@@ -11,6 +11,7 @@
 
 
 #include <Catastrophe/System.h>
+#include <Catastrophe/Input.h>
 
 #include "Common.h"
 #include "ConfigFile.h"
@@ -117,12 +118,18 @@ void DoTests()
 	return;
 	*/
 
-	r = gMonsterList.DeserializeXml("monst.h");
+	r = gMonsterList.DeserializeXml("monsters_psp.xml");
 	assert(r);
 
-	MonsterPartyList mpl;
-	r = mpl.DeserializeXml("monster_troops.h");
-	r = mpl.SerializeXml("ml.xml");
+	foreachi(i, 128)
+	{
+		gMonsterList[i].sprite.size = 
+			gMonsterList[i].sprite.GetTexture()->GetSourceRect(
+			gMonsterList[i].sprite.GetUVRect() //todo add a shortcut for this.
+		).size;
+	}
+
+	r = gMonsterList.SerializeXml("ml.xml");
 
 	if(!r)
 		r = ! r;
@@ -181,12 +188,16 @@ int main(int argc, char* argv[])
 
 	//Font font;
 	//font.LoadFromFile(fc::string(), 32);
+	window->SetOrthographicProjection(0, 512, 312, 0); //set to psp console res for now. :)
 	while( !window->RequestClose() )
 	{
 		window->ClearColor();
 		window->Update();
 
+		Input::Update();
+
 		game->Update();
+		game->Render();
 
 		window->Sleep(16);
 		window->SwapBuffers();

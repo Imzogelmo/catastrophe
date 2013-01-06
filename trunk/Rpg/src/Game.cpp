@@ -50,12 +50,12 @@ int Game::Initialize()
 	gSetActiveGame(this);
 	gSetActiveResourceManager(&m_resourceManager);
 
-	m_resourceManager.SetBaseDirectory("game/");
+	m_resourceManager.SetBaseDirectory("data/");
 	m_resourceManager.SetTextureDirectory("textures/");
 	m_resourceManager.SetFontDirectory("fonts/");
 
 	int ret(0);
-	ret = InternalInitScriptEngine();
+	//ret = InternalInitScriptEngine();
 	if(ret != 0)
 		return ret;
 
@@ -66,6 +66,7 @@ int Game::Initialize()
 //for testing
 #include <conio.h>
 #include <stdio.h>
+#include "TestScreen.h" //testing pt.2
 
 
 int Game::InternalInitScriptEngine()
@@ -102,7 +103,15 @@ int Game::InternalInitScriptEngine()
 
 void Game::Update()
 {
-	m_scriptEngine.Update();
+	static bool testInit = false;
+	if(!testInit)
+	{
+		m_database.GetMonsterList()->DeserializeXml("monsters_psp.xml");
+		m_screenManager.Add( new TestScreen(&m_screenManager) ); //....
+		testInit = true;
+	}
+
+	//m_scriptEngine.Update();
 	m_screenManager.Update();
 }
 

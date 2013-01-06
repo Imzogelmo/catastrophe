@@ -188,6 +188,7 @@ namespace Util
 			DeserializeRect(xml, sourceRect);
 			offset.x = xml->GetInt("offset_x");
 			offset.y = xml->GetInt("offset_y");
+			a.SetTexture(texture);
 			a.SetFrameData( sourceRect, numFrames, offset.x, offset.y );
 		}
 	}
