@@ -193,6 +193,10 @@
 				RelativePath=".\splines.h"
 				>
 			</File>
+			<File
+				RelativePath=".\ui.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"

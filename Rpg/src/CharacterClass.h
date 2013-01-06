@@ -28,8 +28,7 @@ struct RPG_API CharacterClass : public AttributeData
 	//SpellBook			spells;
 	//Inventory...
 
-	CharacterClass() : base_type()
-	{}
+	CharacterClass();
 
 	void SerializeXml( XmlWriter* xml );
 	void DeserializeXml( XmlReader* xml );

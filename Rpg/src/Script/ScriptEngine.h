@@ -31,8 +31,8 @@ public:
 
 	int Compile( const fc::string& filename, const fc::vector<fc::string>& _Args );
 
-	void SetException( asIScriptContext *ctx, const fc::string& str = "" );
-	void LogException( asIScriptContext *ctx );
+	NO_INLINE void SetException( asIScriptContext *ctx, const fc::string& str = "" );
+	NO_INLINE void LogException( asIScriptContext *ctx );
 
 	int SaveByteCode( const fc::string filename );
 	int LoadByteCode( const fc::string filename );
@@ -97,6 +97,10 @@ private:
 	void RegisterGuiInterface();
 	template <class T> void RegisterWidgetType( const char* name );
 	void RegisterFrame();
+
+	//rpg
+	//void RegisterRpgInterface();
+	void RegisterMonster();
 
 	//game
 	void RegisterGameInterface();

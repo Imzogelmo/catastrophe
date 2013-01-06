@@ -11,37 +11,18 @@
 
 #pragma once
 
-#include <Catastrophe/Graphics/Sprite.h>
 #include "Entity.h"
-#include "Collision/CollisionFilter.h"
 
 
-//todo; figure out what we need for entities; scripts, characters, objects...
-class Object : public Entity
+class Character : public Entity
 {
 public:
-	Vector2	pos, speed;
-	Rectf	hitbox;
-	CollisionFilter	filter;
-	AnimatedSprite	sprite;
+	Character() : Entity() 
+	{}
 
-	//Object() : Entity(TypeObject)
-	//{}
-
-	virtual void Update()
-	{
-		pos += speed;
-	}
-
+	virtual void Update() {}
 	virtual void Render() {}
 
-	inline Rectf GetBoundingRect()
-	{
-		return hitbox + pos;
-	}
-
 };
-
-
 
 

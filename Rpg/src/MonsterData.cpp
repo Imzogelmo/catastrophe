@@ -39,7 +39,7 @@ void MonsterData::DeserializeXml( XmlReader* xml )
 
 	if( xml->NextChild("AnimatedSprite") )
 	{
-		Util::DeserializeAnimation(xml, sprite);
+		Util::DeserializeAnimatedSprite(xml, sprite);
 		xml->SetToParent();
 	}
 	else

@@ -20,6 +20,14 @@
 //             CharacterClass
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
+CharacterClass::CharacterClass() :
+	base_type(),
+	exp_table_index(0)
+{
+}
+
+
 void CharacterClass::SerializeXml( XmlWriter* xml )
 {
 	xml->BeginNode("Character");

@@ -24,7 +24,7 @@ public:
 	//this is much faster than dynamic_cast.
 	const int type;
 
-	Entity( EntityType derivedType ) : type(derivedType) {}
+	//Entity( EntityType derivedType ) : type(derivedType) {}
 	virtual ~Entity()
 	{}
 

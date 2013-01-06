@@ -75,21 +75,24 @@ void perspectiveOrthographicProjection
 #include "hsv_wheel.h"
 #include "splines.h"
 #include "glsl.h"
+#include "ui.h"
 
 HSV_Test* hsvTest = 0;
 Spline_Test* splineTest = 0;
 GLSL_Test* glslTest = 0;
+UI_Test* uiTest;
 
 void init_tests()
 {
 	hsvTest = new HSV_Test();
 	splineTest = new Spline_Test();
 	glslTest = new GLSL_Test();
+	uiTest = new UI_Test();
 }
 
 void do_tests()
 {
-	int num = 2;
+	int num = 3;
 	if(num == 0)
 	{
 		hsvTest->Update();
@@ -105,6 +108,11 @@ void do_tests()
 		glslTest->Update();
 		glslTest->Render();
 	}
+	else if(num == 3)
+	{
+		uiTest->Update();
+		uiTest->Render();
+	}
 
 };
 
@@ -113,6 +121,7 @@ void end_tests()
 	delete hsvTest;
 	delete splineTest;
 	delete glslTest;
+	delete uiTest;
 
 }
 
@@ -190,14 +199,14 @@ fc::string textstr = "Hi \nweryuib\n dv fd efvbhfd sbhufidh bifndjsb fdsbhudfg s
 "g y HBDVFGIEDBGVFRBED FRDV GRTG H YJH YJ J J JUJUJ    GBGF "
 "h  HCBH  uhv VHDIVDn dvhdi324 546 76756 7";
 
-Message* text = new Message();
+MessageElement* text = new MessageElement();
 text->SetFont(&font);
 text->SetPosition( Point(64,64) );
 text->SetSize(Point(400,256));
 text->SetText(textstr);
 text->SetColor(Color::LightBlue());
 
-Menu menu;
+MenuElement menu;
 TextElement te1("MenuItem1", &font); te1.SetPosition(Point(0,0));
 TextElement te2("MenuItem2", &font); te2.SetPosition(Point(0,32));
 TextElement te3("MenuItem3", &font); te3.SetPosition(Point(0,64));
@@ -225,7 +234,7 @@ menu.SetPosition(100,0);
 
 		//glEnable( GL_DEPTH_TEST );
 		glDisable(GL_TEXTURE_2D);
-		prim.Render();
+	//	prim.Render();
 	//	prim2.Render();
 	//	glEnable(GL_TEXTURE_2D);
 
@@ -297,15 +306,15 @@ menu.SetPosition(100,0);
 		//	);
 
 		//sb.DrawSprite(sprite, Vector2(200.f));
-		sprite.Update();
+	//	sprite.Update();
 
 		//sb.DrawString( &font, "Test text CAPS. .. \n A newline?", Vector2(200.f, 0.f) );
 	//	sb.DrawTexture(font.GetTexture(), Vector2(0.f));
 
 		//
 
-		text->Update();
-		text->Render(&sb);
+		//text->Update();
+		//text->Render(&sb);
 		//menu.Render(&sb);
 
 		sb.Render();
@@ -320,7 +329,7 @@ menu.SetPosition(100,0);
 
 		se.Update();
 		glDisable(GL_TEXTURE_2D);
-		//do_tests();
+		do_tests();
 /*
 		glEnable(GL_TEXTURE_2D);
 		sb.Begin();

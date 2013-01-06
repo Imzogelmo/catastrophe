@@ -16,6 +16,8 @@
 
 	typedef point				vec2i;
 
+#else
+	#define vec2i				point
 #endif
 
 

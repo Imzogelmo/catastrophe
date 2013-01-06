@@ -93,6 +93,12 @@ class Main
 		id = game::load_font("null", 32);
 		font fnt = game::get_font(id);
 
+		sprite spr;
+		spr.create(tex, rect(0,9,34,36));
+		spr.size = vec2(90,90);
+		spr.scale = vec2(4);
+		spr.color = color(2,45,255,127);
+
 		point a();
 		point b(0,0);
 		point c = a + b;

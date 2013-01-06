@@ -104,10 +104,10 @@ public:
 	const fc::string& GetShaderDirectory() const { return GetShaderResourceCache()->GetDirectory(); }
 
 	ResourceCache* GetTextureResourceCache() { return &m_textureCache; }
-	ResourceCache* GetFontResourceCache() { return &m_textureCache; }
+	ResourceCache* GetFontResourceCache() { return &m_fontCache; }
 	ResourceCache* GetShaderResourceCache() { return &m_shaderCache; }
 	const ResourceCache* GetTextureResourceCache() const { return &m_textureCache; }
-	const ResourceCache* GetFontResourceCache() const { return &m_textureCache; }
+	const ResourceCache* GetFontResourceCache() const { return &m_fontCache; }
 	const ResourceCache* GetShaderResourceCache() const { return &m_shaderCache; }
 
 	//

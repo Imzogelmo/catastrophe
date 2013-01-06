@@ -185,14 +185,37 @@ void Postprocessor::ExpandScriptBehaviors( fc::string& code )
 			++offset;
 		}
 
+		// input namespace
+		else if( c == 'i' )
+		{
+			char previous = code[ offset - 1 ];
+			if( previous == ' ' || previous == '\t' )
+			{
+				size_t index = offset;
+				fc::tokenizer::get_token( code, " \n\t\r.:-\\/<>", index, token );
+
+				if( token == "input" )
+				{
+					offset = index;
+					const char next = code[offset]; //fixme
+					if( next == '.' )
+					{
+						code[offset] = ':';
+						code.insert( offset, ':' );
+					}
+				}
+			}
+			++offset;
+		}
+
 
 		//fixme;
 		size_t offpos = offset;
-		offset = code.find_first_of( "\"[]npg-", offset );
+		offset = code.find_first_of( "\"[]npgi-", offset );
 		if( offpos == offset )
 		{
 			offset++;
-			offset = code.find_first_of( "\"[]npg-", offset );
+			offset = code.find_first_of( "\"[]npgi-", offset );
 		}
 	}
 }
