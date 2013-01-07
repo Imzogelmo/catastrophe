@@ -34,7 +34,7 @@ struct RPG_API Attributes
 
 	//aggregate type
 
-	this_type operator +(const this_type& rhs)
+	this_type operator +(const this_type& rhs) const
 	{
 		this_type ret;
 		ret.attributes = attributes + rhs.attributes;
@@ -44,7 +44,7 @@ struct RPG_API Attributes
 		return ret;
 	}
 
-	this_type operator -(const this_type& rhs)
+	this_type operator -(const this_type& rhs) const
 	{
 		this_type ret;
 		ret.attributes = attributes - rhs.attributes;
