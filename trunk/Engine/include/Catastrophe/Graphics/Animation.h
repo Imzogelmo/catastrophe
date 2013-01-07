@@ -58,16 +58,17 @@ public:
 	bool IsLooping() const { return m_loop; };
 
 	size_t GetCurrentFrame() const { return m_currentFrame; }
-	size_t GetAnimSpeedAsInt() const { return m_frameSpeed; }
 	float GetAnimSpeed() const;
 
 	inline Rectf& GetFrameUVRect() { return m_uv.at(m_currentFrame); }
 	inline const Rectf& GetFrameUVRect() const { return m_uv.at(m_currentFrame); }
 
 protected:
-	size_t m_frameCounter, m_currentFrame, m_frameSpeed;
-	bool m_loop;
-	bool m_paused;
+	size_t	m_currentFrame;
+	float	m_frameCounter;
+	float	m_frameSpeed;
+	bool	m_loop;
+	bool	m_paused;
 
 };
 

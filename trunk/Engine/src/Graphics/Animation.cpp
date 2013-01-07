@@ -27,9 +27,8 @@ CE_NAMESPACE_BEGIN
 
 void Animation::SetAnimationSpeed( float frameSpeed )
 {
-	size_t speed = (size_t)fc::round(frameSpeed * 100.f);
-	m_frameSpeed = fc::max<size_t>(speed, 100);
-	m_frameCounter = fc::min<size_t>(m_frameSpeed, m_frameCounter);
+	m_frameSpeed = fc::max<float>(frameSpeed, 1.f);
+	m_frameCounter = fc::min<float>(m_frameSpeed, m_frameCounter);
 }
 
 
@@ -45,7 +44,7 @@ void Animation::Update()
 	if( !IsAnimated() || m_paused )
 		return;
 
-	m_frameCounter += 100;
+	++m_frameCounter;
 	if( m_frameCounter >= m_frameSpeed )
 	{
 		//advance frame.
@@ -69,16 +68,7 @@ void Animation::Update()
 
 float Animation::GetAnimSpeed() const
 {
-	if(m_frameSpeed < 100)
-		return 0.f;
-
-	fc::string str = fc::to_string(m_frameSpeed);
-	if(str.size() > 2)
-	{
-		str.insert(str.end() -2, '.');
-	}
-
-	return str.to_float();
+	return m_frameSpeed;
 }
 
 
