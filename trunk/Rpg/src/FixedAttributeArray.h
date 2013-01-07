@@ -47,7 +47,7 @@ struct FixedAttributeArray
 	T& operator [](size_t i) { return attribute[i]; }
 	const T& operator [](size_t i) const { return attribute[i]; }
 
-	this_type operator +(T value)
+	this_type operator +(T value) const
 	{
 		this_type ret;
 		for( size_t i(0); i < N; ++i )
@@ -56,7 +56,7 @@ struct FixedAttributeArray
 		return ret;
 	}
 
-	this_type operator +(const this_type& rhs)
+	this_type operator +(const this_type& rhs) const
 	{
 		this_type ret;
 		for( size_t i(0); i < N; ++i )
@@ -65,7 +65,7 @@ struct FixedAttributeArray
 		return ret;
 	}
 
-	this_type operator -(T value)
+	this_type operator -(T value) const
 	{
 		this_type ret;
 		for( size_t i(0); i < N; ++i )
@@ -74,7 +74,7 @@ struct FixedAttributeArray
 		return ret;
 	}
 
-	this_type operator -(const this_type& rhs)
+	this_type operator -(const this_type& rhs) const
 	{
 		this_type ret;
 		for( size_t i(0); i < N; ++i )
@@ -99,22 +99,22 @@ struct FixedAttributeArray
 		return *this;
 	}
 
-	this_type Add(T value)
+	this_type Add(T value) const
 	{
 		return *this + value;
 	}
 
-	this_type Add(const this_type& rhs)
+	this_type Add(const this_type& rhs) const
 	{
 		return *this + rhs;
 	}
 
-	this_type Subtract(T value)
+	this_type Subtract(T value) const
 	{
 		return *this - value;
 	}
 
-	this_type Subtract(const this_type& rhs)
+	this_type Subtract(const this_type& rhs) const
 	{
 		return *this - rhs;
 	}
