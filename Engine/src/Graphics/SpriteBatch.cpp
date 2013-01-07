@@ -381,13 +381,15 @@ void SpriteBatch::Render()
 		used_scissor = true;
 		const Rect& r = m_clip_rect;
 
+		int viewport[4];
+		glGetIntegerv( GL_VIEWPORT, viewport );
+
 		glEnable( GL_SCISSOR_TEST );
-		//todo: y is reversed here...
-		glScissor( r.pos.x , r.pos.y, r.size.x, r.size.y );
+		glScissor( r.pos.x , viewport[3] - r.pos.y - r.size.y, r.size.x, r.size.y );
 	}
 
 	if(m_attached_shader)
-		m_attached_shader->Bind();
+		m_attached_shader->Bind(); //fixme:
 
 
 	glEnable( GL_TEXTURE_2D );
