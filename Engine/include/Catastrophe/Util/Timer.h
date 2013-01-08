@@ -40,10 +40,13 @@ public:
 	uint64 TicksPerSecond();
 
 	uint64 ElapsedTicks();
+	uint64 ElapsedMinutes();
+	uint64 ElapsedSeconds();
 	uint64 ElapsedMilliseconds();
 	uint64 ElapsedMicroseconds();
-	double ElapsedSeconds();
-	double ElapsedMinutes();
+
+	double Seconds();
+	double Minutes();
 
 protected:
 	Time		m_time;

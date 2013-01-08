@@ -140,6 +140,7 @@ void DoTests()
 void DoAtlasPack();
 void DoAtlasPack2();
 void DoAtlasPack3();
+void DoAtlasPack4();
 
 int main(int argc, char* argv[])
 {
@@ -183,8 +184,8 @@ int main(int argc, char* argv[])
 	//DoTests(); //some quick and dirty testing.
 
 
-	//DoAtlasPack3();
-	//return 0;
+	DoAtlasPack4();
+	return 0;
 
 	//Font font;
 	//font.LoadFromFile(fc::string(), 32);
@@ -214,7 +215,7 @@ int main(int argc, char* argv[])
 
 
 
-/*
+
 
 #define WIN32_LEAN_AND_MEAN
 //#include <windows.h>
@@ -777,24 +778,138 @@ void DoAtlasPack3()
 
 	gMonsterList.SerializeXml("dw7.xml");
 }
-*/
-/*
-#include <Catastrophe/Gui/Frame.h>
 
-void DoBestiary()
+
+void DoAtlasPack4()
 {
-	static Frame frame;
-	static bool init = false;
-	if(!init)
+	const int W = 2048;
+	const int H = 1024;
+	const int MAX_EN = 344;
+
+	FileGetter fg("ff6");
+	TextureLoader tl;
+
+	fc::dynamic_array2d<Color> pixels(H,W);
+	pixels.assign(Color::Black(0)); //0,0,0,0 color
+	fc::dynamic_array2d<Color> temp[MAX_EN];
+	fc::string str[MAX_EN];
+
+	int i(0);
+	char buf[255];
+	while( fg.getNextFile(buf) )
 	{
-		init = true;
-		Frame* f = new Frame();
-		frame.AddChild(f);
+		Point size = Point::Zero;
+		fc::string s = buf;
+		if(s == "Thumbs.db" || s == "thumbs.db")
+			continue;
+
+		str[i] = s;
+		str[i].erase(str[i].size() - 4, 4); //erase ".png"
+		s.insert(0, "ff6/");
+		ubyte* data = tl.LoadFromFile(s, size);
+		if(data)
+		{
+			temp[i].resize(size.y, size.x);
+			temp[i].assign(Color::Black(0));
+
+			int q(0);
+			for( int k(0); k < size.y; ++k )
+			{
+				for( int j(0); j < size.x; ++j )
+				{
+					Color *pixel = & temp[i]( k, j );
+					(*pixel).r = *(data + q++);
+					(*pixel).g = *(data + q++);
+					(*pixel).b = *(data + q++);
+					(*pixel).a = *(data + q++);
+				}
+			}
+
+			tl.FreePtr(data);
+		}
+
+		i++;
 	}
 
+	struct arrStr{
+		fc::dynamic_array2d<Color>* p;
+		fc::string* s;
+	};
+
+	struct sortstructx{ //sort by x pos.
+		bool operator()( const arrStr& a, const arrStr& b ) const{
+			return a.p->x() < b.p->x();
+		}
+	};
+
+	struct sortstructy{ //sort by x pos.
+		bool operator()( const arrStr& a, const arrStr& b ) const{
+			return a.p->y() < b.p->y();
+		}
+	};
+
+	struct sortstructxy{
+		bool operator()( const arrStr& a, const arrStr& b ) const{
+			return (a.p->y() * a.p->x()) < (b.p->y() * b.p->x());
+		}
+	};
+
+	arrStr as[MAX_EN];
+	for( int  j(0); j < MAX_EN; ++j )
+	{
+		as[j].p = &temp[j];
+		as[j].s = &str[j];
+	}
+
+	//sort pointers to arrays.
+	//fc::insertion_sort( as, as + MAX_EN, sortstructx() );
+	//fc::insertion_sort( as, as + MAX_EN, sortstructy() );
+	fc::sort( as, as + MAX_EN, sortstructxy() );
+	fc::sort( as, as + MAX_EN, sortstructy() );
+
+	//align to grid for extensibility.
+	RectangleTexturePacker texPack(W,H);
+	Rect sourceRects[MAX_EN];
+
+	bool inc[3] = { false, false, false };
+	for( int  j(0); j < MAX_EN; ++j )
+	{
+		Point pos = Point::Zero;
+		assert( texPack.Pack(as[j].p->x() + 1, as[j].p->y() + 1, pos) );
+
+		sourceRects[j] = Rect( pos, Point(as[j].p->x(), as[j].p->y()) );
+
+		//copy to our texture atlas
+		pixels.write_region( pos.x, pos.y, as[j].p->x(), as[j].p->y(), *as[j].p );
+	}
+
+	Texture tex;
+	tex.CreateTexture(pixels.data(), pixels.x(), pixels.y());
+	tex.SetName("ff6.png");
+
+	for( int u(0); u < MAX_EN; ++u )
+	{
+		if(as[u].s->empty())
+		{
+			assert(true);
+			continue;
+		}
+
+		MonsterData m;
+		m.SetName(*as[u].s);
+		m.SetScript(*as[u].s);
+		m.sprite.SetTexture(&tex);
+		m.sprite.SetFrameData(sourceRects[u]);
+		m.sprite.size = sourceRects[u].size;
+		gMonsterList.Add(m);
+	}
+
+	//..finally save the atlas.
+	tl.SaveToFile( "ff6.png", pixels.data(), pixels.x(), pixels.y() );
+
+	gMonsterList.SerializeXml("ff6.xml");
+}
 
 
 
-};
-*/
 

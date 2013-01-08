@@ -65,6 +65,18 @@ uint64 Timer::ElapsedTicks()
 }
 
 
+uint64 Timer::ElapsedMinutes()
+{
+	return (ElapsedTicks() / TicksPerSecond()) / 60;
+}
+
+
+uint64 Timer::ElapsedSeconds()
+{
+	return ElapsedTicks() / TicksPerSecond();
+}
+
+
 uint64 Timer::ElapsedMilliseconds()
 {
 	return ((uint64)1000 * ElapsedTicks()) / TicksPerSecond();
@@ -77,15 +89,15 @@ uint64 Timer::ElapsedMicroseconds()
 }
 
 
-double Timer::ElapsedSeconds()
+double Timer::Seconds()
 {
 	return timer_elapsed( (timer*)&m_time, 0 );
 }
 
 
-double Timer::ElapsedMinutes()
+double Timer::Minutes()
 {
-	return ElapsedSeconds() / 60.0;
+	return Seconds() / 60.0;
 }
 
 

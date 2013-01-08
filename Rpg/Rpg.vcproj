@@ -387,6 +387,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Shops.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\SpellData.cpp"
 					>
 				</File>
@@ -650,6 +654,10 @@
 				</File>
 				<File
 					RelativePath=".\src\MonsterPartyData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Shops.h"
 					>
 				</File>
 				<File

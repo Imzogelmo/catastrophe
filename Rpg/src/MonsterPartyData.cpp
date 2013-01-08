@@ -42,24 +42,6 @@ void MonsterGroupData::SerializeXml( XmlWriter* xml )
 
 void MonsterGroupData::DeserializeXml( XmlReader* xml )
 {
-	/*
-	bool found = false;
-	fc::string str = xml->GetString("name");
-	for( int i(0); i < gMonsterList.Size(); ++i )
-	{
-		if( str == gMonsterList[i].GetName() )
-		{
-			found = true;
-			monster_index = i;
-		}
-	}
-
-	if(!found)
-	{
-		Log(str.c_str());
-	}
-	*/
-
 	monster_index = xml->GetInt("index");
 	min = xml->GetInt("min");
 	max = xml->GetInt("max");
