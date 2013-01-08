@@ -184,8 +184,8 @@ int main(int argc, char* argv[])
 	//DoTests(); //some quick and dirty testing.
 
 
-	DoAtlasPack4();
-	return 0;
+	//DoAtlasPack4();
+	//return 0;
 
 	//Font font;
 	//font.LoadFromFile(fc::string(), 32);
@@ -214,7 +214,7 @@ int main(int argc, char* argv[])
 
 
 
-
+/*
 
 
 #define WIN32_LEAN_AND_MEAN
@@ -910,6 +910,6 @@ void DoAtlasPack4()
 	gMonsterList.SerializeXml("ff6.xml");
 }
 
-
+*/
 
 
