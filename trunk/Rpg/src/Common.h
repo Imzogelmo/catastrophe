@@ -121,6 +121,7 @@ class BulletPool;
 void gSetActiveGame( Game* game );
 void gSetActiveResourceManager( ResourceManager* resourceManager );
 
-Game*				gGetActiveGame();
-ResourceManager*	gGetActiveResourceManager();
+Game*				gGetGame();
+ResourceManager*	gGetResourceManager();
+Database*			gGetDatabase();
 

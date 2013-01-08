@@ -18,6 +18,10 @@
 
 #pragma once
 
+#ifndef NO_MINMAX
+	#define NO_MINMAX
+#endif
+
 #ifdef min
 	#undef min
 #endif

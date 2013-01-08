@@ -12,8 +12,10 @@
 #include "Game.h"
 
 
+// these are global to simplify everything.
 Game*				__gCurrentGameInstance = 0;
 ResourceManager*	__gCurrentResourceManager = 0;
+Database*			__gCurrentDatabase = 0;
 
 void gSetActiveGame( Game* game )
 {
@@ -27,28 +29,40 @@ void gSetActiveResourceManager( ResourceManager* resourceManager )
 	__gCurrentResourceManager = resourceManager;
 }
 
-Game* gGetActiveGame()
+void gSetActiveDatabase( Database* database )
+{
+	ASSERT(database != 0);
+	__gCurrentDatabase = database;
+}
+
+Game* gGetGame()
 {
 	// I don't plan on allowing multiple game instances
 	// to be active at once, though it is possible.
 	return __gCurrentGameInstance;
 }
 
-ResourceManager* gGetActiveResourceManager()
+ResourceManager* gGetResourceManager()
 {
 	// This may be called from loading functions.
 	// In the player, this will always return
 	// the current game's resource manager.
 	return __gCurrentResourceManager ? __gCurrentResourceManager :
-		gGetActiveGame()->GetResourceManager();
+		gGetGame()->GetResourceManager();
 }
 
+Database* gGetDatabase()
+{
+	// This is called from scripts and loading.
+	return __gCurrentDatabase;
+}
 
 
 int Game::Initialize()
 {
 	gSetActiveGame(this);
 	gSetActiveResourceManager(&m_resourceManager);
+	gSetActiveDatabase(&m_database);
 
 	m_resourceManager.SetBaseDirectory("data/");
 	m_resourceManager.SetTextureDirectory("textures/");
@@ -106,7 +120,6 @@ void Game::Update()
 	static bool testInit = false;
 	if(!testInit)
 	{
-		m_database.GetMonsterList()->DeserializeXml("monsters_psp.xml");
 		m_screenManager.Add( new TestScreen(&m_screenManager) ); //....
 		testInit = true;
 	}

@@ -163,7 +163,7 @@ namespace Util
 		fc::string textureName = xml->GetString("texture");
 		if( !textureName.empty() )
 		{
-			ResourceManager* resourceManager = gGetActiveResourceManager();
+			ResourceManager* resourceManager = gGetResourceManager();
 			ASSERT(resourceManager != 0);
 
 			texture = resourceManager->GetTexture(textureName);
