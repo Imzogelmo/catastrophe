@@ -18,6 +18,10 @@
 #include "../Game.h"
 #include "../MonsterData.h"
 
+// TODO: engine <--> script character integration.
+//       
+#include "../Character.h"
+
 
 namespace script
 {
@@ -25,7 +29,7 @@ namespace script
 	{
 		static MonsterData uninitializedMonster; //fixme
 		return &uninitializedMonster;
-		//return gGetActiveGame()->GetDatabase()->GetMonsterList()->GetMonster(0);
+		//return gGetGame()->GetDatabase()->GetMonsterList()->GetMonster(0);
 	}
 
 } //namespace script
@@ -35,18 +39,6 @@ namespace script
 {
 	#define CLAMP_INDEX(x,y) \
 		if(FC_UNLIKELY(x >= y)) x = 0;
-
-	#define DECLARE_ATTRIB_GET(ret, decl, max) \
-	ret decl( size_t index, Attributes* self ) \
-	{ \
-		if(FC_UNLIKELY(index >= max)) index = 0; \
-		return self->attributes.operator [](index); \
-	}
-
-	//DECLARE_ATTRIB_GET(int, AttributesGetAttribute, MAX_ATTRIBUTES);
-	//DECLARE_ATTRIB_GET(short, AttributesGetElement, MAX_ELEMENTS);
-	//DECLARE_ATTRIB_GET(short, AttributesGetStatus, MAX_STATUS);
-
 
 	int AttributesGetAttribute( size_t index, Attributes* self )
 	{

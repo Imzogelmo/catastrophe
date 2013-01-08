@@ -23,12 +23,12 @@ namespace script
 	int LoadTexture( const fc::string& filename )
 	{
 		int id = -1;
-		ResourceManager* resourceManager = gGetActiveGame()->GetResourceManager();
+		ResourceManager* resourceManager = gGetGame()->GetResourceManager();
 		Texture* texture = resourceManager->LoadTexture(filename, &id);
 		if( !texture )
 		{
 			//todo: this is not really needed.
-			gGetActiveGame()->GetScriptEngine()->SetException( asGetActiveContext(), filename );
+			gGetGame()->GetScriptEngine()->SetException( asGetActiveContext(), filename );
 		}
 
 		return id;
@@ -37,12 +37,12 @@ namespace script
 	int LoadFont( const fc::string& filename, int faceSize )
 	{
 		int id = -1;
-		ResourceManager* resourceManager = gGetActiveGame()->GetResourceManager();
+		ResourceManager* resourceManager = gGetGame()->GetResourceManager();
 		Font* font = resourceManager->LoadFont(filename, faceSize, &id);
 		if( !font )
 		{
 			//todo: this is not really needed.
-			gGetActiveGame()->GetScriptEngine()->SetException( asGetActiveContext(), filename );
+			gGetGame()->GetScriptEngine()->SetException( asGetActiveContext(), filename );
 		}
 		
 		return id;
@@ -51,12 +51,12 @@ namespace script
 
 	Texture* GetTextureResource( int id )
 	{
-		ResourceManager* resourceManager = gGetActiveGame()->GetResourceManager();
+		ResourceManager* resourceManager = gGetGame()->GetResourceManager();
 		Texture* texture = resourceManager->GetTexture(id);
 		if( !texture )
 		{
 			//todo: this is not really needed.
-			gGetActiveGame()->GetScriptEngine()->SetException( asGetActiveContext(), "Invalid texture id" );
+			gGetGame()->GetScriptEngine()->SetException( asGetActiveContext(), "Invalid texture id" );
 		}
 
 		return texture;
@@ -64,12 +64,12 @@ namespace script
 
 	Font* GetFontResource( int id )
 	{
-		ResourceManager* resourceManager = gGetActiveGame()->GetResourceManager();
+		ResourceManager* resourceManager = gGetGame()->GetResourceManager();
 		Font* font = resourceManager->GetFont(id);
 		if( !font )
 		{
 			//todo: this is not really needed.
-			gGetActiveGame()->GetScriptEngine()->SetException( asGetActiveContext(), "Invalid font id" );
+			gGetGame()->GetScriptEngine()->SetException( asGetActiveContext(), "Invalid font id" );
 		}
 
 		return font;
