@@ -11,26 +11,23 @@
 
 #pragma once
 
-#include <Catastrophe/Graphics/Sprite.h>
+#include <fc/string.h>
+#include <fc/vector.h>
 
 #include "Common.h"
-#include "AttributeData.h"
 #include "DataList.h"
 
 
-struct RPG_API ItemData : public AttributeData
+struct RPG_API Shop
 {
-	typedef AttributeData	base_type;
+	typedef fc::vector<size_t>	vec_type;
 
-	Flags32			usage_flags;
-	//size_t			effect_id;
-	int				sfx;
-
-	Sprite			icon;
-	//AnimatedSprite	sprite;
-
-	ItemData() : base_type()
-	{}
+	vec_type		items;
+	fc::string		name;
+	fc::string		greeting;
+	fc::string		transaction;
+	fc::string		buy;
+	fc::string		sell;
 
 	void SerializeXml( XmlWriter* xml );
 	void DeserializeXml( XmlReader* xml );
@@ -39,16 +36,16 @@ struct RPG_API ItemData : public AttributeData
 
 
 
-class RPG_API ItemList : public DataList<ItemData>
+class RPG_API ShopList : public DataList<Shop>
 {
 public:
-	typedef DataList<ItemData>	base_type;
+	typedef DataList<Shop>	base_type;
 
-	ItemList() : base_type()
+	ShopList() : base_type()
 	{}
 
-	ItemData& GetItem( size_t index ) { return base_type::operator [](index);  }
-	const ItemData& GetItem( size_t index ) const { return base_type::operator [](index);  }
+	Shop& GetShop( size_t index ) { return base_type::operator [](index);  }
+	const Shop& GetShop( size_t index ) const { return base_type::operator [](index);  }
 
 	NO_INLINE bool SerializeXml( const fc::string& filename );
 	NO_INLINE bool DeserializeXml( const fc::string& filename );

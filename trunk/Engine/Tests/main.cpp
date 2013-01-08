@@ -8,45 +8,12 @@
 #include <Catastrophe/Sound/FmodSoundEngine.h>
 
 
-#include "out.cpp"
-
-Matrix createPerspectiveFOV( float& zoff, float fov, float aspectRatio, float up, float zNear, float zFar )
-{
-	float h = zNear * (1.f / tanf( fov / 2.f * CE_TO_RADIANS ));
-	float w = h / aspectRatio;
-
-	const float diff = zFar - zNear;
-	const float q = -((zFar + zNear) / diff);
-	const float z = -2.f * ( zNear * zFar ) / diff;
-
-	if( up <= 0.f )
-		h = -h;
-
-	zoff = w / aspectRatio;
-	zoff = h / aspectRatio;
-	zoff = w / zNear;
-	zoff = h / zNear;
-	zoff = q / diff;
-	zoff = q / diff;
-	zoff = 1 / h;
-
-	return Matrix
-		(
-			w,		0.0f,	0.0f,   0.0f,  
-			0.0f,	h,		0.0f,   0.0f,  
-			0.0f,	0.0f,   q,		-1.0f,  
-			0.0f,	0.0f,   z,		0.0f
-		);
-}
-
-
 void perspectiveOrthographicProjection
 ( double left, double right, double bottom, double top, double fovY, double zNear, double zFar,
 												float &zoff )
 	{
 		const double DEGTORAD = (3.1415926535897932 / 180.0);
 		//const double RADTODEG = (180.0 / 3.1415926535897932);
-
 
 		const double aspectRatio = (right / bottom);
 
@@ -219,26 +186,17 @@ menu.AddItem(&te4);
 menu.SetPosition(100,0);
 
 	//test sound;
-	FmodSoundEngine se;
-	se.Initialize();
+	//FmodSoundEngine se;
+	//se.Initialize();
 	//Sound* sound = se.LoadFromFile( Sound::TypeMidi, "wtcf2.mid" );
-	Sound* sound = se.LoadFromFile( Sound::TypeStream, "DTA.mp3" );
-	assert(sound);
+	//Sound* sound = se.LoadFromFile( Sound::TypeStream, "DTA.mp3" );
+	//assert(sound);
 	//sound->Play();
 
 	while(!window->RequestClose())
 	{
 		window->ClearColor();
 		window->Update();
-
-
-		//glEnable( GL_DEPTH_TEST );
-		glDisable(GL_TEXTURE_2D);
-	//	prim.Render();
-	//	prim2.Render();
-	//	glEnable(GL_TEXTURE_2D);
-
-		//glPopMatrix();
 
 		sb.Begin();
 
@@ -295,23 +253,7 @@ menu.SetPosition(100,0);
 
 
 		sb.Begin();
-		//
-	//	sb.Draw( tex.GetTextureID(),
-	//		Rectf(0.f, 0.f, 128.f, 512.f),
-	//		Rectf(0.f, 0.f, 1.f, 1.f)
-	//		);
-		//sb.Draw( tex.GetTextureID(),
-		//	Rectf(-128.f, -512.f, 128.f, 512.f),
-		//	Rectf(0.f, 0.f, 1.f, 1.f)
-		//	);
 
-		//sb.DrawSprite(sprite, Vector2(200.f));
-	//	sprite.Update();
-
-		//sb.DrawString( &font, "Test text CAPS. .. \n A newline?", Vector2(200.f, 0.f) );
-	//	sb.DrawTexture(font.GetTexture(), Vector2(0.f));
-
-		//
 
 		//text->Update();
 		//text->Render(&sb);
@@ -320,14 +262,7 @@ menu.SetPosition(100,0);
 		sb.Render();
 		sb.End();
 
-		static int _cnt = 0;
-		_cnt++;
-		//if(_cnt % 240 == 230)
-		//	sound->Play();
 
-		//sound->Stop();
-
-		se.Update();
 		glDisable(GL_TEXTURE_2D);
 		do_tests();
 /*
@@ -338,18 +273,20 @@ menu.SetPosition(100,0);
 		sb.Render();
 		sb.End();
 */
-Input::Update();
+
+		Input::Update();
 
 		//timer.Reset();
 		//Log("start");
+		//se.Update();
 		window->Sleep(16);
 		/*
 		Log(" ticks %i, ms: %d, milli: %d, seconds %0.5f, minutes %0.5f, ",
 			(int)timer.ElapsedTicks(),
 			(int)timer.ElapsedMicroseconds(),
 			(int)timer.ElapsedMilliseconds(),
-			(float)timer.ElapsedSeconds(),
-			(float)timer.ElapsedMinutes()
+			(float)timer.Seconds(),
+			(float)timer.Minutes()
 			);
 		*/
 		window->SwapBuffers();
@@ -359,7 +296,7 @@ Input::Update();
 	System::Terminate();
 
 
-	se.Shutdown();
+	//se.Shutdown();
 	delete text;
 	//...
 	_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
