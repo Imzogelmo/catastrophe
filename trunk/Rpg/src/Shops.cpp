@@ -17,8 +17,48 @@
 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//                ShopItem
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+void ShopItem::SerializeXml( XmlWriter* xml )
+{
+	xml->BeginNode("Item");
+
+	xml->SetInt("id", id);
+	xml->SetInt("price", price);
+
+	xml->EndNode();
+}
+
+
+void ShopItem::DeserializeXml( XmlReader* xml )
+{
+	id = xml->GetInt("id");
+	price = xml->GetInt("price");
+}
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //                  Shop
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+fc::string Shop::default_greeting_message = "Welcome";
+fc::string Shop::default_transaction_message = "Anything else?";
+fc::string Shop::default_buy_message = "Which one?";
+fc::string Shop::default_sell_message = "Sell what?";
+
+Shop::Shop() :
+	items(),
+	name(),
+	greeting(default_greeting_message),
+	transaction(default_transaction_message),
+	buy(default_buy_message),
+	sell(default_sell_message),
+	markup_percent(0),
+	devaluation_percent(50)
+{
+}
+
 
 void Shop::SerializeXml( XmlWriter* xml )
 {
@@ -30,12 +70,12 @@ void Shop::SerializeXml( XmlWriter* xml )
 	xml->SetString("transaction", greeting.c_str());
 	xml->SetString("buy", greeting.c_str());
 	xml->SetString("sell", greeting.c_str());
+	xml->SetInt("markup", markup_percent);
+	xml->SetInt("devaluation", devaluation_percent);
 
 	for( vec_type::iterator it = items.begin(); it < items.end(); ++it )
 	{
-		xml->BeginNode("Item");
-		xml->SetUInt("id", *it);
-		xml->EndNode();
+		it->SerializeXml(xml);
 	}
 
 	xml->EndNode();
@@ -50,17 +90,18 @@ void Shop::DeserializeXml( XmlReader* xml )
 	transaction = xml->GetString("transaction");
 	buy = xml->GetString("buy");
 	sell = xml->GetString("sell");
+	markup_percent = xml->GetInt("markup");
+	devaluation_percent = xml->GetInt("devaluation");
 
 	items.reserve(n);
 	while( xml->NextChild("Item") )
 	{
 		items.push_back();
-		items.back() = xml->GetUInt("id");
+		items.back().DeserializeXml(xml);
 	}
 
 	xml->SetToParent();
 }
-
 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -78,6 +119,11 @@ bool ShopList::SerializeXml( const fc::string& filename )
 
 	xml.BeginNode("ShopList");
 	xml.SetUInt("count", m_items.size());
+
+	xml.SetString("def_greeting", Shop::default_greeting_message.c_str());
+	xml.SetString("def_transaction", Shop::default_transaction_message.c_str());
+	xml.SetString("def_buy", Shop::default_buy_message.c_str());
+	xml.SetString("def_sell", Shop::default_sell_message.c_str());
 
 	for( size_t i(0); i < m_items.size(); ++i )
 	{
@@ -103,15 +149,19 @@ bool ShopList::DeserializeXml( const fc::string& filename )
 	if( xml.GetCurrentNodeName() == "ShopList" )
 	{
 		size_t n = xml.GetUInt("count");
-		if( n == 0 )
-			return false;
+
+		Shop::default_greeting_message = xml.GetString("def_greeting");
+		Shop::default_transaction_message = xml.GetString("def_transaction");
+		Shop::default_buy_message = xml.GetString("def_buy");
+		Shop::default_sell_message = xml.GetString("def_sell");
 
 		m_items.clear();
-		m_items.resize(n);
+		m_items.reserve(n);
 
-		for( size_t i(0); i < n; ++i )
+		while( xml.NextChild("Shop") )
 		{
-			m_items[i].DeserializeXml(&xml);
+			m_items.push_back();
+			m_items.back().DeserializeXml(&xml);
 		}
 	}
 	else

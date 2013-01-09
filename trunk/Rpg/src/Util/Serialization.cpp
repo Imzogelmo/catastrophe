@@ -46,11 +46,40 @@ namespace Util
 		xml->SetInt("h", r.size.y);
 	}
 
+	void SerializeSprite( XmlWriter* xml, const Sprite& s )
+	{
+		xml->SetInt("width", fc::iround(s.size.x));
+		xml->SetInt("height", fc::iround(s.size.y));
+		xml->SetFloat("scale_x", s.scale.x);
+		xml->SetFloat("scale_y", s.scale.y);
+		xml->SetFloat("angle", s.angle);
+		xml->SetUInt("color", s.tint.packed_value);
+		xml->SetUInt("blendmode", s.blendmode.value);
+
+		fc::string textureName;
+		Rect sourceRect = Rect::Zero;
+
+		const Texture* texture = s.GetTexture();
+		if( !texture )
+		{
+			Log("SerializeSprite error: null texture.");
+		}
+		else
+		{
+			sourceRect = texture->GetSourceRect(s.GetUVRect());
+		}
+
+		xml->SetString("texture", textureName.c_str());
+		SerializeRect(xml, sourceRect);
+	}
+
 	void SerializeAnimatedSprite( XmlWriter* xml, const AnimatedSprite& a )
 	{
-		// don't need to serialize the per-instance variables.
 		xml->SetInt("width", fc::iround(a.size.x));
 		xml->SetInt("height", fc::iround(a.size.y));
+		xml->SetFloat("scale_x", a.scale.x);
+		xml->SetFloat("scale_y", a.scale.y);
+		xml->SetFloat("angle", a.angle);
 		xml->SetUInt("color", a.tint.packed_value);
 		xml->SetUInt("blendmode", a.blendmode.value);
 
@@ -80,7 +109,7 @@ namespace Util
 		const Texture* texture = a.GetTexture();
 		if( !texture )
 		{
-			Log("SerializeAnimationFrames: null texture warning.");
+			Log("SerializeAnimationFrames error: null texture.");
 		}
 		else
 		{
@@ -122,13 +151,53 @@ namespace Util
 		r.size.y = xml->GetInt("h");
 	}
 
+	void DeserializeSprite( XmlReader* xml, Sprite& s )
+	{
+		s.size.x = (float)xml->GetInt("width");
+		s.size.y = (float)xml->GetInt("height");
+		s.scale.x = xml->GetFloat("scale_x", 1.f);
+		s.scale.y = xml->GetFloat("scale_y", 1.f);
+		s.angle = xml->GetFloat("angle");
+		s.tint.packed_value = xml->GetUInt("color", Color::White().packed_value);
+		s.blendmode.value = xml->GetUInt("blendmode", BlendMode::Alpha.value);
+
+		Texture* texture = 0;
+		fc::string textureName = xml->GetString("texture");
+
+		if( !textureName.empty() )
+		{
+			ResourceManager* resourceManager = gGetResourceManager();
+			ASSERT(resourceManager != 0);
+
+			texture = resourceManager->GetTexture(textureName);
+			if( !texture )
+			{
+				texture = resourceManager->LoadTexture(textureName.c_str());
+			}
+		}
+
+		if( !texture )
+		{
+			LogError("Error: Texture (%s) not found. Could not load Sprite.", textureName.c_str());
+		}
+		else
+		{
+			Rect sourceRect = Rect::Zero;
+			DeserializeRect(xml, sourceRect);
+			s.SetTexture(texture);
+			s.SetSourceRect(sourceRect);
+		}
+	}
+
 	void DeserializeAnimatedSprite( XmlReader* xml, AnimatedSprite& a )
 	{
-		// don't need to serialize the per-instance variables.
 		a.size.x = (float)xml->GetInt("width");
 		a.size.y = (float)xml->GetInt("height");
-		a.tint.packed_value = xml->GetUInt("color");
-		a.blendmode.value = xml->GetUInt("blendmode");
+		a.scale.x = xml->GetFloat("scale_x", 1.f);
+		a.scale.y = xml->GetFloat("scale_y", 1.f);
+		a.angle = xml->GetFloat("angle");
+		a.tint.packed_value = xml->GetUInt("color", Color::White().packed_value);
+		a.blendmode.value = xml->GetUInt("blendmode", BlendMode::Alpha.value);
 
 		if( xml->NextChild("Animation") )
 		{

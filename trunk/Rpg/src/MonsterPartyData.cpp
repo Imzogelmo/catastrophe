@@ -36,6 +36,8 @@ void MonsterGroupData::SerializeXml( XmlWriter* xml )
 	xml->SetInt("index", monster_index);
 	xml->SetInt("min", min);
 	xml->SetInt("max", max);
+	xml->SetInt("x", x);
+	xml->SetInt("y", y);
 	xml->EndNode();
 }
 
@@ -45,6 +47,8 @@ void MonsterGroupData::DeserializeXml( XmlReader* xml )
 	monster_index = xml->GetInt("index");
 	min = xml->GetInt("min");
 	max = xml->GetInt("max");
+	x = xml->GetInt("x");
+	y = xml->GetInt("y");
 }
 
 

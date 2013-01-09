@@ -12,38 +12,11 @@
 
 #include <Catastrophe/IO/XmlWriter.h>
 #include <Catastrophe/IO/XmlReader.h>
-#include "ItemData.h"
+#include "SpriteList.h"
+#include "Util/Serialization.h"
 
 
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//               ItemData
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-void ItemData::SerializeXml( XmlWriter* xml )
-{
-	xml->BeginNode("Item");
-
-	base_type::SerializeXml(xml);
-	//item usage...
-
-	xml->EndNode();
-}
-
-
-void ItemData::DeserializeXml( XmlReader* xml )
-{
-	base_type::DeserializeXml(xml);
-	//item usage...
-}
-
-
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//               ItemList
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-bool ItemList::SerializeXml( const fc::string& filename )
+bool AnimatedSpriteList::SerializeXml( const fc::string& filename )
 {
 	XmlWriter xml(filename);
 	if( !xml.IsOpen() )
@@ -52,12 +25,12 @@ bool ItemList::SerializeXml( const fc::string& filename )
 		return false;
 	}
 
-	xml.BeginNode("ItemList");
+	xml.BeginNode("SpriteList");
 	xml.SetUInt("count", m_items.size());
 
 	for( size_t i(0); i < m_items.size(); ++i )
 	{
-		m_items[i].SerializeXml(&xml);
+		Util::SerializeAnimatedSprite(&xml, m_items[i]);
 	}
 
 	xml.EndNode();
@@ -67,7 +40,7 @@ bool ItemList::SerializeXml( const fc::string& filename )
 }
 
 
-bool ItemList::DeserializeXml( const fc::string& filename )
+bool AnimatedSpriteList::DeserializeXml( const fc::string& filename )
 {
 	XmlReader xml(filename);
 	if( !xml.IsOpen() )
@@ -76,16 +49,16 @@ bool ItemList::DeserializeXml( const fc::string& filename )
 		return false;
 	}
 
-	if( xml.GetCurrentNodeName() == "ItemList" )
+	if( xml.GetCurrentNodeName() == "SpriteList" )
 	{
 		size_t n = xml.GetUInt("count");
 		m_items.clear();
 		m_items.reserve(n);
 
-		while( xml.NextChild("Item") )
+		while( xml.NextChild("AnimatedSprite") )
 		{
 			m_items.push_back();
-			m_items.back().DeserializeXml(&xml);
+			Util::DeserializeAnimatedSprite(&xml, m_items.back());
 		}
 	}
 	else
