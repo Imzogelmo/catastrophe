@@ -6,38 +6,38 @@
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="Source Files\Math">
-      <UniqueIdentifier>{004895cc-51df-44ec-bf35-267f6294da47}</UniqueIdentifier>
+      <UniqueIdentifier>{220c256c-969f-4300-801e-2af5ef6aefda}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\IO">
-      <UniqueIdentifier>{1a1045f9-a133-4034-9abf-9684c06eceed}</UniqueIdentifier>
+      <UniqueIdentifier>{5970720d-4e33-4581-907c-5a58e3d36a3a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Graphics">
-      <UniqueIdentifier>{ae6b2956-849f-435e-814c-1879dae8164a}</UniqueIdentifier>
+      <UniqueIdentifier>{1a925152-639b-44dd-998f-65c41b313dd8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Gui">
-      <UniqueIdentifier>{87ecfd58-240a-452b-8d5d-10268fbb3cb5}</UniqueIdentifier>
+      <UniqueIdentifier>{00732285-b2f7-4c47-96d8-23ca228fa0fc}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Util">
-      <UniqueIdentifier>{670d30dd-1de9-4861-be8d-fc4bce9972dd}</UniqueIdentifier>
+      <UniqueIdentifier>{d964558e-1596-4a3e-9252-d04596884f3a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
     <Filter Include="Header Files\Math">
-      <UniqueIdentifier>{6b01e77d-66e1-4556-922a-2ef935f53636}</UniqueIdentifier>
+      <UniqueIdentifier>{3d8595b2-de8c-40d8-94ec-406ec7762983}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\IO">
-      <UniqueIdentifier>{2b811e72-bd64-42a9-a534-13d5fa9ef647}</UniqueIdentifier>
+      <UniqueIdentifier>{282a3132-4d8e-48cf-a545-5fcc6faf48a2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Graphics">
-      <UniqueIdentifier>{a77c89c8-6b68-4d52-97f6-195c06b892ed}</UniqueIdentifier>
+      <UniqueIdentifier>{cb523e84-75db-4266-829d-337460059351}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Gui">
-      <UniqueIdentifier>{bc660daf-f3ff-400c-93ca-4758bc6415ba}</UniqueIdentifier>
+      <UniqueIdentifier>{231d515b-6932-4946-8a2d-0c72c519fe36}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Util">
-      <UniqueIdentifier>{945fe418-9725-411a-b32d-6958d192349c}</UniqueIdentifier>
+      <UniqueIdentifier>{c40802f5-9ce6-4022-84ab-ad46f450340b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
@@ -150,10 +150,13 @@
     <ClCompile Include="src\Graphics\TextureLoader.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\Gui\Menu.cpp">
+    <ClCompile Include="src\Gui\Frame.cpp">
       <Filter>Source Files\Gui</Filter>
     </ClCompile>
-    <ClCompile Include="src\Gui\Message.cpp">
+    <ClCompile Include="src\Gui\MenuElement.cpp">
+      <Filter>Source Files\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Gui\MessageElement.cpp">
       <Filter>Source Files\Gui</Filter>
     </ClCompile>
     <ClCompile Include="src\Gui\TextElement.cpp">
@@ -335,10 +338,13 @@
     <ClInclude Include="include\Catastrophe\Graphics\VertexArray.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\Catastrophe\Gui\Menu.h">
+    <ClInclude Include="include\Catastrophe\Gui\Frame.h">
       <Filter>Header Files\Gui</Filter>
     </ClInclude>
-    <ClInclude Include="include\Catastrophe\Gui\Message.h">
+    <ClInclude Include="include\Catastrophe\Gui\MenuElement.h">
+      <Filter>Header Files\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Catastrophe\Gui\MessageElement.h">
       <Filter>Header Files\Gui</Filter>
     </ClInclude>
     <ClInclude Include="include\Catastrophe\Gui\TextElement.h">

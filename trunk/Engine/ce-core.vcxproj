@@ -120,8 +120,9 @@
     <ClCompile Include="src\Graphics\SpriteBatch.cpp" />
     <ClCompile Include="src\Graphics\Texture.cpp" />
     <ClCompile Include="src\Graphics\TextureLoader.cpp" />
-    <ClCompile Include="src\Gui\Menu.cpp" />
-    <ClCompile Include="src\Gui\Message.cpp" />
+    <ClCompile Include="src\Gui\Frame.cpp" />
+    <ClCompile Include="src\Gui\MenuElement.cpp" />
+    <ClCompile Include="src\Gui\MessageElement.cpp" />
     <ClCompile Include="src\Gui\TextElement.cpp" />
     <ClCompile Include="src\Gui\Widget.cpp" />
     <ClCompile Include="src\Util\TexturePacker.cpp" />
@@ -183,8 +184,9 @@
     <ClInclude Include="include\Catastrophe\Graphics\TextureLoader.h" />
     <ClInclude Include="include\Catastrophe\Graphics\Vertex.h" />
     <ClInclude Include="include\Catastrophe\Graphics\VertexArray.h" />
-    <ClInclude Include="include\Catastrophe\Gui\Menu.h" />
-    <ClInclude Include="include\Catastrophe\Gui\Message.h" />
+    <ClInclude Include="include\Catastrophe\Gui\Frame.h" />
+    <ClInclude Include="include\Catastrophe\Gui\MenuElement.h" />
+    <ClInclude Include="include\Catastrophe\Gui\MessageElement.h" />
     <ClInclude Include="include\Catastrophe\Gui\TextElement.h" />
     <ClInclude Include="include\Catastrophe\Gui\Widget.h" />
     <ClInclude Include="include\Catastrophe\Util\BasicTimer.h" />
