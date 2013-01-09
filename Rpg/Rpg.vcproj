@@ -394,6 +394,10 @@
 					RelativePath=".\src\SpellData.cpp"
 					>
 				</File>
+				<File
+					RelativePath=".\src\SpriteList.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Shmup"
@@ -664,6 +668,10 @@
 					RelativePath=".\src\SpellData.h"
 					>
 				</File>
+				<File
+					RelativePath=".\src\SpriteList.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Shmup"
@@ -694,6 +702,10 @@
 				>
 				<File
 					RelativePath=".\src\Util\Serialization.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Util\StringAlias.h"
 					>
 				</File>
 			</Filter>

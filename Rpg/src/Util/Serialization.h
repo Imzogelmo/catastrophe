@@ -16,13 +16,10 @@
 
 namespace Util
 {
-	// Workaround for the fact that in order to serialize we 
-	// need need access to the current resources we are working with.
-	// *** This must be set before calling any serialization methods! ***
-	void SetResourceManager( ResourceManager* current );
 
 	void SerializePoint( XmlWriter* xml, const Point& p );
 	void SerializeRect( XmlWriter* xml, const Rect& r );
+	void SerializeSprite( XmlWriter* xml, const Sprite& s );
 	void SerializeAnimatedSprite( XmlWriter* xml, const AnimatedSprite& a );
 	void SerializeAnimation( XmlWriter* xml, const Animation& a );
 	void SerializeAnimationFrames( XmlWriter* xml, const AnimationFrames& a );
@@ -30,14 +27,13 @@ namespace Util
 
 
 
-
 	void DeserializePoint( XmlReader* xml, Point& p );
 	void DeserializeRect( XmlReader* xml, Rect& r );
+	void DeserializeSprite( XmlReader* xml, Sprite& s );
 	void DeserializeAnimatedSprite( XmlReader* xml, AnimatedSprite& a );
 	void DeserializeAnimation( XmlReader* xml, Animation& a );
 	void DeserializeAnimationFrames( XmlReader* xml, AnimationFrames& a );
 	void DeserializeTile( XmlReader* xml, Tile& t );
-
 
 
 }

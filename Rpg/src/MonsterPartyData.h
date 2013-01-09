@@ -22,9 +22,11 @@ struct RPG_API MonsterGroupData
 	int		monster_index;
 	int		min;
 	int		max;
+	int		x;
+	int		y;
 
-	MonsterGroupData(int monsterIndex = 0, int minNum = 1, int maxNum = 1) :
-		monster_index(monsterIndex), min(minNum), max(maxNum)
+	MonsterGroupData(int monsterIndex = 0, int minNum = 1, int maxNum = 1, int x = 0, int y = 0) :
+		monster_index(monsterIndex), min(minNum), max(maxNum), x(x), y(y)
 	{}
 
 	//simply to ensure data is sane before saving.

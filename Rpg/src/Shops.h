@@ -18,9 +18,29 @@
 #include "DataList.h"
 
 
+struct RPG_API ShopItem
+{
+	enum ShopItemProperties
+	{
+		DefaultPrice = -1
+	};
+
+	int id;
+	int price;
+
+	ShopItem( int id = 0, int price = DefaultPrice )
+		: id(id), price(price)
+	{}
+
+	void SerializeXml( XmlWriter* xml );
+	void DeserializeXml( XmlReader* xml );
+
+};
+
+
 struct RPG_API Shop
 {
-	typedef fc::vector<size_t>	vec_type;
+	typedef fc::vector<ShopItem>	vec_type;
 
 	vec_type		items;
 	fc::string		name;
@@ -28,10 +48,22 @@ struct RPG_API Shop
 	fc::string		transaction;
 	fc::string		buy;
 	fc::string		sell;
+	int				markup_percent;
+	int				devaluation_percent;
+
+	Shop();
+
+	int GetMarkup() const { return markup_percent; }
+	int GetMarkdown() const { return devaluation_percent; }
 
 	void SerializeXml( XmlWriter* xml );
 	void DeserializeXml( XmlReader* xml );
 
+	// all shop strings are initialized to these in the ctor.
+	static fc::string default_greeting_message;
+	static fc::string default_transaction_message;
+	static fc::string default_buy_message;
+	static fc::string default_sell_message;
 };
 
 

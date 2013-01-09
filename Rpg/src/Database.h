@@ -31,6 +31,10 @@ public:
 	EncounterGroupList*	GetEncounterGroupList() const { return m_encounterList; }
 	CharacterClassList* GetCharacterClassList() const { return m_characterClassList; }
 
+	//SpriteList* GetSpriteList() const { return m; }
+	//AnimatedSpriteList* GetSpriteList() const { return m; }
+	//AnimatedSpriteList* GetSpriteList() const { return m; }
+
 private:
 	ItemList*			m_itemList;
 	SpellList*			m_spellList;
@@ -39,6 +43,10 @@ private:
 	EncounterGroupList*	m_encounterList;
 	CharacterClassList* m_characterClassList;
 	ExpTableList*		m_expTableList;
+
+	//SpriteList*			m_portraitSprites;
+	//AnimatedSpriteList*	m_weaponSprites;
+	//AnimatedSpriteList*	m_miscSprites;
 
 };
 
