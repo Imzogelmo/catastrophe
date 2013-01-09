@@ -75,7 +75,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>ce-core.lib;ce-system.lib;glfw.lib;mcppd.lib;angelscript.lib;glew32s.lib;OpenGL32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ce-core.lib;ce-system.lib;ce-sound.lib;glfw.lib;freetype.lib;mcpp.lib;angelscript.lib;glew32s.lib;OpenGL32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../Engine/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OptimizeReferences>true</OptimizeReferences>
@@ -87,6 +87,7 @@
     <ClCompile Include="src\AttributeFlags.cpp" />
     <ClCompile Include="src\Attributes.cpp" />
     <ClCompile Include="src\ConfigFile.cpp" />
+    <ClCompile Include="src\Dialogue.cpp" />
     <ClCompile Include="src\Equipment.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Inventory.cpp" />
@@ -114,6 +115,7 @@
     <ClCompile Include="src\Script\asGuiInterface.cpp" />
     <ClCompile Include="src\Script\asInputInterface.cpp" />
     <ClCompile Include="src\Script\asMathInterface.cpp" />
+    <ClCompile Include="src\Script\asRpgInterface.cpp" />
     <ClCompile Include="src\Script\asSoundInterface.cpp" />
     <ClCompile Include="src\Script\Compiler.cpp" />
     <ClCompile Include="src\Script\PostProcessor.cpp" />
@@ -127,9 +129,11 @@
     <ClCompile Include="src\CharacterClass.cpp" />
     <ClCompile Include="src\Database.cpp" />
     <ClCompile Include="src\EncounterData.cpp" />
+    <ClCompile Include="src\ExpTable.cpp" />
     <ClCompile Include="src\ItemData.cpp" />
     <ClCompile Include="src\MonsterData.cpp" />
     <ClCompile Include="src\MonsterPartyData.cpp" />
+    <ClCompile Include="src\Shops.cpp" />
     <ClCompile Include="src\SpellData.cpp" />
     <ClCompile Include="src\Shmup\BulletManager.cpp" />
     <ClCompile Include="src\Util\Serialization.cpp" />
@@ -143,19 +147,17 @@
     <ClInclude Include="src\AttributeStrings.h" />
     <ClInclude Include="src\Common.h" />
     <ClInclude Include="src\ConfigFile.h" />
+    <ClInclude Include="src\Dialogue.h" />
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\Equipment.h" />
     <ClInclude Include="src\FixedAttributeArray.h" />
     <ClInclude Include="src\Game.h" />
-    <ClInclude Include="src\GameScreen.h" />
     <ClInclude Include="src\Inventory.h" />
     <ClInclude Include="src\InventoryItem.h" />
     <ClInclude Include="src\ItemDrop.h" />
     <ClInclude Include="src\Object.h" />
     <ClInclude Include="src\RenderEngine.h" />
     <ClInclude Include="src\ResourceManager.h" />
-    <ClInclude Include="src\Screen.h" />
-    <ClInclude Include="src\ScreenManager.h" />
     <ClInclude Include="src\SpellBook.h" />
     <ClInclude Include="src\Script\Bytecode.h" />
     <ClInclude Include="src\Script\Common.h" />
@@ -186,9 +188,11 @@
     <ClInclude Include="src\Database.h" />
     <ClInclude Include="src\DataList.h" />
     <ClInclude Include="src\EncounterData.h" />
+    <ClInclude Include="src\ExpTable.h" />
     <ClInclude Include="src\ItemData.h" />
     <ClInclude Include="src\MonsterData.h" />
     <ClInclude Include="src\MonsterPartyData.h" />
+    <ClInclude Include="src\Shops.h" />
     <ClInclude Include="src\SpellData.h" />
     <ClInclude Include="src\Shmup\Bullet.h" />
     <ClInclude Include="src\Shmup\BulletManager.h" />
@@ -196,6 +200,9 @@
     <ClInclude Include="src\Shmup\PODBullet.h" />
     <ClInclude Include="src\Shmup\PODBulletManager.h" />
     <ClInclude Include="src\Util\Serialization.h" />
+    <ClInclude Include="src\GameScreen.h" />
+    <ClInclude Include="src\Screen.h" />
+    <ClInclude Include="src\ScreenManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

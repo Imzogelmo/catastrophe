@@ -6,59 +6,62 @@
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="Source Files\Script">
-      <UniqueIdentifier>{5ce23f78-da87-4dd9-a5ec-0190cf6157b4}</UniqueIdentifier>
+      <UniqueIdentifier>{fa89749e-bda1-4e78-b231-60fd62a0723c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Script\Collections">
-      <UniqueIdentifier>{d16696cb-a160-4198-8a18-f070f9a1c9cf}</UniqueIdentifier>
+      <UniqueIdentifier>{bdbb70ca-a4a7-4b5d-9eea-f28a3af8961d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Script\Bindings">
-      <UniqueIdentifier>{c7e94afd-a235-47bd-8e28-55e614850113}</UniqueIdentifier>
+      <UniqueIdentifier>{19825331-f3e9-4098-8eb8-7c42fe143ae1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Script\Compiler">
-      <UniqueIdentifier>{8fcb4ce4-6771-44d6-bfc5-9dc9d3ef1fc4}</UniqueIdentifier>
+      <UniqueIdentifier>{b2a94e74-453d-4dfe-9609-d6ba494d7ee6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Tile">
-      <UniqueIdentifier>{89cf6387-6450-4701-b4b3-a6081d326e65}</UniqueIdentifier>
+      <UniqueIdentifier>{41cbd1fe-590e-4690-abc0-191cae259a0b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Database">
-      <UniqueIdentifier>{510f9d0e-c869-4e71-bbef-9f898e561e19}</UniqueIdentifier>
+      <UniqueIdentifier>{3f6346bd-b768-40f0-b111-659e0f3555bc}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Shmup">
-      <UniqueIdentifier>{580d5032-2589-47f5-80cd-9414396aa70d}</UniqueIdentifier>
+      <UniqueIdentifier>{1a432a35-3fa8-43bd-a891-e7697f66a0bf}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Util">
-      <UniqueIdentifier>{4f400a4c-f141-48f1-928c-f0f8f2116e7d}</UniqueIdentifier>
+      <UniqueIdentifier>{0a19ce70-ef6c-41ee-af48-fab27b74fdb7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Screens">
-      <UniqueIdentifier>{fcc34ee2-1e9e-4cfc-8135-f4e74575b1ee}</UniqueIdentifier>
+      <UniqueIdentifier>{9544225a-6ccf-428c-b8a7-d47b601513c8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
     <Filter Include="Header Files\Script">
-      <UniqueIdentifier>{fb74e512-7dbd-486b-90e6-59a83ac578cc}</UniqueIdentifier>
+      <UniqueIdentifier>{08a9a5f0-411f-4714-a9c9-b13398ab8fc5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Script\Collections">
-      <UniqueIdentifier>{b2323c5b-cb57-4dac-b589-0c95f748e7a9}</UniqueIdentifier>
+      <UniqueIdentifier>{9e8defce-eae1-41f2-abce-ddced8c18c93}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Script\Compiler">
-      <UniqueIdentifier>{1cb6e370-d4a8-43c1-aa01-c6e296efbd0a}</UniqueIdentifier>
+      <UniqueIdentifier>{abdd6ef7-d274-4cb8-94e3-729cf6dda302}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Script\Bindings">
-      <UniqueIdentifier>{b5167c3f-16c8-41a3-81e9-2efea9f6304a}</UniqueIdentifier>
+      <UniqueIdentifier>{8d4b568d-580b-4c09-b623-97c3060ab7b7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Tile">
-      <UniqueIdentifier>{9aa833a2-6320-4d99-88aa-cda8ec61a5f7}</UniqueIdentifier>
+      <UniqueIdentifier>{0d5415dd-1004-4e9b-8b52-4c4fbb88071b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Database">
-      <UniqueIdentifier>{d4612de9-a376-4501-a30c-fe80824c9a4a}</UniqueIdentifier>
+      <UniqueIdentifier>{43c5102a-17d7-4453-a4c3-aff29a419292}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Shmup">
-      <UniqueIdentifier>{ab0ac195-b002-4bde-bc91-571e9f1489e7}</UniqueIdentifier>
+      <UniqueIdentifier>{d51f660a-e3b9-4980-9f52-92dec897cd0e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Util">
-      <UniqueIdentifier>{5d991d59-452f-4ab1-9bde-ca43800099ef}</UniqueIdentifier>
+      <UniqueIdentifier>{2ac9aaf5-8ea8-4af1-a712-abe47ad62b35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Screens">
+      <UniqueIdentifier>{8391a7c1-5ad0-4034-9907-f1c3a421f62e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
@@ -73,6 +76,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ConfigFile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dialogue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Equipment.cpp">
@@ -156,6 +162,9 @@
     <ClCompile Include="src\Script\asMathInterface.cpp">
       <Filter>Source Files\Script\Bindings</Filter>
     </ClCompile>
+    <ClCompile Include="src\Script\asRpgInterface.cpp">
+      <Filter>Source Files\Script\Bindings</Filter>
+    </ClCompile>
     <ClCompile Include="src\Script\asSoundInterface.cpp">
       <Filter>Source Files\Script\Bindings</Filter>
     </ClCompile>
@@ -195,6 +204,9 @@
     <ClCompile Include="src\EncounterData.cpp">
       <Filter>Source Files\Database</Filter>
     </ClCompile>
+    <ClCompile Include="src\ExpTable.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
     <ClCompile Include="src\ItemData.cpp">
       <Filter>Source Files\Database</Filter>
     </ClCompile>
@@ -202,6 +214,9 @@
       <Filter>Source Files\Database</Filter>
     </ClCompile>
     <ClCompile Include="src\MonsterPartyData.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shops.cpp">
       <Filter>Source Files\Database</Filter>
     </ClCompile>
     <ClCompile Include="src\SpellData.cpp">
@@ -239,6 +254,9 @@
     <ClInclude Include="src\ConfigFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Dialogue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -249,9 +267,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameScreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Inventory.h">
@@ -270,12 +285,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ResourceManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Screen.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ScreenManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\SpellBook.h">
@@ -368,6 +377,9 @@
     <ClInclude Include="src\EncounterData.h">
       <Filter>Header Files\Database</Filter>
     </ClInclude>
+    <ClInclude Include="src\ExpTable.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
     <ClInclude Include="src\ItemData.h">
       <Filter>Header Files\Database</Filter>
     </ClInclude>
@@ -375,6 +387,9 @@
       <Filter>Header Files\Database</Filter>
     </ClInclude>
     <ClInclude Include="src\MonsterPartyData.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shops.h">
       <Filter>Header Files\Database</Filter>
     </ClInclude>
     <ClInclude Include="src\SpellData.h">
@@ -397,6 +412,15 @@
     </ClInclude>
     <ClInclude Include="src\Util\Serialization.h">
       <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameScreen.h">
+      <Filter>Header Files\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Screen.h">
+      <Filter>Header Files\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ScreenManager.h">
+      <Filter>Header Files\Screens</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
