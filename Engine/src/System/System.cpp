@@ -47,7 +47,8 @@ System::System() :
 	m_window(0),
 	m_gl_major_version(2),
 	m_gl_minor_version(0),
-	m_has_fbo(false)
+	m_has_fbo(false),
+	m_console(false)
 {
 }
 
@@ -94,6 +95,13 @@ bool System::InitLogging( const fc::string& filename, bool debug_console )
 {
 	bool ret = Logger::GetInstance().Open(filename, debug_console);
 	Log("Logging Initialized");
+
+	if( debug_console )
+	{
+		OpenDebugConsole();
+		printf("DEBUG CONSOLE\n" );
+	}
+
 	return ret;
 }
 
@@ -138,14 +146,14 @@ void System::InitOpenGL()
 	m_gl_major_version = maj_ver;
 	m_gl_minor_version = min_ver;
 
-	Log("Glew version: %i, %i", m_gl_major_version, m_gl_minor_version);
+	//Log("Glew version: %i, %i", m_gl_major_version, m_gl_minor_version);
 
 	m_has_fbo = GLEW_EXT_framebuffer_object != 0;
 	if(!m_has_fbo)
 		LogWarning("Warning: GL_EXT_framebuffer_object is not supported -- Render to texture will not be available.");
 
 	if(maj_ver < 2)
-		LogError("Error: Shader objects require an OpenGL 2.0 context. Shaders will not be available.");
+		LogError("Warning: Shader objects require an OpenGL 2.0 context. Shaders will not be available.");
 
 }
 
@@ -153,7 +161,7 @@ void System::InitOpenGL()
 
 
 // Win32 main entry point defined, for portability.
-#ifdef _WIN32
+#if defined(_WIN32) || defined(WIN32)
 
 //windows crap
 #if !defined(_68K_) && !defined(_MPPC_) && !defined(_X86_) && !defined(_IA64_) && !defined(_AMD64_) && defined(_M_IX86)
@@ -166,7 +174,11 @@ void System::InitOpenGL()
 #define NOGDI
 #include <windef.h>
 #include <winbase.h>
-//#include <wincon.h>
+#include <wincon.h>
+#include <fcntl.h>
+#include <io.h>
+#include <iostream>
+//#include <xiosbase>
 
 
 extern int main(int argc, char* argv[]);
@@ -177,8 +189,58 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 }
 
 
+void System::OpenDebugConsole()
+{
+	const int MAX_CONSOLE_LINES = 256;
 
-#endif
+	CONSOLE_SCREEN_BUFFER_INFO console_info;
+	int hConHandle;
+	long lStdHandle;
+
+	AllocConsole();
+
+	// set the screen buffer to be big enough to scroll text
+	GetConsoleScreenBufferInfo( GetStdHandle(STD_OUTPUT_HANDLE), &console_info );
+	console_info.dwSize.Y = MAX_CONSOLE_LINES;
+	SetConsoleScreenBufferSize( GetStdHandle(STD_OUTPUT_HANDLE), console_info.dwSize );
+
+	// redirect unbuffered STDOUT to the console
+	lStdHandle = (long)GetStdHandle( STD_OUTPUT_HANDLE );
+	hConHandle = _open_osfhandle( lStdHandle, _O_TEXT );
+	*stdout = *_fdopen( hConHandle, "w" );
+	setvbuf( stdout, NULL, _IONBF, 0 );
+
+	// redirect unbuffered STDIN to the console
+	lStdHandle = (long)GetStdHandle( STD_INPUT_HANDLE );
+	hConHandle = _open_osfhandle( lStdHandle, _O_TEXT );
+	*stdin = *_fdopen( hConHandle, "r" );
+	setvbuf( stdin, NULL, _IONBF, 0 );
+
+	// redirect unbuffered STDERR to the console
+	lStdHandle = (long)GetStdHandle( STD_ERROR_HANDLE );
+	hConHandle = _open_osfhandle( lStdHandle, _O_TEXT );
+	*stderr = *_fdopen( hConHandle, "w" );
+	setvbuf( stderr, NULL, _IONBF, 0 );
+
+	//for cout, wcout, cin, wcin, wcerr, cerr, wclog and clog
+	std::ios::sync_with_stdio();
+
+	GetInstance()->m_console = true;
+}
+
+
+void System::CloseDebugConsole()
+{
+	FreeConsole();
+	GetInstance()->m_console = false;
+}
+
+#else
+
+void System::OpenDebugConsole() {}
+void System::CloseDebugConsole() {}
+
+#endif //_WIN32
 
 CE_NAMESPACE_END
 

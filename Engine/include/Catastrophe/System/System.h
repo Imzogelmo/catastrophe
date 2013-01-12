@@ -42,6 +42,10 @@ public:
 		int depth_buffer_bits = 8, int stencil_bits = 0, int multisample_level = 0);
 	static Window* GetWindow();
 
+	static void OpenDebugConsole();
+	static void CloseDebugConsole();
+	//static void Update();
+
 protected:
 	System();
 	void InitOpenGL();
@@ -53,7 +57,7 @@ protected:
 	int				m_gl_major_version;
 	int				m_gl_minor_version;
 	bool			m_has_fbo;
-	bool			mUnused1;
+	bool			m_console;
 	bool			mUnused2;
 	bool			mUnused3;
 

@@ -19,28 +19,13 @@
 #include "Common.h"
 #include "IO/Log.h"
 
-#if !defined(_68K_) && !defined(_MPPC_) && !defined(_X86_) && !defined(_IA64_) && !defined(_AMD64_) && defined(_M_IX86)
-	#define _X86_
-#endif
-
 #ifdef _MSC_VER
 	#pragma warning ( push )
 	#pragma warning ( disable : 4996 )
 	#pragma warning ( disable : 4201 )
 #endif
 
-
-#define NOGDI
-#include <cstdarg>
-#include <fcntl.h>
-#include <io.h>
-#include <stdio.h>
-#include <stdarg.h>
-#include <windef.h>
-#include <winbase.h>
-#include <wincon.h>
-//#include <iostream> //for sync_with_io
-
+#include <stdarg.h> //for va_list
 
 CE_NAMESPACE_BEGIN
 
@@ -90,13 +75,9 @@ bool Logger::Open( const fc::string& outfilename, bool create_debug_console, boo
 		m_file.Open( outfilename, FileWriteText );
 	}
 
-	if( create_debug_console )
-	{
-		OpenDebugConsole();
-		printf("DEBUG CONSOLE\n" );
-	}
-
+	m_console = create_debug_console;
 	m_append_new_line = auto_append_new_line;
+
 	return m_file.IsOpen();
 }
 
@@ -131,51 +112,6 @@ void Logger::FlushString( const fc::string& str )
 	{
 		printf( str.c_str() );
 	}
-}
-
-
-void Logger::OpenDebugConsole()
-{
-	const int MAX_CONSOLE_LINES = 256;
-
-	CONSOLE_SCREEN_BUFFER_INFO console_info;
-	int hConHandle;
-	long lStdHandle;
-
-	AllocConsole();
-
-	// set the screen buffer to be big enough to scroll text
-	GetConsoleScreenBufferInfo( GetStdHandle(STD_OUTPUT_HANDLE), &console_info );
-	console_info.dwSize.Y = MAX_CONSOLE_LINES;
-	SetConsoleScreenBufferSize( GetStdHandle(STD_OUTPUT_HANDLE), console_info.dwSize );
-
-	// redirect unbuffered STDOUT to the console
-	lStdHandle = (long)GetStdHandle( STD_OUTPUT_HANDLE );
-	hConHandle = _open_osfhandle( lStdHandle, _O_TEXT );
-	*stdout = *_fdopen( hConHandle, "w" );
-	setvbuf( stdout, NULL, _IONBF, 0 );
-
-	// redirect unbuffered STDIN to the console
-	lStdHandle = (long)GetStdHandle( STD_INPUT_HANDLE );
-	hConHandle = _open_osfhandle( lStdHandle, _O_TEXT );
-	*stdin = *_fdopen( hConHandle, "r" );
-	setvbuf( stdin, NULL, _IONBF, 0 );
-
-	// redirect unbuffered STDERR to the console
-	lStdHandle = (long)GetStdHandle( STD_ERROR_HANDLE );
-	hConHandle = _open_osfhandle( lStdHandle, _O_TEXT );
-	*stderr = *_fdopen( hConHandle, "w" );
-	setvbuf( stderr, NULL, _IONBF, 0 );
-
-	//for cout, wcout, cin, wcin, wcerr, cerr, wclog and clog
-	//std::ios::sync_with_stdio();
-	m_console = true;
-}
-
-void Logger::CloseDebugConsole()
-{
-	FreeConsole();
-	m_console = false;
 }
 
 
