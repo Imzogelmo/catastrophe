@@ -182,11 +182,23 @@
 				Name="Input"
 				>
 				<File
+					RelativePath=".\src\Input\Controller.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Input\Input.cpp"
 					>
 				</File>
 				<File
+					RelativePath=".\src\Input\JoystickController.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Input\Keyboard.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Input\KeyboardController.cpp"
 					>
 				</File>
 			</Filter>
@@ -220,6 +232,10 @@
 				Name="Input"
 				>
 				<File
+					RelativePath=".\include\Catastrophe\Input\Controller.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\Catastrophe\Input\Input.h"
 					>
 				</File>
@@ -228,7 +244,15 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\Catastrophe\Input\JoystickController.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\Catastrophe\Input\Keyboard.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Catastrophe\Input\KeyboardController.h"
 					>
 				</File>
 				<File

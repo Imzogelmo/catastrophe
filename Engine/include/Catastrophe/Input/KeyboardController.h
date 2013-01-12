@@ -18,11 +18,40 @@
 
 #pragma once
 
-#include "Input/Common.h"
-#include "Input/Joystick.h"
-#include "Input/Keyboard.h"
-#include "Input/Mouse.h"
-#include "Input/Input.h"
-#include "Input/Controller.h"
-#include "Input/KeyboardController.h"
+#include "Common.h"
+#include "Controller.h"
+
+CE_NAMESPACE_BEGIN
+
+
+class CE_API KeyboardController : public Controller
+{
+public:
+
+	KeyboardController();
+	virtual ~KeyboardController()
+	{}
+
+	bool IsDown( int key ) const;
+	bool IsPressed( int key ) const;
+	bool IsReleased( int key ) const;
+	bool IsDPadDown( int dir ) const;
+	bool IsDPadPressed( int dir ) const;
+	bool IsDPadReleased( int dir ) const;
+
+	int Button( int key ) const;
+	int DPad( int dir ) const;
+
+	void SetButtonMapping( int key, int value );
+	void SetDirMapping( int dir, int value );
+
+protected:
+	bool InternalIsPressed( int mapped_key ) const;
+
+	Keyboard*	m_keyboard;
+
+};
+
+
+CE_NAMESPACE_END
 
