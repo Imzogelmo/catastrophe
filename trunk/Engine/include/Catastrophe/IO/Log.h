@@ -36,14 +36,11 @@ public:
 	~Logger();
 
 	static Logger& GetInstance();
-
 	bool Open( const fc::string& filename, bool create_debug_console = true, bool auto_append_new_line = true );
 	void Close();
 
 	void Write( const fc::string& message );
 	void AppendNewLine( fc::string& str );
-	void OpenDebugConsole();
-	void CloseDebugConsole();
 
 	File* GetFile() { return &m_file; }
 

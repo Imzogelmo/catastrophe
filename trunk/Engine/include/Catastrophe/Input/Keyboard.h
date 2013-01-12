@@ -24,6 +24,8 @@
 #include <fc/vector_set.h>
 #include <fc/vector_map.h>
 
+CE_NAMESPACE_BEGIN
+
 
 class CE_API Keyboard
 {
@@ -59,4 +61,4 @@ protected:
 };
 
 
-
+CE_NAMESPACE_END
