@@ -16,13 +16,40 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#pragma once
-
-#include "Input/Common.h"
-#include "Input/Joystick.h"
-#include "Input/Keyboard.h"
-#include "Input/Mouse.h"
-#include "Input/Input.h"
+#include <cstring>
 #include "Input/Controller.h"
-#include "Input/KeyboardController.h"
+
+
+Controller::Controller() :
+	m_key_repeat_delay(15),
+	m_key_repeat_rate(4),
+	m_use_key_repeat(true)
+{
+	::memset(m_button_map, 0, sizeof(int) * MaxButtons);
+	::memset(m_direction_map, 0, sizeof(int) * MaxDirections);
+}
+
+
+void Controller::SetKeyRepeatDelay( int delay )
+{
+	if( delay < 0 )
+		delay = 0;
+
+	m_key_repeat_delay = delay;
+}
+
+
+void Controller::SetKeyRepeatRate( int rate )
+{
+	if( rate > 0 )
+	{
+		m_key_repeat_rate = rate;
+	}
+}
+
+
+void Controller::UseKeyRepeat( bool enable )
+{
+	m_use_key_repeat = enable;
+}
 

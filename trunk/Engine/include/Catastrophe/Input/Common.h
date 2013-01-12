@@ -18,11 +18,19 @@
 
 #pragma once
 
-#include "Input/Common.h"
-#include "Input/Joystick.h"
-#include "Input/Keyboard.h"
-#include "Input/Mouse.h"
-#include "Input/Input.h"
-#include "Input/Controller.h"
-#include "Input/KeyboardController.h"
+#include "../Common.h"
+
+CE_NAMESPACE_BEGIN
+
+
+/* Forward Declarations */
+class Input;
+class Joystick;
+class Keyboard;
+class Controller;
+class KeyboardController;
+class JoystickController;
+
+
+CE_NAMESPACE_END
 
