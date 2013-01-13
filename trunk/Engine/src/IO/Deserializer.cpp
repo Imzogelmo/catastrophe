@@ -214,7 +214,7 @@ bool Deserializer::ReadLine( fc::string& value )
 	while( !IsEof() )
 	{
 		char c = ReadByte();
-		if( !c || c == 10)
+		if( c == 10)
 			break;
 		if( c == 13)
 		{

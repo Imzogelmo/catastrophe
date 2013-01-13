@@ -12,9 +12,9 @@
 
 #include <Catastrophe/System.h>
 #include <Catastrophe/Input.h>
+#include <Catastrophe/IO/ConfigFile.h>
 
 #include "Common.h"
-#include "ConfigFile.h"
 #include "GlobalSettings.h"
 #include "Game.h"
 
@@ -27,7 +27,16 @@
 
 GlobalSettings g_settings;
 
+ConfigFile* gGetConfigFile() { return g_settings.GetConfigFile(); }
+void GlobalSettings::Initialize() //I'm just sticking this here for now.
+{
+	m_configfile = new ConfigFile("settings.cfg");
+}
 
+GlobalSettings::~GlobalSettings()
+{
+	delete m_configfile;
+}
 
 void LoadConfigSettings( int argc, char *argv[] )
 {
@@ -43,8 +52,26 @@ void LoadConfigSettings( int argc, char *argv[] )
 		file will be created.
 	*/
 
+	g_settings.Initialize();
+
 	ConfigFile* configFile = g_settings.GetConfigFile();
-	configFile->Read();
+
+	if( !configFile->Read() )
+	{
+		configFile->SetCurrentSection("graphics");
+
+		configFile->SetBool("vsync", false);
+		configFile->SetBool("keep_aspect", false);
+		configFile->SetBool("keep_scale", false);
+		configFile->SetBool("antialias", true);
+		configFile->SetBool("fullscreen", false);
+		configFile->SetInt("resx", 640);
+		configFile->SetInt("resy", 480);
+		configFile->SetInt("multisample", 0);
+		configFile->SetInt("scale", 0);
+
+		configFile->Write();
+	}
 
 	//commandLine.Process( argc, argv, settings );
 
@@ -53,18 +80,19 @@ void LoadConfigSettings( int argc, char *argv[] )
 
 Window* CreateWindow()
 {
-	ConfigSetting* setting = g_settings.GetConfigFile()->GetSettings();
+	ConfigFile* config = gGetConfigFile();
 
-	bool vsync			= setting[ ConfigSetting::Vsync ].value ? true : false;
-	bool keep_aspect	= setting[ ConfigSetting::KeepAspect ].value ? true : false;
-	bool keep_scale		= setting[ ConfigSetting::KeepScale ].value ? true : false;
-	bool antialias		= setting[ ConfigSetting::Antialiasing ].value ? true : false;
-	bool fullscreen		= setting[ ConfigSetting::Fullscreen ].value ? true : false;
+	config->SetCurrentSection("graphics");
+	bool vsync			= config->GetBool("vsync", false);
+	bool keep_aspect	= config->GetBool("keep_aspect", false);
+	bool keep_scale		= config->GetBool("keep_scale", false);
+	bool antialias		= config->GetBool("antialias", true);
+	bool fullscreen		= config->GetBool("fullscreen", false);
 
-	int resx			= setting[ ConfigSetting::ResX ].value;
-	int resy			= setting[ ConfigSetting::ResY ].value;
-	int multisample		= setting[ ConfigSetting::Multisample ].value;
-	int scale			= setting[ ConfigSetting::Scale ].value;
+	int resx			= config->GetInt("resx", 640);
+	int resy			= config->GetInt("resy", 480);
+	int multisample		= config->GetInt("multisample", 0);
+	int scale			= config->GetInt("scale", 0);
 
 
 	Window* window = System::CreateWindow(

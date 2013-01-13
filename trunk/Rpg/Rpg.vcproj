@@ -176,10 +176,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\ConfigFile.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\Dialogue.cpp"
 				>
 			</File>
@@ -451,10 +447,6 @@
 			</File>
 			<File
 				RelativePath=".\src\Common.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\ConfigFile.h"
 				>
 			</File>
 			<File
