@@ -124,8 +124,7 @@ size_t File::Seek(size_t position)
 size_t File::Write(const void* data, size_t size)
 {
 	CE_ASSERT(m_mode != FileRead);
-	CE_ASSERT(size != 0);
-	if(size == 0) //fixme:
+	if(size == 0)
 		return 0;
 
 	if(!m_handle)

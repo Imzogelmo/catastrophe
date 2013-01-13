@@ -88,14 +88,11 @@ typedef long long			int64;
 #define LogError	__Internal_Log_Write
 #define LogWarning	__Internal_Log_Write
 
-
-//forward declare the fc::string type.
-namespace fc
-{
-	//template <class T> class allocator;
-	//template < class T, size_t BufferSize = FC_DEFAULT_STRING_BUFFER_SIZE, class Alloc = allocator<T> > class basic_string_with_buffer_storage;
-	//template < class T, class Storage = basic_string_with_buffer_storage<T> > class basic_string;
-}
+#ifdef CE_DEBUG
+#define LogDebug	__Internal_Log_Write
+#else
+#define LogDebug(x)
+#endif
 
 
 CE_NAMESPACE_BEGIN
@@ -106,7 +103,7 @@ extern FC_NO_INLINE void __Internal_Log_Write( const char* format, ... );
 
 
 /* Forward Declarations */
-//class System;
+class System;
 class Window;
 
 class Vector2;
@@ -162,6 +159,7 @@ struct VertexColorTexture;
 class Serializer;
 class Deserializer;
 class File;
+class ConfigFile;
 class PackFile;
 class VectorBuffer;
 class XmlReader;

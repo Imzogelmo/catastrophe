@@ -220,6 +220,10 @@
 				Name="IO"
 				>
 				<File
+					RelativePath=".\src\IO\ConfigFile.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\IO\Deserializer.cpp"
 					>
 				</File>
@@ -469,6 +473,10 @@
 			<Filter
 				Name="IO"
 				>
+				<File
+					RelativePath=".\include\Catastrophe\IO\ConfigFile.h"
+					>
+				</File>
 				<File
 					RelativePath=".\include\Catastrophe\IO\Deserializer.h"
 					>
