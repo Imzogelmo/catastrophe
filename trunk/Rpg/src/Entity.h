@@ -11,6 +11,12 @@
 
 #pragma once
 
+#include <Catastrophe/Math/Vector2.h>
+#include <Catastrophe/Math/Rectf.h>
+
+#include "Common.h"
+#include "Collision/CollisionFilter.h"
+
 
 class Entity
 {
@@ -18,18 +24,29 @@ public:
 	enum EntityType
 	{
 		TypeEntity, //null
-		TypeObject
+		TypeObject = 0x01,
+		TypeCharacter = 0x10,
+		TypePlayerCharacter = TypeCharacter | 0x20,
+		TypeMonsterCharacter = TypeCharacter | 0x40
 	};
 
-	//this is much faster than dynamic_cast.
 	const int type;
 
-	Entity( EntityType derivedType = TypeEntity ) : type(derivedType) {}
+	Vector2	pos;
+	Rectf	hitbox;
+	CollisionFilter	filter;
+
+	Entity( EntityType derivedType );
 	virtual ~Entity()
 	{}
 
-	virtual void Update() = 0;
-	virtual void Render() = 0;
+	virtual void Update() {}
+	virtual void Render() {}
+
+	inline Rectf GetBoundingRect()
+	{
+		return hitbox + pos;
+	}
 
 };
 

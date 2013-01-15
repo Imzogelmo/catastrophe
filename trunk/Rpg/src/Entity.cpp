@@ -9,38 +9,17 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#pragma once
-
-#include <Catastrophe/Graphics/Sprite.h>
 #include "Entity.h"
-#include "Collision/CollisionFilter.h"
+#include "Character.h"
 
 
-//todo; figure out what we need for entities; scripts, characters, objects...
-class Object : public Entity
+Entity::Entity( EntityType derivedType ) :
+	type(derivedType),
+	pos(Vector2::Zero),
+	hitbox(Rectf::Zero),
+	filter()
 {
-public:
-	Vector2	pos, speed;
-	Rectf	hitbox;
-	CollisionFilter	filter;
-	AnimatedSprite	sprite;
-
-	//Object() : Entity(TypeObject)
-	//{}
-
-	virtual void Update()
-	{
-		pos += speed;
-	}
-
-	virtual void Render() {}
-
-	inline Rectf GetBoundingRect()
-	{
-		return hitbox + pos;
-	}
-
-};
+}
 
 
 

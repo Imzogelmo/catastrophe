@@ -11,25 +11,17 @@
 
 #pragma once
 
-#include <fc/string.h>
-
-#include "Common.h"
-#include "ScriptClass.h"
+#include "Character.h"
 
 
-
-class ScriptObject : public ScriptClass
+class MonsterCharacter : public Character
 {
 public:
-	ScriptObject( ContextPool* contextPool = 0 );
-	~ScriptObject();
+	Character( EntityType derivedType = TypeMonsterCharacter ) : Entity(derivedType) 
+	{}
 
-	void Initialize( const fc::string& class_decl, const fc::string& method_decl = "void run()" );
-	asIScriptObject *CreateObject();
-
-	void Update();
-
-	//void DeepCopy( ScriptObject* &_out );
+	virtual void Update() {}
+	virtual void Render() {}
 
 };
 

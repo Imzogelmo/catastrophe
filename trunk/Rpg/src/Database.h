@@ -24,6 +24,8 @@ public:
 	Database();
 	~Database();
 
+	void Initialize();
+
 	ItemList*			GetItemList() const { return m_itemList; }
 	SpellList*			GetSpellList() const { return m_spellList; }
 	MonsterList*		GetMonsterList() const { return m_monsterList; }
@@ -42,7 +44,7 @@ private:
 	MonsterPartyList*	m_monsterPartyList;
 	EncounterGroupList*	m_encounterList;
 	CharacterClassList* m_characterClassList;
-	ExpTableList*		m_expTableList;
+	ExpTableList*		m_expTableList; //hmmm... maybe go in character class?
 
 	//SpriteList*			m_portraitSprites;
 	//AnimatedSpriteList*	m_weaponSprites;

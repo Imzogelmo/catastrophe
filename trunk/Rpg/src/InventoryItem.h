@@ -24,7 +24,7 @@
 class RPG_API InventoryItem
 {
 public:
-	InventoryItem( Item* item = 0, int amount = 0, int maxAmount = 99 );
+	InventoryItem( Item* item = 0, int amount = 0, int maxAmount = m_defaultMax );
 
 	// Add, Remove - returns the amount that could be successfully added or removed.
 	int Add( int amount = 1 );
@@ -45,9 +45,14 @@ public:
 	void SetAmount( int amount );
 	void SetMaxAmount( int maxAmount );
 
+	// sets the default max amount used to initialize an InventoryItem.
+	static void SetGlobalDefaultMaxAmount( int amount );
+
 protected:
-	Item*	m_item; //should be const / mutable ??
+	Item*	m_item;
 	int		m_amount;
-	int		m_maxAmount; //should this be universal??
+	int		m_maxAmount;
+
+	static int m_defaultMax;
 
 };

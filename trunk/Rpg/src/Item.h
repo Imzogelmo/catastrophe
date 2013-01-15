@@ -3,8 +3,9 @@
 
 #include "Common.h"
 #include "Attributes.h"
+#include "ItemData.h"
 
-
+/*
 class Item
 {
 public:
@@ -16,5 +17,5 @@ public:
 		return Attributes();
 	}
 };
-
+*/
 

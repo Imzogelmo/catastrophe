@@ -17,7 +17,7 @@
 
 void Attributes::ApplyPercentageModifier(const Attributes& modifier)
 {
-	attributes.ApplyPercentageModifier(modifier.attributes);
+	stats.ApplyPercentageModifier(modifier.stats);
 	elements.ApplyPercentageModifier(modifier.elements);
 	status.ApplyPercentageModifier(modifier.status);
 }
@@ -25,7 +25,7 @@ void Attributes::ApplyPercentageModifier(const Attributes& modifier)
 
 void Attributes::ApplyMin(const Attributes& value)
 {
-	attributes.ApplyMin(value.attributes);
+	stats.ApplyMin(value.stats);
 	elements.ApplyMin(value.elements);
 	status.ApplyMin(value.status);
 }
@@ -33,7 +33,7 @@ void Attributes::ApplyMin(const Attributes& value)
 
 void Attributes::ApplyMax(const Attributes& value)
 {
-	attributes.ApplyMax(value.attributes);
+	stats.ApplyMax(value.stats);
 	elements.ApplyMax(value.elements);
 	status.ApplyMax(value.status);
 }
@@ -41,7 +41,7 @@ void Attributes::ApplyMax(const Attributes& value)
 
 void Attributes::Clamp(const Attributes& min, const Attributes& max)
 {
-	attributes.Clamp(min.attributes, max.attributes);
+	stats.Clamp(min.stats, max.stats);
 	elements.Clamp(min.elements, max.elements);
 	status.Clamp(min.status, max.status);
 }
@@ -50,7 +50,7 @@ void Attributes::Clamp(const Attributes& min, const Attributes& max)
 void Attributes::SerializeXml( XmlWriter* xml )
 {
 	xml->BeginNode("Attributes");
-	xml->Write(&attributes[0], MAX_ATTRIBUTES);
+	xml->Write(&stats[0], MAX_STATS);
 	xml->EndNode();
 
 	xml->BeginNode("Elements");
@@ -66,7 +66,7 @@ void Attributes::SerializeXml( XmlWriter* xml )
 void Attributes::DeserializeXml( XmlReader* xml )
 {
 	xml->FirstChild("Attributes");
-	xml->ReadBlock(&attributes[0], MAX_ATTRIBUTES);
+	xml->ReadBlock(&stats[0], MAX_STATS);
 	xml->SetToParent();
 
 	xml->FirstChild("Elements");

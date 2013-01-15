@@ -44,3 +44,13 @@ Database::~Database()
 
 }
 
+
+void Database::Initialize()
+{
+	m_itemList->DeserializeXml("items.xml");
+	m_monsterPartyList->DeserializeXml("monsters.xml");
+
+}
+
+
+

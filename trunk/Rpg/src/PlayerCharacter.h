@@ -11,25 +11,23 @@
 
 #pragma once
 
-#include <fc/string.h>
-
-#include "Common.h"
-#include "ScriptClass.h"
-
+#include "Character.h"
+#include "Inventory.h"
+#include "Equipment.h"
 
 
-class ScriptObject : public ScriptClass
+class PlayerCharacter : public Character
 {
 public:
-	ScriptObject( ContextPool* contextPool = 0 );
-	~ScriptObject();
+	Character( EntityType derivedType = TypePlayerCharacter ) : Character(derivedType) 
+	{}
 
-	void Initialize( const fc::string& class_decl, const fc::string& method_decl = "void run()" );
-	asIScriptObject *CreateObject();
+	virtual void Update() {}
+	virtual void Render() {}
 
-	void Update();
-
-	//void DeepCopy( ScriptObject* &_out );
+protected:
+	Equipment	m_equipment;
+	Inventory	m_inventory;
 
 };
 

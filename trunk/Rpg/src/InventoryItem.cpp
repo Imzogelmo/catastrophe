@@ -13,6 +13,8 @@
 #include <fc/math.h>
 #include "InventoryItem.h"
 
+int InventoryItem::m_defaultMax = 99;
+
 
 InventoryItem::InventoryItem( Item* item, int amount, int maxAmount ) :
 	m_item(item),
@@ -78,5 +80,11 @@ void InventoryItem::SetMaxAmount( int maxAmount )
 		m_amount = maxAmount;
 
 	m_maxAmount = maxAmount;
+}
+
+
+void InventoryItem::SetGlobalDefaultMaxAmount( int amount )
+{
+	m_defaultMax = amount;
 }
 

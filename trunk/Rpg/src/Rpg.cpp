@@ -58,8 +58,8 @@ void LoadConfigSettings( int argc, char *argv[] )
 
 	if( !configFile->Read() )
 	{
+		// graphics
 		configFile->SetCurrentSection("graphics");
-
 		configFile->SetBool("vsync", false);
 		configFile->SetBool("keep_aspect", false);
 		configFile->SetBool("keep_scale", false);
@@ -69,6 +69,44 @@ void LoadConfigSettings( int argc, char *argv[] )
 		configFile->SetInt("resy", 480);
 		configFile->SetInt("multisample", 0);
 		configFile->SetInt("scale", 0);
+
+		/*
+		// keyboard
+		configFile->SetCurrentSection("keyboard");
+		configFile->SetInt("button_y", 0);
+		configFile->SetInt("button_b", 1);
+		configFile->SetInt("button_a", 2);
+		configFile->SetInt("button_x", 3);
+		configFile->SetInt("button_l", 4);
+		configFile->SetInt("button_r", 5);
+		configFile->SetInt("button_l2", 6);
+		configFile->SetInt("button_r2", 7);
+		configFile->SetInt("button_select", 8);
+		configFile->SetInt("button_start", 9);
+		configFile->SetInt("button_l3", 10);
+		configFile->SetInt("button_r3", 11);
+		*/
+
+		// joystick
+		configFile->SetCurrentSection("joystick");
+		configFile->SetInt("dpad_up", 0);
+		configFile->SetInt("dpad_right", 1);
+		configFile->SetInt("dpad_down", 2);
+		configFile->SetInt("dpad_left", 3);
+		configFile->SetInt("button_y", 0);
+		configFile->SetInt("button_b", 1);
+		configFile->SetInt("button_a", 2);
+		configFile->SetInt("button_x", 3);
+		configFile->SetInt("button_l", 4);
+		configFile->SetInt("button_r", 5);
+		configFile->SetInt("button_l2", 6);
+		configFile->SetInt("button_r2", 7);
+		configFile->SetInt("button_select", 8);
+		configFile->SetInt("button_start", 9);
+		configFile->SetInt("button_l3", 10);
+		configFile->SetInt("button_r3", 11);
+
+
 
 		configFile->Write();
 	}
@@ -197,6 +235,10 @@ int main(int argc, char* argv[])
 
 
 	//DoTests();
+	ItemList il;
+	il.DeserializeXml("items2.h");
+	il.SerializeXml("items3.h");
+
 
 
 	// read config file and parse command-line arguments.

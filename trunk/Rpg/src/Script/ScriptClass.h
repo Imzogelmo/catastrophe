@@ -29,7 +29,7 @@
 class ScriptClass : public Indexable<size_t>, public NonCopyable
 {
 public:
-	ScriptClass( ContextPool* contextPool );
+	ScriptClass( ContextPool* contextPool = 0 );
 	~ScriptClass();
 
 	void Initialize( const fc::string& class_decl, const fc::string& method_decl = "void run()" );

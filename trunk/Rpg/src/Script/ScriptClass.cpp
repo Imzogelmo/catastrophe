@@ -12,6 +12,7 @@
 
 #include <angelscript.h>
 #include "ScriptClass.h"
+#include "ScriptEngine.h"
 
 
 ScriptClass::ScriptClass( ContextPool* contextPool ) :
@@ -24,6 +25,8 @@ ScriptClass::ScriptClass( ContextPool* contextPool ) :
 	m_destroyed(false),
 	m_ref_counted(false)
 {
+	if( !m_contextPool )
+		m_contextPool = gGetScriptEngine()->GetContextPool();
 }
 
 
