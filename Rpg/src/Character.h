@@ -12,16 +12,24 @@
 #pragma once
 
 #include "Entity.h"
+#include "Buff.h"
+#include "Script/ScriptClass.h"
 
 
 class Character : public Entity
 {
 public:
-	Character() : Entity() 
+	Character( EntityType derivedType = TypeCharacter )
+		: Entity(derivedType), m_scriptInstance()
 	{}
 
 	virtual void Update() {}
 	virtual void Render() {}
+
+
+protected:
+	ScriptClass	m_scriptInstance;
+	BuffList	m_buffs;
 
 };
 

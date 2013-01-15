@@ -13,55 +13,55 @@
 
 
 // these are global to simplify everything.
-Game*				__gCurrentGameInstance = 0;
-ResourceManager*	__gCurrentResourceManager = 0;
-Database*			__gCurrentDatabase = 0;
+namespace RpgGlobals
+{
+	Game*				currentGameInstance = 0;
+	ScriptEngine*		currentScriptEngine = 0;
+	ResourceManager*	currentResourceManager = 0;
+	Database*			currentDatabase = 0;
+}
 
 void gSetActiveGame( Game* game )
 {
 	ASSERT(game != 0);
-	__gCurrentGameInstance = game;
+	RpgGlobals::currentGameInstance = game;
 }
 
 void gSetActiveResourceManager( ResourceManager* resourceManager )
 {
 	ASSERT(resourceManager != 0);
-	__gCurrentResourceManager = resourceManager;
+	RpgGlobals::currentResourceManager = resourceManager;
+}
+
+void gSetActiveScriptEngine( ScriptEngine* scriptEngine )
+{
+	ASSERT(scriptEngine != 0);
+	RpgGlobals::currentScriptEngine = scriptEngine;
 }
 
 void gSetActiveDatabase( Database* database )
 {
 	ASSERT(database != 0);
-	__gCurrentDatabase = database;
+	RpgGlobals::currentDatabase = database;
 }
 
 Game* gGetGame()
 {
 	// I don't plan on allowing multiple game instances
 	// to be active at once, though it is possible.
-	return __gCurrentGameInstance;
+	return RpgGlobals::currentGameInstance;
 }
 
-ResourceManager* gGetResourceManager()
-{
-	// This may be called from loading functions.
-	// In the player, this will always return
-	// the current game's resource manager.
-	return __gCurrentResourceManager ? __gCurrentResourceManager :
-		gGetGame()->GetResourceManager();
-}
-
-Database* gGetDatabase()
-{
-	// This is called from scripts and loading.
-	return __gCurrentDatabase;
-}
+ResourceManager* gGetResourceManager() { return RpgGlobals::currentResourceManager; }
+ScriptEngine* gGetScriptEngine() { return RpgGlobals::currentScriptEngine; }
+Database* gGetDatabase() { return RpgGlobals::currentDatabase; }
 
 
 int Game::Initialize()
 {
 	gSetActiveGame(this);
 	gSetActiveResourceManager(&m_resourceManager);
+	gSetActiveScriptEngine(&m_scriptEngine);
 	gSetActiveDatabase(&m_database);
 
 	m_resourceManager.SetBaseDirectory("data/");
@@ -74,6 +74,11 @@ int Game::Initialize()
 		return ret;
 
 	return ret;
+}
+
+
+void Game::Shutdown()
+{
 }
 
 

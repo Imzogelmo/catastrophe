@@ -15,29 +15,32 @@
 #include "FixedAttributeArray.h"
 
 
-#define MAX_ATTRIBUTES	32
+#define MAX_STATS		32
 #define MAX_ELEMENTS	32
 #define MAX_STATUS		32
+#define MAX_MISC		16
 
-typedef FixedAttributeArray<int, MAX_ATTRIBUTES>	StatisticsValueArrayType;
+typedef FixedAttributeArray<int, MAX_STATS>			StatisticsValueArrayType;
 typedef FixedAttributeArray<short, MAX_ELEMENTS>	ElementalArrayType;
 typedef FixedAttributeArray<short, MAX_STATUS>		StatusArrayType;
+typedef FixedAttributeArray<short, MAX_MISC>		MiscArrayType;
 
 
 struct RPG_API Attributes
 {
 	typedef Attributes			this_type;
 
-	StatisticsValueArrayType	attributes;
+	StatisticsValueArrayType	stats;
 	ElementalArrayType			elements;
 	StatusArrayType				status;
+	MiscArrayType				misc;
 
 	//aggregate type
 
 	this_type operator +(const this_type& rhs) const
 	{
 		this_type ret;
-		ret.attributes = attributes + rhs.attributes;
+		ret.stats = stats + rhs.stats;
 		ret.elements = elements + rhs.elements;
 		ret.status = status + rhs.status;
 
@@ -47,7 +50,7 @@ struct RPG_API Attributes
 	this_type operator -(const this_type& rhs) const
 	{
 		this_type ret;
-		ret.attributes = attributes - rhs.attributes;
+		ret.stats = stats - rhs.stats;
 		ret.elements = elements - rhs.elements;
 		ret.status = status - rhs.status;
 
@@ -56,7 +59,7 @@ struct RPG_API Attributes
 
 	this_type &operator +=(const this_type& rhs)
 	{
-		attributes += rhs.attributes;
+		stats += rhs.stats;
 		elements += rhs.elements;
 		status += rhs.status;
 
@@ -65,7 +68,7 @@ struct RPG_API Attributes
 
 	this_type &operator -=(const this_type& rhs)
 	{
-		attributes -= rhs.attributes;
+		stats -= rhs.stats;
 		elements -= rhs.elements;
 		status -= rhs.status;
 

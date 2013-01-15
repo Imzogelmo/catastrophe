@@ -74,7 +74,7 @@ class ExpTableList;
 class Database;
 
 
-class Item;
+//class Item;
 class InventoryItem;
 class Inventory;
 class Equipment;
@@ -98,6 +98,11 @@ class ResourceManager;
 class ConfigSetting;
 class ConfigFile;
 
+class ScriptEngine;
+class ContextPool;
+class ScriptClass;
+class ScriptObject;
+
 
 struct PODBullet;
 struct Bullet;
@@ -120,8 +125,12 @@ class BulletPool;
 //global functions
 void gSetActiveGame( Game* game );
 void gSetActiveResourceManager( ResourceManager* resourceManager );
+void gSetActiveScriptEngine( ScriptEngine* scriptEngine );
 
 Game*				gGetGame();
 ResourceManager*	gGetResourceManager();
+ScriptEngine*		gGetScriptEngine();
 Database*			gGetDatabase();
 
+
+typedef ItemData	Item;

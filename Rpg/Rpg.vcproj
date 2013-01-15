@@ -176,7 +176,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\Buff.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Dialogue.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Entity.cpp"
 				>
 			</File>
 			<File
@@ -446,6 +454,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\Buff.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Common.h"
 				>
 			</File>
@@ -479,10 +491,6 @@
 			</File>
 			<File
 				RelativePath=".\src\ItemDrop.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Object.h"
 				>
 			</File>
 			<File

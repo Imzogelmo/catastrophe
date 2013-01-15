@@ -11,23 +11,32 @@
 
 #pragma once
 
+#ifdef _MSC_VER
+	#pragma warning ( push )
+	#pragma warning ( disable : 4201 ) //nameless struct/union
+#endif
+
 /*
-	CollisionFilter - simple class
-	that contains a collision category and mask property to filter out
-	collisions between objects that can or cannot collide with
-	other objects.
+	CollisionFilter - simple class that contains a collision category
+	and mask property to filter out collisions between objects that can
+	or cannot collide with other objects.
 */
 struct CollisionFilter
 {
-	int category, mask;
+	#pragma pack(push, 1)
+	union {
+		struct { short category, mask; };
+		int value;
+	};
+	#pragma pack(pop)
 
 	CollisionFilter() : category(0), mask(0) {}
 	CollisionFilter(int _Category, int _Mask) : category(_Category), mask(_Mask) {}
 
-	inline int GetCategory() const { return category; }
-	inline int GetMask() const { return mask; }
-	inline void SetCategory( int _Category ) { category = _Category; }
-	inline void SetMask( int _Mask ) { mask = _Mask; }
+	inline short GetCategory() const { return category; }
+	inline short GetMask() const { return mask; }
+	inline void SetCategory( short _Category ) { category = _Category; }
+	inline void SetMask( short _Mask ) { mask = _Mask; }
 	inline void AddCategory( int bits ) { category |= bits; }
 	inline void AddMask( int bits ) { mask |= bits; }
 	inline void RemoveCategory( int bits ) { category &= ~bits; }
@@ -44,3 +53,7 @@ struct CollisionFilter
 	}
 };
 
+
+#ifdef _MSC_VER
+	#pragma warning ( pop )
+#endif

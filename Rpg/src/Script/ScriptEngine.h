@@ -41,6 +41,7 @@ public:
 
 	void SetGame( Game* parent ) { m_gamePtr = parent; }
 	Game* GetGame() const { return m_gamePtr; }
+	ContextPool* GetContextPool() const { return m_contextPool; }
  
 private:
 	void RegisterScriptInterfaces();

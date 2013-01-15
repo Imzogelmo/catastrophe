@@ -22,7 +22,6 @@
 
 #include "Script/ScriptEngine.h"
 #include "Entity.h"
-#include "Object.h"
 
 
 
@@ -50,6 +49,7 @@ public:
 	//if the Init method returns anything other than zero,
 	//this means failure and have to shut down.
 	int Initialize();
+	void Shutdown();
 
 	GameSettings* GetSettings() { return &m_settings; }
 	ScriptEngine* GetScriptEngine() { return &m_scriptEngine; }
