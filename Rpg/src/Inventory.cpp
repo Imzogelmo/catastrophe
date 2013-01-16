@@ -9,9 +9,7 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-
 #include "Inventory.h"
-
 
 
 Inventory::Inventory() :
@@ -35,12 +33,15 @@ void Inventory::Clear()
 
 void Inventory::Add( const InventoryItem& inventoryItem )
 {
-	//Add( inventoryItem.GetItem(), inventoryItem.GetAmount() );
+	Add( inventoryItem.GetItem(), inventoryItem.GetAmount() );
 }
 
 
 void Inventory::Add( Item* item, int count )
 {
+	if( !item )
+		return;
+
 	size_t index = 0;
 	if( Find(item, index) )
 	{
@@ -62,6 +63,9 @@ void Inventory::Add( Item* item, int count )
 
 void Inventory::Remove( Item* item, int count )
 {
+	if( !item )
+		return;
+
 	size_t index = 0;
 	if( Find(item, index) )
 	{
@@ -93,6 +97,9 @@ void Inventory::RemoveFromInventory( size_t index )
 
 void Inventory::RemoveFromInventory( Item* item )
 {
+	if( !item )
+		return;
+
 	for( size_t i(0); i < m_items.size(); ++i )
 	{
 		if( m_items[i].GetItem() == item )
@@ -134,7 +141,7 @@ void Inventory::Swap( size_t first, size_t second )
 }
 
 
-void Inventory::Splice(Inventory& other)
+void Inventory::Splice( Inventory& other )
 {
 	for( vec_type::iterator it = other.m_items.begin(); it != other.m_items.end(); ++it )
 	{
@@ -145,19 +152,25 @@ void Inventory::Splice(Inventory& other)
 }
 
 
-void Inventory::Splice(Inventory& other, size_t index)
+void Inventory::Splice( Inventory& other, size_t index )
 {
-	//Add( other.m_items.at(index) );
-	//other.Remove(index);
+	if( index < other.Size() )
+	{
+		Add( other.m_items.at(index) );
+		other.RemoveFromInventory(index);
+	}
 }
 
 
 bool Inventory::Contains( const Item* item ) const
 {
-	for( vec_type::const_iterator it = m_items.begin(); it < m_items.end(); ++it )
+	if( item )
 	{
-		if( it->GetItem() == item )
-			return true;
+		for( vec_type::const_iterator it = m_items.begin(); it < m_items.end(); ++it )
+		{
+			if( it->GetItem() == item )
+				return true;
+		}
 	}
 
 	return false;
@@ -166,47 +179,54 @@ bool Inventory::Contains( const Item* item ) const
 
 bool Inventory::Find( const Item* item, size_t &item_index ) const
 {
-	vec_type::const_iterator it = 0;//= fc::find( m_items.begin(), m_items.end(), item );
-	if( it != m_items.end() )
+	if( item )
 	{
-		item_index = size_t(it - m_items.begin());
-		return true;
+		for( vec_type::const_iterator it = m_items.begin(); it < m_items.end(); ++it )
+		{
+			if( it->GetItem() == item )
+			{
+				item_index = size_t(it - m_items.begin());
+				return true;
+			}
+		}
 	}
 
 	return false;
 }
 
 
-Item* Inventory::GetItem( size_t index )
+Item* Inventory::GetItem( size_t index ) const
 {
-	if(index < m_items.size())
+	if( index < m_items.size() )
 		return m_items[index].GetItem();
 
 	return 0;
 }
 
 
-Item* Inventory::GetItem( const fc::string& name )
+Item* Inventory::GetItem( const fc::string& name ) const
 {
-	for( vec_type::iterator it = m_items.begin(); it != m_items.end(); ++it )
+	for( vec_type::const_iterator it = m_items.begin(); it != m_items.end(); ++it )
 	{
-	//	if(it->GetItemName() == name)
-	//		return it->GetItem();
+		Item* item = it->GetItem();
+		if( item && item->GetName() == name )
+		{
+			return item;
+		}
 	}
 
 	return 0;
 }
 
 
-InventoryItem& Inventory::GetInventoryItem( size_t index )
+InventoryItem& Inventory::operator []( size_t index )
 {
 	ASSERT(index < m_items.size());
 	return m_items[index];
 }
 
 
-
-const InventoryItem& Inventory::GetInventoryItem( size_t index ) const
+const InventoryItem& Inventory::operator []( size_t index ) const
 {
 	ASSERT(index < m_items.size());
 	return m_items[index];

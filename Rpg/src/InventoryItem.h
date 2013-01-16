@@ -30,8 +30,7 @@ public:
 	int Add( int amount = 1 );
 	int Remove( int amount = 1 );
 
-	Item* GetItem() { return m_item; }
-	const Item* GetItem() const { return m_item; }
+	Item* GetItem() const { return m_item; }
 
 	int GetAmount() const { return m_amount; }
 	int GetMaxAmount() const { return m_maxAmount; }

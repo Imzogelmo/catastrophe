@@ -18,7 +18,6 @@
 #include "InventoryItem.h"
 
 
-
 class RPG_API Inventory
 {
 public:
@@ -37,8 +36,8 @@ public:
 
 	void Unique();
 	void Swap( size_t first, size_t second );
-	void Splice(Inventory& other);
-	void Splice(Inventory& other, size_t index);
+	void Splice( Inventory& other );
+	void Splice( Inventory& other, size_t index );
 
 	bool Contains( const Item* item ) const;
 	bool Find( const Item* item, size_t &item_index ) const;
@@ -46,11 +45,13 @@ public:
 	size_t Size() const { return m_items.size(); }
 	bool IsFull() const { return m_items.size() == m_maxSize; }
 
-	Item* GetItem( size_t index );
-	Item* GetItem( const fc::string& name );
+	Item* GetItem( size_t index ) const;
+	Item* GetItem( const fc::string& name ) const;
 
-	InventoryItem& GetInventoryItem( size_t index );
-	const InventoryItem& GetInventoryItem( size_t index ) const;
+	InventoryItem& operator []( size_t index );
+	const InventoryItem& operator []( size_t index ) const;
+	InventoryItem& GetInventoryItem( size_t index ) { return operator[](index); }
+	const InventoryItem& GetInventoryItem( size_t index ) const { return operator[](index); }
 
 
 	//internal management policy queries.
