@@ -29,17 +29,26 @@ public:
 
 	BuffType type;
 	Attributes attributes;
+	int id;
 	int	lifetime;
+	int stack_count; //the number of times this buff can stack.
 	int flags; //todo effect length, type etc..
 	int type_flags;
 
 	Buff( BuffType type = TypeConstant ) : 
 		type(type),
 		attributes(),
-		lifetime(0)
+		id(0),
+		lifetime(0),
+		stack_count(1)
 	{}
 
-	bool IsTimedOut()
+	int GetStackCount() const
+	{
+		return stack_count;
+	}
+
+	bool IsTimedOut() const
 	{
 		return (type != TypeConstant && lifetime <= 0);
 	}
@@ -53,7 +62,7 @@ public:
 
 	BuffList();
 
-	void AddBuff( const Buff& buff );
+	bool AddBuff( const Buff& buff );
 	void RemoveBuff( size_t index );
 
 	void Update();
@@ -61,6 +70,11 @@ public:
 	bool IsDirty() const { return m_is_dirty; }
 
 	const Attributes& GetCombinedAttributes();
+
+	Buff& operator []( size_t index );
+	const Buff& operator []( size_t index ) const;
+	Buff& GetBuff( size_t index ) { return operator[](index); }
+	const Buff& GetBuff( size_t index ) const { return operator[](index); }
 
 protected:
 	vec_type	m_buffs;

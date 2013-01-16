@@ -38,7 +38,7 @@ public:
 	const vec_type& GetEquippedItems() const { return m_items; }
 
 	void RecalculateCombinedAttributes();
-	Attributes GetCombinedAttributes() { return m_combinedAttributes; }
+	const Attributes& GetCombinedAttributes() const { return m_combinedAttributes; }
 
 protected:
 	vec_type		m_items;

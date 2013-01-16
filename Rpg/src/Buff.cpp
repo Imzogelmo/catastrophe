@@ -20,10 +20,26 @@ BuffList::BuffList() :
 }
 
 
-void BuffList::AddBuff( const Buff& buff )
+bool BuffList::AddBuff( const Buff& buff )
 {
-	m_buffs.push_back(buff);
-	m_is_dirty = true;
+	bool isAdded = false;
+	int numFound = 0;
+	for( vec_type::iterator it = m_buffs.begin(); it != m_buffs.end(); )
+	{
+		if( buff.id == it->id )
+			++numFound;
+	}
+
+	// only add this buff if it is unique or it can stack.
+	int stackCount = buff.GetStackCount();
+	if( stackCount == 0 || stackCount > numFound )
+	{
+		m_buffs.push_back(buff);
+		m_is_dirty = true;
+		isAdded = true;
+	}
+
+	return isAdded;
 }
 
 
@@ -78,3 +94,18 @@ const Attributes& BuffList::GetCombinedAttributes()
 
 	return m_combinedBuffAttributes;
 }
+
+
+Buff& BuffList::operator []( size_t index )
+{
+	ASSERT(index < m_buffs.size());
+	return m_buffs[index];
+}
+
+
+const Buff& BuffList::operator []( size_t index ) const
+{
+	ASSERT(index < m_buffs.size());
+	return m_buffs[index];
+}
+

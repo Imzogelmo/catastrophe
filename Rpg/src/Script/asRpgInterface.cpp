@@ -17,6 +17,8 @@
 #include "ScriptEngine.h"
 #include "../Game.h"
 #include "../MonsterData.h"
+#include "../Buff.h"
+#include "../Equipment.h"
 
 // TODO: engine <--> script character integration.
 //       
@@ -92,7 +94,7 @@ void ScriptEngine::RegisterMonster()
 
 	r = engine->RegisterObjectType( "attributes", sizeof(Attributes), asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS_CA ); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour( "attributes", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(ValueConstruct<Attributes>), asCALL_CDECL_OBJLAST); assert( r >= 0 );
-	r = engine->RegisterObjectBehaviour( "attributes", asBEHAVE_CONSTRUCT, "void f(const attributes &in)", asFUNCTION(ValueCopyConstruct<Point>), asCALL_CDECL_OBJLAST); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour( "attributes", asBEHAVE_CONSTRUCT, "void f(const attributes &in)", asFUNCTION(ValueCopyConstruct<Attributes>), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( "attributes", "attributes& opAddAssign(const attributes &in)", asMETHODPR(Attributes, operator+=, (const Attributes &), Attributes&), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( "attributes", "attributes& opSubAssign(const attributes &in)", asMETHODPR(Attributes, operator-=, (const Attributes &), Attributes&), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( "attributes", "attributes opAdd(const attributes &in) const", asMETHODPR(Attributes, operator +, (const Attributes&) const, Attributes), asCALL_THISCALL); assert( r >= 0 );
@@ -107,6 +109,21 @@ void ScriptEngine::RegisterMonster()
 	r = engine->RegisterObjectMethod( "attributes", "void set_element(int, int16)", asFUNCTION(AttributesSetElement), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( "attributes", "void set_status(int, int16)", asFUNCTION(AttributesSetStatus), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 	//r = engine->RegisterObjectMethod( "attributes", "void set_misc(int, int16)", asFUNCTION(AttributesSetStatus), asCALL_CDECL_OBJLAST); assert( r >= 0 );
+
+
+
+	r = engine->RegisterObjectType( "buff", sizeof(Buff), asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS_CA ); assert( r >= 0 );
+	r = engine->RegisterObjectProperty( "buff", "attributes attributes", offsetof(Buff, attributes)); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour( "buff", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(ValueConstruct<Buff>), asCALL_CDECL_OBJLAST); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour( "buff", asBEHAVE_CONSTRUCT, "void f(const attributes &in)", asFUNCTION(ValueCopyConstruct<Buff>), asCALL_CDECL_OBJLAST); assert( r >= 0 );
+
+	r = engine->RegisterObjectType( "equipment", sizeof(Equipment), asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS_CDAK ); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour( "equipment", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(ValueConstruct<Equipment>), asCALL_CDECL_OBJLAST); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour( "equipment", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(ValueDestruct<Equipment>), asCALL_CDECL_OBJLAST); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour( "equipment", asBEHAVE_CONSTRUCT, "void f(const attributes &in)", asFUNCTION(ValueCopyConstruct<Equipment>), asCALL_CDECL_OBJLAST); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( "equipment", "equipment &opAssign(const equipment &in)", asFUNCTION((ValueAssignment<Equipment, Equipment>)), asCALL_CDECL_OBJLAST); assert( r >= 0 );
+
+
 
 }
 
