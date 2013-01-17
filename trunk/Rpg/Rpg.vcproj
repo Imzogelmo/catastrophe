@@ -379,11 +379,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\ItemData.cpp"
+					RelativePath=".\src\Item.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\MonsterData.cpp"
+					RelativePath=".\src\Monster.cpp"
 					>
 				</File>
 				<File
@@ -463,10 +463,6 @@
 			</File>
 			<File
 				RelativePath=".\src\Dialogue.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Entity.h"
 				>
 			</File>
 			<File
@@ -645,15 +641,19 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\ExpCurve.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\ExpTable.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\ItemData.h"
+					RelativePath=".\src\Item.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\MonsterData.h"
+					RelativePath=".\src\Monster.h"
 					>
 				</File>
 				<File
@@ -722,6 +722,26 @@
 				</File>
 				<File
 					RelativePath=".\src\ScreenManager.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Entity"
+				>
+				<File
+					RelativePath=".\src\Character.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Entity.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\MonsterCharacter.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\PlayerCharacter.h"
 					>
 				</File>
 			</Filter>

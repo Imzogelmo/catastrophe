@@ -19,7 +19,7 @@
 
 
 
-struct RPG_API MonsterData : public AttributeData
+struct RPG_API Monster : public AttributeData
 {
 	typedef AttributeData	base_type;
 
@@ -27,7 +27,7 @@ struct RPG_API MonsterData : public AttributeData
 	ItemDropSet		item_dropset;
 	AnimatedSprite	sprite;
 
-	MonsterData() : base_type()
+	Monster() : base_type()
 	{}
 
 	void SerializeXml( XmlWriter* xml );
@@ -37,18 +37,18 @@ struct RPG_API MonsterData : public AttributeData
 
 
 /*
- * A collection of stored MonsterData objects.
+ * A collection of stored Monster objects.
  */
-class RPG_API MonsterList : public DataList<MonsterData>
+class RPG_API MonsterList : public DataList<Monster>
 {
 public:
-	typedef DataList<MonsterData>	base_type;
+	typedef DataList<Monster>	base_type;
 
 	MonsterList() : base_type()
 	{}
 
-	MonsterData& GetMonster( size_t index ) { return base_type::operator [](index);  }
-	const MonsterData& GetMonster( size_t index ) const { return base_type::operator [](index);  }
+	Monster& GetMonster( size_t index ) { return base_type::operator [](index);  }
+	const Monster& GetMonster( size_t index ) const { return base_type::operator [](index);  }
 
 	NO_INLINE bool SerializeXml( const fc::string& filename );
 	NO_INLINE bool DeserializeXml( const fc::string& filename );

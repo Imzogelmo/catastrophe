@@ -48,6 +48,19 @@ class CharacterBase
 	}
 
 	//-------------------------------------
+	// * Statistics
+	//-------------------------------------
+	int get_stat(int i)
+	{
+		return parent.attributes.stat[i];
+	}
+
+	int set_stat(int i, int value)
+	{
+		parent.attributes.stat[i] = value;
+	}
+
+	//-------------------------------------
 	// * Strength
 	//-------------------------------------
 	int strength

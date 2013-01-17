@@ -37,7 +37,7 @@ struct RPG_API ExpTable
 
 
 /*
- * A collection of stored MonsterData objects.
+ * A collection of experience tables.
  */
 class RPG_API ExpTableList : public DataList<ExpTable>
 {

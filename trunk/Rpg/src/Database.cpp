@@ -10,9 +10,9 @@
 // GNU General Public License for more details.
 
 #include "Database.h"
-#include "ItemData.h"
+#include "Item.h"
 #include "SpellData.h"
-#include "MonsterData.h"
+#include "Monster.h"
 #include "MonsterPartyData.h"
 #include "EncounterData.h"
 #include "CharacterClass.h"

@@ -12,9 +12,11 @@
 #pragma once
 
 #include <fc/vector.h>
+#include <fc/string.h>
 
 #include "Common.h"
 #include "Attributes.h"
+#include "DataList.h"
 
 
 class Buff
@@ -52,15 +54,22 @@ public:
 	{
 		return (type != TypeConstant && lifetime <= 0);
 	}
+
+	void SerializeXml( XmlWriter* xml );
+	void DeserializeXml( XmlReader* xml );
+
 };
 
 
-class BuffList
+/*
+ * A collection of active buffs on an entity
+ */
+class BuffSet
 {
 public:
 	typedef fc::vector<Buff>	vec_type;
 
-	BuffList();
+	BuffSet();
 
 	bool AddBuff( const Buff& buff );
 	void RemoveBuff( size_t index );
@@ -85,5 +94,24 @@ protected:
 
 };
 
+
+/*
+ * A collection of stored Buff objects.
+ */
+class RPG_API BuffList : public DataList<Buff>
+{
+public:
+	typedef DataList<Buff>	base_type;
+
+	BuffList() : base_type()
+	{}
+
+	Buff& GetBuff( size_t index ) { return base_type::operator [](index);  }
+	const Buff& GetBuff( size_t index ) const { return base_type::operator [](index);  }
+
+	NO_INLINE bool SerializeXml( const fc::string& filename );
+	NO_INLINE bool DeserializeXml( const fc::string& filename );
+
+};
 
 

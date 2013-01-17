@@ -3,7 +3,7 @@
 
 #include "Screen.h"
 #include "Game.h"
-#include "MonsterData.h"
+#include "Monster.h"
 
 #include <Catastrophe/Graphics/Texture.h>
 #include <Catastrophe/Graphics/SpriteBatch.h>
@@ -46,7 +46,7 @@ public:
 
 		m_spriteBatch.DrawTexture( &bg, Vector2::Zero );
 
-		MonsterData & m = gGetDatabase()->GetMonsterList()->GetMonster(m_index);
+		Monster & m = gGetDatabase()->GetMonsterList()->GetMonster(m_index);
 		AnimatedSprite & s = m.sprite;
 		Vector2 center = s.size / 2.f;
 

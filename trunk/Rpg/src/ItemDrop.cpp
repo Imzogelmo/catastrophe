@@ -19,6 +19,10 @@
 #include "Inventory.h"
 
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//               ItemDrop
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 void ItemDrop::SetRate( int rate )
 {
 	m_dropRate = fc::clamp(rate, 0, m_maxRate);
@@ -104,9 +108,9 @@ void ItemDrop::DeserializeXml(XmlReader* xml)
 
 
 
-////////////////////////////////////////////
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //             ItemDropSet
-////////////////////////////////////////////
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 void ItemDropSet::Add( const ItemDrop& drop )
 {

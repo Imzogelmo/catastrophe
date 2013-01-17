@@ -16,7 +16,7 @@
 #include "asBindUtil.h"
 #include "ScriptEngine.h"
 #include "../Game.h"
-#include "../MonsterData.h"
+#include "../Monster.h"
 #include "../Buff.h"
 #include "../Equipment.h"
 
@@ -27,9 +27,9 @@
 
 namespace script
 {
-	MonsterData* MonsterConstructor()
+	Monster* MonsterConstructor()
 	{
-		static MonsterData uninitializedMonster; //fixme
+		static Monster uninitializedMonster; //fixme
 		return &uninitializedMonster;
 		//return gGetGame()->GetDatabase()->GetMonsterList()->GetMonster(0);
 	}
