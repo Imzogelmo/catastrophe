@@ -12,6 +12,7 @@
 #pragma once
 
 #include <Catastrophe/Graphics/Sprite.h>
+#include <Catastrophe/Graphics/AnimationSet.h>
 #include "Common.h"
 #include "DataList.h"
 
@@ -49,3 +50,19 @@ public:
 
 };
 
+
+class RPG_API AnimationSetList : public DataList<AnimationSet>
+{
+public:
+	typedef DataList<AnimationSet>	base_type;
+
+	AnimationSetList() : base_type()
+	{}
+
+	AnimationSet& GetAnimationSet( size_t index ) { return base_type::operator [](index);  }
+	const AnimationSet& GetAnimationSet( size_t index ) const { return base_type::operator [](index);  }
+
+	NO_INLINE bool SerializeXml( const fc::string& filename );
+	NO_INLINE bool DeserializeXml( const fc::string& filename );
+
+};

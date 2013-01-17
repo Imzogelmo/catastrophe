@@ -14,6 +14,7 @@
 #include "Character.h"
 #include "Inventory.h"
 #include "Equipment.h"
+#include "Buff.h"
 
 
 class PlayerCharacter : public Character
@@ -28,6 +29,7 @@ public:
 protected:
 	Equipment	m_equipment;
 	Inventory	m_inventory;
+	BuffSet		m_buffs;
 
 };
 

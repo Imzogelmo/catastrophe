@@ -12,6 +12,7 @@
 #pragma once
 
 #include "Character.h"
+#include "Buff.h"
 
 
 class MonsterCharacter : public Character
@@ -22,6 +23,9 @@ public:
 
 	virtual void Update() {}
 	virtual void Render() {}
+
+protected:
+	BuffSet		m_buffs;
 
 };
 

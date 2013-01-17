@@ -39,14 +39,12 @@ GlobalSettings::~GlobalSettings()
 }
 
 
-#include "ExpCurve.h"
-
 
 void LoadConfigSettings( int argc, char *argv[] )
 {
 
-	ExpCurve exp;
-	exp.GenerateCurve();
+	//ExpCurve exp;
+	//exp.GenerateCurve();
 
 
 	/*

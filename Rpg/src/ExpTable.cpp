@@ -17,6 +17,25 @@
 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//             ExpCurve
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+void ExpCurve::GenerateCurve()
+{
+	values.resize( (size_t)max_levels + 1 );
+	values[0] = 1;
+
+	for( size_t i(1); i < values.size(); i++ )
+	{
+		values[i] = values[i - 1] + fc::iround(39.f * powf((float)fc::min<size_t>(i, 29), (float)2));
+	}
+
+	int y = 0;
+}
+
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //             ExpTable
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
