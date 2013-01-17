@@ -21,7 +21,6 @@
 #include <fc/fixed_vector.h>
 
 #include "Animation.h"
-#include "AnimationSet.h"
 #include "BlendMode.h"
 
 #include "../Math/Vector2.h"
@@ -38,13 +37,13 @@ public:
 				const BlendMode& blendmode = BlendMode::Alpha,
 				int layer = 0 );
 
-	void SetSize(const Vector2& value) { size = value; }
-	void SetTint(const Color& c) { tint = c; }
-	void SetBlendMode(const BlendMode& value) { blendmode = value; }
-	void SetLayer(int value) { layer = value; }
-	void SetDepth(int value) { depth = value; }
-	void SetAngle(float value) { angle = value; }
-	void SetScale(const Vector2& value) { scale = value; }
+	void SetSize( const Vector2& value ) { size = value; }
+	void SetTint( const Color& c ) { tint = c; }
+	void SetBlendMode( const BlendMode& value ) { blendmode = value; }
+	void SetLayer( int value ) { layer = value; }
+	void SetDepth( int value ) { depth = value; }
+	void SetAngle( float value ) { angle = value; }
+	void SetScale( const Vector2& value ) { scale = value; }
 	//void SetHotspot(const Vector2& hotspot) { m_hotspot = hotspot; }
 
 	float Width() const { return size.x; }
@@ -112,15 +111,6 @@ public:
 
 };
 
-
-
-class AnimatedSpriteSet : public SpriteBase, public AnimationSet
-{
-public:
-	//SpriteSet() {}
-
-
-};
 
 
 

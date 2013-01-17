@@ -20,30 +20,36 @@
 
 #include <fc/vector.h>
 #include "Animation.h"
+#include "Sprite.h"
 
 CE_NAMESPACE_BEGIN
 
 
-class CE_API AnimationSet
+class CE_API AnimationSet : public SpriteBase
 {
 public:
-	typedef fc::vector<Animation*> vec_type;
+	typedef fc::vector<Animation>	vec_type;
+	typedef SpriteBase				base_type;
 
 	AnimationSet();
 
+	void Reserve( size_t capacity );
 	bool Empty() const;
 	size_t Size() const;
 
 	void SetCurrentAnimation( size_t index );
-	void AddAnimation( Animation* anim );
+	void AddAnimation( const Animation& anim );
 	void RemoveAnimation( size_t index );
-	void RemoveAnimation( Animation* anim );
 
-	Animation* GetAnimation( size_t index );
-	const Animation* GetAnimation( size_t index ) const;
+	size_t GetCurrentIndex() const { return m_current_anim; }
 
-	Animation* GetCurrentAnimation();
-	const Animation* GetCurrentAnimation() const;
+	Animation& operator []( size_t index );
+	const Animation& operator []( size_t index ) const;
+	Animation& GetAnimation( size_t index ) { return operator[](index); }
+	const Animation& GetAnimation( size_t index ) const { return operator[](index); }
+
+	Animation& GetCurrentAnimation();
+	const Animation& GetCurrentAnimation() const;
 
 protected:
 	vec_type	m_animations;

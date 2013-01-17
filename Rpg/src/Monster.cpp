@@ -12,38 +12,50 @@
 
 #include <Catastrophe/IO/XmlWriter.h>
 #include <Catastrophe/IO/XmlReader.h>
-#include "ItemData.h"
+#include "Monster.h"
+#include "Util/Serialization.h"
 
 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//               ItemData
+//             Monster
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-void ItemData::SerializeXml( XmlWriter* xml )
+void Monster::SerializeXml( XmlWriter* xml )
 {
-	xml->BeginNode("Item");
-
 	base_type::SerializeXml(xml);
-	//item usage...
+	item_dropset.SerializeXml(xml);
 
+	xml->BeginNode("AnimatedSprite");
+	Util::SerializeAnimatedSprite(xml, sprite);
 	xml->EndNode();
 }
 
 
-void ItemData::DeserializeXml( XmlReader* xml )
+void Monster::DeserializeXml( XmlReader* xml )
 {
 	base_type::DeserializeXml(xml);
-	//item usage...
+	item_dropset.DeserializeXml(xml);
+
+	if( xml->NextChild("AnimatedSprite") )
+	{
+		Util::DeserializeAnimatedSprite(xml, sprite);
+		xml->SetToParent();
+	}
+	else
+	{
+		//todo initialize potential invalid data
+	}
 }
 
 
 
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//               ItemList
+//             MonsterList
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-bool ItemList::SerializeXml( const fc::string& filename )
+bool MonsterList::SerializeXml( const fc::string& filename )
 {
 	XmlWriter xml(filename);
 	if( !xml.IsOpen() )
@@ -52,12 +64,15 @@ bool ItemList::SerializeXml( const fc::string& filename )
 		return false;
 	}
 
-	xml.BeginNode("ItemList");
+	xml.BeginNode("MonsterList");
+	xml.SetString("ver", "1.0");
 	xml.SetUInt("count", m_items.size());
 
 	for( size_t i(0); i < m_items.size(); ++i )
 	{
+		xml.BeginNode("Monster");
 		m_items[i].SerializeXml(&xml);
+		xml.EndNode();
 	}
 
 	xml.EndNode();
@@ -67,7 +82,7 @@ bool ItemList::SerializeXml( const fc::string& filename )
 }
 
 
-bool ItemList::DeserializeXml( const fc::string& filename )
+bool MonsterList::DeserializeXml( const fc::string& filename )
 {
 	XmlReader xml(filename);
 	if( !xml.IsOpen() )
@@ -76,13 +91,13 @@ bool ItemList::DeserializeXml( const fc::string& filename )
 		return false;
 	}
 
-	if( xml.GetCurrentNodeName() == "ItemList" )
+	if( xml.GetCurrentNodeName() == "MonsterList" )
 	{
 		size_t n = xml.GetUInt("count");
 		m_items.clear();
 		m_items.reserve(n);
 
-		while( xml.NextChild("Item") )
+		while( xml.NextChild("Monster") )
 		{
 			m_items.push_back();
 			m_items.back().DeserializeXml(&xml);

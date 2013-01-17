@@ -16,9 +16,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include <fc/string.h>
 #include <fc/math.h>
-
 #include "Graphics/Animation.h"
 #include "Graphics/AnimationSet.h"
 
@@ -26,9 +24,16 @@ CE_NAMESPACE_BEGIN
 
 
 AnimationSet::AnimationSet() :
+	base_type(),
 	m_animations(),
 	m_current_anim(0)
 {
+}
+
+
+void AnimationSet::Reserve( size_t capacity )
+{
+	m_animations.reserve(capacity);
 }
 
 
@@ -51,48 +56,37 @@ void AnimationSet::SetCurrentAnimation( size_t index )
 }
 
 
-Animation* AnimationSet::GetAnimation( size_t index )
+Animation& AnimationSet::operator []( size_t index )
 {
-	if(index < m_animations.size())
-		return m_animations[index];
-
-	return 0;
+	CE_ASSERT(index < m_animations.size());
+	return m_animations[index];
 }
 
 
-const Animation* AnimationSet::GetAnimation( size_t index ) const
+const Animation& AnimationSet::operator []( size_t index ) const
 {
-	if(index < m_animations.size())
-		return m_animations[index];
-
-	return 0;
+	CE_ASSERT(index < m_animations.size());
+	return m_animations[index];
 }
 
 
-Animation* AnimationSet::GetCurrentAnimation()
+Animation& AnimationSet::GetCurrentAnimation()
 {
-	if(!m_animations.empty())
-		return m_animations[m_current_anim];
-
-	return 0;
+	CE_ASSERT(!m_animations.empty());
+	return m_animations[m_current_anim];
 }
 
 
-const Animation* AnimationSet::GetCurrentAnimation() const
+const Animation& AnimationSet::GetCurrentAnimation() const
 {
-	if(!m_animations.empty())
-		return m_animations[m_current_anim];
-
-	return 0;
+	CE_ASSERT(!m_animations.empty());
+	return m_animations[m_current_anim];
 }
 
 
-void AnimationSet::AddAnimation( Animation* anim )
+void AnimationSet::AddAnimation( const Animation& anim )
 {
-	if( anim != 0 )
-	{
-		m_animations.push_back(anim);
-	}
+	m_animations.push_back(anim);
 }
 
 
@@ -105,15 +99,6 @@ void AnimationSet::RemoveAnimation( size_t index )
 			m_current_anim = 0;
 	}
 }
-
-
-void AnimationSet::RemoveAnimation( Animation* anim )
-{
-	for( vec_type::iterator it = m_animations.begin(); it != m_animations.end(); ++it )
-		if( *it == anim )
-			RemoveAnimation( size_t(it - m_animations.begin()) );
-}
-
 
 
 

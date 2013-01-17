@@ -52,9 +52,9 @@ class Map;
 class MapLayer;
 
 struct AttributeData;
-struct ItemData;
+struct Item;
 struct SpellData;
-struct MonsterData;
+struct Monster;
 struct MonsterGroupData;
 struct EncounterData;
 struct CharacterClass;
@@ -133,4 +133,3 @@ ScriptEngine*		gGetScriptEngine();
 Database*			gGetDatabase();
 
 
-typedef ItemData	Item;

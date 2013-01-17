@@ -25,7 +25,7 @@ bool AnimatedSpriteList::SerializeXml( const fc::string& filename )
 		return false;
 	}
 
-	xml.BeginNode("SpriteList");
+	xml.BeginNode("AnimatedSpriteList");
 	xml.SetUInt("count", m_items.size());
 
 	for( size_t i(0); i < m_items.size(); ++i )
@@ -49,7 +49,7 @@ bool AnimatedSpriteList::DeserializeXml( const fc::string& filename )
 		return false;
 	}
 
-	if( xml.GetCurrentNodeName() == "SpriteList" )
+	if( xml.GetCurrentNodeName() == "AnimatedSpriteList" )
 	{
 		size_t n = xml.GetUInt("count");
 		m_items.clear();

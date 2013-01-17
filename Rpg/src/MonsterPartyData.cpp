@@ -16,7 +16,7 @@
 
 
 extern MonsterList gMonsterList; //temp for gererating data.
-#include "MonsterData.h"
+#include "Monster.h"
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //             MonsterGroupData

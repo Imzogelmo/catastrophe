@@ -38,8 +38,17 @@ GlobalSettings::~GlobalSettings()
 	delete m_configfile;
 }
 
+
+#include "ExpCurve.h"
+
+
 void LoadConfigSettings( int argc, char *argv[] )
 {
+
+	ExpCurve exp;
+	exp.GenerateCurve();
+
+
 	/*
 		Step 1: Read the config file.
 		Step 2: Get the command-line args, overriding the previous
@@ -165,9 +174,9 @@ Window* CreateWindow()
 //before running it.
 
 //temp includes
-#include "MonsterData.h"
+#include "Monster.h"
 #include "MonsterPartyData.h"
-#include "ItemData.h"
+#include "Item.h"
 #include "Tile/TilesetManager.h"
 #include <Catastrophe/IO/File.h>
 
@@ -834,7 +843,7 @@ void DoAtlasPack3()
 			continue;
 		}
 
-		MonsterData m;
+		Monster m;
 		m.SetName(*as[u].s);
 		m.SetScript(*as[u].s);
 		m.sprite.SetTexture(&tex);
@@ -965,7 +974,7 @@ void DoAtlasPack4()
 			continue;
 		}
 
-		MonsterData m;
+		Monster m;
 		m.SetName(*as[u].s);
 		m.SetScript(*as[u].s);
 		m.sprite.SetTexture(&tex);
