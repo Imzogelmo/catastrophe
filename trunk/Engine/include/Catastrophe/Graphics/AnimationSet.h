@@ -35,7 +35,7 @@ public:
 
 	void Reserve( size_t capacity );
 	bool Empty() const;
-	size_t Size() const;
+	size_t NumAnimations() const;
 
 	void SetCurrentAnimation( size_t index );
 	void AddAnimation( const Animation& anim );

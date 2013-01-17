@@ -81,13 +81,7 @@ namespace Util
 
 	void SerializeAnimatedSprite( XmlWriter* xml, const AnimatedSprite& a )
 	{
-		xml->SetInt("width", fc::iround(a.size.x));
-		xml->SetInt("height", fc::iround(a.size.y));
-		xml->SetFloat("scale_x", a.scale.x);
-		xml->SetFloat("scale_y", a.scale.y);
-		xml->SetFloat("angle", a.angle);
-		xml->SetUInt("color", a.tint.packed_value);
-		xml->SetUInt("blendmode", a.blendmode.value);
+		SerializeSpriteBase(xml, a);
 
 		xml->BeginNode("Animation");
 		SerializeAnimation(xml, a);
@@ -97,9 +91,9 @@ namespace Util
 	void SerializeAnimationSet( XmlWriter* xml, const AnimationSet& a )
 	{
 		SerializeSpriteBase(xml, a);
-		xml->SetUInt("count", a.Size());
+		xml->SetUInt("count", a.NumAnimations());
 
-		for( size_t i(0); i < a.Size(); ++i )
+		for( size_t i(0); i < a.NumAnimations(); ++i )
 		{
 			xml->BeginNode("Animation");
 			SerializeAnimation(xml, a.GetAnimation(i) );
@@ -215,13 +209,7 @@ namespace Util
 
 	void DeserializeAnimatedSprite( XmlReader* xml, AnimatedSprite& a )
 	{
-		a.size.x = (float)xml->GetInt("width");
-		a.size.y = (float)xml->GetInt("height");
-		a.scale.x = xml->GetFloat("scale_x", 1.f);
-		a.scale.y = xml->GetFloat("scale_y", 1.f);
-		a.angle = xml->GetFloat("angle");
-		a.tint.packed_value = xml->GetUInt("color", Color::White().packed_value);
-		a.blendmode.value = xml->GetUInt("blendmode", BlendMode::Alpha.value);
+		DeserializeSpriteBase(xml, a);
 
 		if( xml->NextChild("Animation") )
 		{
@@ -240,8 +228,7 @@ namespace Util
 		while( xml->NextChild("Animation") )
 		{
 			a.AddAnimation(emptyAnimation);
-			DeserializeAnimation(xml, a[a.Size() - 1]);
-			xml->SetToParent();
+			DeserializeAnimation(xml, a[a.NumAnimations() - 1]);
 		}
 	}
 

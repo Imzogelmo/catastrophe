@@ -12,6 +12,7 @@
 #pragma once
 
 #include <fc/vector.h>
+#include <Catastrophe/Graphics/AnimationSet.h>
 
 #include "Common.h"
 #include "AttributeData.h"
@@ -23,10 +24,10 @@ struct RPG_API CharacterClass : public AttributeData
 {
 	typedef AttributeData	base_type;
 
-	int exp_table_index;
-	//Sprite			sprite; //needs SpriteSet? 
-	//SpellBook			spells;
-	//Inventory...
+	int				exp_table_index;
+	//Sprite		sprite;
+	//SpellBook		spells;
+	AnimationSet	animation_set;
 
 	CharacterClass();
 

@@ -43,7 +43,7 @@ bool AnimationSet::Empty() const
 }
 
 
-size_t AnimationSet::Size() const
+size_t AnimationSet::NumAnimations() const
 {
 	return m_animations.size();
 }

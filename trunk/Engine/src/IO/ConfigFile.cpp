@@ -243,7 +243,7 @@ bool ConfigFile::Read()
 		tokenizer.set_string(line);
 
 		//skip over common whitespace and endlines.
-		while( !line.empty() && (line[0] == 10 || line[0] == 13 || line[0] == ' ' || line[0] == '\t') )
+		while( !line.empty() && (line[0] == 10 || line[0] == 13 || line[0] == ' ' || line[0] == '\t' || line[0] == 0) )
 		{
 			line.erase( line.begin() );
 		}
