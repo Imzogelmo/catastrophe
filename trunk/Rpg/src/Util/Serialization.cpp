@@ -16,6 +16,7 @@
 #include <Catastrophe/Math/Point.h>
 #include <Catastrophe/Math/Rect.h>
 #include <Catastrophe/Graphics/Animation.h>
+#include <Catastrophe/Graphics/AnimationSet.h>
 #include <Catastrophe/Graphics/Sprite.h>
 #include <fc/math.h>
 
@@ -46,7 +47,7 @@ namespace Util
 		xml->SetInt("h", r.size.y);
 	}
 
-	void SerializeSprite( XmlWriter* xml, const Sprite& s )
+	void SerializeSpriteBase( XmlWriter* xml, const SpriteBase& s )
 	{
 		xml->SetInt("width", fc::iround(s.size.x));
 		xml->SetInt("height", fc::iround(s.size.y));
@@ -55,6 +56,11 @@ namespace Util
 		xml->SetFloat("angle", s.angle);
 		xml->SetUInt("color", s.tint.packed_value);
 		xml->SetUInt("blendmode", s.blendmode.value);
+	}
+
+	void SerializeSprite( XmlWriter* xml, const Sprite& s )
+	{
+		SerializeSpriteBase(xml, s);
 
 		fc::string textureName;
 		Rect sourceRect = Rect::Zero;
@@ -86,6 +92,19 @@ namespace Util
 		xml->BeginNode("Animation");
 		SerializeAnimation(xml, a);
 		xml->EndNode();
+	}
+
+	void SerializeAnimationSet( XmlWriter* xml, const AnimationSet& a )
+	{
+		SerializeSpriteBase(xml, a);
+		xml->SetUInt("count", a.Size());
+
+		for( size_t i(0); i < a.Size(); ++i )
+		{
+			xml->BeginNode("Animation");
+			SerializeAnimation(xml, a.GetAnimation(i) );
+			xml->EndNode();
+		}
 	}
 
 	void SerializeAnimation( XmlWriter* xml, const Animation& a )
@@ -151,7 +170,7 @@ namespace Util
 		r.size.y = xml->GetInt("h");
 	}
 
-	void DeserializeSprite( XmlReader* xml, Sprite& s )
+	void DeserializeSpriteBase( XmlReader* xml, SpriteBase& s )
 	{
 		s.size.x = (float)xml->GetInt("width");
 		s.size.y = (float)xml->GetInt("height");
@@ -160,6 +179,11 @@ namespace Util
 		s.angle = xml->GetFloat("angle");
 		s.tint.packed_value = xml->GetUInt("color", Color::White().packed_value);
 		s.blendmode.value = xml->GetUInt("blendmode", BlendMode::Alpha.value);
+	}
+
+	void DeserializeSprite( XmlReader* xml, Sprite& s )
+	{
+		DeserializeSpriteBase(xml, s);
 
 		Texture* texture = 0;
 		fc::string textureName = xml->GetString("texture");
@@ -202,6 +226,21 @@ namespace Util
 		if( xml->NextChild("Animation") )
 		{
 			DeserializeAnimation(xml, a);
+			xml->SetToParent();
+		}
+	}
+
+	void DeserializeAnimationSet( XmlReader* xml, AnimationSet& a )
+	{
+		DeserializeSpriteBase(xml, a);
+		size_t n = xml->GetUInt("count");
+		a.Reserve(n);
+
+		Animation emptyAnimation;
+		while( xml->NextChild("Animation") )
+		{
+			a.AddAnimation(emptyAnimation);
+			DeserializeAnimation(xml, a[a.Size() - 1]);
 			xml->SetToParent();
 		}
 	}

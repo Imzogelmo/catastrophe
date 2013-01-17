@@ -11,8 +11,32 @@
 
 #pragma once
 
+#include <fc/vector.h>
+#include <fc/math.h>
+
 #include "Common.h"
 #include "DataList.h"
+
+
+struct RPG_API ExpCurve
+{
+	typedef fc::vector<int>		vec_type;
+
+	vec_type	values;
+	int			max_levels;
+	int			start_exp;
+	int			end_exp;
+
+	ExpCurve( int maxLevels = 50, int startExp = 40, int endExp = 989641 )
+		: values(), max_levels(maxLevels), start_exp(startExp), end_exp(endExp)
+	{}
+
+	int& operator []( size_t i ) { return values.at(i); }
+	const int& operator []( size_t i ) const { return values.at(i); }
+
+	void GenerateCurve();
+
+};
 
 
 struct RPG_API ExpTable

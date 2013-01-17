@@ -86,7 +86,7 @@ void ItemDrop::Validate()
 void ItemDrop::SerializeXml(XmlWriter* xml)
 {
 	Validate();
-	xml->BeginNode("Data"); //....
+	xml->BeginNode("ItemDrop");
 	xml->SetInt("index", m_itemIndex);
 	xml->SetInt("rate", m_dropRate);
 	xml->SetInt("max_rate", m_maxRate);
@@ -117,16 +117,6 @@ void ItemDropSet::Add( const ItemDrop& drop )
 	m_item_drops.push_back(drop);
 }
 
-/*
-void ItemDropSet::Remove( const ItemDrop& drop )
-{
-	for( vec_type::iterator it = m_item_drops.begin(); it != m_item_drops.end(); ++it )
-	{
-		if(*it == item)
-			m_item_drops.erase(it);
-	}
-}
-*/
 
 void ItemDropSet::Remove( size_t index )
 {
@@ -157,7 +147,7 @@ void ItemDropSet::GetItemDrops( Inventory& out_drops )
 }
 
 
-void ItemDropSet::SerializeXml(XmlWriter* xml)
+void ItemDropSet::SerializeXml( XmlWriter* xml )
 {
 	xml->BeginNode("ItemDropSet");
 	xml->SetUInt("count", m_item_drops.size());
@@ -172,16 +162,24 @@ void ItemDropSet::SerializeXml(XmlWriter* xml)
 }
 
 
-void ItemDropSet::DeserializeXml(XmlReader* xml)
+void ItemDropSet::DeserializeXml( XmlReader* xml )
 {
 	size_t count = (size_t)fc::clamp( xml->GetInt("count"), 0, 8 );
 	m_allow_multiple_drops = xml->GetBool("multiple");
 
+	bool hasData = false;
 	m_item_drops.resize(count);
 	for( vec_type::iterator it = m_item_drops.begin(); it != m_item_drops.end(); ++it )
 	{
-		it->DeserializeXml(xml);
+		if( xml->NextChild("ItemDrop") )
+		{
+			it->DeserializeXml(xml);
+			hasData = true;
+		}
 	}
+
+	if( count > 0 && hasData )
+		xml->SetToParent();
 }
 
 
