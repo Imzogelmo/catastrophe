@@ -51,7 +51,7 @@ struct RPG_API ExpTable
 	const int& operator []( int lv ) const { return table.at(lv); }
 
 	int GetExpForLevel( int lv );
-	int GetExpDeltaForLevel( int lv ); // get the difference of lv and previous lv.
+	int GetExpDeltaForLevel( int lv );
 	void Resize( int maxLv );
 
 	void SerializeXml( XmlWriter* xml );
