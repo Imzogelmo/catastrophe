@@ -12,50 +12,71 @@
 
 #include <Catastrophe/IO/XmlWriter.h>
 #include <Catastrophe/IO/XmlReader.h>
-#include "Monster.h"
+#include "LevelData.h"
 #include "Util/Serialization.h"
 
 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//               Monster
+//              LevelData
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-void Monster::SerializeXml( XmlWriter* xml )
+void LevelData::SerializeXml( XmlWriter* xml )
 {
-	base_type::SerializeXml(xml);
-	item_dropset.SerializeXml(xml);
+	flags.SerializeXml(xml);
+}
 
-	xml->BeginNode("AnimatedSprite");
-	Util::SerializeAnimatedSprite(xml, sprite);
+
+void LevelData::DeserializeXml( XmlReader* xml )
+{
+	flags.DeserializeXml(xml);
+}
+
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//               LevelInfo
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+void LevelInfo::SerializeXml( XmlWriter* xml )
+{
+	xml->BeginNode("LevelInfo");
+	xml->SetUInt("count", levels.size());
+	xml->SetInt("exp_table", exp_table_id);
+
+	for( size_t i(0); i < levels.size(); ++i )
+	{
+		xml->BeginNode("LevelData");
+		levels[i].SerializeXml(xml);
+		xml->EndNode();
+	}
+
 	xml->EndNode();
 }
 
 
-void Monster::DeserializeXml( XmlReader* xml )
+void LevelInfo::DeserializeXml( XmlReader* xml )
 {
-	base_type::DeserializeXml(xml);
-	item_dropset.DeserializeXml(xml);
+	size_t n = xml->GetUInt("count");
+	exp_table_id = xml->GetInt("exp_table");
+	levels.clear();
+	levels.reserve(n);
 
-	if( xml->NextChild("AnimatedSprite") )
+	while( xml->NextChild("LevelData") )
 	{
-		Util::DeserializeAnimatedSprite(xml, sprite);
+		levels.push_back();
+		levels.back().DeserializeXml(xml);
 		xml->SetToParent();
-	}
-	else
-	{
-		//todo initialize potential invalid data
 	}
 }
 
 
 
-
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//             MonsterList
+//               LevelList
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-bool MonsterList::SerializeXml( const fc::string& filename )
+bool LevelList::SerializeXml( const fc::string& filename )
 {
 	XmlWriter xml(filename);
 	if( !xml.IsOpen() )
@@ -64,13 +85,12 @@ bool MonsterList::SerializeXml( const fc::string& filename )
 		return false;
 	}
 
-	xml.BeginNode("MonsterList");
-	xml.SetString("ver", "1.0");
+	xml.BeginNode("LevelList");
 	xml.SetUInt("count", m_items.size());
 
 	for( size_t i(0); i < m_items.size(); ++i )
 	{
-		xml.BeginNode("Monster");
+		xml.BeginNode("LevelInfo");
 		m_items[i].SerializeXml(&xml);
 		xml.EndNode();
 	}
@@ -82,7 +102,7 @@ bool MonsterList::SerializeXml( const fc::string& filename )
 }
 
 
-bool MonsterList::DeserializeXml( const fc::string& filename )
+bool LevelList::DeserializeXml( const fc::string& filename )
 {
 	XmlReader xml(filename);
 	if( !xml.IsOpen() )
@@ -91,13 +111,13 @@ bool MonsterList::DeserializeXml( const fc::string& filename )
 		return false;
 	}
 
-	if( xml.GetCurrentNodeName() == "MonsterList" )
+	if( xml.GetCurrentNodeName() == "LevelList" )
 	{
 		size_t n = xml.GetUInt("count");
 		m_items.clear();
 		m_items.reserve(n);
 
-		while( xml.NextChild("Monster") )
+		while( xml.NextChild("LevelInfo") )
 		{
 			m_items.push_back();
 			m_items.back().DeserializeXml(&xml);

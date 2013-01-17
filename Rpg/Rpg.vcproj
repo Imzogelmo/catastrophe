@@ -176,10 +176,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\Buff.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\Dialogue.cpp"
 				>
 			</File>
@@ -363,6 +359,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Buff.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\CharacterClass.cpp"
 					>
 				</File>
@@ -380,6 +380,10 @@
 				</File>
 				<File
 					RelativePath=".\src\Item.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\LevelData.cpp"
 					>
 				</File>
 				<File
@@ -451,10 +455,6 @@
 			</File>
 			<File
 				RelativePath=".\src\AttributeStrings.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Buff.h"
 				>
 			</File>
 			<File
@@ -625,6 +625,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Buff.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\CharacterClass.h"
 					>
 				</File>
@@ -646,6 +650,10 @@
 				</File>
 				<File
 					RelativePath=".\src\Item.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\LevelData.h"
 					>
 				</File>
 				<File

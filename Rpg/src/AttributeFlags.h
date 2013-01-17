@@ -24,8 +24,8 @@ struct AttributeFlags
 		MaxInternalFlags = 6 //24 bytes
 	};
 
-	Flags32	attribute_flags;
-	Flags32	elem_flags;
+	Flags32	stat_flags;
+	Flags32	element_flags;
 	Flags32	status_flags;
 	Flags32	family_flags;
 	Flags32	class_flags;
@@ -33,8 +33,8 @@ struct AttributeFlags
 
 	//aggregate type
 
-	Flags32& operator [](size_t i) { return *((&attribute_flags) + i); }
-	const Flags32& operator [](size_t i) const { return *((&attribute_flags) + i); }
+	Flags32& operator [](size_t i) { return *((&stat_flags) + i); }
+	const Flags32& operator [](size_t i) const { return *((&stat_flags) + i); }
 
 	this_type& operator |=(const this_type& rhs)
 	{
