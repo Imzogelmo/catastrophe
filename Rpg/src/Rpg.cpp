@@ -177,32 +177,52 @@ Window* CreateWindow()
 #include "Item.h"
 #include "Tile/TilesetManager.h"
 #include <Catastrophe/IO/File.h>
+#include "CharacterClass.h"
 
 MonsterList gMonsterList; //temp for gererating data.
 
 void DoTests()
 {
 	bool r;
+	CharacterClassList ccl;
+	CharacterClassList::vec_type & v = ccl.GetVector();
+
+	Texture t;
+	t.LoadFromFile("data/textures/characters.png");
+	t.SetName("characters.png");
+
 	/*
-	TilesetManager tm;
-	Tileset* t = tm.CreateTileset("testTileset.xml");
-	t->Resize(4, 4); //16 tiles
-	bool r = t->SerializeXml("");
-	return;
+	ResourceManager rm;
+	gSetActiveResourceManager(&rm);
+	rm.SetBaseDirectory("data/");
+	rm.SetTextureDirectory("textures/");
+	rm.LoadTexture("characters.png");
+	ccl.DeserializeXml("chars_test.h");
 	*/
 
-	r = gMonsterList.DeserializeXml("monsters_psp.xml");
-	assert(r);
-
-	foreachi(i, 128)
+	int y = 0;
+	foreachi(i, 12)
 	{
-		gMonsterList[i].sprite.size = 
-			gMonsterList[i].sprite.GetTexture()->GetSourceRect(
-			gMonsterList[i].sprite.GetUVRect() //todo add a shortcut for this.
-		).size;
+		v.push_back();
+		for(int j(24); j < 29; j++ )
+			v.back().attributes.stats[j] = 5;
+
+		v.back().name = "Fighter";
+		v.back().animation_set.SetSize( Vector2(24) );
+		v.back().animation_set.AddAnimation( Animation(&t, Rect(0,y,48,48)) );
+		v.back().animation_set.AddAnimation( Animation(&t, Rect(24,y,48,48)) );
+		v.back().animation_set.AddAnimation( Animation(&t, Rect(48,y,48,48), 3, 0, 0) );
+		v.back().animation_set.GetAnimation(2).SetAnimationSpeed(6);
+		v.back().animation_set.AddAnimation( Animation(&t, Rect(120,y,48,48), 2, 0, 0) );
+		v.back().animation_set.GetAnimation(3).SetAnimationSpeed(6);
+		v.back().animation_set.AddAnimation( Animation(&t, Rect(168,y,48,48)) );
+		v.back().animation_set.AddAnimation( Animation(&t, Rect(192,y,48,48)) );
+		v.back().animation_set.AddAnimation( Animation(&t, Rect(216,y,48,48)) );
+		v.back().animation_set.AddAnimation( Animation(&t, Rect(240,y,48,48)) );
+		y += 24;
 	}
 
-	r = gMonsterList.SerializeXml("ml.xml");
+	ccl.SerializeXml("chars_test.h");
 
 	if(!r)
 		r = ! r;
@@ -242,10 +262,6 @@ int main(int argc, char* argv[])
 
 
 	//DoTests();
-	ItemList il;
-	il.DeserializeXml("items2.h");
-	il.SerializeXml("items3.h");
-
 
 
 	// read config file and parse command-line arguments.

@@ -13,6 +13,7 @@
 #include <Catastrophe/IO/XmlWriter.h>
 #include <Catastrophe/IO/XmlReader.h>
 #include "CharacterClass.h"
+#include "Util/Serialization.h"
 
 
 
@@ -30,8 +31,10 @@ CharacterClass::CharacterClass() :
 
 void CharacterClass::SerializeXml( XmlWriter* xml )
 {
-	xml->BeginNode("Character");
 	base_type::SerializeXml(xml);
+
+	xml->BeginNode("AnimationSet");
+	Util::SerializeAnimationSet(xml, animation_set);
 	xml->EndNode();
 }
 
@@ -39,8 +42,13 @@ void CharacterClass::SerializeXml( XmlWriter* xml )
 void CharacterClass::DeserializeXml( XmlReader* xml )
 {
 	base_type::DeserializeXml(xml);
-}
 
+	if( xml->NextChild("AnimationSet") )
+	{
+		Util::DeserializeAnimationSet(xml, animation_set);
+		xml->SetToParent();
+	}
+}
 
 
 
@@ -58,12 +66,13 @@ bool CharacterClassList::SerializeXml( const fc::string& filename )
 	}
 
 	xml.BeginNode("CharacterList");
-	xml.SetString("ver", "1.0");
 	xml.SetUInt("count", m_items.size());
 
 	for( size_t i(0); i < m_items.size(); ++i )
 	{
+		xml.BeginNode("Character");
 		m_items[i].SerializeXml(&xml);
+		xml.EndNode();
 	}
 
 	xml.EndNode();
@@ -92,6 +101,7 @@ bool CharacterClassList::DeserializeXml( const fc::string& filename )
 		{
 			m_items.push_back();
 			m_items.back().DeserializeXml(&xml);
+			xml.SetToParent();
 		}
 	}
 	else

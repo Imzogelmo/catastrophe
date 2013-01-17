@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <Catastrophe/Graphics/AnimationSet.h>
 #include "Character.h"
 #include "Inventory.h"
 #include "Equipment.h"
@@ -27,9 +28,10 @@ public:
 	virtual void Render() {}
 
 protected:
-	Equipment	m_equipment;
-	Inventory	m_inventory;
-	BuffSet		m_buffs;
+	AnimationSet	m_animationSet;
+	Equipment		m_equipment;
+	Inventory		m_inventory;
+	BuffSet			m_buffs;
 
 };
 
