@@ -21,32 +21,16 @@
 CE_NAMESPACE_BEGIN
 
 
-AnimationFrames::AnimationFrames( const Texture* texture ) :
-	m_texture(texture),
+AnimationFrames::AnimationFrames( const Rectf* uv, int numberOfFrames ) :
 	m_uv()
 {
-	//...err fixme:
-	m_uv.push_back(Rectf::One);
-}
-
-
-AnimationFrames::AnimationFrames( const Texture* texture, const Rect& sourceRect, int numberOfFrames, int frameOffsetX, int frameOffsetY )
-{
-	SetTexture(texture);
-	SetFrameData(sourceRect, numberOfFrames, frameOffsetX, frameOffsetY);
+	SetFrameData(uv, numberOfFrames);
 }
 
 
 void AnimationFrames::Clear()
 {
 	m_uv.reset();
-}
-
-
-void AnimationFrames::SetTexture( const Texture* texture )
-{
-	CE_ASSERT(texture != 0);
-	m_texture = texture;
 }
 
 
@@ -57,77 +41,6 @@ void AnimationFrames::SetFrameData( const Rectf* uv, int numberOfFrames )
 	for( int i(0); i < numberOfFrames; ++i )
 	{
 		m_uv[i] = uv[i];
-	}
-}
-
-void AnimationFrames::SetFrameData( const Rect* sourceRectangles, int numberOfFrames )
-{
-	CE_ASSERT(m_texture != 0);
-
-	if(m_texture)
-	{
-		Clear();
-		m_uv.resize(numberOfFrames);
-		for( int i(0); i < numberOfFrames; ++i )
-		{
-			const Rect& sourceRect = sourceRectangles[i];
-			m_uv[i] = m_texture->GetUVRect(sourceRect);
-		}
-	}
-}
-
-
-void AnimationFrames::SetFrameData( const Rect& sourceRectangle, int numberOfFrames, int frameOffsetX, int frameOffsetY )
-{
-	CE_ASSERT(m_texture != 0);
-	CE_ASSERT(m_texture->Width() != 0 && m_texture->Height() != 0);
-
-	Clear();
-	m_uv.resize(numberOfFrames);
-
-	Rect sourceRect = sourceRectangle;
-	int textureWidth = m_texture->Width();
-	int textureHeight = m_texture->Height();
-
-	const float fw = (float)textureWidth;
-	const float fh = (float)textureHeight;
-	const float s = sourceRect.Right() / fw;
-	const float t = sourceRect.Bottom() / fh;
-
-	for( int i(0); i < numberOfFrames; ++i )
-	{
-		Rectf& uv = m_uv[i];
-
-		uv.min.x  = sourceRect.pos.x / fw;
-		uv.min.y  = sourceRect.pos.y / fh;
-		uv.max.x  = sourceRect.Right() / fw;
-		uv.max.y  = sourceRect.Bottom() / fh;
-
-		sourceRect.pos.x += frameOffsetX;
-		sourceRect.pos.y += frameOffsetY;
-
-		//Wrap around to next row.
-		if( sourceRect.Right() > textureWidth )
-		{
-			sourceRect.pos.x = 0;
-			sourceRect.pos.y += sourceRect.size.y;
-		}
-
-		//Wrap around to top
-		if( sourceRect.Bottom() > textureHeight )
-		{
-			sourceRect.pos.y = 0;
-		}
-	}
-}
-
-
-void AnimationFrames::AddFrame( const Rect& sourceRect )
-{
-	CE_ASSERT(m_texture != 0);
-	if(m_texture)
-	{
-		m_uv.push_back( m_texture->GetUVRect(sourceRect) );
 	}
 }
 

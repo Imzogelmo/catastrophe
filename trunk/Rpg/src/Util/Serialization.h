@@ -24,7 +24,6 @@ namespace Util
 	void SerializeAnimatedSprite( XmlWriter* xml, const AnimatedSprite& a );
 	void SerializeAnimationSet( XmlWriter* xml, const AnimationSet& a );
 	void SerializeAnimation( XmlWriter* xml, const Animation& a );
-	void SerializeAnimationFrames( XmlWriter* xml, const AnimationFrames& a );
 	void SerializeTile( XmlWriter* xml, const Tile& t );
 
 
@@ -36,7 +35,7 @@ namespace Util
 	void DeserializeAnimatedSprite( XmlReader* xml, AnimatedSprite& a );
 	void DeserializeAnimationSet( XmlReader* xml, AnimationSet& a );
 	void DeserializeAnimation( XmlReader* xml, Animation& a );
-	void DeserializeAnimationFrames( XmlReader* xml, AnimationFrames& a );
+	void DeserializeAnimationFrames( XmlReader* xml, Animation& a );
 	void DeserializeTile( XmlReader* xml, Tile& t );
 
 

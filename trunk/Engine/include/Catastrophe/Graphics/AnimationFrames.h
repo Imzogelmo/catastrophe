@@ -23,8 +23,6 @@
 #include "../Common.h"
 #include "../Math/Rectf.h"
 
-#include "Texture.h"
-
 CE_NAMESPACE_BEGIN
 
 
@@ -33,37 +31,23 @@ class CE_API AnimationFrames
 public:
 	typedef fc::fixed_vector<Rectf, 1> vec_type;
 
-	AnimationFrames( const Texture* texture = 0 );
-	AnimationFrames( const Texture* texture,
-		const Rect& sourceRect,
-		int numberOfFrames = 1,
-		int frameOffsetX = 0,
-		int frameOffsetY = 0
-	);
+	AnimationFrames() : m_uv() {}
+	AnimationFrames( const Rectf* uv, int numberOfFrames );
 
 	void Clear();
-
-	void SetTexture( const Texture* texture );
 	void SetFrameData( const Rectf* uv, int numberOfFrames );
-	void SetFrameData( const Rect* sourceRectangles, int numberOfFrames );
-	void SetFrameData( const Rect& sourceRect, int numberOfFrames = 1, int frameOffsetX = 0, int frameOffsetY = 0 );
-
-	void AddFrame( const Rect& sourceRect );
 	void AddFrame( const Rectf& uv );
 	void RemoveFrame( size_t loc );
 
+	inline bool IsEmpty() const { return m_uv.empty(); }
 	inline bool IsAnimated() const { return m_uv.has_overflowed(); }
 	inline size_t NumFrames() const { return m_uv.size(); }
 	
-	inline gluint GetTextureID() const { return m_texture->GetTextureID(); }
 	inline const Rectf& GetUVRect( size_t index = 0 ) const { return m_uv[ index ]; }
 	inline const Rectf* GetUVArray() const { return m_uv.data(); }
-	inline const Texture* GetTexture() const { return m_texture; }
 
 protected:
-	const Texture*	m_texture;
 	vec_type		m_uv;
-
 };
 
 
