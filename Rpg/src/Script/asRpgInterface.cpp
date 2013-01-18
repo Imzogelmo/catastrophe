@@ -34,6 +34,16 @@ namespace script
 		//return gGetGame()->GetDatabase()->GetMonsterList()->GetMonster(0);
 	}
 
+	void BindPlayerCharacterProperties()
+	{
+		if( 1 )
+		{
+			asIScriptObject* obj = (asIScriptObject*)asGetActiveContext()->GetThisPointer();
+
+			//p_ptr->sprite			= (Sprite*)obj->GetAddressOfProperty(0);
+		}
+	}
+
 } //namespace script
 
 

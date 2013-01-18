@@ -103,17 +103,6 @@ namespace Util
 
 	void SerializeAnimation( XmlWriter* xml, const Animation& a )
 	{
-		xml->SetFloat("speed", a.GetAnimSpeed() );
-		xml->SetBool("loop", a.IsLooping() );
-		xml->SetBool("paused", a.IsPaused() );
-
-		xml->BeginNode("Frame");
-		SerializeAnimationFrames(xml, a);
-		xml->EndNode();
-	}
-
-	void SerializeAnimationFrames( XmlWriter* xml, const AnimationFrames& a )
-	{
 		fc::string textureName;
 		Rect r1 = Rect::Zero;
 		Rect r2 = Rect::Zero;
@@ -122,7 +111,7 @@ namespace Util
 		const Texture* texture = a.GetTexture();
 		if( !texture )
 		{
-			Log("SerializeAnimationFrames error: null texture.");
+			Log("SerializeAnimation error: null texture.");
 		}
 		else
 		{
@@ -141,10 +130,16 @@ namespace Util
 		}
 
 		xml->SetString("texture", textureName.c_str());
+		xml->SetFloat("speed", a.GetAnimSpeed() );
+		xml->SetBool("loop", a.IsLooping() );
+		xml->SetBool("paused", a.IsPaused() );
+
+		xml->BeginNode("Frame");
 		xml->SetUInt("num_frames", a.NumFrames());
 		SerializeRect(xml, r1);
 		xml->SetInt("offset_x", offset.x);
 		xml->SetInt("offset_y", offset.y);
+		xml->EndNode();
 	}
 
 
@@ -244,49 +239,46 @@ namespace Util
 
 		if( xml->NextChild("Frame") )
 		{
-			DeserializeAnimationFrames(xml, a);
+			Rect sourceRect = Rect::Zero;
+			Point offset = Point::Zero;
+
+			Texture* texture = 0;
+			fc::string textureName = xml->GetString("texture");
+			if( !textureName.empty() )
+			{
+				ResourceManager* resourceManager = gGetResourceManager();
+				ASSERT(resourceManager != 0);
+
+				texture = resourceManager->GetTexture(textureName);
+				if( !texture )
+				{
+					texture = resourceManager->LoadTexture(textureName.c_str());
+				}
+			}
+
+			if( !texture )
+			{
+				//TODO set default texture to sprite...
+				// ..better yet, initialize sprites to default texture when created... 
+				// (this would save a lot of extra crap in the long run)..
+
+				//it's not a fatal error, but it's not good either.
+				LogError("Error: Texture (%s) not found. Could not load Animation.", textureName.c_str());
+			}
+			else
+			{
+				int numFrames = xml->GetInt("num_frames");
+				DeserializeRect(xml, sourceRect);
+				offset.x = xml->GetInt("offset_x");
+				offset.y = xml->GetInt("offset_y");
+				a.SetTexture(texture);
+				a.SetFrameData( sourceRect, numFrames, offset.x, offset.y );
+			}
+
 			xml->SetToParent();
 		}
 	}
 
-	void DeserializeAnimationFrames( XmlReader* xml, AnimationFrames& a )
-	{
-		Rect sourceRect = Rect::Zero;
-		Point offset = Point::Zero;
-
-		Texture* texture = 0;
-		fc::string textureName = xml->GetString("texture");
-		if( !textureName.empty() )
-		{
-			ResourceManager* resourceManager = gGetResourceManager();
-			ASSERT(resourceManager != 0);
-
-			texture = resourceManager->GetTexture(textureName);
-			if( !texture )
-			{
-				texture = resourceManager->LoadTexture(textureName.c_str());
-			}
-		}
-
-		if( !texture )
-		{
-			//TODO set default texture to sprite...
-			// ..better yet, initialize sprites to default texture when created... 
-			// (this would save a lot of extra crap in the long run)..
-
-			//it's not a fatal error, but it's not good either.
-			LogError("Error: Texture (%s) not found. Could not load Animation.", textureName.c_str());
-		}
-		else
-		{
-			int numFrames = xml->GetInt("num_frames");
-			DeserializeRect(xml, sourceRect);
-			offset.x = xml->GetInt("offset_x");
-			offset.y = xml->GetInt("offset_y");
-			a.SetTexture(texture);
-			a.SetFrameData( sourceRect, numFrames, offset.x, offset.y );
-		}
-	}
 
 
 } //namespace Util

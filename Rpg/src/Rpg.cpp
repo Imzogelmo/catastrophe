@@ -183,6 +183,18 @@ MonsterList gMonsterList; //temp for gererating data.
 
 void DoTests()
 {
+
+	ResourceManager rm;
+	gSetActiveResourceManager(&rm);
+	rm.SetBaseDirectory("data/");
+	rm.SetTextureDirectory("textures/");
+	rm.LoadTexture("monsters_psp.png");
+
+	gMonsterList.DeserializeXml("monsters_psp.xml");
+	gMonsterList.SerializeXml("M2.xml");
+
+
+
 	bool r;
 	CharacterClassList ccl;
 	CharacterClassList::vec_type & v = ccl.GetVector();
