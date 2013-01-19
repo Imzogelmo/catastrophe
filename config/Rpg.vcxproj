@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E92EC01E-0F58-45A1-97A0-9C0600830480}</ProjectGuid>
+    <RootNamespace>Rpg</RootNamespace>
+    <ProjectName>Rpg</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v100</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.50727.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)..\temp\$(Configuration)\$(ProjectName)\</IntDir>
+    <IncludePath>..\lib\include;..\src\;..\src\Rpg\;$(IncludePath)</IncludePath>
+    <LibraryPath>..\lib\;$(LibraryPath)</LibraryPath>
+    <SourcePath>..\src\Rpg\;$(SourcePath)</SourcePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>ce-core-d.lib;ce-system-d.lib;glfwd.lib;mcppd.lib;angelscriptd.lib;freetype.lib;glew32sd.lib;OpenGL32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../Engine/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>ce-core.lib;ce-system.lib;ce-sound.lib;glfw.lib;freetype.lib;mcpp.lib;angelscript.lib;glew32s.lib;OpenGL32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../Engine/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\Rpg\AttributeFlags.cpp" />
+    <ClCompile Include="..\src\Rpg\Attributes.cpp" />
+    <ClCompile Include="..\src\Rpg\Buff.cpp" />
+    <ClCompile Include="..\src\Rpg\Dialogue.cpp" />
+    <ClCompile Include="..\src\Rpg\Entity.cpp" />
+    <ClCompile Include="..\src\Rpg\Equipment.cpp" />
+    <ClCompile Include="..\src\Rpg\Game.cpp" />
+    <ClCompile Include="..\src\Rpg\Inventory.cpp" />
+    <ClCompile Include="..\src\Rpg\InventoryItem.cpp" />
+    <ClCompile Include="..\src\Rpg\ItemDrop.cpp" />
+    <ClCompile Include="..\src\Rpg\LevelData.cpp" />
+    <ClCompile Include="..\src\Rpg\Monster.cpp" />
+    <ClCompile Include="..\src\Rpg\RenderEngine.cpp" />
+    <ClCompile Include="..\src\Rpg\ResourceManager.cpp" />
+    <ClCompile Include="..\src\Rpg\Rpg.cpp" />
+    <ClCompile Include="..\src\Rpg\SpellBook.cpp" />
+    <ClCompile Include="..\src\Rpg\Script\Bytecode.cpp" />
+    <ClCompile Include="..\src\Rpg\Script\ContextPool.cpp" />
+    <ClCompile Include="..\src\Rpg\Script\ScriptClass.cpp" />
+    <ClCompile Include="..\src\Rpg\Script\ScriptEngine.cpp" />
+    <ClCompile Include="..\src\Rpg\Script\ScriptGarbage.cpp" />
+    <ClCompile Include="..\src\Rpg\Script\ScriptObject.cpp" />
+    <ClCompile Include="..\src\Rpg\Script\asArray.cpp" />
+    <ClCompile Include="..\src\Rpg\Script\asArrayTemplate.cpp" />
+    <ClCompile Include="..\src\Rpg\Script\asScriptTemplate.cpp" />
+    <ClCompile Include="..\src\Rpg\Script\asString.cpp" />
+    <ClCompile Include="..\src\Rpg\Script\asVector.cpp" />
+    <ClCompile Include="..\src\Rpg\Script\asVectorTemplate.cpp" />
+    <ClCompile Include="..\src\Rpg\Script\asGameInterface.cpp" />
+    <ClCompile Include="..\src\Rpg\Script\asGlobalInterface.cpp" />
+    <ClCompile Include="..\src\Rpg\Script\asGraphicsInterface.cpp" />
+    <ClCompile Include="..\src\Rpg\Script\asGuiInterface.cpp" />
+    <ClCompile Include="..\src\Rpg\Script\asInputInterface.cpp" />
+    <ClCompile Include="..\src\Rpg\Script\asMathInterface.cpp" />
+    <ClCompile Include="..\src\Rpg\Script\asRpgInterface.cpp" />
+    <ClCompile Include="..\src\Rpg\Script\asSoundInterface.cpp" />
+    <ClCompile Include="..\src\Rpg\Script\Compiler.cpp" />
+    <ClCompile Include="..\src\Rpg\Script\PostProcessor.cpp" />
+    <ClCompile Include="..\src\Rpg\Script\Preprocessor.cpp" />
+    <ClCompile Include="..\src\Rpg\SpriteList.cpp" />
+    <ClCompile Include="..\src\Rpg\Tile\Map.cpp" />
+    <ClCompile Include="..\src\Rpg\Tile\MapLayer.cpp" />
+    <ClCompile Include="..\src\Rpg\Tile\Tile.cpp" />
+    <ClCompile Include="..\src\Rpg\Tile\Tileset.cpp" />
+    <ClCompile Include="..\src\Rpg\Tile\TilesetManager.cpp" />
+    <ClCompile Include="..\src\Rpg\AttributeData.cpp" />
+    <ClCompile Include="..\src\Rpg\CharacterClass.cpp" />
+    <ClCompile Include="..\src\Rpg\Database.cpp" />
+    <ClCompile Include="..\src\Rpg\EncounterData.cpp" />
+    <ClCompile Include="..\src\Rpg\ExpTable.cpp" />
+    <ClCompile Include="..\src\Rpg\ItemData.cpp" />
+    <ClCompile Include="..\src\Rpg\MonsterPartyData.cpp" />
+    <ClCompile Include="..\src\Rpg\Shops.cpp" />
+    <ClCompile Include="..\src\Rpg\SpellData.cpp" />
+    <ClCompile Include="..\src\Rpg\Shmup\BulletManager.cpp" />
+    <ClCompile Include="..\src\Rpg\Util\Serialization.cpp" />
+    <ClCompile Include="..\src\Rpg\GameScreen.cpp" />
+    <ClCompile Include="..\src\Rpg\Screen.cpp" />
+    <ClCompile Include="..\src\Rpg\ScreenManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\Rpg\AttributeFlags.h" />
+    <ClInclude Include="..\src\Rpg\Attributes.h" />
+    <ClInclude Include="..\src\Rpg\AttributeStrings.h" />
+    <ClInclude Include="..\src\Rpg\Buff.h" />
+    <ClInclude Include="..\src\Rpg\Character.h" />
+    <ClInclude Include="..\src\Rpg\Common.h" />
+    <ClInclude Include="..\src\Rpg\Dialogue.h" />
+    <ClInclude Include="..\src\Rpg\Entity.h" />
+    <ClInclude Include="..\src\Rpg\Equipment.h" />
+    <ClInclude Include="..\src\Rpg\FixedAttributeArray.h" />
+    <ClInclude Include="..\src\Rpg\Game.h" />
+    <ClInclude Include="..\src\Rpg\Inventory.h" />
+    <ClInclude Include="..\src\Rpg\InventoryItem.h" />
+    <ClInclude Include="..\src\Rpg\ItemDrop.h" />
+    <ClInclude Include="..\src\Rpg\LevelData.h" />
+    <ClInclude Include="..\src\Rpg\Monster.h" />
+    <ClInclude Include="..\src\Rpg\MonsterCharacter.h" />
+    <ClInclude Include="..\src\Rpg\Object.h" />
+    <ClInclude Include="..\src\Rpg\PlayerCharacter.h" />
+    <ClInclude Include="..\src\Rpg\RenderEngine.h" />
+    <ClInclude Include="..\src\Rpg\ResourceManager.h" />
+    <ClInclude Include="..\src\Rpg\SpellBook.h" />
+    <ClInclude Include="..\src\Rpg\Script\Bytecode.h" />
+    <ClInclude Include="..\src\Rpg\Script\Common.h" />
+    <ClInclude Include="..\src\Rpg\Script\ContextPool.h" />
+    <ClInclude Include="..\src\Rpg\Script\ScriptClass.h" />
+    <ClInclude Include="..\src\Rpg\Script\ScriptEngine.h" />
+    <ClInclude Include="..\src\Rpg\Script\ScriptGarbage.h" />
+    <ClInclude Include="..\src\Rpg\Script\ScriptObject.h" />
+    <ClInclude Include="..\src\Rpg\Script\asArray.h" />
+    <ClInclude Include="..\src\Rpg\Script\asArrayTemplate.h" />
+    <ClInclude Include="..\src\Rpg\Script\asScriptTemplate.h" />
+    <ClInclude Include="..\src\Rpg\Script\asVector.h" />
+    <ClInclude Include="..\src\Rpg\Script\asVectorTemplate.h" />
+    <ClInclude Include="..\src\Rpg\Script\Compiler.h" />
+    <ClInclude Include="..\src\Rpg\Script\PostProcessor.h" />
+    <ClInclude Include="..\src\Rpg\Script\Preprocessor.h" />
+    <ClInclude Include="..\src\Rpg\Script\asBindUtil.h" />
+    <ClInclude Include="..\src\Rpg\SpriteList.h" />
+    <ClInclude Include="..\src\Rpg\Tile\CollisionLayer.h" />
+    <ClInclude Include="..\src\Rpg\Tile\Map.h" />
+    <ClInclude Include="..\src\Rpg\Tile\MapLayer.h" />
+    <ClInclude Include="..\src\Rpg\Tile\MapProperties.h" />
+    <ClInclude Include="..\src\Rpg\Tile\Tile.h" />
+    <ClInclude Include="..\src\Rpg\Tile\TileProperties.h" />
+    <ClInclude Include="..\src\Rpg\Tile\Tileset.h" />
+    <ClInclude Include="..\src\Rpg\Tile\TilesetManager.h" />
+    <ClInclude Include="..\src\Rpg\AttributeData.h" />
+    <ClInclude Include="..\src\Rpg\CharacterClass.h" />
+    <ClInclude Include="..\src\Rpg\Database.h" />
+    <ClInclude Include="..\src\Rpg\DataList.h" />
+    <ClInclude Include="..\src\Rpg\EncounterData.h" />
+    <ClInclude Include="..\src\Rpg\ExpTable.h" />
+    <ClInclude Include="..\src\Rpg\ItemData.h" />
+    <ClInclude Include="..\src\Rpg\MonsterPartyData.h" />
+    <ClInclude Include="..\src\Rpg\Shops.h" />
+    <ClInclude Include="..\src\Rpg\SpellData.h" />
+    <ClInclude Include="..\src\Rpg\Shmup\Bullet.h" />
+    <ClInclude Include="..\src\Rpg\Shmup\BulletManager.h" />
+    <ClInclude Include="..\src\Rpg\Shmup\BulletPool.h" />
+    <ClInclude Include="..\src\Rpg\Shmup\PODBullet.h" />
+    <ClInclude Include="..\src\Rpg\Shmup\PODBulletManager.h" />
+    <ClInclude Include="..\src\Rpg\Util\Serialization.h" />
+    <ClInclude Include="..\src\Rpg\GameScreen.h" />
+    <ClInclude Include="..\src\Rpg\Screen.h" />
+    <ClInclude Include="..\src\Rpg\ScreenManager.h" />
+    <ClInclude Include="..\src\Rpg\Util\StringAlias.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

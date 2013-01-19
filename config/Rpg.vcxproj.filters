@@ -1,0 +1,456 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Script">
+      <UniqueIdentifier>{fa89749e-bda1-4e78-b231-60fd62a0723c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Script\Collections">
+      <UniqueIdentifier>{bdbb70ca-a4a7-4b5d-9eea-f28a3af8961d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Script\Bindings">
+      <UniqueIdentifier>{19825331-f3e9-4098-8eb8-7c42fe143ae1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Script\Compiler">
+      <UniqueIdentifier>{b2a94e74-453d-4dfe-9609-d6ba494d7ee6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tile">
+      <UniqueIdentifier>{41cbd1fe-590e-4690-abc0-191cae259a0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Database">
+      <UniqueIdentifier>{3f6346bd-b768-40f0-b111-659e0f3555bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Shmup">
+      <UniqueIdentifier>{1a432a35-3fa8-43bd-a891-e7697f66a0bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Util">
+      <UniqueIdentifier>{0a19ce70-ef6c-41ee-af48-fab27b74fdb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Screens">
+      <UniqueIdentifier>{9544225a-6ccf-428c-b8a7-d47b601513c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Script">
+      <UniqueIdentifier>{08a9a5f0-411f-4714-a9c9-b13398ab8fc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Script\Collections">
+      <UniqueIdentifier>{9e8defce-eae1-41f2-abce-ddced8c18c93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Script\Compiler">
+      <UniqueIdentifier>{abdd6ef7-d274-4cb8-94e3-729cf6dda302}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Script\Bindings">
+      <UniqueIdentifier>{8d4b568d-580b-4c09-b623-97c3060ab7b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tile">
+      <UniqueIdentifier>{0d5415dd-1004-4e9b-8b52-4c4fbb88071b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Database">
+      <UniqueIdentifier>{43c5102a-17d7-4453-a4c3-aff29a419292}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Shmup">
+      <UniqueIdentifier>{d51f660a-e3b9-4980-9f52-92dec897cd0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Util">
+      <UniqueIdentifier>{2ac9aaf5-8ea8-4af1-a712-abe47ad62b35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Screens">
+      <UniqueIdentifier>{8391a7c1-5ad0-4034-9907-f1c3a421f62e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Entity">
+      <UniqueIdentifier>{6ffdbf76-7cc1-4cfa-bb9f-f90e96651389}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\Rpg\AttributeFlags.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Attributes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Dialogue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Equipment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Inventory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\InventoryItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\ItemDrop.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\RenderEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\ResourceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Rpg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\SpellBook.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Script\Bytecode.cpp">
+      <Filter>Source Files\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Script\ContextPool.cpp">
+      <Filter>Source Files\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Script\ScriptClass.cpp">
+      <Filter>Source Files\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Script\ScriptEngine.cpp">
+      <Filter>Source Files\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Script\ScriptGarbage.cpp">
+      <Filter>Source Files\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Script\ScriptObject.cpp">
+      <Filter>Source Files\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Script\asArray.cpp">
+      <Filter>Source Files\Script\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Script\asArrayTemplate.cpp">
+      <Filter>Source Files\Script\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Script\asScriptTemplate.cpp">
+      <Filter>Source Files\Script\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Script\asString.cpp">
+      <Filter>Source Files\Script\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Script\asVector.cpp">
+      <Filter>Source Files\Script\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Script\asVectorTemplate.cpp">
+      <Filter>Source Files\Script\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Script\asGameInterface.cpp">
+      <Filter>Source Files\Script\Bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Script\asGlobalInterface.cpp">
+      <Filter>Source Files\Script\Bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Script\asGraphicsInterface.cpp">
+      <Filter>Source Files\Script\Bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Script\asGuiInterface.cpp">
+      <Filter>Source Files\Script\Bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Script\asInputInterface.cpp">
+      <Filter>Source Files\Script\Bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Script\asMathInterface.cpp">
+      <Filter>Source Files\Script\Bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Script\asRpgInterface.cpp">
+      <Filter>Source Files\Script\Bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Script\asSoundInterface.cpp">
+      <Filter>Source Files\Script\Bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Script\Compiler.cpp">
+      <Filter>Source Files\Script\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Script\PostProcessor.cpp">
+      <Filter>Source Files\Script\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Script\Preprocessor.cpp">
+      <Filter>Source Files\Script\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Tile\Map.cpp">
+      <Filter>Source Files\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Tile\MapLayer.cpp">
+      <Filter>Source Files\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Tile\Tile.cpp">
+      <Filter>Source Files\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Tile\Tileset.cpp">
+      <Filter>Source Files\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Tile\TilesetManager.cpp">
+      <Filter>Source Files\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\AttributeData.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\CharacterClass.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Database.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\EncounterData.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\ExpTable.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\ItemData.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\MonsterPartyData.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Shops.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\SpellData.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Shmup\BulletManager.cpp">
+      <Filter>Source Files\Shmup</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Util\Serialization.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\GameScreen.cpp">
+      <Filter>Source Files\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Screen.cpp">
+      <Filter>Source Files\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\ScreenManager.cpp">
+      <Filter>Source Files\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Buff.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\LevelData.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\SpriteList.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Entity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rpg\Monster.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\Rpg\AttributeFlags.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Attributes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\AttributeStrings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Dialogue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Equipment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\FixedAttributeArray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Inventory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\InventoryItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\ItemDrop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\RenderEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\ResourceManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\SpellBook.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Script\Bytecode.h">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Script\Common.h">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Script\ContextPool.h">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Script\ScriptClass.h">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Script\ScriptEngine.h">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Script\ScriptGarbage.h">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Script\ScriptObject.h">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Script\asArray.h">
+      <Filter>Header Files\Script\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Script\asArrayTemplate.h">
+      <Filter>Header Files\Script\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Script\asScriptTemplate.h">
+      <Filter>Header Files\Script\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Script\asVector.h">
+      <Filter>Header Files\Script\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Script\asVectorTemplate.h">
+      <Filter>Header Files\Script\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Script\Compiler.h">
+      <Filter>Header Files\Script\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Script\PostProcessor.h">
+      <Filter>Header Files\Script\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Script\Preprocessor.h">
+      <Filter>Header Files\Script\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Script\asBindUtil.h">
+      <Filter>Header Files\Script\Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Tile\CollisionLayer.h">
+      <Filter>Header Files\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Tile\Map.h">
+      <Filter>Header Files\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Tile\MapLayer.h">
+      <Filter>Header Files\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Tile\MapProperties.h">
+      <Filter>Header Files\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Tile\Tile.h">
+      <Filter>Header Files\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Tile\TileProperties.h">
+      <Filter>Header Files\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Tile\Tileset.h">
+      <Filter>Header Files\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Tile\TilesetManager.h">
+      <Filter>Header Files\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\AttributeData.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\CharacterClass.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Database.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\DataList.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\EncounterData.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\ExpTable.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\ItemData.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\MonsterPartyData.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Shops.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\SpellData.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Shmup\Bullet.h">
+      <Filter>Header Files\Shmup</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Shmup\BulletManager.h">
+      <Filter>Header Files\Shmup</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Shmup\BulletPool.h">
+      <Filter>Header Files\Shmup</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Shmup\PODBullet.h">
+      <Filter>Header Files\Shmup</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Shmup\PODBulletManager.h">
+      <Filter>Header Files\Shmup</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Util\Serialization.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\GameScreen.h">
+      <Filter>Header Files\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Screen.h">
+      <Filter>Header Files\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\ScreenManager.h">
+      <Filter>Header Files\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Buff.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\LevelData.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\SpriteList.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Character.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Entity.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\MonsterCharacter.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\PlayerCharacter.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Util\StringAlias.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rpg\Monster.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
