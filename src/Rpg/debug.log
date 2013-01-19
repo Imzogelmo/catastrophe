@@ -1,0 +1,13 @@
+Logging Initialized
+Error reading from file settings.cfg
+ConfigFile error: Invalid identifier or value (), token will not be parsed!
+Error reading from file settings.cfg
+ConfigFile error: Invalid identifier or value (), token will not be parsed!
+OpenGL Initialized,
+Card:    AMD Radeon HD 6800 Series
+Vendor:  ATI Technologies Inc.
+Version: 4.2.11931 Compatibility Profile Context
+Glew version: 3, 0
+Error loading file (bg.png), can't fopen.
+Failed to open file (monsters_psp.xml)
+Could not open file (monsters_psp.xml)
