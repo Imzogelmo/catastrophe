@@ -41,7 +41,7 @@
     <_ProjectFileVersion>11.0.50727.1</_ProjectFileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)..\bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)..\temp\$(Configuration)\$(ProjectName)\</IntDir>
     <IncludePath>..\lib\include;..\src\;..\src\Rpg\;$(IncludePath)</IncludePath>
     <LibraryPath>..\lib\;$(LibraryPath)</LibraryPath>
