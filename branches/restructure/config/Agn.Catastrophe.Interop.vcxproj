@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B6822A5E-07F9-4E39-9156-688EFABDD954}</ProjectGuid>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <Keyword>ManagedCProj</Keyword>
+    <RootNamespace>AgnCatastropheInterop</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CLRSupport>true</CLRSupport>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CLRSupport>true</CLRSupport>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)..\bin\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)..\temp\$(Configuration)\$(ProjectName)\</IntDir>
+    <IncludePath>..\lib\include;..\src\;..\src\Editor\Agn.Catastrophe.Interop\;$(IncludePath)</IncludePath>
+    <LibraryPath>..\lib\;$(LibraryPath)</LibraryPath>
+    <SourcePath>..\src\Editor\Agn.Catastrophe.Interop\;$(SourcePath)</SourcePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <AdditionalIncludeDirectories>..\..\Engine\include;..\..\Rpg\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CompileAsManaged>true</CompileAsManaged>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>Rpg-Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\Editor\Agn.Catastrophe.Interop\Agn.Catastrophe.Interop.h" />
+    <ClInclude Include="..\src\Editor\Agn.Catastrophe.Interop\agn.h" />
+    <ClInclude Include="..\src\Editor\Agn.Catastrophe.Interop\DrawableWrapper.h" />
+    <ClInclude Include="..\src\Editor\Agn.Catastrophe.Interop\FileConverter.h" />
+    <ClInclude Include="..\src\Editor\Agn.Catastrophe.Interop\IDrawTarget.h" />
+    <ClInclude Include="..\src\Editor\Agn.Catastrophe.Interop\ITexture.h" />
+    <ClInclude Include="..\src\Editor\Agn.Catastrophe.Interop\resource.h" />
+    <ClInclude Include="..\src\Editor\Agn.Catastrophe.Interop\ResourceManagerWrapper.h" />
+    <ClInclude Include="..\src\Editor\Agn.Catastrophe.Interop\Stdafx.h" />
+    <ClInclude Include="..\src\Editor\Agn.Catastrophe.Interop\StringWrapper.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\Editor\Agn.Catastrophe.Interop\Agn.Catastrophe.Interop.cpp" />
+    <ClCompile Include="..\src\Editor\Agn.Catastrophe.Interop\AssemblyInfo.cpp" />
+    <ClCompile Include="..\src\Editor\Agn.Catastrophe.Interop\DrawableWrapper.cpp" />
+    <ClCompile Include="..\src\Editor\Agn.Catastrophe.Interop\FileConverter.cpp" />
+    <ClCompile Include="..\src\Editor\Agn.Catastrophe.Interop\ResourceManagerWrapper.cpp" />
+    <ClCompile Include="..\src\Editor\Agn.Catastrophe.Interop\Stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\src\Editor\Agn.Catastrophe.Interop\StringWrapper.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\Editor\Agn.Catastrophe.Interop\app.ico" />
+    <None Include="..\src\Editor\Agn.Catastrophe.Interop\ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\src\Editor\Agn.Catastrophe.Interop\app.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

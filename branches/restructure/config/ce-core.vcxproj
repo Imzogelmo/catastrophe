@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{8896BFA8-8888-4A61-8225-683568711CD1}</ProjectGuid>
+    <RootNamespace>Engine</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>NotSet</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v100</PlatformToolset>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.50727.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)..\lib\</OutDir>
+    <IntDir>$(SolutionDir)..\temp\$(Configuration)\$(ProjectName)\</IntDir>
+    <IncludePath>..\lib\include;..\src\Engine\;$(IncludePath)</IncludePath>
+    <LibraryPath>..\lib\;$(LibraryPath)</LibraryPath>
+    <SourcePath>..\src\Engine\;$(SourcePath)</SourcePath>
+    <TargetName>$(ProjectName)-d</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)lib\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>include\Catastrophe;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <ProgramDataBaseFileName>$(OutDir)$(ProjectName)-d.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <Lib>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>include\Catastrophe;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>true</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\Engine\IO\ConfigFile.cpp" />
+    <ClCompile Include="..\src\Engine\Math\BoundingBox.cpp" />
+    <ClCompile Include="..\src\Engine\Math\Color.cpp" />
+    <ClCompile Include="..\src\Engine\Math\Colorf.cpp" />
+    <ClCompile Include="..\src\Engine\Math\Frustum.cpp" />
+    <ClCompile Include="..\src\Engine\Math\HSLColor.cpp" />
+    <ClCompile Include="..\src\Engine\Math\HSVColor.cpp" />
+    <ClCompile Include="..\src\Engine\Math\Math.cpp" />
+    <ClCompile Include="..\src\Engine\Math\Matrix.cpp" />
+    <ClCompile Include="..\src\Engine\Math\Quaternion.cpp" />
+    <ClCompile Include="..\src\Engine\Math\Rect.cpp" />
+    <ClCompile Include="..\src\Engine\Math\Rectf.cpp" />
+    <ClCompile Include="..\src\Engine\Math\Vector2.cpp" />
+    <ClCompile Include="..\src\Engine\Math\Vector3.cpp" />
+    <ClCompile Include="..\src\Engine\Math\Vector4.cpp" />
+    <ClCompile Include="..\src\Engine\IO\Deserializer.cpp" />
+    <ClCompile Include="..\src\Engine\IO\File.cpp" />
+    <ClCompile Include="..\src\Engine\IO\Log.cpp" />
+    <ClCompile Include="..\src\Engine\IO\Serializer.cpp" />
+    <ClCompile Include="..\src\Engine\IO\XmlReader.cpp" />
+    <ClCompile Include="..\src\Engine\IO\XmlWriter.cpp" />
+    <ClCompile Include="..\src\Engine\Graphics\Animation.cpp" />
+    <ClCompile Include="..\src\Engine\Graphics\AnimationFrames.cpp" />
+    <ClCompile Include="..\src\Engine\Graphics\AnimationSet.cpp" />
+    <ClCompile Include="..\src\Engine\Graphics\BlendMode.cpp" />
+    <ClCompile Include="..\src\Engine\Graphics\FBORenderTarget.cpp" />
+    <ClCompile Include="..\src\Engine\Graphics\Font.cpp" />
+    <ClCompile Include="..\src\Engine\Graphics\Image.cpp" />
+    <ClCompile Include="..\src\Engine\Graphics\Primitive.cpp" />
+    <ClCompile Include="..\src\Engine\Graphics\PrimitiveBatch.cpp" />
+    <ClCompile Include="..\src\Engine\Graphics\Shader.cpp" />
+    <ClCompile Include="..\src\Engine\Graphics\ShaderObject.cpp" />
+    <ClCompile Include="..\src\Engine\Graphics\Sprite.cpp" />
+    <ClCompile Include="..\src\Engine\Graphics\SpriteBatch.cpp" />
+    <ClCompile Include="..\src\Engine\Graphics\Texture.cpp" />
+    <ClCompile Include="..\src\Engine\Graphics\TextureLoader.cpp" />
+    <ClCompile Include="..\src\Engine\Gui\Frame.cpp" />
+    <ClCompile Include="..\src\Engine\Gui\MenuElement.cpp" />
+    <ClCompile Include="..\src\Engine\Gui\MessageElement.cpp" />
+    <ClCompile Include="..\src\Engine\Gui\TextElement.cpp" />
+    <ClCompile Include="..\src\Engine\Gui\Widget.cpp" />
+    <ClCompile Include="..\src\Engine\Util\TexturePacker.cpp" />
+    <ClCompile Include="..\src\Engine\Util\Timer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\Engine\Common.h" />
+    <ClInclude Include="..\src\Engine\FileIO.h" />
+    <ClInclude Include="..\src\Engine\Graphics.h" />
+    <ClInclude Include="..\src\Engine\Gui.h" />
+    <ClInclude Include="..\src\Engine\IO\ConfigFile.h" />
+    <ClInclude Include="..\src\Engine\MathTypes.h" />
+    <ClInclude Include="..\src\Engine\Util.h" />
+    <ClInclude Include="..\src\Engine\Math\BoundingBox.h" />
+    <ClInclude Include="..\src\Engine\Math\Circle.h" />
+    <ClInclude Include="..\src\Engine\Math\Color.h" />
+    <ClInclude Include="..\src\Engine\Math\Colorf.h" />
+    <ClInclude Include="..\src\Engine\Math\Common.h" />
+    <ClInclude Include="..\src\Engine\Math\Frustum.h" />
+    <ClInclude Include="..\src\Engine\Math\HSLColor.h" />
+    <ClInclude Include="..\src\Engine\Math\HSVColor.h" />
+    <ClInclude Include="..\src\Engine\Math\Line.h" />
+    <ClInclude Include="..\src\Engine\Math\Math.h" />
+    <ClInclude Include="..\src\Engine\Math\Matrix.h" />
+    <ClInclude Include="..\src\Engine\Math\PackedPoint.h" />
+    <ClInclude Include="..\src\Engine\Math\PackedRect.h" />
+    <ClInclude Include="..\src\Engine\Math\Plane.h" />
+    <ClInclude Include="..\src\Engine\Math\Point.h" />
+    <ClInclude Include="..\src\Engine\Math\Quaternion.h" />
+    <ClInclude Include="..\src\Engine\Math\Ray.h" />
+    <ClInclude Include="..\src\Engine\Math\Rect.h" />
+    <ClInclude Include="..\src\Engine\Math\Rectf.h" />
+    <ClInclude Include="..\src\Engine\Math\Vector2.h" />
+    <ClInclude Include="..\src\Engine\Math\Vector3.h" />
+    <ClInclude Include="..\src\Engine\Math\Vector4.h" />
+    <ClInclude Include="..\src\Engine\IO\Deserializer.h" />
+    <ClInclude Include="..\src\Engine\IO\File.h" />
+    <ClInclude Include="..\src\Engine\IO\Log.h" />
+    <ClInclude Include="..\src\Engine\IO\Serializer.h" />
+    <ClInclude Include="..\src\Engine\IO\XmlReader.h" />
+    <ClInclude Include="..\src\Engine\IO\XmlWriter.h" />
+    <ClInclude Include="..\src\Engine\Graphics\Animation.h" />
+    <ClInclude Include="..\src\Engine\Graphics\AnimationFrames.h" />
+    <ClInclude Include="..\src\Engine\Graphics\AnimationSet.h" />
+    <ClInclude Include="..\src\Engine\Graphics\Blendmode.h" />
+    <ClInclude Include="..\src\Engine\Graphics\FBORenderTarget.h" />
+    <ClInclude Include="..\src\Engine\Graphics\Font.h" />
+    <ClInclude Include="..\src\Engine\Graphics\Image.h" />
+    <ClInclude Include="..\src\Engine\Graphics\OpenGL.h" />
+    <ClInclude Include="..\src\Engine\Graphics\Primitive.h" />
+    <ClInclude Include="..\src\Engine\Graphics\PrimitiveBatch.h" />
+    <ClInclude Include="..\src\Engine\Graphics\PrimitiveType.h" />
+    <ClInclude Include="..\src\Engine\Graphics\RenderTarget.h" />
+    <ClInclude Include="..\src\Engine\Graphics\Shader.h" />
+    <ClInclude Include="..\src\Engine\Graphics\ShaderObject.h" />
+    <ClInclude Include="..\src\Engine\Graphics\Sprite.h" />
+    <ClInclude Include="..\src\Engine\Graphics\SpriteBatch.h" />
+    <ClInclude Include="..\src\Engine\Graphics\SpriteSort.h" />
+    <ClInclude Include="..\src\Engine\Graphics\Texture.h" />
+    <ClInclude Include="..\src\Engine\Graphics\TextureLoader.h" />
+    <ClInclude Include="..\src\Engine\Graphics\Vertex.h" />
+    <ClInclude Include="..\src\Engine\Graphics\VertexArray.h" />
+    <ClInclude Include="..\src\Engine\Gui\Frame.h" />
+    <ClInclude Include="..\src\Engine\Gui\MenuElement.h" />
+    <ClInclude Include="..\src\Engine\Gui\MessageElement.h" />
+    <ClInclude Include="..\src\Engine\Gui\TextElement.h" />
+    <ClInclude Include="..\src\Engine\Gui\Widget.h" />
+    <ClInclude Include="..\src\Engine\Util\BasicTimer.h" />
+    <ClInclude Include="..\src\Engine\Util\GarbageCollect.h" />
+    <ClInclude Include="..\src\Engine\Util\Indexable.h" />
+    <ClInclude Include="..\src\Engine\Util\MinMax.h" />
+    <ClInclude Include="..\src\Engine\Util\NonCopyable.h" />
+    <ClInclude Include="..\src\Engine\Util\ReferenceCounted.h" />
+    <ClInclude Include="..\src\Engine\Util\Singleton.h" />
+    <ClInclude Include="..\src\Engine\Util\TexturePacker.h" />
+    <ClInclude Include="..\src\Engine\Util\Timer.h" />
+    <ClInclude Include="..\src\Engine\Util\UniqueID.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
