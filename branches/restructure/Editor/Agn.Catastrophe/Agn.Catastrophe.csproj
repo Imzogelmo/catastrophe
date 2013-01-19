@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{85BA06BB-5CF9-4932-9898-A78D11F898F5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Agn.Catastrophe</RootNamespace>
+    <AssemblyName>Agn.Catastrophe</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WeifenLuo.WinFormsUI.Docking">
+      <HintPath>..\packages\DockPanelSuite.2.7.0.0\lib\net40\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DocumentManager.cs" />
+    <Compile Include="IDocument.cs" />
+    <Compile Include="IDocumentManager.cs" />
+    <Compile Include="Navigation\AboutApplication.cs" />
+    <Compile Include="Navigation\ShowConversionTool.cs" />
+    <Compile Include="Navigation\ExitApplication.cs" />
+    <Compile Include="Navigation\NewProject.cs" />
+    <Compile Include="Navigation\OpenProject.cs" />
+    <Compile Include="Navigation\ShowProjectNavigator.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\ConvertFile.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\ConvertFile.Designer.cs">
+      <DependentUpon>ConvertFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConvertFileView.cs" />
+    <Compile Include="Views\ConvertFileViewModel.cs" />
+    <Compile Include="Views\NativeDrawTarget.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\NativeDrawTarget.Designer.cs">
+      <DependentUpon>NativeDrawTarget.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProjectNavigator.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\ProjectNavigator.Designer.cs">
+      <DependentUpon>ProjectNavigator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProjectNavigatorView.cs" />
+    <Compile Include="Views\SourceFile.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\SourceFile.Designer.cs">
+      <DependentUpon>SourceFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SourceFileView.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Agn.Catastrophe.Interop\Agn.Catastrophe.Interop.vcxproj">
+      <Project>{b6822a5e-07f9-4e39-9156-688efabdd954}</Project>
+      <Name>Agn.Catastrophe.Interop %28Visual Studio 2010%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Agn.Core\Agn.Core.csproj">
+      <Project>{CB6E14D8-8EA2-49FF-92CA-293238C918D5}</Project>
+      <Name>Agn.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConvertFile.resx">
+      <DependentUpon>ConvertFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ProjectNavigator.resx">
+      <DependentUpon>ProjectNavigator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SourceFile.resx">
+      <DependentUpon>SourceFile.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
