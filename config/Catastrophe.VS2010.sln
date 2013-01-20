@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2012 for Windows Desktop
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agn.Core", "Agn.Core.csproj", "{CB6E14D8-8EA2-49FF-92CA-293238C918D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agn.Core", "..\src\Editor\Agn.Core\Agn.Core.csproj", "{CB6E14D8-8EA2-49FF-92CA-293238C918D5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{5D42ABE9-4888-4C29-A9E4-A7DD9772AF03}"
 	ProjectSection(SolutionItems) = preProject
@@ -20,13 +20,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game", "Game", "{4CC345F7-A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{37FFCE35-FDAF-4A1C-8B06-C0E6A8450A0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agn.Catastrophe", "Agn.Catastrophe.csproj", "{85BA06BB-5CF9-4932-9898-A78D11F898F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agn.Catastrophe", "..\src\Editor\Agn.Catastrophe\Agn.Catastrophe.csproj", "{85BA06BB-5CF9-4932-9898-A78D11F898F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agn.Catastrophe.Editor", "Agn.Catastrophe.Editor.csproj", "{322C50F5-78CB-419D-B558-C3D660382388}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agn.Catastrophe.Editor", "..\src\Editor\Agn.Catastrophe.Editor\Agn.Catastrophe.Editor.csproj", "{322C50F5-78CB-419D-B558-C3D660382388}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Agn.Catastrophe.Interop", "Agn.Catastrophe.Interop.vcxproj", "{B6822A5E-07F9-4E39-9156-688EFABDD954}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agn.Testing", "Agn.Testing.csproj", "{3673FE72-AE96-4268-823C-1B23FB7260E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agn.Testing", "..\src\Editor\Agn.Testing\Agn.Testing.csproj", "{3673FE72-AE96-4268-823C-1B23FB7260E4}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ce-core", "ce-core.vcxproj", "{8896BFA8-8888-4A61-8225-683568711CD1}"
 EndProject
