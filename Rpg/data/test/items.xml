@@ -1,0 +1,759 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ItemList count="126">
+    <Item name="Asura" script="Asura" description="A sword whose name embodies battle.">
+        <Attributes>0,0,0,0,0,0,0,0,25,0,30,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Assassin Dagger" script="AssassinDagger" description="A dagger that casts Kill when used.">
+        <Attributes>0,0,0,0,0,0,0,0,30,0,40,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="2291" misc="0"/>
+    </Item>
+    <Item name="Battle Axe" script="BattleAxe" description="An axe made for battle.">
+        <Attributes>0,0,0,0,0,0,0,0,16,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Braveheart" script="Braveheart" description="A sword that casts Confuse when used.">
+        <Attributes>0,0,0,0,0,0,0,0,30,0,29,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Broadsword" script="Broadsword" description="Sword with a wide, double-edged blade.">
+        <Attributes>0,0,0,0,0,0,0,0,15,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Claws" script="Claws" description="A weapon with razor-sharp blades.">
+        <Attributes>0,0,0,0,0,0,0,0,22,0,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="2210" misc="0"/>
+    </Item>
+    <Item name="Coral Sword" script="CoralSword" description="A sword effective against aquatic foes.">
+        <Attributes>0,0,0,0,0,0,0,0,19,0,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Crosier" script="Crosier" description="A staff topped with an iron ring.">
+        <Attributes>0,0,0,0,0,0,0,0,14,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="47" misc="0"/>
+    </Item>
+    <Item name="Dagger" script="Dagger" description="A large knife.">
+        <Attributes>0,0,0,0,0,0,0,0,7,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="3315" misc="0"/>
+    </Item>
+    <Item name="Dark Claymore" script="DarkClaymore" description="A sword with a shimmering black blade.">
+        <Attributes>0,0,0,0,0,0,0,0,40,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="3" misc="0"/>
+    </Item>
+    <Item name="Deathbringer" script="Deathbringer" description="A sword that casts Death when used.">
+        <Attributes>0,0,0,0,0,0,0,0,36,0,25,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="128" misc="0"/>
+    </Item>
+    <Item name="Defender" script="Defender" description="A sword that casts Blink when used.">
+        <Attributes>0,0,0,0,0,0,0,0,30,0,33,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="162" misc="0"/>
+    </Item>
+    <Item name="Duel Rapier" script="DuelRapier" description="A rapier refined for battle.">
+        <Attributes>0,0,0,0,0,0,0,0,27,0,30,80,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Enhancer" script="Enhancer" description="An unusual rapier infused with magic.">
+        <Attributes>0,0,0,0,0,0,0,0,28,0,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="227" misc="0"/>
+    </Item>
+    <Item name="Excalibur" script="Excalibur" description="Sword crafted from a legendary metal.">
+        <Attributes>0,0,0,0,0,0,0,0,45,0,35,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="2" misc="0"/>
+    </Item>
+    <Item name="Falchion" script="Falchion" description="A sword that widens toward its tip.">
+        <Attributes>0,0,0,0,0,0,0,0,15,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Flame Sword" script="FlameSword" description="A sword that dances with flame.">
+        <Attributes>0,0,0,0,0,0,0,0,26,0,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="227" misc="0"/>
+    </Item>
+    <Item name="Gigantaxe" script="Gigantaxe" description="An axe boasting superb attack power.">
+        <Attributes>0,0,0,0,0,0,0,0,42,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Gladius" script="Gladius" description="A dagger crafted to be feather-light.">
+        <Attributes>0,0,0,0,0,0,0,0,23,0,30,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="3315" misc="0"/>
+    </Item>
+    <Item name="Great Axe" script="GreatAxe" description="A large axe made for battle.">
+        <Attributes>0,0,0,0,0,0,0,0,22,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Great Sword" script="GreatSword" description="A sword effective against giants.">
+        <Attributes>0,0,0,0,0,0,0,0,21,0,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Hammer" script="Hammer" description="A hammer made for battle.">
+        <Attributes>0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="803" misc="0"/>
+    </Item>
+    <Item name="Healing Staff" script="HealingStaff" description="A staff that casts Heal when used.">
+        <Attributes>0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="800" misc="0"/>
+    </Item>
+    <Item name="Ice Brand" script="Ice Brand" description="A sword gripped by winter's chill.">
+        <Attributes>0,0,0,0,0,0,0,0,29,0,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="227" misc="0"/>
+    </Item>
+    <Item name="Iron Nunchaku" script="IronNunchaku" description="Nunchaku made of iron.">
+        <Attributes>0,0,0,0,0,0,0,0,16,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="44" misc="0"/>
+    </Item>
+    <Item name="Judgment Staff" script="JudgmentStaff" description="A staff that casts Flare when used.">
+        <Attributes>0,0,0,0,0,0,0,0,26,0,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="2048" misc="0"/>
+    </Item>
+    <Item name="Kikuichimonji" script="Kikuichimonji" description="A chrysanthemum adorns its scabbard.">
+        <Attributes>0,0,0,0,0,0,0,0,37,0,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Knife" script="Knife" description="A small knife.">
+        <Attributes>0,0,0,0,0,0,0,0,5,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="3315" misc="0"/>
+    </Item>
+    <Item name="Kotetsu" script="Kotetsu" description="A small katana designed for easy use.">
+        <Attributes>0,0,0,0,0,0,0,0,22,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Light Axe" script="LightAxe" description="An axe that casts Diara when used.">
+        <Attributes>0,0,0,0,0,0,0,0,28,0,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Lightbringer" script="Lightbringer" description="A sword that casts Holy when used.">
+        <Attributes>0,0,0,0,0,0,0,0,48,0,40,50,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="128" misc="0"/>
+    </Item>
+    <Item name="Longsword" script="Longsword" description="A large, double-edged sword.">
+        <Attributes>0,0,0,0,0,0,0,0,20,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Mage Masher" script="MageMasher" description="A knife that casts Silence when used.">
+        <Attributes>0,0,0,0,0,0,0,0,20,0,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="3315" misc="0"/>
+    </Item>
+    <Item name="Mage's Staff" script="MagesStaff" description="A staff that casts Fira when used.">
+        <Attributes>0,0,0,0,0,0,0,0,13,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="3104" misc="0"/>
+    </Item>
+    <Item name="Masamune" script="Masamune" description="A legendary katana without peer.">
+        <Attributes>0,0,0,0,0,0,0,0,56,0,50,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="4095" misc="0"/>
+    </Item>
+    <Item name="Murasame" script="Murasame" description="A sword also known as the Demonblade.">
+        <Attributes>0,0,0,0,0,0,0,0,50,0,10,35,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="32" misc="0"/>
+    </Item>
+    <Item name="Mythril Hammer" script="MythrilHammer" description="A hammer wrought from mythril.">
+        <Attributes>0,0,0,0,0,0,0,0,12,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="803" misc="0"/>
+    </Item>
+    <Item name="Mythril Knife" script="MythrilKnife" description="A knife wrought from mythril.">
+        <Attributes>0,0,0,0,0,0,0,0,10,0,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="3315" misc="0"/>
+    </Item>
+    <Item name="Ogrekiller" script="Ogrekiller" description="An axe effective against giants.">
+        <Attributes>0,0,0,0,0,0,0,0,30,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Orichalcum" script="Orichalcum" description="A knife with a gleaming golden blade.">
+        <Attributes>0,0,0,0,0,0,0,0,28,0,35,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="2291" misc="0"/>
+    </Item>
+    <Item name="Power Staff" script="PowerStaff" description="A staff with good attack power.">
+        <Attributes>0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="3887" misc="0"/>
+    </Item>
+    <Item name="Ragnarok" script="Ragnarok" description="A sword etched with words of the gods.">
+        <Attributes>0,0,0,0,0,0,0,0,58,0,15,33,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="2" misc="0"/>
+    </Item>
+    <Item name="Rapier" script="Rapier" description="A sword with a slender blade.">
+        <Attributes>0,0,0,0,0,0,0,0,9,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Razer" script="Razer" description="A saber that casts Scourge when used.">
+        <Attributes>0,0,0,0,0,0,0,0,22,0,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="163" misc="0"/>
+    </Item>
+    <Item name="Rune Axe" script="RuneAxe" description="An axe that casts Curaga when used.">
+        <Attributes>0,0,0,0,0,0,0,0,40,0,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Rune Blade" script="RuneBlade" description="A sword effective against spellcasters.">
+        <Attributes>0,0,0,0,0,0,0,0,18,0,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Rune Staff" script="RuneStaff" description="A staff that casts Healara when used.">
+        <Attributes>0,0,0,0,0,0,0,0,25,0,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="512" misc="0"/>
+    </Item>
+    <Item name="Saber" script="Saber" description="A long sword made for piercing.">
+        <Attributes>0,0,0,0,0,0,0,0,13,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Sage's Staff" script="SagesStaff" description="A staff that casts Life when used.">
+        <Attributes>0,0,0,0,0,0,0,0,20,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="4032" misc="0"/>
+    </Item>
+    <Item name="Sasuke" script="Sasuke" description="A small katana used by a ninja.">
+        <Attributes>0,0,0,0,0,0,0,0,33,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="32" misc="0"/>
+    </Item>
+    <Item name="Scimitar" script="Scimitar" description="A sword with a curved blade.">
+        <Attributes>0,0,0,0,0,0,0,0,10,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Staff" script="Staff" description="A wooden staff.">
+        <Attributes>0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="3887" misc="0"/>
+    </Item>
+    <Item name="Blade" script="Blade" description="A sword effective against undead.">
+        <Attributes>0,0,0,0,0,0,0,0,32,0,30,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="163" misc="0"/>
+    </Item>
+    <Item name="Thor's Hammer" script="ThorsHammer" description="Hammer that casts Thundara when used.">
+        <Attributes>0,0,0,0,0,0,0,0,18,0,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="546" misc="0"/>
+    </Item>
+    <Item name="Ultima Weapon" script="UltimaWeapon" description="A sword bound to its wielder's HP.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="2730" misc="0"/>
+    </Item>
+    <Item name="Vorpal Sword" script="VorpalSword" description="A very sharp crescent blade.">
+        <Attributes>0,0,0,0,0,0,0,0,24,0,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="163" misc="0"/>
+    </Item>
+    <Item name="Hammer" script="Hammer" description="A hammer that strikes hard.">
+        <Attributes>0,0,0,0,0,0,0,0,30,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="546" misc="0"/>
+    </Item>
+    <Item name="Werebuster" script="Werebuster" description="A sword effective against werebeasts.">
+        <Attributes>0,0,0,0,0,0,0,0,18,0,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="227" misc="0"/>
+    </Item>
+    <Item name="Wizard's Staff" script="WizardsStaff" description="A staff that casts Confuse when used.">
+        <Attributes>0,0,0,0,0,0,0,0,16,0,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="2048" misc="0"/>
+    </Item>
+    <Item name="Wyrmkiller" script="Wyrmkiller" description="Gloves made of leather.">
+        <Attributes>0,0,0,0,0,0,0,0,19,0,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Aegis Shield" script="AegisShield" description="A shield that guards against stone.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="2" misc="0"/>
+    </Item>
+    <Item name="Buckler" script="Buckler" description="A small shield.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Crystal Shield" script="CrystalShield" description="A shield of crystal, crafted long ago.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="34" misc="0"/>
+    </Item>
+    <Item name="Diamond Shield" script="DiamondShield" description="A shield made of diamond.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="2" misc="0"/>
+    </Item>
+    <Item name="Elven Cloak" script="ElvenCloak" description="A cloak enchanted with elven magic.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="4083" misc="0"/>
+    </Item>
+    <Item name="Flame Shield" script="FlameShield" description="A shield alive with the power of fire.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Genji Shield" script="GenjiShield" description="Heavy shield crafted in a distant land.">
+        <Attributes>0,0,0,0,0,0,0,0,27,14,30,42,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Hero's Shield" script="HerosShield" description="Shield that wards off status ailments.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="2" misc="0"/>
+    </Item>
+    <Item name="Shield" script="Shield" description="A shield alive with the power of ice.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Iron Shield" script="IronShield" description="A shield wrought from iron.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Leather Shield" script="LeatherShield" description="A shield made of hardened leather.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Mythril Shield" script="MythrilShield" description="A shield crafted from mythril.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Protect Cloak" script="ProtectCloak" description="A large cloak worn over armor.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="4083" misc="0"/>
+    </Item>
+    <Item name="Zephyr Cape" script="ZephyrCape" description="A cape alive with the spirit of wind.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="4083" misc="0"/>
+    </Item>
+    <Item name="Black Cowl" script="BlackCowl" description="Black hood brought from a distant land.">
+        <Attributes>0,0,0,0,0,0,0,0,1,8,3,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="48" misc="0"/>
+    </Item>
+    <Item name="Crystal Helm" script="CrystalHelm" description="A helm of crystal, crafted long ago.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="34" misc="0"/>
+    </Item>
+    <Item name="Diamond Helm" script="DiamondHelm" description="A helm made of diamond.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="2" misc="0"/>
+    </Item>
+    <Item name="Feathered Cap" script="FeatheredCap" description="A light cap woven of silk.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Genji Helm" script="GenjiHelm" description="A heavy helm crafted in a distant land.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="51" misc="0"/>
+    </Item>
+    <Item name="Great Helm" script="GreatHelm" description="A helm that covers the entire head.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Healing Helm" script="HealingHelm" description="A helm that casts Heal when used.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Helm" script="Helm" description="A small helm.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Leather Cap" script="LeatherCap" description="A cap made of leather.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="4095" misc="0"/>
+    </Item>
+    <Item name="Mythril Helm" script="MythrilHelm" description="A helm wrought from mythril.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="" script="" description="A cap that awakens latent abilities.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="192" misc="0"/>
+    </Item>
+    <Item name="Ribbon" script="Ribbon" description="Ribbon that wards off special attacks.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="4095" misc="0"/>
+    </Item>
+    <Item name="Sage's Mitre" script="SagesMitre" description="A hat made of enchanted cloth.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="3840" misc="0"/>
+    </Item>
+    <Item name="Twist Headband" script="TwistHeadband" description="A headband favored by martial artists.">
+        <Attributes>0,0,0,0,0,0,0,0,5,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="60" misc="0"/>
+    </Item>
+    <Item name="Wizard's Hat" script="WizardsHat" description="A traditional hat brimming with magic.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="4032" misc="0"/>
+    </Item>
+    <Item name="Bard's Tunic" script="BardsTunic" description="A light, loose-fitting tunic.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="4095" misc="0"/>
+    </Item>
+    <Item name="Black Garb" script="BlackGarb" description="Light, durable suit from a distant land.">
+        <Attributes>0,0,0,0,0,0,0,0,1,40,10,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="48" misc="0"/>
+    </Item>
+    <Item name="Black Robe" script="BlackRobe" description="A robe that casts Bizzara when used.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="2048" misc="0"/>
+    </Item>
+    <Item name="Chain Mail" script="ChainMail" description="Mail of interwoven chain links.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="227" misc="0"/>
+    </Item>
+    <Item name="Clothes" script="Clothes" description="Ordinary clothing.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="4095" misc="0"/>
+    </Item>
+    <Item name="Copper Armlet" script="CopperArmlet" description="An armlet crafted from copper.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="4095" misc="0"/>
+    </Item>
+    <Item name="Crystal Mail" script="CrystalMail" description="Mail of crystal, crafted long ago.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="34" misc="0"/>
+    </Item>
+    <Item name="Diamond Armlet" script="DiamondArmlet" description="An armlet adorned with diamonds.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="4095" misc="0"/>
+    </Item>
+    <Item name="Diamond Armor" script="DiamondArmor" description="Armor crafted from diamond.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="2" misc="0"/>
+    </Item>
+    <Item name="Dragon Mail" script="DragonMail" description="Mail fashioned from dragon scales.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="2" misc="0"/>
+    </Item>
+    <Item name="Flame Mail" script="FlameMail" description="Mail infused with the power of fire.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Gaia Gear" script="GaiaGear" description="A robe instilled with the earth's grace.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="3072" misc="0"/>
+    </Item>
+    <Item name="Genji Armor" script="GenjiArmor" description="Heavy armor crafted in a distant land.">
+        <Attributes>0,0,0,0,0,0,0,0,2,35,3,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Armor" script="Armor" description="Armor infused with the power of ice.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Iron Armor" script="IronArmor" description="Armor made of thinly hammered iron.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Kenpogi" script="Kenpogi" description="An outfit favored by martial artists.">
+        <Attributes>0,0,0,0,0,0,0,0,3,28,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="12" misc="0"/>
+    </Item>
+    <Item name="Knight's Armor" script="KnightsArmor" description="Armor crafted from steel plates.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="3" misc="0"/>
+    </Item>
+    <Item name="Leather Armor" script="LeatherArmor" description="Armor made of hardened leather.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="255" misc="0"/>
+    </Item>
+    <Item name="Light Robe" script="LightRobe" description="A robe imbued with the power of light.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="768" misc="0"/>
+    </Item>
+    <Item name="Mythril Mail" script="MythrilMail" description="Mail crafted from mythril.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="227" misc="0"/>
+    </Item>
+    <Item name="Jacket" script="Jacket" description="A jacket that protects against flame.">
+        <Attributes>0,0,0,0,0,0,0,0,3,24,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="240" misc="0"/>
+    </Item>
+    <Item name="Ruby Armlet" script="RubyArmlet" description="An armlet of worked silver.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="4095" misc="0"/>
+    </Item>
+    <Item name="Sage's Surplice" script="SagesSurplice" description="A robe that enhances intelligence.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="4032" misc="0"/>
+    </Item>
+    <Item name="Silver Armlet" script="SilverArmlet" description="An armlet of worked silver.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="4095" misc="0"/>
+    </Item>
+    <Item name="Thief's Armlet" script="ThiefsArmlet" description="An armlet that enhances agility.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,5,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="48" misc="0"/>
+    </Item>
+    <Item name="White Robe" script="WhiteRobe" description="A robe that casts Invisira when used.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="512" misc="0"/>
+    </Item>
+    <Item name="Angel's Ring" script="AngelsRing" description="Ring fashioned after an angel's feather.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="4032" misc="0"/>
+    </Item>
+    <Item name="Bronze Gloves" script="BronzeGloves" description="Gloves made of bronze.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Crystal Gloves" script="CrystalGloves" description="Gloves of crystal, crafted long ago.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="34" misc="0"/>
+    </Item>
+    <Item name="Diamond Gloves" script="DiamondGloves" description="Gloves made of diamond.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="2" misc="0"/>
+    </Item>
+    <Item name="Genji Gloves" script="GenjiGloves" description="Heavy gloves crafted in a distant land.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Giant's Gloves" script="GiantsGloves" description="Gloves that cast Saber when used.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Leather Gloves" script="LeatherGloves" description="Gloves made of leather.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="4095" misc="0"/>
+    </Item>
+    <Item name="Mythril Gloves" script="MythrilGloves" description="Gloves made of mythril.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Protect Ring" script="ProtectRing" description="Ring that guards against instant death.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="4095" misc="0"/>
+    </Item>
+    <Item name="Steel Gloves" script="SteelGloves" description="Gloves made of steel.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Thief's Gloves" script="ThiefsGloves" description="Gloves that enhance ability.">
+        <Attributes>0,0,0,0,0,0,0,0,0,0,5,14,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Attributes>
+        <Elements>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Elements>
+        <Status>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Status>
+        <Flags attrib="0" elements="0" status="0" family="0" class="48" misc="0"/>
+    </Item>
+</ItemList>

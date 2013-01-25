@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<StringAliasList>
+    <String name="imp" alias="goblin" />
+    <String name="grimp" alias="goblin guard" />
+    <String name="wolf" alias="wolf" />
+    <String name="grwolf" alias="warg wolf" />
+    <String name="wrwolf" alias="werewolf" />
+    <String name="frwolf" alias="winter wolf" />
+    <String name="iguana" alias="lizard" />
+    <String name="agama" alias="fire lizard" />
+    <String name="sauria" alias="basilisk" />
+    <String name="giant" alias="hill gigas" />
+    <String name="frgiant" alias="ice gigas" />
+    <String name="rgiant" alias="fire gigas" />
+    <String name="sahag" alias="sahagin" />
+    <String name="rsahag" alias="sahagin chief" />
+    <String name="wzsahag" alias="sahagin prince" />
+    <String name="pirate" alias="pirate" />
+    <String name="kyzoku" alias="buccaneer" />
+    <String name="shark" alias="shark" />
+    <String name="grshark" alias="white shark" />
+    <String name="oddeye" alias="bigeyes" />
+    <String name="bigeye" alias="deepeyes" />
+    <String name="bone" alias="skeleton" />
+    <String name="rbone" alias="bloodbones" />
+    <String name="creep" alias="gigas worm" />
+    <String name="crawl" alias="crawler" />
+    <String name="hyena" alias="hyenadon" />
+    <String name="cerebus" alias="hellhound" />
+    <String name="ogre" alias="ogre" />
+    <String name="grogre" alias="ogre chief" />
+    <String name="wzogre" alias="ogre mage" />
+    <String name="asp" alias="cobra" />
+    <String name="cobra" alias="anaconda" />
+    <String name="seasnake" alias="sea snake" />
+    <String name="scorpion" alias="scorpion" />
+    <String name="lobster" alias="sea scorpion" />
+    <String name="bull" alias="minotaur" />
+    <String name="zombull" alias="necrotaur" />
+    <String name="troll" alias="troll" />
+    <String name="seatroll" alias="sea troll" />
+    <String name="shadow" alias="shadow" />
+    <String name="image" alias="wraith" />
+    <String name="wraith" alias="specter" />
+    <String name="ghost" alias="ghost" />
+    <String name="zombie" alias="zombie" />
+    <String name="ghoul" alias="ghoul" />
+    <String name="geist" alias="ghast" />
+    <String name="specter" alias="wight" />
+    <String name="worm" alias="purple worm" />
+    <String name="sandworm" alias="sand worm" />
+    <String name="grworm" alias="lava worm" />
+    <String name="eye" alias="evil eye" />
+    <String name="phantom" alias="death eye" />
+    <String name="medusa" alias="medusa" />
+    <String name="grmedusa" alias="earth medusa" />
+    <String name="catman" alias="weretiger" />
+    <String name="mancat" alias="rakshasa" />
+    <String name="pede" alias="centipede" />
+    <String name="grpede" alias="remora" />
+    <String name="tiger" alias="lesser tiger" />
+    <String name="saber" alias="sabertooth" />
+    <String name="vampire" alias="vampire" />
+    <String name="wzvampire" alias="vampire lord" />
+    <String name="gargoyle" alias="gargoyle" />
+    <String name="rgargoyle" alias="horned devil" />
+    <String name="earth" alias="earth elemental" />
+    <String name="fire" alias="fire elemental" />
+    <String name="frdragon" alias="white dragon" />
+    <String name="rdragon" alias="red dragon" />
+    <String name="zombd" alias="dragon zombie" />
+    <String name="scum" alias="green slime" />
+    <String name="muck" alias="gray ooze" />
+    <String name="ooze" alias="ochre jelly" />
+    <String name="slime" alias="dark flan" />
+    <String name="spider" alias="black widow" />
+    <String name="arachnid" alias="tarantula" />
+    <String name="manticor" alias="manticore" />
+    <String name="sphinx" alias="sphinx" />
+    <String name="rankylo" alias="baretta" />
+    <String name="ankylo" alias="desert baretta" />
+    <String name="mummy" alias="mummy" />
+    <String name="wzmummy" alias="king mummy" />
+    <String name="coctrice" alias="cockatrice" />
+    <String name="perilisk" alias="pyrolisk" />
+    <String name="wyvern" alias="wyvern" />
+    <String name="wyrm" alias="wyrm" />
+    <String name="tyro" alias="allosaurus" />
+    <String name="trex" alias="tyrannosaur" />
+    <String name="caribe" alias="piranha" />
+    <String name="rcaribe" alias="red piranha" />
+    <String name="gator" alias="crocodile" />
+    <String name="frgator" alias="white croc" />
+    <String name="ocho" alias="ochu" />
+    <String name="naocho" alias="neochu" />
+    <String name="hydra" alias="hydra" />
+    <String name="rhydra" alias="fire hydra" />
+    <String name="guard" alias="guardian" />
+    <String name="sentry" alias="soldier" />
+    <String name="water" alias="water elemental" />
+    <String name="air" alias="air elemental" />
+    <String name="naga" alias="water naga" />
+    <String name="grnaga" alias="spirit naga" />
+    <String name="chimera" alias="chimera" />
+    <String name="jimera" alias="rhyos" />
+    <String name="wizard" alias="piscodemon" />
+    <String name="sorcerer" alias="mindflayer" />
+    <String name="garland" alias="garland" />
+    <String name="gasdragon" alias="green dragon" />
+    <String name="bluedragon" alias="blue dragon" />
+    <String name="mudgol" alias="clay golem" />
+    <String name="rockgol" alias="stone golem" />
+    <String name="irongol" alias="iron golem" />
+    <String name="badman" alias="black knight" />
+    <String name="evilman" alias="death knight" />
+    <String name="astos" alias="astos" />
+    <String name="mage" alias="dark wizard" />
+    <String name="fighter" alias="dark fighter" />
+    <String name="madpony" alias="crazy horse" />
+    <String name="nitemare" alias="nightmare" />
+    <String name="warmech" alias="warmech" />
+    <String name="lich" alias="lich" />
+    <String name="lich" alias="lich" />
+    <String name="kary" alias="marilith" />
+    <String name="kary" alias="marilith" />
+    <String name="kraken" alias="kraken" />
+    <String name="kraken" alias="kraken" />
+    <String name="tiamat" alias="tiamat" />
+    <String name="tiamat" alias="tiamat" />
+    <String name="chaos" alias="chaos" />
+</StringAliasList>
