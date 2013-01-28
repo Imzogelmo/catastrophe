@@ -237,46 +237,47 @@ namespace Util
 		a.SetLooping(loop);
 		a.SetPaused(paused);
 
-		if( xml->NextChild("Frame") )
+		Rect sourceRect = Rect::Zero;
+		Point offset = Point::Zero;
+
+		Texture* texture = 0;
+		fc::string textureName = xml->GetString("texture");
+		if( !textureName.empty() )
 		{
-			Rect sourceRect = Rect::Zero;
-			Point offset = Point::Zero;
+			ResourceManager* resourceManager = gGetResourceManager();
+			ASSERT(resourceManager != 0);
 
-			Texture* texture = 0;
-			fc::string textureName = xml->GetString("texture");
-			if( !textureName.empty() )
-			{
-				ResourceManager* resourceManager = gGetResourceManager();
-				ASSERT(resourceManager != 0);
-
-				texture = resourceManager->GetTexture(textureName);
-				if( !texture )
-				{
-					texture = resourceManager->LoadTexture(textureName.c_str());
-				}
-			}
-
+			texture = resourceManager->GetTexture(textureName);
 			if( !texture )
 			{
-				//TODO set default texture to sprite...
-				// ..better yet, initialize sprites to default texture when created... 
-				// (this would save a lot of extra crap in the long run)..
-
-				//it's not a fatal error, but it's not good either.
-				LogError("Error: Texture (%s) not found. Could not load Animation.", textureName.c_str());
+				texture = resourceManager->LoadTexture(textureName.c_str());
 			}
-			else
+		}
+
+		if( !texture )
+		{
+			//TODO set default texture to sprite...
+			// ..better yet, initialize sprites to default texture when created... 
+			// (this would save a lot of extra crap in the long run)..
+
+			//it's not a fatal error, but it's not good either.
+			LogError("Error: Texture (%s) not found. Could not load Animation.", textureName.c_str());
+		}
+		else
+		{
+			a.SetTexture(texture);
+
+			if( xml->NextChild("Frame") )
 			{
 				int numFrames = xml->GetInt("num_frames");
 				DeserializeRect(xml, sourceRect);
 				offset.x = xml->GetInt("offset_x");
 				offset.y = xml->GetInt("offset_y");
-				a.SetTexture(texture);
 				a.SetFrameData( sourceRect, numFrames, offset.x, offset.y );
 			}
-
-			xml->SetToParent();
 		}
+
+		xml->SetToParent();
 	}
 
 
