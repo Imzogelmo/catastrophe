@@ -91,7 +91,6 @@ void BattleActionQueue::RemoveCancelledActions()
 		{
 			m_actions.erase(it);
 			m_finishedActions.push_back(*it);
-			--it;
 		}
 		else
 		{

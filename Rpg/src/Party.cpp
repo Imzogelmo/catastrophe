@@ -17,7 +17,7 @@
 void Party::AddMember( int id )
 {
 	vec_type::iterator it = fc::find(m_characters.begin(), m_characters.end(), id);
-	if( it != m_characters.end() )
+	if( it == m_characters.end() )
 	{
 		//todo: sanity check
 		m_characters.push_back(id);
