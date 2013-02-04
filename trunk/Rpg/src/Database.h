@@ -38,21 +38,21 @@ public:
 	//AnimatedSpriteList* GetSpriteList() const { return m; }
 
 
-	typedef fc::vector<int>			sound_vec_type;
+	//typedef fc::vector<int>			sound_vec_type;
 
 
-	sound_vec_type		default_sfx;
-	sound_vec_type		default_music;
+	//sound_vec_type		default_sfx;
+	//sound_vec_type		default_music;
 
-	fc::string			title;
-	fc::string			currency;
+	//fc::string			title;
+	//fc::string			currency;
 
 
 
-	template <class T>
-	bool SerializeXml( const fc::vector<T>& vec )
-	{
-	}
+	//template <class T>
+	//bool SerializeXml( const fc::vector<T>& vec )
+	//{
+	//}
 
 private:
 	ItemList*			m_itemList;

@@ -9,6 +9,9 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
+#include <fc/vector.h>
+#include <fc/sort.h>
+
 #include "Inventory.h"
 
 
@@ -224,6 +227,13 @@ Item* Inventory::GetItem( const fc::string& name ) const
 }
 
 
+template <class Compare>
+void Inventory::Sort( Compare comp )
+{
+	fc::sort( m_items.begin(), m_items.end(), comp );
+}
+
+
 InventoryItem& Inventory::operator []( size_t index )
 {
 	ASSERT(index < m_items.size());
@@ -236,6 +246,3 @@ const InventoryItem& Inventory::operator []( size_t index ) const
 	ASSERT(index < m_items.size());
 	return m_items[index];
 }
-
-
-

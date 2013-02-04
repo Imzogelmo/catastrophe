@@ -34,6 +34,9 @@ struct RPG_API Item : public AttributeData
 
 	};
 
+	//item types : item, weapon, armor, accessory, etc..
+	//item subtypes : knife, katana, etc.
+
 	int				id;
 	int				type;
 	int				subtype;
@@ -53,14 +56,6 @@ struct RPG_API Item : public AttributeData
 
 	void SerializeXml( XmlWriter* xml );
 	void DeserializeXml( XmlReader* xml );
-
-};
-
-
-class ItemSorter
-{
-public:
-
 
 };
 
