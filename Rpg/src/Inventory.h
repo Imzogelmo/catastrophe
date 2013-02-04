@@ -50,11 +50,14 @@ public:
 	Item* GetItem( size_t index ) const;
 	Item* GetItem( const fc::string& name ) const;
 
+	template <class Compare>
+	void Sort( Compare comp = Compare() );
+
+
 	InventoryItem& operator []( size_t index );
 	const InventoryItem& operator []( size_t index ) const;
 	InventoryItem& GetInventoryItem( size_t index ) { return operator[](index); }
 	const InventoryItem& GetInventoryItem( size_t index ) const { return operator[](index); }
-
 
 	//internal management policy queries.
 	bool GetPolicyCanContainDuplicates() const { return m_canContainDuplicates; }

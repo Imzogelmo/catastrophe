@@ -43,14 +43,21 @@
 #define ps_CAST				5 // Casting a spell.
 #define ps_PREPARE_ITEM		6 // Preparing to use an item.
 #define ps_ITEM				7 // Using an item.
+
+//these might not be needed.
 #define ps_DEAD				16 // Dead.
 #define ps_STONE			17 // Turned to stone.
+
+//fixme: these should be seperate.
 #define ps_WEAK				0x0100 // Flag | Player is in the kneel position.
 #define ps_MOVE_ACTION		0x1000 // Flag | Player is moving to action position.
 #define ps_MOVE_HOME		0x2000 // Flag | Player is moving to home position.
 #define ps_DAMAGED			0x4000 // Flag | Player is taking damage.
 
 
+/// REVISION parent.attributes.stat[] -> parent.stat[]
+/// -------- equipment and buffs are now handled by the engine
+/// -------- addition of base_stat[]. -- player.stat[] cannot be set, though base_stat[] can be set.
 
 class CharacterBase
 {
@@ -66,14 +73,19 @@ class CharacterBase
 	//-------------------------------------
 	// * Statistics
 	//-------------------------------------
-	int get_stat(int i) const
+	int get_base_stat(int i) const
 	{
-		return parent.attributes.stat[i];
+		return parent.base_stat[i];
 	}
 
-	int set_stat(int i, int value)
+	int set_base_stat(int i, int value)
 	{
-		parent.attributes.stat[i] = value;
+		parent.base_stat[i] = value;
+	}
+
+	int get_stat(int i) const
+	{
+		return parent.stat[i];
 	}
 
 	//-------------------------------------

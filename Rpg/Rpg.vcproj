@@ -506,6 +506,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\ItemSort.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Party.h"
 				>
 			</File>
