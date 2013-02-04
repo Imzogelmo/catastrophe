@@ -75,14 +75,19 @@ void ScriptTemplateClass::SetValue( storage_type *ptr, void *value )
 {
 	if( (m_subtypeId & ~asTYPEID_MASK_SEQNBR) && !(m_isHandle) )
 	{
+	//if( m_isMaskObject )
+		//valStruct.valueObj = engine->CreateScriptObjectCopy(value, typeId);
 		m_objType->GetEngine()->AssignScriptObject( ptr->ptr, value, m_subtypeId );
-		//m_objType->GetEngine()->AssignScriptObject(ptr, value, subTypeId);
 	}
 
 	else if( m_isHandle )
 	{
 		*(void**)ptr = *(void**)value;
 		m_objType->GetEngine()->AddRefScriptObject(*(void**)value, m_subtypeId);
+
+		//void* tmp = *(void**)ptr;
+		//if( *(void**)ptr )
+		//	objType->GetEngine()->ReleaseScriptObject(*(void**)ptr, m_subtypeId);
 	}
 
 	else
@@ -118,6 +123,7 @@ void ScriptTemplateClass::ConstructObject( storage_type *ptr )
 	else if( m_isMaskObject )
 	{
 		ptr->ptr = m_objType->GetEngine()->CreateScriptObject(m_subtypeId);
+		//ptr->ptr = m_objType->GetEngine()->CreateScriptObjectCopy(value, typeId);
 	}
 }
 

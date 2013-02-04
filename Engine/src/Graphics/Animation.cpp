@@ -182,9 +182,19 @@ void Animation::Update()
 			else
 			{
 				--m_currentFrame;
+				m_frameCounter += m_frameSpeed; //hack
 			}
 		}
 	}
+}
+
+
+bool Animation::IsFinished() const
+{
+	return ( !m_loop && IsAnimated() && 
+		(m_currentFrame == NumFrames() - 1) &&
+		(m_frameCounter >= m_frameSpeed)
+	);
 }
 
 

@@ -109,7 +109,7 @@ void ScriptArrayTemplate::Clear()
 	for( size_t i(0); i < m_array.size(); ++i )
 	{
 		this->DestructObject( &m_array[ i ] );
-		//this->ReleasePtr( m_array[ i ] );
+		//this->ReleasePtr( (void*)&m_array[ i ] );
 	}
 
 	m_array.resize(0);
@@ -140,7 +140,8 @@ void ScriptArrayTemplate::Resize3( int z, int y, int x )
 
 	if( newSize == 0 )
 	{
-		Clear();
+		if( size != 0 )
+			Clear();
 	}
 	else if( size < newSize )
 	{
@@ -259,12 +260,12 @@ void ScriptEngine::RegisterArrayTemplate()
 	r = engine->RegisterObjectBehaviour("array<T>", asBEHAVE_RELEASE, "void f()", asMETHOD(ScriptArrayTemplate,Release), asCALL_THISCALL); assert( r >= 0 );
 
 	// The index operator returns the template subtype
-	r = engine->RegisterObjectMethod("array<T>", "T &opArray(int)", asMETHOD(ScriptArrayTemplate, At1), asCALL_THISCALL); assert( r >= 0 );
-	r = engine->RegisterObjectMethod("array<T>", "T &opArray(int,int)", asMETHOD(ScriptArrayTemplate, At2), asCALL_THISCALL); assert( r >= 0 );
-	r = engine->RegisterObjectMethod("array<T>", "T &opArray(int,int,int)", asMETHOD(ScriptArrayTemplate, At3), asCALL_THISCALL); assert( r >= 0 );
-	r = engine->RegisterObjectMethod("array<T>", "const T &opArray(int) const", asMETHOD(ScriptArrayTemplate, At1), asCALL_THISCALL); assert( r >= 0 );
-	r = engine->RegisterObjectMethod("array<T>", "const T &opArray(int,int) const", asMETHOD(ScriptArrayTemplate, At2), asCALL_THISCALL); assert( r >= 0 );
-	r = engine->RegisterObjectMethod("array<T>", "const T &opArray(int,int,int) const", asMETHOD(ScriptArrayTemplate, At3), asCALL_THISCALL); assert( r >= 0 );
+	r = engine->RegisterObjectMethod("array<T>", "T &at(int)", asMETHOD(ScriptArrayTemplate, At1), asCALL_THISCALL); assert( r >= 0 );
+	r = engine->RegisterObjectMethod("array<T>", "T &at(int,int)", asMETHOD(ScriptArrayTemplate, At2), asCALL_THISCALL); assert( r >= 0 );
+	r = engine->RegisterObjectMethod("array<T>", "T &at(int,int,int)", asMETHOD(ScriptArrayTemplate, At3), asCALL_THISCALL); assert( r >= 0 );
+	r = engine->RegisterObjectMethod("array<T>", "const T &at(int) const", asMETHOD(ScriptArrayTemplate, At1), asCALL_THISCALL); assert( r >= 0 );
+	r = engine->RegisterObjectMethod("array<T>", "const T &at(int,int) const", asMETHOD(ScriptArrayTemplate, At2), asCALL_THISCALL); assert( r >= 0 );
+	r = engine->RegisterObjectMethod("array<T>", "const T &at(int,int,int) const", asMETHOD(ScriptArrayTemplate, At3), asCALL_THISCALL); assert( r >= 0 );
 
 	// assignment operator
 	r = engine->RegisterObjectMethod("array<T>", "array<T> &opAssign(const array<T>&in)", asMETHOD(ScriptArrayTemplate, operator=), asCALL_THISCALL); assert( r >= 0 );

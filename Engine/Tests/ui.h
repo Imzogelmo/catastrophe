@@ -3,6 +3,7 @@
 
 #include "Catastrophe/Gui.h"
 #include "Catastrophe/Gui/TextElement.h"
+#include "Catastrophe/Gui/MenuElement.h"
 #include "Catastrophe/Graphics/SpriteBatch.h"
 #include "Catastrophe/Graphics/Texture.h"
 #include "Catastrophe/Graphics/Image.h"
@@ -325,27 +326,41 @@ public:
 	Sprite sprite;
 	Sprite bg;
 	Texture tex;
-	Font font;
+	Font font[7];
+	Font sans;
 
 	FrameWidget frame;
 	TextElement te1;
+	MenuElement me;
 
+	static const int FSIZE = 16;
 
 	UI_Test()
 	{
 		//te1 = TextElement("", &font); te1.SetPosition(Point(32,400));
-		te1 = TextElement("", &font);
+		te1 = TextElement("", &sans);
 		//te1.SetPosition(Point(32,432));
 		te1.SetPosition(Point(32,8));
 		te1.SetText("Wow that's a lotta nuts! ..Kupo.");
 
-		assert( font.LoadFromFile("fonts/final_fantasy_36.ttf", 18) == 0 );
-		//assert( font.LoadFromFile("sansation.ttf", 36) == 0 );
-		font.SetLineHeight(18);
+		font[0].LoadFromFile("fonts/ff_36.ttf", FSIZE);
+		font[1].LoadFromFile("fonts/ff_advance_a.ttf", FSIZE);
+		font[2].LoadFromFile("fonts/ff_advance_b.ttf", FSIZE);
+		font[3].LoadFromFile("fonts/ff_nes.ttf", FSIZE);
+		font[4].LoadFromFile("fonts/ff_6a.ttf", FSIZE);
+		font[5].LoadFromFile("fonts/ff_6b.ttf", FSIZE);
+		font[6].LoadFromFile("fonts/ff_7.ttf", FSIZE);
+
+		//for( int i(0); i < 7; ++i )
+			//font[i].SetMaxGlyphHeight(36 / 4.f);
+
+		sans.LoadFromFile("sansation.ttf", FSIZE);
+
+		//font.SetLineHeight(18);
 		assert( tex.LoadFromFile("gui.png") );
 		sprite.SetTexture(&tex);
 		sprite.SetSize(24.f);
-		sprite.SetSourceRect(Rect(0,0,24,24));
+		sprite.SetSourceRect(Rect(0,64,24,24));
 		//sprite.SetSourceRect(Rect(64,0,64,64));
 
 		bg.SetTexture(&tex);
@@ -357,7 +372,8 @@ public:
 		frame.SetPosition(Point(0,430));
 		frame.SetFromSprite(sprite);
 
-		frame.AddChild(&te1);
+		//frame.AddChild(&te1);
+		frame.AddChild(&me);
 	}
 
 	void Update()
@@ -368,6 +384,7 @@ public:
 	{
 		sb.Begin();
 
+		/*
 		FrameWidget f[64];
 		for( int i(0); i < 64; ++i )
 		{
@@ -380,6 +397,7 @@ public:
 			sb.Draw( bg.GetTextureID(), Rectf(p, p+s), bg.GetUVRect(), Color::White(100));
 			f[i].Render(&sb);
 		}
+		*/
 
 		//sb.DrawSprite( bg, 32.f );
 		//sb.Draw( bg.GetTextureID(), Rectf(Vector2(32.f,32.f), Vector2(32.f,32.f) + bg.size), bg.GetUVRect());
@@ -394,6 +412,19 @@ public:
 
 		te1.SetColor(Color::White());
 		//te1.Render(&sb);
+
+		static int ci = 0;
+		if ( Input::GetKeyboard()->IsKeyPressed(KEY_RIGHT) )
+		{
+			ci++;
+			ci %= 7;
+		}
+
+		//sb.DrawString( &font[ci], "ABCDEFGHIJKLMNOPQRSTUVWXYZ12345 abcdefg", 0.f );
+		sb.DrawString( &font[ci], "ABCDEFG12345", 0.f );
+		sb.DrawString( &font[ci], "abcdefghijk", Vector2(0,FSIZE) );
+		sb.DrawString( &sans, "ABCDEFG12345", Vector2(640,0),Color::White(), AlignRight );
+		sb.DrawString( &sans, "abcdefghijk", Vector2(640,FSIZE),Color::White(), AlignRight );
 
 		sb.Render();
 		sb.End();

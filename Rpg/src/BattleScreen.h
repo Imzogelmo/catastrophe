@@ -6,6 +6,7 @@
 
 #include "Screen.h"
 #include "Battle.h"
+#include "BattleActions.h"
 
 
 
@@ -28,11 +29,13 @@ public:
 	void AddBattle( Battle* battle );
 
 	Battle* GetCurrentBattle();
+	BattleActionQueue* GetActionQueue() { return &m_actionQueue; }
 
 protected:
 	//Script	m_script;
+	BattleActionQueue			m_actionQueue;
 	fc::vector<Battle*>			m_battles;
-	fc::vector<BattleAction*>	m_actions;
+	//fc::vector<BattleAction*>	m_actions;
 	//fc::vector<Actor*>		m_actors;
 
 };

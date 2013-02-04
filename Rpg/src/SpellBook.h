@@ -14,25 +14,21 @@
 #include <fc/vector.h>
 
 
-class Spell
+class SpellLearning
 {
+	int spell_id;
 };
 
 
 class SpellBook
 {
 public:
-	typedef fc::vector<Spell*>		vec_type;
+	typedef fc::vector<int>	vec_type;
 
-
-	bool HasLearned()
-	{
-	}
-
-	void Learn()
-	{
-	}
-
+	bool Contains( int id );
+	void Learn( int id );
+	void Unlearn( int id );
+	void UnlearnAll();
 
 protected:
 	vec_type	m_spells;

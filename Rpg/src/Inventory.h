@@ -30,7 +30,9 @@ public:
 
 	void Add( const InventoryItem& inventoryItem );
 	void Add( Item* item, int count = 1 );
+	//void Add( int id, int count = 1 );
 	void Remove( Item* item, int count = 1 );
+	void Remove( int id, int count = 1 );
 	void RemoveFromInventory( size_t index );
 	void RemoveFromInventory( Item* item );
 

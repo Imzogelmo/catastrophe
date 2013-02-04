@@ -101,8 +101,9 @@ Resource* ResourceCache::GetResource( int id )
 	Resource* res = 0;
 	if( (size_t)id < m_resources.size() )
 	{
-		if( res->ptr )
-			res = &m_resources[id];
+		res = &m_resources[id];
+		if( !res->ptr )
+			res = 0;
 	}
 
 	return res;

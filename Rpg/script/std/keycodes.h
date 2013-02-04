@@ -47,8 +47,8 @@
 
 #define KEY_UP		283
 #define KEY_DOWN	284
-#define KEY_LEFT	281
-#define KEY_RIGHT	282
+#define KEY_LEFT	285
+#define KEY_RIGHT	286
 
 
 //mouse indices will never change.

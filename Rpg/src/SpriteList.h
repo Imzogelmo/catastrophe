@@ -16,7 +16,7 @@
 #include "Common.h"
 #include "DataList.h"
 
-/*
+
 class RPG_API SpriteList : public DataList<Sprite>
 {
 public:
@@ -32,7 +32,7 @@ public:
 	NO_INLINE bool DeserializeXml( const fc::string& filename );
 
 };
-*/
+
 
 class RPG_API AnimatedSpriteList : public DataList<AnimatedSprite>
 {

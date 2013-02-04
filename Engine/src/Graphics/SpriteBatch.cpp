@@ -191,8 +191,14 @@ void SpriteBatch::DrawAnimatedSprite( const AnimatedSprite& sprite, const Vector
 
 void SpriteBatch::DrawTexture( const Texture* texture, const Vector2& pos )
 {
+	DrawTexture( texture, pos, Vector2((float)texture->Width(), (float)texture->Height()) );
+}
+
+
+void SpriteBatch::DrawTexture( const Texture* texture, const Vector2& pos, const Vector2& size )
+{
 	InternalQueueSprite( texture->GetTextureID(), 0.f, 1.f, 0.f, 
-		Rectf(pos.x, pos.y, (float)texture->Width(), (float)texture->Height()), Rectf::One, Color::White(), 0 );
+		Rectf(pos.x, pos.y, pos.x + size.x, pos.y + size.y), Rectf::One, Color::White(), 0 );
 }
 
 

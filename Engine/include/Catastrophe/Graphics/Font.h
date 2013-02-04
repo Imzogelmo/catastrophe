@@ -81,6 +81,7 @@ public:
 
 	void SetAdvance( int advance );
 	void SetLineHeight( int height );
+	void SetMaxGlyphHeight( float y );
 
 	int GetTextWidth( const fc::string& text ) const;
 	int GetTextWidth( const char* first, const char* last ) const;

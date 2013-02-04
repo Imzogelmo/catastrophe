@@ -9,9 +9,49 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-//#include "SpellBook.h"
+#include "SpellBook.h"
 
 
+
+bool SpellBook::Contains( int id )
+{
+	for( vec_type::iterator it = m_spells.begin(); it != m_spells.end(); )
+	{
+		if( id == *it )
+			return true;
+	}
+
+	return false;
+}
+
+
+void SpellBook::Learn( int id )
+{
+	if( !Contains(id) )
+	{
+		//todo check id
+		m_spells.push_back(id);
+	}
+}
+
+
+void SpellBook::Unlearn( int id )
+{
+	for( vec_type::iterator it = m_spells.begin(); it != m_spells.end(); )
+	{
+		if( id == *it )
+		{
+			m_spells.erase(it);
+			break;
+		}
+	}
+}
+
+
+void SpellBook::UnlearnAll()
+{
+	m_spells.clear();
+}
 
 
 

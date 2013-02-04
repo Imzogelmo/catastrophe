@@ -22,6 +22,7 @@ ScriptClass::ScriptClass( ContextPool* contextPool ) :
 	m_objectType(0),
 	m_function(0),
 	m_suspend(0),
+	m_script_status(0),
 	m_destroyed(false),
 	m_ref_counted(false)
 {
@@ -54,6 +55,7 @@ void ScriptClass::Initialize( const fc::string& class_decl, const fc::string& me
 		return;
 	}
 
+	m_ctx->SetUserData(this);
 	asIScriptEngine *engine = m_contextPool->GetScriptEngine();
 
 	int typeID = engine->GetModule(0)->GetTypeIdByDecl(class_decl.c_str());
@@ -80,14 +82,34 @@ void ScriptClass::Initialize( const fc::string& class_decl, const fc::string& me
 		m_suspend = INFINITE_SUSPEND;
 	}
 
+	fc::string factoryString = class_decl;
+	factoryString.append(" @").append(class_decl).append("()");
+	m_factory = m_objectType->GetFactoryByDecl(factoryString.c_str());
+	if( !m_factory )
+	{
+		Log("Error: No factory method (%s) found", factoryString.c_str());
+	}
 
-	//m_ctx->SetClassName( class_decl );
-	m_ctx->SetUserData(this);
 }
 
 
 asIScriptObject* ScriptClass::CreateObject()
 {
+	ASSERT(!!m_ctx);
+
+	if( m_factory )
+	{
+		m_ctx->Prepare(m_factory);
+		m_ctx->Execute();
+		m_object = *(asIScriptObject**)m_ctx->GetAddressOfReturnValue();
+		m_object->AddRef();
+	}
+	else
+	{
+		m_object = (asIScriptObject*)m_contextPool->GetScriptEngine()->CreateScriptObject(m_objectType->GetTypeId());
+	}
+
+
 	//if the function does not exist we have to destroy the object.
 	if( !m_function )
 	{
@@ -96,7 +118,6 @@ asIScriptObject* ScriptClass::CreateObject()
 		return (asIScriptObject*)0;
 	}
 
-	m_object = (asIScriptObject*)m_contextPool->GetScriptEngine()->CreateScriptObject(m_objectType->GetTypeId());
 	return m_object;
 }
 
@@ -148,11 +169,12 @@ void ScriptClass::Destroy()
 	{
 		m_destroyed = true;
 
-		if( m_ref_counted )
+		//if( m_ref_counted )
+		if( m_object )
 		{
 			m_object->Release();
 		}
-		else
+		//else
 		{
 			if( m_object )
 				m_contextPool->GetScriptEngine()->ReleaseScriptObject((void*)m_object, m_objectType->GetTypeId());

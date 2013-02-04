@@ -22,7 +22,7 @@ struct RPG_API SpellData : public AttributeData
 {
 	typedef AttributeData	base_type;
 
-	//effect..
+	int id;
 
 	SpellData() : base_type()
 	{}

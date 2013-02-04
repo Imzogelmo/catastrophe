@@ -79,6 +79,11 @@ void Inventory::Remove( Item* item, int count )
 }
 
 
+void Remove( int id, int count )
+{
+}
+
+
 void Inventory::RemoveFromInventory( size_t index )
 {
 	if( index >= m_items.size() )

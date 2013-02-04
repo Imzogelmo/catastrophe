@@ -34,6 +34,22 @@
 #define CRITICAL_RATE	17
 #define MORALE			18
 
+// Player States
+#define ps_IDLE				0 // Not doing anything.
+#define ps_INPUT			1 // Waiting for player to input commands.
+#define ps_PREPARE_ATTACK	2 // Preparing to attack.
+#define ps_ATTACK			3 // Attacking.
+#define ps_PREPARE_CAST		4 // Preparing to cast a spell.
+#define ps_CAST				5 // Casting a spell.
+#define ps_PREPARE_ITEM		6 // Preparing to use an item.
+#define ps_ITEM				7 // Using an item.
+#define ps_DEAD				16 // Dead.
+#define ps_STONE			17 // Turned to stone.
+#define ps_WEAK				0x0100 // Flag | Player is in the kneel position.
+#define ps_MOVE_ACTION		0x1000 // Flag | Player is moving to action position.
+#define ps_MOVE_HOME		0x2000 // Flag | Player is moving to home position.
+#define ps_DAMAGED			0x4000 // Flag | Player is taking damage.
+
 
 
 class CharacterBase
@@ -50,7 +66,7 @@ class CharacterBase
 	//-------------------------------------
 	// * Statistics
 	//-------------------------------------
-	int get_stat(int i)
+	int get_stat(int i) const
 	{
 		return parent.attributes.stat[i];
 	}
