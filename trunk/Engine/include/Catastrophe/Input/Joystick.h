@@ -35,10 +35,23 @@ public:
 		MaxAxes = MaxAnalogs << 1
 	};
 
-	Joystick() : m_analog_threshhold(0.1f), m_pov(0), m_buttonReleaseFlags(0), m_joyNumber(0)
+	Joystick() : m_analog_threshhold(0.1f), m_pov(0), m_buttonReleaseFlags(0), m_joyNumber(0), m_exists(true)
 	{
-		for( int i(0); i < 32; ++i )
-			m_button[ i ] = 0;
+		for( int i(0); i < MaxButtons; ++i )
+			m_button[i] = 0;
+
+		for( int i(0); i < MaxAnalogs; ++i )
+			m_analog[i] = m_previous_analog[i] = Vector2::Zero;
+	}
+
+	bool Exists() const
+	{
+		return m_exists;
+	}
+
+	void SetExists( bool value = true )
+	{
+		m_exists = value;
 	}
 
 	//Sets the internal joystick number associated with this Object
@@ -195,6 +208,7 @@ private:
 	int	m_pov;
 	int	m_buttonReleaseFlags;
 	int	m_joyNumber;
+	bool m_exists;
 
 };
 

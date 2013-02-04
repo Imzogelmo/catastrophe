@@ -305,7 +305,7 @@ int Font::LoadFromFile( const fc::string& filename, int faceSize, int dpi )
 	}
 
 	// todo: make this optional.
-	m_texture.SetMagFilter( 0x2601 );
+	//m_texture.SetMagFilter( 0x2601 );
 	if( !m_texture.CreateTexture( pixels.data(), tWidth, tHeight ) )
 		return -12;
 
@@ -367,6 +367,21 @@ void Font::SetAdvance( int advance )
 	for( vec_type::iterator it = m_glyphs.begin(); it != m_glyphs.end(); ++it )
 	{
 		it->advance = a;
+	}
+}
+
+
+void Font::SetMaxGlyphHeight( float y )
+{
+	for( vec_type::iterator it = m_glyphs.begin(); it != m_glyphs.end(); ++it )
+	{
+		Glyph & g = *it;
+		if( g.size.y > y )
+		{
+			float d = 1.f - (y / g.size.y);
+			g.uv.min.y += g.uv.Height() * d;
+			g.size.y = y;
+		}
 	}
 }
 

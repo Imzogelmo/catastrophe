@@ -32,7 +32,7 @@ public:
 	enum
 	{
 		MaxKeys			= MAX_KEYS,
-		MaxJoysticks	= 2
+		MaxJoysticks	= 4
 	};
 
 	Input();
@@ -45,7 +45,7 @@ public:
 	static Joystick* GetJoystick(size_t index)
 	{
 		CE_ASSERT(index < MaxJoysticks);
-		return &m_instance.m_joysticks[MaxJoysticks];
+		return &m_instance.m_joysticks[index];
 	}
 
 	static void Update();

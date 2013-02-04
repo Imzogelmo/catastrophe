@@ -239,8 +239,8 @@ void ScriptEngine::RegisterSprite()
 	r = engine->RegisterObjectMethod( "sprite", "void set_uv(const rectf &in)", asMETHODPR(Sprite, SetUVRect, (const Rectf&), void), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( "sprite", "void set_source_rect(const rect &in)", asMETHODPR(Sprite, SetSourceRect, (const Rect&), void), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( "sprite", "const rectf& get_uv() const", asMETHODPR(Sprite, GetUVRect, () const, const Rectf&), asCALL_THISCALL); assert( r >= 0 );
-	r = engine->RegisterObjectMethod( "sprite", "void create(const texture& in, const rect &in) const", asFUNCTION(CreateSprite), asCALL_CDECL_OBJFIRST); assert( r >= 0 );
-	r = engine->RegisterObjectMethod( "sprite", "void draw() const", asFUNCTION(DrawSprite), asCALL_CDECL_OBJFIRST); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( "sprite", "void create(const texture& in, const rect &in)", asFUNCTION(CreateSprite), asCALL_CDECL_OBJFIRST); assert( r >= 0 );
+	//r = engine->RegisterObjectMethod( "sprite", "void draw() const", asFUNCTION(DrawSprite), asCALL_CDECL_OBJFIRST); assert( r >= 0 );
 
 }
 

@@ -33,9 +33,6 @@ namespace script
 	{
 		ScriptArray<T> *a = new ScriptArray<T>( x );
 		return a;
-
-		fc::multi_array<int> b;
-		b.at(1) = 7;
 	}
 
 	template <class T>
@@ -61,15 +58,17 @@ namespace script
 
 } //namespace script
 
+#include <Catastrophe/Graphics/Sprite.h>
 
 void ScriptEngine::RegisterScriptArrayTemplateSpecializations()
 {
 	/* template class MUST be registered first */
 
-	RegisterArrayTemplateSpecialization<int>( "array<int>", "int" );
+	//RegisterArrayTemplateSpecialization<int>( "array<int>", "int" );
 	//RegisterArrayTemplateSpecialization<int>( "array<uint>", "uint" );
-	RegisterArrayTemplateSpecialization<float>( "array<float>", "float" );
-	RegisterArrayTemplateSpecialization<Vector2>( "array<vec2>", "vec2" );
+	//RegisterArrayTemplateSpecialization<float>( "array<float>", "float" );
+	//RegisterArrayTemplateSpecialization<Vector2>( "array<vec2>", "vec2" );
+	//RegisterArrayTemplateSpecialization<Sprite>( "array<sprite>", "sprite" );
 
 	//register the Array<T> object for default [] arrays.
 	engine->RegisterDefaultArrayType( "array<T>" );

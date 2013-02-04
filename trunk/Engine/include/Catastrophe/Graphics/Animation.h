@@ -51,6 +51,7 @@ public:
 	void SetLooping( bool loop = true ) { m_loop = loop; };
 	bool IsPaused() const { return m_paused; };
 	bool IsLooping() const { return m_loop; };
+	bool IsFinished() const;
 
 	size_t GetCurrentFrame() const { return m_currentFrame; }
 	float GetAnimSpeed() const;

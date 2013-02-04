@@ -223,14 +223,15 @@ void DoTests()
 		v.back().animation_set.SetSize( Vector2(24) );
 		v.back().animation_set.AddAnimation( Animation(&t, Rect(0,y,48,48)) );
 		v.back().animation_set.AddAnimation( Animation(&t, Rect(24,y,48,48)) );
-		v.back().animation_set.AddAnimation( Animation(&t, Rect(48,y,48,48), 3, 0, 0) );
-		v.back().animation_set.GetAnimation(2).SetAnimationSpeed(6);
-		v.back().animation_set.AddAnimation( Animation(&t, Rect(120,y,48,48), 2, 0, 0) );
+		v.back().animation_set.AddAnimation( Animation(&t, Rect(48,y,48,48), 4, 0, 0) );//walking
+		v.back().animation_set.GetAnimation(2).SetAnimationSpeed(4);
+		v.back().animation_set.AddAnimation( Animation(&t, Rect(148,y,48,48), 2, 0, 0) );//casting
 		v.back().animation_set.GetAnimation(3).SetAnimationSpeed(6);
-		v.back().animation_set.AddAnimation( Animation(&t, Rect(168,y,48,48)) );
 		v.back().animation_set.AddAnimation( Animation(&t, Rect(192,y,48,48)) );
-		v.back().animation_set.AddAnimation( Animation(&t, Rect(216,y,48,48)) );
+		v.back().animation_set.AddAnimation( Animation(&t, Rect(192,y,48,48), 2, 0, 0) );//victory
 		v.back().animation_set.AddAnimation( Animation(&t, Rect(240,y,48,48)) );
+		v.back().animation_set.AddAnimation( Animation(&t, Rect(264,y,48,48)) );
+		v.back().animation_set.AddAnimation( Animation(&t, Rect(298,y,48,48)) );
 		y += 24;
 	}
 
@@ -242,10 +243,14 @@ void DoTests()
 }
 
 
+void CheckWinMemStats();
 void DoAtlasPack();
 void DoAtlasPack2();
 void DoAtlasPack3();
 void DoAtlasPack4();
+#include <fc/multi_array.h>
+#include <Catastrophe/Util/Timer.h>
+
 
 int main(int argc, char* argv[])
 {
@@ -272,7 +277,6 @@ int main(int argc, char* argv[])
 	System::Init();
 	System::InitLogging("debug.log", true); //todo put this after config..
 
-
 	//DoTests();
 
 
@@ -294,19 +298,48 @@ int main(int argc, char* argv[])
 
 	//Font font;
 	//font.LoadFromFile(fc::string(), 32);
-	window->SetOrthographicProjection(0, 512, 312, 0); //set to psp console res for now. :)
+	//CheckWinMemStats();
+
+	Timer timer;
+	Timer loopTimer;
+	window->SetOrthographicProjection(0, 256, 208, 0);
 	while( !window->RequestClose() )
 	{
 		window->ClearColor();
 		window->Update();
 
+		//timer.Reset();
 		Input::Update();
+		//Log("update %0.4f", float(timer.Seconds()));
 
+		//timer.Reset();
 		game->Update();
-		game->Render();
 
-		window->Sleep(16);
+			static int tmp = 0;
+			tmp++;
+			//if(tmp % 12 == 0) Log("update %0.4f", float(timer.Seconds() * 60.f));
+			//if(tmp % 12 == 0) Log("update %i", int(timer.ElapsedMicroseconds()));
+			//timer.Reset();
+		game->Render();
+			//if(tmp % 12 == 0) Log("render %0.4f", float(timer.Seconds() * 60.f));
+			//if(tmp % 12 == 0) Log("render %i", int(timer.ElapsedMicroseconds()));
+
+
+		//window->Sleep(16);
 		window->SwapBuffers();
+
+		int elapsedMS = loopTimer.ElapsedMilliseconds();
+		while(elapsedMS <= 16)
+		{
+			int tMS = elapsedMS;
+			//Log( "-------------TMS-----------: (%i)", elapsedMS );
+			window->Sleep( (16 - tMS) > 0 ? (16 - tMS) - 1 : 0 );
+			elapsedMS = loopTimer.ElapsedMilliseconds();
+		}
+		//Log("frame time: (%0.4f)", float(loopTimer.ElapsedMicroseconds() / 1000.0f));
+		//Log( "frame time: (%i)", int(loopTimer.ElapsedMilliseconds()) );
+		loopTimer.Reset();
+
 	}
 
 
@@ -319,9 +352,9 @@ int main(int argc, char* argv[])
 
 
 
+
+
 /*
-
-
 #define WIN32_LEAN_AND_MEAN
 //#include <windows.h>
 //windows crap
@@ -347,6 +380,36 @@ int main(int argc, char* argv[])
 #include "Util/StringAlias.h"
 
 #include <cstdlib>
+
+
+#include "psapi.h"
+#pragma comment(lib, "psapi.lib")
+void CheckWinMemStats()
+{
+	MEMORYSTATUSEX memInfo;
+    memInfo.dwLength = sizeof(MEMORYSTATUSEX);
+    GlobalMemoryStatusEx(&memInfo);
+
+    DWORDLONG totalVirtualMem = memInfo.ullTotalPageFile;
+	DWORDLONG virtualMemUsed = memInfo.ullTotalPageFile - memInfo.ullAvailPageFile;
+
+	PROCESS_MEMORY_COUNTERS_EX pmc;
+    GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&pmc, sizeof(pmc));
+
+    SIZE_T virtualMemUsedByMe = pmc.PrivateUsage;
+	DWORDLONG totalPhysMem = memInfo.ullTotalPhys;
+	SIZE_T physMemUsedByMe = pmc.WorkingSetSize;
+
+	Log("VM (total: %i, used %i) - PM (total %i, virtual %i, physical %i)",
+		(int)(totalVirtualMem / 1024)/ 1024,
+		(int)(virtualMemUsed / 1024)/ 1024,
+		(int)(totalPhysMem / 1024)/ 1024,
+		(int)(virtualMemUsedByMe / 1024)/ 1024,
+		(int)(physMemUsedByMe / 1024)/ 1024
+		);
+
+}
+
 
 int hexStrToInt( const fc::string& s) {
     char * p;
@@ -394,7 +457,7 @@ void DoAtlasPack() //let's do it!
 
 	for(int u(0); u < gMonsterList.Size(); ++ u )
 	{
-		gMonsterList[u].attributes.attributes[0] = 1; //lv
+		gMonsterList[u].attributes.stats[0] = 1; //lv
 	}
 
 	for(int u(0); u < strAlias.GetList().size(); ++ u )
@@ -1014,7 +1077,7 @@ void DoAtlasPack4()
 
 	gMonsterList.SerializeXml("ff6.xml");
 }
-
 */
+
 
 

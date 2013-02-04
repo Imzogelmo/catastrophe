@@ -24,30 +24,38 @@ ScriptGarbage::ScriptGarbage() :
 
 void ScriptGarbage::Update()
 {
-	GCStatistics current = GetCurrentStatistices();
+	GCStatistics current = GetCurrentStatistics();
 
 	m_counter++;
 	int d = int(m_statistics.objects - current.objects);
 
 	//todo: get a detailed measurement here.
-	if( m_counter > current.objects && m_counter > 0 )
+	if( current.objects > 0 && current.size > 0 )
 	{
-		GarbageCollect();
-		m_counter = 0;
+		int count = int(current.objects + current.size);
+		if( m_counter > count )
+		{
+			GarbageCollect();
+			m_counter = 0;
+		}
 	}
 }
 
 
 void ScriptGarbage::GarbageCollect()
 {
-	m_statistics = GetCurrentStatistices();
-	m_enginePtr->GarbageCollect(asGC_ONE_STEP);
+	m_statistics = GetCurrentStatistics();
 
+	int flags = asGC_ONE_STEP;
+	if( m_statistics.total_detected == 0 ) flags |= asGC_DETECT_GARBAGE;
+	if( m_statistics.objects > 0 ) flags |= asGC_DESTROY_GARBAGE;
+
+	m_enginePtr->GarbageCollect(flags);
 	LogStatistics(m_statistics);
 }
 
 
-GCStatistics ScriptGarbage::GetCurrentStatistices() const
+GCStatistics ScriptGarbage::GetCurrentStatistics() const
 {
 	GCStatistics s;
 	m_enginePtr->GetGCStatistics(

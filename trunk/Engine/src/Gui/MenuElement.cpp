@@ -66,7 +66,7 @@ void MenuElement::AddItem( Widget* item )
 		{
 			Point pos = Point::Zero;
 			pos.y = (int)GetNumItems() * m_defaultItemSize.y;
-			item->SetPosition(m_defaultItemSize);
+			item->SetPosition(pos);
 		}
 	}
 }

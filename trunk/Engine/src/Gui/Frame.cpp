@@ -28,14 +28,48 @@ CE_NAMESPACE_BEGIN
 
 Frame::Frame() : Widget()
 {
+	m_bgOffset = Vector2::Zero;
 	m_tiled = false;
+	m_bgTiled = false;
+	m_useBg = false;
+}
+
+
+void Frame::SetBackground( const Sprite& bgSprite )
+{
+	CE_ASSERT(bgSprite.GetTexture() != 0);
+	m_backgroundSprite = bgSprite;
+	m_useBg = true;
+}
+
+
+void Frame::SetBackgroundTexture( const Texture* texture )
+{
+	CE_ASSERT(texture);
+	if(texture)
+	{
+		m_backgroundSprite.SetTexture(texture);
+		m_backgroundSprite.SetSize( Vector2( Point(texture->Width(), texture->Height()) ) );
+		m_useBg = true;
+	}
+}
+
+
+void Frame::SetBackgroundOffset( const Vector2& offset )
+{
+	m_bgOffset = offset;
+}
+
+
+void Frame::UseBackGround( bool enable )
+{
+	m_useBg = enable;
 }
 
 
 void Frame::SetTexture( const Texture* texture )
 {
 	CE_ASSERT(texture);
-
 	if(texture)
 	{
 		gluint id = texture->GetTextureID();
@@ -79,6 +113,9 @@ void Frame::SetPatchData( const Texture* texture, const Vector2& spriteSize, con
 	Vector2 d = dist / 3.f;
 
 	// split into a "9-patch" structure.
+	// 1 - 2    - 1 -
+	// -   -    2   3
+	// 3 - 4    - 4 -
 	float x[4], y[4];
 	x[0] = uv.min.x;
 	x[1] = uv.min.x + d.x;
@@ -113,6 +150,27 @@ void Frame::Render( SpriteBatch* spriteBatch )
 {
 	Vector2 min = GetScreenPosition();
 	Vector2 max = min + GetSize();
+
+	// render the background first.
+	if( m_useBg && m_backgroundSprite.GetTexture() != 0 )
+	{
+		if( m_bgTiled )
+		{
+			//todo...
+		}
+		else
+		{
+			spriteBatch->DrawRotatedScaled(
+				m_backgroundSprite.GetTextureID(),
+				m_backgroundSprite.angle,
+				m_backgroundSprite.scale,
+				Rectf(min + m_bgOffset, max - m_bgOffset),
+				m_backgroundSprite.GetUVRect(),
+				m_backgroundSprite.tint,
+				m_backgroundSprite.depth
+			);
+		}
+	}
 
 	Rectf vtx;
 	vtx.min.x = min.x;

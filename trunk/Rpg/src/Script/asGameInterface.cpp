@@ -76,6 +76,11 @@ namespace script
 	}
 
 
+	void DrawSprite( const Sprite& sprite, const Vector2& pos )
+	{
+		SpriteBatch* spriteBatch = gGetGame()->GetSpriteBatch();
+		spriteBatch->DrawSprite(sprite, pos);
+	}
 
 
 
@@ -96,6 +101,7 @@ void ScriptEngine::RegisterGame()
 	r = engine->RegisterGlobalFunction( "::font@ get_font(int)", asFUNCTION(GetFontResource), asCALL_CDECL); assert( r >= 0 );
 
 	//r = engine->RegisterGlobalFunction( "const sprite& create_sprite(const ::texture& in, const rect& in)", asFUNCTION(CreateSprite), asCALL_CDECL); assert( r >= 0 );
+	r = engine->RegisterGlobalFunction( "void draw_sprite(const ::sprite& in, const ::vec2& in)", asFUNCTION(DrawSprite), asCALL_CDECL); assert( r >= 0 );
 
 	r = engine->SetDefaultNamespace(""); assert( r >= 0 );
 }

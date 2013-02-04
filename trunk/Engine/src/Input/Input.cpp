@@ -27,15 +27,22 @@ Input Input::m_instance = Input();
 
 
 Input::Input() :
-	m_maxJoystickUsage(1)
+	m_maxJoystickUsage(MaxJoysticks)
 {
+	for( int i(0); i < MaxJoysticks; ++i )
+	{
+		m_joysticks[i].SetExists(true);
+		m_joysticks[i].SetJoystickNumber(i);
+	}
 }
+
 
 void Input::SetMaxJoystickUsage( size_t numJoysticks )
 {
 	m_instance.m_maxJoystickUsage =
 		Math::Clamp<size_t>(numJoysticks, 0, (size_t)MaxJoysticks);
 }
+
 
 void Input::Update()
 {

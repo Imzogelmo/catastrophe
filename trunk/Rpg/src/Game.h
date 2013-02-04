@@ -13,6 +13,7 @@
 
 #include <fc/string.h>
 #include <Catastrophe/Math/Point.h>
+#include <Catastrophe/Graphics/SpriteBatch.h>
 
 #include "Common.h"
 #include "GlobalSettings.h"
@@ -57,6 +58,8 @@ public:
 	ResourceManager* GetResourceManager() { return &m_resourceManager; }
 	Database* GetDatabase() { return &m_database; }
 
+	SpriteBatch* GetSpriteBatch() { return &m_spriteBatch; }
+
 	void Update();
 	void Render();
 
@@ -72,6 +75,9 @@ protected:
 	ResourceManager	m_resourceManager;
 
 	Database		m_database;
+
+
+	SpriteBatch		m_spriteBatch;
 
 };
 

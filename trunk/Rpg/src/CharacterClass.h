@@ -24,6 +24,7 @@ struct RPG_API CharacterClass : public AttributeData
 {
 	typedef AttributeData	base_type;
 
+	int				id;
 	int				exp_table_index;
 	//Sprite		sprite;
 	//SpellBook		spells;

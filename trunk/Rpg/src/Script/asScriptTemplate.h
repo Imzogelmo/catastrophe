@@ -73,8 +73,17 @@ protected:
 };
 
 
-inline void* ScriptTemplateClass::GetReturnObjectPtr( storage_type *ptr )
+inline void* ScriptTemplateClass::GetReturnObjectPtr( storage_type* ptr )
 {
+	//
+	//
+	//
+	//
+	//
+
+	if( m_isMaskObject )
+		return (void*)ptr->ptr;
+
 	return (void*)ptr;
 }
 

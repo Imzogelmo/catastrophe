@@ -44,8 +44,8 @@ public:
 
 	asIScriptEngine* GetEngine() const { return m_enginePtr; }
 
-	GCStatistics GetLastStatistices() const { return m_statistics; }
-	GCStatistics GetCurrentStatistices() const;
+	GCStatistics GetLastStatistics() const { return m_statistics; }
+	GCStatistics GetCurrentStatistics() const;
 
 	void Update();
 	void GarbageCollect();

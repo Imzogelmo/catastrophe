@@ -100,7 +100,7 @@ int Game::InternalInitScriptEngine()
 	Log( "Compiling scripts..." );
 	for( bool exit(false); exit != true; )
 	{
-		if( engine->Compile("script/TestCompile.cpp", fc::vector<fc::string>()) != 0 )
+		if( engine->Compile("script/blocks.cpp", fc::vector<fc::string>()) != 0 )
 		{
 			printf("-press [c] to recompile, or any key to exit.");
 			int c = _getch();
@@ -122,6 +122,8 @@ int Game::InternalInitScriptEngine()
 
 void Game::Update()
 {
+	m_spriteBatch.Begin();
+
 	static bool testInit = false;
 	if(!testInit)
 	{
@@ -137,6 +139,11 @@ void Game::Update()
 void Game::Render()
 {
 	m_screenManager.Render();
+
+	//script drawing is stuck here for now.
+	//m_spriteBatch.Begin();
+	m_spriteBatch.Render();
+	m_spriteBatch.End();
 }
 
 

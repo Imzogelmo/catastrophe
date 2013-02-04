@@ -57,6 +57,8 @@ public:
 	const fc::string& GetName() const { return m_name; }
 	MonsterGroupData& GetGroup( size_t index );
 	const MonsterGroupData& GetGroup( size_t index ) const;
+
+	//fc::vector<int> Get
 	
 	void SerializeXml( XmlWriter* xml );
 	void DeserializeXml( XmlReader* xml );

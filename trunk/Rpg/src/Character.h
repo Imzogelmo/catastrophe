@@ -13,6 +13,8 @@
 
 #include "Entity.h"
 #include "Buff.h"
+#include "Inventory.h"
+#include "Equipment.h"
 #include "Script/ScriptClass.h"
 
 
@@ -26,11 +28,29 @@ public:
 	virtual void Update() {}
 	virtual void Render() {}
 
+	int GetBaseStat( int stat ) const;
+	int GetStat( int stat );
+	int GetBaseElementalValue( int element ) const;
+	int GetElementalValue( int element );
+	int GetBaseStatusValue( int status ) const;
+	int GetStatusValue( int status );
+
+
+	Attributes& GetAttributes() { return m_attributes; }
+	Equipment& GetEquipment() { return m_equipment; }
+	Inventory& GetInventory() { return m_inventory; }
+	BuffSet& GetBuffs() { return m_buffs; }
+	const Attributes& GetAttributes() const { return m_attributes; }
+	const Equipment& GetEquipment() const { return m_equipment; }
+	const Inventory& GetInventory() const { return m_inventory; }
+	const BuffSet& GetBuffs() const { return m_buffs; }
 
 protected:
-	ScriptClass	m_scriptInstance;
-	BuffList	m_buffs;
+	ScriptClass		m_scriptInstance;
+	Attributes		m_attributes;
+	Equipment		m_equipment;
+	Inventory		m_inventory;
+	BuffSet			m_buffs;
 
 };
-
 

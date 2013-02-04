@@ -46,6 +46,7 @@ protected:
 	asIScriptObject*	m_object;
 	asIObjectType*		m_objectType;
 	asIScriptFunction*	m_function;
+	asIScriptFunction*	m_factory;
 	int					m_suspend;
 	int					m_script_status;
 

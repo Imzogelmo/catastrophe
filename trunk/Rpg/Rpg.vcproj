@@ -176,6 +176,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\BattleActions.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Character.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Dialogue.cpp"
 				>
 			</File>
@@ -201,6 +209,10 @@
 			</File>
 			<File
 				RelativePath=".\src\ItemDrop.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Party.cpp"
 				>
 			</File>
 			<File
@@ -458,6 +470,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\BattleActions.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Common.h"
 				>
 			</File>
@@ -487,6 +503,10 @@
 			</File>
 			<File
 				RelativePath=".\src\ItemDrop.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Party.h"
 				>
 			</File>
 			<File
@@ -662,6 +682,10 @@
 				</File>
 				<File
 					RelativePath=".\src\MonsterPartyData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Race.h"
 					>
 				</File>
 				<File

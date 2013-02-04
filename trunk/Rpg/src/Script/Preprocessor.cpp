@@ -73,6 +73,7 @@ int CppPreprocessor::ProcessFile
 		args.push_back( "-k" );
 		args.push_back( "-D__DEFINED__" );
 		args.push_back( "-Iscript/" );
+		args.push_back( "-Iscript/std" );
 	}
 
 	int		num_args		= args.size() + 1;

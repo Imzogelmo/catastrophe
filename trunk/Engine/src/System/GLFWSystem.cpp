@@ -262,8 +262,15 @@ int GLFWWindow::glfwWindowCloseCallback()
 
 void Joystick::Update()
 {
-	if( glfwGetJoystickParam(GetJoystickNumber(), GLFW_PRESENT) == GL_FALSE )
+	if( !Exists() )
 		return;
+
+	if( glfwGetJoystickParam(GetJoystickNumber(), GLFW_PRESENT) == GL_FALSE )
+	{
+		Log("Joystick (%i) not detected.", GetJoystickNumber());
+		m_exists = false;
+		return;
+	}
 
 	for( int i(0); i < MaxAnalogs; ++i )
 	{

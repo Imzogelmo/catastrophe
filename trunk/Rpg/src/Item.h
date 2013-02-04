@@ -22,6 +22,25 @@ struct RPG_API Item : public AttributeData
 {
 	typedef AttributeData	base_type;
 
+	enum ItemFlags
+	{
+		Valuable = 0x0001,
+		Consumable = 0x0002,
+		Equippable = 0x0004,
+		//...
+		UsableInMenu = 0x0010,
+		UsableInBattle = 0x0020
+
+
+	};
+
+	int				id;
+	int				type;
+	int				subtype;
+
+	//int				gold;
+	int				targeting;
+	Flags32			flags;
 	Flags32			usage_flags;
 	//size_t			effect_id;
 	int				sfx;
@@ -34,6 +53,14 @@ struct RPG_API Item : public AttributeData
 
 	void SerializeXml( XmlWriter* xml );
 	void DeserializeXml( XmlReader* xml );
+
+};
+
+
+class ItemSorter
+{
+public:
+
 
 };
 

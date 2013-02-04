@@ -31,6 +31,7 @@ public:
 
 	BuffType type;
 	Attributes attributes;
+	fc::string name;
 	int id;
 	int	lifetime;
 	int stack_count; //the number of times this buff can stack.
@@ -73,6 +74,21 @@ public:
 
 	bool AddBuff( const Buff& buff );
 	void RemoveBuff( size_t index );
+
+	bool Contains( int id )
+	{
+		return Count(id) > 0;
+	}
+
+	int Count( int id )
+	{
+		int count = 0;
+		for( vec_type::iterator it = m_buffs.begin(); it != m_buffs.end(); ++it)
+			if( it->id == id )
+				count++;
+
+		return count;
+	}
 
 	void Update();
 	void CalculateModifiers();
