@@ -32,6 +32,17 @@ void BattleActionQueue::AddAction( BattleAction* action )
 }
 
 
+void BattleActionQueue::RemoveAction( BattleAction* action )
+{
+	vec_type::iterator it = fc::find(m_actions.begin(), m_actions.end(), action);
+	if( it != m_actions.end() )
+	{
+		m_actions.erase(it);
+		action->SetParent(0);
+	}
+}
+
+
 void BattleActionQueue::ClearActions()
 {
 	m_finishedActions.insert( m_finishedActions.end(), m_actions.begin(), m_actions.end() );
@@ -58,6 +69,51 @@ void BattleActionQueue::CancelAction( BattleAction* action )
 }
 
 
+void BattleActionQueue::MoveToFront( BattleAction* action )
+{
+	vec_type::iterator it = fc::find(m_actions.begin(), m_actions.end(), action);
+	if( it != m_actions.end() )
+	{
+		m_actions.erase(it);
+	}
+	else
+	{
+		if( action != GetCurrentAction() )
+		{
+			// action is not inside this queue
+			BattleActionQueue* p = action->GetParent();
+			if( p != 0 )
+				p->RemoveAction(action);
+
+			action->SetParent(this);
+		}
+	}
+
+	if( action->HasPriority() )
+	{
+		m_actions.insert_at(0, action);
+	}
+	else
+	{
+		// iterate through the queue and find the first valid slot to insert.
+		for( it = m_actions.begin(); it != m_actions.end(); ++it )
+		{
+			if( !(*it)->HasPriority() )
+			{
+				m_actions.insert(it, action);
+				break;
+			}
+		}
+
+		if( it == m_actions.end() )
+		{
+			// 'MoveToFront' just moved it to the end!
+			m_actions.push_back(action);
+		}
+	}
+}
+
+
 BattleAction* BattleActionQueue::GetCurrentAction()
 {
 	return m_currentAction;
@@ -77,8 +133,12 @@ void BattleActionQueue::SetCurrentAction()
 		if( m_actions.empty() )
 			return;
 
-		m_currentAction = m_actions[0];
-		m_actions.erase_at(0);
+		if( m_actions[0]->IsReady() )
+		{
+			m_currentAction = m_actions[0];
+			m_actions.erase_at(0);
+			m_currentAction->OnTrigger(); //...something like this.
+		}
 	}
 }
 
@@ -106,8 +166,11 @@ void BattleActionQueue::Update()
 	SetCurrentAction();
 
 	if( m_currentAction )
-	{
 		m_currentAction->Update();
+
+	for( vec_type::iterator it = m_actions.begin(); it != m_actions.end(); )
+	{
+		(*it)->Update();
 	}
 }
 

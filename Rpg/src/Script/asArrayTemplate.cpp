@@ -151,9 +151,7 @@ void ScriptArrayTemplate::Resize3( int z, int y, int x )
 		for( size_t i(0); i < amount; ++i )
 		{
 			const size_t index = size + i;
-			//m_array[ index ] = this->AquirePtr();
 			this->ConstructObject( &m_array[ index ] );
-			//m_array[ index ] = this->ConstructObject( m_array[ index ] );
 		}
 	}
 	else if( size > newSize )
@@ -161,9 +159,7 @@ void ScriptArrayTemplate::Resize3( int z, int y, int x )
 		const size_t amount = size - newSize;
 		for( size_t i(0); i < amount; ++i )
 		{
-			//void *data = m_array[ size - amount + i ];
 			this->DestructObject( &m_array[ size - amount + i ] );
-			//this->ReleasePtr( data );
 		}
 
 		m_array.resize( z, y, x );
