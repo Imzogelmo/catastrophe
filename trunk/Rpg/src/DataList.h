@@ -49,7 +49,7 @@ public:
 
 	T& operator []( size_t i )
 	{
-		DATALIST_ASSERT(i < m_items.size());
+		DATALIST_ASSERT(i <= m_items.size());
 		return m_items[i];
 	}
 

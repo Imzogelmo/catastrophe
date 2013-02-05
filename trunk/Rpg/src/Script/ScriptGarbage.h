@@ -56,7 +56,7 @@ protected:
 	asIScriptEngine*	m_enginePtr;
 	GCStatistics		m_statistics;
 	GCPolicy			m_policy;
-	int					m_counter;
+	unsigned int		m_counter;
 
 };
 
