@@ -75,9 +75,6 @@
     <ClCompile Include="src\Attributes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ConfigFile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Dialogue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -207,12 +204,6 @@
     <ClCompile Include="src\ExpTable.cpp">
       <Filter>Source Files\Database</Filter>
     </ClCompile>
-    <ClCompile Include="src\ItemData.cpp">
-      <Filter>Source Files\Database</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MonsterData.cpp">
-      <Filter>Source Files\Database</Filter>
-    </ClCompile>
     <ClCompile Include="src\MonsterPartyData.cpp">
       <Filter>Source Files\Database</Filter>
     </ClCompile>
@@ -237,6 +228,15 @@
     <ClCompile Include="src\ScreenManager.cpp">
       <Filter>Source Files\Screens</Filter>
     </ClCompile>
+    <ClCompile Include="src\Monster.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Item.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\IO\ConfigFile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AttributeFlags.h">
@@ -249,9 +249,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Common.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ConfigFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Dialogue.h">
@@ -421,6 +418,12 @@
     </ClInclude>
     <ClInclude Include="src\ScreenManager.h">
       <Filter>Header Files\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Item.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\include\Catastrophe\IO\ConfigFile.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
