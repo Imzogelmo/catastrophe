@@ -54,7 +54,7 @@ struct TargetInfo
 class BattleAction
 {
 public:
-	BattleAction() : m_parent(0)//, type(0)
+	BattleAction() : m_parent(0), m_performer(0), m_preparationTime(0)
 	{
 	}
 
@@ -62,7 +62,16 @@ public:
 	{}
 
 	void SetParent( BattleActionQueue* parent ) { m_parent = parent; }
-	void Update() {}
+	void Update()
+	{
+		if( m_preparationTime > 0 )
+			--m_preparationTime;
+	}
+
+	void OnTrigger()
+	{
+	}
+
 	void Cancel()
 	{
 		m_cancelled = true;
@@ -70,11 +79,16 @@ public:
 
 	bool IsCancelled() const { return m_cancelled; }
 	bool HasPriority() const { return m_hasPriority; }
+	bool IsReady() const { return m_preparationTime <= 0; }
+
+	BattleActionQueue* GetParent() const { return m_parent; }
+
 
 	BattleActionQueue* m_parent;
 	Character*	m_performer;
 	//int			type;
 	//int			flags;
+	int			m_preparationTime;
 	TargetInfo	targetInfo;
 	bool		m_hasPriority;
 	bool		m_cancelled;
@@ -124,9 +138,11 @@ public:
 	BattleActionQueue();
 
 	void AddAction( BattleAction* action );
+	void RemoveAction( BattleAction* action );
 	void CancelAction( size_t index );
 	void CancelAction( BattleAction* action );
 	void ClearActions();
+	void MoveToFront( BattleAction* action );
 
 	BattleAction* GetCurrentAction();
 	void SetCurrentAction();

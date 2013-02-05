@@ -16,29 +16,73 @@
 
 void Party::AddMember( int id )
 {
-	vec_type::iterator it = fc::find(m_characters.begin(), m_characters.end(), id);
-	if( it == m_characters.end() )
+	vec_type::iterator it = fc::find(m_reserveMembers.begin(), m_reserveMembers.end(), id);
+	if( it == m_reserveMembers.end() )
 	{
 		//todo: sanity check
-		m_characters.push_back(id);
+		if( m_activeMembers.size() < (size_t)m_maxActivePartySize )
+			m_activeMembers.push_back(id);
+
+		else m_reserveMembers.push_back(id);
 	}
 }
 
 
 void Party::RemoveMember( int id )
 {
-	vec_type::iterator it = fc::find(m_characters.begin(), m_characters.end(), id);
-	if( it != m_characters.end() )
+	vec_type::iterator it;
+	if( IsMemberInActiveParty(id, it) )
 	{
-		m_characters.erase(it);
+		m_activeMembers.erase(it);
+	}
+	else if( IsMemberInActiveParty(id, it) )
+	{
+		m_reserveMembers.erase(it);
 	}
 }
 
 
-bool HasMember( int id )
+bool Party::HasMember( int id )
 {
-	vec_type::iterator it = fc::find(m_characters.begin(), m_characters.end(), id);
-	return it != m_characters.end();
+	return (IsMemberInActiveParty(id) || IsMemberInReserve(id));
+}
+
+
+bool Party::IsMemberInActiveParty( int id )
+{
+	vec_type::iterator it = 0;
+	return IsMemberInActiveParty(id, it);
+}
+
+
+bool Party::IsMemberInReserve( int id )
+{
+	vec_type::iterator it = 0;
+	return IsMemberInReserve(id, it);
+}
+
+
+bool Party::IsMemberInActiveParty( int id, vec_type::iterator& outIt )
+{
+	outIt = fc::find(m_activeMembers.begin(), m_activeMembers.end(), id);
+	return outIt != m_activeMembers.end();
+}
+
+
+bool Party::IsMemberInReserve( int id, vec_type::iterator& outIt )
+{
+	outIt = fc::find(m_reserveMembers.begin(), m_reserveMembers.end(), id);
+	return outIt != m_reserveMembers.end();
+}
+
+
+Party::vec_type Party::GetAllPartyMembers()
+{
+	vec_type ret;
+	ret.reserve(m_activeMembers.size() + m_reserveMembers.size());
+	ret.insert(ret.end(), m_activeMembers.begin(), m_activeMembers.end());
+	ret.insert(ret.end(), m_reserveMembers.begin(), m_reserveMembers.end());
+	return ret;
 }
 
 

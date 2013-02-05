@@ -61,7 +61,6 @@ void ScriptVectorTemplate::PopBack()
 	if( !m_vector.empty() )
 	{
 		this->DestructObject( &m_vector.back() );
-		//this->ReleasePtr( m_vector.back() );
 		m_vector.pop_back();
 	}
 }
@@ -134,7 +133,6 @@ void ScriptVectorTemplate::Erase1( int loc )
 		return; //todo
 
 	this->DestructObject( &m_vector[ loc ] );
-	//this->ReleasePtr( m_vector[ loc ] );
 	m_vector.erase( m_vector.begin() + loc );
 }
 
@@ -149,7 +147,6 @@ void ScriptVectorTemplate::Erase2( int loc, int amount )
 	for( size_t i((size_t)loc); i < last; ++i )
 	{
 		this->DestructObject( &m_vector[ i ] );
-		//this->ReleasePtr( m_vector[ i ] );
 	}
 
 	m_vector.erase( m_vector.begin() + loc, m_vector.begin() + last );
@@ -162,7 +159,6 @@ void ScriptVectorTemplate::Clear()
 	for( size_t i(0); i < size; ++i )
 	{
 		this->DestructObject( &m_vector[ i ] );
-		//this->ReleasePtr( m_vector[ i ] );
 	}
 
 	m_vector.clear();
@@ -191,7 +187,6 @@ void ScriptVectorTemplate::Resize( int resizeAmount )
 		for( size_t i(0); i < amount; ++i )
 		{
 			const size_t index = size + i;
-			//m_vector[ index ] = this->AquirePtr();
 			this->ConstructObject( &m_vector[ index ] );
 		}
 	}
@@ -201,9 +196,7 @@ void ScriptVectorTemplate::Resize( int resizeAmount )
 
 		for( size_t i(0); i < amount; ++i )
 		{
-			//void *data = m_vector[ size - amount + i ];
 			this->DestructObject( &m_vector[ size - amount + i ] );
-			//this->ReleasePtr( data );
 		}
 
 		m_vector.resize( newSize );
