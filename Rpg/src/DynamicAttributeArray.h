@@ -12,33 +12,75 @@
 #pragma once
 
 
-template <class T, size_t N>
-struct FixedAttributeArray
+template <class T>
+struct DynamicAttributeArray
 {
-	typedef FixedAttributeArray<T, N> this_type;
+	typedef DynamicAttributeArray<T> this_type;
 
-	enum : size_t
+	T* attribute;
+
+	DynamicAttributeArray()
+		: attribute(0), m_size(0)
+		{
+		}
+
+	DynamicAttributeArray( const this_type& a )
+		: attribute(0), m_size(0)
+		{
+			*this = a;
+		}
+
+	this_type &operator =( const this_type &a )
 	{
-		MaxSize = N,
-		MaxAttributes = N
-	};
+		if( this != &a )
+		{
+			if( m_size != a.m_size )
+				Resize(a.m_size);
 
-	T attribute[MaxAttributes];
+			::memcpy( attribute, a.attribute, m_size * sizeof(T) );
+		}
 
-	FixedAttributeArray()
+		return *this;
+	}
+
+	void Resize( size_t n )
 	{
-		memset(this, 0, sizeof(this_type));
+		if( m_size == n )
+			return;
+
+		if( n > 0 )
+		{
+			T* ptr = (T*) new T[n];
+			if(attribute)
+			{
+				// copy previous contents
+				size_t minSize = m_size > n ? n : m_size;
+				for( size_t i(0); i < minSize; ++i )
+					ptr[i] = attribute[i];
+
+				delete [] attribute;
+			}
+
+			attribute = ptr;
+			m_size = n;
+		}
+		else if( attribute )
+		{
+			delete [] attribute;
+			attribute = 0;
+			m_size = 0;
+		}
 	}
 
 	void Set(T value)
 	{
-		for( size_t i(0); i < N; ++i )
+		for( size_t i(0); i < m_size; ++i )
 			attribute[i] = value;
 	}
 
 	void Set(T* values)
 	{
-		for( size_t i(0); i < N; ++i )
+		for( size_t i(0); i < m_size; ++i )
 			attribute[i] = values[i];
 	}
 
@@ -48,7 +90,7 @@ struct FixedAttributeArray
 	this_type operator +(const this_type& rhs) const
 	{
 		this_type ret;
-		for( size_t i(0); i < N; ++i )
+		for( size_t i(0); i < m_size; ++i )
 			ret.attribute[i] = attribute[i] + rhs.attribute[i];
 
 		return ret;
@@ -57,7 +99,7 @@ struct FixedAttributeArray
 	this_type operator -(const this_type& rhs) const
 	{
 		this_type ret;
-		for( size_t i(0); i < N; ++i )
+		for( size_t i(0); i < m_size; ++i )
 			ret.attribute[i] = attribute[i] - rhs.attribute[i];
 
 		return ret;
@@ -65,7 +107,7 @@ struct FixedAttributeArray
 
 	this_type& operator +=(const this_type& rhs)
 	{
-		for( size_t i(0); i < N; ++i )
+		for( size_t i(0); i < m_size; ++i )
 			attribute[i] += rhs.attribute[i];
 
 		return *this;
@@ -73,7 +115,7 @@ struct FixedAttributeArray
 
 	this_type& operator -=(const this_type& rhs)
 	{
-		for( size_t i(0); i < N; ++i )
+		for( size_t i(0); i < m_size; ++i )
 			attribute[i] -= rhs.attribute[i];
 
 		return *this;
@@ -83,7 +125,7 @@ struct FixedAttributeArray
 	this_type Add(const this_type& rhs, I min, I max) const
 	{
 		this_type ret;
-		for( size_t i(0); i < N; ++i )
+		for( size_t i(0); i < m_size; ++i )
 		{
 			I val = ((I)attribute[i] + (I)rhs.attribute[i]);
 			if( val < min ) val = min;
@@ -98,7 +140,7 @@ struct FixedAttributeArray
 	this_type Subtract(const this_type& rhs, I min, I max) const
 	{
 		this_type ret;
-		for( size_t i(0); i < N; ++i )
+		for( size_t i(0); i < m_size; ++i )
 		{
 			I val = ((I)attribute[i] - (I)rhs.attribute[i]);
 			if( val < min ) val = min;
@@ -112,7 +154,7 @@ struct FixedAttributeArray
 	template <class I>
 	this_type& AddAssign(const this_type& rhs, I min, I max)
 	{
-		for( size_t i(0); i < N; ++i )
+		for( size_t i(0); i < m_size; ++i )
 		{
 			I val = ((I)attribute[i] + (I)rhs.attribute[i]);
 			if( val < min ) val = min;
@@ -126,7 +168,7 @@ struct FixedAttributeArray
 	template <class I>
 	this_type& SubtractAssign(const this_type& rhs, I min, I max)
 	{
-		for( size_t i(0); i < N; ++i )
+		for( size_t i(0); i < m_size; ++i )
 		{
 			I val = ((I)attribute[i] - (I)rhs.attribute[i]);
 			if( val < min ) val = min;
@@ -140,7 +182,7 @@ struct FixedAttributeArray
 	template <class I>
 	void ApplyModifier(float modifier, I min, I max)
 	{
-		for( size_t i(0); i < N; ++i )
+		for( size_t i(0); i < m_size; ++i )
 		{
 			float x = (float)attribute[i] * modifier;
 			I val = I((x > 0.f) ? (x + 0.5f) : (x - 0.5f))
@@ -158,7 +200,7 @@ struct FixedAttributeArray
 
 	void Clamp(const this_type& min, const this_type& max)
 	{
-		for( size_t i(0); i < N; ++i )
+		for( size_t i(0); i < m_size; ++i )
 		{
 			if( attribute[i] > max.attribute[i] )
 				attribute[i] = max.attribute[i];
@@ -170,7 +212,7 @@ struct FixedAttributeArray
 
 	void Clamp(T min, T max)
 	{
-		for( size_t i(0); i < N; ++i )
+		for( size_t i(0); i < m_size; ++i )
 		{
 			if( attribute[i] > max )
 				attribute[i] = max;
@@ -180,5 +222,7 @@ struct FixedAttributeArray
 		}
 	}
 
+protected:
+	size_t m_size;
 };
 

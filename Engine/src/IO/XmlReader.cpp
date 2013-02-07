@@ -214,6 +214,12 @@ fc::string XmlReader::ReadText() const
 }
 
 
+bool XmlReader::ReadByteBlock( char* ptr, size_t n )
+{
+	return ReadBlock<char>(ptr, n, true);
+}
+
+
 bool XmlReader::ReadShortBlock( short* ptr, size_t n )
 {
 	return ReadBlock<short>(ptr, n, true);

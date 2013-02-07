@@ -22,7 +22,7 @@
 
 typedef FixedAttributeArray<int, MAX_STATS>			StatisticsValueArrayType;
 typedef FixedAttributeArray<short, MAX_ELEMENTS>	ElementalArrayType;
-typedef FixedAttributeArray<short, MAX_STATUS>		StatusArrayType;
+typedef FixedAttributeArray<ubyte, MAX_STATUS>		StatusArrayType;
 typedef FixedAttributeArray<short, MAX_MISC>		MiscArrayType;
 
 
@@ -31,55 +31,25 @@ struct RPG_API Attributes
 	typedef Attributes			this_type;
 
 	StatisticsValueArrayType	stats;
-	ElementalArrayType			elements;
-	StatusArrayType				status;
+	//ElementalArrayType			elements;
+	StatusArrayType				status_atk;
+	StatusArrayType				status_def;
 	MiscArrayType				misc;
 
 	//aggregate type
 
-	this_type operator +(const this_type& rhs) const
-	{
-		this_type ret;
-		ret.stats = stats + rhs.stats;
-		ret.elements = elements + rhs.elements;
-		ret.status = status + rhs.status;
+	this_type operator +(const this_type& rhs) const;
+	this_type operator -(const this_type& rhs) const;
+	this_type &operator +=(const this_type& rhs);
+	this_type &operator -=(const this_type& rhs);
 
-		return ret;
-	}
 
-	this_type operator -(const this_type& rhs) const
-	{
-		this_type ret;
-		ret.stats = stats - rhs.stats;
-		ret.elements = elements - rhs.elements;
-		ret.status = status - rhs.status;
-
-		return ret;
-	}
-
-	this_type &operator +=(const this_type& rhs)
-	{
-		stats += rhs.stats;
-		elements += rhs.elements;
-		status += rhs.status;
-
-		return *this;
-	}
-
-	this_type &operator -=(const this_type& rhs)
-	{
-		stats -= rhs.stats;
-		elements -= rhs.elements;
-		status -= rhs.status;
-
-		return *this;
-	}
-
+/*
 	void ApplyPercentageModifier(const this_type& modifier);
 	void ApplyMin(const this_type& value);
 	void ApplyMax(const this_type& value);
 	void Clamp(const this_type& min, const this_type& max);
-
+*/
 	void SerializeXml( XmlWriter* xml );
 	void DeserializeXml( XmlReader* xml );
 

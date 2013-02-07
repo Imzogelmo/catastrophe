@@ -73,12 +73,13 @@ class Party
 {
 public:
 	typedef fc::vector<int>			vec_type;
-	//typedef fc::vector<PartyGroup>	group_vec_type;
+
+	Party();
 
 	void AddMember( int id );
 	void RemoveMember( int id );
-	bool HasMember( int id );
 
+	bool HasMember( int id );
 	bool IsMemberInActiveParty( int id );
 	bool IsMemberInReserve( int id );
 	bool IsMemberInActiveParty( int id, vec_type::iterator& outIt );
@@ -90,13 +91,15 @@ public:
 
 
 	Inventory&		GetInventory() { return m_inventory; }
-	vec_type&		GetMembers() { return m_reserveMembers; }
-	vec_type		GetAllPartyMembers();
+	vec_type&		GetActiveMembers() { return m_activeMembers; }
+	vec_type&		GetReserveMembers() { return m_reserveMembers; }
+	vec_type		GetAllPartyMembers() const;
+	size_t			GetPartySize() const;
 	int				GetGold() const { return m_gold; }
 
 protected:
-	vec_type		m_reserveMembers;
 	vec_type		m_activeMembers;
+	vec_type		m_reserveMembers;
 	Inventory		m_inventory;
 
 	int				m_gold;

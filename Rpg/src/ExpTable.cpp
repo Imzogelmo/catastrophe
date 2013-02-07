@@ -82,7 +82,7 @@ void ExpTable::Resize( int maxLv )
 void ExpTable::SerializeXml( XmlWriter* xml )
 {
 	xml->SetUInt("count", table.size());
-	xml->Write(&table[0], table.size());
+	xml->WriteIntBlock(&table[0], table.size());
 }
 
 
