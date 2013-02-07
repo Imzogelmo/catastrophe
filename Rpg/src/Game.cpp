@@ -64,9 +64,7 @@ int Game::Initialize()
 	gSetActiveScriptEngine(&m_scriptEngine);
 	gSetActiveDatabase(&m_database);
 
-	m_resourceManager.SetBaseDirectory("data/");
-	m_resourceManager.SetTextureDirectory("textures/");
-	m_resourceManager.SetFontDirectory("fonts/");
+	m_resourceManager.GetResourceDirectory().SetRootDirectory("data/");
 
 	int ret(0);
 	//ret = InternalInitScriptEngine();
