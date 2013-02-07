@@ -20,6 +20,14 @@ enum Gender
 };
 
 
+enum Handedness
+{
+	Handed_Right = 1,
+	Handed_Left = 2,
+	Handed_Ambidextrous = 3
+};
+
+
 enum Alignment
 {
 	Alignment_Good,
@@ -27,29 +35,58 @@ enum Alignment
 	Alignment_Evil
 };
 
+//------------------------------------------------------------------------------------
+// properties of potiential attack before it is input
+//------------------------------------------------------------------------------------
 
-enum TargetModeFlags
+enum TargetModeFlags  
 {
-	TargetMode_Single = 1,
-	TargetMode_Many = 2,
-	TargetMode_SingleOrMany = 3
+	TargetMode_Single = 1,         // Forced single-target to a selectable target
+	TargetMode_Group = 2,          // Forced multi-target to a selectable group
+	TargetMode_SingleOrGroup = 3,  // Single or group, spreadable 
+	TargetMode_Faction = 4,        // Forced multi-target to selectable faction
+	TargetMode_SingleOrFaction = 5 // Single or all of faction, spreadable
+	TargetMode_All = 0xFF          // Forced multi-target to both factions
 };
 
 
-enum TargetInfo
+enum Confirmation  
 {
-	Target_Self,
-	Target_Enemy,
-	Target_EnemyGroup,
-	Target_AllEnemies,
-	Target_Ally,
-	Target_AllyGroup,
-	Target_AllAllies,
-	Target_All
+	Confirm_Manual,
+	Confirm_Auto,
+	Confirm_Randomize
 };
 
 
-enum TargetScope
+enum CursorStart
+{
+	Cursor_None,
+	Cursor_Self,
+	Cursor_FirstEnemy,
+	Curosr_FirstAlly
+};
+
+
+enum CursorModeFlags
+{
+	CursorMode_Selectablle = 1,      // Cam be moved off the starting target
+	CursorMode_Spreadable = 2,       // Can be spread optionally
+	CursorMode_FactionRestricted = 4 // Keep cursor within the faction it starts in
+};
+
+
+//------------------------------------------------------------------------------------
+// properties of attack after it is input
+//------------------------------------------------------------------------------------
+
+enum Faction
+{
+	Faction_Ally,
+	Faction_Enemy
+};
+
+
+enum TargetScope 
 {
 	Scope_Single,
 	Scope_Group,
@@ -58,12 +95,21 @@ enum TargetScope
 };
 
 
-enum Faction
+enum TargetInfo 
 {
-	Faction_Ally,
-	Faction_Enemy
+	Target_None, 
+	Target_Enemy,
+	Target_EnemyGroup,
+	Target_AllEnemies,
+	Target_Ally,
+	Target_AllyGroup,
+	Target_AllAllies, 
+	Target_All
 };
 
+//------------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------------
 
 enum UsageFlags
 {
