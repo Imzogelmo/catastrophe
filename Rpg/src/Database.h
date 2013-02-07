@@ -47,8 +47,6 @@ public:
 	//fc::string			title;
 	//fc::string			currency;
 
-
-
 	//template <class T>
 	//bool SerializeXml( const fc::vector<T>& vec )
 	//{

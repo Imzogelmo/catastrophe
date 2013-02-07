@@ -142,6 +142,19 @@ namespace Util
 		xml->EndNode();
 	}
 
+	void SerializeStringArray( XmlWriter* xml, const char* node, const fc::string* stringArray, int n )
+	{
+		xml->BeginNode(node);
+		xml->SetInt("count", n);
+		for( int i(0); i < n; ++i )
+		{
+			xml->BeginNode("String");
+			xml->SetInt("id", i);
+			xml->SetString("s", stringArray[i].c_str());
+			xml->EndNode();
+		}
+		xml->EndNode();
+	}
 
 
 
@@ -280,6 +293,23 @@ namespace Util
 		xml->SetToParent();
 	}
 
+	void DeserializeStringArray( XmlReader* xml, const char* node, fc::string* stringArray, int n )
+	{
+		if( xml->NextChild(node) )
+		{
+			int i = 0;
+			int amount = xml->GetInt("count");
+			amount = (amount < n) ? amount : n;
+
+			while( i < amount && xml->NextChild("String") )
+			{
+				stringArray[i] = xml->GetString("s");
+				++i;
+			}
+
+			xml->SetToParent();
+		}
+	}
 
 
 } //namespace Util

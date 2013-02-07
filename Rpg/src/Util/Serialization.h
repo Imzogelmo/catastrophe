@@ -25,6 +25,7 @@ namespace Util
 	void SerializeAnimationSet( XmlWriter* xml, const AnimationSet& a );
 	void SerializeAnimation( XmlWriter* xml, const Animation& a );
 	void SerializeTile( XmlWriter* xml, const Tile& t );
+	void SerializeStringArray( XmlWriter* xml, const char* node, const fc::string* stringArray, int n );
 
 
 
@@ -37,6 +38,7 @@ namespace Util
 	void DeserializeAnimation( XmlReader* xml, Animation& a );
 	void DeserializeAnimationFrames( XmlReader* xml, Animation& a );
 	void DeserializeTile( XmlReader* xml, Tile& t );
+	void DeserializeStringArray( XmlReader* xml, const char* node, fc::string* stringArray, int n );
 
 
 }
