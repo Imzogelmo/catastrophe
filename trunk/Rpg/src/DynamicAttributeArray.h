@@ -43,6 +43,8 @@ struct DynamicAttributeArray
 		return *this;
 	}
 
+	size_t Size() const { return m_size; }
+
 	void Resize( size_t n )
 	{
 		if( m_size == n )

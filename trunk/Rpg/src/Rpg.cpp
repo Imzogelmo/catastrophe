@@ -186,8 +186,6 @@ void DoTests()
 
 	ResourceManager rm;
 	gSetActiveResourceManager(&rm);
-	rm.SetBaseDirectory("data/");
-	rm.SetTextureDirectory("textures/");
 	rm.LoadTexture("monsters_psp.png");
 
 	gMonsterList.DeserializeXml("monsters_psp.xml");

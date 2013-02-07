@@ -12,7 +12,10 @@
 #pragma once
 
 #include <fc/vector.h>
+#include <fc/string.h>
+
 #include "Common.h"
+#include "ResourceDirectory.h"
 
 
 class Resource
@@ -60,9 +63,6 @@ public:
 	// it is required to call this. 
 	void SetResourceUsage( size_t maxCapacity = 256 );
 
-	void SetDirectory( const fc::string& directory );
-	const fc::string& GetDirectory() const { return m_directory; };
-
 	// this will invalidate all existing pointers to these resources.
 	template <class T> void DeleteResources();
 	template <class T> void DeleteResource( Resource* ptr );
@@ -80,7 +80,6 @@ public:
 protected:
 	vec_type	m_resources;
 	store_type	m_free_store;
-	fc::string	m_directory;
 
 };
 
@@ -93,22 +92,15 @@ public:
 
 	void DeleteResources();
 
-	void SetBaseDirectory( const fc::string& directory );
-	void SetTextureDirectory( const fc::string& directory ) { GetTextureResourceCache()->SetDirectory(directory); }
-	void SetFontDirectory( const fc::string& directory ) { GetFontResourceCache()->SetDirectory(directory); }
-	void SetShaderDirectory( const fc::string& directory ) { GetShaderResourceCache()->SetDirectory(directory); }
-
-	const fc::string& GetBaseDirectory() const { return m_baseDirectory; }
-	const fc::string& GetTextureDirectory() const { return GetTextureResourceCache()->GetDirectory(); }
-	const fc::string& GetFontDirectory() const { return GetFontResourceCache()->GetDirectory(); }
-	const fc::string& GetShaderDirectory() const { return GetShaderResourceCache()->GetDirectory(); }
-
 	ResourceCache* GetTextureResourceCache() { return &m_textureCache; }
 	ResourceCache* GetFontResourceCache() { return &m_fontCache; }
 	ResourceCache* GetShaderResourceCache() { return &m_shaderCache; }
 	const ResourceCache* GetTextureResourceCache() const { return &m_textureCache; }
 	const ResourceCache* GetFontResourceCache() const { return &m_fontCache; }
 	const ResourceCache* GetShaderResourceCache() const { return &m_shaderCache; }
+
+	ResourceDirectory& GetResourceDirectory() { return m_directory; }
+	const ResourceDirectory& GetResourceDirectory() const { return m_directory; }
 
 	//
 	// Load and Get functions return null if the resource does not exist.
@@ -149,12 +141,9 @@ protected:
 	ResourceCache		m_textureCache;
 	ResourceCache		m_fontCache;
 	ResourceCache		m_shaderCache;
-
-	fc::string			m_baseDirectory;
+	ResourceDirectory	m_directory;
 
 private:
-	//ResourceManager does NOT follow the singleton pattern...
-	//...though there could be use for one....
 	//static ResourceManager m_singleton;
 
 	//at any rate, this cannot be allowed to share resources.

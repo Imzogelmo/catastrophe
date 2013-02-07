@@ -21,13 +21,6 @@ ResourceCache::ResourceCache()
 }
 
 
-void ResourceCache::SetDirectory( const fc::string& directory )
-{
-	ASSERT(m_resources.empty());
-	m_directory = directory;
-}
-
-
 template <class T>
 void ResourceCache::DeleteResources()
 {
@@ -142,13 +135,6 @@ ResourceManager::~ResourceManager()
 }
 
 
-void ResourceManager::SetBaseDirectory( const fc::string& directory )
-{
-	//ASSERT(m_textures.empty() && m_fonts.empty());
-	m_baseDirectory = directory;
-}
-
-
 void ResourceManager::DeleteResources()
 {
 	//releases all gpu data and deletes all resources.
@@ -173,8 +159,9 @@ Texture* ResourceManager::LoadTexture( const fc::string& filename, int* id  )
 		texture = new Texture();
 
 		fc::string fn;
-		fn.reserve(m_baseDirectory.size() + GetTextureDirectory().size() + filename.size() + 1);
-		fn.append(m_baseDirectory).append(GetTextureDirectory()).append(filename);
+		fn.reserve(filename.size() + 32);
+		m_directory.GetTextureDirectory(fn);
+		fn.append(filename);
 
 		if( !texture->LoadFromFile(fn) )
 		{
@@ -212,8 +199,9 @@ Font* ResourceManager::LoadFont( const fc::string& filename, int faceSize, int* 
 		font = new Font();
 
 		fc::string fn;
-		fn.reserve(m_baseDirectory.size() + GetFontDirectory().size() + filename.size() + 1);
-		fn.append(m_baseDirectory).append(GetFontDirectory()).append(filename);
+		fn.reserve(filename.size() + 32);
+		m_directory.GetFontDirectory(fn);
+		fn.append(filename);
 
 		if( !font->LoadFromFile(fn, faceSize) )
 		{
@@ -256,8 +244,9 @@ ShaderObject* ResourceManager::LoadShaderObject( const fc::string& filename, int
 		}
 
 		fc::string fn;
-		fn.reserve(m_baseDirectory.size() + GetShaderDirectory().size() + filename.size() + 1);
-		fn.append(m_baseDirectory).append(GetShaderDirectory()).append(filename);
+		fn.reserve(filename.size() + 32);
+		m_directory.GetFontDirectory(fn);
+		fn.append(filename);
 
 		if( !shader->LoadFromFile(fn) )
 		{
