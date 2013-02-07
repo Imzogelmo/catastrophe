@@ -57,17 +57,17 @@ namespace script
 		CLAMP_INDEX(index, MAX_STATS);
 		return self->stats[index];
 	}
-
+/*
 	short AttributesGetElement( size_t index, Attributes* self )
 	{
 		CLAMP_INDEX(index, MAX_ELEMENTS);
 		return self->elements[index];
 	}
-
+*/
 	short AttributesGetStatus( size_t index, Attributes* self )
 	{
 		CLAMP_INDEX(index, MAX_STATUS);
-		return self->status[index];
+		return self->status_atk[index];
 	}
 
 	void AttributesSetStat( size_t index, int value, Attributes* self )
@@ -75,17 +75,17 @@ namespace script
 		CLAMP_INDEX(index, MAX_STATS);
 		self->stats[index] = value;
 	}
-
+/*
 	void AttributesSetElement( size_t index, short value, Attributes* self )
 	{
 		CLAMP_INDEX(index, MAX_ELEMENTS);
 		self->elements[index] = value;
 	}
-
+*/
 	void AttributesSetStatus( size_t index, short value, Attributes* self )
 	{
 		CLAMP_INDEX(index, MAX_STATUS);
-		self->status[index] = value;
+		self->status_atk[index] = value;
 	}
 
 } //namespace script
@@ -111,12 +111,12 @@ void ScriptEngine::RegisterMonster()
 	r = engine->RegisterObjectMethod( "attributes", "attributes opSub(const attributes &in) const", asMETHODPR(Attributes, operator -, (const Attributes&) const, Attributes), asCALL_THISCALL); assert( r >= 0 );
 
 	r = engine->RegisterObjectMethod( "attributes", "int get_stat(int) const", asFUNCTION(AttributesGetStat), asCALL_CDECL_OBJLAST); assert( r >= 0 );
-	r = engine->RegisterObjectMethod( "attributes", "int16 get_element(int)", asFUNCTION(AttributesGetElement), asCALL_CDECL_OBJLAST); assert( r >= 0 );
+	//r = engine->RegisterObjectMethod( "attributes", "int16 get_element(int)", asFUNCTION(AttributesGetElement), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( "attributes", "int16 get_status(int)", asFUNCTION(AttributesGetStatus), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 	//r = engine->RegisterObjectMethod( "attributes", "int16 get_misc(int)", asFUNCTION(AttributesGetStatus), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 
 	r = engine->RegisterObjectMethod( "attributes", "void set_stat(int, int) const", asFUNCTION(AttributesSetStat), asCALL_CDECL_OBJLAST); assert( r >= 0 );
-	r = engine->RegisterObjectMethod( "attributes", "void set_element(int, int16)", asFUNCTION(AttributesSetElement), asCALL_CDECL_OBJLAST); assert( r >= 0 );
+	//r = engine->RegisterObjectMethod( "attributes", "void set_element(int, int16)", asFUNCTION(AttributesSetElement), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( "attributes", "void set_status(int, int16)", asFUNCTION(AttributesSetStatus), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 	//r = engine->RegisterObjectMethod( "attributes", "void set_misc(int, int16)", asFUNCTION(AttributesSetStatus), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 

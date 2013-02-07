@@ -14,16 +14,36 @@
 #include "Party.h"
 
 
+Party::Party()
+{
+	m_gold = 0;
+	m_maxPartySize = 32;
+	m_maxActivePartySize = 4;
+}
+
+
 void Party::AddMember( int id )
 {
-	vec_type::iterator it = fc::find(m_reserveMembers.begin(), m_reserveMembers.end(), id);
-	if( it == m_reserveMembers.end() )
+	vec_type::iterator it;
+	if( IsMemberInActiveParty(id, it) )
+		return;
+
+	if( IsMemberInReserve(id, it) )
+	{
+		if( m_activeMembers.size() < (size_t)m_maxActivePartySize )
+		{
+			m_reserveMembers.erase(it);
+			m_activeMembers.push_back(id);
+		}
+	}
+	else
 	{
 		//todo: sanity check
 		if( m_activeMembers.size() < (size_t)m_maxActivePartySize )
 			m_activeMembers.push_back(id);
 
-		else m_reserveMembers.push_back(id);
+		else if( GetPartySize() < (size_t)m_maxPartySize )
+			m_reserveMembers.push_back(id);
 	}
 }
 
@@ -76,7 +96,7 @@ bool Party::IsMemberInReserve( int id, vec_type::iterator& outIt )
 }
 
 
-Party::vec_type Party::GetAllPartyMembers()
+Party::vec_type Party::GetAllPartyMembers() const
 {
 	vec_type ret;
 	ret.reserve(m_activeMembers.size() + m_reserveMembers.size());
@@ -100,6 +120,10 @@ void Party::RemoveGold( int amount )
 }
 
 
+size_t Party::GetPartySize() const
+{
+	return m_activeMembers.size() + m_reserveMembers.size();
+}
 
 
 

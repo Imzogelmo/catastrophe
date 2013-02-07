@@ -139,27 +139,26 @@ void XmlWriter::Write( const char* s )
 }
 
 
-void XmlWriter::Write( int* ptr, size_t n )
+void XmlWriter::WriteByteBlock( char* ptr, size_t n )
 {
-	fc::string str;
-	str.reserve(n * 4); //best guess
-
-	char buf[64];
-	for( size_t i(0); i < n; ++i )
-	{
-		sprintf(buf, "%i", ptr[i]);
-		str.append(buf).append(',');
-	}
-
-	//remove the trailing ',' character.
-	if(!str.empty())
-		str.pop_back();
-
-	Write(str.c_str());
+	WriteBlock<char>(ptr, n, true);
 }
 
 
-void XmlWriter::Write( short* ptr, size_t n )
+void XmlWriter::WriteShortBlock( short* ptr, size_t n )
+{
+	WriteBlock<short>(ptr, n, true);
+}
+
+
+void XmlWriter::WriteIntBlock( int* ptr, size_t n )
+{
+	WriteBlock<int>(ptr, n, true);
+}
+
+
+template <class T>
+void XmlWriter::WriteBlock( T* ptr, size_t n, bool isIntegral )
 {
 	fc::string str;
 	str.reserve(n * 4); //best guess
@@ -167,7 +166,12 @@ void XmlWriter::Write( short* ptr, size_t n )
 	char buf[64];
 	for( size_t i(0); i < n; ++i )
 	{
-		sprintf(buf, "%i", ptr[i]);
+		if( isIntegral )
+		{
+			int val = (int)ptr[i];
+			sprintf(buf, "%i", val);
+		}
+
 		str.append(buf).append(',');
 	}
 

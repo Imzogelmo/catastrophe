@@ -39,8 +39,10 @@ public:
 	void EndNode();
 	void Write( const fc::string& text );
 	void Write( const char* text );
-	void Write( int* ptr, size_t n );
-	void Write( short* ptr, size_t n );
+	void WriteByteBlock( char* ptr, size_t n );
+	void WriteShortBlock( short* ptr, size_t n );
+	void WriteIntBlock( int* ptr, size_t n );
+	template <class T> void WriteBlock( T* ptr, size_t n, bool isIntegral = true );
 
 	void SetString( const fc::string& name, const fc::string& value );
 	void SetBool( const fc::string& name, bool value );

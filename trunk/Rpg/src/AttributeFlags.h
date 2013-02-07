@@ -21,20 +21,22 @@ struct AttributeFlags
 
 	enum : size_t
 	{
-		MaxInternalFlags = 6 //24 bytes
+		MaxInternalFlags = 8 //32 bytes
 	};
 
-	Flags32	stat_flags;
-	Flags32	element_flags;
-	Flags32	status_flags;
+	Flags32	element;
+	Flags32	element_absorb;
+	Flags32	element_nullify;
+	Flags32	element_resist;
+	Flags32	element_weak;
 	Flags32	family_flags;
 	Flags32	class_flags;
 	Flags32	misc_flags;
 
 	//aggregate type
 
-	Flags32& operator [](size_t i) { return *((&stat_flags) + i); }
-	const Flags32& operator [](size_t i) const { return *((&stat_flags) + i); }
+	Flags32& operator [](size_t i) { return *((&element) + i); }
+	const Flags32& operator [](size_t i) const { return *((&element) + i); }
 
 	this_type& operator |=(const this_type& rhs)
 	{

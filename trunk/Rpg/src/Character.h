@@ -30,10 +30,8 @@ public:
 
 	int GetBaseStat( int stat ) const;
 	int GetStat( int stat );
-	int GetBaseElementalValue( int element ) const;
-	int GetElementalValue( int element );
-	int GetBaseStatusValue( int status ) const;
-	int GetStatusValue( int status );
+	int GetBaseStatusAttackValue( int status ) const;
+	int GetStatusAttackValue( int status );
 
 
 	Attributes& GetAttributes() { return m_attributes; }

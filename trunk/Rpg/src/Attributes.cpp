@@ -14,51 +14,97 @@
 #include "Attributes.h"
 
 
+Attributes Attributes::operator +(const Attributes& rhs) const
+{
+	Attributes ret;
+	ret.stats = stats + rhs.stats;
+	//ret.elements = elements + rhs.elements;
+	ret.status_atk = status_atk.Add<int>(rhs.status_atk, 0, 100);
+	ret.status_def = status_def.Add<int>(rhs.status_def, 0, 100);
 
+	return ret;
+}
+
+
+Attributes Attributes::operator -(const Attributes& rhs) const
+{
+	Attributes ret;
+	ret.stats = stats - rhs.stats;
+	//ret.elements = elements - rhs.elements;
+	ret.status_atk = status_atk.Subtract<int>(rhs.status_atk, 0, 100);
+	ret.status_def = status_def.Subtract<int>(rhs.status_def, 0, 100);
+
+	return ret;
+}
+
+
+Attributes& Attributes::operator +=(const Attributes& rhs)
+{
+	stats += rhs.stats;
+	//elements += rhs.elements;
+	status_atk.AddAssign<int>(rhs.status_atk, 0, 100);
+	status_def.AddAssign<int>(rhs.status_def, 0, 100);
+
+	return *this;
+}
+
+
+Attributes& Attributes::operator -=(const Attributes& rhs)
+{
+	stats -= rhs.stats;
+	//elements -= rhs.elements;
+	status_atk.SubtractAssign<int>(rhs.status_atk, 0, 100);
+	status_def.SubtractAssign<int>(rhs.status_def, 0, 100);
+
+	return *this;
+}
+
+
+/*
 void Attributes::ApplyPercentageModifier(const Attributes& modifier)
 {
 	stats.ApplyPercentageModifier(modifier.stats);
-	elements.ApplyPercentageModifier(modifier.elements);
-	status.ApplyPercentageModifier(modifier.status);
+	//elements.ApplyPercentageModifier(modifier.elements);
+	status_atk.ApplyPercentageModifier(modifier.status_atk);
 }
 
 
 void Attributes::ApplyMin(const Attributes& value)
 {
 	stats.ApplyMin(value.stats);
-	elements.ApplyMin(value.elements);
-	status.ApplyMin(value.status);
+	//elements.ApplyMin(value.elements);
+	status_atk.ApplyMin(value.status_atk);
 }
 
 
 void Attributes::ApplyMax(const Attributes& value)
 {
 	stats.ApplyMax(value.stats);
-	elements.ApplyMax(value.elements);
-	status.ApplyMax(value.status);
+	//elements.ApplyMax(value.elements);
+	status_atk.ApplyMax(value.status_atk);
 }
 
 
 void Attributes::Clamp(const Attributes& min, const Attributes& max)
 {
 	stats.Clamp(min.stats, max.stats);
-	elements.Clamp(min.elements, max.elements);
-	status.Clamp(min.status, max.status);
+	//elements.Clamp(min.elements, max.elements);
+	status_atk.Clamp(min.status_atk, max.status_atk);
 }
-
+*/
 
 void Attributes::SerializeXml( XmlWriter* xml )
 {
 	xml->BeginNode("Attributes");
-	xml->Write(&stats[0], MAX_STATS);
+	xml->WriteBlock(&stats[0], MAX_STATS);
 	xml->EndNode();
 
-	xml->BeginNode("Elements");
-	xml->Write(&elements[0], MAX_ELEMENTS);
+	xml->BeginNode("Status Atk");
+	xml->WriteBlock(&status_atk[0], MAX_STATUS);
 	xml->EndNode();
 
-	xml->BeginNode("Status");
-	xml->Write(&status[0], MAX_STATUS);
+	xml->BeginNode("Status Def");
+	xml->WriteBlock(&status_def[0], MAX_STATUS);
 	xml->EndNode();
 }
 
@@ -69,12 +115,12 @@ void Attributes::DeserializeXml( XmlReader* xml )
 	xml->ReadBlock(&stats[0], MAX_STATS);
 	xml->SetToParent();
 
-	xml->FirstChild("Elements");
-	xml->ReadBlock(&elements[0], MAX_ELEMENTS);
+	xml->FirstChild("Status Atk");
+	xml->ReadBlock(&status_atk[0], MAX_STATUS);
 	xml->SetToParent();
 
-	xml->FirstChild("Status");
-	xml->ReadBlock(&status[0], MAX_STATUS);
+	xml->FirstChild("Status Def");
+	xml->ReadBlock(&status_def[0], MAX_STATUS);
 	xml->SetToParent();
 }
 
