@@ -27,9 +27,10 @@ struct RPG_API Item : public AttributeData
 		Valuable = 0x0001,
 		Consumable = 0x0002,
 		Equippable = 0x0004,
+		Cursed = 0x0008,
 		//...
-		UsableInMenu = 0x0010,
-		UsableInBattle = 0x0020
+		UsableInMenu = 0x0040,
+		UsableInBattle = 0x0080
 
 
 	};
@@ -41,7 +42,8 @@ struct RPG_API Item : public AttributeData
 	int				type;
 	int				subtype;
 
-	//int				gold;
+	int				gold;
+	int				spell_cast_id;
 	int				targeting;
 	Flags32			flags;
 	Flags32			usage_flags;
