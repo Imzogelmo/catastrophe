@@ -139,9 +139,9 @@ void XmlWriter::Write( const char* s )
 }
 
 
-void XmlWriter::WriteByteBlock( char* ptr, size_t n )
+void XmlWriter::WriteByteBlock( ubyte* ptr, size_t n )
 {
-	WriteBlock<char>(ptr, n, true);
+	WriteBlock<ubyte>(ptr, n, true);
 }
 
 

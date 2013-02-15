@@ -12,13 +12,9 @@
 #pragma once
 
 #include "Common.h"
+#include "Defs.h"
 #include "FixedAttributeArray.h"
 
-
-#define MAX_STATS		32
-#define MAX_ELEMENTS	32
-#define MAX_STATUS		32
-#define MAX_MISC		16
 
 typedef FixedAttributeArray<int, MAX_STATS>			StatisticsValueArrayType;
 typedef FixedAttributeArray<short, MAX_ELEMENTS>	ElementalArrayType;
@@ -46,8 +42,6 @@ struct RPG_API Attributes
 
 /*
 	void ApplyPercentageModifier(const this_type& modifier);
-	void ApplyMin(const this_type& value);
-	void ApplyMax(const this_type& value);
 	void Clamp(const this_type& min, const this_type& max);
 */
 	void SerializeXml( XmlWriter* xml );

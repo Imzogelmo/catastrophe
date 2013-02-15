@@ -20,6 +20,7 @@
 
 
 typedef signed char			sbyte;
+typedef unsigned char		byte;
 typedef unsigned char		ubyte;
 typedef unsigned char		uchar;
 typedef unsigned short		ushort;

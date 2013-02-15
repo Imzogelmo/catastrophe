@@ -214,9 +214,9 @@ fc::string XmlReader::ReadText() const
 }
 
 
-bool XmlReader::ReadByteBlock( char* ptr, size_t n )
+bool XmlReader::ReadByteBlock( ubyte* ptr, size_t n )
 {
-	return ReadBlock<char>(ptr, n, true);
+	return ReadBlock<ubyte>(ptr, n, true);
 }
 
 

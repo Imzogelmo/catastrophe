@@ -69,22 +69,6 @@ void Attributes::ApplyPercentageModifier(const Attributes& modifier)
 }
 
 
-void Attributes::ApplyMin(const Attributes& value)
-{
-	stats.ApplyMin(value.stats);
-	//elements.ApplyMin(value.elements);
-	status_atk.ApplyMin(value.status_atk);
-}
-
-
-void Attributes::ApplyMax(const Attributes& value)
-{
-	stats.ApplyMax(value.stats);
-	//elements.ApplyMax(value.elements);
-	status_atk.ApplyMax(value.status_atk);
-}
-
-
 void Attributes::Clamp(const Attributes& min, const Attributes& max)
 {
 	stats.Clamp(min.stats, max.stats);

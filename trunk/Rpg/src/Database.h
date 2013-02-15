@@ -26,6 +26,9 @@ public:
 
 	void Initialize();
 
+
+	//fc::dynamic_array<int> variables; //should be in game?
+
 	ItemList*			GetItemList() const { return m_itemList; }
 	SpellList*			GetSpellList() const { return m_spellList; }
 	MonsterList*		GetMonsterList() const { return m_monsterList; }

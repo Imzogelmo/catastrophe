@@ -138,12 +138,30 @@ struct FixedAttributeArray
 	}
 
 	template <class I>
+	this_type& ApplyPercentageModifier(const this_type& rhs, I min, I max)
+	{
+		for( size_t i(0); i < N; ++i )
+		{
+			if( rhs.attribute[i] != 0 )
+			{
+				float x = ((float)attribute[i] * (1.f + (float)rhs.attribute[i]));
+				I val = I((x > 0.f) ? (x + 0.5f) : (x - 0.5f))
+				if( val < min ) val = min;
+				if( val > max ) val = min;
+				attribute[i] = (T)val;
+			}
+		}
+
+		return *this;
+	}
+
+	template <class I>
 	void ApplyModifier(float modifier, I min, I max)
 	{
 		for( size_t i(0); i < N; ++i )
 		{
 			float x = (float)attribute[i] * modifier;
-			I val = I((x > 0.f) ? (x + 0.5f) : (x - 0.5f))
+			I val = I((x > 0.f) ? (x + 0.5f) : (x - 0.5f));
 			if( val < min ) val = min;
 			if( val > max ) val = min;
 			attribute[i] = (T)val;
