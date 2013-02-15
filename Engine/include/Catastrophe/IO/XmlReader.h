@@ -49,7 +49,7 @@ public:
 	bool HasAttribute( const fc::string& attr ) const;
 
 	fc::string ReadText() const;
-	bool ReadByteBlock( char* ptr, size_t n );
+	bool ReadByteBlock( ubyte* ptr, size_t n );
 	bool ReadShortBlock( short* ptr, size_t n );
 	bool ReadIntBlock( int* ptr, size_t n );
 	bool ReadFloatBlock( float* ptr, size_t n );

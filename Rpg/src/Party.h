@@ -87,7 +87,9 @@ public:
 
 
 	void AddGold( int amount );
+	//void AddItem( int id, int amount = 1 );
 	void RemoveGold( int amount );
+	//void RemoveItem( int id, int amount = 1 );
 
 
 	Inventory&		GetInventory() { return m_inventory; }

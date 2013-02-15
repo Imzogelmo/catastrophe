@@ -112,6 +112,14 @@ void BuffSet::CalculateModifiers()
 		}
 	}
 
+	for( vec_type::iterator it = m_buffs.begin(); it != m_buffs.end(); ++it)
+	{
+		if( it->type == Buff::TypePercent )
+		{
+			m_combinedBuffAttributes.ApplyPercentageModifier(it->attributes);
+		}
+	}
+
 	m_is_dirty = false;
 }
 

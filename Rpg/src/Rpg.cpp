@@ -248,6 +248,7 @@ void DoAtlasPack3();
 void DoAtlasPack4();
 #include <fc/multi_array.h>
 #include <Catastrophe/Util/Timer.h>
+#include <fc/tiny_string.h>
 
 
 int main(int argc, char* argv[])
@@ -276,6 +277,20 @@ int main(int argc, char* argv[])
 	System::InitLogging("debug.log", true); //todo put this after config..
 
 	//DoTests();
+
+	fc::tiny_string<32> a = "string a is here";
+	fc::tiny_string<45> b = "b -- string is here";
+	//fc::tiny_basic_string<char, 32> a;
+	//fc::tiny_basic_string<char, 45> b(a);
+	a = b;
+	b = a.c_str();
+
+	fc::string c = b.c_str();
+	a = b.c_str();
+
+	fc::tiny_string<41> d(c);
+	d = c;
+	d = a;
 
 
 	// read config file and parse command-line arguments.
