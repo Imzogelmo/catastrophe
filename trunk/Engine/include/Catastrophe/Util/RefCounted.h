@@ -19,7 +19,7 @@
 #pragma once
 
 
-struct ReferenceCountedDefaultDeleter
+struct RefCountedDefaultDeleter
 {
 	inline void operator()( void* const ptr ) const
 	{
@@ -28,11 +28,19 @@ struct ReferenceCountedDefaultDeleter
 };
 
 
-template <class Deleter = ReferenceCountedDefaultDeleter>
-class ReferenceCounted
+struct RefCountedDummyDeleter
+{
+	inline void operator()( void* const ) const
+	{
+	}
+};
+
+
+template <class Deleter = RefCountedDefaultDeleter>
+class RefCounted
 {
 public:
-	ReferenceCounted( bool addRef = true ) : _ref_count(addRef ? 1 : 0) {}
+	RefCounted( bool addRef = true ) : m_ref_count(addRef ? 1 : 0) {}
 
 	void AddRef()
 	{
