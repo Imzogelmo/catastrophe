@@ -20,7 +20,7 @@
 
 #include <fc/vector.h>
 
-#include "Common.h"
+#include "../Common.h"
 #include "Primitive.h"
 
 CE_NAMESPACE_BEGIN
