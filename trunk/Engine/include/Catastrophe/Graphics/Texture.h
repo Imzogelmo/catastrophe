@@ -62,6 +62,8 @@ public:
 	gluint GetTextureID() const { return m_texture; }
 	int Width() const { return m_width; }
 	int Height() const { return m_height; }
+	float Widthf() const { return m_floatWidth; }
+	float Heightf() const { return m_floatHeight; }
 
 	Vector2 GetUV( const Point& pos ) const;
 	Vector2 GetUV( int x, int y ) const;
@@ -73,6 +75,8 @@ protected:
 	gluint	m_texture;
 	int		m_width;
 	int		m_height;
+	float	m_floatWidth;
+	float	m_floatHeight;
 	int		m_format;
 	int		m_internalformat;
 	int		m_wrapmode;
