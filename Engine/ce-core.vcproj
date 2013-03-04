@@ -280,6 +280,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Graphics\PackedSprite.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Graphics\Primitive.cpp"
 					>
 				</File>
@@ -535,6 +539,10 @@
 				</File>
 				<File
 					RelativePath=".\include\Catastrophe\Graphics\OpenGL.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Catastrophe\Graphics\PackedSprite.h"
 					>
 				</File>
 				<File

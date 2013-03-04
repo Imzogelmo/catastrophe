@@ -88,6 +88,8 @@ bool Texture::CreateTexture( const void* data, int w, int h )
 {
 	m_width = w;
 	m_height = h;
+	m_floatWidth = (float)w;
+	m_floatHeight = (float)h;
 	return CreateTexture(data);
 }
 
@@ -107,6 +109,8 @@ bool Texture::LoadFromFile( const fc::string& filename )
 
 	m_width = size.x;
 	m_height = size.y;
+	m_floatWidth = (float)size.x;
+	m_floatHeight = (float)size.y;
 
 	bool ret = CreateTexture(ptr);
 	TextureLoader::FreePtr(ptr);

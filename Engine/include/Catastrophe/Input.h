@@ -25,4 +25,5 @@
 #include "Input/Input.h"
 #include "Input/Controller.h"
 #include "Input/KeyboardController.h"
+#include "Input/JoystickController.h"
 
