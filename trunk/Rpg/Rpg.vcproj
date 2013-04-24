@@ -420,14 +420,6 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="Shmup"
-				>
-				<File
-					RelativePath=".\src\Shmup\BulletManager.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
 				Name="Util"
 				>
 				<File
@@ -702,30 +694,6 @@
 				</File>
 				<File
 					RelativePath=".\src\SpriteList.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Shmup"
-				>
-				<File
-					RelativePath=".\src\Shmup\Bullet.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Shmup\BulletManager.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Shmup\BulletPool.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Shmup\PODBullet.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Shmup\PODBulletManager.h"
 					>
 				</File>
 			</Filter>

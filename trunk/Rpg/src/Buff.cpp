@@ -114,9 +114,9 @@ void BuffSet::CalculateModifiers()
 
 	for( vec_type::iterator it = m_buffs.begin(); it != m_buffs.end(); ++it)
 	{
-		if( it->type == Buff::TypePercent )
+		if( it->type == Buff::TypeMultiplier )
 		{
-			m_combinedBuffAttributes.ApplyPercentageModifier(it->attributes);
+			//m_combinedBuffAttributes.ApplyPercentageModifier(it->attributes);
 		}
 	}
 
