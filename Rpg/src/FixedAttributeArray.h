@@ -146,6 +146,8 @@ struct FixedAttributeArray
 			{
 				float x = ((float)attribute[i] * (1.f + (float)rhs.attribute[i]));
 				I val = I((x > 0.f) ? (x + 0.5f) : (x - 0.5f))
+
+				// clamp val within range min, max
 				if( val < min ) val = min;
 				if( val > max ) val = min;
 				attribute[i] = (T)val;
@@ -162,6 +164,8 @@ struct FixedAttributeArray
 		{
 			float x = (float)attribute[i] * modifier;
 			I val = I((x > 0.f) ? (x + 0.5f) : (x - 0.5f));
+
+			// clamp val within range min, max
 			if( val < min ) val = min;
 			if( val > max ) val = min;
 			attribute[i] = (T)val;
