@@ -277,7 +277,11 @@ void Joystick::Update()
 		m_previous_analog[i] = m_analog[i];
 	}
 
-	glfwGetJoystickPos( GetJoystickNumber(), &m_analog[0].x, MaxAxes );
+	glfwGetJoystickPos( GetJoystickNumber(), &m_analog[0].x, 4 ); //MaxAxes );
+
+	//glfw bug...
+	m_analog[0].y = -m_analog[0].y;
+	//m_analog[1].y = -m_analog[1].y;
 
 	uchar b[MaxButtons];
 	glfwGetJoystickButtons( GetJoystickNumber(), b, MaxButtons );

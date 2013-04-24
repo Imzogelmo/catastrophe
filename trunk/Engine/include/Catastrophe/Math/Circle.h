@@ -78,7 +78,9 @@ public:
 
 	bool Intersects( const Circle& c ) const
 	{
-		return (pos.DistanceSquared( c.pos ) < (radius + c.radius) * (radius + c.radius));
+		float dx = pos.x - c.pos.x;
+		float dy = pos.y - c.pos.y;
+		return ((dx * dx + dy * dy) < (radius + c.radius) * (radius + c.radius));
 	}
 
 	bool Intersects( const Vector2& point ) const

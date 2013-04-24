@@ -44,12 +44,15 @@ public:
 	PackedSprite();
 	PackedSprite( Texture* texturePtr, const Rect& sourceRectangle, int numberOfFrames, short frameDelay );
 
-	void PackedSprite::SetAnimationSpeed( short frameDelay );
+	void SetAnimationSpeed( short frameDelay );
 	void SetTexture( Texture* texturePtr );
 	void SetSourceRect( const Rect& sourceRectangle );
-	void PackedSprite::Update();
-	void PackedSprite::SetCurrentFrame( short index );
+	void Update();
+	void SetCurrentFrame( short index );
 	void SetFrameData( const Rect& sourceRectangle, int numberOfFrames, short frameDelay );
+
+	Texture* GetTexture() const { return texture; }
+	//gluint GetTextureID() const { return texture->; }
 
 	// a few utility functions for dealing with fixed crap.
 	static short SecondsToFixed( float seconds )

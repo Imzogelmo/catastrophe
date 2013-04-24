@@ -20,6 +20,7 @@
 
 #include "../Common.h"
 #include "../Math/Vector2.h"
+#include "JoystickConstants.h"
 
 CE_NAMESPACE_BEGIN
 

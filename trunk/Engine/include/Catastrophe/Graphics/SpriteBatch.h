@@ -24,6 +24,7 @@
 #include "../Math/Common.h"
 #include "../Math/Vector2.h"
 #include "../Math/Rect.h"
+#include "../Math/Rectf.h"
 #include "../Math/Color.h"
 
 #include "Blendmode.h"
@@ -152,6 +153,7 @@ public:
 	void DrawTexture( const Texture* texture, const Vector2& pos );
 	void DrawTexture( const Texture* texture, const Vector2& pos, const Vector2& size );
 	void DrawSpriteData( const SpriteData& data );
+	void DrawSpriteData( const SpriteData& data, float rotation, const Vector2& scale, const Vector2& origin );
 
 	void Render();
 	void Render( const Matrix& transformation );

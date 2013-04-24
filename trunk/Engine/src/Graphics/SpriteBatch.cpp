@@ -29,8 +29,8 @@ CE_NAMESPACE_BEGIN
 
 SpriteBatch::SpriteBatch( size_t reserve ) :
 	m_queue(),
-	m_current_blendmode(),
-	m_clip_rect(Rect(0, 0, 0, 0)),
+	m_current_blendmode(BlendMode::Alpha),
+	m_clip_rect(Rect::Zero),
 	m_sortmode(Deferred),
 	m_attached_shader(0),
 	m_max_batch_usage(size_t(-1)),
@@ -204,9 +204,17 @@ void SpriteBatch::DrawTexture( const Texture* texture, const Vector2& pos, const
 
 void SpriteBatch::DrawSpriteData( const SpriteData& data )
 {
-	//it doesn't get any faster than this.
 	m_queue.push_back_uninitialized() = data;
 }
+
+
+void SpriteBatch::DrawSpriteData( const SpriteData& data, float rotation, const Vector2& scale, const Vector2& origin )
+{
+	SpriteData& s = m_queue.push_back_uninitialized();
+	s = data;
+	TransformSprite( rotation, scale, origin, s );
+}
+
 
 
 // Text rendering
