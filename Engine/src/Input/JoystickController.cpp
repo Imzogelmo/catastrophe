@@ -73,7 +73,7 @@ bool JoystickController::IsPressed( int key ) const
 bool JoystickController::IsReleased( int key ) const
 {
 	if( (size_t)key < MaxButtons )
-		return m_joystick->Pressed( m_button_map[key] );
+		return m_joystick->Released( m_button_map[key] );
 
 	return false;
 }
@@ -118,6 +118,18 @@ int JoystickController::DPad( int dir ) const
 		return m_directions[ m_direction_map[dir] ];
 
 	return 0;
+}
+
+
+Vector2 JoystickController::Analog( int analogStick ) const
+{
+	return m_joystick->Analog(analogStick);
+}
+
+
+float JoystickController::Axis( int axis ) const
+{
+	return m_joystick->Axis(axis);
 }
 
 

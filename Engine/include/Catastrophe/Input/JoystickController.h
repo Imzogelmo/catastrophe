@@ -42,6 +42,9 @@ public:
 	int Button( int key ) const;
 	int DPad( int dir ) const;
 
+	Vector2 Analog( int analogStick ) const;
+	float Axis( int axis ) const;
+
 	void SetJoystick( int id );
 	void SetButtonMapping( int key, int value );
 	void SetDirMapping( int dir, int value );

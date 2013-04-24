@@ -61,8 +61,14 @@ void PackedSprite::SetTexture( Texture* texturePtr )
 
 void PackedSprite::SetSourceRect( const Rect& sourceRectangle )
 {
+	CE_ASSERT(texture != 0);
 	source_rect = sourceRectangle;
 	size = sourceRectangle.size;
+
+	uv.min.x = sourceRectangle.Left() / texture->Widthf();
+	uv.max.x = sourceRectangle.Right() / texture->Widthf();
+	uv.min.y = sourceRectangle.Top() / texture->Heightf();
+	uv.max.y = sourceRectangle.Bottom() / texture->Heightf();
 }
 
 
