@@ -159,14 +159,23 @@ bool Tileset::SerializeXml( const fc::string& directory )
 		return false;
 	}
 
-	//if the texture is null we certainly cannot proceed.
-	ASSERT(m_texture);
 
 	xml.BeginNode("Tileset");
 	xml.SetString("name", m_name.c_str());
 	xml.SetUInt("width", m_tiles.x());
 	xml.SetUInt("height", m_tiles.y());
-	//texture...
+
+	fc::string textureFilename;
+	if( !m_texture )
+	{
+		Log("Warning: (%s) texture is null.", filename.c_str());
+	}
+	else
+	{
+		textureFilename = m_texture->filename;
+	}
+
+	xml.SetString("name", textureFilename.c_str());
 
 	for( size_t i(0); i < m_tiles.size(); ++i )
 	{
@@ -182,7 +191,7 @@ bool Tileset::SerializeXml( const fc::string& directory )
 }
 
 
-bool Tileset::DeserializeXml( const fc::string& directory )
+bool Tileset::DeserializeXml( const fc::string& directory, const fc::string& filename )
 {
 	fc::string filename;
 	filename.reserve(directory.size() + m_name.size() + 1);
@@ -203,7 +212,7 @@ bool Tileset::DeserializeXml( const fc::string& directory )
 		//TODO get texture here...
 
 		m_tiles.resize(h, w);
-		for( int i(0); xml.NextChild("Tile"); ++i )
+		while( xml.NextChild("Tile") )
 		{
 			m_tiles[i].DeserializeXml(&xml);
 		}
