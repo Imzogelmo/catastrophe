@@ -174,13 +174,16 @@ void Widget::InsertChild( size_t index, Widget* element )
 
 void Widget::RemoveChild( Widget* element )
 {
-	for( child_vec_type::iterator it = m_children.begin(); it != m_children.end(); ++it )
+	if( element != 0 )
 	{
-		if( *it == element )
+		for( child_vec_type::iterator it = m_children.begin(); it != m_children.end(); ++it )
 		{
-			element->m_parent = 0;
-			m_children.erase( it );
-			return;
+			if( *it == element )
+			{
+				element->m_parent = 0;
+				m_children.erase( it );
+				return;
+			}
 		}
 	}
 }

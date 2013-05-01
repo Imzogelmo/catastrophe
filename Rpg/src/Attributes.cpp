@@ -98,7 +98,7 @@ void Attributes::DeserializeXml( XmlReader* xml )
 	xml->FirstChild("Attributes");
 	xml->ReadBlock(&stats[0], MAX_STATS);
 	xml->SetToParent();
-
+/*
 	xml->FirstChild("Status Atk");
 	xml->ReadBlock(&status_atk[0], MAX_STATUS);
 	xml->SetToParent();
@@ -106,5 +106,6 @@ void Attributes::DeserializeXml( XmlReader* xml )
 	xml->FirstChild("Status Def");
 	xml->ReadBlock(&status_def[0], MAX_STATUS);
 	xml->SetToParent();
+	*/
 }
 

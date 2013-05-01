@@ -26,7 +26,9 @@ class RpgSerializer
 	ResourceManager* GetResourceManager() const { return m_resourceManager; }
 
 	static void SerializePoint( XmlWriter* xml, const Point& p );
+	static void SerializePoint( const char* nodeName, XmlWriter* xml, const Point& p );
 	static void SerializeRect( XmlWriter* xml, const Rect& r );
+	static void SerializeRect( const char* nodeName, XmlWriter* xml, const Rect& r );
 	static void SerializeSpriteBase( XmlWriter* xml, const SpriteBase& s );
 
 	void SerializeSprite( XmlWriter* xml, const Sprite& s );
@@ -39,7 +41,9 @@ class RpgSerializer
 
 
 	static void DeserializePoint( XmlReader* xml, Point& p );
+	static void DeserializePoint( const char* nodeName, XmlReader* xml, Point& p );
 	static void DeserializeRect( XmlReader* xml, Rect& r );
+	static void DeserializeRect( const char* nodeName, XmlReader* xml, Rect& r );
 	static void DeserializeSpriteBase( XmlReader* xml, SpriteBase& s );
 
 	void DeserializeSprite( XmlReader* xml, Sprite& s );

@@ -22,7 +22,8 @@ Tileset::Tileset( TilesetManager* parent, const fc::string& name ) :
 	m_id(-1),
 	m_tiles(),
 	m_ptr_animated_tiles()
-{}
+{
+}
 
 
 Tileset::~Tileset()
@@ -38,9 +39,17 @@ void Tileset::Clear()
 }
 
 
+void Tileset::SetTexture( Texture* texture )
+{
+	//todo: if texture is ref counted
+	m_texture = texture;
+}
+
+
 void Tileset::Resize( size_t w, size_t h )
 {
 	m_tiles.resize(h, w);
+
 	ValidateTiles();
 	ReconfigureAnimatedTileList();
 }
@@ -148,10 +157,7 @@ bool Tileset::CreateFromTexture( Texture* texture )
 
 bool Tileset::SerializeXml( const fc::string& directory )
 {
-	fc::string filename;
-	filename.reserve(directory.size() + m_name.size() + 1);
-	filename.append(directory).append(m_name);
-
+	fc::string filename = directory + m_filename;
 	XmlWriter xml(filename);
 	if( !xml.IsOpen() )
 	{
@@ -159,23 +165,23 @@ bool Tileset::SerializeXml( const fc::string& directory )
 		return false;
 	}
 
-
-	xml.BeginNode("Tileset");
-	xml.SetString("name", m_name.c_str());
-	xml.SetUInt("width", m_tiles.x());
-	xml.SetUInt("height", m_tiles.y());
-
 	fc::string textureFilename;
 	if( !m_texture )
 	{
-		Log("Warning: (%s) texture is null.", filename.c_str());
+		//shouldn't really happen.
+		Log("Tileset::SerializeXml: (%s) texture is null.", filename.c_str());
 	}
 	else
 	{
 		textureFilename = m_texture->filename;
 	}
 
-	xml.SetString("name", textureFilename.c_str());
+
+	xml.BeginNode("Tileset");
+	xml.SetString("name", m_name.c_str());
+	xml.SetString("texture", textureFilename.c_str());
+	xml.SetUInt("width", m_tiles.x());
+	xml.SetUInt("height", m_tiles.y());
 
 	for( size_t i(0); i < m_tiles.size(); ++i )
 	{
@@ -193,10 +199,12 @@ bool Tileset::SerializeXml( const fc::string& directory )
 
 bool Tileset::DeserializeXml( const fc::string& directory, const fc::string& filename )
 {
-	fc::string filename;
-	filename.reserve(directory.size() + m_name.size() + 1);
-	filename.append(directory).append(m_name);
+	Clear();
 
+	m_name = 
+	m_filename = filename;
+
+	fc::string filename = directory + filename;
 	XmlReader xml(filename);
 	if( !xml.IsOpen() )
 	{
@@ -206,10 +214,27 @@ bool Tileset::DeserializeXml( const fc::string& directory, const fc::string& fil
 
 	if( xml.GetCurrentNodeName() == "Tileset" )
 	{
+		fc::string textureFilename;
+
 		m_name = xml.GetString("name");
+		textureFilename = xml.GetString("texture");
 		size_t w = xml.GetUInt("width");
 		size_t h = xml.GetUInt("height");
-		//TODO get texture here...
+
+		//we don't handle this in any good way.
+		if( textureFilename.empty() )
+		{
+			Log("Tileset::DeserializeXml: unknown texture");
+		}
+		else
+		{
+			SetTexture(0);
+			m_texture = resourceManager->LoadTexture(textureFilename);
+			if( !m_texture )
+			{
+				Log("Tileset::DeserializeXml: (%s) texture is null.", filename.c_str());
+			}
+		}
 
 		m_tiles.resize(h, w);
 		while( xml.NextChild("Tile") )

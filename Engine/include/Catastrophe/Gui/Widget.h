@@ -105,6 +105,7 @@ protected:
 	Color			m_color;
 
 	int				m_ref_count;
+	//bool			m_locked; //...
 	bool			m_active;
 	bool			m_selected;
 	bool			m_visible;

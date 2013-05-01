@@ -33,8 +33,9 @@ public:
 
 	void SetName( const fc::string& name ) { m_name = name; }
 	void SetId( int id ) { m_id = id; }
-	void SetTexture( Texture* texture ) { m_texture = texture; }
+	void SetTexture( Texture* texture );
 
+	bool Empty() const { return m_tiles.empty(); }
 	size_t Size() const { return m_tiles.size(); }
 	size_t Width() const { return m_tiles.x(); }
 	size_t Height() const { return m_tiles.y(); }
@@ -52,6 +53,8 @@ public:
 	const Tile& operator []( size_t index ) const { return m_tiles[index]; }
 
 	bool CreateFromTexture( Texture* texture );
+
+	// these are usually only called internally.
 	void ReconfigureAnimatedTileList();
 	void ResetAnimations();
 	void ValidateTiles();
