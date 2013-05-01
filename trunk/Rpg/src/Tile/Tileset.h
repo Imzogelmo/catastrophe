@@ -29,9 +29,6 @@ public:
 
 	void Clear();
 	void Update();
-	void ReconfigureAnimatedTileList();
-	void ResetAnimations();
-	void ValidateTiles();
 	void Resize( size_t w, size_t h );
 
 	void SetName( const fc::string& name ) { m_name = name; }
@@ -49,6 +46,15 @@ public:
 
 	Tile* GetTile( size_t index );
 	Tile* GetTile( size_t x, size_t y );
+
+	// fast index operators with no error checking.
+	Tile& operator []( size_t index ) { return m_tiles[index]; }
+	const Tile& operator []( size_t index ) const { return m_tiles[index]; }
+
+	bool CreateFromTexture( Texture* texture );
+	void ReconfigureAnimatedTileList();
+	void ResetAnimations();
+	void ValidateTiles();
 
 	NO_INLINE bool SerializeXml( const fc::string& directory );
 	NO_INLINE bool DeserializeXml( const fc::string& directory );

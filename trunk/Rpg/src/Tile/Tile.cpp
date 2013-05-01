@@ -105,11 +105,9 @@ void Tile::Update()
 	if( counter >= anim_speed )
 	{
 		counter -= anim_speed;
-		const short maxFrames = (short)m_uv.size();
-
-		if( ++frame >= maxFrames )
+		if( ++frame >= num_frames )
 		{
-			frame -= maxFrames;
+			frame -= num_frames;
 		}
 	}
 }

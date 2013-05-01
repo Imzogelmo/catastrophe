@@ -81,7 +81,8 @@ void Tileset::ValidateTiles()
 	//make sure all tile data is correct.
 	//since we do no runtime checks on these later 
 	//it's possible to get undefined behavior otherwise.
-	for( size_t i(0); i < m_tiles.size(); ++i )
+	size_t size = m_tiles.size();
+	for( size_t i(0); i < size; ++i )
 	{
 		Tile &tile = m_tiles[i];
 		tile.SetTileset(this);
@@ -105,6 +106,43 @@ Tile* Tileset::GetTile( size_t x, size_t y )
 		return &m_tiles(y, x);
 
 	return 0;
+}
+
+
+bool Tileset::CreateFromTexture( Texture* texture )
+{
+	ASSERT(texture != 0);
+
+	const size_t image_w = texture->Width();
+	const size_t image_h = texture->Height;
+	const size_t tileSize = 16;
+
+	if( image_w < tileSize || image_h < tileSize )
+		return false;
+
+	const size_t tw = image_w / tileSize;
+	const size_t th = image_h / tileSize;
+
+	SetTexture(texture);
+	Resize(tw, th);
+
+	for( size_t y(0); y < th; ++y )
+	{
+		for( size_t x(0); x < tw; ++x )
+		{
+			Tile &t = m_tiles(y, x);
+
+			t.SetColor(Color::White());
+			t.animation.SetTexture( image->GetTexture() );
+
+			Rect rect(x * tileSize, y * tileSize, tileSize, tileSize);
+
+			t.SetSourceRect(rect);
+			//t.animation.AddFrame( image->GetUVRect(rect) );
+		}
+	}
+
+	return true;
 }
 
 
