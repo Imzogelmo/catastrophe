@@ -22,11 +22,15 @@
 #include "../Math/Vector2.h"
 #include "../Math/Color.h"
 #include "../Math/Rectf.h"
-#include "../Math/Rect.h"
+#include "../Math/PackedRect.h"
+#include "BlendMode.h"
 
 CE_NAMESPACE_BEGIN
 
 
+/* PackedSprite -
+ * sprite class with a small memory footprint.
+ */
 class PackedSprite
 {
 public:
@@ -34,25 +38,33 @@ public:
 	Vector2		size;
 	float		angle;
 	Color		color;
+	BlendMode	blendmode;
 	Rectf		uv;
-	Rect		source_rect;
+	PackedRect	source_rect;
 	short		frame_counter;
 	short		current_frame;
 	short		anim_speed;
 	short		num_frames;
 
 	PackedSprite();
-	PackedSprite( Texture* texturePtr, const Rect& sourceRectangle, int numberOfFrames, short frameDelay );
+	PackedSprite( Texture* texturePtr, const PackedRect& sourceRectangle, int numberOfFrames, short frameDelay );
 
+	void SetSize( const Vector2& value ) { size = value; }
+	void SetColor( const Color& c ) { color = c; }
+	void SetBlendMode( const BlendMode& value ) { blendmode = value; }
 	void SetAnimationSpeed( short frameDelay );
 	void SetTexture( Texture* texturePtr );
-	void SetSourceRect( const Rect& sourceRectangle );
-	void Update();
+	void SetSourceRect( const PackedRect& sourceRectangle );
 	void SetCurrentFrame( short index );
-	void SetFrameData( const Rect& sourceRectangle, int numberOfFrames, short frameDelay );
+	void SetFrameData( const PackedRect& sourceRectangle, int numberOfFrames, short frameDelay );
+
+	void Update();
 
 	Texture* GetTexture() const { return texture; }
 	//gluint GetTextureID() const { return texture->; }
+	const Color& GetColor() const { return color; }
+	const BlendMode& GetBlendMode() const { return blendmode; }
+	float GetAngle() const { return angle; }
 
 	// a few utility functions for dealing with fixed crap.
 	static short SecondsToFixed( float seconds )

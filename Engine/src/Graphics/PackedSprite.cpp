@@ -25,7 +25,7 @@ PackedSprite::PackedSprite() :
 	angle(0.f),
 	color(Color::White()),
 	uv(Rectf::Zero),
-	source_rect(Rect::Zero),
+	source_rect(PackedRect::Zero),
 	frame_counter(0),
 	current_frame(0),
 	anim_speed(16),
@@ -34,10 +34,11 @@ PackedSprite::PackedSprite() :
 }
 
 
-PackedSprite::PackedSprite( Texture* texturePtr, const Rect& sourceRectangle, int numberOfFrames, short frameDelay )
+PackedSprite::PackedSprite( Texture* texturePtr, const PackedRect& sourceRectangle, int numberOfFrames, short frameDelay )
 {
 	angle = 0.f,
 	color = Color::White();
+	size = sourceRectangle.size;
 	frame_counter = 0;
 	current_frame = 0;
 	SetTexture(texturePtr);
@@ -59,16 +60,20 @@ void PackedSprite::SetTexture( Texture* texturePtr )
 }
 
 
-void PackedSprite::SetSourceRect( const Rect& sourceRectangle )
+void PackedSprite::SetSourceRect( const PackedRect& sourceRectangle )
 {
 	CE_ASSERT(texture != 0);
 	source_rect = sourceRectangle;
-	size = sourceRectangle.size;
+	size = sourceRectangle.size; //fixme
 
-	uv.min.x = sourceRectangle.Left() / texture->Widthf();
-	uv.max.x = sourceRectangle.Right() / texture->Widthf();
-	uv.min.y = sourceRectangle.Top() / texture->Heightf();
-	uv.max.y = sourceRectangle.Bottom() / texture->Heightf();
+	float w = (float)texture->Width();
+	float h = (float)texture->Height();
+	uv.min.x = (float)sourceRectangle.Left() / w;
+	uv.max.x = (float)sourceRectangle.Right() / w;
+	uv.min.y = (float)sourceRectangle.Top() / h;
+	uv.max.y = (float)sourceRectangle.Bottom() / h;
+
+	SetCurrentFrame(currentframe);
 }
 
 
@@ -106,26 +111,30 @@ void PackedSprite::SetCurrentFrame( short index )
 	{
 		current_frame = index;
 
-		int w = source_rect.Width();
-		int x = source_rect.pos.x + (w * (int)current_frame);
+		//float w = (float)texture->Width();
+		//float h = (float)texture->Height();
+		int w = (int)source_rect.Width();
+		int x = (int)source_rect.pos.x + (w * (int)current_frame);
 		int yOffset = x / texture->Width();
 		if( yOffset > 0 )
 		{
 			x %= texture->Width();
 
-			int h = source_rect.Height();
-			int y = source_rect.pos.y + (h * yOffset);
-			uv.min.y = y / texture->Heightf();
-			uv.max.y = (y + h) / texture->Heightf();
+			int h = (int)source_rect.Height();
+			int y = (int)source_rect.pos.y + (h * yOffset);
+			float texHeightf = (float)texture->Width();
+			uv.min.y = y / texHeightf;
+			uv.max.y = (y + h) / texHeightf;
 		}
 
-		uv.min.x = x / texture->Widthf();
-		uv.max.x = (x + w) / texture->Widthf();
+		float texWidthf = (float)texture->Width();
+		uv.min.x = x / texWidthf;
+		uv.max.x = (x + w) / texWidthf;
 	}
 }
 
 
-void PackedSprite::SetFrameData( const Rect& sourceRectangle, int numberOfFrames, short frameDelay )
+void PackedSprite::SetFrameData( const PackedRect& sourceRectangle, int numberOfFrames, short frameDelay )
 {
 	num_frames = (short)(numberOfFrames > 0 ? numberOfFrames : 1);
 

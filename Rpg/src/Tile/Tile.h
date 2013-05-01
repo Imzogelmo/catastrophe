@@ -25,7 +25,7 @@
  * these are optimized heavily for both cases, and
  * non-animated tiles will never allocate memory.
  */
-class RPG_API Tile : public Indexable<> //todo; ..I think index can be safely removed...
+class RPG_API Tile
 {
 public:
 	typedef fc::fixed_vector<Rectf, 1>	vec_type;
@@ -38,16 +38,17 @@ public:
 	Tile( Tileset* parent = 0, size_t id = 0 );
 
 	void SetTileset( Tileset* parent ) { m_parent = parent; }
-	void SetFrameData( Rect sourceRect, int numberOfFrames = 1 );
-	void SetTileSize( int size ) { m_tileSize = size; }
+	//void SetTileSize( int size ) { m_tileSize = size; }
 	void SetCurrentFrame( short frame );
 	void SetAnimationSpeed( short frameDelay );
+
+	void Create( Rect sourceRect, int numberOfFrames = 1 );
 	void Update();
 
-	short		GetCurrentFrame() const { return frame; }
-	short		GetAnimationSpeed() const { return anim_speed; }
-	short		GetFlags() const { return flags; }
-	int			GetTileSize() const { return m_tileSize; }
+	inline short GetCurrentFrame() const { return frame; }
+	inline short GetAnimationSpeed() const { return anim_speed; }
+	inline short GetFlags() const { return flags; }
+	//inline int GetTileSize() const { return m_tileSize; }
 	inline bool IsAnimated() const { return m_uv.has_overflowed(); }
 	inline size_t NumFrames() const { return m_uv.size(); }
 
@@ -56,6 +57,9 @@ public:
 	gluint GetTextureID() const;
 	inline const Rectf&	GetUVRect() const { return m_uv[frame]; }
 
+	inline void SetIndex( size_t index ) { m_tilesetIndex = index; }
+	inline size_t GetIndex() const { return m_tilesetIndex; }
+
 	NO_INLINE void SerializeXml( XmlWriter* xml );
 	NO_INLINE void DeserializeXml( XmlReader* xml );
 
@@ -63,14 +67,16 @@ public:
 	short counter;
 	short frame;
 	short anim_speed;
+	short num_frames;
 	short flags;
 
 protected:
 	Tileset*	m_parent;
 	vec_type	m_uv;
+	size_t		m_tilesetIndex;
 
 private:
 	//This value should never change.
-	static int m_tileSize;
+	static int m_tileSize; //todo: depricated
 };
 
