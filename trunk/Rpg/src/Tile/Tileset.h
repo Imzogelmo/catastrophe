@@ -63,6 +63,7 @@ private:
 	TilesetManager*	m_parent;
 	Texture*		m_texture;
 	fc::string		m_name;
+	fc::string		m_filename;
 	int				m_id;
 	array_type		m_tiles;
 	anim_vec_type	m_ptr_animated_tiles;

@@ -26,9 +26,8 @@ Tile::Tile( Tileset* parent, size_t id ) :
 	anim_speed(16),
 	flags(0),
 	m_parent(parent),
-	m_uv()
+	m_uv(Rectf::Zero)
 {
-	m_uv.push_back(Rectf::Zero);
 }
 
 
@@ -44,7 +43,7 @@ gluint Tile::GetTextureID() const
 }
 
 
-void Tile::SetFrameData( Rect sourceRect, int numberOfFrames )
+void Tile::Create( Rect sourceRect, int numberOfFrames )
 {
 	ASSERT(numberOfFrames > 0);
 	ASSERT(m_parent != 0);
@@ -52,33 +51,7 @@ void Tile::SetFrameData( Rect sourceRect, int numberOfFrames )
 	Texture* texture = m_parent->GetTexture();
 	ASSERT(texture != 0);
 
-	if( numberOfFrames > 1 )
-	{
-		m_uv.resize(numberOfFrames);
-	}
-	else
-	{
-		m_uv.reset();
-	}
-
-	for( int i(0); i < numberOfFrames; ++i )
-	{
-		m_uv[i] = texture->GetUVRect(sourceRect);
-		sourceRect.pos.x += m_tileSize;
-
-		//Wrap around to next row.
-		if( sourceRect.Right() > texture->Width() )
-		{
-			sourceRect.pos.x = 0;
-			sourceRect.pos.y += m_tileSize;
-		}
-
-		//Wrap around to top
-		if( sourceRect.Bottom() > texture->Height() )
-		{
-			sourceRect.pos.y = 0;
-		}
-	}
+	//todo:
 }
 
 
@@ -115,25 +88,26 @@ void Tile::Update()
 
 void Tile::SerializeXml( XmlWriter* xml )
 {
-	xml->SetShort("flags", flags);
-	xml->SetShort("speed", anim_speed);
-	xml->SetUInt("frames", m_uv.size());
+	//set it just in case.
+	xml->SetUInt("id", m_tilesetIndex);
 
-	Texture* texture = m_parent->GetTexture();
-	Rect sourceRect = texture->GetSourceRect(m_uv[0]);
-	Util::SerializeRect(xml, sourceRect);
+	xml->SetUInt("num_frames", num_frames);
+	xml->SetShort("speed", anim_speed);
+	xml->SetShort("flags", flags);
+
+	Util::SerializeRect("SouceRect", xml, m_sourceRect);
 }
 
 
 void Tile::DeserializeXml( XmlReader* xml )
 {
-	flags = xml->GetShort("flags");
-	anim_speed = xml->GetShort("speed");
-	int n = xml->GetInt("frames");
+	num_frames = xml->GetInt("num_frames", 1);
+	anim_speed = xml->GetShort("speed", 16);
+	flags = xml->GetShort("flags", 0);
 
-	Rect sourceRect = Rect::Zero;
-	Util::DeserializeRect(xml, sourceRect);
+	Util::DeserializeRect("SouceRect", xml, m_sourceRect);
 
-	SetFrameData(sourceRect, n);
+	//todo: should have tileset create..?
+	Create(m_sourceRect, num_frames);
 }
 

@@ -20,15 +20,11 @@
 
 
 /*
- * @Tile (animated tile)
- * 48 bytes + 16 bytes per frame of animation.
- * these are optimized heavily for both cases, and
- * non-animated tiles will never allocate memory.
+ * Tile (animated tile)
  */
 class RPG_API Tile
 {
 public:
-	typedef fc::fixed_vector<Rectf, 1>	vec_type;
 	enum TileFlags
 	{
 		FlipHorizontal	= 1,
@@ -37,8 +33,7 @@ public:
 
 	Tile( Tileset* parent = 0, size_t id = 0 );
 
-	void SetTileset( Tileset* parent ) { m_parent = parent; }
-	//void SetTileSize( int size ) { m_tileSize = size; }
+	void SetTileset( Tileset* parent ) { m_parent = parent; } //make protected
 	void SetCurrentFrame( short frame );
 	void SetAnimationSpeed( short frameDelay );
 
@@ -48,14 +43,15 @@ public:
 	inline short GetCurrentFrame() const { return frame; }
 	inline short GetAnimationSpeed() const { return anim_speed; }
 	inline short GetFlags() const { return flags; }
-	//inline int GetTileSize() const { return m_tileSize; }
-	inline bool IsAnimated() const { return m_uv.has_overflowed(); }
-	inline size_t NumFrames() const { return m_uv.size(); }
+	inline short NumFrames() const { return num_frames; }
+	inline bool IsAnimated() const { return num_frames > 1; }
 
 	inline Tileset*	GetTileset() const { return m_parent; }
-	Texture* GetTexture() const;
-	gluint GetTextureID() const;
-	inline const Rectf&	GetUVRect() const { return m_uv[frame]; }
+
+	Texture* GetTexture() const; //depricated
+	gluint GetTextureID() const; //depricated
+
+	inline const Rectf&	GetUVRect() const { return m_uv; }
 
 	inline void SetIndex( size_t index ) { m_tilesetIndex = index; }
 	inline size_t GetIndex() const { return m_tilesetIndex; }
@@ -68,11 +64,15 @@ public:
 	short frame;
 	short anim_speed;
 	short num_frames;
+
+	//todo: flags..
 	short flags;
+	//16 bit align....
 
 protected:
 	Tileset*	m_parent;
-	vec_type	m_uv;
+	Rect		m_sourceRect;
+	Rectf		m_uv;
 	size_t		m_tilesetIndex;
 
 private:
