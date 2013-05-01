@@ -32,12 +32,28 @@ void RpgSerializer::SerializePoint( XmlWriter* xml, const Point& p )
 }
 
 
+void RpgSerializer::SerializePoint( const char* nodeName, XmlWriter* xml, const Point& p )
+{
+	xml->BeginNode(nodeName);
+	SerializePoint(xml, p);
+	xml->EndNode();
+}
+
+
 void RpgSerializer::SerializeRect( XmlWriter* xml, const Rect& r )
 {
 	xml->SetInt("x", r.pos.x);
 	xml->SetInt("y", r.pos.y);
 	xml->SetInt("w", r.size.x);
 	xml->SetInt("h", r.size.y);
+}
+
+
+void RpgSerializer::SerializeRect( const char* nodeName, XmlWriter* xml, const Rect& r )
+{
+	xml->BeginNode(nodeName);
+	SerializeRect(xml, r);
+	xml->EndNode();
 }
 
 
@@ -170,12 +186,32 @@ void RpgSerializer::DeserializePoint( XmlReader* xml, Point& p )
 }
 
 
+void RpgSerializer::DeserializePoint( const char* nodeName, XmlReader* xml, Point& p )
+{
+	if( xml->NextChild(nodeName) )
+	{
+		DeserializePoint(xml, p);
+		xml->SetToParent();
+	}
+}
+
+
 void RpgSerializer::DeserializeRect( XmlReader* xml, Rect& r )
 {
 	r.pos.x = xml->GetInt("x");
 	r.pos.y = xml->GetInt("y");
 	r.size.x = xml->GetInt("w");
 	r.size.y = xml->GetInt("h");
+}
+
+
+void RpgSerializer::DeserializeRect( const char* nodeName, XmlReader* xml, Rect& r )
+{
+	if( xml->NextChild(nodeName) )
+	{
+		DeserializeRect(xml, r);
+		xml->SetToParent();
+	}
 }
 
 
