@@ -180,9 +180,27 @@ Window* CreateWindow()
 #include "CharacterClass.h"
 
 MonsterList gMonsterList; //temp for gererating data.
+ResourceManager* resourceManager = 0;
 
 void DoTests()
 {
+	//resourceManager->LoadTexture("tiles/town.png");
+
+	//Tileset ts;
+	//ts.DeserializeXml("data/tilesets/", "town.tileset.xml");
+
+	/*
+	Texture tex;
+	tex.LoadFromFile("data/textures/tiles/town.png");
+	tex.SetName("town.png");
+	Tileset ts;
+	ts.CreateFromTexture(&tex);
+	ts.SetName("town");
+	ts.SetFileName("town.tileset.xml");
+	ts.SerializeXml("data/tilesets/");
+	*/
+
+	return;
 
 	ResourceManager rm;
 	gSetActiveResourceManager(&rm);
@@ -303,7 +321,10 @@ int main(int argc, char* argv[])
 
 	Window* window = CreateWindow();
 
-	//DoTests(); //some quick and dirty testing.
+
+	resourceManager = new ResourceManager();
+	DoTests(); //some quick and dirty testing.
+	return 0;
 
 
 	//DoAtlasPack4();

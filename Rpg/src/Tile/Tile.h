@@ -36,8 +36,9 @@ public:
 	void SetTileset( Tileset* parent ) { m_parent = parent; } //make protected
 	void SetCurrentFrame( short frame );
 	void SetAnimationSpeed( short frameDelay );
+	void SetSourceRect( const Rect& sourceRectangle );
 
-	void Create( Rect sourceRect, int numberOfFrames = 1 );
+	void Create( const Rect& sourceRectangle, int numberOfFrames = 1 );
 	void Update();
 
 	inline short GetCurrentFrame() const { return frame; }
@@ -48,8 +49,7 @@ public:
 
 	inline Tileset*	GetTileset() const { return m_parent; }
 
-	Texture* GetTexture() const; //depricated
-	gluint GetTextureID() const; //depricated
+	Texture* GetParentTexture() const;
 
 	inline const Rectf&	GetUVRect() const { return m_uv; }
 
@@ -71,7 +71,10 @@ public:
 
 protected:
 	Tileset*	m_parent;
-	Rect		m_sourceRect;
+	Rect		m_sourceRect; // w,h are always tilesize?!
+	//PackedRect	m_sourceRect;
+	//Vector		m_sCoord;
+	//float		m_tCoord
 	Rectf		m_uv;
 	size_t		m_tilesetIndex;
 

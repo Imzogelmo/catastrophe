@@ -82,7 +82,7 @@ void RenderEngine::DrawMapLayer( SpriteBatch* spriteBatch, const MapLayer* layer
 			{
 				const Vector2 max = pos + TILE_SIZEf;
 				const Rectf & uv = tile->GetUVRect();
-				sd.SetTexture(tile->GetTextureID());
+			//	sd.SetTexture(tile->GetTextureID());
 				sd.data[0].pos = pos;
 				sd.data[0].uv = uv.min;
 				sd.data[1].pos = Vector2(pos.x, max.y);
