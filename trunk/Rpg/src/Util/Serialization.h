@@ -19,6 +19,7 @@ namespace Util
 
 	void SerializePoint( XmlWriter* xml, const Point& p );
 	void SerializeRect( XmlWriter* xml, const Rect& r );
+	void SerializeRect( const char* nodeName, XmlWriter* xml, const Rect& r );
 	void SerializeSpriteBase( XmlWriter* xml, const SpriteBase& s );
 	void SerializeSprite( XmlWriter* xml, const Sprite& s );
 	void SerializeAnimatedSprite( XmlWriter* xml, const AnimatedSprite& a );
@@ -31,6 +32,7 @@ namespace Util
 
 	void DeserializePoint( XmlReader* xml, Point& p );
 	void DeserializeRect( XmlReader* xml, Rect& r );
+	void DeserializeRect( const char* nodeName, XmlReader* xml, Rect& r );
 	void DeserializeSpriteBase( XmlReader* xml, SpriteBase& s );
 	void DeserializeSprite( XmlReader* xml, Sprite& s );
 	void DeserializeAnimatedSprite( XmlReader* xml, AnimatedSprite& a );

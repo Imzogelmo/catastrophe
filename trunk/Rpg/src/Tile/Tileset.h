@@ -24,6 +24,7 @@ public:
 	typedef fc::dynamic_array2d<Tile>	array_type;
 	typedef fc::vector<Tile*>			anim_vec_type;
 
+	Tileset();
 	Tileset( TilesetManager* parent, const fc::string& name );
 	~Tileset();
 
@@ -32,6 +33,7 @@ public:
 	void Resize( size_t w, size_t h );
 
 	void SetName( const fc::string& name ) { m_name = name; }
+	void SetFileName( const fc::string& filename ) { m_filename = filename; }
 	void SetId( int id ) { m_id = id; }
 	void SetTexture( Texture* texture );
 
@@ -60,7 +62,7 @@ public:
 	void ValidateTiles();
 
 	NO_INLINE bool SerializeXml( const fc::string& directory );
-	NO_INLINE bool DeserializeXml( const fc::string& directory );
+	NO_INLINE bool DeserializeXml( const fc::string& directory, const fc::string& filename );
 
 private:
 	TilesetManager*	m_parent;
@@ -73,4 +75,6 @@ private:
 
 };
 
+
+extern ResourceManager* resourceManager;
 

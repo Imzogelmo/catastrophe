@@ -47,6 +47,13 @@ namespace Util
 		xml->SetInt("h", r.size.y);
 	}
 
+	void SerializeRect( const char* nodeName, XmlWriter* xml, const Rect& r )
+	{
+		xml->BeginNode(nodeName);
+		SerializeRect(xml, r);
+		xml->EndNode();
+	}
+
 	void SerializeSpriteBase( XmlWriter* xml, const SpriteBase& s )
 	{
 		xml->SetInt("width", fc::iround(s.size.x));
@@ -170,6 +177,15 @@ namespace Util
 		r.pos.y = xml->GetInt("y");
 		r.size.x = xml->GetInt("w");
 		r.size.y = xml->GetInt("h");
+	}
+
+	void DeserializeRect( const char* nodeName, XmlReader* xml, Rect& r )
+	{
+		if( xml->NextChild(nodeName) )
+		{
+			DeserializeRect(xml, r);
+			xml->SetToParent();
+		}
 	}
 
 	void DeserializeSpriteBase( XmlReader* xml, SpriteBase& s )

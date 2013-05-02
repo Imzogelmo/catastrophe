@@ -23,7 +23,7 @@ int Tile::m_tileSize = 16;
 Tile::Tile( Tileset* parent, size_t id ) :
 	counter(0),
 	frame(0),
-	anim_speed(16),
+	anim_speed(128),
 	flags(0),
 	m_parent(parent),
 	m_uv(Rectf::Zero)
@@ -31,34 +31,71 @@ Tile::Tile( Tileset* parent, size_t id ) :
 }
 
 
-Texture* Tile::GetTexture() const
+Texture* Tile::GetParentTexture() const
 {
-	return m_parent->GetTexture();
+	return (m_parent ? m_parent->GetTexture() : 0);
 }
 
 
-gluint Tile::GetTextureID() const
+void Tile::Create( const Rect& sourceRectangle, int numberOfFrames )
 {
-	return m_parent->GetTexture()->GetTextureID();
+	num_frames = (short)(numberOfFrames > 0 ? numberOfFrames : 1);
+	SetSourceRect(sourceRectangle);
 }
 
 
-void Tile::Create( Rect sourceRect, int numberOfFrames )
+void Tile::SetSourceRect( const Rect& sourceRectangle )
 {
-	ASSERT(numberOfFrames > 0);
-	ASSERT(m_parent != 0);
+	m_sourceRect = sourceRectangle;
+	Texture* texture = GetParentTexture();
+	if( texture )
+	{
+		float w = (float)texture->Width();
+		float h = (float)texture->Height();
+		m_uv.min.x = (float)sourceRectangle.Left() / w;
+		m_uv.max.x = (float)sourceRectangle.Right() / w;
+		m_uv.min.y = (float)sourceRectangle.Top() / h;
+		m_uv.max.y = (float)sourceRectangle.Bottom() / h;
 
-	Texture* texture = m_parent->GetTexture();
-	ASSERT(texture != 0);
-
-	//todo:
+		if( frame > 0 )
+		{
+			SetCurrentFrame(frame);
+		}
+		//todo: flip
+	}
 }
 
 
 void Tile::SetCurrentFrame( short index )
 {
-	if( (size_t)index < m_uv.size() )
+	if( index < num_frames )
+	{
 		frame = index;
+
+		Texture* texture = GetParentTexture();
+		if( !texture )
+			return;
+
+		int w = m_sourceRect.Width();
+		int x = m_sourceRect.pos.x + (w * (int)frame);
+		int yOffset = x / texture->Width();
+		if( yOffset > 0 )
+		{
+			x %= texture->Width();
+
+			int h = m_sourceRect.Height();
+			int y = m_sourceRect.pos.y + (h * yOffset);
+			float texHeightf = (float)texture->Width();
+			m_uv.min.y = y / texHeightf;
+			m_uv.max.y = (y + h) / texHeightf;
+		}
+
+		float texWidthf = (float)texture->Width();
+		m_uv.min.x = x / texWidthf;
+		m_uv.max.x = (x + w) / texWidthf;
+
+		//todo: flip
+	}
 }
 
 
@@ -82,6 +119,8 @@ void Tile::Update()
 		{
 			frame -= num_frames;
 		}
+
+		SetCurrentFrame(frame);
 	}
 }
 

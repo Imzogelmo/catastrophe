@@ -12,7 +12,19 @@
 #include <Catastrophe/IO/XmlWriter.h>
 #include <Catastrophe/IO/XmlReader.h>
 #include "Tileset.h"
+#include "../ResourceManager.h"
 
+
+
+Tileset::Tileset() :
+	m_parent(0),
+	m_texture(0),
+	m_name(),
+	m_id(-1),
+	m_tiles(),
+	m_ptr_animated_tiles()
+{
+}
 
 
 Tileset::Tileset( TilesetManager* parent, const fc::string& name ) :
@@ -123,7 +135,7 @@ bool Tileset::CreateFromTexture( Texture* texture )
 	ASSERT(texture != 0);
 
 	const size_t image_w = texture->Width();
-	const size_t image_h = texture->Height;
+	const size_t image_h = texture->Height();
 	const size_t tileSize = 16;
 
 	if( image_w < tileSize || image_h < tileSize )
@@ -141,12 +153,13 @@ bool Tileset::CreateFromTexture( Texture* texture )
 		{
 			Tile &t = m_tiles(y, x);
 
-			t.SetColor(Color::White());
-			t.animation.SetTexture( image->GetTexture() );
+	//		t.SetColor(Color::White());
+	//		t.animation.SetTexture( image->GetTexture() );
 
 			Rect rect(x * tileSize, y * tileSize, tileSize, tileSize);
 
-			t.SetSourceRect(rect);
+			t.Create(rect, 1);
+			//t.SetSourceRect(rect);
 			//t.animation.AddFrame( image->GetUVRect(rect) );
 		}
 	}
@@ -173,7 +186,8 @@ bool Tileset::SerializeXml( const fc::string& directory )
 	}
 	else
 	{
-		textureFilename = m_texture->filename;
+		//textureFilename = m_texture->GetFilename(); //todo:
+		textureFilename = m_texture->GetName();
 	}
 
 
@@ -201,11 +215,11 @@ bool Tileset::DeserializeXml( const fc::string& directory, const fc::string& fil
 {
 	Clear();
 
-	m_name = 
+	//m_name = 
 	m_filename = filename;
 
-	fc::string filename = directory + filename;
-	XmlReader xml(filename);
+	fc::string filepath = directory + filename;
+	XmlReader xml(filepath);
 	if( !xml.IsOpen() )
 	{
 		Log("Could not open file (%s)", filename.c_str());
@@ -237,9 +251,18 @@ bool Tileset::DeserializeXml( const fc::string& directory, const fc::string& fil
 		}
 
 		m_tiles.resize(h, w);
-		while( xml.NextChild("Tile") )
+
+		array_type::iterator it = m_tiles.begin();
+		for( array_type::iterator it = m_tiles.begin(); it != m_tiles.end(); ++it )
 		{
-			m_tiles[i].DeserializeXml(&xml);
+			if( xml.NextChild("Tile") )
+			{
+				it->DeserializeXml(&xml);
+			}
+			else
+			{
+				break;
+			}
 		}
 
 		ValidateTiles();

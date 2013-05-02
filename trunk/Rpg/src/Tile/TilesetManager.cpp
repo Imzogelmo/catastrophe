@@ -99,7 +99,7 @@ bool TilesetManager::LoadTilesetXml( const fc::string& filename )
 	Tileset* tileset = CreateTileset(filename);
 	if( tileset )
 	{
-		if( tileset->DeserializeXml(m_directory) )
+		if( tileset->DeserializeXml(m_directory, filename) )
 			return true;
 	}
 
