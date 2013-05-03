@@ -25,6 +25,7 @@ Map::Map( const fc::string& mapName, size_t numLayers, size_t mapWidth, size_t m
 	m_width(0),
 	m_height(0)
 {
+	Resize(mapWidth, mapHeight, numLayers);
 }
 
 
@@ -59,7 +60,7 @@ void Map::Resize( size_t w, size_t h, size_t numLayers )
 	m_width = w;
 	m_height = h;
 
-	if( numLayers = size_t(-1) )
+	if( numLayers == size_t(-1) )
 	{
 		numLayers = m_layers.size();
 	}

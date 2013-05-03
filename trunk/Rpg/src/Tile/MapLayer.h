@@ -19,16 +19,51 @@
 #include "Tile.h"
 
 
+/*
+ * @LayerTile
+ * represents an instance of a tile as it 
+ * exists inside a layer of a map.
+ */
+struct LayerTile
+{
+	enum Flags
+	{
+		FlipHorizontal = 1,
+		FlipVertical = 2
+	};
+
+	Tile* tile;
+	int flags;
+
+	LayerTile() : tile(0), flags(0)
+	{}
+
+	inline operator bool() const { return tile != 0; }
+	inline bool Empty() const { return tile == 0; }
+	inline void Clear()
+	{
+		tile = 0;
+		flags = 0;
+	}
+
+	inline int GetFlags() const { return flags; }
+	inline int GetFlip() const { return flags & (FlipVertical | FlipHorizontal); }
+
+};
+
+
+//todo: tile flip/flags
 class RPG_API MapLayer : public Indexable<>
 {
 public:
-	typedef fc::dynamic_array2d<Tile*> array_type;
+	typedef fc::dynamic_array2d<LayerTile> array_type;
 
-	MapLayer( Map* parent = 0 );
+	MapLayer();
 
+	void SetName( const fc::string& name ) { m_name = name; }
 	void SetVisible( bool enable = true ) { m_visible = enable; }
 	void SetColor( const Color& color ) { m_color = color; }
-	void SetMap( Map* map ) { m_parent = map; }
+	void SetTileset( Tileset* map ); //...
 	
 	void Resize( size_t w, size_t h );
 	void Clear();
@@ -38,11 +73,20 @@ public:
 	size_t Height() const { return m_tiles.y(); }
 
 	bool IsVisible() const { return m_visible; }
-	Color GetColor() const { return m_color; }
-	BlendMode GetBlendMode() const { return m_blendmode; }
-	Tile* GetTile( size_t x, size_t y ) const { return m_tiles.at(y, x); }
-	Map* GetMap() const { return m_parent; }
 
+	const fc::string& GetName() const { return m_name; }
+	const Color& GetColor() const { return m_color; }
+	const BlendMode& GetBlendMode() const { return m_blendmode; }
+	
+	LayerTile& GetLayerTile( size_t index ) { return m_tiles[index]; }
+	LayerTile& GetLayerTile( size_t x, size_t y ) { return m_tiles.at(y, x); }
+	const LayerTile& GetLayerTile( size_t index ) const { return m_tiles[index]; }
+	const LayerTile& GetLayerTile( size_t x, size_t y ) const { return m_tiles.at(y, x); }
+
+	Tile* GetTile( size_t index ) const { return m_tiles[index].tile; }
+	Tile* GetTile( size_t x, size_t y ) const { return m_tiles.at(y, x).tile; }
+
+	//remove me.
 	array_type& GetTileArray() { return m_tiles; }
 	const array_type& GetTileArray() const { return m_tiles; }
 
@@ -53,12 +97,14 @@ public:
 	void DeserializeXml( XmlReader* xml );
 
 protected:
-	Map*		m_parent;
-	array_type	m_tiles;
-	BlendMode	m_blendmode;
-	Color		m_color;
-	//Point		m_offset;
-	bool		m_visible;
+	fc::string		m_name;
+	Map*			m_parent;
+	Tileset*		m_tileset;
+	array_type		m_tiles;
+	BlendMode		m_blendmode;
+	Color			m_color;
+	//Point			m_offset;
+	bool			m_visible;
 	//bool		m_parallax;
 
 };

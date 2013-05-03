@@ -48,14 +48,17 @@ public:
 
 	MapLayer* GetLayer( size_t index ) const;
 
-	fc::string&	GetName() { return m_name; }
+	void SetName( const fc::string& name ) { m_name = name; }
+	void SetFileName( const fc::string& filename ) { m_name = filename; }
 	const fc::string& GetName() const { return m_name; }
+	const fc::string& GetFileName() const { return m_filename; }
 
 	bool SerializeXml( const fc::string& filename );
 	bool DeserializeXml( const fc::string& filename );
 
 public:
 	fc::string		m_name;
+	fc::string		m_filename;
 	vec_type		m_layers;
 	size_t			m_width;
 	size_t			m_height;

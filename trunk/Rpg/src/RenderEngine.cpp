@@ -77,7 +77,7 @@ void RenderEngine::DrawMapLayer( SpriteBatch* spriteBatch, const MapLayer* layer
 		const size_t last = array.offset(y, x2);
 		for( size_t first = array.offset(y, x1); first < last; ++first )
 		{
-			const Tile* tile = array[first];
+			const Tile* tile = array[first].tile;
 			if( tile != 0 )
 			{
 				const Vector2 max = pos + TILE_SIZEf;
