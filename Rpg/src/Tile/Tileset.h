@@ -45,6 +45,7 @@ public:
 	TilesetManager* GetTilesetManager() const { return m_parent; }
 	Texture* GetTexture() const { return m_texture; }
 	const fc::string& GetName() const { return m_name; }
+	const fc::string& GetFileName() const { return m_filename; }
 	int GetId() const { return m_id; }
 
 	Tile* GetTile( size_t index );

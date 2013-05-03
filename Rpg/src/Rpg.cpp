@@ -182,23 +182,35 @@ Window* CreateWindow()
 MonsterList gMonsterList; //temp for gererating data.
 ResourceManager* resourceManager = 0;
 
+
+#include "Tile/Map.h"
+
+Map* CreateMapFromImage( const fc::string& directory, const fc::string& filename, Tileset *tileset );
+
+
 void DoTests()
 {
-	//resourceManager->LoadTexture("tiles/town.png");
+	resourceManager->LoadTexture("tiles/town.png");
+	Tileset ts;
+	ts.DeserializeXml("data/tilesets/", "town.tileset.xml");
+	ts.SetFileName("town.tileset.xml");
+	ts.SetName("town");
 
-	//Tileset ts;
-	//ts.DeserializeXml("data/tilesets/", "town.tileset.xml");
+	Map* map = CreateMapFromImage( "data/FF1 Maps/", "coneria.gif", &ts );
+	map->SetName("coneria");
+	map->SerializeXml("data/maps/coneria.map.xml");
 
 	/*
 	Texture tex;
-	tex.LoadFromFile("data/textures/tiles/town.png");
-	tex.SetName("town.png");
+	tex.LoadFromFile("data/textures/tiles/overworld.png");
+	tex.SetName("overworld.png");
 	Tileset ts;
 	ts.CreateFromTexture(&tex);
-	ts.SetName("town");
-	ts.SetFileName("town.tileset.xml");
+	ts.SetName("overworld");
+	ts.SetFileName("overworld.tileset.xml");
 	ts.SerializeXml("data/tilesets/");
 	*/
+	
 
 	return;
 
@@ -296,19 +308,6 @@ int main(int argc, char* argv[])
 
 	//DoTests();
 
-	fc::tiny_string<32> a = "string a is here";
-	fc::tiny_string<45> b = "b -- string is here";
-	//fc::tiny_basic_string<char, 32> a;
-	//fc::tiny_basic_string<char, 45> b(a);
-	a = b;
-	b = a.c_str();
-
-	fc::string c = b.c_str();
-	a = b.c_str();
-
-	fc::tiny_string<41> d(c);
-	d = c;
-	d = a;
 
 
 	// read config file and parse command-line arguments.
@@ -326,6 +325,12 @@ int main(int argc, char* argv[])
 	DoTests(); //some quick and dirty testing.
 	return 0;
 
+	Texture tex, tex2;
+	tex.LoadFromFile("data/textures/tiles/town.png");
+	ubyte *p = tex.GetPixels();
+
+	tex2.CreateTexture(p, tex.Width(), tex.Height());
+	SpriteBatch sb;
 
 	//DoAtlasPack4();
 	//return 0;
@@ -336,7 +341,8 @@ int main(int argc, char* argv[])
 
 	Timer timer;
 	Timer loopTimer;
-	window->SetOrthographicProjection(0, 256, 208, 0);
+	//window->SetOrthographicProjection(0, 256, 208, 0);
+	window->SetOrthographicProjection(0, 512, 416, 0);
 	while( !window->RequestClose() )
 	{
 		window->ClearColor();
@@ -346,15 +352,20 @@ int main(int argc, char* argv[])
 		Input::Update();
 		//Log("update %0.4f", float(timer.Seconds()));
 
+		sb.Begin();
+		sb.DrawTexture(&tex2, 0.f);
+		sb.Render();
+		sb.End();
+
 		//timer.Reset();
-		game->Update();
+	//	game->Update();
 
 			static int tmp = 0;
 			tmp++;
 			//if(tmp % 12 == 0) Log("update %0.4f", float(timer.Seconds() * 60.f));
 			//if(tmp % 12 == 0) Log("update %i", int(timer.ElapsedMicroseconds()));
 			//timer.Reset();
-		game->Render();
+	//	game->Render();
 			//if(tmp % 12 == 0) Log("render %0.4f", float(timer.Seconds() * 60.f));
 			//if(tmp % 12 == 0) Log("render %i", int(timer.ElapsedMicroseconds()));
 
@@ -362,7 +373,7 @@ int main(int argc, char* argv[])
 		//window->Sleep(16);
 		window->SwapBuffers();
 
-		int elapsedMS = loopTimer.ElapsedMilliseconds();
+		int elapsedMS = (int)loopTimer.ElapsedMilliseconds();
 		while(elapsedMS <= 16)
 		{
 			int tMS = elapsedMS;
@@ -1115,3 +1126,116 @@ void DoAtlasPack4()
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+#include <Catastrophe/Graphics/Image.h>
+#include <Catastrophe/Graphics/TextureLoader.h>
+#include "Tile/Map.h"
+
+
+
+Map* CreateMapFromImage( const fc::string& directory, const fc::string& filename, Tileset *tileset )
+{
+	ASSERT(tileset != 0);
+
+	Image image;
+	Point _s;
+	ubyte* pp = TextureLoader::LoadFromFile(directory + filename, _s);
+	image.CreateFromPixels(_s.x, _s.y, pp);
+
+	//if( !image.Load(directory + filename) )
+	//	return 0;
+
+	const fc::dynamic_array2d<Color> & pixels = image.GetPixelArray();
+	if( pixels.empty() )
+		return 0;
+
+	Texture* tilesetTexture = tileset->GetTexture();
+	if( !tilesetTexture )
+		return 0;
+
+	ubyte* pPtr = tilesetTexture->GetPixels();
+	if( !pPtr )
+		return 0;
+
+	fc::dynamic_array2d<Color> tilesetImagePixels;
+
+	int tstWidth = tilesetTexture->Width();
+	int tstHeight = tilesetTexture->Height();
+	tilesetImagePixels.resize(tstHeight, tstWidth);
+
+	//copy tileset image pixel data
+	{
+		int i(0);
+		for( int k(0); k < tstHeight; ++k )
+		{
+			for( int j(0); j < tstWidth; ++j )
+			{
+				Color *pixel = & tilesetImagePixels( k, j );
+				(*pixel).r = *(pPtr + i++);
+				(*pixel).g = *(pPtr + i++);
+				(*pixel).b = *(pPtr + i++);
+				(*pixel).a = *(pPtr + i++);
+			}
+		}
+	}
+
+	delete pPtr;
+
+	const size_t TILE_SIZE = 16;
+	
+	//trim border pixels, if any.
+	const size_t w = (pixels.x() / TILE_SIZE) * TILE_SIZE;
+	const size_t h = (pixels.y() / TILE_SIZE) * TILE_SIZE;
+	//const size_t size = w * h;
+
+	size_t mapWidth = w / TILE_SIZE;
+	size_t mapHeight = h / TILE_SIZE;
+
+	Map *map = new Map(filename, 1, mapWidth, mapHeight);
+	MapLayer* mapLayer0 = map->GetLayer(0);
+	//mapLayer0->SetTileset();
+
+	fc::dynamic_array2d<Color> mapSubRect;
+	fc::dynamic_array2d<Color> tileRect;
+
+	for( size_t y(0); y < h; y += TILE_SIZE )
+	{
+		size_t mapIndexY = y / TILE_SIZE;
+
+		for( size_t x(0); x < w; x += TILE_SIZE )
+		{
+			pixels.copy_region( x, y, TILE_SIZE, TILE_SIZE, mapSubRect );
+
+			const size_t tilesetSize = tileset->Size();
+			for( size_t i(0); i < tilesetSize; ++i )
+			{
+				Tile *currentTile = tileset->GetTile(i);
+				const Rect &rect = currentTile->GetSourceRect();
+
+				tilesetImagePixels.copy_region( rect.pos.x, rect.pos.y, rect.size.x, rect.size.y, tileRect );
+
+				if( mapSubRect == tileRect )
+				{
+					LayerTile & t = mapLayer0->GetLayerTile(x / TILE_SIZE, mapIndexY);
+					t.tile = currentTile;
+
+
+					break;
+					//map->m_layers[0].m_tiles[ 0 ] = tileset->GetTile(i);
+				}
+			}
+		}
+	}
+
+	return map;
+}

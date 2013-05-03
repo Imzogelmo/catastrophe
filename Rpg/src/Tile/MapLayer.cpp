@@ -16,10 +16,12 @@
 #include "Tileset.h"
 
 
-MapLayer::MapLayer( Map* parent ) :
-	m_parent(parent),
+MapLayer::MapLayer() :
+	m_name(),
+	m_tileset(0),
 	m_tiles(),
 	m_blendmode(BlendMode::Alpha),
+	m_color(Color::White()),
 	m_visible(true)
 {
 }
@@ -27,64 +29,51 @@ MapLayer::MapLayer( Map* parent ) :
 
 void MapLayer::Clear()
 {
-	//m_tiles.assign(0, m_tiles.size());
-	m_tiles.assign(0);
+	m_tiles.assign(LayerTile());
 }
 
 
 void MapLayer::Resize( size_t w, size_t h )
 {
-	size_t old_x = m_tiles.x();
-	size_t old_y = m_tiles.y();
 	m_tiles.resize(h, w);
+}
 
-	//make all new pointers null.
-	if( old_x < m_tiles.x() )
-	{
-		for( size_t y(0); y < m_tiles.y(); ++y )
-		{
-			size_t i = m_tiles.offset(y, old_x);
-			for( size_t x(old_x); x < m_tiles.x(); ++x )
-			{
-				m_tiles[i++] = 0;
-			}
-		}
-	}
-	if( old_y < m_tiles.y() )
-	{
-		size_t x_dist = fc::min(old_x, m_tiles.x());
-		for( size_t y(old_y); y < m_tiles.y(); ++y )
-		{
-			size_t i = m_tiles.offset(y, 0);
-			for( size_t x(0); x < x_dist; ++x )
-			{
-				m_tiles[i++] = 0;
-			}
-		}
-	}
+
+void MapLayer::SetTileset( Tileset* tileset )
+{
+	m_tileset = tileset;
 }
 
 
 void MapLayer::SerializeXml( XmlWriter* xml )
 {
+	xml->SetString("name", m_name.c_str());
 	xml->SetUInt("width", m_tiles.x());
 	xml->SetUInt("height", m_tiles.y());
 	xml->SetUInt("color", m_color.packed_value);
-	xml->SetUInt("blend", m_blendmode.value);
+	xml->SetUInt("blendmode", m_blendmode.value);
+
+	fc::string tilesetFilename = m_tileset ? m_tileset->GetFileName() : "";
+	if( tilesetFilename.empty() )
+	{
+		Log("MapLayer::SerializeXml: tileset filename is empty.");
+	}
+
+	xml->SetString("tileset", tilesetFilename.c_str());
 
 	for( array_type::iterator it = m_tiles.begin(); it != m_tiles.end(); ++it )
 	{
 		xml->BeginNode("Tile");
 
-		int id = -1, tileset_id = -1;
-		if(*it)
+		int id = -1;
+		Tile* p = it->tile;
+		if(p)
 		{
-			id = (*it)->GetIndex();
-			tileset_id = (*it)->GetTileset()->GetId();
+			id = p->GetIndex();
 		}
 
 		xml->SetInt("id", id);
-		xml->SetInt("tid", tileset_id);
+		xml->SetInt("flags", it->flags);
 		xml->EndNode();
 	}
 }
@@ -92,25 +81,38 @@ void MapLayer::SerializeXml( XmlWriter* xml )
 
 void MapLayer::DeserializeXml( XmlReader* xml )
 {
-	m_tiles.resize(0, 0);
+	Clear();
 
+	m_name = xml->GetString("name");
 	size_t w = xml->GetUInt("width");
 	size_t h = xml->GetUInt("height");
 	m_color.packed_value = xml->GetUInt("color");
-	m_blendmode.value = xml->GetUInt("blend");
+	m_blendmode.value = xml->GetUInt("blendmode");
 
-	m_tiles.resize(w, h);
-	m_tiles.assign((Tile*)0);
+	Resize(w, h);
+
+	fc::string tilsetFilename = xml->GetString("tileset");
+	if( tilsetFilename.empty() )
+	{
+		Log("MapLayer::DeserializeXml: unknown tileset");
+		return;
+	}
+	else
+	{
+		/*
+		m_tileset = tilesetManager->LoadTileset(tilsetFilename);
+		if( !m_tileset )
+		{
+			Log("Tileset::DeserializeXml: (%s) tileset is null.", filename.c_str());
+			return;
+		}
+		*/
+	}
 
 	while( xml->NextChild("Tile") )
 	{
 		int id = xml->GetInt("id", -1);
-		int tileset_id = xml->GetInt("tid", -1);
-		if( tileset_id != -1 )
-		{
-			//get tileset pointer
-			//get tile pointer
-		}
+		//xml->SetInt("flags", it->flags);
 	}
 }
 

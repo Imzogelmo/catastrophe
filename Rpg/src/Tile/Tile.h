@@ -41,6 +41,7 @@ public:
 	void Create( const Rect& sourceRectangle, int numberOfFrames = 1 );
 	void Update();
 
+	inline const Rect& GetSourceRect() const { return m_sourceRect; }
 	inline short GetCurrentFrame() const { return frame; }
 	inline short GetAnimationSpeed() const { return anim_speed; }
 	inline short GetFlags() const { return flags; }

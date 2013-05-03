@@ -154,10 +154,12 @@ ubyte* Texture::GetPixels()
 	{
 		int format = GL_RGBA;
 		pixels = new ubyte[ m_width *  m_height * 4 ];
+
+		Bind();
 		glGetTexImage(GL_TEXTURE_2D, 0, format, GL_UNSIGNED_BYTE, pixels);
 	}
 
-	return 0;
+	return pixels;
 }
 
 
