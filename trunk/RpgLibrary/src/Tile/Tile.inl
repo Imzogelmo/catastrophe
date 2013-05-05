@@ -10,9 +10,11 @@
 // GNU General Public License for more details.
 
 
+#include <Catastrophe/Graphics/Texture.h>
 #include <Catastrophe/IO/XmlWriter.h>
 #include <Catastrophe/IO/XmlReader.h>
-#include "../Util/Serialization.h"
+
+#include "Serialization.h"
 #include "Tile.h"
 #include "Tileset.h"
 
@@ -20,12 +22,13 @@
 int Tile::m_tileSize = 16;
 
 
-Tile::Tile( Tileset* parent, size_t id ) :
+Tile::Tile( Tileset* parent ) :
 	counter(0),
 	frame(0),
 	anim_speed(128),
 	flags(0),
 	m_parent(parent),
+	m_sourceRect(Rect::Zero),
 	m_uv(Rectf::Zero)
 {
 }
@@ -134,7 +137,7 @@ void Tile::SerializeXml( XmlWriter* xml )
 	xml->SetShort("speed", anim_speed);
 	xml->SetShort("flags", flags);
 
-	Util::SerializeRect("SouceRect", xml, m_sourceRect);
+	//Util::SerializeRect("SouceRect", xml, m_sourceRect);
 }
 
 
@@ -144,7 +147,7 @@ void Tile::DeserializeXml( XmlReader* xml )
 	anim_speed = xml->GetShort("speed", 16);
 	flags = xml->GetShort("flags", 0);
 
-	Util::DeserializeRect("SouceRect", xml, m_sourceRect);
+	//Util::DeserializeRect("SouceRect", xml, m_sourceRect);
 
 	//todo: should have tileset create..?
 	Create(m_sourceRect, num_frames);

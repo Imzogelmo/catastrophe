@@ -20,8 +20,6 @@
 class RPG_API ResourceManagerTypeBase
 {
 public:
-	friend class Resource;
-
 	ResourceManagerTypeBase();
 	virtual ~ResourceManagerTypeBase();
 
@@ -36,6 +34,8 @@ public:
 	void DeleteResources();
 
 protected:
+	friend class ResourceCache;
+
 	// called when the resource will be deleted.
 	virtual void DisposeResource( void* p ) = 0;
 
@@ -60,8 +60,8 @@ template <class T>
 class ResourceManagerType : public ResourceManagerTypeBase
 {
 public:
-	ResourceManager() {}
-	virtual ~ResourceManager()
+	ResourceManagerType() {}
+	virtual ~ResourceManagerType()
 	{}
 
 	//
@@ -76,14 +76,14 @@ public:
 	// example load function usage:
 	// T* Load( const fc::string& filename, int* id = 0 )
 	// {
-	//   Resource* resource = GetResource(filename, id);
-	//   if( resource )
-	//     return (T*)resource->ptr;
+	//     Resource* resource = GetResource(filename, id);
+	//     if( resource )
+	//         return (T*)resource->ptr;
 	//
-	//   // otherwise load the resource then add it to the cache.
-	//   T* ptr = LoadFunction();
-	//   AddResource(ptr, filename, id);
-	//   return ptr;
+	//     // otherwise load the resource then add it to the cache.
+	//     T* ptr = LoadFunction();
+	//     AddResource(ptr, filename, id);
+	//     return ptr;
 	// }
 	//
 
@@ -97,33 +97,6 @@ protected:
 	virtual void DisposeResource( void* p ) = 0;
 
 };
-
-
-
-T* ResourceManager::Load( const fc::string& filename, int* id  )
-{
-	Resource* resource = GetResource(filename, id);
-	if( resource )
-		return resource->ptr;
-
-	// else create a new resource.
-	texture = new Texture();
-
-	fc::string fn = GetTextureDirectory(fn) + filename;
-	if( !texture->Load(fn) )
-	{
-		LogError("Failed to load resource (%s)", fn.c_str());
-		SAFE_DELETE(texture);
-	}
-	else
-	{
-		texture->SetName(filename);
-		AddResource(texture, filename, id);
-	}
-
-	return texture;
-}
-
 
 
 

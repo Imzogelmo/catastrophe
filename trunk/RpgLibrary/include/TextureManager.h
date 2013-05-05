@@ -19,7 +19,7 @@ class TextureManager : public ResourceManagerType<Texture>
 public:
 	TextureManager();
 
-	Texture* TextureManager::Load( const fc::string& filename, int* id = 0 );
+	Texture* Load( const fc::string& filename, int* id = 0 );
 
 protected:
 	void DisposeResource( void* p );

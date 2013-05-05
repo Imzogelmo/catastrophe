@@ -127,7 +127,7 @@ int ResourceCache::AddResource( const Resource& resource )
 }
 
 
-int GetResourceId( Resource* resource ) const
+int ResourceCache::GetResourceId( Resource* resource ) const
 {
 	int id = -1;
 	if( resource && m_resources.iterator_is_valid(resource) )

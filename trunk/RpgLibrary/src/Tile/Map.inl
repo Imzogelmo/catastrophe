@@ -99,7 +99,7 @@ bool Map::AddLayer( MapLayer* layer )
 
 	if( !layer )
 	{
-		layer = new MapLayer(this);
+		layer = new MapLayer();
 	}
 	else
 	{

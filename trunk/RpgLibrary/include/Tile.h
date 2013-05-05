@@ -12,11 +12,10 @@
 #pragma once
 
 #include <fc/fixed_vector.h>
-
-#include "../Common.h"
-#include <Catastrophe/Graphics/Animation.h>
+#include <Catastrophe/Math/Rect.h>
 #include <Catastrophe/Math/Rectf.h>
-#include <Catastrophe/Util/Indexable.h>
+
+#include "RpgCommon.h"
 
 
 /*
@@ -31,7 +30,7 @@ public:
 		FlipVertical	= 2
 	};
 
-	Tile( Tileset* parent = 0, size_t id = 0 );
+	Tile( Tileset* parent = 0 );
 
 	void SetTileset( Tileset* parent ) { m_parent = parent; } //make protected
 	void SetCurrentFrame( short frame );
@@ -49,10 +48,9 @@ public:
 	inline bool IsAnimated() const { return num_frames > 1; }
 
 	inline Tileset*	GetTileset() const { return m_parent; }
+	inline const Rectf&	GetUVRect() const { return m_uv; }
 
 	Texture* GetParentTexture() const;
-
-	inline const Rectf&	GetUVRect() const { return m_uv; }
 
 	inline void SetIndex( size_t index ) { m_tilesetIndex = index; }
 	inline size_t GetIndex() const { return m_tilesetIndex; }

@@ -21,7 +21,7 @@
 #include <fc/math.h>
 
 #include "Serialization.h"
-#include "ResourceManager.h"
+#include "TextureManager.h"
 
 
 
@@ -236,14 +236,8 @@ void RpgSerializer::DeserializeSprite( XmlReader* xml, Sprite& s )
 
 	if( !textureName.empty() )
 	{
-		ResourceManager* resourceManager = GetResourceManager();
-		ASSERT(resourceManager != 0);
-
-		texture = resourceManager->GetTexture(textureName);
-		if( !texture )
-		{
-			texture = resourceManager->LoadTexture(textureName.c_str());
-		}
+		ASSERT(g_textureManager != 0);
+		texture = g_textureManager->Load(textureName.c_str());
 	}
 
 	if( !texture )
@@ -304,13 +298,12 @@ void RpgSerializer::DeserializeAnimation( XmlReader* xml, Animation& a )
 	fc::string textureName = xml->GetString("texture");
 	if( !textureName.empty() )
 	{
-		ResourceManager* resourceManager = GetResourceManager();
-		ASSERT(resourceManager != 0);
+		ASSERT(g_textureManager != 0);
 
-		texture = resourceManager->GetTexture(textureName);
+		texture = g_textureManager->GetResource(textureName);
 		if( !texture )
 		{
-			texture = resourceManager->LoadTexture(textureName.c_str());
+			texture = g_textureManager->Load(textureName.c_str());
 		}
 	}
 
