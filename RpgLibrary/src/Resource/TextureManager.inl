@@ -9,8 +9,7 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#pragma once
-
+#include <Catastrophe/Graphics/Texture.h>
 #include "TextureManager.h"
 
 
@@ -29,15 +28,17 @@ void TextureManager::DisposeResource( void* p )
 
 Texture* TextureManager::Load( const fc::string& filename, int* id  )
 {
-	Resource* resource = GetResource(filename, id);
-	if( resource )
-		return (Texture*)resource->ptr;
+	Texture* texture = GetResource(filename, id);
+	if( texture )
+		return (Texture*)texture;
 
 	// else create a new resource.
-	Texture* texture = new Texture();
+	texture = new Texture();
 
-	fc::string fn = GetTextureDirectory(fn) + filename;
-	if( !texture->Load(fn) )
+	fc::string fn;
+	g_resourceDirectory->GetTextureDirectory(fn);
+	fn += filename; //todo
+	if( !texture->LoadFromFile(fn) )
 	{
 		LogError("Failed to load texture (%s)", fn.c_str());
 		SAFE_DELETE(texture);

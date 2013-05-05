@@ -47,7 +47,6 @@ USING_NAMESPACE_CE
 class Tile;
 class TileProperties;
 class Tileset;
-class TilesetManager;
 class Map;
 class MapLayer;
 
@@ -72,11 +71,18 @@ struct ExpCurve;
 
 template <class T> class DataArray;
 
+//resource
 class Database;
 class Resource;
 class ResourceDirectory;
 class ResourceCache;
 class ResourceManagerTypeBase;
+class TextureManager;
+class TilesetManager;
+
+
+
+
 class RpgStrings;
 
 
@@ -96,4 +102,10 @@ class RpgStrings;
 
 #define MAX_ITEM_DROPS	8
 
+
+
+//global
+extern ResourceDirectory*	g_resourceDirectory;
+extern TextureManager*		g_textureManager;
+extern TilesetManager*		g_tilesetManager;
 

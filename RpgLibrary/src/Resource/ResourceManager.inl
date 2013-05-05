@@ -58,7 +58,7 @@ void ResourceManagerTypeBase::ReleaseResource( Resource* resource )
 }
 
 
-void ResourceManagerTypeBase::AddResource( void* p, const fc::string& filename, int* id = 0 )
+void ResourceManagerTypeBase::AddResource( void* p, const fc::string& filename, int* id )
 {
 	int resourceID = m_resourceCache.AddResource( Resource(p, filename) );
 	if( id != 0 )
@@ -69,7 +69,7 @@ void ResourceManagerTypeBase::AddResource( void* p, const fc::string& filename, 
 }
 
 
-void* ResourceManagerTypeBase::InternalGetResource( const fc::string& filename, int* id = 0 )
+void* ResourceManagerTypeBase::InternalGetResource( const fc::string& filename, int* id )
 {
 	void* ptr = 0;
 	Resource* resource = m_resourceCache.GetResource(filename);
@@ -80,7 +80,7 @@ void* ResourceManagerTypeBase::InternalGetResource( const fc::string& filename, 
 
 		if( id != 0 )
 		{
-			id = m_resourceCache.GetResourceId(resource);
+			*id = m_resourceCache.GetResourceId(resource);
 		}
 	}
 
@@ -88,7 +88,7 @@ void* ResourceManagerTypeBase::InternalGetResource( const fc::string& filename, 
 }
 
 
-void* ResourceManagerTypeBase::InternalGetResource( int id );
+void* ResourceManagerTypeBase::InternalGetResource( int id )
 {
 	void* ptr = 0;
 	Resource* resource = m_resourceCache.GetResource(id);

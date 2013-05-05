@@ -12,7 +12,7 @@
 #include <Catastrophe/IO/XmlWriter.h>
 #include <Catastrophe/IO/XmlReader.h>
 #include "Tileset.h"
-#include "../ResourceManager.h"
+#include "TextureManager.h"
 
 
 
@@ -243,7 +243,7 @@ bool Tileset::DeserializeXml( const fc::string& directory, const fc::string& fil
 		else
 		{
 			SetTexture(0);
-			m_texture = resourceManager->LoadTexture(textureFilename);
+			m_texture = g_textureManager->Load(textureFilename);
 			if( !m_texture )
 			{
 				Log("Tileset::DeserializeXml: (%s) texture is null.", filename.c_str());

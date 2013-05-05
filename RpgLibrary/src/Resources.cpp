@@ -24,3 +24,7 @@
 #include "MapManager.inl"
 
 
+ResourceDirectory*	g_resourceDirectory = 0;
+TextureManager*		g_textureManager = 0;
+TilesetManager*		g_tilesetManager = 0;
+

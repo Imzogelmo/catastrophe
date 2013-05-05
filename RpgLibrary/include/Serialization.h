@@ -18,12 +18,6 @@
 
 class RpgSerializer
 {
-	RpgSerializer( ResourceManager* resourceManager = 0 )
-		: m_resourceManager(resourceManager)
-	{}
-
-	void SetResourceManager( ResourceManager* resourceManager ) { m_resourceManager = resourceManager; }
-	ResourceManager* GetResourceManager() const { return m_resourceManager; }
 
 	static void SerializePoint( XmlWriter* xml, const Point& p );
 	static void SerializePoint( const char* nodeName, XmlWriter* xml, const Point& p );
@@ -54,9 +48,6 @@ class RpgSerializer
 	void DeserializeTile( XmlReader* xml, Tile& t );
 	template <class T> static void DeserializeStringArray( XmlReader* xml, const char* node, T* stringArray, int n );
 
-
-protected:
-	ResourceManager* m_resourceManager;
 
 };
 

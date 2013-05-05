@@ -14,7 +14,7 @@
 #include <fc/dynamic_array2d.h>
 #include <fc/vector.h>
 
-#include "../Common.h"
+#include "RpgCommon.h"
 #include "Tile.h"
 
 
@@ -77,5 +77,4 @@ private:
 };
 
 
-extern ResourceManager* resourceManager;
 
