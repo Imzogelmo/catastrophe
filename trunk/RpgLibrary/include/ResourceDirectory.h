@@ -19,16 +19,11 @@ enum BaseDirectoryType
 	BaseDir_Textures,
 	BaseDir_Fonts,
 	BaseDir_Shaders,
-	BaseDir_Audio,
-	BaseDir_Data,
+	BaseDir_Bgm,
+	BaseDir_Sfx,
+	BaseDir_Maps,
+	BaseDir_Tilesets,
 	BaseDir_Max
-};
-
-enum AudioDirectories
-{
-	AudioDir_Bgm,
-	AudioDir_Sfx,
-	AudioDir_Max
 };
 
 static const char* default_base_directories[BaseDir_Max] =
@@ -36,15 +31,10 @@ static const char* default_base_directories[BaseDir_Max] =
 	"textures/",
 	"fonts/",
 	"shaders/",
-	"audio/",
-	"maps/"
-	"tilesets/"
-};
-
-static const char* default_audio_directories[AudioDir_Max] =
-{
 	"bgm/",
-	"sfx/"
+	"sfx/",
+	"maps/",
+	"tilesets/"
 };
 
 
@@ -58,15 +48,12 @@ public:
 
 		for( int i(0); i < BaseDir_Max; ++i )
 			m_baseDirectory[i] = default_base_directories[i];
-
-		for( int i(0); i < AudioDir_Max; ++i )
-			m_audioDirectory[i] = default_audio_directories[i];
 	}
 
 	void SetRootDirectory( const fc::string& directory ) { m_root = directory; }
 	const fc::string& GetRootDirectory( BaseDirectoryType type ) const { return m_root; }
 
-	void GetBaseDirectory( BaseDirectoryType type, fc::string& outDir ) const
+	void GetDirectory( BaseDirectoryType type, fc::string& outDir ) const
 	{
 		ASSERT(type < BaseDir_Max);
 		outDir.clear();
@@ -75,24 +62,22 @@ public:
 
 	void GetTextureDirectory( fc::string& outDir ) const
 	{
-		GetBaseDirectory(BaseDir_Textures, outDir);
+		GetDirectory(BaseDir_Textures, outDir);
 	}
 
 	void GetFontDirectory( fc::string& outDir ) const
 	{
-		GetBaseDirectory(BaseDir_Fonts, outDir);
+		GetDirectory(BaseDir_Fonts, outDir);
 	}
 
 	void GetShaderDirectory( fc::string& outDir ) const
 	{
-		GetBaseDirectory(BaseDir_Shaders, outDir);
+		GetDirectory(BaseDir_Shaders, outDir);
 	}
 
 protected:
 	fc::string m_root;
 	fc::string m_baseDirectory[BaseDir_Max];
-	fc::string m_audioDirectory[AudioDir_Max];
-
 
 };
 
