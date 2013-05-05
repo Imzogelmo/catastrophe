@@ -14,93 +14,55 @@
 #include <fc/vector.h>
 #include <fc/string.h>
 
-#include "RpgCommon.h"
-#include "ResourceDirectory.h"
+#include "Resource.h"
 
 
-class Resource
+class RPG_API ResourceManagerTypeBase
 {
 public:
-	//we don't need a template type for simple pointers.
-	typedef void* pointer;
+	friend class Resource;
 
-	pointer			ptr;
-	fc::string		name;
+	ResourceManagerTypeBase();
+	virtual ~ResourceManagerTypeBase();
 
-	Resource( pointer p = 0, const fc::string& filename = "" )
-		: ptr(p), name(filename), m_ref_count(1)
-	{}
+	ResourceDirectory* GetResourceDirectory() { return g_resourceDirectory; }
+	ResourceCache* GetResourceCache() { return &m_resourceCache; }
 
-	void AddRef()
-	{
-		++m_ref_count;
-	}
+	// destroys or removes a reference to a resource.
+	void Unload( const fc::string& filename );
+	void Unload( int id );
 
-	void ReleaseRef()
-	{
-		--m_ref_count;
-	}
-
-	int GetRefCount()
-	{
-		return m_ref_count;
-	}
-
-protected:
-	int m_ref_count;
-};
-
-
-class RPG_API ResourceCache
-{
-public:
-	typedef	fc::vector<Resource>	vec_type;
-	typedef	fc::vector<size_t>		store_type;
-
-	ResourceCache();
-
-	// since the needs of a resource cache can largely vary,
-	// it is required to call this. 
-	void SetResourceUsage( size_t maxCapacity = 256 );
-
-	// this will invalidate all existing pointers to these resources.
-	template <class T> void DeleteResources();
-	template <class T> void DeleteResource( Resource* ptr );
-
-	// these get functions have a linear time cost.
-	Resource* GetResource( const fc::string& name );
-	Resource* GetResource( const void* ptr );
-
-	// fast lookup of resource.
-	Resource* GetResource( int id );
-
-	// returns the id of the newly added resource
-	int AddResource( const Resource& resource );
-
-protected:
-	vec_type	m_resources;
-	store_type	m_free_store;
-
-};
-
-
-class RPG_API ResourceManager
-{
-public:
-	ResourceManager();
-	~ResourceManager();
-
+	// called automatically by the destructor.
 	void DeleteResources();
 
-	ResourceCache* GetTextureResourceCache() { return &m_textureCache; }
-	ResourceCache* GetFontResourceCache() { return &m_fontCache; }
-	ResourceCache* GetShaderResourceCache() { return &m_shaderCache; }
-	const ResourceCache* GetTextureResourceCache() const { return &m_textureCache; }
-	const ResourceCache* GetFontResourceCache() const { return &m_fontCache; }
-	const ResourceCache* GetShaderResourceCache() const { return &m_shaderCache; }
+protected:
+	// called when the resource will be deleted.
+	virtual void DisposeResource( void* p ) = 0;
 
-	ResourceDirectory& GetResourceDirectory() { return m_directory; }
-	const ResourceDirectory& GetResourceDirectory() const { return m_directory; }
+	void ReleaseResource( Resource* resource );
+	void AddResource( void* p, const fc::string& filename, int* id = 0 );
+
+	// calls to get will increase the resource reference count.
+	void* InternalGetResource( const fc::string& filename, int* id = 0 );
+	void* InternalGetResource( int id );
+
+	ResourceCache	m_resourceCache;
+
+private:
+	//this cannot be allowed to share resources.
+	ResourceManagerTypeBase( const ResourceManagerTypeBase& );
+	ResourceManagerTypeBase& operator =( const ResourceManagerTypeBase& );
+};
+
+
+
+template <class T>
+class ResourceManagerType : public ResourceManagerTypeBase
+{
+public:
+	ResourceManager() {}
+	virtual ~ResourceManager()
+	{}
 
 	//
 	// Load and Get functions return null if the resource does not exist.
@@ -108,47 +70,60 @@ public:
 	// id's will be eventually be recycled by the resource cache 
 	// after destroying the actual resource.
 	//
-	Texture*		LoadTexture( const fc::string& filename, int* id = 0 );
-	Font*			LoadFont( const fc::string& filename, int faceSize, int* id = 0 );
-	ShaderObject*	LoadShaderObject( const fc::string& filename, int shaderType, int* id = 0 );
+	// Every call to Load or Get requires a call to Unload in
+	// order to decrease the reference counter.
+	//
+	// example load function usage:
+	// T* Load( const fc::string& filename, int* id = 0 )
+	// {
+	//   Resource* resource = GetResource(filename, id);
+	//   if( resource )
+	//     return (T*)resource->ptr;
+	//
+	//   // otherwise load the resource then add it to the cache.
+	//   T* ptr = LoadFunction();
+	//   AddResource(ptr, filename, id);
+	//   return ptr;
+	// }
+	//
 
-	Texture*		GetTexture( const fc::string& filename );
-	Font*			GetFont( const fc::string& filename );
-	ShaderObject*	GetShaderObject( const fc::string& filename );
 
-	Texture*		GetTexture( int id );
-	Font*			GetFont( int id );
-	ShaderObject*	GetShaderObject( int id );
-
-	void UnloadTexture( const fc::string& filename );
-	void UnloadFont( const fc::string& filename );
-	void UnloadShaderObject( const fc::string& filename );
-
-	void UnloadTexture( int id );
-	void UnloadFont( int id );
-	void UnloadShaderObject( int id );
-
-	// when we lose OpenGL context or switch video modes (ie; to-from fullscreen),
-	// this invalidates all gpu data, so we must reload them.
-	// *this will not invalidate any pointers*
-	void ReloadGraphicsResources();
+	// calls to get will increase the resource reference count.
+	T* GetResource( const fc::string& filename, int* id = 0 ) { return (T*)InternalGetResource(filename, id); }
+	T* GetResource( int id ) { return (T*)InternalGetResource(id); }
 
 protected:
-	void InternalReleaseTexture( Resource* resource );
-	void InternalReleaseFont( Resource* resource );
-	void InternalReleaseShaderObject( Resource* resource );
+	// override this.
+	virtual void DisposeResource( void* p ) = 0;
 
-	ResourceCache		m_textureCache;
-	ResourceCache		m_fontCache;
-	ResourceCache		m_shaderCache;
-	ResourceDirectory	m_directory;
-
-private:
-	//static ResourceManager m_singleton;
-
-	//at any rate, this cannot be allowed to share resources.
-	ResourceManager( const ResourceManager& );
-	ResourceManager& operator =( const ResourceManager& );
 };
+
+
+
+T* ResourceManager::Load( const fc::string& filename, int* id  )
+{
+	Resource* resource = GetResource(filename, id);
+	if( resource )
+		return resource->ptr;
+
+	// else create a new resource.
+	texture = new Texture();
+
+	fc::string fn = GetTextureDirectory(fn) + filename;
+	if( !texture->Load(fn) )
+	{
+		LogError("Failed to load resource (%s)", fn.c_str());
+		SAFE_DELETE(texture);
+	}
+	else
+	{
+		texture->SetName(filename);
+		AddResource(texture, filename, id);
+	}
+
+	return texture;
+}
+
+
 
 

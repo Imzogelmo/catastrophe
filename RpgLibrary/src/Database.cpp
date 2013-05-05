@@ -31,12 +31,6 @@
 #include "Enhancement.inl"
 #include "Synthesis.inl"
 
-// tiles
-#include "Tile.inl"
-#include "TileProperties.inl"
-#include "Tileset.inl"
-#include "MapLayer.inl"
-#include "Map.inl"
 
 #include "Database.h"
 

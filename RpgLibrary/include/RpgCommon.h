@@ -76,7 +76,7 @@ class Database;
 class Resource;
 class ResourceDirectory;
 class ResourceCache;
-class ResourceManager;
+class ResourceManagerTypeBase;
 class RpgStrings;
 
 
