@@ -13,6 +13,7 @@
 #include <angelscript.h>
 #include <Catastrophe/Input/Input.h>
 
+#include "TextureManager.h"
 #include "asBindUtil.h"
 #include "ScriptEngine.h"
 #include "../Game.h"
@@ -23,8 +24,7 @@ namespace script
 	int LoadTexture( const fc::string& filename )
 	{
 		int id = -1;
-		ResourceManager* resourceManager = gGetGame()->GetResourceManager();
-		Texture* texture = resourceManager->LoadTexture(filename, &id);
+		Texture* texture = g_textureManager->Load(filename, &id);
 		if( !texture )
 		{
 			//todo: this is not really needed.
@@ -37,12 +37,12 @@ namespace script
 	int LoadFont( const fc::string& filename, int faceSize )
 	{
 		int id = -1;
-		ResourceManager* resourceManager = gGetGame()->GetResourceManager();
-		Font* font = resourceManager->LoadFont(filename, faceSize, &id);
-		if( !font )
+	//	ResourceManager* resourceManager = gGetGame()->GetResourceManager();
+	//	Font* font = resourceManager->LoadFont(filename, faceSize, &id);
+	//	if( !font )
 		{
 			//todo: this is not really needed.
-			gGetGame()->GetScriptEngine()->SetException( asGetActiveContext(), filename );
+	//		gGetGame()->GetScriptEngine()->SetException( asGetActiveContext(), filename );
 		}
 		
 		return id;
@@ -51,28 +51,28 @@ namespace script
 
 	Texture* GetTextureResource( int id )
 	{
-		ResourceManager* resourceManager = gGetGame()->GetResourceManager();
-		Texture* texture = resourceManager->GetTexture(id);
-		if( !texture )
+		//ResourceManager* resourceManager = gGetGame()->GetResourceManager();
+		//Texture* texture = resourceManager->GetTexture(id);
+		//if( !texture )
 		{
 			//todo: this is not really needed.
 			gGetGame()->GetScriptEngine()->SetException( asGetActiveContext(), "Invalid texture id" );
 		}
 
-		return texture;
+		return 0;
 	}
 
 	Font* GetFontResource( int id )
 	{
-		ResourceManager* resourceManager = gGetGame()->GetResourceManager();
-		Font* font = resourceManager->GetFont(id);
-		if( !font )
+	//	ResourceManager* resourceManager = gGetGame()->GetResourceManager();
+	//	Font* font = resourceManager->GetFont(id);
+	//	if( !font )
 		{
 			//todo: this is not really needed.
 			gGetGame()->GetScriptEngine()->SetException( asGetActiveContext(), "Invalid font id" );
 		}
 
-		return font;
+		return 0;
 	}
 
 

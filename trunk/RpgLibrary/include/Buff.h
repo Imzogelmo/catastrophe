@@ -14,9 +14,8 @@
 #include <fc/vector.h>
 #include <fc/string.h>
 
-#include "Common.h"
+#include "RpgCommon.h"
 #include "Attributes.h"
-#include "DataList.h"
 
 
 class Buff
@@ -110,24 +109,5 @@ protected:
 
 };
 
-
-/*
- * A collection of stored Buff objects.
- */
-class RPG_API BuffList : public DataList<Buff>
-{
-public:
-	typedef DataList<Buff>	base_type;
-
-	BuffList() : base_type()
-	{}
-
-	Buff& GetBuff( size_t index ) { return base_type::operator [](index);  }
-	const Buff& GetBuff( size_t index ) const { return base_type::operator [](index);  }
-
-	NO_INLINE bool SerializeXml( const fc::string& filename );
-	NO_INLINE bool DeserializeXml( const fc::string& filename );
-
-};
 
 

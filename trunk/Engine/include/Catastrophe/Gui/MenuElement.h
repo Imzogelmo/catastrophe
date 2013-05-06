@@ -34,7 +34,7 @@ public:
 	void AddItem( Widget* item );
 	void InsertItem( size_t index, Widget* item );
 	void RemoveItem( Widget* item );
-	void RemoveItem( size_t index );
+	void RemoveItemAt( size_t index );
 	void RemoveAllItems();
 
 	void SetDefaultItemSize( const Point& size );
