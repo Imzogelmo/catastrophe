@@ -79,7 +79,7 @@ class ResourceCache;
 class ResourceManagerTypeBase;
 class TextureManager;
 class TilesetManager;
-
+class MapManager;
 
 
 
@@ -108,4 +108,5 @@ class RpgStrings;
 extern ResourceDirectory*	g_resourceDirectory;
 extern TextureManager*		g_textureManager;
 extern TilesetManager*		g_tilesetManager;
+extern MapManager*			g_mapManager;
 

@@ -51,3 +51,8 @@ class RpgSerializer
 
 };
 
+
+template <class T>
+void SerializeObject( XmlWriter* xml, const T& val );
+
+

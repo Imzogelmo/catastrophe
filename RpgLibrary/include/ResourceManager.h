@@ -28,6 +28,7 @@ public:
 
 	// destroys or removes a reference to a resource.
 	void Unload( const fc::string& filename );
+	void Unload( void* ptr );
 	void Unload( int id );
 
 	// called automatically by the destructor.
