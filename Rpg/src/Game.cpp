@@ -60,11 +60,10 @@ Database* gGetDatabase() { return RpgGlobals::currentDatabase; }
 int Game::Initialize()
 {
 	gSetActiveGame(this);
-	gSetActiveResourceManager(&m_resourceManager);
 	gSetActiveScriptEngine(&m_scriptEngine);
-	gSetActiveDatabase(&m_database);
+	//gSetActiveDatabase(&m_database);
 
-	m_resourceManager.GetResourceDirectory().SetRootDirectory("data/");
+	//m_resourceManager.GetResourceDirectory().SetRootDirectory("data/");
 
 	int ret(0);
 	//ret = InternalInitScriptEngine();

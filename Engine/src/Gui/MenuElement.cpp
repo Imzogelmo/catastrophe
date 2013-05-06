@@ -47,7 +47,14 @@ void MenuElement::Render( SpriteBatch* spritebatch )
 	this->Widget::Render(spritebatch);
 	if( IsVisible() )
 	{
-		m_itemContent.Render(spritebatch);
+		//todo: only if it is in view...
+//		child_vec_type::iterator it = m_itemContent.m_children.begin();
+//		for( ; it != m_itemContent.m_children.end(); ++it )
+		{
+//			(*it)->Render(spritebatch);
+		}
+
+		//m_itemContent.Render(spritebatch);
 	}
 }
 
@@ -83,12 +90,12 @@ void MenuElement::RemoveItem( Widget* item )
 	m_itemContent.RemoveChild( item );
 }
 
-
+/*
 void MenuElement::RemoveItem( size_t index )
 {
 	m_itemContent.RemoveChild( GetItem(index) );
 }
-
+*/
 
 void MenuElement::RemoveAllItems()
 {

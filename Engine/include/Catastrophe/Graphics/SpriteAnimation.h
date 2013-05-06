@@ -30,8 +30,8 @@ CE_NAMESPACE_BEGIN
 class CE_API SpriteAnimation
 {
 public:
-	Animation();
-	Animation( Texture* texturePtr,
+	SpriteAnimation();
+	SpriteAnimation( Texture* texturePtr,
 			const Rect& sourceRect,
 			int numberOfFrames = 1,
 			int frameOffsetX = 0,
@@ -39,9 +39,10 @@ public:
 			);
 
 	void Create( Texture* texturePtr, const Rect& sourceRect, int numberOfFrames = 1, int frameOffsetX = 0, int frameOffsetY = 0 );
+	void Create( Texture* texturePtr, const Rect& sourceRect, float animationDelay, int numberOfFrames = 1, int frameOffsetX = 0, int frameOffsetY = 0 );
 	void SetTexture( Texture* texturePtr );
 	void SetSourceRect( const Rect& sourceRect );
-	void SetAnimationSpeed( float frameSpeed );
+	void SetAnimationSpeed( float animationDelay );
 	void SetCurrentFrame( size_t frame );
 	void SetNumberOfFrames( int frames );
 	void Update();

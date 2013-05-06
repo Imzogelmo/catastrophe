@@ -147,7 +147,7 @@ const Buff& BuffSet::operator []( size_t index ) const
 }
 
 
-
+/*
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //               BuffList
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -209,3 +209,5 @@ bool BuffList::DeserializeXml( const fc::string& filename )
 
 	return true;
 }
+*/
+

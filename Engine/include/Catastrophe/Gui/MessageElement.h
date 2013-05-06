@@ -54,7 +54,7 @@ public:
 protected:
 	int				m_rowHeight;
 
-	typedef fc::fixed_vector<Point, 1>		row_vec_type;
+	typedef fc::fixed_vector<Point, 16>		row_vec_type;
 	row_vec_type	m_textRows; 
 
 	int				m_fastForwardSpeed;

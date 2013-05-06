@@ -59,7 +59,7 @@ struct Item;
 struct Skill;
 struct Spell;
 struct Race;
-struct Character;
+//struct Character;
 struct CharacterClass;
 struct Monster;
 struct MonsterGroup;

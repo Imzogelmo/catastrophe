@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\Engine\include&quot;"
+				AdditionalIncludeDirectories="&quot;..\Engine\include&quot;;&quot;..\RpgLibrary\include&quot;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -112,7 +112,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;..\Engine\include&quot;"
+				AdditionalIncludeDirectories="&quot;..\Engine\include&quot;;&quot;..\RpgLibrary\include&quot;"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				WarningLevel="3"
@@ -168,14 +168,6 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\src\AttributeFlags.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Attributes.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\BattleActions.cpp"
 				>
 			</File>
@@ -208,19 +200,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\ItemDrop.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\Party.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\src\RenderEngine.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\ResourceManager.cpp"
 				>
 			</File>
 			<File
@@ -340,86 +324,6 @@
 				</Filter>
 			</Filter>
 			<Filter
-				Name="Tile"
-				>
-				<File
-					RelativePath=".\src\Tile\Map.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Tile\MapLayer.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Tile\Tile.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Tile\Tileset.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Tile\TilesetManager.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Database"
-				>
-				<File
-					RelativePath=".\src\AttributeData.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Buff.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\CharacterClass.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Database.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\EncounterData.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\ExpTable.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Item.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\LevelData.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Monster.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\MonsterPartyData.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Shops.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\SpellData.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\SpriteList.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
 				Name="Util"
 				>
 				<File
@@ -450,14 +354,6 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\src\AttributeFlags.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Attributes.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\AttributeStrings.h"
 				>
 			</File>
@@ -478,10 +374,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\FixedAttributeArray.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\Game.h"
 				>
 			</File>
@@ -494,10 +386,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\ItemDrop.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\ItemSort.h"
 				>
 			</File>
@@ -507,10 +395,6 @@
 			</File>
 			<File
 				RelativePath=".\src\RenderEngine.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\ResourceManager.h"
 				>
 			</File>
 			<File
@@ -596,106 +480,6 @@
 						>
 					</File>
 				</Filter>
-			</Filter>
-			<Filter
-				Name="Tile"
-				>
-				<File
-					RelativePath=".\src\Tile\CollisionLayer.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Tile\Map.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Tile\MapLayer.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Tile\MapProperties.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Tile\Tile.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Tile\TileProperties.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Tile\Tileset.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Tile\TilesetManager.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Database"
-				>
-				<File
-					RelativePath=".\src\AttributeData.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Buff.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\CharacterClass.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Database.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\DataList.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\EncounterData.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\ExpTable.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Item.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\LevelData.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Monster.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\MonsterPartyData.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Race.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Shops.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\SpellData.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\SpriteList.h"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="Util"

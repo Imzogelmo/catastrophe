@@ -16,8 +16,8 @@
 #include "asBindUtil.h"
 #include "ScriptEngine.h"
 #include "../Game.h"
-#include "../Monster.h"
-#include "../Buff.h"
+#include "Monster.h"
+#include "Buff.h"
 #include "../Equipment.h"
 
 // TODO: engine <--> script character integration.

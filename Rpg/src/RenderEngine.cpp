@@ -10,7 +10,7 @@
 // GNU General Public License for more details.
 
 #include "RenderEngine.h"
-#include "Tile/Map.h"
+#include "Map.h"
 
 
 #ifdef _MSC_VER
@@ -63,7 +63,7 @@ void RenderEngine::DrawMapLayer( SpriteBatch* spriteBatch, const MapLayer* layer
 	SpriteData sd;
 	::memset(&sd, 0, sizeof(SpriteData));
 	sd.SetBlendMode(layer->GetBlendMode());
-	sd.SetDepth(layer->GetIndex());
+	//sd.SetDepth(layer->GetIndex());
 
 	Color layerColor = layer->GetColor();
 	sd.data[0].color = layerColor;

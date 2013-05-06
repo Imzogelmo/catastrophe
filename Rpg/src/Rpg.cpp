@@ -173,7 +173,6 @@ Window* CreateWindow()
 
 //temp includes
 #include "Monster.h"
-#include "MonsterPartyData.h"
 #include "Item.h"
 #include "Tile/TilesetManager.h"
 #include <Catastrophe/IO/File.h>

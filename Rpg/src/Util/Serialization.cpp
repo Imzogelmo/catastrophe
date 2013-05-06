@@ -21,7 +21,7 @@
 #include <fc/math.h>
 
 #include "Serialization.h"
-#include "../ResourceManager.h"
+#include "ResourceManager.h"
 
 
 namespace Util

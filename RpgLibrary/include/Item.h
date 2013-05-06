@@ -11,14 +11,17 @@
 
 #pragma once
 
+#include <fc/string.h>
+#include <fc/tiny_string.h>
+
 #include "RpgCommon.h"
 #include "Attributes.h"
 
 
 struct RPG_API Item
 {
-	fc::string	name;
-	fc::string	script;
+	fc::tiny_string<32>	name;
+	fc::tiny_string<32>	script;
 	fc::string	description;
 
 	enum ItemFlags
@@ -54,6 +57,9 @@ struct RPG_API Item
 
 	Item()
 	{}
+
+	fc::tiny_string<32> GetName() const { return name; }
+	Attributes GetAttributes() { return attributes; }
 
 	void SerializeXml( XmlWriter* xml );
 	void DeserializeXml( XmlReader* xml );

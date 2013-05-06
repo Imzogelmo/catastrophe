@@ -18,8 +18,6 @@
 #include "Common.h"
 #include "GlobalSettings.h"
 #include "ScreenManager.h"
-#include "ResourceManager.h"
-#include "Database.h"
 
 #include "Script/ScriptEngine.h"
 #include "Entity.h"
@@ -55,8 +53,6 @@ public:
 	GameSettings* GetSettings() { return &m_settings; }
 	ScriptEngine* GetScriptEngine() { return &m_scriptEngine; }
 	ScreenManager* GetScreenManager() { return &m_screenManager; }
-	ResourceManager* GetResourceManager() { return &m_resourceManager; }
-	Database* GetDatabase() { return &m_database; }
 
 	SpriteBatch* GetSpriteBatch() { return &m_spriteBatch; }
 
@@ -72,9 +68,6 @@ protected:
 	GameSettings	m_settings;
 	ScriptEngine	m_scriptEngine;
 	ScreenManager	m_screenManager;
-	ResourceManager	m_resourceManager;
-
-	Database		m_database;
 
 
 	SpriteBatch		m_spriteBatch;
