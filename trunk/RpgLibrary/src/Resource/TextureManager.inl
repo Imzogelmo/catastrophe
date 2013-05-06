@@ -22,7 +22,12 @@ TextureManager::TextureManager()
 
 void TextureManager::DisposeResource( void* p )
 {
-	delete p;
+	Texture* texture = (Texture*)p;
+	if( texture )
+	{
+		texture->Dispose();
+		delete texture;
+	}
 }
 
 
@@ -35,9 +40,8 @@ Texture* TextureManager::Load( const fc::string& filename, int* id  )
 	// else create a new resource.
 	texture = new Texture();
 
-	fc::string fn;
-	g_resourceDirectory->GetTextureDirectory(fn);
-	fn += filename; //todo
+	fc::string fn = g_resourceDirectory->GetTextureDirectory();
+	fn += filename;
 	if( !texture->LoadFromFile(fn) )
 	{
 		LogError("Failed to load texture (%s)", fn.c_str());

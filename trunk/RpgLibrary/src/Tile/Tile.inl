@@ -53,18 +53,26 @@ void Tile::SetSourceRect( const Rect& sourceRectangle )
 	Texture* texture = GetParentTexture();
 	if( texture )
 	{
-		float w = (float)texture->Width();
 		float h = (float)texture->Height();
-		m_uv.min.x = (float)sourceRectangle.Left() / w;
-		m_uv.max.x = (float)sourceRectangle.Right() / w;
 		m_uv.min.y = (float)sourceRectangle.Top() / h;
 		m_uv.max.y = (float)sourceRectangle.Bottom() / h;
+
+		if( flags & FlipVertical )
+			fc::swap(m_uv.min.y, m_uv.max.y);
 
 		if( frame > 0 )
 		{
 			SetCurrentFrame(frame);
 		}
-		//todo: flip
+		else
+		{
+			float w = (float)texture->Width();
+			m_uv.min.x = (float)sourceRectangle.Left() / w;
+			m_uv.max.x = (float)sourceRectangle.Right() / w;
+
+			if( flags & FlipHorizontal )
+				fc::swap(m_uv.min.x, m_uv.max.x);
+		}
 	}
 }
 
@@ -91,13 +99,17 @@ void Tile::SetCurrentFrame( short index )
 			float texHeightf = (float)texture->Width();
 			m_uv.min.y = y / texHeightf;
 			m_uv.max.y = (y + h) / texHeightf;
+
+			if( flags & FlipVertical )
+				fc::swap(m_uv.min.y, m_uv.max.y);
 		}
 
 		float texWidthf = (float)texture->Width();
 		m_uv.min.x = x / texWidthf;
 		m_uv.max.x = (x + w) / texWidthf;
 
-		//todo: flip
+		if( flags & FlipHorizontal )
+			fc::swap(m_uv.min.x, m_uv.max.x);
 	}
 }
 

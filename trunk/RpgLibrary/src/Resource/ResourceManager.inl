@@ -39,6 +39,12 @@ void ResourceManagerTypeBase::Unload( const fc::string& filename )
 }
 
 
+void ResourceManagerTypeBase::Unload( void* p )
+{
+	ReleaseResource( m_resourceCache.GetResource(p) );
+}
+
+
 void ResourceManagerTypeBase::Unload( int id )
 {
 	ReleaseResource( m_resourceCache.GetResource(id) );

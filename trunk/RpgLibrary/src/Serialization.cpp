@@ -17,6 +17,7 @@
 #include <Catastrophe/Math/Rect.h>
 #include <Catastrophe/Graphics/Animation.h>
 #include <Catastrophe/Graphics/AnimationSet.h>
+#include <Catastrophe/Graphics/SpriteAnimation.h>
 #include <Catastrophe/Graphics/Sprite.h>
 #include <fc/math.h>
 
@@ -352,4 +353,51 @@ void RpgSerializer::DeserializeStringArray( XmlReader* xml, const char* node, T*
 	}
 }
 
+
+
+
+/*
+template <>
+void SerializeObject<SpriteAnimation>( XmlWriter* xml, const SpriteAnimation& val )
+{
+	fc::string textureName;
+	Rect r1 = Rect::Zero;
+	Rect r2 = Rect::Zero;
+	Point offset = Point::Zero;
+
+	const Texture* texture = a.GetTexture();
+	if( !texture )
+	{
+		Log("SerializeAnimation error: null texture.");
+	}
+	else
+	{
+		textureName = texture->GetName();
+		if( a.NumFrames() > 1 )
+		{
+			const Rectf* uv = a.GetUVArray();
+			r1 = texture->GetSourceRect( uv[0] );
+			r2 = texture->GetSourceRect( uv[1] );
+			offset = r2.pos - r2.pos;
+		}
+		else
+		{
+			r1 = texture->GetSourceRect( a.GetUVRect(0) );
+		}
+	}
+
+	xml->SetString("texture", textureName.c_str());
+	xml->SetFloat("speed", a.GetAnimSpeed() );
+	xml->SetBool("loop", a.IsLooping() );
+	xml->SetBool("paused", a.IsPaused() );
+
+	xml->BeginNode("Frame");
+	xml->SetUInt("num_frames", a.NumFrames());
+	SerializeRect(xml, r1);
+	xml->SetInt("offset_x", offset.x);
+	xml->SetInt("offset_y", offset.y);
+	xml->EndNode();
+}
+
+*/
 

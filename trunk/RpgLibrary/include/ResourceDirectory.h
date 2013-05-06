@@ -41,39 +41,18 @@ static const char* default_base_directories[BaseDir_Max] =
 class ResourceDirectory
 {
 public:
-
-	ResourceDirectory()
-	{
-		m_root = "data/";
-
-		for( int i(0); i < BaseDir_Max; ++i )
-			m_baseDirectory[i] = default_base_directories[i];
-	}
+	ResourceDirectory();
 
 	void SetRootDirectory( const fc::string& directory ) { m_root = directory; }
 	const fc::string& GetRootDirectory( BaseDirectoryType type ) const { return m_root; }
 
-	void GetDirectory( BaseDirectoryType type, fc::string& outDir ) const
-	{
-		ASSERT(type < BaseDir_Max);
-		outDir.clear();
-		outDir.append(m_root).append(m_baseDirectory[type]);
-	}
-
-	void GetTextureDirectory( fc::string& outDir ) const
-	{
-		GetDirectory(BaseDir_Textures, outDir);
-	}
-
-	void GetFontDirectory( fc::string& outDir ) const
-	{
-		GetDirectory(BaseDir_Fonts, outDir);
-	}
-
-	void GetShaderDirectory( fc::string& outDir ) const
-	{
-		GetDirectory(BaseDir_Shaders, outDir);
-	}
+	//void GetDirectory( BaseDirectoryType type ) const;
+	fc::string GetDirectory( BaseDirectoryType type ) const;
+	fc::string GetTextureDirectory() const;
+	fc::string GetFontDirectory() const;
+	fc::string GetShaderDirectory() const;
+	fc::string GetMapDirectory() const;
+	fc::string GetTilesetDirectory() const;
 
 protected:
 	fc::string m_root;

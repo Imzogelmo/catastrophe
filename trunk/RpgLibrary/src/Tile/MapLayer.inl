@@ -14,6 +14,7 @@
 #include <Catastrophe/IO/XmlReader.h>
 #include "MapLayer.h"
 #include "Tileset.h"
+#include "TilesetManager.h"
 
 
 MapLayer::MapLayer() :
@@ -99,20 +100,24 @@ void MapLayer::DeserializeXml( XmlReader* xml )
 	}
 	else
 	{
-		/*
-		m_tileset = tilesetManager->LoadTileset(tilsetFilename);
+		m_tileset = g_tilesetManager->LoadXml(tilsetFilename);
 		if( !m_tileset )
 		{
-			Log("Tileset::DeserializeXml: (%s) tileset is null.", filename.c_str());
+			Log("Tileset::DeserializeXml: (%s) tileset could not be loaded.", tilsetFilename.c_str());
 			return;
 		}
-		*/
 	}
 
-	while( xml->NextChild("Tile") )
+	for( array_type::iterator it = m_tiles.begin(); it != m_tiles.end(); ++it )
 	{
+		if( !xml->NextChild("Tile") )
+			break;
+
 		int id = xml->GetInt("id", -1);
-		//xml->SetInt("flags", it->flags);
+
+		it->tile = m_tileset->GetTile((size_t)id);
+		it->flags = xml->GetInt("flags", 0);
+
 	}
 }
 

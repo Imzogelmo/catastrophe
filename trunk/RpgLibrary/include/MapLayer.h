@@ -14,7 +14,6 @@
 #include <fc/dynamic_array2d.h>
 #include <Catastrophe/Math/Color.h>
 #include <Catastrophe/Graphics/BlendMode.h>
-#include <Catastrophe/Util/Indexable.h>
 
 #include "Tile.h"
 
@@ -53,7 +52,7 @@ struct LayerTile
 
 
 //todo: tile flip/flags
-class RPG_API MapLayer : public Indexable<>
+class RPG_API MapLayer
 {
 public:
 	typedef fc::dynamic_array2d<LayerTile> array_type;
