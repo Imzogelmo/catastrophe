@@ -43,7 +43,7 @@ void Frame::SetBackground( const Sprite& bgSprite )
 }
 
 
-void Frame::SetBackgroundTexture( const Texture* texture )
+void Frame::SetBackgroundTexture( Texture* texture )
 {
 	CE_ASSERT(texture);
 	if(texture)
@@ -67,7 +67,7 @@ void Frame::UseBackGround( bool enable )
 }
 
 
-void Frame::SetTexture( const Texture* texture )
+void Frame::SetTexture( Texture* texture )
 {
 	CE_ASSERT(texture);
 	if(texture)
@@ -105,7 +105,7 @@ void Frame::SetFromSprite( const AnimatedSprite& sprite )
 }
 
 
-void Frame::SetPatchData( const Texture* texture, const Vector2& spriteSize, const Rectf& uv )
+void Frame::SetPatchData( Texture* texture, const Vector2& spriteSize, const Rectf& uv )
 {
 	SetTexture(texture);
 	Vector2 size = spriteSize / 3.f;
@@ -166,8 +166,8 @@ void Frame::Render( SpriteBatch* spriteBatch )
 				m_backgroundSprite.scale,
 				Rectf(min + m_bgOffset, max - m_bgOffset),
 				m_backgroundSprite.GetUVRect(),
-				m_backgroundSprite.tint,
-				m_backgroundSprite.depth
+				m_backgroundSprite.color,
+				0
 			);
 		}
 	}

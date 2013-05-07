@@ -49,7 +49,7 @@ SpriteAnimation::SpriteAnimation( Texture* texturePtr, const Rect& sourceRect, i
 	m_frameOffsetY(0),
 	m_flags(0)
 {
-	Create(texturePtr, sourceRectangle, numberOfFrames, frameOffsetX, frameOffsetY );
+	Create(texturePtr, sourceRect, numberOfFrames, frameOffsetX, frameOffsetY );
 }
 
 
@@ -71,7 +71,7 @@ void SpriteAnimation::SetNumberOfFrames( int numFrames )
 }
 
 
-void SpriteAnimation::Create( Texture* texturePtr, const Rect& sourceRectangle, int numberOfFrames = 1, int frameOffsetX = 0, int frameOffsetY = 0 )
+void SpriteAnimation::Create( Texture* texturePtr, const Rect& sourceRectangle, int numberOfFrames, int frameOffsetX, int frameOffsetY )
 {
 	SetTexture(texturePtr);
 	SetNumberOfFrames(numberOfFrames);
@@ -86,50 +86,66 @@ void SpriteAnimation::Create( Texture* texturePtr, const Rect& sourceRectangle, 
 
 void SpriteAnimation::SetSourceRect( const Rect& sourceRectangle )
 {
-	CE_ASSERT(m_texture != 0);
 	m_sourceRect = sourceRectangle;
+	if( m_texture )
+	{
+		float h = (float)m_texture->Height();
+		m_uv.min.y = (float)sourceRectangle.Top() / h;
+		m_uv.max.y = (float)sourceRectangle.Bottom() / h;
 
-	// set uv as if this is being initialized for the first time.
-	float w = (float)texture->Width();
-	float h = (float)texture->Height();
-	uv.min.x = sourceRectangle.Left() / w;
-	uv.max.x = sourceRectangle.Right() / w;
-	uv.min.y = sourceRectangle.Top() / h;
-	uv.max.y = sourceRectangle.Bottom() / h;
+		if( m_flags & 2 )
+			fc::swap(m_uv.min.y, m_uv.max.y);
 
-	SetCurrentFrame(m_currentFrame);
+		if( m_currentFrame > 0 )
+		{
+			SetCurrentFrame(m_currentFrame);
+		}
+		else
+		{
+			float w = (float)m_texture->Width();
+			m_uv.min.x = (float)sourceRectangle.Left() / w;
+			m_uv.max.x = (float)sourceRectangle.Right() / w;
+
+			if( m_flags & 1 )
+				fc::swap(m_uv.min.x, m_uv.max.x);
+		}
+	}
 }
 
 
-void SpriteAnimation::SetCurrentFrame( int index )
+void SpriteAnimation::SetCurrentFrame( size_t index )
 {
 	// texture must be assigned first.
-	CE_ASSERT(texture != 0);
-
-	if( index < m_numFrames )
+	if( m_texture )
 	{
-		current_frame = index;
-
-		float tw = (float)texture->Width();
-		float th = (float)texture->Height();
-
-		int x = m_sourceRect.pos.x + (m_frameOffsetX * (int)m_currentFrame);
-		int yOffset = x / texture->Width();
-
-		// if the row is the same, calculation of top, bottom uv will be the same also.
-		if( yOffset > 0 )
+		if( index < m_numFrames )
 		{
-			x %= texture->Width();
-			int y = source_rect.pos.y + (m_frameOffsetY * yOffset);
-			float texHeightf = (float)texture->Width();
+			m_currentFrame = index;
 
-			uv.min.y = y / texHeightf;
-			uv.max.y = (y + m_frameOffsetY) / texHeightf;
+			int x = m_sourceRect.pos.x + (m_frameOffsetX * (int)m_currentFrame);
+			int yOffset = x / m_texture->Width();
+
+			// if the row is the same, calculation of top, bottom uv will be the same also.
+			if( yOffset > 0 )
+			{
+				x %= m_texture->Width();
+				int y = m_sourceRect.pos.y + (m_frameOffsetY * yOffset);
+				float texHeightf = (float)m_texture->Height();
+
+				m_uv.min.y = y / texHeightf;
+				m_uv.max.y = (y + m_frameOffsetY) / texHeightf;
+
+				if( m_flags & 2 )
+					fc::swap(m_uv.min.y, m_uv.max.y);
+			}
+
+			float texWidthf = (float)m_texture->Width();
+			m_uv.min.x = x / texWidthf;
+			m_uv.max.x = (x + m_frameOffsetX) / texWidthf;
+
+			if( m_flags & 1 )
+				fc::swap(m_uv.min.x, m_uv.max.x);
 		}
-
-		float texWidthf = (float)texture->Width();
-		uv.min.x = x / texWidthf;
-		uv.max.x = (x + m_frameOffsetX) / texWidthf;
 	}
 }
 
@@ -142,7 +158,7 @@ void SpriteAnimation::Update()
 		if( m_frameCounter >= m_frameSpeed )
 		{
 			m_frameCounter -= m_frameSpeed;
-			if( ++current_frame >= m_numFrames )
+			if( ++m_currentFrame >= m_numFrames )
 			{
 				m_currentFrame -= m_numFrames;
 			}
@@ -153,6 +169,18 @@ void SpriteAnimation::Update()
 	}
 }
 
+
+bool SpriteAnimation::IsFinished() const
+{
+	//todo:
+	return m_currentFrame == (m_numFrames - 1) && m_frameCounter > m_frameSpeed;
+}
+
+
+gluint SpriteAnimation::GetTextureID() const
+{
+	return m_texture ? m_texture->GetTextureID() : 0;
+}
 
 
 

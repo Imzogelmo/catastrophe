@@ -17,16 +17,29 @@
 // THE SOFTWARE.
 
 #include "Graphics/AnimatedSpriteSet.h"
+#include "Graphics/Texture.h"
 
 CE_NAMESPACE_BEGIN
 
 
 AnimatedSpriteSet::AnimatedSpriteSet() :
-	texture(0),
-	size(Vector2::Zero),
-	scale(Vector2::One),
-	color(Color::White()),
-	angle(0.f),
+	SpriteBase(),
+	m_texture(0),
+	m_animations(),
+	m_currentAnimation(0)
+{
+}
+
+
+AnimatedSpriteSet::AnimatedSpriteSet(
+		const Vector2& size,
+		const Vector2& scale, 
+		const Color& color,
+		const BlendMode& blendmode,
+		float angle
+	) :
+	SpriteBase(size, scale, color, blendmode, angle),
+	m_texture(0),
 	m_animations(),
 	m_currentAnimation(0)
 {
@@ -60,24 +73,23 @@ void AnimatedSpriteSet::SetCurrentAnimation( size_t index )
 }
 
 
-void AnimatedSpriteSet::AddAnimation( const SpriteAnimation& anim )
+void AnimatedSpriteSet::AddAnimation( const Rect& sourceRect, float animationDelay, int numberOfFrames, int frameOffsetX, int frameOffsetY )
 {
-	// insert at end
-	InsertAnimation(anim, m_animations.size());
+	SpriteAnimation a;
+	a.Create(m_texture, sourceRect, animationDelay, numberOfFrames, frameOffsetX, frameOffsetY);
+	AddAnimation(a);
 }
 
 
-void AnimatedSpriteSet::RemoveAnimation( size_t index )
+void AnimatedSpriteSet::AddAnimation( const Rect& sourceRect, int numberOfFrames, int frameOffsetX, int frameOffsetY )
 {
-	if( index < m_animations.size() )
-	{
-		m_animations.erase_at(anim, index);
+	AddAnimation( SpriteAnimation(m_texture, sourceRect, numberOfFrames, frameOffsetX, frameOffsetY) );
+}
 
-		if( m_currentAnimation >= index && m_currentAnimation > 0 )
-		{
-			SetCurrentAnimation(m_currentAnimation - 1);
-		}
-	}
+
+void AnimatedSpriteSet::AddAnimation( const SpriteAnimation& anim )
+{
+	m_animations.push_back(anim);
 }
 
 
@@ -86,11 +98,25 @@ void AnimatedSpriteSet::InsertAnimation( const SpriteAnimation& anim, size_t ind
 	if( index > m_animations.size() )
 		index = m_animations.size();
 
-	m_animations.insert_at(anim, index);
+	m_animations.insert_at(index, anim);
 
 	if( m_currentAnimation >= index )
 	{
 		SetCurrentAnimation(m_currentAnimation + 1);
+	}
+}
+
+
+void AnimatedSpriteSet::RemoveAnimation( size_t index )
+{
+	if( index < m_animations.size() )
+	{
+		m_animations.erase_at(index);
+
+		if( m_currentAnimation >= index && m_currentAnimation > 0 )
+		{
+			SetCurrentAnimation(m_currentAnimation - 1);
+		}
 	}
 }
 

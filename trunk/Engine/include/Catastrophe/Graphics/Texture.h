@@ -49,12 +49,13 @@ public:
 	bool CreateTexture( const void* data, int w, int h );
 
 	bool LoadFromFile( const fc::string& filename );
+	bool SaveToFile( const fc::string& filename );
 
-	ubyte* GetPixels();
+	ubyte* GetPixels() const;
 	void SetName( const fc::string& name ) { m_name = name; }
 	void SetMinFilter( int filter );
 	void SetMagFilter( int filter );
-	void Bind();
+	void Bind() const;
 	bool IsValid() const;
 
 	const fc::string& GetName() const { return m_name; }

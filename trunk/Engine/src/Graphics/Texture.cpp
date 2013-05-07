@@ -94,7 +94,7 @@ bool Texture::CreateTexture( const void* data, int w, int h )
 }
 
 
-void Texture::Bind()
+void Texture::Bind() const
 {
 	glBindTexture( GL_TEXTURE_2D, m_texture );
 }
@@ -115,6 +115,12 @@ bool Texture::LoadFromFile( const fc::string& filename )
 	bool ret = CreateTexture(ptr);
 	TextureLoader::FreePtr(ptr);
 	return ret;
+}
+
+
+bool Texture::SaveToFile( const fc::string& filename )
+{
+	return TextureLoader::SaveToFile(filename, *this);
 }
 
 
@@ -147,7 +153,7 @@ bool Texture::CreateTexture( const void* data )
 }
 
 
-ubyte* Texture::GetPixels()
+ubyte* Texture::GetPixels() const
 {
 	ubyte* pixels = 0;
 	if(IsValid())

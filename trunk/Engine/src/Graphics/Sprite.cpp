@@ -17,57 +17,91 @@
 // THE SOFTWARE.
 
 #include "Graphics/Sprite.h"
+#include "Graphics/Texture.h"
 
 
 CE_NAMESPACE_BEGIN
 
 
-SpriteBase::SpriteBase( const Vector2& size, const Color& tint, const BlendMode& blendmode, int layer) :
-	size(size),
-	tint(tint),
-	blendmode(blendmode),
-	layer(layer),
-	depth(0),
+SpriteBase::SpriteBase() :
+	size(Vector2::Zero),
 	scale(Vector2::One),
+	color(Color::White()),
+	blendmode(BlendMode::Alpha),
 	angle(0.f)
 {
 }
 
 
-Sprite::Sprite( const Texture* texture, const Rect& sourceRect )
-: SpriteBase(), m_uv(Rectf::Zero)
+SpriteBase::SpriteBase( const Vector2& size,
+			const Vector2& scale, 
+			const Color& color,
+			const BlendMode& blendmode,
+			float angle
+	) :
+	size(size),
+	scale(scale),
+	color(color),
+	blendmode(blendmode),
+	angle(angle)
 {
-	if(texture)
-	{
-		Init(texture, sourceRect);
-	}
 }
 
 
-Sprite::Sprite( const Texture* texture, const Rectf& uv )
+
+// Sprite class
+
+Sprite::Sprite() :
+	SpriteBase(),
+	m_texture(0),
+	m_uv(Rectf::One)
 {
-	SetTexture(texture);
-	SetUVRect(uv);
-	if(texture)
-	{
-		//set the size to the actual pixel size from the texture.
-		SetSize( Vector2(
-			uv.Width() * (float)texture->Width(),
-			uv.Height() * (float)texture->Height())
-		);
-	}
 }
 
 
-void Sprite::Init( const Texture* texture, const Rect& sourceRect )
+Sprite::Sprite( Texture* texture, const Rect& sourceRect ) :
+	SpriteBase(),
+	m_texture(0),
+	m_uv(Rectf::One)
+{
+	Create(texture, sourceRect);
+}
+
+
+Sprite::Sprite( Texture* texture, const Rectf& uv ) :
+	SpriteBase(),
+	m_texture(0),
+	m_uv(Rectf::One)
+{
+	Create(texture, uv);
+}
+
+
+void Sprite::Create( Texture* texture, const Rect& sourceRect )
 {
 	SetTexture(texture);
 	SetSourceRect(sourceRect);
+
+	// create methods also sets size to exact pixel-dimensions
 	SetSize( Vector2(sourceRect.size) );
 }
 
 
-void Sprite::SetTexture( const Texture* texture )
+void Sprite::Create( Texture* texture, const Rectf& uv )
+{
+	SetTexture(texture);
+	SetUVRect(uv);
+
+	// create methods also sets size to exact pixel-dimensions
+	if(texture)
+	{
+		Vector2 s(uv.max.x * (float)texture->Width(), uv.max.y * (float)texture->Height());
+		SetSize(s);
+	}
+}
+
+
+void Sprite::SetTexture( Texture* texture )
 {
 	m_texture = texture;
 }
@@ -75,33 +109,39 @@ void Sprite::SetTexture( const Texture* texture )
 
 void Sprite::SetSourceRect( const Rect& sourceRect )
 {
-	CE_ASSERT(m_texture != 0);
-	if(m_texture)
-		m_uv = m_texture->GetUVRect(sourceRect);
-}
-
-
-AnimatedSprite::AnimatedSprite( const Texture* texture, bool loopAnim, bool startPaused )
-	: SpriteBase(), Animation(texture, loopAnim, startPaused)
-{
-	if(texture)
+	if( m_texture )
 	{
-		SetSize( Vector2((float)texture->Width(), (float)texture->Height()) );
+		m_uv = m_texture->GetUVRect(sourceRect);
 	}
 }
 
 
+gluint Sprite::GetTextureID() const
+{
+	return m_texture ? m_texture->GetTextureID() : 0;
+}
+
+
+
+
+// Animated Sprite class
+
+AnimatedSprite::AnimatedSprite() :
+	SpriteBase(),
+	SpriteAnimation()
+{
+}
+
+
 AnimatedSprite::AnimatedSprite(
-	const Texture* texture,
+	Texture* texture,
 	const Rect& sourceRect,
 	int numberOfFrames,
 	int frameOffsetX,
-	int frameOffsetY,
-	bool loopAnim,
-	bool startPaused
+	int frameOffsetY
 ) :
 	SpriteBase(),
-	Animation(texture, sourceRect, numberOfFrames, frameOffsetX, frameOffsetY, loopAnim, startPaused)
+	SpriteAnimation(texture, sourceRect, numberOfFrames, frameOffsetX, frameOffsetY)
 {
 	SetSize( Vector2((float)sourceRect.size.x, (float)sourceRect.size.y) );
 }
@@ -110,7 +150,7 @@ AnimatedSprite::AnimatedSprite(
 bool AnimatedSprite::IsValid() const
 {
 	//if any of these fail, so does the rendering of the sprite.
-	return (m_texture && m_texture->IsValid() && NumFrames() > 0);
+	return (m_texture && m_texture->IsValid() && GetNumFrames() > 0);
 }
 
 

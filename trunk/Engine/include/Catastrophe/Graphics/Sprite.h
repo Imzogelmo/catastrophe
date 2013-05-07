@@ -18,13 +18,13 @@
 
 #pragma once
 
-#include <fc/fixed_vector.h>
-
-#include "Animation.h"
-#include "BlendMode.h"
-
 #include "../Math/Vector2.h"
 #include "../Math/Color.h"
+#include "../Math/Rectf.h"
+#include "../Math/Rect.h"
+
+#include "BlendMode.h"
+#include "SpriteAnimation.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -32,41 +32,39 @@ CE_NAMESPACE_BEGIN
 class SpriteBase
 {
 public:
-	SpriteBase( const Vector2& size = Vector2::Zero,
-				const Color& tint = Color::White(),
-				const BlendMode& blendmode = BlendMode::Alpha,
-				int layer = 0 );
-
-	void SetSize( const Vector2& value ) { size = value; }
-	void SetTint( const Color& c ) { tint = c; }
-	void SetBlendMode( const BlendMode& value ) { blendmode = value; }
-	void SetLayer( int value ) { layer = value; }
-	void SetDepth( int value ) { depth = value; }
-	void SetAngle( float value ) { angle = value; }
-	void SetScale( const Vector2& value ) { scale = value; }
-	//void SetHotspot(const Vector2& hotspot) { m_hotspot = hotspot; }
-
-	float Width() const { return size.x; }
-	float Height() const { return size.y; }
-	const Vector2& GetSize() const { return size; }
-	Vector2 GetExtents() const { return size * 0.5f; }
-	const Vector2& GetScale() const { return scale; }
-	//const Vector2& GetHotspot() const { return m_hotspot; }
-	const Color& GetTint() const { return tint; }
-	const BlendMode& GetBlendMode() const { return blendmode; }
-	int GetLayer() const { return layer; }
-	int GetDepth() const { return depth; }
-	float GetAngle() const { return angle; }
-
-	//there's no good reason not to make these public.
 	Vector2		size;
-	Color		tint;
-	BlendMode	blendmode;
-	int			layer;
-	int			depth;
 	Vector2		scale;
+	Color		color;
+	BlendMode	blendmode;
 	float		angle;
+
+	SpriteBase();
+	SpriteBase( const Vector2& size,
+				const Vector2& scale, 
+				const Color& color,
+				const BlendMode& blendmode,
+				float angle
+				);
+
+	// set methods
+	inline void SetSize( const Vector2& value ) { size = value; }
+	inline void SetColor( const Color& c ) { color = c; }
+	inline void SetBlendMode( const BlendMode& value ) { blendmode = value; }
+	inline void SetScale( const Vector2& value ) { scale = value; }
+	inline void SetAngle( float value ) { angle = value; }
+
+	// get methods
+	inline float Width() const { return size.x; }
+	inline float Height() const { return size.y; }
+	inline const Vector2& GetSize() const { return size; }
+	inline const Vector2& GetScale() const { return scale; }
+	inline const Color& GetColor() const { return color; }
+	inline const BlendMode& GetBlendMode() const { return blendmode; }
+	inline float GetAngle() const { return angle; }
+
 };
+
+
 
 /**
  * @Sprite
@@ -75,39 +73,44 @@ public:
 class CE_API Sprite : public SpriteBase
 {
 public:
-	Sprite( const Texture* texture = 0, const Rect& sourceRect = Rect::Zero );
-	Sprite( const Texture* texture, const Rectf& uv );
+	Sprite();
+	Sprite( Texture* texture, const Rect& sourceRect );
+	Sprite( Texture* texture, const Rectf& uv );
 
-	void SetTexture( const Texture* texture );
+	void SetTexture( Texture* texture );
 	void SetSourceRect( const Rect& sourceRect );
 	void SetUVRect( const Rectf& uv ) { m_uv = uv; }
-	void Init( const Texture* texture, const Rect& sourceRect );
+	void Create( Texture* texture, const Rect& sourceRect );
+	void Create( Texture* texture, const Rectf& uv );
 
 	inline const Rectf& GetUVRect() const { return m_uv; }
-	inline const Texture* GetTexture() const { return m_texture; }
-	inline gluint GetTextureID() const { return m_texture->GetTextureID(); }
+	inline Texture* GetTexture() const { return m_texture; }
+	gluint GetTextureID() const;
 
 protected:
-	const Texture*	m_texture;
-	Rectf			m_uv;
+	Texture*	m_texture;
+	Rectf		m_uv;
 };
 
 
-class CE_API AnimatedSprite : public SpriteBase, public Animation
+
+/**
+ * @AnimatedSprite
+ * 
+ */
+class CE_API AnimatedSprite : public SpriteBase, public SpriteAnimation
 {
 public:
-	AnimatedSprite( const Texture* texture = 0, bool loopAnim = true, bool startPaused = false );
+	AnimatedSprite();
 	AnimatedSprite(
-		const Texture* texture,
+		Texture* texture,
 		const Rect& sourceRect,
 		int numberOfFrames = 1,
 		int frameOffsetX = 0,
-		int frameOffsetY = 0,
-		bool loopAnim = true,
-		bool startPaused = false
+		int frameOffsetY = 0
 	);
 
-	bool IsValid() const;
+	bool IsValid() const; //depricated
 
 };
 
