@@ -13,6 +13,7 @@
 
 #include "Entity.h"
 #include "Buff.h"
+#include "BuffSet.h"
 #include "Inventory.h"
 #include "Equipment.h"
 #include "Script/ScriptClass.h"

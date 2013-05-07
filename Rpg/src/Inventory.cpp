@@ -217,7 +217,7 @@ Item* Inventory::GetItem( const fc::string& name ) const
 	for( vec_type::const_iterator it = m_items.begin(); it != m_items.end(); ++it )
 	{
 		Item* item = it->GetItem();
-		if( item && item->GetName() == name )
+		if( item && item->GetName().c_str() == name )
 		{
 			return item;
 		}
