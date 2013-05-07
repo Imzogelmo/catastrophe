@@ -285,6 +285,8 @@ void DoAtlasPack4();
 #include <Catastrophe/Util/Timer.h>
 #include <fc/tiny_string.h>
 
+#include <Catastrophe/Graphics/TextureLoader.h>
+
 
 int main(int argc, char* argv[])
 {
@@ -326,7 +328,25 @@ int main(int argc, char* argv[])
 	Window* window = CreateWindow();
 
 
-	DoTests(); //some quick and dirty testing.
+	const int F_S = 16;
+	int r_;
+	Font ff[6];
+	r_ = ff[0].LoadFromFile("data/fonts/ff_6a.ttf", F_S);
+	r_ = ff[1].LoadFromFile("data/fonts/ff_6b.ttf", F_S);
+	r_ = ff[2].LoadFromFile("data/fonts/ff_7.ttf", F_S);
+	r_ = ff[3].LoadFromFile("data/fonts/ff_36.ttf", F_S);
+	r_ = ff[4].LoadFromFile("data/fonts/ff_advance_a.ttf", F_S);
+	r_ = ff[5].LoadFromFile("data/fonts/ff_nes.ttf", F_S);
+
+	foreachi(i, 6)
+	{
+		fc::string str = fc::to_string(i);
+		str.append(".png");
+		Texture* t = ff[i].GetTexture();
+		TextureLoader::SaveToFile(str, t->GetPixels(), t->Width(), t->Height());
+	}
+
+	//DoTests(); //some quick and dirty testing.
 	return 0;
 
 	Texture tex, tex2;

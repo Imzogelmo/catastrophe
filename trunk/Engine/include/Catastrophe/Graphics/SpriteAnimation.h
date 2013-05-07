@@ -51,6 +51,7 @@ public:
 	//inline void SetLooping( bool loop = true ) { m_loop = loop; };
 	//inline bool IsPaused() const { return (m_flags & 4) != 0; };
 	//inline bool IsLooping() const { return m_loop; };
+	inline bool IsAnimated() const { return m_numFrames > 1; };
 	bool IsFinished() const;
 
 	inline size_t GetNumFrames() const { return m_numFrames; }

@@ -58,8 +58,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ce-core-d.lib ce-system-d.lib glfwd.lib mcppd.lib angelscriptd.lib freetype.lib glew32sd.lib OpenGL32.lib glu32.lib"
-				AdditionalLibraryDirectories="&quot;../Engine/lib&quot;"
+				AdditionalDependencies="ce-core-d.lib ce-system-d.lib rpglibd.lib glfwd.lib mcppd.lib angelscriptd.lib freetype.lib glew32sd.lib OpenGL32.lib glu32.lib"
+				AdditionalLibraryDirectories="&quot;../Engine/lib&quot;;&quot;..\RpgLibrary\lib&quot;"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
@@ -129,8 +129,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ce-core.lib ce-system.lib ce-sound.lib glfw.lib freetype.lib mcpp.lib angelscript.lib glew32s.lib OpenGL32.lib glu32.lib"
-				AdditionalLibraryDirectories="&quot;../Engine/lib&quot;"
+				AdditionalDependencies="ce-core.lib ce-system.lib ce-sound.lib rpglib.lib glfw.lib freetype.lib mcpp.lib angelscript.lib glew32s.lib OpenGL32.lib glu32.lib"
+				AdditionalLibraryDirectories="&quot;../Engine/lib&quot;;&quot;..\RpgLibrary\lib&quot;"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -169,6 +169,10 @@
 			>
 			<File
 				RelativePath=".\src\BattleActions.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\BuffSet.cpp"
 				>
 			</File>
 			<File
@@ -359,6 +363,10 @@
 			</File>
 			<File
 				RelativePath=".\src\BattleActions.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\BuffSet.h"
 				>
 			</File>
 			<File
