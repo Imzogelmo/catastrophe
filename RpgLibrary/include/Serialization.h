@@ -16,43 +16,14 @@
 #include "ResourceManager.h"
 
 
-class RpgSerializer
-{
 
-	static void SerializePoint( XmlWriter* xml, const Point& p );
-	static void SerializePoint( const char* nodeName, XmlWriter* xml, const Point& p );
-	static void SerializeRect( XmlWriter* xml, const Rect& r );
-	static void SerializeRect( const char* nodeName, XmlWriter* xml, const Rect& r );
-	static void SerializeSpriteBase( XmlWriter* xml, const SpriteBase& s );
-
-	void SerializeSprite( XmlWriter* xml, const Sprite& s );
-	void SerializeAnimatedSprite( XmlWriter* xml, const AnimatedSprite& a );
-	void SerializeAnimationSet( XmlWriter* xml, const AnimationSet& a );
-	void SerializeAnimation( XmlWriter* xml, const Animation& a );
-	void SerializeTile( XmlWriter* xml, const Tile& t );
-	template <class T> static void SerializeStringArray( XmlWriter* xml, const char* node, const T* stringArray, int n );
+template <class T> void SerializeObject( XmlWriter* xml, const T& val );
+template <class T> void SerializeObject( const char* nodeName, XmlWriter* xml, const T& val );
+template <class T> void SerializeStringArray( XmlWriter* xml, const char* node, const T* stringArray, int n );
 
 
-
-	static void DeserializePoint( XmlReader* xml, Point& p );
-	static void DeserializePoint( const char* nodeName, XmlReader* xml, Point& p );
-	static void DeserializeRect( XmlReader* xml, Rect& r );
-	static void DeserializeRect( const char* nodeName, XmlReader* xml, Rect& r );
-	static void DeserializeSpriteBase( XmlReader* xml, SpriteBase& s );
-
-	void DeserializeSprite( XmlReader* xml, Sprite& s );
-	void DeserializeAnimatedSprite( XmlReader* xml, AnimatedSprite& a );
-	void DeserializeAnimationSet( XmlReader* xml, AnimationSet& a );
-	void DeserializeAnimation( XmlReader* xml, Animation& a );
-	void DeserializeAnimationFrames( XmlReader* xml, Animation& a );
-	void DeserializeTile( XmlReader* xml, Tile& t );
-	template <class T> static void DeserializeStringArray( XmlReader* xml, const char* node, T* stringArray, int n );
-
-
-};
-
-
-template <class T>
-void SerializeObject( XmlWriter* xml, const T& val );
+template <class T> void DeserializeObject( XmlReader* xml, T& val );
+template <class T> void DeserializeObject( const char* nodeName, XmlReader* xml, T& val );
+template <class T> void DeserializeStringArray( XmlReader* xml, const char* node, T* stringArray, int n );
 
 
