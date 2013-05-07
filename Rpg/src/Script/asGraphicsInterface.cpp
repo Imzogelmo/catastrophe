@@ -192,17 +192,17 @@ void ScriptEngine::RegisterSpriteBase( const char* name )
 	using namespace script;
 	r = engine->RegisterObjectType( name, sizeof(T), asOBJ_VALUE | asOBJ_APP_CLASS_CDAK ); assert( r >= 0 );
 	r = engine->RegisterObjectProperty( name, "vec2 size", offsetof(T, size)); assert( r >= 0 );
-	r = engine->RegisterObjectProperty( name, "colorf color", offsetof(T, tint)); assert( r >= 0 );
+	r = engine->RegisterObjectProperty( name, "color color", offsetof(T, color)); assert( r >= 0 );
 	r = engine->RegisterObjectProperty( name, "blendmode blendmode", offsetof(T, blendmode)); assert( r >= 0 );
-	r = engine->RegisterObjectProperty( name, "int layer", offsetof(T, layer)); assert( r >= 0 );
-	r = engine->RegisterObjectProperty( name, "int depth", offsetof(T, depth)); assert( r >= 0 );
+	//r = engine->RegisterObjectProperty( name, "int layer", offsetof(T, layer)); assert( r >= 0 );
+	//r = engine->RegisterObjectProperty( name, "int depth", offsetof(T, depth)); assert( r >= 0 );
 	r = engine->RegisterObjectProperty( name, "vec2 scale", offsetof(T, scale)); assert( r >= 0 );
 	r = engine->RegisterObjectProperty( name, "float angle", offsetof(T, angle)); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour( name, asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(ValueConstruct<T>), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour( name, asBEHAVE_DESTRUCT, "void f()", asFUNCTION(ValueDestruct<T>), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 
-	r = engine->RegisterObjectMethod( name, "void set_texture(const texture &in)", asMETHODPR(T, SetTexture, (const Texture*), void), asCALL_THISCALL); assert( r >= 0 );
-	r = engine->RegisterObjectMethod( name, "texture@ get_texture() const", asMETHODPR(T, GetTexture, () const, const Texture*), asCALL_THISCALL); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( name, "void set_texture(const texture &in)", asMETHODPR(T, SetTexture, (Texture*), void), asCALL_THISCALL); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( name, "texture@ get_texture() const", asMETHODPR(T, GetTexture, () const, Texture*), asCALL_THISCALL); assert( r >= 0 );
 
 	fc::string method_decl = name + fc::string(" &opAssign(const ") + name + fc::string(" &in)");
 	r = engine->RegisterObjectMethod( name, method_decl.c_str(), asFUNCTION((ValueAssignment<T, T>)), asCALL_CDECL_OBJLAST); assert( r >= 0 );
@@ -220,7 +220,8 @@ namespace script
 {
 	void CreateSprite( Sprite* sprite, const Texture& texture, const Rect& sourceRect )
 	{
-		sprite->Init(&texture, sourceRect);
+		Texture* texturePtr = const_cast<Texture*>(&texture);
+		sprite->Create(texturePtr, sourceRect);
 	}
 
 	void DrawSprite( Sprite* sprite )
@@ -251,15 +252,15 @@ void ScriptEngine::RegisterAnimatedSprite()
 	using namespace script;
 	RegisterSpriteBase<AnimatedSprite>("animated_sprite");
 	r = engine->RegisterObjectMethod( "animated_sprite", "bool is_animated() const", asMETHODPR(AnimatedSprite, IsAnimated, () const, bool), asCALL_THISCALL); assert( r >= 0 );
-	r = engine->RegisterObjectMethod( "animated_sprite", "int get_num_frames() const", asMETHODPR(AnimatedSprite, NumFrames, () const, size_t), asCALL_THISCALL); assert( r >= 0 );
-	r = engine->RegisterObjectMethod( "animated_sprite", "float get_animation_speed() const", asMETHODPR(AnimatedSprite, GetAnimSpeed, () const, float), asCALL_THISCALL); assert( r >= 0 );
-	r = engine->RegisterObjectMethod( "animated_sprite", "bool get_paused() const", asMETHODPR(AnimatedSprite, IsPaused, () const, bool), asCALL_THISCALL); assert( r >= 0 );
-	r = engine->RegisterObjectMethod( "animated_sprite", "bool get_loop() const", asMETHODPR(AnimatedSprite, IsLooping, () const, bool), asCALL_THISCALL); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( "animated_sprite", "int get_num_frames() const", asMETHODPR(AnimatedSprite, GetNumFrames, () const, size_t), asCALL_THISCALL); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( "animated_sprite", "float get_animation_speed() const", asMETHODPR(AnimatedSprite, GetAnimationSpeed, () const, float), asCALL_THISCALL); assert( r >= 0 );
+	//r = engine->RegisterObjectMethod( "animated_sprite", "bool get_paused() const", asMETHODPR(AnimatedSprite, IsPaused, () const, bool), asCALL_THISCALL); assert( r >= 0 );
+	//r = engine->RegisterObjectMethod( "animated_sprite", "bool get_loop() const", asMETHODPR(AnimatedSprite, IsLooping, () const, bool), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( "animated_sprite", "int get_frame() const", asMETHODPR(AnimatedSprite, GetCurrentFrame, () const, size_t), asCALL_THISCALL); assert( r >= 0 );
 
 	r = engine->RegisterObjectMethod( "animated_sprite", "void set_animation_speed(float)", asMETHODPR(AnimatedSprite, SetAnimationSpeed, (float), void), asCALL_THISCALL); assert( r >= 0 );
-	r = engine->RegisterObjectMethod( "animated_sprite", "void set_paused(bool)", asMETHODPR(AnimatedSprite, SetPaused, (bool), void), asCALL_THISCALL); assert( r >= 0 );
-	r = engine->RegisterObjectMethod( "animated_sprite", "void set_loop(bool)", asMETHODPR(AnimatedSprite, SetLooping, (bool), void), asCALL_THISCALL); assert( r >= 0 );
+	//r = engine->RegisterObjectMethod( "animated_sprite", "void set_paused(bool)", asMETHODPR(AnimatedSprite, SetPaused, (bool), void), asCALL_THISCALL); assert( r >= 0 );
+	//r = engine->RegisterObjectMethod( "animated_sprite", "void set_loop(bool)", asMETHODPR(AnimatedSprite, SetLooping, (bool), void), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( "animated_sprite", "void set_frame(int)", asMETHODPR(AnimatedSprite, SetCurrentFrame, (size_t), void), asCALL_THISCALL); assert( r >= 0 );
 
 	//r = engine->RegisterObjectMethod( "sprite", "int get_layer() const", asMETHOD(AnimatedSprite, GetLayer), asCALL_THISCALL); assert( r >= 0 );

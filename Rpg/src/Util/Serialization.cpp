@@ -15,8 +15,7 @@
 #include <Catastrophe/IO/XmlReader.h>
 #include <Catastrophe/Math/Point.h>
 #include <Catastrophe/Math/Rect.h>
-#include <Catastrophe/Graphics/Animation.h>
-#include <Catastrophe/Graphics/AnimationSet.h>
+#include <Catastrophe/Graphics/AnimatedSpriteSet.h>
 #include <Catastrophe/Graphics/Sprite.h>
 #include <fc/math.h>
 
@@ -61,7 +60,7 @@ namespace Util
 		xml->SetFloat("scale_x", s.scale.x);
 		xml->SetFloat("scale_y", s.scale.y);
 		xml->SetFloat("angle", s.angle);
-		xml->SetUInt("color", s.tint.packed_value);
+		xml->SetUInt("color", s.color.packed_value);
 		xml->SetUInt("blendmode", s.blendmode.value);
 	}
 

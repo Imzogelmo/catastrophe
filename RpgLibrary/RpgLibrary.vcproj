@@ -106,7 +106,7 @@
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="..\Engine\include;include;src\Data"
+				AdditionalIncludeDirectories="..\Engine\include;include;src\Data;src\Resource;src\Tile"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -181,6 +181,10 @@
 				</File>
 				<File
 					RelativePath=".\src\Data\BattleCommand.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Data\Buff.inl"
 					>
 				</File>
 				<File
@@ -343,6 +347,10 @@
 				>
 				<File
 					RelativePath=".\include\BattleCommand.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Buff.h"
 					>
 				</File>
 				<File
