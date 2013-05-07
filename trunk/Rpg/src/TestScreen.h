@@ -17,7 +17,6 @@
 #include <Catastrophe/Gui/Frame.h>
 
 #include "Script/ScriptClass.h"
-#include "MonsterPartyData.h"
 #include "Item.h"
 #include "Inventory.h"
 
@@ -270,7 +269,7 @@ protected:
 
 */
 
-
+/*
 class TestScreen : public Screen // Test Items/Menus
 {
 public:
@@ -346,6 +345,13 @@ protected:
 
 	SpriteBatch m_spriteBatch;
 
+};
+*/
+
+
+class TestScreen : public Screen
+{
+public:
 };
 
 

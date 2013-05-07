@@ -124,7 +124,7 @@ void Game::Update()
 	static bool testInit = false;
 	if(!testInit)
 	{
-		m_screenManager.Add( new TestScreen(&m_screenManager) ); //....
+	//	m_screenManager.Add( new TestScreen(&m_screenManager) ); //....
 		testInit = true;
 	}
 

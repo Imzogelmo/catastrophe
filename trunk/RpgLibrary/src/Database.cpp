@@ -16,6 +16,7 @@
 #include "AttributeFlags.inl"
 #include "BattleCommand.inl"
 #include "Item.inl"
+#include "Buff.inl"
 #include "Skill.inl"
 #include "Spell.inl"
 #include "Monster.inl"

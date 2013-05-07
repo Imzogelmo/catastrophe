@@ -95,11 +95,11 @@ void Attributes::SerializeXml( XmlWriter* xml )
 	xml->EndNode();
 
 	xml->BeginNode("Status Atk");
-	xml->WriteBlock(&status_atk[0], MAX_STATUS);
+	xml->WriteBlock((ubyte*)&status_atk[0], MAX_STATUS);
 	xml->EndNode();
 
 	xml->BeginNode("Status Def");
-	xml->WriteBlock(&status_def[0], MAX_STATUS);
+	xml->WriteBlock((ubyte*)&status_def[0], MAX_STATUS);
 	xml->EndNode();
 
 	//attribute_flags.SerializeXml(xml);
@@ -114,11 +114,11 @@ void Attributes::DeserializeXml( XmlReader* xml )
 	xml->SetToParent();
 
 	xml->FirstChild("Status Atk");
-	xml->ReadBlock(&status_atk[0], MAX_STATUS);
+	xml->ReadBlock((ubyte*)&status_atk[0], MAX_STATUS);
 	xml->SetToParent();
 
 	xml->FirstChild("Status Def");
-	xml->ReadBlock(&status_def[0], MAX_STATUS);
+	xml->ReadBlock((ubyte*)&status_def[0], MAX_STATUS);
 	xml->SetToParent();
 
 	//attribute_flags.DeserializeXml(xml);

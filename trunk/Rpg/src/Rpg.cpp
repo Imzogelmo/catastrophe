@@ -174,22 +174,22 @@ Window* CreateWindow()
 //temp includes
 #include "Monster.h"
 #include "Item.h"
-#include "Tile/TilesetManager.h"
+#include "Tileset.h"
+#include "TilesetManager.h"
 #include <Catastrophe/IO/File.h>
 #include "CharacterClass.h"
 
-MonsterList gMonsterList; //temp for gererating data.
-ResourceManager* resourceManager = 0;
+//MonsterList gMonsterList; //temp for gererating data.
 
 
-#include "Tile/Map.h"
+#include "Map.h"
 
 Map* CreateMapFromImage( const fc::string& directory, const fc::string& filename, Tileset *tileset );
 
 
 void DoTests()
 {
-	resourceManager->LoadTexture("tiles/town.png");
+	g_tilesetManager->LoadXml("tiles/town.png");
 	Tileset ts;
 	ts.DeserializeXml("data/tilesets/", "town.tileset.xml");
 	ts.SetFileName("town.tileset.xml");
@@ -213,6 +213,9 @@ void DoTests()
 
 	return;
 
+	bool r;
+
+	/*
 	ResourceManager rm;
 	gSetActiveResourceManager(&rm);
 	rm.LoadTexture("monsters_psp.png");
@@ -225,7 +228,7 @@ void DoTests()
 	bool r;
 	CharacterClassList ccl;
 	CharacterClassList::vec_type & v = ccl.GetVector();
-
+*/
 	Texture t;
 	t.LoadFromFile("data/textures/characters.png");
 	t.SetName("characters.png");
@@ -239,6 +242,8 @@ void DoTests()
 	ccl.DeserializeXml("chars_test.h");
 	*/
 
+
+	/*
 	int y = 0;
 	foreachi(i, 12)
 	{
@@ -261,8 +266,9 @@ void DoTests()
 		v.back().animation_set.AddAnimation( Animation(&t, Rect(298,y,48,48)) );
 		y += 24;
 	}
+	*/
 
-	ccl.SerializeXml("chars_test.h");
+	//ccl.SerializeXml("chars_test.h");
 
 	if(!r)
 		r = ! r;
@@ -320,7 +326,6 @@ int main(int argc, char* argv[])
 	Window* window = CreateWindow();
 
 
-	resourceManager = new ResourceManager();
 	DoTests(); //some quick and dirty testing.
 	return 0;
 
@@ -378,7 +383,7 @@ int main(int argc, char* argv[])
 			int tMS = elapsedMS;
 			//Log( "-------------TMS-----------: (%i)", elapsedMS );
 			window->Sleep( (16 - tMS) > 0 ? (16 - tMS) - 1 : 0 );
-			elapsedMS = loopTimer.ElapsedMilliseconds();
+			elapsedMS = (int)loopTimer.ElapsedMilliseconds();
 		}
 		//Log("frame time: (%0.4f)", float(loopTimer.ElapsedMicroseconds() / 1000.0f));
 		//Log( "frame time: (%i)", int(loopTimer.ElapsedMilliseconds()) );
@@ -1138,7 +1143,7 @@ void DoAtlasPack4()
 
 #include <Catastrophe/Graphics/Image.h>
 #include <Catastrophe/Graphics/TextureLoader.h>
-#include "Tile/Map.h"
+#include "Map.h"
 
 
 

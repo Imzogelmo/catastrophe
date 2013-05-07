@@ -21,7 +21,7 @@
 #include <fc/math.h>
 
 #include "Serialization.h"
-#include "ResourceManager.h"
+#include "TextureManager.h"
 
 
 namespace Util
@@ -208,14 +208,8 @@ namespace Util
 
 		if( !textureName.empty() )
 		{
-			ResourceManager* resourceManager = gGetResourceManager();
-			ASSERT(resourceManager != 0);
-
-			texture = resourceManager->GetTexture(textureName);
-			if( !texture )
-			{
-				texture = resourceManager->LoadTexture(textureName.c_str());
-			}
+			ASSERT(g_textureManager != 0);
+			texture = g_textureManager->Load(textureName);
 		}
 
 		if( !texture )
@@ -273,14 +267,8 @@ namespace Util
 		fc::string textureName = xml->GetString("texture");
 		if( !textureName.empty() )
 		{
-			ResourceManager* resourceManager = gGetResourceManager();
-			ASSERT(resourceManager != 0);
-
-			texture = resourceManager->GetTexture(textureName);
-			if( !texture )
-			{
-				texture = resourceManager->LoadTexture(textureName.c_str());
-			}
+			ASSERT(g_textureManager != 0);
+			texture = g_textureManager->Load(textureName);
 		}
 
 		if( !texture )
