@@ -165,11 +165,11 @@ void SpriteBatch::DrawSprite( const Sprite& sprite, const Vector2& pos )
 		sprite.GetTextureID(),
 		sprite.angle,
 		sprite.scale,
-		pos + sprite.GetExtents(),
+		pos + (sprite.size * 0.5f),
 		Rectf(pos, pos + sprite.size),
 		sprite.GetUVRect(),
-		sprite.tint,
-		sprite.depth
+		sprite.color,
+		0
 		);
 }
 
@@ -180,11 +180,11 @@ void SpriteBatch::DrawAnimatedSprite( const AnimatedSprite& sprite, const Vector
 		sprite.GetTextureID(),
 		sprite.angle,
 		sprite.scale,
-		pos + sprite.GetExtents(),
+		pos + (sprite.size * 0.5f),
 		Rectf(pos, pos + sprite.size),
-		sprite.GetFrameUVRect(),
-		sprite.tint,
-		sprite.depth
+		sprite.GetUVRect(),
+		sprite.color,
+		0
 		);
 }
 

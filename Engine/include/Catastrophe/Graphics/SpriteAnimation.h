@@ -47,16 +47,17 @@ public:
 	void SetNumberOfFrames( int frames );
 	void Update();
 
-	void SetPaused( bool pause = true ) { m_paused = pause; };
-	void SetLooping( bool loop = true ) { m_loop = loop; };
-	bool IsPaused() const { return m_paused; };
-	bool IsLooping() const { return m_loop; };
-	bool IsFinished() const { return m_currentFrame == (m_numFrames - 1) && m_frameCounter > m_frameSpeed; }
+	//inline void SetPaused( bool pause = true ) { m_flags = (m_flags & 4) != 0; };
+	//inline void SetLooping( bool loop = true ) { m_loop = loop; };
+	//inline bool IsPaused() const { return (m_flags & 4) != 0; };
+	//inline bool IsLooping() const { return m_loop; };
+	bool IsFinished() const;
 
+	inline size_t GetNumFrames() const { return m_numFrames; }
 	inline size_t GetCurrentFrame() const { return m_currentFrame; }
-	inline float GetAnimationSpeed() const;
+	inline float GetAnimationSpeed() const { return m_frameSpeed; }
 	inline Texture* GetTexture() const { return m_texture; }
-	inline gluint GetTextureID() const { return m_texture->GetTextureID(); }
+	gluint GetTextureID() const;
 
 	inline Rectf& GetUVRect() { return m_uv; }
 	inline const Rectf& GetUVRect() const { return m_uv; }
@@ -71,17 +72,17 @@ protected:
 	float		m_frameSpeed;
 	int			m_frameOffsetX;
 	int			m_frameOffsetY;
-	bool		m_loop;
-	bool		m_paused;
-	int			m_flags;
+	int			m_flags; //todo
 
-	enum SpriteFlags
+	/*
+	enum SpriteAnimationFlags
 	{
-		FLIPX,
-		FLIPY,
-		PAUSE,
-		LOOP
+		FlipHorizontal = 1,
+		FlipVertical = 2,
+		Pause = 4,
+		NoRepeat = 8
 	};
+	*/
 
 };
 

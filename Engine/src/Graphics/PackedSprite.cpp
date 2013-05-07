@@ -42,7 +42,13 @@ PackedSprite::PackedSprite( Texture* texturePtr, const PackedRect& sourceRectang
 	frame_counter = 0;
 	current_frame = 0;
 	SetTexture(texturePtr);
-	SetFrameData(sourceRectangle, numberOfFrames, frameDelay);
+	Create(sourceRectangle, numberOfFrames, frameDelay);
+}
+
+
+gluint PackedSprite::GetTextureID() const
+{
+	return texture ? texture->GetTextureID() : 0;
 }
 
 
@@ -137,7 +143,14 @@ void PackedSprite::SetCurrentFrame( short index )
 }
 
 
-void PackedSprite::SetFrameData( const PackedRect& sourceRectangle, int numberOfFrames, short frameDelay )
+void PackedSprite::Create( Texture* texturePtr, const PackedRect& sourceRectangle, int numberOfFrames, short frameDelay )
+{
+	SetTexture(texturePtr);
+	Create(sourceRectangle, numberOfFrames, frameDelay);
+}
+
+
+void PackedSprite::Create( const PackedRect& sourceRectangle, int numberOfFrames, short frameDelay )
 {
 	num_frames = (short)(numberOfFrames > 0 ? numberOfFrames : 1);
 

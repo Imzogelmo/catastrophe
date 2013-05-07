@@ -93,7 +93,15 @@ bool TextureLoader::SaveToFile( const fc::string& filename, const void* data, in
 
 bool TextureLoader::SaveToFile( const fc::string& filename, const Texture& texture, ImageFileFormat fFormat )
 {
-	return false;
+	bool ret = false;
+	ubyte* p = texture.GetPixels();
+	if( p != 0 )
+	{
+		ret = SaveToFile(filename, p, texture.Width(), texture.Height(), tfRgba, fFormat);
+		delete p;
+	}
+
+	return ret;
 }
 
 

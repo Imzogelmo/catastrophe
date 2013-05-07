@@ -252,15 +252,7 @@
 				Name="Graphics"
 				>
 				<File
-					RelativePath=".\src\Graphics\Animation.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Graphics\AnimationFrames.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Graphics\AnimationSet.cpp"
+					RelativePath=".\src\Graphics\AnimatedSpriteSet.cpp"
 					>
 				</File>
 				<File
@@ -301,6 +293,10 @@
 				</File>
 				<File
 					RelativePath=".\src\Graphics\Sprite.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Graphics\SpriteAnimation.cpp"
 					>
 				</File>
 				<File
@@ -510,15 +506,7 @@
 				Name="Graphics"
 				>
 				<File
-					RelativePath=".\include\Catastrophe\Graphics\Animation.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\Catastrophe\Graphics\AnimationFrames.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\Catastrophe\Graphics\AnimationSet.h"
+					RelativePath=".\include\Catastrophe\Graphics\AnimatedSpriteSet.h"
 					>
 				</File>
 				<File
@@ -571,6 +559,10 @@
 				</File>
 				<File
 					RelativePath=".\include\Catastrophe\Graphics\Sprite.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Catastrophe\Graphics\SpriteAnimation.h"
 					>
 				</File>
 				<File

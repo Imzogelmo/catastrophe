@@ -44,14 +44,14 @@ public:
 	Frame();
 
 	void SetBackground( const Sprite& bgSprite );
-	void SetBackgroundTexture( const Texture* texture );
+	void SetBackgroundTexture( Texture* texture );
 	void SetBackgroundOffset( const Vector2& offset );
 	void UseBackGround( bool enable = true );
 
-	void SetTexture( const Texture* texture );
+	void SetTexture( Texture* texture );
 	void SetFromSprite( const Sprite& sprite );
 	void SetFromSprite( const AnimatedSprite& sprite );
-	void SetPatchData( const Texture* texture, const Vector2& spriteSize, const Rectf& uv );
+	void SetPatchData( Texture* texture, const Vector2& spriteSize, const Rectf& uv );
 	void SetBlendMode( const BlendMode& value ) { m_blendmode = value; }
 
 	const BlendMode& GetBlendMode() const { return m_blendmode; }

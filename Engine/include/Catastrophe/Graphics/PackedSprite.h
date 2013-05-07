@@ -28,6 +28,7 @@
 CE_NAMESPACE_BEGIN
 
 
+
 /* PackedSprite -
  * sprite class with a small memory footprint.
  */
@@ -49,19 +50,23 @@ public:
 	PackedSprite();
 	PackedSprite( Texture* texturePtr, const PackedRect& sourceRectangle, int numberOfFrames, short frameDelay );
 
+	void Create( Texture* texturePtr, const PackedRect& sourceRectangle, int numberOfFrames, short frameDelay = 128 );
+	void Create( const PackedRect& sourceRectangle, int numberOfFrames, short frameDelay = 128 );
+
 	void SetSize( const Vector2& value ) { size = value; }
+	void SetAngle( float value ) { angle = value; }
 	void SetColor( const Color& c ) { color = c; }
 	void SetBlendMode( const BlendMode& value ) { blendmode = value; }
 	void SetAnimationSpeed( short frameDelay );
 	void SetTexture( Texture* texturePtr );
 	void SetSourceRect( const PackedRect& sourceRectangle );
 	void SetCurrentFrame( short index );
-	void SetFrameData( const PackedRect& sourceRectangle, int numberOfFrames, short frameDelay );
 
 	void Update();
 
 	Texture* GetTexture() const { return texture; }
-	//gluint GetTextureID() const { return texture->; }
+	gluint GetTextureID() const;
+	const Vector2& GetSize() const { return size; }
 	const Color& GetColor() const { return color; }
 	const BlendMode& GetBlendMode() const { return blendmode; }
 	float GetAngle() const { return angle; }
