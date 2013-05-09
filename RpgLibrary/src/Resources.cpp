@@ -30,3 +30,23 @@ TextureManager*		g_textureManager = 0;
 TilesetManager*		g_tilesetManager = 0;
 MapManager*			g_mapManager = 0;
 
+
+
+void RpgLibInit()
+{
+	g_resourceDirectory = new ResourceDirectory();
+	g_textureManager = new TextureManager();
+	g_tilesetManager = new TilesetManager();
+	g_mapManager = new MapManager();
+}
+
+
+void RpgLibShutdown()
+{
+	delete g_resourceDirectory;
+	delete g_textureManager;
+	delete g_tilesetManager;
+	delete g_mapManager;
+}
+
+

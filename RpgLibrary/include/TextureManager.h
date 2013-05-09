@@ -18,6 +18,7 @@ class TextureManager : public ResourceManagerType<Texture>
 {
 public:
 	TextureManager();
+	~TextureManager();
 
 	Texture* Load( const fc::string& filename, int* id = 0 );
 

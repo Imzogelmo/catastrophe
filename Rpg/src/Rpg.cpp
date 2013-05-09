@@ -24,6 +24,8 @@
 //for memory leak checking
 #include <crtdbg.h>
 
+void testDrawMapLayer( SpriteBatch* spriteBatch, const MapLayer* layer, const Rect& viewRect );
+void testDrawMapLayerWrap( SpriteBatch* spriteBatch, const MapLayer* layer, const Rect& viewRect );
 
 GlobalSettings g_settings;
 
@@ -286,6 +288,7 @@ void DoAtlasPack4();
 #include <fc/tiny_string.h>
 
 #include <Catastrophe/Graphics/TextureLoader.h>
+#include "Camera.h"
 
 
 int main(int argc, char* argv[])
@@ -315,6 +318,7 @@ int main(int argc, char* argv[])
 
 	//DoTests();
 
+	RpgLibInit();
 
 
 	// read config file and parse command-line arguments.
@@ -327,7 +331,7 @@ int main(int argc, char* argv[])
 
 	Window* window = CreateWindow();
 
-
+/*
 	const int F_S = 16;
 	int r_;
 	Font ff[6];
@@ -354,6 +358,13 @@ int main(int argc, char* argv[])
 	ubyte *p = tex.GetPixels();
 
 	tex2.CreateTexture(p, tex.Width(), tex.Height());
+*/
+
+	Texture tex;
+	tex.LoadFromFile("data/textures/tiles/town.png");
+
+	Map map;
+	map.DeserializeXml("data/maps/coneria.map.xml");
 	SpriteBatch sb;
 
 	//DoAtlasPack4();
@@ -363,10 +374,15 @@ int main(int argc, char* argv[])
 	//font.LoadFromFile(fc::string(), 32);
 	//CheckWinMemStats();
 
+	Camera cam;
+	Point ppos = Point::Zero;
+
 	Timer timer;
 	Timer loopTimer;
 	//window->SetOrthographicProjection(0, 256, 208, 0);
-	window->SetOrthographicProjection(0, 512, 416, 0);
+	cam.SetProjectionMatrix( Matrix::CreateOrthographic(-128, 128, 104, -104) );
+	//cam.SetProjectionMatrix( Matrix::CreateOrthographic(0, 256, 208, 0) );
+	//window->SetOrthographicProjection(0, 512, 416, 0);
 	while( !window->RequestClose() )
 	{
 		window->ClearColor();
@@ -376,8 +392,37 @@ int main(int argc, char* argv[])
 		Input::Update();
 		//Log("update %0.4f", float(timer.Seconds()));
 
+		if(Input::GetKeyboard()->IsKeyDown(KEY_UP))
+		{
+			cam.Move( Vector2(0.f, -1.f) );
+		}
+		if(Input::GetKeyboard()->IsKeyDown(KEY_DOWN))
+		{
+			cam.Move( Vector2(0.f, 1.f) );
+		}
+		if(Input::GetKeyboard()->IsKeyDown(KEY_LEFT))
+		{
+			cam.Move( Vector2(-1.f, 0.f) );
+		}
+		if(Input::GetKeyboard()->IsKeyDown(KEY_RIGHT))
+		{
+			cam.Move( Vector2(1.f, 0.f) );
+		}
+		cam.Update();
+
 		sb.Begin();
-		sb.DrawTexture(&tex2, 0.f);
+
+		int st_ = loopTimer.ElapsedMicroseconds();
+		//testDrawMapLayer( &sb, map.GetLayer(0), Rect(ppos.x, ppos.y, 512, 416) );
+		//testDrawMapLayerWrap( &sb, map.GetLayer(0), Rect(ppos.x, ppos.y, 256, 208) );
+		testDrawMapLayer( &sb, map.GetLayer(0), cam.GetViewRect() );
+		testDrawMapLayer( &sb, map.GetLayer(0), cam.GetViewRect() );
+	//	testDrawMapLayerWrap( &sb, map.GetLayer(0), cam.GetViewRect() );
+	//	testDrawMapLayerWrap( &sb, map.GetLayer(0), cam.GetViewRect() );
+		int et_ = loopTimer.ElapsedMicroseconds();
+		Log( "--: (%i)", et_ - st_ );
+
+		//sb.DrawTexture(&tex, 0.f);
 		sb.Render();
 		sb.End();
 
@@ -413,6 +458,9 @@ int main(int argc, char* argv[])
 
 
 	delete game;
+
+
+	RpgLibShutdown();
 
 	// shut down all sub-systems and release resources.
 	System::Terminate();
@@ -1263,3 +1311,301 @@ Map* CreateMapFromImage( const fc::string& directory, const fc::string& filename
 
 	return map;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////
+
+/*
+void testDrawMapLayer( SpriteBatch* spriteBatch, const MapLayer* layer, const Rect& viewRect )
+{
+	Vector2 tilePos = viewRect.pos;
+
+	const int TILE_SIZE = 16;//fixme
+	const float TILE_SIZEf = 16.f;//fixme
+
+	//todo: offset or parallax here...
+	int x1 = viewRect.pos.x / TILE_SIZE;
+	int y1 = viewRect.pos.y / TILE_SIZE;
+	int x2 = x1 + viewRect.Width() / TILE_SIZE;
+	int y2 = y1 + viewRect.Height() / TILE_SIZE;
+
+	//todo: overworld type wraparound needs a special function...
+	const MapLayer::array_type & array = layer->GetTileArray();
+	x1 = fc::clamp<int>(x1, 0, (int)array.x());
+	y1 = fc::clamp<int>(y1, 0, (int)array.y());
+	x2 = fc::clamp<int>(x2, 0, (int)array.x());
+	y2 = fc::clamp<int>(y2, 0, (int)array.y());
+
+	SpriteData sd;
+	::memset(&sd, 0, sizeof(SpriteData));
+	sd.SetBlendMode(layer->GetBlendMode());
+	//sd.SetDepth(layer->GetIndex());
+
+	Color layerColor = layer->GetColor();
+	sd.data[0].color = layerColor;
+	sd.data[1].color = layerColor;
+	sd.data[2].color = layerColor;
+	sd.data[3].color = layerColor;
+	sd.SetTexture(layer->GetTileset()->GetTextureId());
+
+	Vector2 pos = tilePos;
+
+	for( int y(y1); y < y2; ++y )
+	{
+		const size_t last = array.offset(y, x2);
+		for( size_t first = array.offset(y, x1); first < last; ++first )
+		{
+			const Tile* tile = array[first].tile;
+			const int flags = array[first].flags;
+			//const LayerTile & cell = array[first];
+			if( tile != 0 )
+			{
+				const Vector2 max = pos + TILE_SIZEf;
+				//const Rectf & uv = tile->GetUVRect();
+				Rectf uv = tile->GetUVRect();
+				//Rectf uv = cell->GetUVRect();
+
+				// flip
+				if( flags & 3 )
+				{
+					if( flags & 1 ) fc::swap(uv.min.x, uv.max.x);
+					if( flags & 2 ) fc::swap(uv.min.y, uv.max.y);
+				}
+				
+				sd.data[0].pos = pos;
+				sd.data[0].uv = uv.min;
+				sd.data[1].pos.x = pos.x;
+				sd.data[1].pos.y = max.y;
+				sd.data[1].uv.x = uv.min.x;
+				sd.data[1].uv.y = uv.max.y;
+				sd.data[2].pos = max;
+				sd.data[2].uv = uv.max;
+				sd.data[3].pos.x = max.x;
+				sd.data[3].pos.y = pos.y;
+				sd.data[3].uv.x = uv.max.x;
+				sd.data[3].uv.y = uv.min.y;
+
+				spriteBatch->DrawSpriteData(sd);
+			}
+
+			pos.x += TILE_SIZEf;
+		}
+
+		pos.x = tilePos.x;
+		pos.y += TILE_SIZEf;
+	}
+}
+*/
+
+void testDrawMapLayer( SpriteBatch* spriteBatch, const MapLayer* layer, const Rect& viewRect )
+{
+	const int TILE_SIZE = 16;//fixme
+	const float TILE_SIZEf = 16.f;//fixme
+
+	int x1 = (viewRect.Left() - TILE_SIZE - 1) / TILE_SIZE;
+	int y1 = (viewRect.Top() - TILE_SIZE - 1) / TILE_SIZE;
+	int x2 = (viewRect.Right() + TILE_SIZE - 1) / TILE_SIZE;
+	int y2 = (viewRect.Bottom() + TILE_SIZE - 1) / TILE_SIZE;
+
+	Point p = Point(x1, y1);
+	Vector2 tilePos = Point(x1, y1) * TILE_SIZE;
+
+	const MapLayer::array_type & array = layer->GetTileArray();
+	const int maxMapTilesX = (int)array.x();
+	const int maxMapTilesY = (int)array.y();
+	x1 = fc::clamp<int>(x1, 0, maxMapTilesX);
+	y1 = fc::clamp<int>(y1, 0, maxMapTilesY);
+	x2 = fc::clamp<int>(x2, 0, maxMapTilesX);
+	y2 = fc::clamp<int>(y2, 0, maxMapTilesY);
+
+	tilePos.x += (x1 - p.x) * TILE_SIZE; 
+	tilePos.y += (y1 - p.y) * TILE_SIZE; 
+
+	SpriteData sd;
+	::memset(&sd, 0, sizeof(SpriteData));
+	sd.SetBlendMode(layer->GetBlendMode());
+
+	Color layerColor = layer->GetColor();
+	sd.data[0].color = layerColor;
+	sd.data[1].color = layerColor;
+	sd.data[2].color = layerColor;
+	sd.data[3].color = layerColor;
+	sd.SetTexture(layer->GetTileset()->GetTextureId());
+
+	Vector2 pos = tilePos;
+	//Vector2 pos = Vector2(0.f);
+
+	for( int y(y1); y < y2; ++y )
+	{
+		const size_t last = array.offset(y, x2);
+		for( size_t first = array.offset(y, x1); first < last; ++first )
+		{
+			const Tile* tile = array[first].tile;
+			const int flags = array[first].flags;
+			if( tile != 0 )
+			{
+				const Vector2 max = pos + TILE_SIZEf;
+				//const Rectf & uv = tile->GetUVRect();
+				Rectf uv = tile->GetUVRect();
+
+				// flip
+				if( flags & 3 )
+				{
+					if( flags & 1 ) fc::swap(uv.min.x, uv.max.x);
+					if( flags & 2 ) fc::swap(uv.min.y, uv.max.y);
+				}
+
+				sd.data[0].pos = pos;
+				sd.data[0].uv = uv.min;
+				sd.data[1].pos.x = pos.x;
+				sd.data[1].pos.y = max.y;
+				sd.data[1].uv.x = uv.min.x;
+				sd.data[1].uv.y = uv.max.y;
+				sd.data[2].pos = max;
+				sd.data[2].uv = uv.max;
+				sd.data[3].pos.x = max.x;
+				sd.data[3].pos.y = pos.y;
+				sd.data[3].uv.x = uv.max.x;
+				sd.data[3].uv.y = uv.min.y;
+
+				spriteBatch->DrawSpriteData(sd);
+			}
+
+			pos.x += TILE_SIZEf;
+		}
+
+		pos.x = tilePos.x;
+		pos.y += TILE_SIZEf;
+	}
+}
+
+
+void testDrawMapLayerWrap( SpriteBatch* spriteBatch, const MapLayer* layer, const Rect& viewRect )
+{
+	//Vector2 tilePos = 0.f;//viewRect.pos;
+	//Vector2 tilePos = viewRect.pos - (viewRect.pos /
+
+	const int TILE_SIZE = 16;//fixme
+	const float TILE_SIZEf = 16.f;//fixme
+
+	/*
+	//todo: offset or parallax here...
+	int x1 = viewRect.Left() / TILE_SIZE;
+	int y1 = viewRect.Top() / TILE_SIZE;
+	int x2 = viewRect.Right() / TILE_SIZE;
+	int y2 = viewRect.Bottom() / TILE_SIZE;
+	*/
+
+	int x1 = (viewRect.Left() - TILE_SIZE - 1) / TILE_SIZE;
+	int y1 = (viewRect.Top() - TILE_SIZE - 1) / TILE_SIZE;
+	int x2 = (viewRect.Right() + TILE_SIZE - 1) / TILE_SIZE;
+	int y2 = (viewRect.Bottom() + TILE_SIZE - 1) / TILE_SIZE;
+
+	Vector2 tilePos = Point(x1, y1) * TILE_SIZE;
+
+	/*
+	//todo...
+	// if we have partial tile offset inside the view we have to draw it.
+	if( x1 < viewRect.pos.x ) x1--;
+	if( y1 < viewRect.pos.y ) y1--;
+	if( (x2 + TILE_SIZE) < viewRect.size.x ) x2++;
+	if( (y2 + TILE_SIZE) < viewRect.size.y ) y2++;
+	*/
+
+	const MapLayer::array_type & array = layer->GetTileArray();
+	const int maxMapTilesX = (int)array.x();
+	const int maxMapTilesY = (int)array.y();
+
+	// resolve to within positive range [0.. 2x) while keeping a valid rect
+	x1 = (x1 % maxMapTilesX) + maxMapTilesX;
+	x2 = (x2 % maxMapTilesX) + maxMapTilesX;
+	y1 = (y1 % maxMapTilesY) + maxMapTilesY;
+	y2 = (y2 % maxMapTilesY) + maxMapTilesY;
+	x1 %= maxMapTilesX;
+	x2 %= maxMapTilesX;
+	y1 %= maxMapTilesY;
+	y2 %= maxMapTilesY;
+	if( x2 < x1 ) x2 += maxMapTilesX;
+	if( y2 < y1 ) y2 += maxMapTilesY;
+
+
+//	Vector2 tilePos = ((viewRect.pos / TILE_SIZE) * TILE_SIZE);
+	//Vector2 tilePos = ((viewRect.pos / TILE_SIZE) * TILE_SIZE) - viewRect.pos;
+	//Vector2 tilePos = viewRect.pos;
+
+	SpriteData sd;
+	::memset(&sd, 0, sizeof(SpriteData));
+	sd.SetBlendMode(layer->GetBlendMode());
+
+	Color layerColor = layer->GetColor();
+	sd.data[0].color = layerColor;
+	sd.data[1].color = layerColor;
+	sd.data[2].color = layerColor;
+	sd.data[3].color = layerColor;
+	sd.SetTexture(layer->GetTileset()->GetTextureId());
+
+	Vector2 pos = tilePos;
+	//Vector2 pos = Vector2(0.f);
+
+	for( int row(y1); row < y2; ++row )
+	{
+		const int y = row % maxMapTilesY;
+		for( int col(x1); col < x2; ++col )
+		{
+			//const int x = col % maxMapTilesX;
+			const size_t index = array.offset(y, col % maxMapTilesX);
+			const Tile* tile = array[index].tile;
+			const int flags = array[index].flags;
+			if( tile != 0 )
+			{
+				const Vector2 max = pos + TILE_SIZEf;
+				//const Rectf & uv = tile->GetUVRect();
+				Rectf uv = tile->GetUVRect();
+
+				// flip
+				if( flags & 3 )
+				{
+					if( flags & 1 ) fc::swap(uv.min.x, uv.max.x);
+					if( flags & 2 ) fc::swap(uv.min.y, uv.max.y);
+				}
+
+				sd.data[0].pos = pos;
+				sd.data[0].uv = uv.min;
+				sd.data[1].pos.x = pos.x;
+				sd.data[1].pos.y = max.y;
+				sd.data[1].uv.x = uv.min.x;
+				sd.data[1].uv.y = uv.max.y;
+				sd.data[2].pos = max;
+				sd.data[2].uv = uv.max;
+				sd.data[3].pos.x = max.x;
+				sd.data[3].pos.y = pos.y;
+				sd.data[3].uv.x = uv.max.x;
+				sd.data[3].uv.y = uv.min.y;
+
+				spriteBatch->DrawSpriteData(sd);
+			}
+
+			pos.x += TILE_SIZEf;
+		}
+
+		pos.x = tilePos.x;
+		pos.y += TILE_SIZEf;
+	}
+}
+

@@ -11,6 +11,7 @@
 
 #include <Catastrophe/Math/Vector3.h>
 #include <Catastrophe/Math/Rectf.h>
+#include <Catastrophe/Graphics/OpenGL.h>
 
 #include "Camera.h"
 
@@ -62,14 +63,14 @@ void Camera::SetRotation( float rotation )
 
 void Camera::Move( const Vector2& dir )
 {
-	pos += dir;
+	m_pos += dir;
 	m_transformDirty = true;
 }
 
 
 void Camera::Rotate( float rotation )
 {
-	m_rot = Math::WrapAngle(m_rotation += rotation);
+	m_rotation = Math::WrapAngle(m_rotation += rotation);
 	m_transformDirty = true;
 }
 
@@ -88,14 +89,15 @@ void Camera::Update()
 	glMatrixMode( GL_PROJECTION );
 	glLoadMatrixf( &mat[0] );
 	glMatrixMode( GL_MODELVIEW );
-	Matrix::LoadIdentity();
+	glLoadIdentity();
+
 }
 
 
 Rectf Camera::GetViewRect() const
 {
 	//todo:
-	return Rectf(-128, -104, 128, 104);
+	return Rectf(m_pos.x-128, m_pos.y-104, m_pos.x+128, m_pos.y+104);
 }
 
 
@@ -116,8 +118,8 @@ const Matrix& Camera::GetTransform() const
 	if( m_transformDirty )
 	{
 		m_transform = 
-			Matrix::CreateRotation( Vector3(0.f, 0.f, m_rot) ) *
-			Matrix::CreateTranslation( Vector3(-pos.x, -pos.y, 0.f) );
+			//Matrix::CreateRotationZ(m_rotation) *
+			Matrix::CreateTranslation( Vector3(-m_pos.x, -m_pos.y, 0.f) );
 		m_transformDirty = false;
 	}
 
@@ -127,7 +129,7 @@ const Matrix& Camera::GetTransform() const
 
 const Matrix& Camera::GetView() const
 {
-	if( m_viewDirty )
+	if( m_viewDirty || m_transformDirty )
 	{
 		m_view = GetProjection() * GetTransform();
 		m_viewDirty = false;

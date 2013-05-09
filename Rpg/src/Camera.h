@@ -20,12 +20,7 @@
 class Camera
 {
 public:
-
 	Camera();
-	Camera( const Vector2& pos, const Vector3& rotation, const Vector2& scale, const Rect& viewport );
-
-	void Update();
-	void Clamp( const Vector2& minv, const Vector2& maxv );
 
 	void SetBoundingArea( const Rectf& boundingRect );
 	void SetProjectionMatrix( const Matrix& m );
@@ -34,8 +29,9 @@ public:
 	void Move( const Vector2& dir );
 	void Rotate( float rotation );
 	void ClampPosition( const Vector2& minv, const Vector2& maxv );
+	void Update();
 
-	const Vector2& GetPosition() const { return pos; }
+	const Vector2& GetPosition() const { return m_pos; }
 	float GetRotation() const { return m_rotation; }
 	Rectf GetViewRect() const;
 
@@ -43,16 +39,15 @@ public:
 	const Matrix& GetTransform() const;
 	const Matrix& GetView() const;
 
-
 protected:
-	mutable Matrix	m_projection;
-	mutable Matrix	m_transform;
-	mutable Matrix	m_view;
 	Vector2			m_pos;
 	float			m_rotation;
 	Rectf			m_boundry;
-	bool			m_transformDirty;
-	bool			m_viewDirty;
+	mutable Matrix	m_projection;
+	mutable Matrix	m_transform;
+	mutable Matrix	m_view;
+	mutable bool	m_transformDirty;
+	mutable bool	m_viewDirty;
 
 };
 

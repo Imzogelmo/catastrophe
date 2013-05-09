@@ -21,7 +21,8 @@ class RPG_API ResourceManagerTypeBase
 {
 public:
 	ResourceManagerTypeBase();
-	virtual ~ResourceManagerTypeBase();
+	virtual ~ResourceManagerTypeBase()
+	{}
 
 	ResourceDirectory* GetResourceDirectory() { return g_resourceDirectory; }
 	ResourceCache* GetResourceCache() { return &m_resourceCache; }

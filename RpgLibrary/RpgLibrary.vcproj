@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="RpgLibrary"
-	ProjectGUID="{E92EC01E-0F58-45A1-97A0-9C0600830480}"
+	ProjectGUID="{BE7D9EE6-B32E-4CAA-BF9D-FD031043A7D2}"
 	RootNamespace="RpgLibrary"
 	TargetFrameworkVersion="196613"
 	>

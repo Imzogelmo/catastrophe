@@ -18,6 +18,7 @@ class TilesetManager : public ResourceManagerType<Tileset>
 {
 public:
 	TilesetManager();
+	~TilesetManager();
 
 	Tileset* LoadXml( const fc::string& filename, int* id = 0 );
 

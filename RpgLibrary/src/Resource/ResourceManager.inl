@@ -15,14 +15,8 @@
 
 
 ResourceManagerTypeBase::ResourceManagerTypeBase()
-	: m_resourceCache(this)
+	: m_resourceCache()
 {
-}
-
-
-ResourceManagerTypeBase::~ResourceManagerTypeBase()
-{
-	DeleteResources();
 }
 
 

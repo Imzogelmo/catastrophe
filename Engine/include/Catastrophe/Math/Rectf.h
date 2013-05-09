@@ -128,6 +128,11 @@ public:
 		return( r.min.x > min.x && r.max.x <= max.x && r.min.y > min.y && r.max.y <= max.y );
 	}
 
+	inline bool Contains( const Vector2& p ) const
+	{
+		return Intersects(p);
+	}
+
 	void Merge( const Rectf& r );
 	void Merge( const Vector2& p );
 	bool IntersectsCircle( const Vector2& point, float radius );

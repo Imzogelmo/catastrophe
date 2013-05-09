@@ -16,6 +16,7 @@
 
 MapManager::MapManager()
 {
+	m_resourceCache.SetManager(this);
 	m_resourceCache.SetResourceUsage(4);
 }
 
