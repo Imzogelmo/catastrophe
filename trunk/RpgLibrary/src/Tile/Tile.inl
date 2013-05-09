@@ -96,7 +96,7 @@ void Tile::SetCurrentFrame( short index )
 
 			int h = m_sourceRect.Height();
 			int y = m_sourceRect.pos.y + (h * yOffset);
-			float texHeightf = (float)texture->Width();
+			float texHeightf = (float)texture->Height();
 			m_uv.min.y = y / texHeightf;
 			m_uv.max.y = (y + h) / texHeightf;
 
@@ -149,7 +149,7 @@ void Tile::SerializeXml( XmlWriter* xml )
 	xml->SetShort("speed", anim_speed);
 	xml->SetShort("flags", flags);
 
-	//Util::SerializeRect("SouceRect", xml, m_sourceRect);
+	SerializeObject<Rect>("SouceRect", xml, m_sourceRect);
 }
 
 
@@ -159,7 +159,7 @@ void Tile::DeserializeXml( XmlReader* xml )
 	anim_speed = xml->GetShort("speed", 16);
 	flags = xml->GetShort("flags", 0);
 
-	//Util::DeserializeRect("SouceRect", xml, m_sourceRect);
+	DeserializeObject<Rect>("SouceRect", xml, m_sourceRect);
 
 	//todo: should have tileset create..?
 	Create(m_sourceRect, num_frames);

@@ -110,3 +110,7 @@ extern TextureManager*		g_textureManager;
 extern TilesetManager*		g_tilesetManager;
 extern MapManager*			g_mapManager;
 
+
+void RpgLibInit();
+void RpgLibShutdown();
+

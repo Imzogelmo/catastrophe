@@ -112,6 +112,12 @@ void Tileset::ValidateTiles()
 }
 
 
+gluint Tileset::GetTextureId() const
+{
+	return m_texture ? m_texture->GetTextureID() : 0;
+}
+
+
 Tile* Tileset::GetTile( size_t index )
 {
 	if( index < m_tiles.size() )
@@ -251,6 +257,7 @@ bool Tileset::DeserializeXml( const fc::string& directory, const fc::string& fil
 		}
 
 		m_tiles.resize(h, w);
+		ValidateTiles();
 
 		array_type::iterator it = m_tiles.begin();
 		for( array_type::iterator it = m_tiles.begin(); it != m_tiles.end(); ++it )
@@ -265,7 +272,7 @@ bool Tileset::DeserializeXml( const fc::string& directory, const fc::string& fil
 			}
 		}
 
-		ValidateTiles();
+		//ValidateTiles();
 		ReconfigureAnimatedTileList();
 		ResetAnimations();
 	}

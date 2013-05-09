@@ -24,7 +24,7 @@
 
 
 template <class T>
-void SerializeObject( const char* nodeName, XmlWriter* xml, const T& val )
+void SerializeObject<T>( const char* nodeName, XmlWriter* xml, const T& val )
 {
 	xml->BeginNode(nodeName);
 	SerializeObject<T>(xml, val);

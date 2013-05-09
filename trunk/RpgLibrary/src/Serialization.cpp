@@ -37,4 +37,12 @@ void test()
 	DeserializeObject(0,p);
 	DeserializeObject("test",0,p);
 
+	Rect r;
+	SerializeObject(0,r);
+	SerializeObject("test",0,r);
+
+	DeserializeObject(0,r);
+	DeserializeObject("test",0,r);
+
+
 }

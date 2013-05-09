@@ -18,7 +18,14 @@
 
 TilesetManager::TilesetManager()
 {
+	m_resourceCache.SetManager(this);
 	m_resourceCache.SetResourceUsage(64);
+}
+
+
+TilesetManager::~TilesetManager()
+{
+	m_resourceCache.DeleteResources();
 }
 
 

@@ -16,7 +16,14 @@
 
 TextureManager::TextureManager()
 {
+	m_resourceCache.SetManager(this);
 	m_resourceCache.SetResourceUsage(256);
+}
+
+
+TextureManager::~TextureManager()
+{
+	m_resourceCache.DeleteResources();
 }
 
 

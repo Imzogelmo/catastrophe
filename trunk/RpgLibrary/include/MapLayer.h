@@ -62,7 +62,7 @@ public:
 	void SetName( const fc::string& name ) { m_name = name; }
 	void SetVisible( bool enable = true ) { m_visible = enable; }
 	void SetColor( const Color& color ) { m_color = color; }
-	void SetTileset( Tileset* map ); //...
+	void SetTileset( Tileset* tileset );
 	
 	void Resize( size_t w, size_t h );
 	void Clear();
@@ -73,6 +73,7 @@ public:
 
 	bool IsVisible() const { return m_visible; }
 
+	Tileset* GetTileset() const { return m_tileset; }
 	const fc::string& GetName() const { return m_name; }
 	const Color& GetColor() const { return m_color; }
 	const BlendMode& GetBlendMode() const { return m_blendmode; }
@@ -90,7 +91,7 @@ public:
 	const array_type& GetTileArray() const { return m_tiles; }
 
 	void Update();
-	void Render();
+	void Render( SpriteBatch* spriteBatch, const Rect& viewRect, bool wrap );
 
 	void SerializeXml( XmlWriter* xml );
 	void DeserializeXml( XmlReader* xml );

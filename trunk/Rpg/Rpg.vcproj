@@ -176,6 +176,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\Camera.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Character.cpp"
 				>
 			</File>
@@ -367,6 +371,10 @@
 			</File>
 			<File
 				RelativePath=".\src\BuffSet.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Camera.h"
 				>
 			</File>
 			<File

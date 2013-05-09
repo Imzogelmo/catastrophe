@@ -50,10 +50,14 @@ public:
 	const fc::string& GetName() const { return m_name; }
 	const fc::string& GetFileName() const { return m_filename; }
 
+
+	void Render( SpriteBatch* spriteBatch, const Rect& viewRect );
+
+
 	NO_INLINE bool SerializeXml( const fc::string& filename );
 	NO_INLINE bool DeserializeXml( const fc::string& filename );
 
-public:
+protected:
 	fc::string		m_name;
 	fc::string		m_filename;
 	vec_type		m_layers;

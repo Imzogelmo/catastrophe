@@ -57,7 +57,11 @@ public:
 	typedef	fc::vector<Resource>	vec_type;
 	typedef	fc::vector<size_t>		store_type;
 
-	ResourceCache( ResourceManagerTypeBase* p );
+	ResourceCache();
+	~ResourceCache();
+
+	// type is simply the parent's 'this' pointer.
+	void SetManager( ResourceManagerTypeBase* p );
 
 	// since the needs of a resource cache can largely vary,
 	// it is required to call this. 

@@ -71,6 +71,13 @@ void SpriteAnimation::SetNumberOfFrames( int numFrames )
 }
 
 
+void SpriteAnimation::SetAnimationSpeed( float animationDelay )
+{
+	m_frameSpeed = animationDelay;
+	m_frameCounter = 0.f;
+}
+
+
 void SpriteAnimation::Create( Texture* texturePtr, const Rect& sourceRectangle, int numberOfFrames, int frameOffsetX, int frameOffsetY )
 {
 	SetTexture(texturePtr);

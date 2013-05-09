@@ -13,10 +13,22 @@
 #include "ResourceManager.h"
 
 
-ResourceCache::ResourceCache( ResourceManagerTypeBase* p ) 
-	: m_parent(p)
+ResourceCache::ResourceCache() 
+	: m_parent(0)
+{
+}
+
+
+ResourceCache::~ResourceCache()
+{
+	DeleteResources();
+}
+
+
+void ResourceCache::SetManager( ResourceManagerTypeBase* p )
 {
 	ASSERT(p != 0);
+	m_parent = p;
 }
 
 
