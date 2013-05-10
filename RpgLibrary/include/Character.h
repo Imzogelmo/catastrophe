@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <fc/string.h>
+
 #include "RpgCommon.h"
 
 
