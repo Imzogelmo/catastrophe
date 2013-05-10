@@ -57,14 +57,40 @@ void DeserializeObject<Rect>( XmlReader* xml, Rect& val )
 template <>
 void DeserializeObject<SpriteBase>( XmlReader* xml, SpriteBase& s )
 {
-	s.size.x = (float)xml->GetInt("width", 0);
-	s.size.y = (float)xml->GetInt("height", 0);
-	s.scale.x = xml->GetFloat("scale_x", 1.f);
-	s.scale.y = xml->GetFloat("scale_y", 1.f);
-	s.angle = xml->GetFloat("angle", 0.f);
-	s.color.packed_value = xml->GetUInt("color", Color::White().packed_value);
-	s.blendmode.value = xml->GetUInt("blendmode", BlendMode::Alpha.value);
+	if( xml->NextChild("SpriteBase") )
+	{
+		s.size.x = (float)xml->GetInt("width");
+		s.size.y = (float)xml->GetInt("height");
+		s.scale.x = xml->GetFloat("scale_x", 1.f);
+		s.scale.y = xml->GetFloat("scale_y", 1.f);
+		s.angle = xml->GetFloat("angle");
+		s.color.packed_value = xml->GetUInt("color", Color::White().packed_value);
+		s.blendmode.value = xml->GetUInt("blendmode", BlendMode::Alpha.value);
+
+		xml->SetToParent();
+	}
 }
+
+
+template <>
+void DeserializeObject<SpriteAnimation>( XmlReader* xml, SpriteAnimation& a )
+{
+	if( xml->NextChild("SpriteAnimation") )
+	{
+		Rect sourceRect = Rect::Zero;
+		DeserializeObject<Rect>(xml, sourceRect);
+		int numFrames = xml->GetInt("num_frames", 1);
+		int offsetX = xml->GetInt("offset_x");
+		int offsetY = xml->GetInt("offset_y");
+		float animSpeed = xml->GetFloat("speed", 16.f);
+		int flags = xml->GetInt("flags");
+
+		a.Create( sourceRect, animSpeed, numFrames, offsetX, offsetY );
+		xml->SetToParent();
+	}
+}
+
+
 
 
 

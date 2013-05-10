@@ -12,6 +12,7 @@
 #pragma once
 
 #include <Catastrophe/Math/Vector2.h>
+#include <Catastrophe/Math/Rectf.h>
 #include <Catastrophe/Math/Matrix.h>
 
 #include "Common.h"

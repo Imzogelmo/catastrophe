@@ -62,6 +62,23 @@ void SerializeObject<SpriteBase>( XmlWriter* xml, const SpriteBase& s )
 	xml->SetUInt("blendmode", s.blendmode.value);
 }
 
+
+template <>
+void SerializeObject<SpriteAnimation>( XmlWriter* xml, const SpriteAnimation& a )
+{
+	xml->BeginNode("SpriteAnimation");
+
+	SerializeObject<Rect>(xml, a.GetSourceRect());
+	xml->SetUInt("num_frames", a.GetNumFrames());
+	xml->SetInt("offset_x", a.GetFrameOffsetX());
+	xml->SetInt("offset_y", a.GetFrameOffsetY());
+	xml->SetFloat("speed", a.GetAnimationSpeed() );
+	xml->SetInt("flags", a.GetFlags() );
+
+	xml->EndNode();
+}
+
+
 /*
 template <>
 void SerializeObject<Sprite>( XmlWriter* xml, const Sprite& s )

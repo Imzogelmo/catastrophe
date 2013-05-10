@@ -23,7 +23,7 @@ public:
 	//keep a list (queue) of battles,
 	//update scripts, curent battle, and entities.
 
-	BattleScreen( ScreenManager* parent, const fc::string& script );
+	BattleScreen( const fc::string& script );
 	virtual ~BattleScreen();
 
 	void AddBattle( Battle* battle );

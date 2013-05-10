@@ -38,6 +38,8 @@ public:
 			int frameOffsetY = 0
 			);
 
+	void Create( const Rect& sourceRect, int numberOfFrames = 1, int frameOffsetX = 0, int frameOffsetY = 0 );
+	void Create( const Rect& sourceRect, float animationDelay, int numberOfFrames = 1, int frameOffsetX = 0, int frameOffsetY = 0 );
 	void Create( Texture* texturePtr, const Rect& sourceRect, int numberOfFrames = 1, int frameOffsetX = 0, int frameOffsetY = 0 );
 	void Create( Texture* texturePtr, const Rect& sourceRect, float animationDelay, int numberOfFrames = 1, int frameOffsetX = 0, int frameOffsetY = 0 );
 	void SetTexture( Texture* texturePtr );
@@ -54,9 +56,13 @@ public:
 	inline bool IsAnimated() const { return m_numFrames > 1; };
 	bool IsFinished() const;
 
+	inline int GetFlags() const { return m_flags; }
+	inline int GetFrameOffsetX() const { return m_frameOffsetX; }
+	inline int GetFrameOffsetY() const { return m_frameOffsetY; }
 	inline size_t GetNumFrames() const { return m_numFrames; }
 	inline size_t GetCurrentFrame() const { return m_currentFrame; }
 	inline float GetAnimationSpeed() const { return m_frameSpeed; }
+	inline const Rect& GetSourceRect() const { return m_sourceRect; }
 	inline Texture* GetTexture() const { return m_texture; }
 	gluint GetTextureID() const;
 

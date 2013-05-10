@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <fc/string.h>
 #include <fc/dynamic_array2d.h>
 #include <Catastrophe/Math/Color.h>
 #include <Catastrophe/Graphics/BlendMode.h>

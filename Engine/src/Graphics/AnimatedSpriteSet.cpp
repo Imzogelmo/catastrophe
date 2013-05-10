@@ -59,6 +59,16 @@ void AnimatedSpriteSet::Resize( size_t newSize )
 }
 
 
+void AnimatedSpriteSet::SetTexture( Texture* texture )
+{
+	m_texture = texture;
+	for( vec_type::iterator it = m_animations.begin(); it != m_animations.end(); ++it )
+	{
+		it->SetTexture(m_texture);
+	}
+}
+
+
 void AnimatedSpriteSet::SetCurrentAnimation( size_t index )
 {
 	size_t size = m_animations.size();
@@ -129,6 +139,11 @@ void AnimatedSpriteSet::Update()
 	GetCurrentAnimation().Update();
 }
 
+
+gluint AnimatedSpriteSet::GetTextureID() const
+{
+	return m_texture ? m_texture->GetTextureID() : 0;
+}
 
 
 

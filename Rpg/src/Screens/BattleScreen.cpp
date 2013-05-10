@@ -4,7 +4,7 @@
 
 
 
-BattleScreen::BattleScreen( ScreenManager* parent, const fc::string& script ) : Screen(parent)
+BattleScreen::BattleScreen( const fc::string& script ) : Screen()
 {
 }
 

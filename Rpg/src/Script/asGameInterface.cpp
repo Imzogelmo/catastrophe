@@ -28,7 +28,7 @@ namespace script
 		if( !texture )
 		{
 			//todo: this is not really needed.
-			gGetGame()->GetScriptEngine()->SetException( asGetActiveContext(), filename );
+			game->GetScriptEngine()->SetException( asGetActiveContext(), filename );
 		}
 
 		return id;
@@ -56,7 +56,7 @@ namespace script
 		//if( !texture )
 		{
 			//todo: this is not really needed.
-			gGetGame()->GetScriptEngine()->SetException( asGetActiveContext(), "Invalid texture id" );
+			game->GetScriptEngine()->SetException( asGetActiveContext(), "Invalid texture id" );
 		}
 
 		return 0;
@@ -69,7 +69,7 @@ namespace script
 	//	if( !font )
 		{
 			//todo: this is not really needed.
-			gGetGame()->GetScriptEngine()->SetException( asGetActiveContext(), "Invalid font id" );
+			game->GetScriptEngine()->SetException( asGetActiveContext(), "Invalid font id" );
 		}
 
 		return 0;
@@ -78,7 +78,7 @@ namespace script
 
 	void DrawSprite( const Sprite& sprite, const Vector2& pos )
 	{
-		SpriteBatch* spriteBatch = gGetGame()->GetSpriteBatch();
+		SpriteBatch* spriteBatch = game->GetSpriteBatch();
 		spriteBatch->DrawSprite(sprite, pos);
 	}
 

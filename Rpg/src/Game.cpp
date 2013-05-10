@@ -11,56 +11,17 @@
 
 #include "Game.h"
 
+Game* game = 0;
+ScriptEngine* g_scriptEngine = 0;
 
-// these are global to simplify everything.
-namespace RpgGlobals
-{
-	Game*				currentGameInstance = 0;
-	ScriptEngine*		currentScriptEngine = 0;
-	ResourceManager*	currentResourceManager = 0;
-	Database*			currentDatabase = 0;
-}
+ScriptEngine* gGetScriptEngine() { return g_scriptEngine; }
+Game* gGetGame() { return game; }
 
-void gSetActiveGame( Game* game )
-{
-	ASSERT(game != 0);
-	RpgGlobals::currentGameInstance = game;
-}
-
-void gSetActiveResourceManager( ResourceManager* resourceManager )
-{
-	ASSERT(resourceManager != 0);
-	RpgGlobals::currentResourceManager = resourceManager;
-}
-
-void gSetActiveScriptEngine( ScriptEngine* scriptEngine )
-{
-	ASSERT(scriptEngine != 0);
-	RpgGlobals::currentScriptEngine = scriptEngine;
-}
-
-void gSetActiveDatabase( Database* database )
-{
-	ASSERT(database != 0);
-	RpgGlobals::currentDatabase = database;
-}
-
-Game* gGetGame()
-{
-	// I don't plan on allowing multiple game instances
-	// to be active at once, though it is possible.
-	return RpgGlobals::currentGameInstance;
-}
-
-ResourceManager* gGetResourceManager() { return RpgGlobals::currentResourceManager; }
-ScriptEngine* gGetScriptEngine() { return RpgGlobals::currentScriptEngine; }
-Database* gGetDatabase() { return RpgGlobals::currentDatabase; }
 
 
 int Game::Initialize()
 {
-	gSetActiveGame(this);
-	gSetActiveScriptEngine(&m_scriptEngine);
+	g_scriptEngine = &m_scriptEngine;
 	//gSetActiveDatabase(&m_database);
 
 	//m_resourceManager.GetResourceDirectory().SetRootDirectory("data/");

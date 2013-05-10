@@ -28,7 +28,7 @@ public:
 	};
 	*/
 
-	Screen( ScreenManager* parent );
+	Screen( ScreenManager* parent = 0 );
 	virtual ~Screen()
 	{}
 	
@@ -54,6 +54,9 @@ public:
 	ScreenManager* GetScreenManager() const { return m_screenManager; }
 
 protected:
+	friend class ScreenManager;
+	void SetScreenManager( ScreenManager* parent );
+
 	ScreenManager*	m_screenManager;
 	//ScreenState		m_state;
 

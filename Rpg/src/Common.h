@@ -87,6 +87,7 @@ class Screen;
 class ScreenManager;
 class Game;
 class GameScreen;
+class MapScreen;
 
 class RenderEngine;
 class Entity;
@@ -104,11 +105,6 @@ class ScriptClass;
 class ScriptObject;
 
 
-struct PODBullet;
-struct Bullet;
-class BulletManager;
-class PODBulletManager;
-class BulletPool;
 
 //utility macros (normally only for testing)
 #define foreachv(vec_type, it, container) \
@@ -123,13 +119,9 @@ class BulletPool;
 
 
 //global functions
-void gSetActiveGame( Game* game );
-void gSetActiveResourceManager( ResourceManager* resourceManager );
-void gSetActiveScriptEngine( ScriptEngine* scriptEngine );
+ScriptEngine* gGetScriptEngine();
+Game* gGetGame();
 
-Game*				gGetGame();
-ResourceManager*	gGetResourceManager();
-ScriptEngine*		gGetScriptEngine();
-Database*			gGetDatabase();
 
+extern Game* game;
 

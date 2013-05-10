@@ -43,6 +43,18 @@ public:
 	virtual void Update() {}
 	virtual void Render() {}
 
+
+	inline bool CanCollide( Entity* entity )
+	{
+		return filter.CanCollide(entity->filter);
+	}
+
+	inline bool CollidesWith( Entity* entity )
+	{
+		bool intersects = GetBoundingRect().Intersects(entity->GetBoundingRect());
+		return intersects;
+	}
+
 	inline Rectf GetBoundingRect()
 	{
 		return hitbox + pos;
