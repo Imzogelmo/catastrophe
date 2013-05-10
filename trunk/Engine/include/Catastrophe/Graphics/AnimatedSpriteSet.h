@@ -51,10 +51,16 @@ public:
 	void InsertAnimation( const SpriteAnimation& anim, size_t index );
 	void RemoveAnimation( size_t index );
 
+	void SetTexture( Texture* texture );
 	void SetCurrentAnimation( size_t index );
 	void Reserve( size_t capacity );
 	void Resize( size_t newSize );
 	void Update();
+
+	inline bool Empty() const { return m_animations.empty(); }
+	inline size_t GetNumAnimations() const { return m_animations.size(); }
+	inline Texture* GetTexture() const { return m_texture; }
+	gluint GetTextureID() const;
 
 	// sprite animation index methods
 	inline SpriteAnimation& operator []( size_t index ) { return m_animations.at(index); }

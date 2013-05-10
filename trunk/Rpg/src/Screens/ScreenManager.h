@@ -32,13 +32,11 @@ public:
 	bool IsEmpty() const;
 
 	void Add( Screen* screen );
-	//void Exit( Screen* screen );
+	//void Exit( Screen* screen ); //todo
 	void Remove( Screen* screen );
 
 private:
 	vec_type		m_screens;
-
-	//vec_type		m_queue;
 
 };
 

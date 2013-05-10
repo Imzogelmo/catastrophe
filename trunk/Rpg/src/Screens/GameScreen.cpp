@@ -12,8 +12,8 @@
 #include "GameScreen.h"
 
 
-GameScreen::GameScreen( ScreenManager* parent )
-	: Screen(parent)
+GameScreen::GameScreen()
+	: Screen()
 {
 }
 

@@ -55,8 +55,14 @@ SpriteAnimation::SpriteAnimation( Texture* texturePtr, const Rect& sourceRect, i
 
 void SpriteAnimation::SetTexture( Texture* texturePtr )
 {
-	CE_ASSERT(texturePtr != 0);
-	CE_ASSERT(texturePtr->Width() != 0 && texturePtr->Height() != 0);
+	if( m_texture && texturePtr && m_texture != texturePtr )
+	{
+		m_texture = texturePtr;
+
+		// recompute out uv coords.
+		SetSourceRect(m_sourceRect);
+	}
+
 	m_texture = texturePtr;
 }
 
@@ -78,16 +84,35 @@ void SpriteAnimation::SetAnimationSpeed( float animationDelay )
 }
 
 
-void SpriteAnimation::Create( Texture* texturePtr, const Rect& sourceRectangle, int numberOfFrames, int frameOffsetX, int frameOffsetY )
+void SpriteAnimation::Create( const Rect& sourceRect, int numberOfFrames, int frameOffsetX, int frameOffsetY )
 {
-	SetTexture(texturePtr);
 	SetNumberOfFrames(numberOfFrames);
 	m_frameOffsetX = (frameOffsetX > 0 ? frameOffsetX : sourceRectangle.Width());
 	m_frameOffsetY = (frameOffsetY > 0 ? frameOffsetY : sourceRectangle.Height());
 
-	//SetAnimationSpeed();
 	SetSourceRect(sourceRectangle);
 	SetCurrentFrame(0);
+}
+
+
+void SpriteAnimation::Create( const Rect& sourceRect, float animationDelay, int numberOfFrames, int frameOffsetX, int frameOffsetY )
+{
+	SetAnimationSpeed(animationDelay);
+	Create(sourceRectangle, numberOfFrames, frameOffsetX, frameOffsetY);
+}
+
+
+void SpriteAnimation::Create( Texture* texturePtr, const Rect& sourceRectangle, int numberOfFrames, int frameOffsetX, int frameOffsetY )
+{
+	SetTexture(texturePtr);
+	Create(sourceRectangle, numberOfFrames, frameOffsetX, frameOffsetY);
+}
+
+
+void SpriteAnimation::Create( Texture* texturePtr, const Rect& sourceRectangle, float animationDelay, int numberOfFrames, int frameOffsetX, int frameOffsetY )
+{
+	SetTexture(texturePtr);
+	Create(sourceRectangle, animationDelay, numberOfFrames, frameOffsetX, frameOffsetY);
 }
 
 
@@ -122,13 +147,13 @@ void SpriteAnimation::SetSourceRect( const Rect& sourceRectangle )
 
 void SpriteAnimation::SetCurrentFrame( size_t index )
 {
-	// texture must be assigned first.
-	if( m_texture )
+	if( index < m_numFrames )
 	{
-		if( index < m_numFrames )
-		{
-			m_currentFrame = index;
+		m_currentFrame = index;
 
+		// texture must be assigned first to generate uv coords.
+		if( m_texture )
+		{
 			int x = m_sourceRect.pos.x + (m_frameOffsetX * (int)m_currentFrame);
 			int yOffset = x / m_texture->Width();
 

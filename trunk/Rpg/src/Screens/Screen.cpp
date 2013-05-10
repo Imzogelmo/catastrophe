@@ -20,7 +20,12 @@ Screen::Screen( ScreenManager* parent ) :
 	m_popup(false),
 	m_blocking(true)
 {
-	ASSERT(m_screenManager != 0);
+}
+
+
+void Screen::SetScreenManager( ScreenManager* parent )
+{
+	m_screenManager = parent;
 }
 
 

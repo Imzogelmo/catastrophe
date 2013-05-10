@@ -12,6 +12,8 @@
 #pragma once
 
 #include "Screen.h"
+#include "Camera.h"
+
 
 /*
  * GameScreen
@@ -22,7 +24,7 @@
 class GameScreen : public Screen
 {
 public:
-	GameScreen( ScreenManager* parent );
+	GameScreen();
 	virtual ~GameScreen()
 	{}
 	
@@ -31,6 +33,8 @@ public:
 
 
 protected:
+
+	Camera	m_camera;
 	//list of	m_entities;
 	//other stuff.
 
