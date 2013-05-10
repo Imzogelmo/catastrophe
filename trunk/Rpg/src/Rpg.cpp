@@ -361,6 +361,8 @@ int main(int argc, char* argv[])
 
 	tex2.CreateTexture(p, tex.Width(), tex.Height());
 */
+
+	/*
 	Texture tex6;
 	tex6.LoadFromFile("heros2.png");
 	ubyte *p = tex6.GetPixels();
@@ -377,6 +379,7 @@ int main(int argc, char* argv[])
 
 
 	return 0;
+	*/
 
 	Texture tex;
 	tex.LoadFromFile("data/textures/tiles/town.png");
@@ -433,8 +436,13 @@ int main(int argc, char* argv[])
 		int st_ = loopTimer.ElapsedMicroseconds();
 		//testDrawMapLayer( &sb, map.GetLayer(0), Rect(ppos.x, ppos.y, 512, 416) );
 		//testDrawMapLayerWrap( &sb, map.GetLayer(0), Rect(ppos.x, ppos.y, 256, 208) );
-		testDrawMapLayer( &sb, map.GetLayer(0), cam.GetViewRect() );
-		testDrawMapLayer( &sb, map.GetLayer(0), cam.GetViewRect() );
+		MapLayer* l = map.GetLayer(0);
+		l->SetBlendMode(BlendMode::Alpha);
+		l->SetColor( Color::White() );
+		testDrawMapLayer( &sb, l, cam.GetViewRect() );
+		l->SetBlendMode(BlendMode::Subtractive);
+		l->SetColor( Color(0,166,222,200) );
+		testDrawMapLayer( &sb, l, cam.GetViewRect() );
 	//	testDrawMapLayerWrap( &sb, map.GetLayer(0), cam.GetViewRect() );
 	//	testDrawMapLayerWrap( &sb, map.GetLayer(0), cam.GetViewRect() );
 		int et_ = loopTimer.ElapsedMicroseconds();

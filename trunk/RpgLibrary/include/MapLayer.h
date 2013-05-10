@@ -62,6 +62,7 @@ public:
 	void SetName( const fc::string& name ) { m_name = name; }
 	void SetVisible( bool enable = true ) { m_visible = enable; }
 	void SetColor( const Color& color ) { m_color = color; }
+	void SetBlendMode( const BlendMode& blendmode ) { m_blendmode = blendmode; }
 	void SetTileset( Tileset* tileset );
 	
 	void Resize( size_t w, size_t h );

@@ -4,25 +4,14 @@
 
 
 
-Battle( ScreenManager* parent, const fc::string& script ) : Screen(parent)
+BattleScreen::BattleScreen( ScreenManager* parent, const fc::string& script ) : Screen(parent)
 {
 }
 
 
-void BattleScreen::AddAction( BattleAction* action, bool immediateAction )
+BattleScreen::~BattleScreen()
 {
-	// Insert at either front or back.
-	// "counterattack" is an example of an immediate action.
-	size_t index = immediateAction ? (size_t)0 : m_actions.size();
-	m_actions.insert_at(index);
 }
-
-
-void BattleScreen::ClearActions()
-{
-	m_actions.clear();
-}
-
 
 
 void BattleScreen::AddBattle( Battle* battle )
@@ -32,8 +21,7 @@ void BattleScreen::AddBattle( Battle* battle )
 }
 
 
-
-Battle* GetCurrentBattle()
+Battle* BattleScreen::GetCurrentBattle()
 {
 	if( !m_battles.empty() )
 		return m_battles.front();

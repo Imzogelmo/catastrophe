@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\Engine\include&quot;;&quot;..\RpgLibrary\include&quot;"
+				AdditionalIncludeDirectories="&quot;..\Engine\include&quot;;&quot;..\RpgLibrary\include&quot;;&quot;src&quot;;&quot;src\Screens&quot;;&quot;src\Entity&quot;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -112,7 +112,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;..\Engine\include&quot;;&quot;..\RpgLibrary\include&quot;"
+				AdditionalIncludeDirectories="&quot;..\Engine\include&quot;;&quot;..\RpgLibrary\include&quot;;&quot;src&quot;;&quot;src\Screens&quot;;&quot;src\Entity&quot;"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				WarningLevel="3"
@@ -185,10 +185,6 @@
 			</File>
 			<File
 				RelativePath=".\src\Dialogue.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Entity.cpp"
 				>
 			</File>
 			<File
@@ -343,15 +339,31 @@
 				Name="Screens"
 				>
 				<File
-					RelativePath=".\src\GameScreen.cpp"
+					RelativePath=".\src\Screens\BattleScreen.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Screen.cpp"
+					RelativePath=".\src\Screens\GameScreen.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\ScreenManager.cpp"
+					RelativePath=".\src\Screens\MapScreen.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Screens\Screen.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Screens\ScreenManager.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Entity"
+				>
+				<File
+					RelativePath=".\src\Entity\Entity.cpp"
 					>
 				</File>
 			</Filter>
@@ -513,15 +525,23 @@
 				Name="Screens"
 				>
 				<File
-					RelativePath=".\src\GameScreen.h"
+					RelativePath=".\src\Screens\BattleScreen.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Screen.h"
+					RelativePath=".\src\Screens\GameScreen.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\ScreenManager.h"
+					RelativePath=".\src\Screens\MapScreen.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Screens\Screen.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Screens\ScreenManager.h"
 					>
 				</File>
 			</Filter>
@@ -529,19 +549,11 @@
 				Name="Entity"
 				>
 				<File
-					RelativePath=".\src\Character.h"
+					RelativePath=".\src\Entity\Entity.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Entity.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\MonsterCharacter.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\PlayerCharacter.h"
+					RelativePath=".\src\Entity\FloatyText.h"
 					>
 				</File>
 			</Filter>

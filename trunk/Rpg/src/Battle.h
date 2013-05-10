@@ -9,12 +9,6 @@ public:
 };
 
 
-class BattleAction
-{
-public:
-};
-
-
 class Battle
 {
 public:
@@ -37,7 +31,7 @@ private:
 	event_vec_type		m_outroEvents;
 
 	//Sound*				m_bgm;
-	AnimatedSprite		m_background;
+	//AnimatedSprite		m_background;
 
 	//fc::vector<BattleAction*>	m_actions; //??
 
