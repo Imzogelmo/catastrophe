@@ -14,6 +14,7 @@
 #include <Catastrophe/IO/XmlWriter.h>
 #include <Catastrophe/Math/Point.h>
 #include <Catastrophe/Math/Rect.h>
+#include <Catastrophe/Graphics/Texture.h>
 #include <Catastrophe/Graphics/SpriteAnimation.h>
 #include <Catastrophe/Graphics/AnimatedSpriteSet.h>
 #include <Catastrophe/Graphics/Sprite.h>
@@ -72,8 +73,8 @@ void SerializeObject<SpriteAnimation>( XmlWriter* xml, const SpriteAnimation& a 
 	xml->SetUInt("num_frames", a.GetNumFrames());
 	xml->SetInt("offset_x", a.GetFrameOffsetX());
 	xml->SetInt("offset_y", a.GetFrameOffsetY());
-	xml->SetFloat("speed", a.GetAnimationSpeed() );
-	xml->SetInt("flags", a.GetFlags() );
+	xml->SetFloat("speed", a.GetAnimationSpeed());
+	xml->SetInt("flags", a.GetFlags());
 
 	xml->EndNode();
 }
@@ -84,8 +85,11 @@ void SerializeObject<AnimatedSpriteSet>( XmlWriter* xml, const AnimatedSpriteSet
 {
 	xml->BeginNode("AnimatedSpriteSet");
 
+	Texture* texture = s.GetTexture();
+	fc::string texStr = texture ? texture->GetName() : "";
 	size_t count = s.GetNumAnimations();
-	xml->SetString("texture", "");
+
+	xml->SetString("texture", texStr.c_str());
 	xml->SetUInt("num_animations", count);
 	SerializeObject<SpriteBase>(xml, s);
 

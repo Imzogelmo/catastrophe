@@ -24,6 +24,9 @@
 #include "TilesetManager.inl"
 #include "MapManager.inl"
 
+#include "AnimatedSpriteSetAsset.inl"
+
+
 
 ResourceDirectory*	g_resourceDirectory = 0;
 TextureManager*		g_textureManager = 0;
