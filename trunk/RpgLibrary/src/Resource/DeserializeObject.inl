@@ -75,7 +75,7 @@ void DeserializeObject<SpriteBase>( XmlReader* xml, SpriteBase& s )
 template <>
 void DeserializeObject<SpriteAnimation>( XmlReader* xml, SpriteAnimation& a )
 {
-	if( xml->NextChild("SpriteAnimation") )
+	//if( xml->NextChild("SpriteAnimation") )
 	{
 		Rect sourceRect = Rect::Zero;
 		DeserializeObject<Rect>(xml, sourceRect);
@@ -86,7 +86,7 @@ void DeserializeObject<SpriteAnimation>( XmlReader* xml, SpriteAnimation& a )
 		int flags = xml->GetInt("flags");
 
 		a.Create( sourceRect, animSpeed, numFrames, offsetX, offsetY );
-		xml->SetToParent();
+	//	xml->SetToParent();
 	}
 }
 
@@ -96,10 +96,11 @@ void DeserializeObject<AnimatedSpriteSet>( XmlReader* xml, AnimatedSpriteSet& s 
 {
 	fc::string str = xml->GetString("texture");
 	size_t count = xml->GetUInt("num_animations");
-
-	//todo: get texture
 	DeserializeObject<SpriteBase>(xml, s);
 	s.Resize(count);
+
+	Texture* texture = g_textureManager->Load(str);
+	s.SetTexture(texture);
 
 	bool hasAnim = false;
 	for( size_t i(0); i < count; ++i )

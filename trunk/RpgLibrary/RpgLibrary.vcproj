@@ -276,6 +276,14 @@
 				Name="Resource"
 				>
 				<File
+					RelativePath=".\src\Resource\AnimatedSpriteAsset.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Resource\AnimatedSpriteSetAsset.inl"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Resource\DeserializeObject.inl"
 					>
 				</File>
@@ -293,6 +301,10 @@
 				</File>
 				<File
 					RelativePath=".\src\Resource\SerializeObject.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Resource\TextureAsset.inl"
 					>
 				</File>
 				<File
@@ -344,10 +356,6 @@
 			</File>
 			<File
 				RelativePath=".\include\RpgStrings.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\Serialization.h"
 				>
 			</File>
 			<Filter
@@ -462,6 +470,14 @@
 				Name="Resource"
 				>
 				<File
+					RelativePath=".\include\AnimatedSpriteAsset.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\AnimatedSpriteSetAsset.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\MapManager.h"
 					>
 				</File>
@@ -475,6 +491,14 @@
 				</File>
 				<File
 					RelativePath=".\include\ResourceManager.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Serialization.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\TextureAsset.h"
 					>
 				</File>
 				<File

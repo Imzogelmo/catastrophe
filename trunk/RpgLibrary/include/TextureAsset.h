@@ -1,0 +1,43 @@
+// catastrophe rpg engine
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+#pragma once
+
+#include <fc/string.h>
+#include "RpgCommon.h"
+
+
+class RPG_API TextureAsset
+{
+public:
+	TextureAsset();
+	~TextureAsset();
+
+	void SetFilename( const fc::string& filename ) { m_textureFilename = filename; }
+	const fc::string& GetFilename() const { return m_textureFilename; }
+
+	Texture* LoadTexture();
+	void ReleaseTexture();
+
+	// this is called automatically.
+	void Reset();
+	int GetRefCount() const { return m_refCount; }
+
+	void SerializeXml( XmlWriter* xml );
+	void DeserializeXml( XmlReader* xml );
+
+protected:
+	fc::string			m_textureFilename;
+	int					m_textureResourceId;
+	int					m_refCount;
+	bool				m_preload; //todo
+};
+
