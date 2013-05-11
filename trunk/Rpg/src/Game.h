@@ -35,7 +35,7 @@ public:
 	GameSettings() {}
 
 
-	Point	res; //display resolution
+	Point	display_resolution;
 
 };
 

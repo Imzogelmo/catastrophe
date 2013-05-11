@@ -276,6 +276,10 @@
 				Name="Resource"
 				>
 				<File
+					RelativePath=".\src\Resource\DeserializeObject.inl"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Resource\MapManager.inl"
 					>
 				</File>
@@ -285,6 +289,10 @@
 				</File>
 				<File
 					RelativePath=".\src\Resource\ResourceManager.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Resource\SerializeObject.inl"
 					>
 				</File>
 				<File

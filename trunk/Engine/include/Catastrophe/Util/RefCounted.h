@@ -18,29 +18,14 @@
 
 #pragma once
 
-
-struct RefCountedDefaultDeleter
-{
-	inline void operator()( void* const ptr ) const
-	{
-		delete ptr;
-	}
-};
-
-
-struct RefCountedDummyDeleter
-{
-	inline void operator()( void* const ) const
-	{
-	}
-};
-
-
-template <class Deleter = RefCountedDefaultDeleter>
+/*
+ * RefCounted
+ * assignment of inherited classes is undefined.
+ */
 class RefCounted
 {
 public:
-	RefCounted( bool addRef = true ) : m_ref_count(addRef ? 1 : 0) {}
+	RefCounted( int refCount = 1 ) : m_ref_count(refCount) {}
 
 	void AddRef()
 	{
@@ -49,11 +34,12 @@ public:
 
 	void ReleaseRef()
 	{
-		if(--m_ref_count < 1)
-		{
-			Deleter d;
-			d(this);
-		}
+		--m_ref_count;
+	}
+
+	int GetRefCount()
+	{
+		return m_ref_count;
 	}
 
 protected:

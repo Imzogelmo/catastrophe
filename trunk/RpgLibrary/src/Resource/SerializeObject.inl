@@ -79,6 +79,25 @@ void SerializeObject<SpriteAnimation>( XmlWriter* xml, const SpriteAnimation& a 
 }
 
 
+template <>
+void SerializeObject<AnimatedSpriteSet>( XmlWriter* xml, const AnimatedSpriteSet& s )
+{
+	xml->BeginNode("AnimatedSpriteSet");
+
+	size_t count = s.GetNumAnimations();
+	xml->SetString("texture", "");
+	xml->SetUInt("num_animations", count);
+	SerializeObject<SpriteBase>(xml, s);
+
+	for( size_t i(0); i < count; ++i )
+	{
+		SerializeObject<SpriteAnimation>(xml, s.GetAnimation(i));
+	}
+
+	xml->EndNode();
+}
+
+
 /*
 template <>
 void SerializeObject<Sprite>( XmlWriter* xml, const Sprite& s )
