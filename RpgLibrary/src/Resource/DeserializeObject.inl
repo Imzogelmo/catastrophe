@@ -91,7 +91,29 @@ void DeserializeObject<SpriteAnimation>( XmlReader* xml, SpriteAnimation& a )
 }
 
 
+template <>
+void DeserializeObject<AnimatedSpriteSet>( XmlReader* xml, AnimatedSpriteSet& s )
+{
+	fc::string str = xml->GetString("texture");
+	size_t count = xml->GetUInt("num_animations");
 
+	//todo: get texture
+	DeserializeObject<SpriteBase>(xml, s);
+	s.Resize(count);
+
+	bool hasAnim = false;
+	for( size_t i(0); i < count; ++i )
+	{
+		if( xml->NextChild("SpriteAnimation") )
+		{
+			DeserializeObject<SpriteAnimation>(xml, s[i]);
+			hasAnim = true;
+		}
+	}
+
+	if( hasAnim )
+		xml->SetToParent();
+}
 
 
 /*

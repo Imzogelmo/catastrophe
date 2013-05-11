@@ -15,10 +15,11 @@
 #include <fc/string.h>
 
 #include "RpgCommon.h"
+#include "RefCounted.h"
 #include "ResourceDirectory.h"
 
 
-class Resource
+class Resource : public RefCounted
 {
 public:
 	//we don't need a template type for simple pointers.
@@ -28,26 +29,9 @@ public:
 	fc::string		name;
 
 	Resource( pointer p = 0, const fc::string& filename = "" )
-		: ptr(p), name(filename), m_ref_count(1)
+		: RefCounted(), ptr(p), name(filename)
 	{}
 
-	void AddRef()
-	{
-		++m_ref_count;
-	}
-
-	void ReleaseRef()
-	{
-		--m_ref_count;
-	}
-
-	int GetRefCount()
-	{
-		return m_ref_count;
-	}
-
-protected:
-	int m_ref_count;
 };
 
 
