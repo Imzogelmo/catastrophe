@@ -161,10 +161,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\Serialization.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\TileMap.cpp"
 				>
 			</File>

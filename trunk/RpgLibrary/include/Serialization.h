@@ -21,9 +21,20 @@ template <class T> void SerializeObject( XmlWriter* xml, const T& val );
 template <class T> void SerializeObject( const char* nodeName, XmlWriter* xml, const T& val );
 template <class T> void SerializeStringArray( XmlWriter* xml, const char* node, const T* stringArray, int n );
 
+// template specializations
+template <> void SerializeObject<SpriteBase>( XmlWriter* xml, const SpriteBase& val );
+template <> void SerializeObject<SpriteAnimation>( XmlWriter* xml, const SpriteAnimation& val );
+
+
+
 
 template <class T> void DeserializeObject( XmlReader* xml, T& val );
 template <class T> void DeserializeObject( const char* nodeName, XmlReader* xml, T& val );
 template <class T> void DeserializeStringArray( XmlReader* xml, const char* node, T* stringArray, int n );
+
+
+// template specializations
+template <> void DeserializeObject<SpriteBase>( XmlReader* xml, SpriteBase& val );
+template <> void DeserializeObject<SpriteAnimation>( XmlReader* xml, SpriteAnimation& val );
 
 

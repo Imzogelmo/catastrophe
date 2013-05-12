@@ -23,10 +23,10 @@ AnimatedSpriteAsset::AnimatedSpriteAsset() :
 }
 
 
-bool AnimatedSpriteAsset::AquireAnimatedSprite( AnimatedSprite& animatedSpriteRef )
+bool AnimatedSpriteAsset::LoadAnimatedSprite( AnimatedSprite& animatedSpriteRef )
 {
 	Texture* texture = TextureAsset::LoadTexture();
-	AnimatedSpriteSet::SetTexture(texture);
+	AnimatedSprite::SetTexture(texture);
 	if( !texture )
 		return false;
 
@@ -40,7 +40,7 @@ void AnimatedSpriteAsset::ReleaseAnimatedSprite()
 	TextureAsset::ReleaseTexture();
 	if( GetRefCount() < 1 )
 	{
-		AnimatedSpriteSet::SetTexture(0);
+		AnimatedSprite::SetTexture(0);
 	}
 }
 
@@ -61,7 +61,7 @@ void AnimatedSpriteAsset::DeserializeXml( XmlReader* xml )
 {
 	//if( xml->GetNextNode("AnimatedSprite") )
 	{
-		TextureAsset::SerializeXml(xml);
+		TextureAsset::DeserializeXml(xml);
 		DeserializeObject<SpriteBase>(xml, *this);
 		DeserializeObject<SpriteAnimation>(xml, *this);
 	//	xml->SetToParent();
