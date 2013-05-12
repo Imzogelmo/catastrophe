@@ -147,12 +147,11 @@ class Shader;
 class TextureLoader;
 class Viewport;
 
-class AnimationFrames;
-class Animation;
-class AnimationSet;
+class SpriteAnimation;
 class SpriteBase;
 class Sprite;
 class AnimatedSprite;
+class AnimatedSpriteSet;
 class PackedSprite;
 
 struct VertexColor;
@@ -199,6 +198,9 @@ FC_MAKE_TRAIT(VertexColorTexture, is_pod);
 
 FC_MAKE_TRAIT(Glyph, is_pod);
 FC_MAKE_TRAIT(Sprite, is_pod);
+FC_MAKE_TRAIT(SpriteBase, is_pod);
+FC_MAKE_TRAIT(AnimatedSprite, is_pod);
+FC_MAKE_TRAIT(SpriteAnimation, is_pod);
 FC_MAKE_TRAIT(PackedSprite, is_pod);
 
 

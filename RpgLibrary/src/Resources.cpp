@@ -24,8 +24,12 @@
 #include "TilesetManager.inl"
 #include "MapManager.inl"
 
+#include "TextureAsset.inl"
+#include "AnimatedSpriteAsset.inl"
 #include "AnimatedSpriteSetAsset.inl"
 
+#include "SerializeObject.inl"
+#include "DeserializeObject.inl"
 
 
 ResourceDirectory*	g_resourceDirectory = 0;
@@ -52,4 +56,25 @@ void RpgLibShutdown()
 	delete g_mapManager;
 }
 
+
+
+
+void _test()
+{
+	Point p;
+	SerializeObject(0,p);
+	SerializeObject("test",0,p);
+
+	DeserializeObject(0,p);
+	DeserializeObject("test",0,p);
+
+	Rect r;
+	SerializeObject(0,r);
+	SerializeObject("test",0,r);
+
+	DeserializeObject(0,r);
+	DeserializeObject("test",0,r);
+
+
+}
 
