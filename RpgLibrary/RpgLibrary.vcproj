@@ -168,14 +168,6 @@
 				Name="Data"
 				>
 				<File
-					RelativePath=".\src\Data\AttributeFlags.inl"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Data\Attributes.inl"
-					>
-				</File>
-				<File
 					RelativePath=".\src\Data\BattleCommand.inl"
 					>
 				</File>
@@ -184,11 +176,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\Data\Character.inl"
+					RelativePath=".\src\Data\CharacterClass.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Data\CharacterClass.inl"
+					RelativePath=".\src\Data\CharacterData.inl"
 					>
 				</File>
 				<File
@@ -209,6 +201,10 @@
 				</File>
 				<File
 					RelativePath=".\src\Data\ItemDrop.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Data\ItemDropSet.inl"
 					>
 				</File>
 				<File
@@ -312,6 +308,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Attribute"
+				>
+				<File
+					RelativePath=".\src\Data\AttributeFlags.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Data\Attributes.inl"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -319,27 +327,11 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\include\AttributeArray.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\AttributeFlags.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\Attributes.h"
-				>
-			</File>
-			<File
 				RelativePath=".\include\Database.h"
 				>
 			</File>
 			<File
 				RelativePath=".\include\Enums.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\FixedAttributeArray.h"
 				>
 			</File>
 			<File
@@ -366,11 +358,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\Character.h"
+					RelativePath=".\include\CharacterClass.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\CharacterClass.h"
+					RelativePath=".\include\CharacterData.h"
 					>
 				</File>
 				<File
@@ -395,6 +387,10 @@
 				</File>
 				<File
 					RelativePath=".\include\ItemDrop.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\ItemDropSet.h"
 					>
 				</File>
 				<File
@@ -503,6 +499,26 @@
 				</File>
 				<File
 					RelativePath=".\include\TilesetManager.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Attribute"
+				>
+				<File
+					RelativePath=".\include\AttributeArray.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\AttributeFlags.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Attributes.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\FixedAttributeArray.h"
 					>
 				</File>
 			</Filter>

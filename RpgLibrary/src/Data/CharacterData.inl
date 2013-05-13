@@ -12,18 +12,18 @@
 
 #include <Catastrophe/IO/XmlWriter.h>
 #include <Catastrophe/IO/XmlReader.h>
-#include "Character.h"
+#include "CharacterData.h"
 #include "Serialization.h"
 
 
 
-Character::Character() :
+CharacterData::CharacterData() :
 	id(0)
 {
 }
 
 
-void Character::SerializeXml( XmlWriter* xml )
+void CharacterData::SerializeXml( XmlWriter* xml )
 {
 	xml->SetString("name", name.c_str());
 	xml->SetString("script", script.c_str());
@@ -32,7 +32,7 @@ void Character::SerializeXml( XmlWriter* xml )
 }
 
 
-void Character::DeserializeXml( XmlReader* xml )
+void CharacterData::DeserializeXml( XmlReader* xml )
 {
 	name = xml->GetString("name");
 	script = xml->GetString("script");

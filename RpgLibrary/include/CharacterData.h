@@ -13,7 +13,7 @@
 
 #include <fc/string.h>
 #include <fc/tiny_string.h>
-#include <fc/vector.h>
+//#include <fc/vector.h>
 
 #include "RpgCommon.h"
 
@@ -28,13 +28,14 @@ struct RPG_API CharacterData
 	int					race_id;
 	int					class_id;
 
-	int					lv;
-	int					exp;
-	int					gold;
+	// these should be in CharacterClass only...?
 	int					portrait_id;
 	int					map_spriteset_id;
 	int					battle_spriteset_id;
 
+	int					lv;
+	int					exp;
+	int					gold;
 	Attributes			attributes;
 
 	//levelupLearning { id, lv } ..?

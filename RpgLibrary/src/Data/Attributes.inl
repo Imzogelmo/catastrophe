@@ -18,7 +18,7 @@ Attributes Attributes::operator +(const Attributes& rhs) const
 {
 	Attributes ret;
 
-	ret.params = params + rhs.params;
+	ret.max_params = max_params + rhs.max_params;
 	ret.stats = stats + rhs.stats;
 	//ret.elements = elements + rhs.elements;
 	ret.status_atk = status_atk.Add<int>(rhs.status_atk, 0, 100);
@@ -32,7 +32,7 @@ Attributes Attributes::operator -(const Attributes& rhs) const
 {
 	Attributes ret;
 
-	ret.params = params - rhs.params;
+	ret.max_params = max_params - rhs.max_params;
 	ret.stats = stats - rhs.stats;
 	//ret.elements = elements - rhs.elements;
 	ret.status_atk = status_atk.Subtract<int>(rhs.status_atk, 0, 100);
@@ -44,7 +44,7 @@ Attributes Attributes::operator -(const Attributes& rhs) const
 
 Attributes& Attributes::operator +=(const Attributes& rhs)
 {
-	params += rhs.params;
+	max_params += rhs.max_params;
 	stats += rhs.stats;
 
 	//elements += rhs.elements;
@@ -59,7 +59,7 @@ Attributes& Attributes::operator +=(const Attributes& rhs)
 
 Attributes& Attributes::operator -=(const Attributes& rhs)
 {
-	params -= rhs.params;
+	max_params -= rhs.max_params;
 	stats -= rhs.stats;
 	//elements -= rhs.elements;
 	status_atk.SubtractAssign<int>(rhs.status_atk, 0, 100);
@@ -90,15 +90,19 @@ void Attributes::Clamp(const Attributes& min, const Attributes& max)
 
 void Attributes::SerializeXml( XmlWriter* xml )
 {
-	xml->BeginNode("Attributes");
+	xml->BeginNode("MaxParams");
+	xml->WriteBlock(&max_params[0], MAX_PARAMS);
+	xml->EndNode();
+
+	xml->BeginNode("Stats");
 	xml->WriteBlock(&stats[0], MAX_STATS);
 	xml->EndNode();
 
-	xml->BeginNode("Status Atk");
+	xml->BeginNode("StatusAtk");
 	xml->WriteBlock((ubyte*)&status_atk[0], MAX_STATUS);
 	xml->EndNode();
 
-	xml->BeginNode("Status Def");
+	xml->BeginNode("StatusDef");
 	xml->WriteBlock((ubyte*)&status_def[0], MAX_STATUS);
 	xml->EndNode();
 
@@ -113,11 +117,11 @@ void Attributes::DeserializeXml( XmlReader* xml )
 	xml->ReadBlock(&stats[0], MAX_STATS);
 	xml->SetToParent();
 
-	xml->FirstChild("Status Atk");
+	xml->FirstChild("StatusAtk");
 	xml->ReadBlock((ubyte*)&status_atk[0], MAX_STATUS);
 	xml->SetToParent();
 
-	xml->FirstChild("Status Def");
+	xml->FirstChild("StatusDef");
 	xml->ReadBlock((ubyte*)&status_def[0], MAX_STATUS);
 	xml->SetToParent();
 

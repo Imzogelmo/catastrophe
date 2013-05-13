@@ -20,9 +20,9 @@
 
 struct RPG_API Item
 {
-	fc::tiny_string<32>	name;
-	fc::tiny_string<32>	script;
-	fc::string	description;
+	fc::tiny_string32	name;
+	fc::tiny_string32	script;
+	fc::string			description;
 
 	enum ItemFlags
 	{
@@ -51,14 +51,15 @@ struct RPG_API Item
 	int		flags;
 	int		usage_flags; //...
 	//size_t		effect_id;
-	int			sfx;
-	int			icon_id;
-	int			sprite_id;
+
+	int				sfx;
+	int				icon_id;
+	int				sprite_id;
 
 	Item()
 	{}
 
-	fc::tiny_string<32> GetName() const { return name; }
+	fc::tiny_string32 GetName() const { return name; }
 	Attributes GetAttributes() { return attributes; }
 
 	void SerializeXml( XmlWriter* xml );

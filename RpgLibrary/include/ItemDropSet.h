@@ -11,37 +11,31 @@
 
 #pragma once
 
-#include <fc/string.h>
-#include <fc/tiny_string.h>
-
 #include "RpgCommon.h"
-#include "Attributes.h"
-#include "ItemDropSet.h"
+#include "ItemDrop.h"
 
 
-
-struct RPG_API Monster
+class RPG_API ItemDropSet
 {
-	fc::tiny_string32	name;
-	fc::tiny_string32	script;
-	fc::string			description;
+public:
+	ItemDropSet( bool multiple_drops = false );
 
-	int					id;
-	int					spriteset_id;
+	void Add( const ItemDrop& drop );
+	void Remove();
+	void Clear();
+	size_t Size() { return m_size; }
 
-	int					lv;
-	int					exp;
-	int					gold;
-	Attributes			attributes;
-	ItemDropSet			item_dropset;
+	ItemDrop& operator []( size_t index );
+	const ItemDrop& operator []( size_t index ) const;
 
-	Monster()
-	{}
+	virtual void SerializeXml( XmlWriter* xml );
+	virtual void DeserializeXml( XmlReader* xml );
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
+protected:
+	ItemDrop	m_item_drops[MAX_ITEM_DROPS];
+	size_t		m_size;
+	bool		m_allow_multiple_drops;
 
 };
-
 
 
