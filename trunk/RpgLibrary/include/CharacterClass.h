@@ -11,21 +11,25 @@
 
 #pragma once
 
+#include <fc/string.h>
+#include <fc/tiny_string.h>
+
 #include "RpgCommon.h"
 #include "Attributes.h"
 
 
 struct RPG_API CharacterClass
 {
-	fc::string		name;
-	fc::string		script;
-	fc::string		description;
+	fc::tiny_string32	name;
+	fc::tiny_string32	script;
+	fc::string			description;
 
-	Attributes	attributes;
-	int			id;
-	int			exp_table_id; //..levelup data..
-	int			animation_id;
-	int			battle_animation_id;
+	int					id;
+	int					portrait_id;
+	int					map_spriteset_id;
+	int					battle_spriteset_id;
+	int					exp_table_id; //..levelup data..
+	Attributes			attributes;
 
 	CharacterClass();
 

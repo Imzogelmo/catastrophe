@@ -59,7 +59,7 @@ struct Item;
 struct Skill;
 struct Spell;
 struct Race;
-//struct Character;
+struct CharacterData;
 struct CharacterClass;
 struct Monster;
 struct MonsterGroup;
@@ -87,9 +87,9 @@ class RpgStrings;
 
 
 
-#define MAX_ATTRIBS		4
+#define MAX_PARAMS		4
 #define MAX_STATS		16
-#define MAX_ELEMENTS	32
+#define MAX_ELEMENTS	16
 #define MAX_STATUS		32
 #define MAX_MISC		8
 

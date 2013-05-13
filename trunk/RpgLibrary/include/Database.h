@@ -30,7 +30,7 @@
 #include "MonsterTroop.h"
 #include "Encounter.h"
 #include "Race.h"
-#include "Character.h"
+#include "CharacterData.h"
 #include "CharacterClass.h"
 #include "ItemDrop.h"
 #include "LevelData.h"
@@ -76,7 +76,7 @@ public:
 	DataArray<Item>				items;
 	DataArray<Skill>			skills;
 	DataArray<Spell>			spells;
-	DataArray<Character>		characters;
+	DataArray<CharacterData>	characters;
 	DataArray<CharacterClass>	classes;
 	DataArray<Monster>			monsters;
 	DataArray<MonsterTroop>		troops;
@@ -104,7 +104,7 @@ public:
 	Item*			GetItem( int id ) { return GetArrayContent<Item>(items, id); }
 	Skill*			GetSkill( int id ) { return GetArrayContent<Skill>(skills, id); }
 	Spell*			GetSpell( int id ) { return GetArrayContent<Spell>(spells, id); }
-	Character*		GetCharacter( int id ) { return GetArrayContent<Character>(characters, id); }
+	CharacterData*	GetCharacter( int id ) { return GetArrayContent<CharacterData>(characters, id); }
 	CharacterClass*	GetCharacterClass( int id ) { return GetArrayContent<CharacterClass>(classes, id); }
 	Monster*		GetMonster( int id ) { return GetArrayContent<Monster>(monsters, id); }
 	MonsterTroop*	GetMonsterTroop( int id ) { return GetArrayContent<MonsterTroop>(troops, id); }

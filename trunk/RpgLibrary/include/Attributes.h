@@ -16,7 +16,7 @@
 #include "AttributeFlags.h"
 
 
-typedef FixedAttributeArray<int, 8>		ParamValueArrayType;
+typedef FixedAttributeArray<int, MAX_PARAMS>		ParamValueArrayType;
 typedef FixedAttributeArray<short, MAX_STATS>		StatisticsValueArrayType;
 //typedef FixedAttributeArray<short, MAX_ELEMENTS>	ElementalArrayType;
 typedef FixedAttributeArray<sbyte, MAX_STATUS>		StatusArrayType;

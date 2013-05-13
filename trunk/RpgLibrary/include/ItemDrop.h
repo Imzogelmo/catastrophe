@@ -53,27 +53,3 @@ protected:
 };
 
 
-class RPG_API ItemDropSet
-{
-public:
-	ItemDropSet( bool multiple_drops = false );
-
-	void Add( const ItemDrop& drop );
-	void Remove();
-	void Clear();
-	size_t Size() { return m_size; }
-
-	ItemDrop& operator []( size_t index );
-	const ItemDrop& operator []( size_t index ) const;
-
-	virtual void SerializeXml( XmlWriter* xml );
-	virtual void DeserializeXml( XmlReader* xml );
-
-protected:
-	ItemDrop	m_item_drops[MAX_ITEM_DROPS];
-	size_t		m_size;
-	bool		m_allow_multiple_drops;
-
-};
-
-
