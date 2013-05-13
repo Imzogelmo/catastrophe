@@ -16,7 +16,7 @@
 #include "AttributeFlags.h"
 
 
-typedef FixedAttributeArray<int, MAX_ATTRIBS>		AttribValueArrayType;
+typedef FixedAttributeArray<int, 8>		ParamValueArrayType;
 typedef FixedAttributeArray<short, MAX_STATS>		StatisticsValueArrayType;
 //typedef FixedAttributeArray<short, MAX_ELEMENTS>	ElementalArrayType;
 typedef FixedAttributeArray<sbyte, MAX_STATUS>		StatusArrayType;
@@ -27,9 +27,10 @@ struct RPG_API Attributes
 {
 	typedef Attributes			this_type;
 
-	StatisticsValueArrayType	params;
+	ParamValueArrayType			max_params;
 	StatisticsValueArrayType	stats;
-	//ElementalArrayType			elements;
+	//ElementalArrayType			element_atk;
+	//ElementalArrayType			element_def;
 	StatusArrayType				status_atk;
 	StatusArrayType				status_def;
 	//MiscArrayType				misc;

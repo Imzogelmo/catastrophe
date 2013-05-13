@@ -11,6 +11,9 @@
 
 #pragma once
 
+#include <fc/string.h>
+#include <fc/tiny_string.h>
+
 #include "RpgCommon.h"
 #include "Attributes.h"
 #include "ItemDrop.h"
@@ -19,14 +22,17 @@
 
 struct RPG_API Monster
 {
-	fc::string		name;
-	fc::string		script;
-	fc::string		description;
-	Attributes		attributes;
+	fc::tiny_string32	name;
+	fc::tiny_string32	script;
+	fc::string			description;
 
-	//int sprite_index;
-	ItemDropSet		item_dropset;
-	//AnimatedSprite	sprite;
+	int					lv;
+	int					exp;
+	int					gold;
+	int					spriteset_id;
+
+	Attributes			attributes;
+	ItemDropSet			item_dropset;
 
 	Monster()
 	{}
