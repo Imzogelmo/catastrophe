@@ -16,7 +16,6 @@
 #include <fc/fixed_vector.h>
 
 
-
 class RPG_API Map
 {
 public:

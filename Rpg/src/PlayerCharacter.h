@@ -11,27 +11,19 @@
 
 #pragma once
 
-#include <Catastrophe/Graphics/AnimationSet.h>
 #include "Character.h"
-#include "Inventory.h"
-#include "Equipment.h"
-#include "Buff.h"
+#include "CharacterData.h"
 
 
 class PlayerCharacter : public Character
 {
 public:
-	Character( EntityType derivedType = TypePlayerCharacter ) : Character(derivedType) 
+	PlayerCharacter() : Character() 
 	{}
 
-	virtual void Update() {}
-	virtual void Render() {}
 
 protected:
-	AnimationSet	m_animationSet;
-	Equipment		m_equipment;
-	Inventory		m_inventory;
-	BuffSet			m_buffs;
+	int
 
 };
 

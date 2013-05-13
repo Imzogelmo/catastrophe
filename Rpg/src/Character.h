@@ -16,23 +16,38 @@
 #include "BuffSet.h"
 #include "Inventory.h"
 #include "Equipment.h"
-#include "Script/ScriptClass.h"
 
 
-class Character : public Entity
+/*
+class Character
+{
+int id;
+int lv;
+int exp;
+int gold;
+ParamValueArrayType	params;
+
+};
+*/
+
+
+class Character
 {
 public:
-	Character( EntityType derivedType = TypeCharacter )
-		: Entity(derivedType), m_scriptInstance()
+	Character()
 	{}
 
-	virtual void Update() {}
-	virtual void Render() {}
+	//....should be non virtual class..?..
+	//virtual void Update() {}
+	//virtual void Render() {}
 
+	int GetParam( int param ) const;
+	int GetMaxParam( int param ) const;
+	int GetBaseMaxParam( int param ) const;
 	int GetBaseStat( int stat ) const;
-	int GetStat( int stat );
+	int GetStat( int stat ) const;
 	int GetBaseStatusAttackValue( int status ) const;
-	int GetStatusAttackValue( int status );
+	int GetStatusAttackValue( int status ) const;
 
 
 	Attributes& GetAttributes() { return m_attributes; }
@@ -45,11 +60,11 @@ public:
 	const BuffSet& GetBuffs() const { return m_buffs; }
 
 protected:
-	ScriptClass		m_scriptInstance;
-	Attributes		m_attributes;
-	Equipment		m_equipment;
-	Inventory		m_inventory;
-	BuffSet			m_buffs;
+	ParamValueArrayType	m_params;
+	Attributes			m_attributes;
+	Equipment			m_equipment;
+	Inventory			m_inventory;
+	BuffSet				m_buffs;
 
 };
 

@@ -18,7 +18,7 @@
 class MonsterCharacter : public Character
 {
 public:
-	Character( EntityType derivedType = TypeMonsterCharacter ) : Entity(derivedType) 
+	MonsterCharacter() 
 	{}
 
 	virtual void Update() {}

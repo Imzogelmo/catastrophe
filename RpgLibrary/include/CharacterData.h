@@ -12,21 +12,35 @@
 #pragma once
 
 #include <fc/string.h>
+#include <fc/tiny_string.h>
+#include <fc/vector.h>
 
 #include "RpgCommon.h"
 
 
-struct RPG_API Character
+struct RPG_API CharacterData
 {
-	fc::string		name;
-	fc::string		script;
-	fc::string		description;
+	fc::tiny_string32	name;
+	fc::tiny_string32	script;
+	fc::string			description;
 
-	int			id;
-	int			race_id;
-	int			class_id;
+	int					id;
+	int					race_id;
+	int					class_id;
 
-	Character();
+	int					lv;
+	int					exp;
+	int					gold;
+	int					portrait_id;
+	int					map_spriteset_id;
+	int					battle_spriteset_id;
+
+	Attributes			attributes;
+
+	//levelupLearning { id, lv } ..?
+	//fc::vector<int>		spells;
+
+	CharacterData();
 
 	void SerializeXml( XmlWriter* xml );
 	void DeserializeXml( XmlReader* xml );

@@ -18,6 +18,20 @@
 #include "Collision/CollisionFilter.h"
 
 
+enum EntityType
+{
+	EntityType_Entity, //null
+	EntityType_ScriptEntity, //null
+	EntityType_Object = 0x01,
+	EntityType_Character = 0x10,
+	EntityType_PlayerCharacter = EntityType_Character | 0x20,
+	EntityType_MonsterCharacter = EntityType_Character | 0x40
+	EntityType_MonsterCharacter = EntityType_Character | 0x40
+	EntityType_Combatant = 0x10,
+
+};
+
+
 class Entity
 {
 public:
@@ -35,6 +49,7 @@ public:
 	Vector2	pos;
 	Rectf	hitbox;
 	CollisionFilter	filter;
+	bool	alive;
 
 	Entity( EntityType derivedType );
 	virtual ~Entity()
