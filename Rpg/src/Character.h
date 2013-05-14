@@ -37,9 +37,10 @@ public:
 	Character()
 	{}
 
-	//....should be non virtual class..?..
-	//virtual void Update() {}
-	//virtual void Render() {}
+
+	int GetLv() const;
+	int GetExp() const;
+	int GetGold() const;
 
 	int GetParam( int param ) const;
 	int GetMaxParam( int param ) const;
@@ -60,6 +61,9 @@ public:
 	const BuffSet& GetBuffs() const { return m_buffs; }
 
 protected:
+	int					m_lv;
+	int					m_exp;
+	int					m_gold;
 	ParamValueArrayType	m_params;
 	Attributes			m_attributes;
 	Equipment			m_equipment;
