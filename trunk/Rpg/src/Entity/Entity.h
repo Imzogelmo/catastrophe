@@ -26,8 +26,10 @@ enum EntityType
 	EntityType_Character = 0x10,
 	EntityType_PlayerCharacter = EntityType_Character | 0x20,
 	EntityType_MonsterCharacter = EntityType_Character | 0x40
-	EntityType_MonsterCharacter = EntityType_Character | 0x40
-	EntityType_Combatant = 0x10,
+	//EntityType_MonsterCharacter = EntityType_Character | 0x40
+	EntityType_Combatant = 0x100,
+	EntityType_PlayerCombatant = 0x200 | EntityType_Combatant,
+	EntityType_MonsterCombatant = 0x400 | EntityType_Combatant,
 
 };
 
@@ -35,14 +37,6 @@ enum EntityType
 class Entity
 {
 public:
-	enum EntityType
-	{
-		TypeEntity, //null
-		TypeObject = 0x01,
-		TypeCharacter = 0x10,
-		TypePlayerCharacter = TypeCharacter | 0x20,
-		TypeMonsterCharacter = TypeCharacter | 0x40
-	};
 
 	const int type;
 
@@ -59,7 +53,17 @@ public:
 	virtual void Render() {}
 
 
-	inline bool CanCollide( Entity* entity )
+	//inline void SetPosition( const Vector2& position ) { pos = position; }
+	//inline void SetHitbox( const Rectf& rect ) { hitbox = rect; }
+	//inline void SetCollisionFilter( const CollisionFilter& f ) { filter = f; }
+
+	//inline const Vector2& GetPosition() const { return pos; }
+	//inline const Rectf& GetHitbox() const { return hitbox; }
+	//inline const CollisionFilter& GetCollisionFilter() const { return filter; }
+
+	//inline bool IsAlive() const { return alive; }
+
+	inline bool CanCollideWith( Entity* entity )
 	{
 		return filter.CanCollide(entity->filter);
 	}
