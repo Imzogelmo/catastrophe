@@ -11,64 +11,29 @@
 
 #pragma once
 
-#include "Entity.h"
-#include "Buff.h"
-#include "BuffSet.h"
-#include "Inventory.h"
-#include "Equipment.h"
+#include <fc/string.h>
+#include "Actor.h"
+//#include "CharacterData.h"
 
 
-/*
-class Character
-{
-int id;
-int lv;
-int exp;
-int gold;
-ParamValueArrayType	params;
-
-};
-*/
-
-
-class Character
+class Character : public Actor
 {
 public:
-	Character()
+	fc::string	name;
+	fc::string	script;
+
+	int			id; //of base data??
+	int			portait_id;
+	int			map_spriteset_id;
+	int			battle_spriteset_id;
+
+	Character() : Actor() 
 	{}
 
-
-	int GetLv() const;
-	int GetExp() const;
-	int GetGold() const;
-
-	int GetParam( int param ) const;
-	int GetMaxParam( int param ) const;
-	int GetBaseMaxParam( int param ) const;
-	int GetBaseStat( int stat ) const;
-	int GetStat( int stat ) const;
-	int GetBaseStatusAttackValue( int status ) const;
-	int GetStatusAttackValue( int status ) const;
-
-
-	Attributes& GetBaseAttributes() { return m_attributes; }
-	Equipment& GetEquipment() { return m_equipment; }
-	Inventory& GetInventory() { return m_inventory; }
-	BuffSet& GetBuffs() { return m_buffs; }
-	const Attributes& GetBaseAttributes() const { return m_attributes; }
-	const Equipment& GetEquipment() const { return m_equipment; }
-	const Inventory& GetInventory() const { return m_inventory; }
-	const BuffSet& GetBuffs() const { return m_buffs; }
+	void InitializeFromData( int characterDataId );
 
 protected:
-	int					m_lv;
-	int					m_exp;
-	int					m_gold;
-	ParamValueArrayType	m_params;
-	Attributes			m_attributes;
-	Equipment			m_equipment;
-	Inventory			m_inventory;
-	BuffSet				m_buffs;
 
 };
+
 

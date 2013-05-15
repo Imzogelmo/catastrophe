@@ -9,78 +9,18 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#pragma once
-
 #include "Character.h"
+#include "CharacterData.h"
 
 
-
-
-int Character::GetLv() const
+Character::Character() 
 {
-	return m_lv;
 }
 
 
-int Character::GetExp() const
+
+void Character::InitializeFromData( int monsterDataId )
 {
-	return m_exp;
-}
-
-
-int Character::GetGold() const
-{
-	return m_gold;
-}
-
-
-int Character::GetParam( int param ) const
-{
-	return m_params[param];
-}
-
-
-int Character::GetMaxParam( int param ) const
-{
-	if( (unsigned)param >= MAX_PARAMS )
-		param = 
-	return m_attributes.max_params[param] +
-		m_equipment.GetCombinedAttributes().max_params[param] +
-		m_buffs.GetCombinedAttributes().max_params[param];
-}
-
-
-int Character::GetBaseMaxParam( int param ) const
-{
-	return m_attributes.max_params[param];
-}
-
-
-int Character::GetBaseStat( int stat ) const
-{
-	return m_attributes.stats[stat];
-}
-
-
-int Character::GetStat( int stat ) const
-{
-	return m_attributes.stats[stat] +
-		m_equipment.GetCombinedAttributes().stats[stat] +
-		m_buffs.GetCombinedAttributes().stats[stat];
-}
-
-
-int Character::GetBaseStatusAttackValue( int status ) const
-{
-	return m_attributes.status_atk[status];
-}
-
-
-int Character::GetStatusAttackValue( int status ) const
-{
-	return m_attributes.status_atk[status] +
-		m_equipment.GetCombinedAttributes().status_atk[status] +
-		m_buffs.GetCombinedAttributes().status_atk[status];
 }
 
 
