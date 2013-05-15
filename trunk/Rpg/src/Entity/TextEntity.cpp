@@ -11,28 +11,27 @@
 
 #pragma once
 
-#include <fc/string.h>
-
-#include "Actor.h"
-//#include "MonsterData.h"
+#include <Catastrophe/Graphics/SpriteBatch.h>
+#include "TextEntity.h"
 
 
-class Monster : public Actor
+TextEntity::TextEntity( const Vector2& position, const fc::string& text, Font* font, TextAlignment alignment ) :
+	Entity(position),
+	m_text(text),
+	m_font(font),
+	m_color(text),
+	m_textAlignment(alignment)
 {
-public:
-	fc::string	name;
-	fc::string	script;
+	//todo: set hitbox
+}
 
-	int			monster_data_id;
-	int			portait_id;
-	int			map_spriteset_id;
-	int			battle_spriteset_id;
 
-	Monster() 
-	{}
+void TextEntity::Render( SpriteBatch* spriteBatch )
+{
+	spriteBatch->DrawText(pos, m_font, m_text, m_color, m_textAlignment);
+}
 
-	void InitializeFromData( int monsterDataId );
 
-};
+
 
 

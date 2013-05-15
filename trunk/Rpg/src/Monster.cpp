@@ -9,30 +9,18 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#pragma once
-
-#include <fc/string.h>
-
-#include "Actor.h"
-//#include "MonsterData.h"
+#include "Monster.h"
+#include "MonsterData.h"
 
 
-class Monster : public Actor
+Monster::Monster() 
 {
-public:
-	fc::string	name;
-	fc::string	script;
+}
 
-	int			monster_data_id;
-	int			portait_id;
-	int			map_spriteset_id;
-	int			battle_spriteset_id;
 
-	Monster() 
-	{}
 
-	void InitializeFromData( int monsterDataId );
-
-};
+void Monster::InitializeFromData( int monsterDataId )
+{
+}
 
 

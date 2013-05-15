@@ -12,44 +12,34 @@
 #pragma once
 
 #include <fc/vector.h>
-#include <fc/fixed_vector.h>
 
 #include "Common.h"
+#include "BattleAction.h"
 
 
-
-class BattleEvent
+class BattleActionQueue
 {
 public:
+	typedef fc::vector<BattleAction*> vec_type;
 
-};
+	BattleActionQueue();
 
+	void AddAction( BattleAction* action );
+	void RemoveAction( BattleAction* action );
+	void CancelAction( size_t index );
+	void CancelAction( BattleAction* action );
+	void ClearActions();
+	void MoveToFront( BattleAction* action );
 
-class Battle
-{
-public:
-	typedef fc::vector<BattleEvent*>	event_vec_type;
-
-	Battle();
-	~Battle();
-
-	void AddEvent( BattleEvent* battleEvent );
-	void AddOutroEvent( BattleEvent* battleEvent );
-
-	//void SetMusic( Sound* sound );
-	//Sound* GetMusic() const { return m_bgm; }
+	BattleAction* GetCurrentAction();
+	void SetCurrentAction();
+	void RemoveCancelledActions();
+	void Update();
 
 protected:
-	//MonsterTroop	m_monsterParty;
-	//Party			m_party;...?
-
-	event_vec_type		m_eventQueue;
-	event_vec_type		m_outroEvents;
-
-	//Sound*				m_bgm;
-	//AnimatedSprite		m_background;
-
+	vec_type		m_actions;
+	vec_type		m_finishedActions;
+	BattleAction*	m_currentAction;
 
 };
-
 

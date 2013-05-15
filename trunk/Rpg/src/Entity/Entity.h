@@ -21,15 +21,16 @@
 enum EntityType
 {
 	EntityType_Entity, //null
-	EntityType_ScriptEntity, //null
+	EntityType_ScriptEntity,
+	EntityType_TextEntity,
 	EntityType_Object = 0x01,
-	EntityType_Character = 0x10,
-	EntityType_PlayerCharacter = EntityType_Character | 0x20,
-	EntityType_MonsterCharacter = EntityType_Character | 0x40
+	EntityType_Character = 0x100,
+	EntityType_PlayerCharacter = EntityType_Character | 0x200,
+	EntityType_MonsterCharacter = EntityType_Character | 0x400
 	//EntityType_MonsterCharacter = EntityType_Character | 0x40
-	EntityType_Combatant = 0x100,
-	EntityType_PlayerCombatant = 0x200 | EntityType_Combatant,
-	EntityType_MonsterCombatant = 0x400 | EntityType_Combatant,
+	EntityType_Combatant = 0x1000,
+	EntityType_PlayerCombatant = 0x2000 | EntityType_Combatant,
+	EntityType_MonsterCombatant = 0x4000 | EntityType_Combatant,
 
 };
 
