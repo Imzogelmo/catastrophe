@@ -61,7 +61,7 @@ struct Spell;
 struct Race;
 struct CharacterData;
 struct CharacterClass;
-struct Monster;
+struct MonsterData;
 struct MonsterGroup;
 struct MonsterTroop;
 struct Encounter;
@@ -101,6 +101,9 @@ class RpgStrings;
 
 
 #define MAX_ITEM_DROPS	8
+#define MAX_LV			9999
+#define MAX_EXP			999999999
+#define MAX_GOLD		999999999
 
 
 

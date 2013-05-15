@@ -212,10 +212,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\Data\Monster.inl"
-					>
-				</File>
-				<File
 					RelativePath=".\src\Data\MonsterTroop.inl"
 					>
 				</File>
@@ -398,7 +394,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\Monster.h"
+					RelativePath=".\include\MonsterData.h"
 					>
 				</File>
 				<File

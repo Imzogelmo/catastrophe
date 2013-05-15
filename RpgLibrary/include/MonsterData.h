@@ -20,14 +20,15 @@
 
 
 
-struct RPG_API Monster
+struct RPG_API MonsterData
 {
 	fc::tiny_string32	name;
 	fc::tiny_string32	script;
 	fc::string			description;
 
 	int					id;
-	int					spriteset_id;
+	int					map_spriteset_id;
+	int					battle_spriteset_id;
 
 	int					lv;
 	int					exp;
@@ -35,7 +36,7 @@ struct RPG_API Monster
 	Attributes			attributes;
 	ItemDropSet			item_dropset;
 
-	Monster()
+	MonsterData()
 	{}
 
 	void SerializeXml( XmlWriter* xml );
