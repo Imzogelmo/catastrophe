@@ -84,7 +84,7 @@ void SpriteAnimation::SetAnimationSpeed( float animationDelay )
 }
 
 
-void SpriteAnimation::Create( const Rect& sourceRect, int numberOfFrames, int frameOffsetX, int frameOffsetY )
+void SpriteAnimation::Create( const Rect& sourceRectangle, int numberOfFrames, int frameOffsetX, int frameOffsetY )
 {
 	SetNumberOfFrames(numberOfFrames);
 	m_frameOffsetX = (frameOffsetX > 0 ? frameOffsetX : sourceRectangle.Width());
@@ -95,7 +95,7 @@ void SpriteAnimation::Create( const Rect& sourceRect, int numberOfFrames, int fr
 }
 
 
-void SpriteAnimation::Create( const Rect& sourceRect, float animationDelay, int numberOfFrames, int frameOffsetX, int frameOffsetY )
+void SpriteAnimation::Create( const Rect& sourceRectangle, float animationDelay, int numberOfFrames, int frameOffsetX, int frameOffsetY )
 {
 	SetAnimationSpeed(animationDelay);
 	Create(sourceRectangle, numberOfFrames, frameOffsetX, frameOffsetY);

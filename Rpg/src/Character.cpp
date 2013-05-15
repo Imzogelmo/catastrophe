@@ -13,7 +13,8 @@
 #include "CharacterData.h"
 
 
-Character::Character() 
+Character::Character() :
+	Actor() 
 {
 }
 

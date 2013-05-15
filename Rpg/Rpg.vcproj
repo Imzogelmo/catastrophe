@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\Engine\include&quot;;&quot;..\RpgLibrary\include&quot;;&quot;src&quot;;&quot;src\Screens&quot;;&quot;src\Entity&quot;"
+				AdditionalIncludeDirectories="..\Engine\include;..\RpgLibrary\include;src;src\Screens;src\Entity;src\Battle;src\Script"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -112,7 +112,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;..\Engine\include&quot;;&quot;..\RpgLibrary\include&quot;;&quot;src&quot;;&quot;src\Screens&quot;;&quot;src\Entity&quot;"
+				AdditionalIncludeDirectories="..\Engine\include;..\RpgLibrary\include;src;src\Screens;src\Entity;src\Battle;src\Script"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				WarningLevel="3"
@@ -168,7 +168,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\src\BattleActions.cpp"
+				RelativePath=".\src\Actor.cpp"
 				>
 			</File>
 			<File
@@ -181,10 +181,6 @@
 			</File>
 			<File
 				RelativePath=".\src\Character.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Dialogue.cpp"
 				>
 			</File>
 			<File
@@ -201,6 +197,10 @@
 			</File>
 			<File
 				RelativePath=".\src\InventoryItem.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Monster.cpp"
 				>
 			</File>
 			<File
@@ -330,10 +330,6 @@
 			<Filter
 				Name="Util"
 				>
-				<File
-					RelativePath=".\src\Util\Serialization.cpp"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="Screens"
@@ -363,7 +359,51 @@
 				Name="Entity"
 				>
 				<File
+					RelativePath=".\src\Entity\Combatant.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Entity\Entity.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Entity\FloatyText.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Entity\MonsterCombatant.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Entity\Npc.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Entity\Player.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Entity\PlayerCombatant.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Entity\TextEntity.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Battle"
+				>
+				<File
+					RelativePath=".\src\Battle.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\BattleAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\BattleActionQueue.cpp"
 					>
 				</File>
 			</Filter>
@@ -374,11 +414,7 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\src\AttributeStrings.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\BattleActions.h"
+				RelativePath=".\src\Actor.h"
 				>
 			</File>
 			<File
@@ -387,6 +423,10 @@
 			</File>
 			<File
 				RelativePath=".\src\Camera.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Character.h"
 				>
 			</File>
 			<File
@@ -418,6 +458,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\Monster.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Party.h"
 				>
 			</File>
@@ -434,10 +478,6 @@
 				>
 				<File
 					RelativePath=".\src\Script\Bytecode.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Script\Common.h"
 					>
 				</File>
 				<File
@@ -513,10 +553,6 @@
 				Name="Util"
 				>
 				<File
-					RelativePath=".\src\Util\Serialization.h"
-					>
-				</File>
-				<File
 					RelativePath=".\src\Util\StringAlias.h"
 					>
 				</File>
@@ -549,11 +585,55 @@
 				Name="Entity"
 				>
 				<File
+					RelativePath=".\src\Entity\Combatant.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Entity\Entity.h"
 					>
 				</File>
 				<File
 					RelativePath=".\src\Entity\FloatyText.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Entity\MonsterCombatant.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Entity\Npc.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Entity\Player.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Entity\PlayerCombatant.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Entity\ScriptEntity.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Entity\TextEntity.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Battle"
+				>
+				<File
+					RelativePath=".\src\Battle.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\BattleAction.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\BattleActionQueue.h"
 					>
 				</File>
 			</Filter>

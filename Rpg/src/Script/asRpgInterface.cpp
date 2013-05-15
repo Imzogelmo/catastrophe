@@ -15,10 +15,15 @@
 
 #include "asBindUtil.h"
 #include "ScriptEngine.h"
-#include "../Game.h"
+#include "Game.h"
+
+#include "MonsterData.h"
+#include "CharacterData.h"
+
+
 #include "Monster.h"
 #include "Buff.h"
-#include "../Equipment.h"
+#include "Equipment.h"
 
 // TODO: engine <--> script character integration.
 //       
@@ -52,7 +57,7 @@ namespace script
 	#define CLAMP_INDEX(x,y) \
 		if(FC_UNLIKELY(x >= y)) { x = 0; LogDebug("Attribute index out of range."); }
 
-	int AttributesGetParam( size_t index, Attributes* self )
+	int AttributesGetMaxParam( size_t index, Attributes* self )
 	{
 		CLAMP_INDEX(index, MAX_PARAMS);
 		return self->max_params[index];
@@ -151,7 +156,7 @@ void ScriptEngine::RegisterMonster()
 
 
 
-	r = engine->RegisterObjectType( "buff", sizeof(Buff), asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS_CAD ); assert( r >= 0 );
+	r = engine->RegisterObjectType( "buff", sizeof(Buff), asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS_CDA ); assert( r >= 0 );
 	r = engine->RegisterObjectProperty( "buff", "attributes attributes", offsetof(Buff, attributes)); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour( "buff", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(ValueConstruct<Buff>), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour( "buff", asBEHAVE_CONSTRUCT, "void f(const attributes &in)", asFUNCTION(ValueCopyConstruct<Buff>), asCALL_CDECL_OBJLAST); assert( r >= 0 );
@@ -170,7 +175,8 @@ void ScriptEngine::RegisterMonster()
 	r = engine->RegisterObjectBehaviour( "monster_data", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(ValueDestruct<Monster>), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour( "monster_data", asBEHAVE_CONSTRUCT, "void f(const monster_data &in)", asFUNCTION(ValueCopyConstruct<Monster>), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( "monster_data", "monster_data &opAssign(const monster_data &in)", asFUNCTION((ValueAssignment<Monster, Monster>)), asCALL_CDECL_OBJLAST); assert( r >= 0 );
-	r = engine->RegisterObjectProperty( "monster_data", "int id", offsetof(Monster, id)); assert( r >= 0 );
+/*
+	//r = engine->RegisterObjectProperty( "monster_data", "int id", offsetof(Monster, id)); assert( r >= 0 );
 	r = engine->RegisterObjectProperty( "monster_data", "int lv", offsetof(Monster, lv)); assert( r >= 0 );
 	r = engine->RegisterObjectProperty( "monster_data", "int exp", offsetof(Monster, exp)); assert( r >= 0 );
 	r = engine->RegisterObjectProperty( "monster_data", "int gold", offsetof(Monster, gold)); assert( r >= 0 );
@@ -183,7 +189,7 @@ void ScriptEngine::RegisterMonster()
 	//r = engine->RegisterObjectProperty( "monster_data", "string description", offsetof(Monster, description)); assert( r >= 0 );
 	//r = engine->RegisterObjectProperty( "monster_data", "string description", offsetof(Monster, description)); assert( r >= 0 );
 	r = engine->RegisterObjectProperty( "monster_data", "string description", offsetof(Monster, description)); assert( r >= 0 );
-
+*/
 
 
 

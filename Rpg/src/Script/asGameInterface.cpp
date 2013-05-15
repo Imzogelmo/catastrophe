@@ -16,7 +16,7 @@
 #include "TextureManager.h"
 #include "asBindUtil.h"
 #include "ScriptEngine.h"
-#include "../Game.h"
+#include "Game.h"
 
 
 namespace script
