@@ -1,28 +1,17 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C++ Express 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ce-core", "Engine\ce-core.vcxproj", "{8896BFA8-8888-4A61-8225-683568711CD1}"
-	ProjectSection(ProjectDependencies) = postProject
-		{92E877D2-1F0F-4265-8041-005ED766955C} = {92E877D2-1F0F-4265-8041-005ED766955C}
-		{9557A9DF-F752-4983-88CA-CAD03F01905F} = {9557A9DF-F752-4983-88CA-CAD03F01905F}
-	EndProjectSection
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ce-core", "Engine\ce-core.vcproj", "{8896BFA8-8888-4A61-8225-683568711CD1}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tests", "Engine\Tests\Tests.vcxproj", "{F035CA65-94D2-440C-BF4C-F0ECCDBC6ECB}"
-	ProjectSection(ProjectDependencies) = postProject
-		{92E877D2-1F0F-4265-8041-005ED766955C} = {92E877D2-1F0F-4265-8041-005ED766955C}
-		{9557A9DF-F752-4983-88CA-CAD03F01905F} = {9557A9DF-F752-4983-88CA-CAD03F01905F}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tests", "Engine\Tests\Tests.vcproj", "{F035CA65-94D2-440C-BF4C-F0ECCDBC6ECB}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Rpg", "Rpg\Rpg.vcxproj", "{E92EC01E-0F58-45A1-97A0-9C0600830480}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8896BFA8-8888-4A61-8225-683568711CD1} = {8896BFA8-8888-4A61-8225-683568711CD1}
-		{92E877D2-1F0F-4265-8041-005ED766955C} = {92E877D2-1F0F-4265-8041-005ED766955C}
-		{9557A9DF-F752-4983-88CA-CAD03F01905F} = {9557A9DF-F752-4983-88CA-CAD03F01905F}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Rpg", "Rpg\Rpg.vcproj", "{E92EC01E-0F58-45A1-97A0-9C0600830480}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ce-sound", "Engine\ce-sound.vcxproj", "{9557A9DF-F752-4983-88CA-CAD03F01905F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ce-sound", "Engine\ce-sound.vcproj", "{9557A9DF-F752-4983-88CA-CAD03F01905F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ce-system", "Engine\ce-system.vcxproj", "{92E877D2-1F0F-4265-8041-005ED766955C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ce-system", "Engine\ce-system.vcproj", "{92E877D2-1F0F-4265-8041-005ED766955C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RpgLibrary", "RpgLibrary\RpgLibrary.vcproj", "{BE7D9EE6-B32E-4CAA-BF9D-FD031043A7D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +39,10 @@ Global
 		{92E877D2-1F0F-4265-8041-005ED766955C}.Debug|Win32.Build.0 = Debug|Win32
 		{92E877D2-1F0F-4265-8041-005ED766955C}.Release|Win32.ActiveCfg = Release|Win32
 		{92E877D2-1F0F-4265-8041-005ED766955C}.Release|Win32.Build.0 = Release|Win32
+		{BE7D9EE6-B32E-4CAA-BF9D-FD031043A7D2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BE7D9EE6-B32E-4CAA-BF9D-FD031043A7D2}.Debug|Win32.Build.0 = Debug|Win32
+		{BE7D9EE6-B32E-4CAA-BF9D-FD031043A7D2}.Release|Win32.ActiveCfg = Release|Win32
+		{BE7D9EE6-B32E-4CAA-BF9D-FD031043A7D2}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
