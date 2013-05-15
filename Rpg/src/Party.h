@@ -21,9 +21,47 @@
 class PlayerCharacter;
 
 
+
 struct GameClock
 {
+	int elapsed;
+	int hours;
+	int minutes;
+	int seconds;
+
+	GameClock()
+		: elapsed(0), hours(0), minutes(0), seconds(0)
+	{}
+
+	void Tick()
+	{
+		if( ++elapsed % 60 == 0 )
+			if( ++seconds % 60 == 0 )
+				if( ++minutes % 60 == 0 )
+					++hours;
+	}
+
+	int GetTicks() const
+	{
+		return elapsed;
+	}
+
+	int GetHours() const { return hours; }
+	int GetMinutes() const { return minutes; }
+	int GetSeconds() const { return seconds; }
+
+	fc::string GetFormattedText() const
+	{
+		return fc::string(); //todo 
+	}
+
+	int elapsed;
+	int hours;
+	int minutes;
+	int seconds;
+
 };
+
 
 
 struct GameStatistics

@@ -29,6 +29,8 @@ public:
 	virtual int GetStat( int stat ) const = 0;
 	virtual int GetBaseStatusAttackValue( int status ) const = 0;
 	virtual int GetStatusAttackValue( int status ) const = 0;
+	virtual int GetBaseStatusDefValue( int status ) const = 0;
+	virtual int GetStatusDefValue( int status ) const = 0;
 
 
 	virtual Attributes& GetAttributes() = 0;

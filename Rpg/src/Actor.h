@@ -18,38 +18,43 @@
 #include "Equipment.h"
 
 
-/*
-class Character
-{
-int id;
-int lv;
-int exp;
-int gold;
-ParamValueArrayType	params;
-
-};
-*/
 
 
-class Character
+class Actor
 {
 public:
-	Character()
-	{}
-
+	Actor();
 
 	int GetLv() const;
 	int GetExp() const;
 	int GetGold() const;
+
+	void SetLv( int val );
+	void SetExp( int val );
+	void SetGold( int val );
+
+	void AddExp( int val );
+	void AddGold( int val );
+	void RemoveExp( int val );
+	void RemoveGold( int val );
 
 	int GetParam( int param ) const;
 	int GetMaxParam( int param ) const;
 	int GetBaseMaxParam( int param ) const;
 	int GetBaseStat( int stat ) const;
 	int GetStat( int stat ) const;
-	int GetBaseStatusAttackValue( int status ) const;
-	int GetStatusAttackValue( int status ) const;
+	int GetBaseStatusAtk( int status ) const;
+	int GetStatusAtk( int status ) const;
+	int GetBaseStatusDef( int status ) const;
+	int GetStatusDef( int status ) const;
 
+	/*
+	void SetBaseParam( int param, int val );
+	void SetBaseMaxParam( int param, int val );
+	void SetBaseStat( int stat, int val );
+	void SetBaseStatusAtk( int param, int val );
+	void SetBaseStatusDef( int param, int val );
+	*/
 
 	Attributes& GetBaseAttributes() { return m_attributes; }
 	Equipment& GetEquipment() { return m_equipment; }

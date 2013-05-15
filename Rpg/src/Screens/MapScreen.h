@@ -11,28 +11,27 @@
 
 #pragma once
 
-#include <fc/string.h>
-
-#include "Actor.h"
-//#include "MonsterData.h"
+#include "GameScreen.h"
+#include "Map.h"
 
 
-class Monster : public Actor
+/*
+ * MapScreen
+ * 
+ */
+class MapScreen : public GameScreen
 {
 public:
-	fc::string	name;
-	fc::string	script;
-
-	int			monster_data_id;
-	int			portait_id;
-	int			map_spriteset_id;
-	int			battle_spriteset_id;
-
-	Monster() 
+	MapScreen();
+	virtual ~MapScreen()
 	{}
+	
+	virtual void Update();
+	virtual void Render();
 
-	void InitializeFromData( int monsterDataId );
+
+protected:
+	Map*	m_map;
 
 };
-
 

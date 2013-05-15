@@ -9,30 +9,23 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#pragma once
-
-#include <fc/string.h>
-
-#include "Actor.h"
-//#include "MonsterData.h"
+#include "MapScreen.h"
 
 
-class Monster : public Actor
+MapScreen::MapScreen()
+	: GameScreen()
 {
-public:
-	fc::string	name;
-	fc::string	script;
+}
 
-	int			monster_data_id;
-	int			portait_id;
-	int			map_spriteset_id;
-	int			battle_spriteset_id;
 
-	Monster() 
-	{}
+void MapScreen::Update()
+{
+}
 
-	void InitializeFromData( int monsterDataId );
 
-};
+void MapScreen::Render()
+{
+}
+
 
 

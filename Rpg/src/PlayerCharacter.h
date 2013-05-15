@@ -11,19 +11,28 @@
 
 #pragma once
 
-#include "Character.h"
-#include "CharacterData.h"
+#include <fc/string.h>
+#include "Actor.h"
+//#include "CharacterData.h"
 
 
-class PlayerCharacter : public Character
+class Character : public Actor
 {
 public:
-	PlayerCharacter() : Character() 
+	fc::string	name;
+	fc::string	script;
+
+	int			id; //of base data??
+	int			portait_id;
+	int			map_spriteset_id;
+	int			battle_spriteset_id;
+
+	Character() : Actor() 
 	{}
 
+	void InitializeFromData( int characterDataId );
 
 protected:
-	int
 
 };
 

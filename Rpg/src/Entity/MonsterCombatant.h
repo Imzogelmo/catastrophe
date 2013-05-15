@@ -15,11 +15,11 @@
 #include "Character.h"
 
 
-class PlayerCombatant : public Combatant
+class MonsterCombatant : public Combatant
 {
 public:
-	PlayerCombatant( EntityType derivedType = EntityType_PlayerCombatant );
-	virtual ~PlayerCombatant()
+	MonsterCombatant( EntityType derivedType = EntityType_MonsterCombatant );
+	virtual ~MonsterCombatant()
 	{}
 
 	virtual void Update() {}
