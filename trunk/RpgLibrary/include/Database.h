@@ -26,7 +26,7 @@
 #include "Item.h"
 #include "Skill.h"
 #include "Spell.h"
-#include "Monster.h"
+#include "MonsterData.h"
 #include "MonsterTroop.h"
 #include "Encounter.h"
 #include "Race.h"
@@ -78,7 +78,7 @@ public:
 	DataArray<Spell>			spells;
 	DataArray<CharacterData>	characters;
 	DataArray<CharacterClass>	classes;
-	DataArray<Monster>			monsters;
+	DataArray<MonsterData>			monsters;
 	DataArray<MonsterTroop>		troops;
 	DataArray<EncounterGroup>	encounters;
 
@@ -106,7 +106,7 @@ public:
 	Spell*			GetSpell( int id ) { return GetArrayContent<Spell>(spells, id); }
 	CharacterData*	GetCharacter( int id ) { return GetArrayContent<CharacterData>(characters, id); }
 	CharacterClass*	GetCharacterClass( int id ) { return GetArrayContent<CharacterClass>(classes, id); }
-	Monster*		GetMonster( int id ) { return GetArrayContent<Monster>(monsters, id); }
+	MonsterData*	GetMonster( int id ) { return GetArrayContent<MonsterData>(monsters, id); }
 	MonsterTroop*	GetMonsterTroop( int id ) { return GetArrayContent<MonsterTroop>(troops, id); }
 	EncounterGroup*	GetEncounterGroup( int id ) { return GetArrayContent<EncounterGroup>(encounters, id); }
 

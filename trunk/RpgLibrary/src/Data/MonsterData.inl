@@ -12,12 +12,12 @@
 
 #include <Catastrophe/IO/XmlWriter.h>
 #include <Catastrophe/IO/XmlReader.h>
-#include "Monster.h"
+#include "MonsterData.h"
 #include "Serialization.h"
 
 
 
-void Monster::SerializeXml( XmlWriter* xml )
+void MonsterData::SerializeXml( XmlWriter* xml )
 {
 	xml->SetString("name", name.c_str());
 	xml->SetString("script", script.c_str());
@@ -30,7 +30,7 @@ void Monster::SerializeXml( XmlWriter* xml )
 }
 
 
-void Monster::DeserializeXml( XmlReader* xml )
+void MonsterData::DeserializeXml( XmlReader* xml )
 {
 	name = xml->GetString("name");
 	script = xml->GetString("script");

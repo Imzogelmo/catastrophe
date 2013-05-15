@@ -19,7 +19,7 @@
 #include "Buff.inl"
 #include "Skill.inl"
 #include "Spell.inl"
-#include "Monster.inl"
+#include "MonsterData.inl"
 #include "MonsterTroop.inl"
 #include "Encounter.inl"
 #include "Race.inl"
@@ -43,7 +43,7 @@ Database::Database()
 	spells.SetNodeNames("SpellList", "Spell");
 	characters.SetNodeNames("CharacterList", "CharacterData");
 	classes.SetNodeNames("CharacterClassList", "CharacterClass");
-	monsters.SetNodeNames("MonsterList", "Monster");
+	monsters.SetNodeNames("MonsterList", "MonsterData");
 	troops.SetNodeNames("MonsterTroopList", "MonsterTroop");
 	encounters.SetNodeNames("EncounterGroupList", "EncounterGroup");
 }
