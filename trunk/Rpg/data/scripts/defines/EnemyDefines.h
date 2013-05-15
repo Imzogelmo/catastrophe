@@ -1,8 +1,7 @@
 
 #pragma once
 
-
-
+//
 // *** *Note* this file was auto-generated and may contain errors! ***
 //
 // FF Enemy ids.
