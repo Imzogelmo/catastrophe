@@ -55,11 +55,6 @@ struct GameClock
 		return fc::string(); //todo 
 	}
 
-	int elapsed;
-	int hours;
-	int minutes;
-	int seconds;
-
 };
 
 

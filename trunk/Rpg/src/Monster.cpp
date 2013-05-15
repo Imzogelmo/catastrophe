@@ -13,7 +13,8 @@
 #include "MonsterData.h"
 
 
-Monster::Monster() 
+Monster::Monster() :
+	Actor()
 {
 }
 

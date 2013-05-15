@@ -11,28 +11,7 @@
 
 #pragma once
 
-#include <Catastrophe/Graphics/SpriteBatch.h>
-#include "TextEntity.h"
-
-
-TextEntity::TextEntity( const Vector2& position, const fc::string& text, Font* font, TextAlignment alignment ) :
-	Entity(EntityType_TextEntity),
-	m_text(text),
-	m_font(font),
-	m_color(Color::White()),
-	m_textAlignment(alignment)
-{
-	pos = position;
-	//todo: set hitbox
-}
-
-
-void TextEntity::Render( SpriteBatch* spriteBatch )
-{
-	spriteBatch->DrawString(m_font, m_text, pos, m_color, m_textAlignment);
-}
-
-
+#include "BattleAction.h"
 
 
 

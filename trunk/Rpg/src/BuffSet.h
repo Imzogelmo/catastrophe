@@ -32,26 +32,26 @@ public:
 	bool AddBuff( const Buff& buff );
 	void RemoveBuff( size_t index );
 
-	bool Contains( int id )
+	bool Contains( int buff_id )
 	{
-		return Count(id) > 0;
+		return Count(buff_id) > 0;
 	}
 
-	int Count( int id )
+	int Count( int buff_id )
 	{
 		int count = 0;
 		for( vec_type::iterator it = m_buffs.begin(); it != m_buffs.end(); ++it)
-			if( it->id == id )
+			if( it->id == buff_id )
 				count++;
 
 		return count;
 	}
 
 	void Update();
-	void CalculateModifiers();
+	void CalculateModifiers() const;
 	bool IsDirty() const { return m_is_dirty; }
 
-	const Attributes& GetCombinedAttributes();
+	const Attributes& GetCombinedAttributes() const;
 
 	Buff& operator []( size_t index );
 	const Buff& operator []( size_t index ) const;
@@ -59,11 +59,9 @@ public:
 	const Buff& GetBuff( size_t index ) const { return operator[](index); }
 
 protected:
-	vec_type	m_buffs;
-	Attributes	m_combinedBuffAttributes;
-
-	//bool		m_stackMultiplierPolicy;
-	bool		m_is_dirty;
+	vec_type			m_buffs;
+	mutable Attributes	m_combinedBuffAttributes;
+	mutable bool		m_is_dirty;
 
 };
 

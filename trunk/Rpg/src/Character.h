@@ -27,8 +27,7 @@ public:
 	int			map_spriteset_id;
 	int			battle_spriteset_id;
 
-	Character() : Actor() 
-	{}
+	Character();
 
 	void InitializeFromData( int characterDataId );
 

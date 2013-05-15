@@ -23,13 +23,13 @@ Battle::~Battle()
 }
 
 
-void AddEvent( BattleEvent* battleEvent )
+void Battle::AddEvent( BattleEvent* battleEvent )
 {
 	m_eventQueue.push_back(battleEvent);
 }
 
 
-void AddOutroEvent( BattleEvent* battleEvent )
+void Battle::AddOutroEvent( BattleEvent* battleEvent )
 {
 	m_outroEvents.push_back(battleEvent);
 }

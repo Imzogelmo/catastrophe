@@ -71,12 +71,12 @@ void BuffSet::Update()
 }
 
 
-void BuffSet::CalculateModifiers()
+void BuffSet::CalculateModifiers() const
 {
 	// these have to be recalculated fully whenever the list changes.
 	m_combinedBuffAttributes = Attributes();
 
-	for( vec_type::iterator it = m_buffs.begin(); it != m_buffs.end(); ++it)
+	for( vec_type::const_iterator it = m_buffs.begin(); it != m_buffs.end(); ++it)
 	{
 		if( it->type == Buff::TypeModifier )
 		{
@@ -84,7 +84,7 @@ void BuffSet::CalculateModifiers()
 		}
 	}
 
-	for( vec_type::iterator it = m_buffs.begin(); it != m_buffs.end(); ++it)
+	for( vec_type::const_iterator it = m_buffs.begin(); it != m_buffs.end(); ++it)
 	{
 		if( it->type == Buff::TypeMultiplier )
 		{
@@ -96,7 +96,7 @@ void BuffSet::CalculateModifiers()
 }
 
 
-const Attributes& BuffSet::GetCombinedAttributes()
+const Attributes& BuffSet::GetCombinedAttributes() const
 {
 	if( m_is_dirty )
 		CalculateModifiers();

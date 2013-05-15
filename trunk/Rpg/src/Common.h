@@ -44,25 +44,16 @@ USING_NAMESPACE_CE
 	#define RPG_API
 #endif
 
+
+#include "RpgCommon.h"
+
 // forward declarations
-class Tile;
-class Tileset;
-class TilesetManager;
-class Map;
-class MapLayer;
 
-struct AttributeData;
-struct Item;
-struct SpellData;
-struct Monster;
-struct MonsterGroupData;
-struct EncounterData;
-struct CharacterClass;
-struct ExpTable;
+class Actor;
+class Character;
+class Monster;
 
-class MonsterPartyData;
-class EncounterGroupData;
-
+/*
 class ItemList;
 class SpellList;
 class MonsterList;
@@ -71,6 +62,7 @@ class EncounterGroupList;
 class EncounterGroupList;
 class CharacterClassList;
 class ExpTableList;
+*/
 class Database;
 
 
@@ -78,31 +70,49 @@ class Database;
 class InventoryItem;
 class Inventory;
 class Equipment;
-class ItemDrop;
-class ItemDropSet;
 
-class AttributeStrings;
 
+class Game;
 class Screen;
 class ScreenManager;
-class Game;
 class GameScreen;
 class MapScreen;
 
 class RenderEngine;
+
 class Entity;
+class TextEntity;
+class FloatyText;
+class BouncyText;
+class Combatant;
 
 
-class Resource;
-class ResourceCache;
-class ResourceManager;
+
 class ConfigSetting;
 class ConfigFile;
 
-class ScriptEngine;
+
+
+// angelscript forward declarations
+class asIScriptEngine;
+class asIScriptModule;
+class asIScriptContext;
+class asIScriptGeneric;
+class asIScriptObject;
+class asIObjectType;
+class asIScriptFunction;
+class asIBinaryStream;
+class asIJITCompiler;
+struct asSMessageInfo;
+
+
+// script forward declarations
+struct GCStatistics;
+class ScriptGarbage;
 class ContextPool;
-class ScriptClass;
 class ScriptObject;
+class ScriptFunction;
+class ScriptEngine;
 
 
 

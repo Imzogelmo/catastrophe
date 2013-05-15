@@ -17,7 +17,7 @@
 #include "Common.h"
 #include "Collision/CollisionFilter.h"
 
-
+/*
 enum EntityType
 {
 	EntityType_Entity, //null
@@ -26,11 +26,24 @@ enum EntityType
 	EntityType_Object = 0x01,
 	EntityType_Character = 0x100,
 	EntityType_PlayerCharacter = EntityType_Character | 0x200,
-	EntityType_MonsterCharacter = EntityType_Character | 0x400
+	EntityType_MonsterCharacter = EntityType_Character | 0x400,
 	//EntityType_MonsterCharacter = EntityType_Character | 0x40
 	EntityType_Combatant = 0x1000,
 	EntityType_PlayerCombatant = 0x2000 | EntityType_Combatant,
 	EntityType_MonsterCombatant = 0x4000 | EntityType_Combatant,
+
+};
+*/
+
+enum EntityType
+{
+	EntityType_Entity,
+	EntityType_ScriptEntity,
+	EntityType_TextEntity,
+	EntityType_Character,
+	EntityType_Combatant,
+	EntityType_PlayerCombatant,
+	EntityType_MonsterCombatant
 
 };
 

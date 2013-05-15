@@ -28,8 +28,7 @@ public:
 	int			map_spriteset_id;
 	int			battle_spriteset_id;
 
-	Monster() 
-	{}
+	Monster();
 
 	void InitializeFromData( int monsterDataId );
 
