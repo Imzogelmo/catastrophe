@@ -23,6 +23,13 @@
 class Actor
 {
 public:
+	fc::string	name;
+	fc::string	script;
+	int			portait_id;
+	int			map_spriteset_id;
+	int			battle_spriteset_id;
+
+
 	Actor();
 
 	int GetLv() const;

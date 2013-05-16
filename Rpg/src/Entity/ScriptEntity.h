@@ -18,7 +18,7 @@
 class ScriptEntity : public Entity
 {
 public:
-	Character( EntityType derivedType = TypeCharacter )
+	ScriptEntity( EntityType derivedType = EntityType_ScriptEntity )
 		: Entity(derivedType), m_scriptInstance()
 	{}
 

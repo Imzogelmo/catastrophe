@@ -14,7 +14,9 @@
 
 
 
-BattleScreen::BattleScreen( const fc::string& script ) : Screen()
+//BattleScreen::BattleScreen( const fc::string& script ) : Screen()
+BattleScreen::BattleScreen() :
+	Screen()
 {
 }
 
@@ -39,4 +41,54 @@ Battle* BattleScreen::GetCurrentBattle()
 	return 0;
 }
 
+
+BattlePolicy BattleScreen::GetCurrentBattlePolicy()
+{
+	BattlePolicy battlePolicy;
+	Battle* b = GetCurrentBattle();
+	if( b != 0 )
+		battlePolicy = b->GetBattlePolicy();
+
+	return battlePolicy;
+}
+
+
+void BattleScreen::Update()
+{
+	BattlePolicy battlePolicy = GetCurrentBattlePolicy();
+
+	// update players
+	for( player_vec_type::iterator it = m_players.begin(); it != m_players.end(); ++it )
+	{
+		(*it)->Update();
+	}
+
+	// update monsters
+	for( monster_vec_type::iterator it = m_monsters.begin(); it != m_monsters.end(); ++it )
+	{
+		MonsterCombatant* m = *it;
+		m->Update();
+		if( !m->IsAlive() )
+		{
+			if( battlePolicy.ShouldRemoveDeadMonsters() )
+			{
+			}
+		}
+	}
+}
+
+
+void BattleScreen::Render()
+{
+	for( player_vec_type::iterator it = m_players.begin(); it != m_players.end(); ++it )
+	{
+		//(*it)->Render();
+	}
+
+	for( monster_vec_type::iterator it = m_monsters.begin(); it != m_monsters.end(); ++it )
+	{
+		//(*it)->Render();
+	}
+
+}
 

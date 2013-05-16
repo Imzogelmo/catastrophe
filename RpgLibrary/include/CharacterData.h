@@ -12,7 +12,6 @@
 #pragma once
 
 #include <fc/string.h>
-#include <fc/tiny_string.h>
 //#include <fc/vector.h>
 
 #include "RpgCommon.h"
@@ -20,23 +19,23 @@
 
 struct RPG_API CharacterData
 {
-	fc::tiny_string32	name;
-	fc::tiny_string32	script;
-	fc::string			description;
+	fc::string		name;
+	fc::string		script;
+	fc::string		description;
 
-	int					id;
-	int					race_id;
+	int				id;
+	int				race_id;
 	int					class_id;
 
 	// these should be in CharacterClass only...?
-	int					portrait_id;
-	int					map_spriteset_id;
-	int					battle_spriteset_id;
+	int				portrait_id;
+	int				map_spriteset_id;
+	int				battle_spriteset_id;
 
-	int					lv;
-	int					exp;
-	int					gold;
-	Attributes			attributes;
+	int				lv;
+	int				exp;
+	int				gold;
+	Attributes		attributes;
 
 	//levelupLearning { id, lv } ..?
 	//fc::vector<int>		spells;

@@ -13,12 +13,15 @@
 
 #include <fc/string.h>
 #include <fc/vector.h>
+#include <fc/parallel.h>
 #include <fc/fixed_vector.h>
 
 #include "Screen.h"
 #include "Battle.h"
-#include "BattleActions.h"
-
+#include "BattleActionQueue.h"
+#include "Entity.h"
+#include "PlayerCombatant.h"
+#include "MonsterCombatant.h"
 
 
 
@@ -26,6 +29,9 @@ class BattleScreen : public Screen
 {
 public:
 	typedef fc::fixed_vector<Battle*, 16>	battle_vec_type;
+	typedef fc::vector<Entity*>				entity_vec_type;
+	typedef fc::vector<PlayerCombatant*>	player_vec_type;
+	typedef fc::vector<MonsterCombatant*>	monster_vec_type;
 
 	//So...
 	//we need to,
@@ -33,18 +39,30 @@ public:
 	//keep a list (queue) of battles,
 	//update scripts, curent battle, and entities.
 
-	BattleScreen( const fc::string& script );
+	//BattleScreen( const fc::string& script );
+
+	BattleScreen();
 	virtual ~BattleScreen();
 
 	void AddBattle( Battle* battle );
+	//void RemoveBattle( Battle* battle );
 
 	Battle* GetCurrentBattle();
-	BattleActionQueue* GetActionQueue() { return &m_actionQueue; }
+	BattleActionQueue* GetBattleActionQueue() { return &m_actionQueue; }
+	BattlePolicy GetCurrentBattlePolicy();
+
+	void Update();
+	void Render();
 
 protected:
-	//Script	m_script;
 	BattleActionQueue			m_actionQueue;
 	battle_vec_type				m_battles;
+
+	entity_vec_type				m_textEntities;
+	player_vec_type				m_players;
+	monster_vec_type			m_monsters;
+
+
 	//fc::vector<BattleAction*>	m_actions;
 	//fc::vector<Actor*>		m_actors;
 

@@ -22,7 +22,7 @@ public:
 	fc::string	name;
 	fc::string	script;
 
-	int			id; //of base data??
+	int			id;
 	int			portait_id;
 	int			map_spriteset_id;
 	int			battle_spriteset_id;
