@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <Catastrophe/Graphics/AnimatedSpriteSet.h>
 #include "ScriptEntity.h"
 
 
@@ -27,22 +28,22 @@ public:
 	virtual int GetBaseMaxParam( int param ) const = 0;
 	virtual int GetBaseStat( int stat ) const = 0;
 	virtual int GetStat( int stat ) const = 0;
-	virtual int GetBaseStatusAttackValue( int status ) const = 0;
-	virtual int GetStatusAttackValue( int status ) const = 0;
-	virtual int GetBaseStatusDefValue( int status ) const = 0;
-	virtual int GetStatusDefValue( int status ) const = 0;
+	virtual int GetBaseStatusAtk( int status ) const = 0;
+	virtual int GetStatusAtk( int status ) const = 0;
+	virtual int GetBaseStatusDef( int status ) const = 0;
+	virtual int GetStatusDef( int status ) const = 0;
 
 
-	virtual Attributes& GetAttributes() = 0;
+	virtual Attributes& GetBaseAttributes() = 0;
 	virtual Equipment& GetEquipment() = 0;
 	virtual Inventory& GetInventory() = 0;
 	virtual BuffSet& GetBuffs() = 0;
-	virtual const Attributes& GetAttributes() const = 0;
+	virtual const Attributes& GetBaseAttributes() const = 0;
 	virtual const Equipment& GetEquipment() const = 0;
 	virtual const Inventory& GetInventory() const = 0;
 	virtual const BuffSet& GetBuffs() const = 0;
 
-	AnimatedSpriteSet& GetAnimatedSpriteSet { return m_spriteset; }
+	AnimatedSpriteSet& GetAnimatedSpriteSet() { return m_spriteset; }
 	const AnimatedSpriteSet& GetAnimatedSpriteSet() const { return m_spriteset; }
 
 protected:

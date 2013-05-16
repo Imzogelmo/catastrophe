@@ -26,6 +26,7 @@
 #include "CharacterData.inl"
 #include "CharacterClass.inl"
 #include "ItemDrop.inl"
+#include "ItemDropSet.inl"
 #include "Level.inl"
 #include "ExpTable.inl"
 #include "Shops.inl"

@@ -30,14 +30,14 @@ public:
 	int GetBaseMaxParam( int param ) const { return m_character->GetBaseMaxParam(param); }
 	int GetBaseStat( int stat ) const { return m_character->GetBaseStat(stat); }
 	int GetStat( int stat ) const { return m_character->GetStat(stat); }
-	int GetBaseStatusAttackValue( int status ) const { return m_character->GetBaseStatusAttackValue(status); }
-	int GetStatusAttackValue( int status ) const { return m_character->GetStatusAttackValue(status); }
+	int GetBaseStatusAtk( int status ) const { return m_character->GetBaseStatusAtk(status); }
+	int GetStatusAtk( int status ) const { return m_character->GetStatusAtk(status); }
 
-	Attributes& GetAttributes() { return m_character->GetAttributes(); }
+	Attributes& GetBaseAttributes() { return m_character->GetBaseAttributes(); }
 	Equipment& GetEquipment() { return m_character->GetEquipment(); }
 	Inventory& GetInventory() { return m_character->GetInventory(); }
 	BuffSet& GetBuffs() { return m_character->GetBuffs(); }
-	const Attributes& GetAttributes() const { return m_character->GetAttributes(); }
+	const Attributes& GetBaseAttributes() const { return m_character->GetBaseAttributes(); }
 	const Equipment& GetEquipment() const { return m_character->GetEquipment(); }
 	const Inventory& GetInventory() const { return m_character->GetInventory(); }
 	const BuffSet& GetBuffs() const { return m_character->GetBuffs(); }

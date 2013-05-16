@@ -70,6 +70,7 @@ class Database;
 class InventoryItem;
 class Inventory;
 class Equipment;
+class BuffSet;
 
 
 class Game;

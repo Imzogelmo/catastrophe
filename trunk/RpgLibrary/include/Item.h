@@ -12,7 +12,6 @@
 #pragma once
 
 #include <fc/string.h>
-#include <fc/tiny_string.h>
 
 #include "RpgCommon.h"
 #include "Attributes.h"
@@ -20,9 +19,9 @@
 
 struct RPG_API Item
 {
-	fc::tiny_string32	name;
-	fc::tiny_string32	script;
-	fc::string			description;
+	fc::string		name;
+	fc::string		script;
+	fc::string		description;
 
 	enum ItemFlags
 	{
@@ -48,18 +47,17 @@ struct RPG_API Item
 	int			gold;
 	int			spell_id;
 	int			targeting;
-	int		flags;
-	int		usage_flags; //...
+	int			flags;
+	int			usage_flags; //...
 	//size_t		effect_id;
 
-	int				sfx;
-	int				icon_id;
-	int				sprite_id;
+	int			sfx;
+	int			icon_id;
+	int			sprite_id;
 
 	Item()
 	{}
 
-	fc::tiny_string32 GetName() const { return name; }
 	Attributes GetAttributes() { return attributes; }
 
 	void SerializeXml( XmlWriter* xml );

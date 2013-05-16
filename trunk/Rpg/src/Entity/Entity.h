@@ -75,7 +75,7 @@ public:
 	//inline const Rectf& GetHitbox() const { return hitbox; }
 	//inline const CollisionFilter& GetCollisionFilter() const { return filter; }
 
-	//inline bool IsAlive() const { return alive; }
+	inline bool IsAlive() const { return alive; }
 
 	inline bool CanCollideWith( Entity* entity )
 	{

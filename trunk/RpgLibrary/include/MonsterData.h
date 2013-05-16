@@ -12,7 +12,6 @@
 #pragma once
 
 #include <fc/string.h>
-#include <fc/tiny_string.h>
 
 #include "RpgCommon.h"
 #include "Attributes.h"
@@ -22,19 +21,20 @@
 
 struct RPG_API MonsterData
 {
-	fc::tiny_string32	name;
-	fc::tiny_string32	script;
-	fc::string			description;
+	fc::string		name;
+	fc::string		script;
+	fc::string		description;
 
-	int					id;
-	int					map_spriteset_id;
-	int					battle_spriteset_id;
+	int				id;
+	int				portrait_id;
+	int				map_spriteset_id;
+	int				battle_spriteset_id;
 
-	int					lv;
-	int					exp;
-	int					gold;
-	Attributes			attributes;
-	ItemDropSet			item_dropset;
+	int				lv;
+	int				exp;
+	int				gold;
+	Attributes		attributes;
+	ItemDropSet		item_dropset;
 
 	MonsterData()
 	{}

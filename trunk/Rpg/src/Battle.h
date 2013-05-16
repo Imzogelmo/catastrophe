@@ -18,6 +18,21 @@
 
 
 
+struct BattlePolicy
+{
+	bool remove_dead_monsters;
+
+	BattlePolicy() :
+		remove_dead_monsters(true)
+	{}
+
+	bool ShouldRemoveDeadMonsters() const
+	{
+		return remove_dead_monsters;
+	}
+
+};
+
 class BattleEvent
 {
 public:
@@ -39,9 +54,12 @@ public:
 	//void SetMusic( Sound* sound );
 	//Sound* GetMusic() const { return m_bgm; }
 
+	BattlePolicy GetBattlePolicy() const { return m_battlePolicy; }
+
 protected:
 	//MonsterTroop	m_monsterParty;
 	//Party			m_party;...?
+	BattlePolicy		m_battlePolicy;
 
 	event_vec_type		m_eventQueue;
 	event_vec_type		m_outroEvents;
