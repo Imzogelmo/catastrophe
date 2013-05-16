@@ -27,6 +27,7 @@
 void testDrawMapLayer( SpriteBatch* spriteBatch, const MapLayer* layer, const Rect& viewRect );
 void testDrawMapLayerWrap( SpriteBatch* spriteBatch, const MapLayer* layer, const Rect& viewRect );
 void RemoveTileSeparationLines(fc::dynamic_array2d<Color> &pixels, uint tileWidth, uint tileHeight, uint spacing);
+void RemoveSeparationLinesSaveTexture(fc::dynamic_array2d<Color> &pixels, uint tileWidth, uint tileHeight, uint spacing);
 
 GlobalSettings g_settings;
 
@@ -380,6 +381,29 @@ int main(int argc, char* argv[])
 
 	return 0;
 	*/
+	Texture tex6;
+	tex6.LoadFromFile("battlebgs.png");
+	ubyte *p = tex6.GetPixels();
+
+	Image img;
+	img.CreateFromPixels(tex6.Width(), tex6.Height(), p);
+
+	fc::dynamic_array2d<Color> p2;
+	img.CopyPixelArray(p2);
+
+	//fc::replace( p2.begin(), p2.end(), *p2.begin(), Color(0,0,0,0) );
+	RemoveSeparationLinesSaveTexture(p2, 256, 156, 2);
+	//TextureLoader::SaveToFile("h2_t.png", &p2[0], p2.x(), p2.y());
+
+
+	return 0;
+	//RemoveSeparationLinesSaveTexture( fc::dynamic_array2d<Color> &pixels, uint tileWidth, uint tileHeight, uint spacing );
+
+
+
+
+
+
 
 	Texture tex;
 	tex.LoadFromFile("data/textures/tiles/town.png");
@@ -1698,6 +1722,69 @@ void RemoveTileSeparationLines(fc::dynamic_array2d<Color> &pixels, uint tileWidt
 }
 
 
+
+void RemoveSeparationLinesSaveTexture(fc::dynamic_array2d<Color> &pixels, uint tileWidth, uint tileHeight, uint spacing)
+{
+	if( spacing == 0 )
+		return;
+
+	fc::dynamic_array2d<Color> p( pixels.y(), pixels.x() );
+	p.assign( Color::Black(0) );
+
+	const uint w = pixels.x();
+	const uint h = pixels.y();
+
+	uint py(0), xHeigth = tileHeight;
+	for( uint y(0); y < h; ++y )
+	{
+		//horizontal row
+		if( y == xHeigth )
+		{
+			y += spacing - 1;
+			xHeigth += tileHeight + spacing;
+
+			continue;
+		}
+
+		uint px(0), xWidth = tileWidth;
+		for( uint x(0); x < w; ++x )
+		{
+			//vertical row
+			if( x == xWidth )
+			{
+				x += spacing - 1;
+				xWidth += tileWidth + spacing;
+
+				continue;
+			}
+
+			//pixel is part of the tile, copy it.
+			p(py, px) = pixels(y, x);
+
+			++px;
+		}
+		++py;
+	}
+
+	pixels = p;
+
+
+	fc::string str;
+	int ii = 0;
+	fc::dynamic_array2d<Color> ppp;
+	ppp.resize(tileHeight, tileWidth);
+	for( size_t y(0); (y + tileHeight) < p.y(); y += tileHeight )
+	{
+		for( size_t x(0); (x + tileWidth) < p.x(); x += tileWidth )
+		{
+			p.copy_region(x, y, tileWidth, tileHeight, ppp);
+
+			str = fc::to_string(ii) + ".png";
+			TextureLoader::SaveToFile(str, ppp.data(), ppp.x(), ppp.y());
+			++ii;
+		}
+	}
+}
 
 
 
