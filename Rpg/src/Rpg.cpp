@@ -184,11 +184,51 @@ Window* CreateWindow()
 #include "CharacterClass.h"
 
 //MonsterList gMonsterList; //temp for gererating data.
+#include <Catastrophe/Graphics/AnimatedSpriteSet.h>
+#include "Database.h"
 
 
 #include "Map.h"
 
 Map* CreateMapFromImage( const fc::string& directory, const fc::string& filename, Tileset *tileset );
+
+void GenCharSprites()
+{
+	DataArray<AnimatedSpriteSetAsset>	s;
+
+	//s.SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet");
+	//s.DeserializeXml("battle_sprites.xml");
+
+	s.SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet");
+	s.resize(12);
+
+	int y = 0;
+	foreachi(i, 12)
+	{
+		s[i].SetFilename("characters.png");
+		s[i].SetPreload(true);
+		s[i].SetSize( Vector2(24) );
+		s[i].AddAnimation( Rect(0,y,24,24) ); //standing
+		s[i].AddAnimation( Rect(24*1,y,24,24) ); //ready position
+		s[i].AddAnimation( Rect(24*2,y,24,24), 12.f, 2 ); //walking
+		s[i].AddAnimation( Rect(24*2,y,24,24), 6.f, 2 ); //running
+		s[i].AddAnimation( Rect(24*3,y,24,24), 30.f, 2 ); //attack
+		//s[i].AddAnimation( Rect(24*3,y,24,24) ); //attack 1
+		//s[i].AddAnimation( Rect(24*4,y,24,24) ); //attack 2
+		s[i].AddAnimation( Rect(24*5,y,24,24), 15.f, 2 ); //chanting
+		s[i].AddAnimation( Rect(24*7,y,24,24) ); //cast
+		s[i].AddAnimation( Rect(24*7,y,24,24), 15.f, 2 ); //victory
+		s[i].AddAnimation( Rect(24*9,y,24,24) ); //crit
+		s[i].AddAnimation( Rect(24*10,y,24,24) ); //hit
+		s[i].AddAnimation( Rect(24*11,y,24,24) ); //dead
+
+		y += 24;
+	}
+
+	s.SerializeXml("battle_sprites.xml");
+}
+
+
 
 
 void DoTests()
@@ -381,6 +421,7 @@ int main(int argc, char* argv[])
 
 	return 0;
 	*/
+	/*
 	Texture tex6;
 	tex6.LoadFromFile("battlebgs.png");
 	ubyte *p = tex6.GetPixels();
@@ -395,9 +436,9 @@ int main(int argc, char* argv[])
 	RemoveSeparationLinesSaveTexture(p2, 256, 156, 2);
 	//TextureLoader::SaveToFile("h2_t.png", &p2[0], p2.x(), p2.y());
 
-
+*/
+	GenCharSprites();
 	return 0;
-	//RemoveSeparationLinesSaveTexture( fc::dynamic_array2d<Color> &pixels, uint tileWidth, uint tileHeight, uint spacing );
 
 
 

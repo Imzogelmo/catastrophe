@@ -27,6 +27,9 @@ public:
 	Texture* LoadTexture();
 	void ReleaseTexture();
 
+	void SetPreload( bool enable = true ) { m_preload = enable; }
+	int GetPreload() const { return m_preload; }
+
 	// this is called automatically.
 	void Reset();
 	int GetRefCount() const { return m_refCount; }

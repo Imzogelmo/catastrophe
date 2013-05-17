@@ -39,6 +39,10 @@
 #include "Enhancement.h"
 #include "Synthesis.h"
 
+#include "AnimatedSpriteAsset.h"
+#include "AnimatedSpriteSetAsset.h"
+
+
 
 template <class T>
 class DataArray : public fc::dynamic_array<T>
@@ -82,6 +86,10 @@ public:
 	DataArray<MonsterTroop>		troops;
 	DataArray<EncounterGroup>	encounters;
 
+
+	DataArray<AnimatedSpriteSetAsset>	character_battle_sprites;
+	DataArray<AnimatedSpriteSetAsset>	monster_battle_sprites;
+
 	//todo:
 	//monster sprites
 	//battle sprites
@@ -95,8 +103,20 @@ public:
 	//music
 	//sfx
 
+	/// Sets all node names to default. (This should never need to be used)
+	void SetAllDefaultDataArrayNodeNames();
+
+	/// Save the entire database to xml. This will override any existing files.
+	bool SerializeAllDataXml();
+
+	/// Load the entire database from xml files.
+	bool DeserializeAllDataXml();
+
+	/// Called internally by DataArray. (This also keep the header files clean) ;)
 	template <class T> static bool SerializeDataArray( T& arr, const fc::string& filename, const char* root, const char* item );
 	template <class T> static bool DeserializeDataArray( T& arr, const fc::string& filename, const char* root, const char* item );
+
+	/// *Safe* lookup of data by id. If the id is invalid it will return null.
 	template <class T> static inline T* GetArrayContent( DataArray<T>& arr, int id ) {
 		return (size_t)id < arr.size() ? &arr[id] : (T*)0;
 	}
@@ -111,6 +131,8 @@ public:
 	EncounterGroup*	GetEncounterGroup( int id ) { return GetArrayContent<EncounterGroup>(encounters, id); }
 
 
+	//template <> static bool SerializeDataArray< DataArray<AnimatedSpriteSetAsset> >
+	//	( DataArray<AnimatedSpriteSetAsset>& arr, const fc::string& filename, const char* root, const char* item );
 
 
 private:
@@ -127,7 +149,7 @@ template <class T>
 bool DataArray<T>::SerializeXml( const fc::string& filename ) {
 	ASSERT(root_name != 0);
 	ASSERT(item_name != 0);
-	return Database::SerializeDataArray( *base_type, filename, root_name, item_name );
+	return Database::SerializeDataArray( *this, filename, root_name, item_name );
 }
 
 
@@ -135,6 +157,12 @@ template <class T>
 bool DataArray<T>::DeserializeXml( const fc::string& filename ) {
 	ASSERT(root_name != 0);
 	ASSERT(item_name != 0);
-	return Database::DeserializeDataArray( *base_type, filename, root_name, item_name );
+	return Database::DeserializeDataArray( *this, filename, root_name, item_name );
 }
 
+/*
+template <>
+bool DataArray<AnimatedSpriteSetAsset>::SerializeXml( const fc::string& filename ) {
+	return Database::SerializeDataArray< DataArray<AnimatedSpriteSetAsset> >( *this, filename, root_name, item_name );
+}
+*/

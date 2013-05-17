@@ -94,15 +94,21 @@ void TextureAsset::Reset()
 
 void TextureAsset::SerializeXml( XmlWriter* xml )
 {
+	xml->BeginNode("Asset");
 	xml->SetString("texture", m_textureFilename.c_str());
 	xml->SetBool("preload", m_preload);
+	xml->EndNode();
 }
 
 
 void TextureAsset::DeserializeXml( XmlReader* xml )
 {
-	m_textureFilename = xml->GetString("texture");
-	m_preload = xml->GetBool("preload");
+	if( xml->NextChild("Asset") )
+	{
+		m_textureFilename = xml->GetString("texture");
+		m_preload = xml->GetBool("preload");
+		xml->SetToParent();
+	}
 
 	Reset();
 }

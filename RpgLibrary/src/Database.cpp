@@ -39,6 +39,19 @@
 
 Database::Database()
 {
+	// this must always be called on init.
+	SetAllDefaultDataArrayNodeNames();
+}
+
+
+Database::~Database()
+{
+}
+
+
+void Database::SetAllDefaultDataArrayNodeNames()
+{
+	/*
 	items.SetNodeNames("ItemList", "Item");
 	skills.SetNodeNames("SkillList", "Skill");
 	spells.SetNodeNames("SpellList", "Spell");
@@ -47,11 +60,29 @@ Database::Database()
 	monsters.SetNodeNames("MonsterList", "MonsterData");
 	troops.SetNodeNames("MonsterTroopList", "MonsterTroop");
 	encounters.SetNodeNames("EncounterGroupList", "EncounterGroup");
+	*/
+
+	character_battle_sprites.SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet");
+	monster_battle_sprites.SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet");
+
 }
 
 
-Database::~Database()
+bool Database::SerializeAllDataXml()
 {
+	//todo: need filenames
+	character_battle_sprites.SerializeXml("");
+
+	return false;
+}
+
+
+bool Database::DeserializeAllDataXml()
+{
+	//todo: need filenames
+	character_battle_sprites.DeserializeXml("");
+
+	return false;
 }
 
 

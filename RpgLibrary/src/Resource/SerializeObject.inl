@@ -67,23 +67,23 @@ void SerializeObject<SpriteBase>( XmlWriter* xml, const SpriteBase& s )
 template <>
 void SerializeObject<SpriteAnimation>( XmlWriter* xml, const SpriteAnimation& a )
 {
-	xml->BeginNode("SpriteAnimation");
+	//xml->BeginNode("SpriteAnimation");
 
 	SerializeObject<Rect>(xml, a.GetSourceRect());
-	xml->SetUInt("num_frames", a.GetNumFrames());
+	xml->SetUInt("frames", a.GetNumFrames());
 	xml->SetInt("offset_x", a.GetFrameOffsetX());
 	xml->SetInt("offset_y", a.GetFrameOffsetY());
 	xml->SetFloat("speed", a.GetAnimationSpeed());
 	xml->SetInt("flags", a.GetFlags());
 
-	xml->EndNode();
+	//xml->EndNode();
 }
 
 
 template <>
 void SerializeObject<AnimatedSpriteSet>( XmlWriter* xml, const AnimatedSpriteSet& s )
 {
-	xml->BeginNode("AnimatedSpriteSet");
+	//xml->BeginNode("AnimatedSpriteSet");
 
 	Texture* texture = s.GetTexture();
 	fc::string texStr = texture ? texture->GetName() : "";
@@ -91,14 +91,14 @@ void SerializeObject<AnimatedSpriteSet>( XmlWriter* xml, const AnimatedSpriteSet
 
 	xml->SetString("texture", texStr.c_str());
 	xml->SetUInt("num_animations", count);
-	SerializeObject<SpriteBase>(xml, s);
+	SerializeObject<SpriteBase>("SpriteBase", xml, s);
 
 	for( size_t i(0); i < count; ++i )
 	{
 		SerializeObject<SpriteAnimation>(xml, s.GetAnimation(i));
 	}
 
-	xml->EndNode();
+	//xml->EndNode();
 }
 
 
