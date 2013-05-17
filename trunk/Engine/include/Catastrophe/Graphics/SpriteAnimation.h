@@ -49,10 +49,17 @@ public:
 	void SetNumberOfFrames( int frames );
 	void Update();
 
-	//inline void SetPaused( bool pause = true ) { m_flags = (m_flags & 4) != 0; };
-	//inline void SetLooping( bool loop = true ) { m_loop = loop; };
-	//inline bool IsPaused() const { return (m_flags & 4) != 0; };
-	//inline bool IsLooping() const { return m_loop; };
+	//void SetFlipX( bool flip = true );
+	//void SetFlipHorizontal( bool flip = true );
+	//void SetFlipVertical( bool flip = true );
+	void SetPaused( bool pause = true );
+	void SetLooping( bool loop = true );
+	inline void SetFrameOffsetX( int offsetX ) { m_frameOffsetX = offsetX; }
+	inline void SetFrameOffsetY( int offsetY ) { m_frameOffsetY = offsetY; }
+	//inline bool IsFlippedHorizontal() const { return (m_flags & 1) != 0; };
+	//inline bool IsFlippedVertical() const { return (m_flags & 2) != 0; };
+	inline bool IsPaused() const { return (m_flags & 4) != 0; };
+	inline bool IsLooping() const { return (m_flags & 8) == 0; };
 	inline bool IsAnimated() const { return m_numFrames > 1; };
 	bool IsFinished() const;
 

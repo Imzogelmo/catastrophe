@@ -184,7 +184,7 @@ void SpriteAnimation::SetCurrentFrame( size_t index )
 
 void SpriteAnimation::Update()
 {
-	if( m_numFrames > 1 )
+	if( m_numFrames > 1 && !IsPaused() )
 	{
 		m_frameCounter += 16;
 		if( m_frameCounter >= m_frameSpeed )
@@ -199,6 +199,21 @@ void SpriteAnimation::Update()
 			SetCurrentFrame(m_currentFrame);
 		}
 	}
+}
+
+
+void SpriteAnimation::SetPaused( bool pause )
+{
+	if( pause ) m_flags |= 4;
+	else m_flags &= ~4;
+}
+
+
+void SpriteAnimation::SetLooping( bool loop )
+{
+	// loop when no bit is set.
+	if( loop ) m_flags &= ~8;
+	else m_flags |= 8;
 }
 
 
