@@ -77,43 +77,104 @@ public:
 
 
 
-
-/*
-class Sprite
+//----------------------------------
+// * Sprite
+//----------------------------------
+class sprite
 {
 public:
 	vec2 size;
 	vec2 scale;
+	color color;
+	blendmode blendmode;
 	float angle;
-	color tint;
+	rectf uv;
 
-	Sprite();
-	Sprite( const Sprite& );
-	Sprite( int sprite_index );
+	sprite();
+	sprite(const sprite&);
+	sprite &operator =(const sprite&);
 
-	Sprite &operator = ( const Sprite& );
+};
 
-	//getters
-	bool is_animated() const;
-	float get_animation_speed() const;
-	int get_num_frames() const;
-	int get_frame() const;
-	int get_layer() const;
-	int get_index() const;
 
-	//setters
-	void set_animation_speed(float speed);
-	void set_frame(int frame);
-	void set_layer(int layer);
-	void set_index(int sprite_index);
 
-	void flip(int flags);
-	void animate();
-
-protected:
+//----------------------------------
+// * SpriteAnimation
+//----------------------------------
+class sprite_animation 
+{
+public:
 	int animation_speed;
 	int frame;
-	int layer;
-	int index;
+	int num_frames;
+	rect source_rect;
+	rectf uv;
+
+
+	bool is_animated() const;
+	//void flip(int flags);
+
 };
-*/
+
+
+//----------------------------------
+// * AnimatedSprite
+//----------------------------------
+class animated_sprite : public sprite_animation
+{
+public:
+	vec2 size;
+	vec2 scale;
+	color color;
+	blendmode blendmode;
+	float angle;
+
+	animated_sprite();
+	animated_sprite(const animated_sprite&);
+	animated_sprite &operator =(const sprite&);
+	animated_sprite &operator =(const animated_sprite&);
+
+};
+
+
+//----------------------------------
+// * AnimatedSpriteSet
+//----------------------------------
+class animated_spriteset
+{
+public:
+	sprite_animation animation[];
+	vec2 size;
+	vec2 scale;
+	color color;
+	blendmode blendmode;
+	float angle;
+	int num_animations; //get
+	int state;
+
+	animated_spriteset();
+	animated_spriteset(const animated_spriteset&);
+	animated_spriteset &operator =(const animated_spriteset&);
+
+	//void add_animation(const rect& sourceRect, float speed, int numFrames, int frameOffsetX, int frameOffsetY);
+	//void remove_animation(int index);
+
+};
+
+
+
+void f()
+{
+	pos + sprite.size / 2f;
+
+	spriteset s;
+	spriteset[4].frame = 3;
+
+	spriteset.state = WALKING;
+	int n = spriteset.animation[WALKING].num_frames;
+
+
+
+}
+
+

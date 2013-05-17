@@ -91,6 +91,13 @@ void ScriptEngine::MessageCallback( const asSMessageInfo *msg, void *param )
 }
 
 
+void ScriptEngine::SetException( const fc::string &str )
+{
+	asIScriptContext* context = asGetActiveContext();
+	SetException(context, str);
+}
+
+
 void ScriptEngine::SetException( asIScriptContext *ctx, const fc::string &str )
 {
 	ctx->SetException(str.c_str());

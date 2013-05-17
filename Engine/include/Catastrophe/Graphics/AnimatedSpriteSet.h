@@ -59,6 +59,7 @@ public:
 
 	inline bool Empty() const { return m_animations.empty(); }
 	inline size_t GetNumAnimations() const { return m_animations.size(); }
+	inline size_t GetCurrentAnimationIndex() const { return m_currentAnimation; }
 	inline Texture* GetTexture() const { return m_texture; }
 	gluint GetTextureID() const;
 

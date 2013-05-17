@@ -31,6 +31,7 @@ public:
 
 	int Compile( const fc::string& filename, const fc::vector<fc::string>& _Args );
 
+	NO_INLINE void SetException( const fc::string& str = "" );
 	NO_INLINE void SetException( asIScriptContext *ctx, const fc::string& str = "" );
 	NO_INLINE void LogException( asIScriptContext *ctx );
 
@@ -86,9 +87,12 @@ private:
 	void RegisterTexture();
 	void RegisterFont();
 	void RegisterVertex();
-	template <class T> void RegisterSpriteBase( const char* name );
+	template <class T> void RegisterSpriteBase( const char* name, int extraClassFlags = 0 );
+	template <class T> void RegisterSpriteAnimationBase( const char* name );
 	void RegisterSprite();
+	void RegisterSpriteAnimation();
 	void RegisterAnimatedSprite();
+	void RegisterAnimatedSpriteSet();
 
 	//sound
 	void RegisterSoundInterface();
