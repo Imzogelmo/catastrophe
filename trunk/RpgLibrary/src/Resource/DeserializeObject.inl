@@ -57,7 +57,7 @@ void DeserializeObject<Rect>( XmlReader* xml, Rect& val )
 template <>
 void DeserializeObject<SpriteBase>( XmlReader* xml, SpriteBase& s )
 {
-	if( xml->NextChild("SpriteBase") )
+	//if( xml->NextChild("SpriteBase") )
 	{
 		s.size.x = (float)xml->GetInt("width");
 		s.size.y = (float)xml->GetInt("height");
@@ -67,7 +67,7 @@ void DeserializeObject<SpriteBase>( XmlReader* xml, SpriteBase& s )
 		s.color.packed_value = xml->GetUInt("color", Color::White().packed_value);
 		s.blendmode.value = xml->GetUInt("blendmode", BlendMode::Alpha.value);
 
-		xml->SetToParent();
+	//	xml->SetToParent();
 	}
 }
 
@@ -79,7 +79,7 @@ void DeserializeObject<SpriteAnimation>( XmlReader* xml, SpriteAnimation& a )
 	{
 		Rect sourceRect = Rect::Zero;
 		DeserializeObject<Rect>(xml, sourceRect);
-		int numFrames = xml->GetInt("num_frames", 1);
+		int numFrames = xml->GetInt("frames", 1);
 		int offsetX = xml->GetInt("offset_x");
 		int offsetY = xml->GetInt("offset_y");
 		float animSpeed = xml->GetFloat("speed", 16.f);

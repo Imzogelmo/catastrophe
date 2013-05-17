@@ -47,29 +47,29 @@ void AnimatedSpriteSetAsset::ReleaseAnimatedSpriteSet()
 
 void AnimatedSpriteSetAsset::SerializeXml( XmlWriter* xml )
 {
-	xml->BeginNode("AnimatedSpriteSet");
-
-	TextureAsset::SerializeXml(xml);
-	SerializeObject<SpriteBase>(xml, *this);
+	//xml->BeginNode("AnimatedSpriteSet");
 
 	size_t count = AnimatedSpriteSet::GetNumAnimations();
 	xml->SetUInt("num_animations", count);
 
+	TextureAsset::SerializeXml(xml);
+	SerializeObject<SpriteBase>("SpriteBase", xml, *this);
+
 	for( size_t i(0); i < count; ++i )
 	{
-		SerializeObject<SpriteAnimation>(xml, AnimatedSpriteSet::GetAnimation(i));
+		SerializeObject<SpriteAnimation>("SpriteAnimation", xml, AnimatedSpriteSet::GetAnimation(i));
 	}
 
-	xml->EndNode();
+	//xml->EndNode();
 }
 
 
 void AnimatedSpriteSetAsset::DeserializeXml( XmlReader* xml )
 {
-	TextureAsset::DeserializeXml(xml);
-	DeserializeObject<SpriteBase>(xml, *this);
-
 	size_t count = xml->GetUInt("num_animations");
+
+	TextureAsset::DeserializeXml(xml);
+	DeserializeObject<SpriteBase>("SpriteBase", xml, *this);
 	AnimatedSpriteSet::Resize(count);
 
 	bool nested = false;
