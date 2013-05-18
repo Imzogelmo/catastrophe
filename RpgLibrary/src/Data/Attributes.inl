@@ -113,19 +113,61 @@ void Attributes::SerializeXml( XmlWriter* xml )
 
 void Attributes::DeserializeXml( XmlReader* xml )
 {
-	xml->FirstChild("Attributes");
-	xml->ReadBlock(&stats[0], MAX_STATS);
-	xml->SetToParent();
 
-	xml->FirstChild("StatusAtk");
-	xml->ReadBlock((ubyte*)&status_atk[0], MAX_STATUS);
-	xml->SetToParent();
+	if( xml->FirstChild("MaxParams") )
+	{
+		xml->ReadBlock(&max_params[0], MAX_PARAMS);
+		xml->SetToParent();
+	}
 
-	xml->FirstChild("StatusDef");
-	xml->ReadBlock((ubyte*)&status_def[0], MAX_STATUS);
-	xml->SetToParent();
+	if( xml->FirstChild("Stats") )
+	{
+		xml->ReadBlock(&stats[0], MAX_STATS);
+		xml->SetToParent();
+	}
+
+	if( xml->FirstChild("StatusAtk") )
+	{
+		xml->ReadBlock((ubyte*)&status_atk[0], MAX_STATUS);
+		xml->SetToParent();
+	}
+
+	if( xml->FirstChild("StatusDef") )
+	{
+		xml->ReadBlock((ubyte*)&status_def[0], MAX_STATUS);
+		xml->SetToParent();
+	}
 
 	//attribute_flags.DeserializeXml(xml);
 
 }
 
+/*
+void Attributes::DeserializeXml( XmlReader* xml )
+{
+	temp[0] = temp[1] = temp[2] = 0;
+
+	int a[32];
+	xml->FirstChild("Attributes");
+	xml->ReadBlock(&a[0], 32);
+	xml->SetToParent();
+
+	temp[0] = a[0];
+	temp[1] = a[1];
+	temp[2] = a[2];
+
+	max_params[0] = a[4];
+
+	for(int i(0); i<16; ++i)
+	{
+		stats[i] = a[i + 8];
+	}
+
+	//xml->FirstChild("Attributes");
+	//xml->ReadBlock(&stats[0], MAX_STATS);
+	//xml->SetToParent();
+
+	//attribute_flags.DeserializeXml(xml);
+
+}
+*/

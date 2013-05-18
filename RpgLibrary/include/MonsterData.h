@@ -36,8 +36,7 @@ struct RPG_API MonsterData
 	Attributes		attributes;
 	ItemDropSet		item_dropset;
 
-	MonsterData()
-	{}
+	MonsterData();
 
 	void SerializeXml( XmlWriter* xml );
 	void DeserializeXml( XmlReader* xml );

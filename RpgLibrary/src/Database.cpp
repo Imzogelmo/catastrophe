@@ -55,9 +55,9 @@ void Database::SetAllDefaultDataArrayNodeNames()
 	items.SetNodeNames("ItemList", "Item");
 	skills.SetNodeNames("SkillList", "Skill");
 	spells.SetNodeNames("SpellList", "Spell");
-	characters.SetNodeNames("CharacterList", "CharacterData");
+	characters.SetNodeNames("CharacterList", "Character");
 	classes.SetNodeNames("CharacterClassList", "CharacterClass");
-	monsters.SetNodeNames("MonsterList", "MonsterData");
+	monsters.SetNodeNames("MonsterList", "Monster");
 	troops.SetNodeNames("MonsterTroopList", "MonsterTroop");
 	encounters.SetNodeNames("EncounterGroupList", "EncounterGroup");
 	*/
@@ -71,6 +71,9 @@ void Database::SetAllDefaultDataArrayNodeNames()
 bool Database::SerializeAllDataXml()
 {
 	//todo: need filenames
+	monsters.SerializeXml("");
+
+
 	character_battle_sprites.SerializeXml("");
 
 	return false;
@@ -80,6 +83,9 @@ bool Database::SerializeAllDataXml()
 bool Database::DeserializeAllDataXml()
 {
 	//todo: need filenames
+	monsters.DeserializeXml("");
+
+
 	character_battle_sprites.DeserializeXml("");
 
 	return false;
