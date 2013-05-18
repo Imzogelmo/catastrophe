@@ -89,7 +89,7 @@ class RpgStrings;
 
 #define MAX_PARAMS		4
 #define MAX_STATS		16
-#define MAX_ELEMENTS	16
+#define MAX_ELEMENTS	8
 #define MAX_STATUS		32
 #define MAX_MISC		8
 

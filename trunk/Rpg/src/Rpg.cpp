@@ -363,6 +363,22 @@ int main(int argc, char* argv[])
 
 	RpgLibInit();
 
+	DataArray<AnimatedSpriteSetAsset> ass;
+	ass.SetNodeNames("MonsterList", "Monster");
+	ass.DeserializeXml("data/test/monsters.xml");
+	ass.SerializeXml("monster_battle_sprites.xml");
+	return 0;
+
+
+	DataArray<MonsterData> mst;
+	mst.SetNodeNames("MonsterList", "Monster");
+	mst.DeserializeXml("data/test/monsters.xml");
+	foreachi(i, mst.size()) {
+		mst[i].battle_spriteset_id = i;
+	}
+
+	mst.SerializeXml("new_monsters.xml");
+	return 0;
 
 	// read config file and parse command-line arguments.
 	LoadConfigSettings(argc, argv);
