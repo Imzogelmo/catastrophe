@@ -14,28 +14,28 @@ class Fire : Spell
 	Fire()
 	{
 	}
-}
+};
 
 class Thunder : Spell
 {
 	Thunder()
 	{
 	}
-}
+};
 
 class Focus : Spell
 {
 	Focus()
 	{
 	}
-}
+};
 
 class Sleep : Spell
 {
 	Sleep()
 	{
 	}
-}
+};
 
 
 //////////////////////////////////////
@@ -48,28 +48,28 @@ class Blizzard : Spell
 	Blizzard()
 	{
 	}
-}
+};
 
 class Dark : Spell
 {
 	Dark()
 	{
 	}
-}
+};
 
 class Temper : Spell
 {
 	Temper()
 	{
 	}
-}
+};
 
 class Slow : Spell
 {
 	Slow()
 	{
 	}
-}
+};
 
 
 //////////////////////////////////////
@@ -82,28 +82,28 @@ class Fira : Spell
 	Fira()
 	{
 	}
-}
+};
 
 class Thundara : Spell
 {
 	Thundara()
 	{
 	}
-}
+};
 
 class Hold : Spell
 {
 	Hold()
 	{
 	}
-}
+};
 
 class Focara : Spell
 {
 	Focara()
 	{
 	}
-}
+};
 
 
 //////////////////////////////////////
@@ -116,28 +116,28 @@ class Blizzara : Spell
 	Blizzara()
 	{
 	}
-}
+};
 
 class Sleepra : Spell
 {
 	Sleepra()
 	{
 	}
-}
+};
 
 class Haste : Spell
 {
 	Haste()
 	{
 	}
-}
+};
 
 class Confuse : Spell
 {
 	Confuse()
 	{
 	}
-}
+};
 
 
 //////////////////////////////////////
@@ -150,28 +150,28 @@ class Firaga : Spell
 	Firaga()
 	{
 	}
-}
+};
 
 class Scourge : Spell
 {
 	Scourge()
 	{
 	}
-}
+};
 
 class Warp : Spell
 {
 	Warp()
 	{
 	}
-}
+};
 
 class Slowra : Spell
 {
 	Slowra()
 	{
 	}
-}
+};
 
 
 //////////////////////////////////////
@@ -184,28 +184,28 @@ class Thundaga : Spell
 	Thundaga()
 	{
 	}
-}
+};
 
 class Rub : Spell
 {
 	Rub()
 	{
 	}
-}
+};
 
 class Quake : Spell
 {
 	Quake()
 	{
 	}
-}
+};
 
 class Stun : Spell
 {
 	Stun()
 	{
 	}
-}
+};
 
 
 //////////////////////////////////////
@@ -218,28 +218,28 @@ class Blizzaga : Spell
 	Blizzaga()
 	{
 	}
-}
+};
 
 class Saber : Spell
 {
 	Saber()
 	{
 	}
-}
+};
 
 class Blind : Spell
 {
 	Blind()
 	{
 	}
-}
+};
 
 class Break : Spell
 {
 	Break()
 	{
 	}
-}
+};
 
 
 //////////////////////////////////////
@@ -252,27 +252,27 @@ class Stop : Spell
 	Stop()
 	{
 	}
-}
+};
 
 class Banish : Spell
 {
 	Banish()
 	{
 	}
-}
+};
 
 class Death : Spell
 {
 	Death()
 	{
 	}
-}
+};
 
 class Flare : Spell
 {
 	Flare()
 	{
 	}
-}
+};
 
 

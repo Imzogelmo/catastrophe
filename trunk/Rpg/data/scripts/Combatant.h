@@ -310,6 +310,38 @@ class Combatant
 		}
 	}
 
+
+
+
+
+
+
+
+
+
+
+
+
+	//////////////////////////////////////////
+	vec2 pos
+	{
+		get const
+		{
+			return self.pos;
+		}
+		set
+		{
+			self.pos = value;
+		}
+	}
+
+	vec2 GetCenter()
+	{
+		return self.pos + self.spriteset.size / 2f;
+	}
+
+
+
 };
 
 

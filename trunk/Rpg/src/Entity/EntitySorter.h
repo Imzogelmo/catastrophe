@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <fc/parallel.h>
 #include "Common.h"
 #include "Entity.h"
 
