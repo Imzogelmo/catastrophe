@@ -184,6 +184,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Data\Dice.inl"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Data\Encounter.inl"
 					>
 				</File>
@@ -346,6 +350,10 @@
 				Name="Data"
 				>
 				<File
+					RelativePath=".\include\AttributeStrings.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\BattleCommand.h"
 					>
 				</File>
@@ -359,6 +367,10 @@
 				</File>
 				<File
 					RelativePath=".\include\CharacterData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Dice.h"
 					>
 				</File>
 				<File

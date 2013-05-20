@@ -124,25 +124,27 @@ public:
 		return (size_t)id < arr.size() ? &arr[id] : (T*)0;
 	}
 
+	/*
 	Item*			GetItem( int id ) { return GetArrayContent<Item>(items, id); }
 	Skill*			GetSkill( int id ) { return GetArrayContent<Skill>(skills, id); }
 	Spell*			GetSpell( int id ) { return GetArrayContent<Spell>(spells, id); }
 	CharacterData*	GetCharacter( int id ) { return GetArrayContent<CharacterData>(characters, id); }
 	CharacterClass*	GetCharacterClass( int id ) { return GetArrayContent<CharacterClass>(classes, id); }
-	MonsterData*	GetMonster( int id ) { return GetArrayContent<MonsterData>(monsters, id); }
-	MonsterTroop*	GetMonsterTroop( int id ) { return GetArrayContent<MonsterTroop>(troops, id); }
 	EncounterGroup*	GetEncounterGroup( int id ) { return GetArrayContent<EncounterGroup>(encounters, id); }
+	*/
+
+
+	MonsterData*			GetMonster(int id) { return GetArrayContent<MonsterData>(monsters, id); }
+	MonsterTroop*			GetMonsterTroop(int id) { return GetArrayContent<MonsterTroop>(monster_troops, id); }
+
+	AnimatedSpriteSetAsset* GetCharacterBattleSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(character_battle_sprites, id); }
+	AnimatedSpriteSetAsset* GetMonsterBattleSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(monster_battle_sprites, id); }
+
 
 
 	//template <> static bool SerializeDataArray< DataArray<AnimatedSpriteSetAsset> >
 	//	( DataArray<AnimatedSpriteSetAsset>& arr, const fc::string& filename, const char* root, const char* item );
 
-
-private:
-
-	//SpriteList*			m_portraitSprites;
-	//AnimatedSpriteList*	m_weaponSprites;
-	//AnimatedSpriteList*	m_miscSprites;
 
 };
 
