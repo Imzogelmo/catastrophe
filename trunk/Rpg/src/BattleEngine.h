@@ -29,8 +29,8 @@ class BattleEngine
 public:
 	typedef fc::fixed_vector<Battle*, 16>	battle_vec_type;
 	typedef fc::vector<Entity*>				entity_vec_type;
-	typedef fc::vector<PlayerCombatant*>	player_vec_type;
-	typedef fc::vector<MonsterCombatant*>	monster_vec_type;
+	typedef fc::vector<Combatant*>			player_vec_type;
+	typedef fc::vector<Combatant*>			monster_vec_type;
 
 	//So...
 	//we need to,
@@ -64,7 +64,7 @@ protected:
 	BattleActionQueue			m_actionQueue;
 	battle_vec_type				m_battles;
 
-	EntitySorter<EntitySortZ>	m_sortedEntities;
+	//EntitySorter<EntitySortZ>	m_sortedEntities;
 	entity_vec_type				m_textEntities;
 	entity_vec_type				m_entities;
 	player_vec_type				m_players;

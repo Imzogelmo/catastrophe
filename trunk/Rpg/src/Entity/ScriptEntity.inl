@@ -9,23 +9,6 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#pragma once
-
-#include "TextEntity.h"
-
-
-class FloatyText : public TextEntity
-{
-public:
-	FloatyText( int lifetime = 120 );
-
-	void Update();
-	void Render( SpriteBatch* spriteBatch );
-
-protected:
-	int		m_lifetime;
-	
-};
-
+#include "ScriptEntity.h"
 
 

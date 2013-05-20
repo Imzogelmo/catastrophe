@@ -10,7 +10,6 @@
 // GNU General Public License for more details.
 
 #include "Entity.h"
-#include "Character.h"
 
 
 Entity::Entity( EntityType derivedType ) :

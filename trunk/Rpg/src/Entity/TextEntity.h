@@ -18,7 +18,11 @@
 class TextEntity : public Entity
 {
 public:
-	TextEntity( const Vector2& position = Vector2::Zero, const fc::string& text = "", Font* font = 0, TextAlignment alignment = AlignLeft );
+	TextEntity( EntityType derivedType = EntityType_TextEntity,
+			const fc::string& text = "",
+			Font* font = 0,
+			TextAlignment alignment = AlignLeft
+		);
 
 	void SetFont( Font* font );
 	void SetText( const fc::string& text );
@@ -30,6 +34,7 @@ public:
 	const fc::string& GetText() const { return m_text; }
 	TextAlignment GetTextAlignment() const { return m_textAlignment; }
 
+	virtual void Update() {}
 	virtual void Render( SpriteBatch* spriteBatch );
 
 protected:

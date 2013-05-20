@@ -40,6 +40,8 @@ enum EntityType
 	EntityType_Entity,
 	EntityType_ScriptEntity,
 	EntityType_TextEntity,
+	EntityType_FloatyText,
+	EntityType_BouncyText,
 	EntityType_Character,
 	EntityType_Combatant,
 	EntityType_PlayerCombatant,
@@ -55,6 +57,7 @@ public:
 	const int type;
 
 	Vector2	pos;
+	Vector2	velocity;
 	Rectf	hitbox;
 	CollisionFilter	filter;
 	bool	alive;

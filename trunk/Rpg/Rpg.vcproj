@@ -172,6 +172,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\BattleEngine.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\BuffSet.cpp"
 				>
 			</File>
@@ -181,6 +185,10 @@
 			</File>
 			<File
 				RelativePath=".\src\Character.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Entity.cpp"
 				>
 			</File>
 			<File
@@ -213,6 +221,10 @@
 			</File>
 			<File
 				RelativePath=".\src\Rpg.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Screens.cpp"
 				>
 			</File>
 			<File
@@ -335,23 +347,23 @@
 				Name="Screens"
 				>
 				<File
-					RelativePath=".\src\Screens\BattleScreen.cpp"
+					RelativePath=".\src\Screens\BattleScreen.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Screens\GameScreen.cpp"
+					RelativePath=".\src\Screens\GameScreen.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Screens\MapScreen.cpp"
+					RelativePath=".\src\Screens\MapScreen.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Screens\Screen.cpp"
+					RelativePath=".\src\Screens\Screen.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Screens\ScreenManager.cpp"
+					RelativePath=".\src\Screens\ScreenManager.inl"
 					>
 				</File>
 			</Filter>
@@ -359,35 +371,43 @@
 				Name="Entity"
 				>
 				<File
-					RelativePath=".\src\Entity\Combatant.cpp"
+					RelativePath=".\src\Entity\BouncyText.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Entity\Entity.cpp"
+					RelativePath=".\src\Entity\Combatant.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Entity\FloatyText.cpp"
+					RelativePath=".\src\Entity\Entity.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Entity\MonsterCombatant.cpp"
+					RelativePath=".\src\Entity\FloatyText.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Entity\Npc.cpp"
+					RelativePath=".\src\Entity\MonsterCombatant.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Entity\Player.cpp"
+					RelativePath=".\src\Entity\Npc.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Entity\PlayerCombatant.cpp"
+					RelativePath=".\src\Entity\Player.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Entity\TextEntity.cpp"
+					RelativePath=".\src\Entity\PlayerCombatant.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Entity\ScriptEntity.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Entity\TextEntity.inl"
 					>
 				</File>
 			</Filter>
@@ -415,6 +435,10 @@
 			>
 			<File
 				RelativePath=".\src\Actor.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\BattleEngine.h"
 				>
 			</File>
 			<File
@@ -585,11 +609,19 @@
 				Name="Entity"
 				>
 				<File
+					RelativePath=".\src\Entity\BouncyText.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Entity\Combatant.h"
 					>
 				</File>
 				<File
 					RelativePath=".\src\Entity\Entity.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Entity\EntitySorter.h"
 					>
 				</File>
 				<File
