@@ -78,7 +78,7 @@ void EncounterGroup::DeserializeXml( XmlReader* xml )
 	encounters.resize(n);
 
 	bool nested = false;
-	for( size_t i(0); i < groups.size(); ++i )
+	for( size_t i(0); i < encounters.size(); ++i )
 	{
 		if( xml->NextChild("Encounter") )
 		{
