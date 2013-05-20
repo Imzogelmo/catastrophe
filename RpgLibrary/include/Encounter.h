@@ -24,6 +24,9 @@ struct RPG_API EncounterData
 
 	EncounterData( int monsterPartyIndex = 0, int encounterRate = 0, int maxRate = 100 );
 
+	//simply to ensure data is sane before saving.
+	void Validate();
+
 	void SerializeXml( XmlWriter* xml );
 	void DeserializeXml( XmlReader* xml );
 };

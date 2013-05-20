@@ -28,6 +28,8 @@ public:
 	void Reserve( size_t max_items );
 	void Clear();
 
+	int FindFirstFreeSlot() const;
+
 	void Add( const InventoryItem& inventoryItem );
 	void Add( Item* item, int count = 1 );
 	//void Add( int id, int count = 1 );

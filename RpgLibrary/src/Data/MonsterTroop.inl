@@ -41,8 +41,8 @@ void MonsterGroup::SerializeXml( XmlWriter* xml )
 	xml->SetInt("index", monster_id);
 	xml->SetInt("min", min);
 	xml->SetInt("max", max);
-	xml->SetInt("x", x);
-	xml->SetInt("y", y);
+	//xml->SetInt("x", x);
+	//xml->SetInt("y", y);
 	xml->EndNode();
 }
 
@@ -52,8 +52,8 @@ void MonsterGroup::DeserializeXml( XmlReader* xml )
 	monster_id = xml->GetInt("index");
 	min = xml->GetInt("min");
 	max = xml->GetInt("max");
-	x = xml->GetInt("x");
-	y = xml->GetInt("y");
+	//x = xml->GetInt("x");
+	//y = xml->GetInt("y");
 }
 
 
@@ -81,17 +81,22 @@ void MonsterTroop::DeserializeXml( XmlReader* xml )
 {
 	name = xml->GetString("name");
 	size_t n = xml->GetUInt("num_groups");
-	groups.reserve(n);
+	groups.resize(n);
 
-	bool hasChild = false;
-	while( xml->NextChild("Monster") )
+	bool nested = false;
+	for( size_t i(0); i < groups.size(); ++i )
 	{
-		groups.push_back();
-		groups.back().DeserializeXml(xml);
-		hasChild = true;
+		if( xml->NextChild("Monster") )
+		{
+			groups[i].DeserializeXml(xml);
+			nested = true;
+		}
+		else
+		{
+		}
 	}
 
-	if( hasChild )
+	if( nested )
 		xml->SetToParent();
 }
 

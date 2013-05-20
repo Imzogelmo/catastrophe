@@ -22,14 +22,20 @@ EncounterData::EncounterData( int monsterPartyIndex, int encounterRate, int maxR
 }
 
 
+void EncounterData::Validate()
+{
+	if(rate < 0) rate = 0;
+	if(max_rate < 0) max_rate = 0;
+	if(max_rate < rate) max_rate = rate;
+}
+
+
 void EncounterData::SerializeXml( XmlWriter* xml )
 {
 	xml->BeginNode("Encounter");
-
 	xml->SetInt("troop_id", troop_id);
 	xml->SetInt("rate", rate);
 	xml->SetInt("max_rate", max_rate);
-
 	xml->EndNode();
 }
 
@@ -45,7 +51,7 @@ void EncounterData::DeserializeXml( XmlReader* xml )
 
 
 EncounterGroup::EncounterGroup() :
-	name(name),
+	name(),
 	encounters()
 {
 }
@@ -69,19 +75,23 @@ void EncounterGroup::SerializeXml( XmlWriter* xml )
 void EncounterGroup::DeserializeXml( XmlReader* xml )
 {
 	size_t n = xml->GetUInt("num_encounters");
-	encounters.clear();
-	encounters.reserve(n);
+	encounters.resize(n);
 
-	while( xml->NextChild("Encounter") )
+	bool nested = false;
+	for( size_t i(0); i < groups.size(); ++i )
 	{
-		encounters.push_back();
-		encounters.back().DeserializeXml(xml);
+		if( xml->NextChild("Encounter") )
+		{
+			encounters[i].DeserializeXml(xml);
+			nested = true;
+		}
+		else
+		{
+		}
 	}
 
-	if( encounters.size() != n )
-	{
-		LogWarning("Region: num_encounters does not match.");
-	}
+	if( nested )
+		xml->SetToParent();
 }
 
 

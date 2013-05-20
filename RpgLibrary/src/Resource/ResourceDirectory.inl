@@ -57,3 +57,9 @@ fc::string ResourceDirectory::GetTilesetDirectory() const
 	return GetDirectory(BaseDir_Tilesets);
 }
 
+
+fc::string ResourceDirectory::GetDataDirectory() const
+{
+	return GetDirectory(BaseDir_Data);
+}
+

@@ -62,6 +62,9 @@ void Database::SetAllDefaultDataArrayNodeNames()
 	encounters.SetNodeNames("EncounterGroupList", "EncounterGroup");
 	*/
 
+	monsters.SetNodeNames("MonsterList", "Monster");
+	monster_troops.SetNodeNames("MonsterTroopList", "MonsterTroop");
+
 	character_battle_sprites.SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet");
 	monster_battle_sprites.SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet");
 
@@ -72,9 +75,11 @@ bool Database::SerializeAllDataXml()
 {
 	//todo: need filenames
 	monsters.SerializeXml("");
+	monster_troops.SerializeXml("");
 
 
 	character_battle_sprites.SerializeXml("");
+	monster_battle_sprites.SerializeXml("");
 
 	return false;
 }
@@ -84,9 +89,11 @@ bool Database::DeserializeAllDataXml()
 {
 	//todo: need filenames
 	monsters.DeserializeXml("");
+	monster_troops.DeserializeXml("");
 
 
 	character_battle_sprites.DeserializeXml("");
+	monster_battle_sprites.DeserializeXml("");
 
 	return false;
 }

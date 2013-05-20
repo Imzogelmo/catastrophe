@@ -77,15 +77,18 @@ public:
 	Database();
 	~Database();
 
+	/*
 	DataArray<Item>				items;
 	DataArray<Skill>			skills;
 	DataArray<Spell>			spells;
 	DataArray<CharacterData>	characters;
 	DataArray<CharacterClass>	classes;
-	DataArray<MonsterData>			monsters;
 	DataArray<MonsterTroop>		troops;
 	DataArray<EncounterGroup>	encounters;
+	*/
 
+	DataArray<MonsterData>		monsters;
+	DataArray<MonsterTroop>		monster_troops;
 
 	DataArray<AnimatedSpriteSetAsset>	character_battle_sprites;
 	DataArray<AnimatedSpriteSetAsset>	monster_battle_sprites;

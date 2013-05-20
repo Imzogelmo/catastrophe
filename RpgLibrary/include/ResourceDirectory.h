@@ -23,6 +23,7 @@ enum BaseDirectoryType
 	BaseDir_Sfx,
 	BaseDir_Maps,
 	BaseDir_Tilesets,
+	BaseDir_Data,
 	BaseDir_Max
 };
 
@@ -34,7 +35,8 @@ static const char* default_base_directories[BaseDir_Max] =
 	"bgm/",
 	"sfx/",
 	"maps/",
-	"tilesets/"
+	"tilesets/",
+	"data/"
 };
 
 
@@ -53,6 +55,7 @@ public:
 	fc::string GetShaderDirectory() const;
 	fc::string GetMapDirectory() const;
 	fc::string GetTilesetDirectory() const;
+	fc::string GetDataDirectory() const;
 
 protected:
 	fc::string m_root;
