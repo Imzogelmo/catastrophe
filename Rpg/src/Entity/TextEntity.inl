@@ -9,26 +9,26 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#pragma once
-
 #include <Catastrophe/Graphics/SpriteBatch.h>
 #include "TextEntity.h"
 
 
-TextEntity::TextEntity( const Vector2& position, const fc::string& text, Font* font, TextAlignment alignment ) :
-	Entity(EntityType_TextEntity),
+TextEntity::TextEntity( EntityType derivedType, const fc::string& text, Font* font, TextAlignment alignment ) :
+	Entity(derivedType),
 	m_text(text),
 	m_font(font),
 	m_color(Color::White()),
 	m_textAlignment(alignment)
 {
-	pos = position;
 	//todo: set hitbox
 }
 
 
 void TextEntity::Render( SpriteBatch* spriteBatch )
 {
+	if( !m_font )
+		return;
+
 	spriteBatch->DrawString(m_font, m_text, pos, m_color, m_textAlignment);
 }
 

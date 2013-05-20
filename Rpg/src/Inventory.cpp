@@ -42,8 +42,9 @@ void Inventory::Add( const InventoryItem& inventoryItem )
 
 int Inventory::FindFirstFreeSlot() const
 {
-	const int size = (int)m_items.size()
-	for( int i(0); i < size; ++i )
+	int i(0);
+	int size = (int)m_items.size();
+	for( ; i < size; ++i )
 	{
 		if( m_items[i].IsEmpty() )
 			break;

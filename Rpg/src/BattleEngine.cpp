@@ -13,10 +13,7 @@
 
 
 
-
-//BattleEngine::BattleEngine( const fc::string& script ) : Screen()
-BattleEngine::BattleEngine() :
-	Screen()
+BattleEngine::BattleEngine()
 {
 }
 
@@ -56,14 +53,14 @@ BattlePolicy BattleEngine::GetCurrentBattlePolicy()
 void BattleEngine::AddPlayerCombatant( Combatant* player )
 {
 	m_players.push_back(player);
-	m_sortedEntities.push_back(player);
+	//m_sortedEntities.push_back(player);
 }
 
 
 void BattleEngine::AddMonsterCombatant( Combatant* monster )
 {
 	m_monsters.push_back(monster);
-	m_sortedEntities.push_back(monster);
+	//m_sortedEntities.push_back(monster);
 }
 
 
@@ -92,7 +89,7 @@ void BattleEngine::Update()
 	// update monsters
 	for( monster_vec_type::iterator it = m_monsters.begin(); it != m_monsters.end(); ++it )
 	{
-		MonsterCombatant* m = *it;
+		Combatant* m = *it;
 		m->Update();
 		if( !m->IsAlive() )
 		{
@@ -143,8 +140,8 @@ void BattleEngine::Render()
 		//(*it)->Render();
 	}
 
-	m_sortedEntities.RemoveDeadEntities();
-	m_sortedEntities.Sort();
+	//m_sortedEntities.RemoveDeadEntities();
+	//m_sortedEntities.Sort();
 	//todo:
 
 }
