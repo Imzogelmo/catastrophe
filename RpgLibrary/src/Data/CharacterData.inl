@@ -18,7 +18,17 @@
 
 
 CharacterData::CharacterData() :
-	id(0)
+	name(),
+	script(),
+	description(),
+	id(0),
+	portrait_id(0),
+	map_spriteset_id(0),
+	battle_spriteset_id(0),
+	lv(0),
+	exp(0),
+	gold(0),
+	attributes()
 {
 }
 
@@ -29,6 +39,18 @@ void CharacterData::SerializeXml( XmlWriter* xml )
 	xml->SetString("script", script.c_str());
 	xml->SetString("description", description.c_str());
 
+	xml->BeginNode("Data");
+	xml->SetInt("lv", lv);
+	xml->SetInt("exp", exp);
+	xml->SetInt("gold", gold);
+	xml->SetInt("class_id", class_id);
+	xml->SetInt("portrait_id", portrait_id);
+	xml->SetInt("map_spriteset_id", map_spriteset_id);
+	xml->SetInt("battle_spriteset_id", battle_spriteset_id);
+	xml->EndNode();
+
+	attributes.SerializeXml(xml);
+
 }
 
 
@@ -37,6 +59,20 @@ void CharacterData::DeserializeXml( XmlReader* xml )
 	name = xml->GetString("name");
 	script = xml->GetString("script");
 	description = xml->GetString("description");
+	
+	if( xml->NextChild("Data") )
+	{
+		lv = xml->GetInt("lv");
+		exp = xml->GetInt("exp");
+		gold = xml->GetInt("gold");
+		class_id = xml->GetInt("class_id");
+		portrait_id = xml->GetInt("portrait_id");
+		map_spriteset_id = xml->GetInt("map_spriteset_id");
+		battle_spriteset_id = xml->GetInt("battle_spriteset_id");
+		xml->SetToParent();
+	}
+
+	attributes.DeserializeXml(xml);
 
 }
 

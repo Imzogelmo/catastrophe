@@ -27,7 +27,8 @@ struct RPG_API CharacterClass
 	int				portrait_id;
 	int				map_spriteset_id;
 	int				battle_spriteset_id;
-	int				exp_table_id; //..levelup data..
+	int				exp_table_id;
+
 	Attributes		attributes;
 
 	CharacterClass();

@@ -17,13 +17,17 @@
 
 
 MonsterData::MonsterData() :
+	name(),
+	script(),
+	description(),
 	id(0),
 	portrait_id(0),
 	map_spriteset_id(0),
 	battle_spriteset_id(0),
 	lv(0),
 	exp(0),
-	gold(0)
+	gold(0),
+	attributes()
 {
 }
 
@@ -71,12 +75,6 @@ void MonsterData::DeserializeXml( XmlReader* xml )
 
 	attributes.DeserializeXml(xml);
 	item_dropset.DeserializeXml(xml);
-
-	//sprite
-	lv = attributes.temp[0];
-	exp = attributes.temp[1];
-	gold = attributes.temp[2];
-
 
 }
 

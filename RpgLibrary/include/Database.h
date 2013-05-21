@@ -89,13 +89,12 @@ public:
 
 	DataArray<MonsterData>		monsters;
 	DataArray<MonsterTroop>		monster_troops;
+	DataArray<CharacterClass>	character_classes;
 
 	DataArray<AnimatedSpriteSetAsset>	character_battle_sprites;
 	DataArray<AnimatedSpriteSetAsset>	monster_battle_sprites;
 
 	//todo:
-	//monster sprites
-	//battle sprites
 	//player/npc sprites
 	//icons (sprites)
 	//backgrounds
@@ -129,13 +128,13 @@ public:
 	Skill*			GetSkill( int id ) { return GetArrayContent<Skill>(skills, id); }
 	Spell*			GetSpell( int id ) { return GetArrayContent<Spell>(spells, id); }
 	CharacterData*	GetCharacter( int id ) { return GetArrayContent<CharacterData>(characters, id); }
-	CharacterClass*	GetCharacterClass( int id ) { return GetArrayContent<CharacterClass>(classes, id); }
 	EncounterGroup*	GetEncounterGroup( int id ) { return GetArrayContent<EncounterGroup>(encounters, id); }
 	*/
 
 
-	MonsterData*			GetMonster(int id) { return GetArrayContent<MonsterData>(monsters, id); }
-	MonsterTroop*			GetMonsterTroop(int id) { return GetArrayContent<MonsterTroop>(monster_troops, id); }
+	MonsterData*		GetMonster(int id) { return GetArrayContent<MonsterData>(monsters, id); }
+	MonsterTroop*		GetMonsterTroop(int id) { return GetArrayContent<MonsterTroop>(monster_troops, id); }
+	CharacterClass*		GetCharacterClass(int id) { return GetArrayContent<CharacterClass>(character_classes, id); }
 
 	AnimatedSpriteSetAsset* GetCharacterBattleSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(character_battle_sprites, id); }
 	AnimatedSpriteSetAsset* GetMonsterBattleSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(monster_battle_sprites, id); }

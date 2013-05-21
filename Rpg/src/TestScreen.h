@@ -12,8 +12,8 @@
 #include <Catastrophe/Input.h>
 #include <Catastrophe/Input/Input.h>
 #include <Catastrophe/Gui/MenuElement.h>
-#include <Catastrophe/Gui/TextElement.h>
-#include <Catastrophe/Gui/MessageElement.h>
+#include <Catastrophe/Gui/Label.h>
+#include <Catastrophe/Gui/TextBox.h>
 #include <Catastrophe/Gui/Frame.h>
 
 #include "Script/ScriptClass.h"

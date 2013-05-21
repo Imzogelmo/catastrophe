@@ -25,9 +25,8 @@ struct RPG_API CharacterData
 
 	int				id;
 	int				race_id;
-	int					class_id;
+	int				class_id;
 
-	// these should be in CharacterClass only...?
 	int				portrait_id;
 	int				map_spriteset_id;
 	int				battle_spriteset_id;

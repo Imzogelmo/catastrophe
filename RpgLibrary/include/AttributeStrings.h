@@ -29,6 +29,7 @@ public:
 	fc::string stats[MAX_STATS];
 	fc::string elements[MAX_ELEMENTS];
 	fc::string status[MAX_STATUS];
+	fc::string misc[MAX_MISC];
 
 
 	// index lookup by name
@@ -50,6 +51,11 @@ public:
 	bool GetStatusIndex( const fc::string& name, size_t& index )
 	{
 		return InternalGetIndex(status, MAX_STATUS, name, index);
+	}
+
+	bool GetMiscIndex( const fc::string& name, size_t& index )
+	{
+		return InternalGetIndex(misc, MAX_MISC, name, index);
 	}
 
 protected:

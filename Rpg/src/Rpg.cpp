@@ -363,12 +363,40 @@ int main(int argc, char* argv[])
 
 	RpgLibInit();
 
+
+	DataArray<CharacterClass> ass;
+	ass.SetNodeNames("CharacterClassList", "CharacterClass");
+	//ass.DeserializeXml("data/test/character_classes.xml");
+	ass.resize(12);
+	foreachi(i,12){
+		ass[i].battle_spriteset_id = i;
+		ass[i].map_spriteset_id = i;
+		ass[i].portrait_id = i;
+		ass[i].name = "Fighter";
+		ass[i].script = "Fighter";
+		Attributes& a = ass[i].attributes;
+
+		a.max_params[0] = 30;
+		a.stats[3] = 48; //evade
+		a.stats[5] = 10; //m.def
+		a.stats[11] = 20;
+		a.stats[12] = 5;
+		a.stats[13] = 1;
+		a.stats[14] = 5;
+		a.stats[15] = 5;
+	}
+
+	ass.SerializeXml("character_classes.xml");
+	return 0;
+
+
+/*
 	DataArray<AnimatedSpriteSetAsset> ass;
 	ass.SetNodeNames("MonsterList", "Monster");
 	ass.DeserializeXml("data/test/monsters.xml");
 	ass.SerializeXml("monster_battle_sprites.xml");
 	return 0;
-
+*/
 
 	DataArray<MonsterData> mst;
 	mst.SetNodeNames("MonsterList", "Monster");

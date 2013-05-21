@@ -216,6 +216,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Data\MonsterData.inl"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Data\MonsterTroop.inl"
 					>
 				</File>
@@ -349,10 +353,6 @@
 			<Filter
 				Name="Data"
 				>
-				<File
-					RelativePath=".\include\AttributeStrings.h"
-					>
-				</File>
 				<File
 					RelativePath=".\include\BattleCommand.h"
 					>
@@ -523,6 +523,10 @@
 				</File>
 				<File
 					RelativePath=".\include\Attributes.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\AttributeStrings.h"
 					>
 				</File>
 				<File
