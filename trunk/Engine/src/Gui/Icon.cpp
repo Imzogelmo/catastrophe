@@ -18,47 +18,60 @@
 
 #pragma once
 
-#include "Widget.h"
-#include "../Graphics/Sprite.h"
+#include "Gui/Icon.h"
+#include "Graphics/SpriteBatch.h"
 
 CE_NAMESPACE_BEGIN
 
 
-class Icon : public Widget
+Icon::Icon() :
+	Widget()
 {
-public:
-	Icon();
-
-	void Render( SpriteBatch* spritebatch );
-
-	void SetSprite( const Sprite& sprite );
-
-	Sprite& GetSprite() { return m_sprite; }
-	const Sprite& GetSprite() const { return m_sprite; }
-
-protected:
-	Sprite			m_sprite;
-
-};
+}
 
 
-class AnimatedIcon : public Widget
+void Icon::Render( SpriteBatch* spritebatch )
 {
-public:
-	AnimatedIcon();
+	if( !m_sprite.GetTexture() )
+		return;
 
-	void Update();
-	void Render( SpriteBatch* spritebatch );
+	spritebatch->DrawSprite(m_sprite, GetScreenPosition());
 
-	void SetSprite( const AnimatedSprite& sprite );
-
-	AnimatedSprite& GetSprite() { return m_sprite; }
-	const AnimatedSprite& GetSprite() const { return m_sprite; }
-
-protected:
-	AnimatedSprite	m_sprite;
-
-};
+	// render children
+	Widget::Render(spritebatch);
+}
 
 
-CE_NAMESPACE_END
+
+
+AnimatedIcon::AnimatedIcon() :
+	Widget()
+{
+}
+
+
+void AnimatedIcon::Update()
+{
+	m_sprite.Update();
+
+	// update children
+	Widget::Update();
+}
+
+
+void AnimatedIcon::Render( SpriteBatch* spritebatch )
+{
+	if( !m_sprite.GetTexture() )
+		return;
+
+	spritebatch->DrawAnimatedSprite(m_sprite, GetScreenPosition());
+
+	// render children
+	Widget::Render(spritebatch);
+}
+
+
+
+
+
+

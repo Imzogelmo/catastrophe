@@ -18,29 +18,29 @@
 
 #pragma once
 
-#include "Gui/MessageElement.h"
+#include "Gui/TextBox.h"
 #include "Graphics/SpriteBatch.h"
 
 CE_NAMESPACE_BEGIN
 
 
-MessageElement::MessageElement( const fc::string& text, Font* font, TextAlignment alignment, int rowHeight ) :
-	TextElement(text, font, alignment),
+TextBox::TextBox( const fc::string& text, Font* font, TextAlignment alignment, int rowHeight ) :
+	Label(text, font, alignment),
+	m_frame(0),
 	m_rowHeight(rowHeight),
 	m_fastForwardSpeed(4),
 	m_textSpeed(3.f)
-
 {
 }
 
 
-void MessageElement::SetFastForwardSpeed( int speed )
+void TextBox::SetFastForwardSpeed( int speed )
 {
 	m_fastForwardSpeed = (size_t)speed;
 }
 
 
-void MessageElement::FastForward()
+void TextBox::FastForward()
 {
 	m_currentChar += (size_t)m_fastForwardSpeed;
 	if( m_currentChar >= m_text.size() )
@@ -51,14 +51,22 @@ void MessageElement::FastForward()
 }
 
 
-bool MessageElement::IsTextInstantaneous() const
+bool TextBox::IsTextInstantaneous() const
 {
 	return Math::EpsilonCompare(m_textSpeed, 0.f, 0.001f);
 }
 
 
-void MessageElement::Update()
+void TextBox::Update()
 {
+	if( !IsActive() )
+		return;
+
+	if( m_frame != 0 )
+	{
+		m_frame->Update();
+	}
+
 	if( m_currentChar < m_text.size() )
 	{
 		if( IsTextInstantaneous() )
@@ -83,46 +91,57 @@ void MessageElement::Update()
 		m_currentChar = 0; //test
 		m_textDisplayFinished = true;
 	}
+
+	Widget::Update();
 }
 
 
-void MessageElement::Render( SpriteBatch* spritebatch )
+void TextBox::Render( SpriteBatch* spritebatch )
 {
-	if( !m_font || m_text.empty() )
+	if( !IsVisible() )
 		return;
 
-	Vector2 pos = GetScreenPosition();
-	pos.x += (float)GetTextAlignmentOffset();
-
-	size_t size = m_textRows.size();
-
-	for( size_t i(0); i < size; ++i )
+	if( m_frame != 0 )
 	{
-		if( (int)m_currentChar < m_textRows[i].x )
-			break;
-
-		int amount = abs(m_textRows[i].y - m_textRows[i].x);
-		if( (int)m_currentChar < m_textRows[i].x + amount )
-			amount -= m_textRows[i].x + amount - m_currentChar;
-
-		spritebatch->DrawString( m_font,
-			m_text,
-			//m_text.begin() + m_textRows[i].x,
-			//m_text.begin() + m_textRows[i].y,
-			m_textRows[i].x,
-			amount,
-			pos,
-			m_color,
-			m_textAlignment
-		);
-
-		pos.y += m_font->GetLineHeight();
-
+		m_frame->Render(spritebatch);
 	}
+
+	if( m_font || !m_text.empty() )
+	{
+		Vector2 pos = GetScreenPosition();
+		pos.x += (float)GetTextAlignmentOffset();
+
+		size_t size = m_textRows.size();
+		for( size_t i(0); i < size; ++i )
+		{
+			if( (int)m_currentChar < m_textRows[i].x )
+				break;
+
+			int amount = abs(m_textRows[i].y - m_textRows[i].x);
+			if( (int)m_currentChar < m_textRows[i].x + amount )
+				amount -= m_textRows[i].x + amount - m_currentChar;
+
+			spritebatch->DrawString( m_font,
+				m_text,
+				//m_text.begin() + m_textRows[i].x,
+				//m_text.begin() + m_textRows[i].y,
+				m_textRows[i].x,
+				amount,
+				pos,
+				m_color,
+				m_textAlignment
+			);
+
+			pos.y += m_font->GetLineHeight();
+
+		}
+	}
+
+	Widget::Render(spritebatch);
 }
 
 
-void MessageElement::SetFont( Font* font )
+void TextBox::SetFont( Font* font )
 {
 	if(font)
 	{
@@ -132,7 +151,7 @@ void MessageElement::SetFont( Font* font )
 }
 
 
-void MessageElement::SetText( const fc::string& text )
+void TextBox::SetText( const fc::string& text )
 {
 	m_text = text;
 	m_currentChar = 0;
@@ -141,7 +160,7 @@ void MessageElement::SetText( const fc::string& text )
 }
 
 
-void MessageElement::UpdateText()
+void TextBox::UpdateText()
 {
 	//Here we have to generate all our row information for the
 	//current text. By caching this data we can speed up font rendering.

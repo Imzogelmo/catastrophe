@@ -18,13 +18,13 @@
 
 #pragma once
 
-#include "Gui/TextElement.h"
+#include "Gui/Label.h"
 #include "Graphics/SpriteBatch.h"
 
 CE_NAMESPACE_BEGIN
 
 
-TextElement::TextElement( const fc::string& text, Font* font, TextAlignment alignment ) :
+Label::Label( const fc::string& text, Font* font, TextAlignment alignment ) :
 	Widget(),
 	m_font(font),
 	m_text(text),
@@ -33,7 +33,7 @@ TextElement::TextElement( const fc::string& text, Font* font, TextAlignment alig
 }
 
 
-void TextElement::Render( SpriteBatch* spritebatch )
+void Label::Render( SpriteBatch* spritebatch )
 {
 	if( !m_font || m_text.empty() )
 		return;
@@ -50,20 +50,20 @@ void TextElement::Render( SpriteBatch* spritebatch )
 }
 
 
-void TextElement::SetFont( Font* font )
+void Label::SetFont( Font* font )
 {
 	if(font)
 		m_font = font;
 }
 
 
-void TextElement::SetText( const fc::string& text )
+void Label::SetText( const fc::string& text )
 {
 	m_text = text;
 }
 
 
-int TextElement::GetTextAlignmentOffset() const
+int Label::GetTextAlignmentOffset() const
 {
 	int offset = 0;
 	if( m_textAlignment == AlignCenter )
