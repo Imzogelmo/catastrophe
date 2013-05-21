@@ -29,6 +29,12 @@ void CharacterClass::SerializeXml( XmlWriter* xml )
 	xml->SetString("script", script.c_str());
 	xml->SetString("description", description.c_str());
 
+	xml->BeginNode("Data");
+	xml->SetInt("portrait_id", portrait_id);
+	xml->SetInt("map_spriteset_id", portrait_id);
+	xml->SetInt("battle_spriteset_id", portrait_id);
+	xml->EndNode();
+
 	attributes.SerializeXml(xml);
 
 }
@@ -39,6 +45,14 @@ void CharacterClass::DeserializeXml( XmlReader* xml )
 	name = xml->GetString("name");
 	script = xml->GetString("script");
 	description = xml->GetString("description");
+
+	if( xml->NextChild("Data") )
+	{
+		portrait_id = xml->GetInt("portrait_id");
+		map_spriteset_id = xml->GetInt("map_spriteset_id");
+		battle_spriteset_id = xml->GetInt("battle_spriteset_id");
+		xml->SetToParent();
+	}
 
 	attributes.DeserializeXml(xml);
 

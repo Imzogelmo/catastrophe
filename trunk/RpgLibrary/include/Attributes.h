@@ -27,7 +27,6 @@ struct RPG_API Attributes
 {
 	typedef Attributes			this_type;
 
-	int temp[3];
 	ParamValueArrayType			max_params;
 	StatisticsValueArrayType	stats;
 	//ElementalArrayType			element_atk;

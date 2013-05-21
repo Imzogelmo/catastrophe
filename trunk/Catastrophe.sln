@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ce-system", "Engine\ce-syst
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RpgLibrary", "RpgLibrary\RpgLibrary.vcproj", "{BE7D9EE6-B32E-4CAA-BF9D-FD031043A7D2}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ce-gui", "Engine\ce-gui.vcproj", "{51BD937C-A915-4421-8CE5-CAF0933B68C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -43,6 +45,10 @@ Global
 		{BE7D9EE6-B32E-4CAA-BF9D-FD031043A7D2}.Debug|Win32.Build.0 = Debug|Win32
 		{BE7D9EE6-B32E-4CAA-BF9D-FD031043A7D2}.Release|Win32.ActiveCfg = Release|Win32
 		{BE7D9EE6-B32E-4CAA-BF9D-FD031043A7D2}.Release|Win32.Build.0 = Release|Win32
+		{51BD937C-A915-4421-8CE5-CAF0933B68C4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{51BD937C-A915-4421-8CE5-CAF0933B68C4}.Debug|Win32.Build.0 = Debug|Win32
+		{51BD937C-A915-4421-8CE5-CAF0933B68C4}.Release|Win32.ActiveCfg = Release|Win32
+		{51BD937C-A915-4421-8CE5-CAF0933B68C4}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

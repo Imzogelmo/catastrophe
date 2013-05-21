@@ -74,4 +74,6 @@ void AnimatedIcon::Render( SpriteBatch* spritebatch )
 
 
 
+CE_NAMESPACE_END
+
 

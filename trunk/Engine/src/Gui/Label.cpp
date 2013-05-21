@@ -78,3 +78,6 @@ int Label::GetTextAlignmentOffset() const
 	return offset;
 }
 
+
+
+CE_NAMESPACE_END
