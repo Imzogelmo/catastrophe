@@ -18,34 +18,60 @@
 
 #pragma once
 
-#include "Widget.h"
-#include "../Graphics/Font.h"
+#include "Label.h"
+#include "Frame.h"
 
 CE_NAMESPACE_BEGIN
 
 
-class CE_API TextElement : public Widget
+class CE_API TextBox : public Label
 {
 public:
-	TextElement( const fc::string& text = "", Font* font = 0, TextAlignment alignment = AlignLeft );
+	typedef fc::fixed_vector<Point, 16>		row_vec_type;
+	enum MessageConstants
+	{
+		DefaultFastForwardSpeed = 4,
+	};
 
-	void Render( SpriteBatch* spritebatch );
+	TextBox( const fc::string& text = "", Font* font = 0, TextAlignment alignment = AlignLeft, int rowHeight = -1 );
+	
+	virtual void Update();
+	virtual void Render( SpriteBatch* spritebatch );
 
+	void SetFrame( Frame* frame );
 	void SetFont( Font* font );
 	void SetText( const fc::string& text );
-	void SetTextAlignment( TextAlignment alignment ) { m_textAlignment = alignment; }
+	void SetRowHeight( int height );
+	void SetFastForwardSpeed( int speed );
+	void FastForward();
 
-	const Font* GetFont() const { return m_font; }
-	const fc::string& GetText() const { return m_text; }
-	TextAlignment GetTextAlignment() const { return m_textAlignment; }
-	int GetTextAlignmentOffset() const;
+	Frame* GetFrame() const { return m_frame; }
+	size_t GetNumberOfRows() const;
+	int GetRowHeight() const { return m_rowHeight; }
+	int GetFastForwardSpeed() const { return m_fastForwardSpeed; }
+
+	bool IsTextDisplayFinished() const { return m_textDisplayFinished; }
+	bool IsTextInstantaneous() const;
+
+	void UpdateText();
 
 protected:
-	Font*			m_font;
-	fc::string		m_text;
-	TextAlignment	m_textAlignment;
+	Frame*			m_frame;
+	int				m_rowHeight;
+	row_vec_type	m_textRows; 
+
+	int				m_fastForwardSpeed;
+	float			m_textSpeed;
+	float			m_textSpeedCounter;
+	size_t			m_currentChar;
+
+	bool			m_textDisplayFinished;
+	bool			m_autoUpdateFastForwardSpeed;
 
 };
+
+
+
 
 
 CE_NAMESPACE_END

@@ -18,57 +18,34 @@
 
 #pragma once
 
-#include "TextElement.h"
+#include "Widget.h"
+#include "../Graphics/Font.h"
 
 CE_NAMESPACE_BEGIN
 
 
-class CE_API MessageElement : public TextElement
+class CE_API Label : public Widget
 {
 public:
-	enum MessageConstants
-	{
-		DefaultFastForwardSpeed = 4,
-	};
+	Label( const fc::string& text = "", Font* font = 0, TextAlignment alignment = AlignLeft );
 
-	MessageElement( const fc::string& text = "", Font* font = 0, TextAlignment alignment = AlignLeft, int rowHeight = -1 );
-	
-	virtual void Update();
-	virtual void Render( SpriteBatch* spritebatch );
+	void Render( SpriteBatch* spritebatch );
 
 	void SetFont( Font* font );
 	void SetText( const fc::string& text );
-	void SetRowHeight( int height );
-	void SetFastForwardSpeed( int speed );
-	void FastForward();
+	void SetTextAlignment( TextAlignment alignment ) { m_textAlignment = alignment; }
 
-	size_t GetNumberOfRows() const;
-	int GetRowHeight() const { return m_rowHeight; }
-	int GetFastForwardSpeed() const { return m_fastForwardSpeed; }
-
-	bool IsTextDisplayFinished() const { return m_textDisplayFinished; }
-	bool IsTextInstantaneous() const;
-
-	void UpdateText();
+	const Font* GetFont() const { return m_font; }
+	const fc::string& GetText() const { return m_text; }
+	TextAlignment GetTextAlignment() const { return m_textAlignment; }
+	int GetTextAlignmentOffset() const;
 
 protected:
-	int				m_rowHeight;
-
-	typedef fc::fixed_vector<Point, 16>		row_vec_type;
-	row_vec_type	m_textRows; 
-
-	int				m_fastForwardSpeed;
-	float			m_textSpeed;
-	float			m_textSpeedCounter;
-	size_t			m_currentChar;
-
-	bool			m_textDisplayFinished;
-	bool			m_autoUpdateFastForwardSpeed;
+	Font*			m_font;
+	fc::string		m_text;
+	TextAlignment	m_textAlignment;
 
 };
-
-
-
 
 
 CE_NAMESPACE_END

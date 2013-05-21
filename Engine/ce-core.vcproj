@@ -313,30 +313,6 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="Gui"
-				>
-				<File
-					RelativePath=".\src\Gui\Frame.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Gui\MenuElement.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Gui\MessageElement.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Gui\TextElement.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Gui\Widget.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
 				Name="Util"
 				>
 				<File
@@ -587,30 +563,6 @@
 				</File>
 				<File
 					RelativePath=".\include\Catastrophe\Graphics\VertexArray.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Gui"
-				>
-				<File
-					RelativePath=".\include\Catastrophe\Gui\Frame.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\Catastrophe\Gui\MenuElement.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\Catastrophe\Gui\MessageElement.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\Catastrophe\Gui\TextElement.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\Catastrophe\Gui\Widget.h"
 					>
 				</File>
 			</Filter>
