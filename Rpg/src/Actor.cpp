@@ -221,7 +221,7 @@ int Actor::GetStatusDef( int status ) const
 }
 
 
-void Actor::SetBaseParam( int param, int val )
+void Actor::SetParam( int param, int val )
 {
 	m_params[param] = val;
 }
@@ -235,19 +235,19 @@ void Actor::SetBaseMaxParam( int param, int val )
 
 void Actor::SetBaseStat( int stat, int val )
 {
-	m_attributes.stats[param] = val;
+	m_attributes.stats[stat] = val;
 }
 
 
-void Actor::SetBaseStatusAtk( int param, int val )
+void Actor::SetBaseStatusAtk( int status, int val )
 {
-	m_attributes.status_atk[param] = val;
+	m_attributes.status_atk[status] = val;
 }
 
 
-void Actor::SetBaseStatusDef( int param, int val )
+void Actor::SetBaseStatusDef( int status, int val )
 {
-	m_attributes.status_def[param] = val;
+	m_attributes.status_def[status] = val;
 }
 
 

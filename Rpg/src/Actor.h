@@ -69,11 +69,11 @@ public:
 	int GetStatusDef( int status ) const;
 
 
-	void SetBaseParam( int param, int val );
+	void SetParam( int param, int val );
 	void SetBaseMaxParam( int param, int val );
 	void SetBaseStat( int stat, int val );
-	void SetBaseStatusAtk( int param, int val );
-	void SetBaseStatusDef( int param, int val );
+	void SetBaseStatusAtk( int status, int val );
+	void SetBaseStatusDef( int status, int val );
 
 
 	Attributes& GetBaseAttributes() { return m_attributes; }
