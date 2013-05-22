@@ -106,23 +106,46 @@ Party::vec_type Party::GetAllPartyMembers() const
 }
 
 
+int Party::GetGold() const
+{
+	return m_gold;
+}
+
+
+int Party::GetPartySize() const
+{
+	return int(m_activeMembers.size() + m_reserveMembers.size());
+}
+
+
+int GetMaxPartySize() const
+{
+	return m_maxPartySize;
+}
+
+
+int GetMaxActivePartySize() const
+{
+	return m_maxActivePartySize;
+}
+
+
+
+void Party::SetGold( int val )
+{
+	m_gold = fc::clamp(val, 0, MAX_GOLD);
+}
+
+
 void Party::AddGold( int amount )
 {
-	m_gold += amount;
-	m_gold = fc::clamp(m_gold, 0, 999999999);
+	SetGold(m_gold + amount);
 }
 
 
 void Party::RemoveGold( int amount )
 {
-	m_gold -= amount;
-	m_gold = fc::clamp(m_gold, 0, 999999999);
-}
-
-
-size_t Party::GetPartySize() const
-{
-	return m_activeMembers.size() + m_reserveMembers.size();
+	SetGold(m_gold - amount);
 }
 
 

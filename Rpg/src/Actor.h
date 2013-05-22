@@ -19,18 +19,31 @@
 
 
 
-
 class Actor
 {
 public:
 	fc::string	name;
 	fc::string	script;
-	int			portait_id;
+	int			id;
+	int			data_id;
+	int			portrait_id;
 	int			map_spriteset_id;
 	int			battle_spriteset_id;
 
+	enum ActorType
+	{
+		TypeCharacter,
+		TypeMonster
+	};
 
 	Actor();
+
+	bool InitializeFromCharacter( int character_id );
+	bool InitializeFromMonster( int monster_id );
+
+	ActorType GetType() const { return m_type; }
+	bool IsCharacter() const { return m_type == TypeCharacter; }
+	bool IsMonster() const { return m_type == TypeMonster; }
 
 	int GetLv() const;
 	int GetExp() const;
@@ -55,13 +68,13 @@ public:
 	int GetBaseStatusDef( int status ) const;
 	int GetStatusDef( int status ) const;
 
-	/*
+
 	void SetBaseParam( int param, int val );
 	void SetBaseMaxParam( int param, int val );
 	void SetBaseStat( int stat, int val );
 	void SetBaseStatusAtk( int param, int val );
 	void SetBaseStatusDef( int param, int val );
-	*/
+
 
 	Attributes& GetBaseAttributes() { return m_attributes; }
 	Equipment& GetEquipment() { return m_equipment; }
@@ -73,6 +86,7 @@ public:
 	const BuffSet& GetBuffs() const { return m_buffs; }
 
 protected:
+	ActorType			m_type;
 	int					m_lv;
 	int					m_exp;
 	int					m_gold;

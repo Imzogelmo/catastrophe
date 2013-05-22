@@ -10,6 +10,7 @@
 // GNU General Public License for more details.
 
 #include "Game.h"
+#include "Database.h"
 
 Game* game = 0;
 ScriptEngine* g_scriptEngine = 0;
@@ -17,6 +18,12 @@ ScriptEngine* g_scriptEngine = 0;
 ScriptEngine* gGetScriptEngine() { return g_scriptEngine; }
 Game* gGetGame() { return game; }
 
+Database g_database;
+//I'm sticking this here for now also!
+Database* GetDatabase()
+{
+	return &g_database;
+}
 
 
 int Game::Initialize()

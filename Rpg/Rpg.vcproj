@@ -172,10 +172,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\BattleEngine.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\BuffSet.cpp"
 				>
 			</File>
@@ -424,6 +420,10 @@
 				</File>
 				<File
 					RelativePath=".\src\BattleActionQueue.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\BattleEngine.cpp"
 					>
 				</File>
 			</Filter>

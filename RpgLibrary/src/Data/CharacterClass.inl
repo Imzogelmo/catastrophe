@@ -18,7 +18,15 @@
 
 
 CharacterClass::CharacterClass() :
-	exp_table_id(0)
+	name(),
+	script(),
+	description(),
+	id(0),
+	portrait_id(0),
+	map_spriteset_id(0),
+	battle_spriteset_id(0),
+	exp_table_id(0),
+	attributes()
 {
 }
 

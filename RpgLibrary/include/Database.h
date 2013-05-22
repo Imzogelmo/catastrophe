@@ -77,6 +77,9 @@ public:
 	Database();
 	~Database();
 
+	//void Initialize();
+	//void Shutdown();
+
 	/*
 	DataArray<Item>				items;
 	DataArray<Skill>			skills;
@@ -89,7 +92,9 @@ public:
 
 	DataArray<MonsterData>		monsters;
 	DataArray<MonsterTroop>		monster_troops;
+	DataArray<CharacterData>	characters;
 	DataArray<CharacterClass>	character_classes;
+	DataArray<Race>				races;
 
 	DataArray<AnimatedSpriteSetAsset>	character_battle_sprites;
 	DataArray<AnimatedSpriteSetAsset>	monster_battle_sprites;
@@ -132,12 +137,14 @@ public:
 	*/
 
 
-	MonsterData*		GetMonster(int id) { return GetArrayContent<MonsterData>(monsters, id); }
-	MonsterTroop*		GetMonsterTroop(int id) { return GetArrayContent<MonsterTroop>(monster_troops, id); }
-	CharacterClass*		GetCharacterClass(int id) { return GetArrayContent<CharacterClass>(character_classes, id); }
+	inline MonsterData*			GetMonster(int id) { return GetArrayContent<MonsterData>(monsters, id); }
+	inline MonsterTroop*		GetMonsterTroop(int id) { return GetArrayContent<MonsterTroop>(monster_troops, id); }
+	inline CharacterClass*		GetCharacterClass(int id) { return GetArrayContent<CharacterClass>(character_classes, id); }
+	inline CharacterData*		GetCharacter(int id) { return GetArrayContent<CharacterData>(characters, id); }
+	inline Race*				GetRace(int id) { return GetArrayContent<Race>(races, id); }
 
-	AnimatedSpriteSetAsset* GetCharacterBattleSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(character_battle_sprites, id); }
-	AnimatedSpriteSetAsset* GetMonsterBattleSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(monster_battle_sprites, id); }
+	inline AnimatedSpriteSetAsset* GetCharacterBattleSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(character_battle_sprites, id); }
+	inline AnimatedSpriteSetAsset* GetMonsterBattleSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(monster_battle_sprites, id); }
 
 
 

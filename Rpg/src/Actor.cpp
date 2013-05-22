@@ -12,9 +12,82 @@
 #pragma once
 
 #include "Actor.h"
+#include "Database.h"
 
-Actor::Actor()
+
+Actor::Actor() :
+	name(),
+	script(),
+	id(0),
+	portrait_id(0),
+	map_spriteset_id(0),
+	battle_spriteset_id(0)
 {
+}
+
+
+bool Actor::InitializeFromCharacter( int character_id )
+{
+	CharacterData* character = GetDatabase()->GetCharacter(character_id);
+	if( !character )
+	{
+		Log("Actor::InitializeFromCharacter : invalid id (%i)", character_id);
+		return false;
+	}
+
+	m_type = TypeCharacter;
+
+	// initialize base attribute data and modify it according to race and class.
+	Attributes compiledAttributes = character->attributes;
+
+	Race* race = GetDatabase()->GetRace(character->race_id);
+	if( race )
+		compiledAttributes += race->attributes;
+
+	CharacterClass* character_class = GetDatabase()->GetCharacterClass(character->class_id);
+	if( character_class )
+		compiledAttributes += character_class->attributes;
+
+	data_id = character_id;
+	portrait_id = character->portrait_id;
+	map_spriteset_id = character->map_spriteset_id;
+	battle_spriteset_id = character->battle_spriteset_id;
+
+	SetLv(character->lv);
+	SetExp(character->exp);
+	SetGold(character->gold);
+
+	m_attributes = compiledAttributes;
+	m_params = compiledAttributes.max_params;
+
+	return true;
+}
+
+
+bool Actor::InitializeFromMonster( int monster_id )
+{
+	MonsterData* monster = GetDatabase()->GetMonster(monster_id);
+	if( !monster )
+	{
+		Log("Actor::InitializeFromMonster : invalid id (%i)", monster_id);
+		return false;
+	}
+
+	m_type = TypeMonster;
+
+	data_id = monster_id;
+	portrait_id = monster->portrait_id;
+	map_spriteset_id = monster->map_spriteset_id;
+	battle_spriteset_id = monster->battle_spriteset_id;
+
+	SetLv(monster->lv);
+	SetExp(monster->exp);
+	SetGold(monster->gold);
+
+	m_attributes = monster->attributes;
+	m_params = monster->attributes.max_params;
+
+	return true;
 }
 
 
@@ -62,7 +135,7 @@ void Actor::AddExp( int val )
 
 void Actor::AddGold( int val )
 {
-	SetGold(m_exp + val);
+	SetGold(m_gold + val);
 }
 
 
@@ -74,7 +147,7 @@ void Actor::RemoveExp( int val )
 
 void Actor::RemoveGold( int val )
 {
-	SetGold(m_exp - val);
+	SetGold(m_gold - val);
 }
 
 
@@ -147,6 +220,35 @@ int Actor::GetStatusDef( int status ) const
 		m_buffs.GetCombinedAttributes().status_def[status];
 }
 
+
+void Actor::SetBaseParam( int param, int val )
+{
+	m_params[param] = val;
+}
+
+
+void Actor::SetBaseMaxParam( int param, int val )
+{
+	m_attributes.max_params[param] = val;
+}
+
+
+void Actor::SetBaseStat( int stat, int val )
+{
+	m_attributes.stats[param] = val;
+}
+
+
+void Actor::SetBaseStatusAtk( int param, int val )
+{
+	m_attributes.status_atk[param] = val;
+}
+
+
+void Actor::SetBaseStatusDef( int param, int val )
+{
+	m_attributes.status_def[param] = val;
+}
 
 
 
