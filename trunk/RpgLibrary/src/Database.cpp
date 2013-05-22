@@ -48,6 +48,17 @@ Database::~Database()
 {
 }
 
+/*
+Database::Initialize()
+{
+	SetAllDefaultDataArrayNodeNames();
+}
+
+
+Database::Shutdown()
+{
+}
+*/
 
 void Database::SetAllDefaultDataArrayNodeNames()
 {
@@ -76,7 +87,9 @@ bool Database::SerializeAllDataXml()
 	//todo: need filenames
 	monsters.SerializeXml("");
 	monster_troops.SerializeXml("");
+	characters.SerializeXml("");
 	character_classes.SerializeXml("");
+	races.SerializeXml("");
 
 
 	character_battle_sprites.SerializeXml("");
@@ -91,7 +104,9 @@ bool Database::DeserializeAllDataXml()
 	//todo: need filenames
 	monsters.DeserializeXml("");
 	monster_troops.DeserializeXml("");
+	characters.DeserializeXml("");
 	character_classes.DeserializeXml("");
+	races.DeserializeXml("");
 
 
 	character_battle_sprites.DeserializeXml("");

@@ -119,9 +119,16 @@ public:
 	bool IsMemberInReserve( int id, vec_type::iterator& outIt );
 
 
+	int GetGold() const;
+	int GetPartySize() const;
+	int GetMaxPartySize() const;
+	int GetMaxActivePartySize() const;
+
+	void SetGold( int val );
 	void AddGold( int amount );
-	//void AddItem( int id, int amount = 1 );
 	void RemoveGold( int amount );
+
+	//void AddItem( int id, int amount = 1 );
 	//void RemoveItem( int id, int amount = 1 );
 
 
@@ -129,8 +136,6 @@ public:
 	vec_type&		GetActiveMembers() { return m_activeMembers; }
 	vec_type&		GetReserveMembers() { return m_reserveMembers; }
 	vec_type		GetAllPartyMembers() const;
-	size_t			GetPartySize() const;
-	int				GetGold() const { return m_gold; }
 
 protected:
 	vec_type		m_activeMembers;

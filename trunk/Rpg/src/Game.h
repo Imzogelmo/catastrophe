@@ -11,15 +11,17 @@
 
 #pragma once
 
-#include <fc/string.h>
-#include <Catastrophe/Math/Point.h>
-#include <Catastrophe/Graphics/SpriteBatch.h>
+ //todo remove these and use forward declaration
+#include <fc/string.h> //todo remove me
+#include <Catastrophe/Math/Point.h> //todo remove me
+#include <Catastrophe/Graphics/SpriteBatch.h> //todo remove me
 
 #include "Common.h"
 #include "GlobalSettings.h"
-#include "ScreenManager.h"
 
-#include "Script/ScriptEngine.h"
+ //todo remove these and use forward declaration
+#include "ScreenManager.h"
+#include "ScriptEngine.h"
 #include "Entity.h"
 
 
@@ -35,7 +37,8 @@ public:
 	GameSettings() {}
 
 
-	Point	display_resolution;
+	int	display_resolution_x;
+	int	display_resolution_y;
 
 };
 

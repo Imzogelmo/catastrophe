@@ -53,6 +53,11 @@ class Actor;
 class Character;
 class Monster;
 
+class Battle;
+class BattleAction;
+class BattleActionQueue;
+class BattleEngine;
+
 /*
 class ItemList;
 class SpellList;
@@ -78,14 +83,18 @@ class Screen;
 class ScreenManager;
 class GameScreen;
 class MapScreen;
+class BattleScreen;
 
 class RenderEngine;
 
 class Entity;
+class ScriptEntity;
 class TextEntity;
 class FloatyText;
 class BouncyText;
 class Combatant;
+class Npc;
+class Player;
 
 
 
@@ -114,8 +123,13 @@ class ContextPool;
 class ScriptObject;
 class ScriptFunction;
 class ScriptEngine;
+class BytecodeInStream;
+class BytecodeOutStream;
 
-
+class ScriptTemplateClass;
+class ScriptArrayTemplate;
+class ScriptVectorTemplate;
+template<class T> class ScriptArray;
 
 //utility macros (normally only for testing)
 #define foreachv(vec_type, it, container) \
@@ -133,6 +147,7 @@ class ScriptEngine;
 ScriptEngine* gGetScriptEngine();
 Game* gGetGame();
 
+Database* GetDatabase();
 
 extern Game* game;
 
