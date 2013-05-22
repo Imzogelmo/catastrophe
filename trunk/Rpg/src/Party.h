@@ -105,7 +105,7 @@ struct GameStatistics
 class Party
 {
 public:
-	typedef fc::vector<int>			vec_type;
+	typedef fc::vector<int>		vec_type;
 
 	Party();
 
@@ -117,25 +117,30 @@ public:
 	bool IsMemberInReserve( int id );
 	bool IsMemberInActiveParty( int id, vec_type::iterator& outIt );
 	bool IsMemberInReserve( int id, vec_type::iterator& outIt );
+	bool IsFull() const;
 
 
 	int GetGold() const;
 	int GetPartySize() const;
+	int GetActivePartySize() const;
+	int GetReservePartySize() const;
 	int GetMaxPartySize() const;
 	int GetMaxActivePartySize() const;
 
 	void SetGold( int val );
 	void AddGold( int amount );
 	void RemoveGold( int amount );
+	void SetMaxPartySize( int size );
+	void SetMaxActivePartySize( int size );
 
-	//void AddItem( int id, int amount = 1 );
-	//void RemoveItem( int id, int amount = 1 );
 
-
-	Inventory&		GetInventory() { return m_inventory; }
-	vec_type&		GetActiveMembers() { return m_activeMembers; }
-	vec_type&		GetReserveMembers() { return m_reserveMembers; }
-	vec_type		GetAllPartyMembers() const;
+	Inventory&			GetInventory() { return m_inventory; }
+	vec_type&			GetActiveMembers() { return m_activeMembers; }
+	vec_type&			GetReserveMembers() { return m_reserveMembers; }
+	const Inventory&	GetInventory() const { return m_inventory; }
+	const vec_type&		GetActiveMembers() const { return m_activeMembers; }
+	const vec_type&		GetReserveMembers() const { return m_reserveMembers; }
+	vec_type			GetAllPartyMembers() const;
 
 protected:
 	vec_type		m_activeMembers;
