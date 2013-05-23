@@ -106,7 +106,7 @@ void Attributes::SerializeXml( XmlWriter* xml )
 	xml->WriteBlock((ubyte*)&status_def[0], MAX_STATUS);
 	xml->EndNode();
 
-	//attribute_flags.SerializeXml(xml);
+	flags.SerializeXml(xml);
 
 }
 
@@ -138,7 +138,7 @@ void Attributes::DeserializeXml( XmlReader* xml )
 		xml->SetToParent();
 	}
 
-	//attribute_flags.DeserializeXml(xml);
+	flags.DeserializeXml(xml);
 
 }
 

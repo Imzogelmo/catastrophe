@@ -34,7 +34,7 @@ struct RPG_API Attributes
 	StatusArrayType				status_atk;
 	StatusArrayType				status_def;
 	//MiscArrayType				misc;
-	//AttributeFlags				flags;
+	AttributeFlags				flags;
 
 	//aggregate type
 

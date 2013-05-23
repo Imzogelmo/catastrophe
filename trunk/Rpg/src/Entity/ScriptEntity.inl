@@ -12,3 +12,16 @@
 #include "ScriptEntity.h"
 
 
+ScriptEntity::ScriptEntity( EntityType derivedType ) :
+	Entity(derivedType),
+	m_scriptInstance()
+{
+}
+
+
+void ScriptEntity::Update()
+{
+	m_scriptInstance.Update();
+}
+
+

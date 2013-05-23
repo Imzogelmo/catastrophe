@@ -363,6 +363,13 @@ int main(int argc, char* argv[])
 
 	RpgLibInit();
 
+	Database db;
+	//db.armor.DeserializeXml("armor.xml");
+	//db.armor.SerializeXml("arm_.txt");
+	db.weapons.DeserializeXml("weapons.xml");
+	db.weapons.SerializeXml("weapons_.txt");
+	return 0;
+
 
 	DataArray<CharacterClass> ass;
 	ass.SetNodeNames("CharacterClassList", "CharacterClass");

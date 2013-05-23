@@ -13,12 +13,60 @@
 
 #include <Catastrophe/Graphics/AnimatedSpriteSet.h>
 #include "ScriptEntity.h"
+#include "Actor.h"
 
 
 class Combatant : public ScriptEntity
 {
 public:
-	Combatant( EntityType derivedType );
+	Combatant( EntityType derivedType = EntityType_Combatant );
+	virtual ~Combatant();
+
+	void InitializeFromActor( Actor* actor );
+
+	virtual void Update();
+	virtual void Render();
+
+	int GetParam( int param ) const { return m_actor->GetParam(param); }
+	int GetMaxParam( int param ) const { return m_actor->GetMaxParam(param); }
+	int GetBaseMaxParam( int param ) const { return m_actor->GetBaseMaxParam(param); }
+	int GetBaseStat( int stat ) const { return m_actor->GetBaseStat(stat); }
+	int GetStat( int stat ) const { return m_actor->GetStat(stat); }
+	int GetBaseStatusAtk( int status ) const { return m_actor->GetBaseStatusAtk(status); }
+	int GetStatusAtk( int status ) const { return m_actor->GetStatusAtk(status); }
+
+	void SetParam( int param, int val ) { m_actor->SetParam(param, val); }
+	void SetBaseMaxParam( int param, int val ) { m_actor->SetBaseMaxParam(param, val); }
+	void SetBaseStat( int stat, int val ) { m_actor->SetBaseStat(stat, val); }
+	void SetBaseStatusAtk( int status, int val ) { m_actor->SetBaseStatusAtk(status, val); }
+	void SetBaseStatusDef( int status, int val ) { m_actor->SetBaseStatusDef(status, val); }
+
+	Attributes& GetBaseAttributes() { return m_actor->GetBaseAttributes(); }
+	Equipment& GetEquipment() { return m_actor->GetEquipment(); }
+	Inventory& GetInventory() { return m_actor->GetInventory(); }
+	BuffSet& GetBuffs() { return m_actor->GetBuffs(); }
+	const Attributes& GetBaseAttributes() const { return m_actor->GetBaseAttributes(); }
+	const Equipment& GetEquipment() const { return m_actor->GetEquipment(); }
+	const Inventory& GetInventory() const { return m_actor->GetInventory(); }
+	const BuffSet& GetBuffs() const { return m_actor->GetBuffs(); }
+
+	AnimatedSpriteSet& GetAnimatedSpriteSet() { return m_spriteset; }
+	const AnimatedSpriteSet& GetAnimatedSpriteSet() const { return m_spriteset; }
+
+protected:
+	Actor*				m_actor;
+	AnimatedSpriteSet	m_spriteset;
+
+};
+
+
+
+
+/*
+class Combatant : public ScriptEntity
+{
+public:
+	Combatant( EntityType derivedType = EntityType_Combatant );
 
 	virtual void Update() {}
 	virtual void Render() {}
@@ -50,3 +98,5 @@ protected:
 	AnimatedSpriteSet	m_spriteset;
 
 };
+*/
+

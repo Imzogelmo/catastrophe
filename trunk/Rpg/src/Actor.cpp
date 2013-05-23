@@ -89,6 +89,48 @@ bool Actor::InitializeFromMonster( int monster_id )
 }
 
 
+bool Actor::LoadMapSpriteSet( AnimatedSpriteSet& animatedSpriteSetRef )
+{
+	Database* database = GetDatabase();
+	AnimatedSpriteSetAsset* animatedSpriteSetAsset = 0;
+
+	if( IsCharacter() )
+		animatedSpriteSetAsset = database->GetCharacterMapSpriteSetAsset(map_spriteset_id);
+
+	else if( IsMonster() )
+		animatedSpriteSetAsset = database->GetMonsterMapSpriteSetAsset(map_spriteset_id);
+
+	if( !animatedSpriteSetAsset )
+	{
+		LogDebug("Actor::LoadSpriteSet : invalid type (%i) or asset_id (%i)", m_type, map_spriteset_id);
+		return false;
+	}
+
+	return animatedSpriteSetAsset->LoadAnimatedSpriteSet(animatedSpriteSetRef);
+}
+
+
+bool Actor::LoadBattleSpriteSet( AnimatedSpriteSet& animatedSpriteSetRef )
+{
+	Database* database = GetDatabase();
+	AnimatedSpriteSetAsset* animatedSpriteSetAsset = 0;
+
+	if( IsCharacter() )
+		animatedSpriteSetAsset = database->GetCharacterBattleSpriteSetAsset(battle_spriteset_id);
+
+	else if( IsMonster() )
+		animatedSpriteSetAsset = database->GetMonsterBattleSpriteSetAsset(battle_spriteset_id);
+
+	if( !animatedSpriteSetAsset )
+	{
+		LogDebug("Actor::LoadSpriteSet : invalid type (%i) or asset_id (%i)", m_type, battle_spriteset_id);
+		return false;
+	}
+
+	return animatedSpriteSetAsset->LoadAnimatedSpriteSet(animatedSpriteSetRef);
+}
+
+
 int Actor::GetLv() const
 {
 	return m_lv;

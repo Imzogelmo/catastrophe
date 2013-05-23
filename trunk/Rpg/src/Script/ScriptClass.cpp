@@ -93,7 +93,7 @@ void ScriptClass::Initialize( const fc::string& class_decl, const fc::string& me
 }
 
 
-asIScriptObject* ScriptClass::CreateObject()
+asIScriptObject* ScriptClass::CreateScriptObject()
 {
 	ASSERT(!!m_ctx);
 

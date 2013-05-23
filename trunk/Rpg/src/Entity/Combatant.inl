@@ -13,5 +13,41 @@
 
 
 
+Combatant::Combatant( EntityType derivedType ) :
+	ScriptEntity(derivedType),
+	m_actor(0),
+	m_spriteset()
+{
+}
+
+
+Combatant::~Combatant()
+{
+}
+
+
+void Combatant::InitializeFromActor( Actor* actor )
+{
+	ASSERT(actor != 0);
+
+	m_actor = actor;
+	m_actor->LoadBattleSpriteSet(m_spriteset);
+	m_scriptInstance.Initialize(actor->script);
+	m_scriptInstance.CreateScriptObject();
+}
+
+
+void Combatant::Update()
+{
+	ScriptEntity::Update();
+}
+
+
+void Combatant::Render()
+{
+}
+
+
+
 
 

@@ -41,6 +41,12 @@ public:
 	bool InitializeFromCharacter( int character_id );
 	bool InitializeFromMonster( int monster_id );
 
+	// asset loading
+	//void LoadPortaitSprite( AnimatedSprite& animatedSprite);
+	bool LoadMapSpriteSet( AnimatedSpriteSet& animatedSpriteSetRef);
+	bool LoadBattleSpriteSet( AnimatedSpriteSet& animatedSpriteSetRef);
+
+
 	ActorType GetType() const { return m_type; }
 	bool IsCharacter() const { return m_type == TypeCharacter; }
 	bool IsMonster() const { return m_type == TypeMonster; }

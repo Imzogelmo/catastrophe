@@ -106,7 +106,8 @@ private:
 	//rpg
 	//void RegisterRpgInterface();
 	void RegisterRpgDataTypes();
-	void RegisterMonster();
+	void RegisterActor();
+	template <class T> void RegisterClassContainingAttributes( const char* name );
 	template <class T> void RegisterCombatant( const char* name );
 
 	//game
