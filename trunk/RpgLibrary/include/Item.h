@@ -16,6 +16,13 @@
 #include "RpgCommon.h"
 #include "Attributes.h"
 
+/*
+struct ItemType
+{
+	short type; // item, weapon, armor, accessory, etc..
+	short subtype; // knife, katana, etc.. (used in inventory sorting)
+};
+*/
 
 struct RPG_API Item
 {
@@ -36,15 +43,14 @@ struct RPG_API Item
 
 	};
 
-	//item types : item, weapon, armor, accessory, etc..
-	//item subtypes : knife, katana, etc.
 
-	Attributes	attributes;
+	//Attributes	attributes;
+
+	short		type; // item, weapon, armor, accessory, etc..
+	short		subtype; // knife, katana, etc.. (used in inventory sorting)
+
 	int			id;
-	int			type;
-	int			subtype;
-
-	int			gold;
+	int			price;
 	int			spell_id;
 	int			targeting;
 	int			flags;
@@ -55,13 +61,16 @@ struct RPG_API Item
 	int			icon_id;
 	int			sprite_id;
 
-	Item()
-	{}
+	Item();
 
-	Attributes GetAttributes() { return attributes; }
+	virtual Attributes& GetAttributes() { return m_static_attributes; }
+	virtual const Attributes& GetAttributes() const { return m_static_attributes; }
 
 	void SerializeXml( XmlWriter* xml );
 	void DeserializeXml( XmlReader* xml );
+
+protected:
+	static Attributes m_static_attributes;
 
 };
 
