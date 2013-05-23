@@ -82,7 +82,6 @@ public:
 	//void Shutdown();
 
 	/*
-	DataArray<Item>				items;
 	DataArray<Skill>			skills;
 	DataArray<Spell>			spells;
 	DataArray<CharacterData>	characters;
@@ -102,7 +101,9 @@ public:
 	DataArray<CharacterClass>	character_classes;
 	DataArray<Race>				races;
 
+	DataArray<AnimatedSpriteSetAsset>	character_map_sprites;
 	DataArray<AnimatedSpriteSetAsset>	character_battle_sprites;
+	DataArray<AnimatedSpriteSetAsset>	monster_map_sprites;
 	DataArray<AnimatedSpriteSetAsset>	monster_battle_sprites;
 
 	//todo:
@@ -151,7 +152,9 @@ public:
 	inline CharacterClass*		GetCharacterClass(int id) { return GetArrayContent<CharacterClass>(character_classes, id); }
 	inline Race*				GetRace(int id) { return GetArrayContent<Race>(races, id); }
 
+	inline AnimatedSpriteSetAsset* GetCharacterMapSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(character_map_sprites, id); }
 	inline AnimatedSpriteSetAsset* GetCharacterBattleSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(character_battle_sprites, id); }
+	inline AnimatedSpriteSetAsset* GetMonsterMapSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(monster_map_sprites, id); }
 	inline AnimatedSpriteSetAsset* GetMonsterBattleSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(monster_battle_sprites, id); }
 
 

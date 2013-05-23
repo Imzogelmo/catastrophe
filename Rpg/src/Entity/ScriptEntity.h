@@ -18,12 +18,9 @@
 class ScriptEntity : public Entity
 {
 public:
-	ScriptEntity( EntityType derivedType = EntityType_ScriptEntity )
-		: Entity(derivedType), m_scriptInstance()
-	{}
+	ScriptEntity( EntityType derivedType = EntityType_ScriptEntity );
 
-	virtual void Update() { m_scriptInstance.Update(); }
-	virtual void Render() {}
+	virtual void Update();
 
 	ScriptClass* GetScriptClass() { return &m_scriptInstance; }
 	const ScriptClass* GetScriptClass() const { return &m_scriptInstance; }

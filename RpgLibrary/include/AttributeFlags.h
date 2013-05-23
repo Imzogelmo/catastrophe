@@ -23,7 +23,7 @@ struct AttributeFlags
 		MaxInternalFlags = 8 //32 bytes
 	};
 
-	int	element;
+	int	element_atk;
 	int	element_absorb;
 	int	element_nullify;
 	int	element_resist;
@@ -34,8 +34,8 @@ struct AttributeFlags
 
 	//aggregate type
 
-	int& operator [](size_t i) { return *((&element) + i); }
-	const int& operator [](size_t i) const { return *((&element) + i); }
+	int& operator [](size_t i) { return *((&element_atk) + i); }
+	const int& operator [](size_t i) const { return *((&element_atk) + i); }
 
 	this_type& operator |=(const this_type& rhs)
 	{

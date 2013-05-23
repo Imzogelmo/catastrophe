@@ -33,12 +33,17 @@ public:
 	~ScriptClass();
 
 	void Initialize( const fc::string& class_decl, const fc::string& method_decl = "void run()" );
+	asIScriptObject* CreateScriptObject();
+
 	asIScriptEngine* GetScriptEngine();
-	asIScriptObject *CreateObject();
+	ContextPool* GetContextPool() const { return m_contextPool; }
+	asIScriptObject* GetScriptObject() const { return m_object; }
 	
 	void Update();
 	void Suspend( int frames );
 	void Destroy();
+
+	bool IsDestroyed() const { return m_destroyed; }
 
 protected:
 	ContextPool*		m_contextPool;

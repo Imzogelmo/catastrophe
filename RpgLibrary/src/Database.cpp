@@ -83,7 +83,9 @@ void Database::SetAllDefaultDataArrayNodeNames()
 	monster_troops.SetNodeNames("MonsterTroopList", "MonsterTroop");
 	character_classes.SetNodeNames("CharacterClassList", "CharacterClass");
 
+	character_map_sprites.SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet");
 	character_battle_sprites.SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet");
+	monster_map_sprites.SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet");
 	monster_battle_sprites.SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet");
 
 }
@@ -105,7 +107,9 @@ bool Database::SerializeAllDataXml()
 	races.SerializeXml("");
 
 
+	character_map_sprites.SerializeXml("");
 	character_battle_sprites.SerializeXml("");
+	monster_map_sprites.SerializeXml("");
 	monster_battle_sprites.SerializeXml("");
 
 	return false;
@@ -128,7 +132,9 @@ bool Database::DeserializeAllDataXml()
 	races.DeserializeXml("");
 
 
+	character_map_sprites.DeserializeXml("");
 	character_battle_sprites.DeserializeXml("");
+	monster_map_sprites.DeserializeXml("");
 	monster_battle_sprites.DeserializeXml("");
 
 	return false;
