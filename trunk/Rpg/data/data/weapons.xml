@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ItemList count="60">
+    <Item name="Asura" script="Asura" description="A sword whose name embodies battle.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Assassin Dagger" script="AssassinDagger" description="A dagger that casts Kill when used.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="2291" misc="0"/>
+    </Item>
+    <Item name="Battle Axe" script="BattleAxe" description="An axe made for battle.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Braveheart" script="Braveheart" description="A sword that casts Confuse when used.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Broadsword" script="Broadsword" description="Sword with a wide, double-edged blade.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Claws" script="Claws" description="A weapon with razor-sharp blades.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="2210" misc="0"/>
+    </Item>
+    <Item name="Coral Sword" script="CoralSword" description="A sword effective against aquatic foes.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Crosier" script="Crosier" description="A staff topped with an iron ring.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="47" misc="0"/>
+    </Item>
+    <Item name="Dagger" script="Dagger" description="A large knife.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="3315" misc="0"/>
+    </Item>
+    <Item name="Dark Claymore" script="DarkClaymore" description="A sword with a shimmering black blade.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="3" misc="0"/>
+    </Item>
+    <Item name="Deathbringer" script="Deathbringer" description="A sword that casts Death when used.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="128" misc="0"/>
+    </Item>
+    <Item name="Defender" script="Defender" description="A sword that casts Blink when used.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="162" misc="0"/>
+    </Item>
+    <Item name="Duel Rapier" script="DuelRapier" description="A rapier refined for battle.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Enhancer" script="Enhancer" description="An unusual rapier infused with magic.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="227" misc="0"/>
+    </Item>
+    <Item name="Excalibur" script="Excalibur" description="Sword crafted from a legendary metal.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="2" misc="0"/>
+    </Item>
+    <Item name="Falchion" script="Falchion" description="A sword that widens toward its tip.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Flame Sword" script="FlameSword" description="A sword that dances with flame.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="227" misc="0"/>
+    </Item>
+    <Item name="Gigantaxe" script="Gigantaxe" description="An axe boasting superb attack power.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Gladius" script="Gladius" description="A dagger crafted to be feather-light.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="3315" misc="0"/>
+    </Item>
+    <Item name="Great Axe" script="GreatAxe" description="A large axe made for battle.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Great Sword" script="GreatSword" description="A sword effective against giants.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Hammer" script="Hammer" description="A hammer made for battle.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="803" misc="0"/>
+    </Item>
+    <Item name="Healing Staff" script="HealingStaff" description="A staff that casts Heal when used.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="800" misc="0"/>
+    </Item>
+    <Item name="Ice Brand" script="Ice Brand" description="A sword gripped by winter&apos;s chill.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="227" misc="0"/>
+    </Item>
+    <Item name="Iron Nunchaku" script="IronNunchaku" description="Nunchaku made of iron.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="44" misc="0"/>
+    </Item>
+    <Item name="Judgment Staff" script="JudgmentStaff" description="A staff that casts Flare when used.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="2048" misc="0"/>
+    </Item>
+    <Item name="Kikuichimonji" script="Kikuichimonji" description="A chrysanthemum adorns its scabbard.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Knife" script="Knife" description="A small knife.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="3315" misc="0"/>
+    </Item>
+    <Item name="Kotetsu" script="Kotetsu" description="A small katana designed for easy use.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Light Axe" script="LightAxe" description="An axe that casts Diara when used.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Lightbringer" script="Lightbringer" description="A sword that casts Holy when used.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="128" misc="0"/>
+    </Item>
+    <Item name="Longsword" script="Longsword" description="A large, double-edged sword.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Mage Masher" script="MageMasher" description="A knife that casts Silence when used.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="3315" misc="0"/>
+    </Item>
+    <Item name="Mage&apos;s Staff" script="MagesStaff" description="A staff that casts Fira when used.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="3104" misc="0"/>
+    </Item>
+    <Item name="Masamune" script="Masamune" description="A legendary katana without peer.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="4095" misc="0"/>
+    </Item>
+    <Item name="Murasame" script="Murasame" description="A sword also known as the Demonblade.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="32" misc="0"/>
+    </Item>
+    <Item name="Mythril Hammer" script="MythrilHammer" description="A hammer wrought from mythril.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="803" misc="0"/>
+    </Item>
+    <Item name="Mythril Knife" script="MythrilKnife" description="A knife wrought from mythril.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="3315" misc="0"/>
+    </Item>
+    <Item name="Ogrekiller" script="Ogrekiller" description="An axe effective against giants.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Orichalcum" script="Orichalcum" description="A knife with a gleaming golden blade.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="2291" misc="0"/>
+    </Item>
+    <Item name="Power Staff" script="PowerStaff" description="A staff with good attack power.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="3887" misc="0"/>
+    </Item>
+    <Item name="Ragnarok" script="Ragnarok" description="A sword etched with words of the gods.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="2" misc="0"/>
+    </Item>
+    <Item name="Rapier" script="Rapier" description="A sword with a slender blade.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Razer" script="Razer" description="A saber that casts Scourge when used.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="163" misc="0"/>
+    </Item>
+    <Item name="Rune Axe" script="RuneAxe" description="An axe that casts Curaga when used.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="35" misc="0"/>
+    </Item>
+    <Item name="Rune Blade" script="RuneBlade" description="A sword effective against spellcasters.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Rune Staff" script="RuneStaff" description="A staff that casts Healara when used.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="512" misc="0"/>
+    </Item>
+    <Item name="Saber" script="Saber" description="A long sword made for piercing.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Sage&apos;s Staff" script="SagesStaff" description="A staff that casts Life when used.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="4032" misc="0"/>
+    </Item>
+    <Item name="Sasuke" script="Sasuke" description="A small katana used by a ninja.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="32" misc="0"/>
+    </Item>
+    <Item name="Scimitar" script="Scimitar" description="A sword with a curved blade.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="243" misc="0"/>
+    </Item>
+    <Item name="Staff" script="Staff" description="A wooden staff.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="3887" misc="0"/>
+    </Item>
+    <Item name="Blade" script="Blade" description="A sword effective against undead.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="163" misc="0"/>
+    </Item>
+    <Item name="Thor&apos;s Hammer" script="ThorsHammer" description="Hammer that casts Thundara when used.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="546" misc="0"/>
+    </Item>
+    <Item name="Ultima Weapon" script="UltimaWeapon" description="A sword bound to its wielder&apos;s HP.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="2730" misc="0"/>
+    </Item>
+    <Item name="Vorpal Sword" script="VorpalSword" description="A very sharp crescent blade.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="163" misc="0"/>
+    </Item>
+    <Item name="Hammer" script="Hammer" description="A hammer that strikes hard.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="546" misc="0"/>
+    </Item>
+    <Item name="Werebuster" script="Werebuster" description="A sword effective against werebeasts.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="227" misc="0"/>
+    </Item>
+    <Item name="Wizard&apos;s Staff" script="WizardsStaff" description="A staff that casts Confuse when used.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="2048" misc="0"/>
+    </Item>
+    <Item name="Wyrmkiller" script="Wyrmkiller" description="Gloves made of leather.">
+        <Data type="0" subtype="0" price="1"/>
+        <MaxParams>0,0,0,0</MaxParams>
+        <Stats>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</Stats>
+        <StatusAtk>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusAtk>
+        <StatusDef>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</StatusDef>
+        <Flags elem_atk="0" elem_absorb="0" elem_nullify="0" elem_resist="0" elem_weak="0" family="0" class="243" misc="0"/>
+    </Item>
+</ItemList>
