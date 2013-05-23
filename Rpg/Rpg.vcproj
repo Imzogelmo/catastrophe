@@ -458,10 +458,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\Dialogue.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\Equipment.h"
 				>
 			</File>

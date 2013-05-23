@@ -16,6 +16,7 @@
 #include "AttributeFlags.inl"
 #include "BattleCommand.inl"
 #include "Item.inl"
+#include "EquipmentItem.inl"
 #include "Buff.inl"
 #include "Skill.inl"
 #include "Spell.inl"
@@ -33,6 +34,7 @@
 #include "Enhancement.inl"
 #include "Synthesis.inl"
 
+#include "StringAlias.inl"
 
 #include "Database.h"
 
@@ -72,6 +74,11 @@ void Database::SetAllDefaultDataArrayNodeNames()
 	encounters.SetNodeNames("EncounterGroupList", "EncounterGroup");
 	*/
 
+	items.SetNodeNames("ItemList", "Item");
+	weapons.SetNodeNames("ItemList", "Item");
+	armor.SetNodeNames("ItemList", "Item");
+	accessories.SetNodeNames("ItemList", "Item");
+
 	monsters.SetNodeNames("MonsterList", "Monster");
 	monster_troops.SetNodeNames("MonsterTroopList", "MonsterTroop");
 	character_classes.SetNodeNames("CharacterClassList", "CharacterClass");
@@ -85,6 +92,12 @@ void Database::SetAllDefaultDataArrayNodeNames()
 bool Database::SerializeAllDataXml()
 {
 	//todo: need filenames
+
+	items.SerializeXml("");
+	weapons.SerializeXml("");
+	armor.SerializeXml("");
+	accessories.SerializeXml("");
+
 	monsters.SerializeXml("");
 	monster_troops.SerializeXml("");
 	characters.SerializeXml("");
@@ -102,6 +115,12 @@ bool Database::SerializeAllDataXml()
 bool Database::DeserializeAllDataXml()
 {
 	//todo: need filenames
+
+	items.DeserializeXml("");
+	weapons.DeserializeXml("");
+	armor.DeserializeXml("");
+	accessories.DeserializeXml("");
+
 	monsters.DeserializeXml("");
 	monster_troops.DeserializeXml("");
 	characters.DeserializeXml("");

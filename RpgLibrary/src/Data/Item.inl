@@ -9,11 +9,23 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-
 #include <Catastrophe/IO/XmlWriter.h>
 #include <Catastrophe/IO/XmlReader.h>
 #include "Item.h"
 
+Attributes Item::m_static_attributes = Attributes();
+
+
+Item::Item() :
+	name(),
+	script(),
+	description(),
+	type(0),
+	subtype(0),
+	id(0),
+	price(1)
+{
+}
 
 
 void Item::SerializeXml( XmlWriter* xml )
@@ -22,7 +34,13 @@ void Item::SerializeXml( XmlWriter* xml )
 	xml->SetString("script", script.c_str());
 	xml->SetString("description", description.c_str());
 
-	attributes.SerializeXml(xml);
+	xml->BeginNode("Data");
+	xml->SetShort("type", type);
+	xml->SetShort("subtype", subtype);
+	xml->SetInt("price", price);
+	xml->EndNode();
+
+	//attributes.SerializeXml(xml);
 
 }
 
@@ -33,7 +51,15 @@ void Item::DeserializeXml( XmlReader* xml )
 	script = xml->GetString("script");
 	description = xml->GetString("description");
 
-	attributes.DeserializeXml(xml);
+	if( xml->NextChild("Data") )
+	{
+		type = xml->GetShort("type");
+		subtype = xml->GetShort("subtype");
+		price = xml->GetInt("price");
+		xml->SetToParent();
+	}
+
+	//attributes.DeserializeXml(xml);
 
 }
 

@@ -24,6 +24,7 @@
 #include "AttributeFlags.h"
 #include "BattleCommand.h"
 #include "Item.h"
+#include "EquipmentItem.h"
 #include "Skill.h"
 #include "Spell.h"
 #include "MonsterData.h"
@@ -90,6 +91,11 @@ public:
 	DataArray<EncounterGroup>	encounters;
 	*/
 
+	DataArray<Item>				items;
+	DataArray<EquipmentItem>	weapons;
+	DataArray<EquipmentItem>	armor;
+	DataArray<EquipmentItem>	accessories;
+
 	DataArray<MonsterData>		monsters;
 	DataArray<MonsterTroop>		monster_troops;
 	DataArray<CharacterData>	characters;
@@ -129,18 +135,20 @@ public:
 	}
 
 	/*
-	Item*			GetItem( int id ) { return GetArrayContent<Item>(items, id); }
 	Skill*			GetSkill( int id ) { return GetArrayContent<Skill>(skills, id); }
 	Spell*			GetSpell( int id ) { return GetArrayContent<Spell>(spells, id); }
-	CharacterData*	GetCharacter( int id ) { return GetArrayContent<CharacterData>(characters, id); }
 	EncounterGroup*	GetEncounterGroup( int id ) { return GetArrayContent<EncounterGroup>(encounters, id); }
 	*/
 
+	inline Item*				GetItem(int id) { return GetArrayContent<Item>(items, id); }
+	inline Item*				GetWeapon(int id) { return GetArrayContent<EquipmentItem>(weapons, id); }
+	inline Item*				GetArmor(int id) { return GetArrayContent<EquipmentItem>(armor, id); }
+	inline Item*				GetAccessory(int id) { return GetArrayContent<EquipmentItem>(accessories, id); }
 
 	inline MonsterData*			GetMonster(int id) { return GetArrayContent<MonsterData>(monsters, id); }
 	inline MonsterTroop*		GetMonsterTroop(int id) { return GetArrayContent<MonsterTroop>(monster_troops, id); }
-	inline CharacterClass*		GetCharacterClass(int id) { return GetArrayContent<CharacterClass>(character_classes, id); }
 	inline CharacterData*		GetCharacter(int id) { return GetArrayContent<CharacterData>(characters, id); }
+	inline CharacterClass*		GetCharacterClass(int id) { return GetArrayContent<CharacterClass>(character_classes, id); }
 	inline Race*				GetRace(int id) { return GetArrayContent<Race>(races, id); }
 
 	inline AnimatedSpriteSetAsset* GetCharacterBattleSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(character_battle_sprites, id); }
