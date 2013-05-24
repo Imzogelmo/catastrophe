@@ -18,6 +18,10 @@
 #include "ContextPool.h"
 
 
+void* ScriptMemoryAlloc( size_t n );
+void ScriptMemoryFree( void* ptr );
+
+
 #ifdef _MSC_VER
 	#pragma warning ( push )
 	#pragma warning ( disable : 4996 )
@@ -56,8 +60,12 @@ void ScriptEngine::Initialize()
 
 	ASSERT(m_engine);
 
+	// set global script memory management functions.
+	asSetGlobalMemoryFunctions(ScriptMemoryAlloc, ScriptMemoryFree);
+
 	m_gc.SetEngine(m_engine);
 	m_engine->SetUserData(this);
+
 	m_engine->SetMessageCallback( asFUNCTION(MessageCallback), 0, asCALL_CDECL );
 	SetDefaultEngineProperties();
 
@@ -73,6 +81,15 @@ void ScriptEngine::SetDefaultEngineProperties()
 	m_engine->SetEngineProperty( asEP_OPTIMIZE_BYTECODE, 1 );
 	m_engine->SetEngineProperty( asEP_BUILD_WITHOUT_LINE_CUES, 1 );
 	m_engine->SetEngineProperty( asEP_EXPAND_DEF_ARRAY_TO_TMPL, 1 );
+}
+
+void ScriptEngine::SetEngineProperty( int param, int val )
+{
+	switch(param)
+	{
+		case asEP_AUTO_GARBAGE_COLLECT:
+			m_engine->SetEngineProperty( asEP_AUTO_GARBAGE_COLLECT, val ? 1 : 0 );
+	}
 }
 
 
@@ -282,6 +299,29 @@ void ScriptEngine::RegisterScriptingInterfaces()
 #ifdef _MSC_VER
 	#pragma warning ( pop )
 #endif
+
+
+
+
+size_t __total_mem = 0;
+void* ScriptMemoryAlloc( size_t n )
+{
+	__total_mem += n;
+	LogInfo("---Info : Script Alloc : bytes (%i), total kbytes(%i).",
+		n, (__total_mem / 1024)
+		);
+
+	return malloc(n);
+}
+
+
+void ScriptMemoryFree( void* ptr )
+{
+	LogInfo("---Info : Script Memory Free.");
+
+	free(ptr);
+}
+
 
 
 

@@ -153,11 +153,17 @@ namespace script
 
 
 	//...
-	template <class T, class U> inline
-	T& ScopedAssignment( const U &other, T *self )
+	template <class T> inline
+	T* PointerAssignment( const T &other, T *self )
 	{
-		*self = other;
-		return *self;
+		self = const_cast<T*>(&other);
+		return self;
+	}
+
+	template <class T> inline
+	T* PointerCopyConstruct( const T &other )
+	{
+		return const_cast<T*>(&other);
 	}
 
 

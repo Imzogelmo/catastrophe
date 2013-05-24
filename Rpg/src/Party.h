@@ -112,13 +112,12 @@ public:
 	void AddMember( int id );
 	void RemoveMember( int id );
 
-	bool HasMember( int id );
-	bool IsMemberInActiveParty( int id );
-	bool IsMemberInReserve( int id );
-	bool IsMemberInActiveParty( int id, vec_type::iterator& outIt );
-	bool IsMemberInReserve( int id, vec_type::iterator& outIt );
+	bool HasMember( int id ) const;
+	bool IsMemberInActiveParty( int id ) const;
+	bool IsMemberInReserve( int id ) const;
+	bool IsMemberInActiveParty( int id, size_t& outIndex ) const;
+	bool IsMemberInReserve( int id, size_t& outIndex ) const;
 	bool IsFull() const;
-
 
 	int GetGold() const;
 	int GetPartySize() const;
@@ -133,6 +132,8 @@ public:
 	void SetMaxPartySize( int size );
 	void SetMaxActivePartySize( int size );
 
+	int GetActiveMemberId( int index );
+	int GetReserveMemberId( int index );
 
 	Inventory&			GetInventory() { return m_inventory; }
 	vec_type&			GetActiveMembers() { return m_activeMembers; }
