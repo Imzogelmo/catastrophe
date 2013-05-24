@@ -34,6 +34,8 @@ public:
 	int GetStat( int stat ) const { return m_actor->GetStat(stat); }
 	int GetBaseStatusAtk( int status ) const { return m_actor->GetBaseStatusAtk(status); }
 	int GetStatusAtk( int status ) const { return m_actor->GetStatusAtk(status); }
+	int GetBaseStatusDef( int status ) const { return m_actor->GetBaseStatusDef(status); }
+	int GetStatusDef( int status ) const { return m_actor->GetStatusDef(status); }
 
 	void SetParam( int param, int val ) { m_actor->SetParam(param, val); }
 	void SetBaseMaxParam( int param, int val ) { m_actor->SetBaseMaxParam(param, val); }
@@ -50,6 +52,7 @@ public:
 	const Inventory& GetInventory() const { return m_actor->GetInventory(); }
 	const BuffSet& GetBuffs() const { return m_actor->GetBuffs(); }
 
+	Actor* GetActor() const { return m_actor; }
 	AnimatedSpriteSet& GetAnimatedSpriteSet() { return m_spriteset; }
 	const AnimatedSpriteSet& GetAnimatedSpriteSet() const { return m_spriteset; }
 

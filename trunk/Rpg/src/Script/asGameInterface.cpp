@@ -83,6 +83,11 @@ namespace script
 	}
 
 
+	void GameSetEngineProperty( int param, int val )
+	{
+		game->GetScriptEngine()->SetEngineProperty(param, val);
+	}
+
 
 } //namespace script
 
@@ -103,8 +108,14 @@ void ScriptEngine::RegisterGame()
 	//r = engine->RegisterGlobalFunction( "const sprite& create_sprite(const ::texture& in, const rect& in)", asFUNCTION(CreateSprite), asCALL_CDECL); assert( r >= 0 );
 	r = engine->RegisterGlobalFunction( "void draw_sprite(const ::sprite& in, const ::vec2& in)", asFUNCTION(DrawSprite), asCALL_CDECL); assert( r >= 0 );
 
+
+	r = engine->RegisterGlobalFunction( "void set_engine_property(int, int)", asFUNCTION(GameSetEngineProperty), asCALL_CDECL); assert( r >= 0 );
+
+
 	r = engine->SetDefaultNamespace(""); assert( r >= 0 );
 }
+
+
 
 
 void ScriptEngine::RegisterGameInterface()

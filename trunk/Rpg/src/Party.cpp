@@ -24,15 +24,16 @@ void Party::AddMember( int id )
 {
 	//todo: sanity check - verify that id is valid
 
-	vec_type::iterator it;
-	if( IsMemberInActiveParty(id, it) )
+	size_t index = 0;
+	if( IsMemberInActiveParty(id, index) )
 		return;
 
-	if( IsMemberInReserve(id, it) )
+	if( IsMemberInReserve(id, index) )
 	{
+		// add to active party if there is room.
 		if( m_activeMembers.size() < (size_t)m_maxActivePartySize )
 		{
-			m_reserveMembers.erase(it);
+			m_reserveMembers.erase_at(index);
 			m_activeMembers.push_back(id);
 		}
 	}
@@ -51,49 +52,55 @@ void Party::RemoveMember( int id )
 {
 	//todo: sanity check - verify that id is valid
 
-	vec_type::iterator it;
-	if( IsMemberInActiveParty(id, it) )
+	size_t index = 0;
+	if( IsMemberInActiveParty(id, index) )
 	{
-		m_activeMembers.erase(it);
+		m_activeMembers.erase_at(index);
 	}
-	else if( IsMemberInActiveParty(id, it) )
+	else if( IsMemberInActiveParty(id, index) )
 	{
-		m_reserveMembers.erase(it);
+		m_reserveMembers.erase_at(index);
 	}
 }
 
 
-bool Party::HasMember( int id )
+bool Party::HasMember( int id ) const
 {
 	return (IsMemberInActiveParty(id) || IsMemberInReserve(id));
 }
 
 
-bool Party::IsMemberInActiveParty( int id )
+bool Party::IsMemberInActiveParty( int id ) const
 {
-	vec_type::iterator it = 0;
-	return IsMemberInActiveParty(id, it);
+	size_t i = 0;
+	return IsMemberInActiveParty(id, i);
 }
 
 
-bool Party::IsMemberInReserve( int id )
+bool Party::IsMemberInReserve( int id ) const
 {
-	vec_type::iterator it = 0;
-	return IsMemberInReserve(id, it);
+	size_t i = 0;
+	return IsMemberInReserve(id, i);
 }
 
 
-bool Party::IsMemberInActiveParty( int id, vec_type::iterator& outIt )
+bool Party::IsMemberInActiveParty( int id, size_t& outIndex ) const
 {
-	outIt = fc::find(m_activeMembers.begin(), m_activeMembers.end(), id);
-	return outIt != m_activeMembers.end();
+	vec_type::const_iterator it = fc::find(m_activeMembers.begin(), m_activeMembers.end(), id);
+	if( it != m_activeMembers.end() )
+		outIndex = size_t(m_activeMembers.end() - it);
+
+	return it != m_activeMembers.end();
 }
 
 
-bool Party::IsMemberInReserve( int id, vec_type::iterator& outIt )
+bool Party::IsMemberInReserve( int id, size_t& outIndex ) const
 {
-	outIt = fc::find(m_reserveMembers.begin(), m_reserveMembers.end(), id);
-	return outIt != m_reserveMembers.end();
+	vec_type::const_iterator it = fc::find(m_reserveMembers.begin(), m_reserveMembers.end(), id);
+	if( it != m_reserveMembers.end() )
+		outIndex = size_t(m_reserveMembers.end() - it);
+
+	return it != m_reserveMembers.end();
 }
 
 
@@ -214,5 +221,23 @@ void Party::SetMaxActivePartySize( int size )
 }
 
 
+int Party::GetActiveMemberId( int index )
+{
+	int ret = -1;
+	if( (size_t)index < m_activeMembers.size() )
+		ret = m_activeMembers[index];
+
+	return ret;
+}
+
+
+int Party::GetReserveMemberId( int index )
+{
+	int ret = -1;
+	if( (size_t)index < m_reserveMembers.size() )
+		ret = m_reserveMembers[index];
+
+	return ret;
+}
 
 
