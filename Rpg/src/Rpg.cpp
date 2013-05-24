@@ -341,6 +341,50 @@ int main(int argc, char* argv[])
 	crtDebugflags |= (crtDebugflags & 0x0000FFFF) | _CRTDBG_CHECK_ALWAYS_DF;
 	_CrtSetDbgFlag(crtDebugflags);
 
+/*
+	System::Init();
+	System::InitLogging("debug.log", true); //todo put this after config..
+	File f, f2;
+	f.Open("src/Script/asRpgInterface.cpp");
+	f2.Open("f_temp.txt", FileWriteText);
+	fc::string ln;
+	int k=0;
+	while(k++ < 428)
+	{
+		int pos_ = 0;
+		int pos2_ = 0;
+		ln = f.ReadLine();
+		if(ln.size() < 32)
+			continue;
+
+		foreachi(i, 2)
+		{
+			pos_ = ln.find_first_of('\"',pos2_);
+			if( pos_ == fc::string::npos )
+				break;
+
+			pos2_ = ln.find_first_of('\"',pos_+1);
+			if( pos2_ == fc::string::npos )
+				break;
+
+			if( (pos2_ - pos_) > 0 )
+			{
+				fc::string tmps = ln.substr(pos_, pos2_ - pos_);
+				f2.WriteLine(tmps);
+			}
+			else
+				break;
+
+			pos2_++;
+		}
+	}
+
+	f.Close();
+	f2.Close();
+	return 0;
+*/
+
+
 	/*
 	File f("sansation.ttf");
 	File out("out.txt", FileWriteText);
