@@ -37,11 +37,13 @@
 #include "StringAlias.inl"
 
 #include "Database.h"
+#include "ResourceDirectory.h"
 
 
 Database::Database()
 {
-	// this must always be called on init.
+	// these must always be called on init.
+	SetAllDefaultDataArrayFilenames();
 	SetAllDefaultDataArrayNodeNames();
 }
 
@@ -50,17 +52,50 @@ Database::~Database()
 {
 }
 
-/*
-Database::Initialize()
+
+void Database::ClearAll()
 {
-	SetAllDefaultDataArrayNodeNames();
+	items.clear();
+	weapons.clear();
+	armor.clear();
+	accessories.clear();
+
+	monsters.clear();
+	monster_troops.clear();
+	characters.clear();
+	character_classes.clear();
+	races.clear();
+
+
+	character_map_sprites.clear();
+	character_battle_sprites.clear();
+	monster_map_sprites.clear();
+	monster_battle_sprites.clear();
+
 }
 
 
-Database::Shutdown()
+void Database::SetAllDefaultDataArrayFilenames()
 {
+	// *Note* Sets all filenames. (But not Paths!)
+	// -Uses a ResourceDirectory for paths.
+
+	items.SetFileame("items.xml");
+	weapons.SetFileame("weapons.xml");
+	armor.SetFileame("armor.xml");
+	accessories.SetFileame("accessories.xml");
+
+	monsters.SetFileame("monsters.xml");
+	monster_troops.SetFileame("monster_troops.xml");
+	character_classes.SetFileame("character_classes.xml");
+
+	character_map_sprites.SetFileame("character_map_sprites.xml");
+	character_battle_sprites.SetFileame("character_battle_sprites.xml");
+	monster_map_sprites.SetFileame("monster_map_sprites.xml");
+	monster_battle_sprites.SetFileame("monster_battle_sprites.xml");
+
 }
-*/
+
 
 void Database::SetAllDefaultDataArrayNodeNames()
 {
@@ -144,10 +179,13 @@ bool Database::DeserializeAllDataXml()
 template <class T>
 bool Database::SerializeDataArray( T& arr, const fc::string& filename, const char* root, const char* item )
 {
-	XmlWriter xml(filename);
+	fc::string fn = g_resourceDirectory->GetDataDirectory();
+	fn += filename;
+
+	XmlWriter xml(fn);
 	if( !xml.IsOpen() )
 	{
-		Log("Could not open file (%s)", filename.c_str());
+		Log("Could not open file (%s)", fn.c_str());
 		return false;
 	}
 
@@ -170,10 +208,13 @@ bool Database::SerializeDataArray( T& arr, const fc::string& filename, const cha
 template <class T>
 bool Database::DeserializeDataArray( T& arr, const fc::string& filename, const char* root, const char* item )
 {
-	XmlReader xml(filename);
+	fc::string fn = g_resourceDirectory->GetDataDirectory();
+	fn += filename;
+
+	XmlReader xml(fn);
 	if( !xml.IsOpen() )
 	{
-		Log("Could not open file (%s)", filename.c_str());
+		Log("Could not open file (%s)", fn.c_str());
 		return false;
 	}
 
