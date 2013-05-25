@@ -150,6 +150,7 @@ public:
 
 	void DrawSprite( const Sprite& sprite, const Vector2& pos );
 	void DrawAnimatedSprite( const AnimatedSprite& sprite, const Vector2& pos );
+	void DrawAnimatedSpriteSet( const AnimatedSpriteSet& spriteset, const Vector2& pos );
 	void DrawTexture( const Texture* texture, const Vector2& pos );
 	void DrawTexture( const Texture* texture, const Vector2& pos, const Vector2& size );
 	void DrawSpriteData( const SpriteData& data );

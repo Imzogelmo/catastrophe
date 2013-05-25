@@ -286,6 +286,7 @@ void ScriptEngine::RegisterScriptingInterfaces()
 	RegisterGraphicsInterface();
 	RegisterSoundInterface();
 	RegisterGuiInterface();
+	RegisterRpgInterface();
 	RegisterGameInterface();
 
 	RegisterScriptArrayTemplateSpecializations();
@@ -301,25 +302,29 @@ void ScriptEngine::RegisterScriptingInterfaces()
 #endif
 
 
-
+#include <fc/fixed_memory_pool.h>
+fc::fixed_memory_pool<509612> scriptMemPool;
 
 size_t __total_mem = 0;
+
 void* ScriptMemoryAlloc( size_t n )
 {
 	__total_mem += n;
-	LogInfo("---Info : Script Alloc : bytes (%i), total kbytes(%i).",
-		n, (__total_mem / 1024)
-		);
+	//LogInfo("---Info : Script Alloc : bytes (%i), total kbytes(%i).", n, (__total_mem / 1024));
 
-	return malloc(n);
+	//return malloc(n);
+
+	return scriptMemPool.allocate(n);
+	//return new(scriptMemPool) char[n];//(n);
 }
 
 
 void ScriptMemoryFree( void* ptr )
 {
-	LogInfo("---Info : Script Memory Free.");
+	//LogInfo("---Info : Script Memory Free.");
 
-	free(ptr);
+	scriptMemPool.deallocate(ptr);
+	//free(ptr);
 }
 
 

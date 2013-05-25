@@ -30,6 +30,8 @@
 #include "Character.h"
 #include "Actor.h"
 #include "Party.h"
+
+#include "Entity.h"
 #include "Combatant.h"
 
 
@@ -157,8 +159,8 @@ void ScriptEngine::RegisterRpgDataTypes()
 	r = engine->RegisterObjectType( "item", sizeof(Item), asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS_CDAK ); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour( "item", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(ValueConstruct<Item>), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour( "item", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(ValueDestruct<Item>), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
-	r = engine->RegisterObjectBehaviour( "item", asBEHAVE_CONSTRUCT, "void f(const inventory &in)", asFUNCTION(ValueCopyConstruct<Item>), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
-	r = engine->RegisterObjectMethod( "item", "inventory &opAssign(const inventory &in)", asFUNCTION((ValueAssignment<Item, Item>)), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour( "item", asBEHAVE_CONSTRUCT, "void f(const item &in)", asFUNCTION(ValueCopyConstruct<Item>), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( "item", "item &opAssign(const item &in)", asFUNCTION((ValueAssignment<Item, Item>)), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
 	r = engine->RegisterObjectProperty( "item", "string name", offsetof(Item, name)); assert( r >= 0 );
 	r = engine->RegisterObjectProperty( "item", "string script", offsetof(Item, script)); assert( r >= 0 );
 	r = engine->RegisterObjectProperty( "item", "string description", offsetof(Item, description)); assert( r >= 0 );
@@ -194,8 +196,8 @@ void ScriptEngine::RegisterRpgDataTypes()
 	r = engine->RegisterObjectType( "character_data", sizeof(CharacterData), asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS_CDAK ); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour( "character_data", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(ValueConstruct<CharacterData>), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour( "character_data", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(ValueDestruct<CharacterData>), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
-	r = engine->RegisterObjectBehaviour( "character_data", asBEHAVE_CONSTRUCT, "void f(const monster_data &in)", asFUNCTION(ValueCopyConstruct<CharacterData>), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
-	r = engine->RegisterObjectMethod( "character_data", "character_data &opAssign(const monster_data &in)", asFUNCTION((ValueAssignment<CharacterData, CharacterData>)), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour( "character_data", asBEHAVE_CONSTRUCT, "void f(const character_data &in)", asFUNCTION(ValueCopyConstruct<CharacterData>), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( "character_data", "character_data &opAssign(const character_data &in)", asFUNCTION((ValueAssignment<CharacterData, CharacterData>)), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
 
 	r = engine->RegisterObjectProperty( "character_data", "string name", offsetof(CharacterData, name)); assert( r >= 0 );
 	r = engine->RegisterObjectProperty( "character_data", "string script", offsetof(CharacterData, script)); assert( r >= 0 );
@@ -263,7 +265,7 @@ void ScriptEngine::RegisterActor()
 
 	r = engine->RegisterObjectType( "actor", 0, asOBJ_REF | asOBJ_SCOPED ); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour( "actor", asBEHAVE_FACTORY, "actor @f()", asFUNCTION(ActorFactory), asCALL_CDECL ); assert( r >= 0 );
-	r = engine->RegisterObjectBehaviour( "actor", asBEHAVE_FACTORY, "actor @f(const actor& in)", asFUNCTION(PointerCopyConstruct<Actor>), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
+	//r = engine->RegisterObjectBehaviour( "actor", asBEHAVE_FACTORY, "actor @f(const actor& in)", asFUNCTION(PointerCopyConstruct<Actor>), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour( "actor", asBEHAVE_RELEASE, "void f()", asFUNCTION(DummyReleaseRef), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( "actor", "actor &opAssign(const actor &in)", asFUNCTION((PointerAssignment<Actor>)), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
 
@@ -314,7 +316,7 @@ void ScriptEngine::RegisterParty()
 	using namespace script;
 	r = engine->RegisterObjectType("party", 0, asOBJ_REF | asOBJ_SCOPED); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour("party", asBEHAVE_FACTORY, "party @f()", asFUNCTION(PartyFactory), asCALL_CDECL ); assert( r >= 0 );
-	r = engine->RegisterObjectBehaviour("party", asBEHAVE_FACTORY, "party @f(const party& in)", asFUNCTION(PointerCopyConstruct<Party>), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
+	//r = engine->RegisterObjectBehaviour("party", asBEHAVE_FACTORY, "party @f(const party& in)", asFUNCTION(PointerCopyConstruct<Party>), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour("party", asBEHAVE_RELEASE, "void f()", asFUNCTION(DummyReleaseRef), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
 	r = engine->RegisterObjectMethod("party", "party &opAssign(const party &in)", asFUNCTION((PointerAssignment<Party>)), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
 
@@ -349,23 +351,6 @@ void ScriptEngine::RegisterParty()
 }
 
 
-void ScriptEngine::RegisterCombatant()
-{
-	int r(0);
-	using namespace script;
-	r = engine->RegisterObjectType( "combatant", 0, asOBJ_REF | asOBJ_SCOPED ); assert( r >= 0 );
-	r = engine->RegisterObjectBehaviour("combatant", asBEHAVE_FACTORY, "combatant @f()", asFUNCTION(ActorFactory), asCALL_CDECL ); assert( r >= 0 );
-	r = engine->RegisterObjectBehaviour("combatant", asBEHAVE_FACTORY, "combatant @f(const combatant& in)", asFUNCTION(PointerCopyConstruct<Combatant>), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
-	r = engine->RegisterObjectBehaviour("combatant", asBEHAVE_RELEASE, "void f()", asFUNCTION(DummyReleaseRef), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
-	r = engine->RegisterObjectMethod("combatant", "combatant &opAssign(const combatant &in)", asFUNCTION((PointerAssignment<Combatant>)), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
-
-	r = engine->RegisterObjectMethod("combatant", "actor@ get_actor() const", asMETHODPR(Combatant, GetActor, () const, Actor*), asCALL_THISCALL ); assert( r >= 0 );
-
-	RegisterClassContainingAttributes<Combatant>("combatant");
-
-}
-
-
 template <class T>
 void ScriptEngine::RegisterClassContainingAttributes( const char* name )
 {
@@ -392,6 +377,82 @@ void ScriptEngine::RegisterClassContainingAttributes( const char* name )
 	//r = engine->RegisterObjectMethod( name, "const equipment& get_equipment() const", asMETHODPR(T, GetEquipment, (void) const, const Equipment&), asCALL_THISCALL ); assert( r >= 0 );
 
 }
+
+
+
+namespace script
+{
+	Entity* EntityFactory()
+	{
+		static Entity uninitializedEntity[4]; //fixme
+		return &uninitializedEntity[0];
+	}
+
+} //namespace script
+
+
+template <class T>
+void ScriptEngine::RegisterEntityType( const char* name )
+{
+	fc::string decl = name;
+	fc::string const_ref = "const " + decl + " &in";
+	fc::string factory_decl = decl + "@ f()";
+	fc::string factory_copy_decl = decl + "@ f(" + const_ref + ")";
+	fc::string opAssignString = decl;
+	opAssignString.append(" &opAssign(").append(const_ref).append(")");
+
+	int r(0);
+	using namespace script;
+	r = engine->RegisterObjectType( name, 0, asOBJ_REF | asOBJ_SCOPED ); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour( name, asBEHAVE_FACTORY, factory_decl.c_str(), asFUNCTION(EntityFactory), asCALL_CDECL ); assert( r >= 0 );
+	//r = engine->RegisterObjectBehaviour( name, asBEHAVE_FACTORY, factory_copy_decl.c_str(), asFUNCTION(PointerCopyConstruct<T>), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour( name, asBEHAVE_RELEASE, "void f()", asFUNCTION(DummyReleaseRef), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( name, opAssignString.c_str(), asFUNCTION((PointerAssignment<T>)), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
+
+}
+
+
+template <class T>
+void ScriptEngine::RegisterEntityBaseProperties( const char* name )
+{
+	int r(0);
+	using namespace script;
+	r = engine->RegisterObjectProperty( name, "vec2 pos", offsetof(T, pos)); assert( r >= 0 );
+	r = engine->RegisterObjectProperty( name, "vec2 velocity", offsetof(T, velocity)); assert( r >= 0 );
+	r = engine->RegisterObjectProperty( name, "rectf hitbox", offsetof(T, hitbox)); assert( r >= 0 );
+
+	r = engine->RegisterObjectMethod( name, "rectf get_aabb() const", asMETHOD(T, GetBoundingRect), asCALL_THISCALL ); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( name, "bool get_alive() const", asMETHOD(T, IsAlive), asCALL_THISCALL ); assert( r >= 0 );
+
+}
+
+
+void ScriptEngine::RegisterCombatant()
+{
+	int r(0);
+	using namespace script;
+
+	RegisterEntityType<Combatant>("combatant");
+	RegisterEntityBaseProperties<Combatant>("combatant");
+	RegisterClassContainingAttributes<Combatant>("combatant");
+
+	/*
+	r = engine->RegisterObjectType( "combatant", 0, asOBJ_REF | asOBJ_SCOPED ); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour("combatant", asBEHAVE_FACTORY, "combatant @f()", asFUNCTION(ActorFactory), asCALL_CDECL ); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour("combatant", asBEHAVE_FACTORY, "combatant @f(const combatant& in)", asFUNCTION(PointerCopyConstruct<Combatant>), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour("combatant", asBEHAVE_RELEASE, "void f()", asFUNCTION(DummyReleaseRef), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
+	r = engine->RegisterObjectMethod("combatant", "combatant &opAssign(const combatant &in)", asFUNCTION((PointerAssignment<Combatant>)), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
+	*/
+
+	r = engine->RegisterObjectMethod("combatant", "actor@ get_actor() const", asMETHODPR(Combatant, GetActor, () const, Actor*), asCALL_THISCALL ); assert( r >= 0 );
+
+}
+
+
+
+
+
+
 
 
 void ScriptEngine::RegisterRpgInterface()

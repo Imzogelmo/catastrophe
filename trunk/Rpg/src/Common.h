@@ -144,10 +144,12 @@ template<class T> class ScriptArray;
 
 
 //global functions
+// TODO: implement these proper as more subsystems are functional.
 ScriptEngine* gGetScriptEngine();
 Game* gGetGame();
 
 Database* GetDatabase();
+SpriteBatch* gGetSpriteBatch(); //need to hook into game for now.
 
 extern Game* game;
 

@@ -62,7 +62,7 @@ public:
 	CollisionFilter	filter;
 	bool	alive;
 
-	Entity( EntityType derivedType );
+	Entity( EntityType derivedType = EntityType_Entity );
 	virtual ~Entity()
 	{}
 

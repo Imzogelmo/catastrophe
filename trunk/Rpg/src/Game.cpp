@@ -14,9 +14,11 @@
 
 Game* game = 0;
 ScriptEngine* g_scriptEngine = 0;
+SpriteBatch* g_tempSpriteBatch = 0;
 
 ScriptEngine* gGetScriptEngine() { return g_scriptEngine; }
 Game* gGetGame() { return game; }
+SpriteBatch* gGetSpriteBatch() { return g_tempSpriteBatch; }
 
 Database g_database;
 //I'm sticking this here for now also!
@@ -29,12 +31,13 @@ Database* GetDatabase()
 int Game::Initialize()
 {
 	g_scriptEngine = &m_scriptEngine;
+	g_tempSpriteBatch = &m_spriteBatch;
 	//gSetActiveDatabase(&m_database);
 
 	//m_resourceManager.GetResourceDirectory().SetRootDirectory("data/");
 
 	int ret(0);
-	//ret = InternalInitScriptEngine();
+	ret = InternalInitScriptEngine();
 	if(ret != 0)
 		return ret;
 
@@ -60,6 +63,8 @@ int Game::InternalInitScriptEngine()
 	engine->Initialize();
 	engine->SetDefaultEngineProperties();
 	engine->RegisterScriptingInterfaces();
+
+	return 0;
 
 	//WIP build - this will be removed later
 	Log( "Compiling scripts..." );
