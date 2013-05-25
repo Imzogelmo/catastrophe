@@ -9,6 +9,7 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
+#include <Catastrophe/Graphics/SpriteBatch.h>
 #include "Combatant.h"
 
 
@@ -45,6 +46,7 @@ void Combatant::Update()
 
 void Combatant::Render()
 {
+	gGetSpriteBatch()->DrawAnimatedSpriteSet(m_spriteset, pos);
 }
 
 

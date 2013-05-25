@@ -111,7 +111,8 @@ private:
 	void RegisterParty();
 	void RegisterCombatant();
 	template <class T> void RegisterClassContainingAttributes( const char* name );
-	//template <class T> void RegisterCombatant2( const char* name );
+	template <class T> void RegisterEntityType( const char* name );
+	template <class T> void RegisterEntityBaseProperties( const char* name );
 
 	//game
 	void RegisterGameInterface();

@@ -22,6 +22,7 @@
 
 #include "Graphics/SpriteBatch.h"
 #include "Graphics/Sprite.h"
+#include "Graphics/AnimatedSpriteSet.h"
 #include "Graphics/OpenGL.h"
 
 CE_NAMESPACE_BEGIN
@@ -184,6 +185,24 @@ void SpriteBatch::DrawAnimatedSprite( const AnimatedSprite& sprite, const Vector
 		Rectf(pos, pos + sprite.size),
 		sprite.GetUVRect(),
 		sprite.color,
+		0
+		);
+}
+
+
+void SpriteBatch::DrawAnimatedSpriteSet( const AnimatedSpriteSet& spriteset, const Vector2& pos )
+{
+	if( spriteset.Empty() )
+		return;
+
+	InternalQueueSprite(
+		spriteset.GetTextureID(),
+		spriteset.angle,
+		spriteset.scale,
+		pos + (spriteset.size * 0.5f),
+		Rectf(pos, pos + spriteset.size),
+		spriteset.GetCurrentAnimation().GetUVRect(),
+		spriteset.color,
 		0
 		);
 }

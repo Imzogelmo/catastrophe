@@ -45,6 +45,7 @@ public:
 	uint64 ElapsedMilliseconds();
 	uint64 ElapsedMicroseconds();
 
+	double MilliSeconds();
 	double Seconds();
 	double Minutes();
 

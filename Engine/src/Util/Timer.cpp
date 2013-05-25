@@ -89,6 +89,12 @@ uint64 Timer::ElapsedMicroseconds()
 }
 
 
+double Timer::MilliSeconds()
+{
+	return Seconds() * 1000.0;
+}
+
+
 double Timer::Seconds()
 {
 	return timer_elapsed( (timer*)&m_time, 0 );
