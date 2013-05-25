@@ -50,11 +50,12 @@ class DataArray : public fc::dynamic_array<T>
 {
 public:
 	typedef fc::dynamic_array<T>	base_type;
+	fc::string	filename;
 	const char* root_name;
 	const char* item_name;
 
 	DataArray()
-		: base_type(), root_name(0), item_name(0)
+		: base_type(), filename(), root_name(0), item_name(0)
 	{}
 
 	void SetNodeNames( const char* root, const char* item )
@@ -63,8 +64,13 @@ public:
 		item_name = item;
 	}
 
-	NO_INLINE bool SerializeXml( const fc::string& filename );
-	NO_INLINE bool DeserializeXml( const fc::string& filename );
+	void SetFileame( const fc::string& name )
+	{
+		filename = name;
+	}
+
+	NO_INLINE bool SerializeXml( const fc::string& filename = "" );
+	NO_INLINE bool DeserializeXml( const fc::string& filename = "" );
 };
 
 
@@ -117,6 +123,12 @@ public:
 	//music
 	//sfx
 
+	/// Clears all data from all arrays and deallocated any memory used.
+	void ClearAll();
+
+	/// Sets all file names to default. (This is called from the constructor)
+	void SetAllDefaultDataArrayFilenames();
+
 	/// Sets all node names to default. (This should never need to be used)
 	void SetAllDefaultDataArrayNodeNames();
 
@@ -158,28 +170,23 @@ public:
 	inline AnimatedSpriteSetAsset* GetMonsterBattleSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(monster_battle_sprites, id); }
 
 
-
-	//template <> static bool SerializeDataArray< DataArray<AnimatedSpriteSetAsset> >
-	//	( DataArray<AnimatedSpriteSetAsset>& arr, const fc::string& filename, const char* root, const char* item );
-
-
 };
 
 
 
 template <class T>
-bool DataArray<T>::SerializeXml( const fc::string& filename ) {
+bool DataArray<T>::SerializeXml( const fc::string& name ) {
 	ASSERT(root_name != 0);
 	ASSERT(item_name != 0);
-	return Database::SerializeDataArray( *this, filename, root_name, item_name );
+	return Database::SerializeDataArray( *this, name.empty() ? filename : name, root_name, item_name );
 }
 
 
 template <class T>
-bool DataArray<T>::DeserializeXml( const fc::string& filename ) {
+bool DataArray<T>::DeserializeXml( const fc::string& name ) {
 	ASSERT(root_name != 0);
 	ASSERT(item_name != 0);
-	return Database::DeserializeDataArray( *this, filename, root_name, item_name );
+	return Database::DeserializeDataArray( *this, name.empty() ? filename : name, root_name, item_name );
 }
 
 /*
