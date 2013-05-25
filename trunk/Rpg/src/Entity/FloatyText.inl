@@ -26,9 +26,9 @@ void FloatyText::Update()
 }
 
 
-void FloatyText::Render( SpriteBatch* spriteBatch )
+void FloatyText::Render()
 {
-	TextEntity::Render(spriteBatch);
+	TextEntity::Render();
 }
 
 

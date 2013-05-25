@@ -21,6 +21,7 @@
 #include "Common.h"
 #include "GlobalSettings.h"
 #include "Game.h"
+#include "Database.h"
 
 
 //for memory leak checking
@@ -181,6 +182,7 @@ int main(int argc, char* argv[])
 	//todo: ...
 	RpgLibInit();
 
+	GetDatabase()->DeserializeAllDataXml();
 
 	// read config file and parse command-line arguments.
 	LoadConfigSettings(argc, argv);

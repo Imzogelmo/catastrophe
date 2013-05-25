@@ -216,6 +216,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Data\Modifier.inl"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Data\MonsterData.inl"
 					>
 				</File>
@@ -403,6 +407,10 @@
 				</File>
 				<File
 					RelativePath=".\include\LevelData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Modifier.h"
 					>
 				</File>
 				<File

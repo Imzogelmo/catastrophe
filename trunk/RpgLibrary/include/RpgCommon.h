@@ -100,10 +100,15 @@ class RpgStrings;
 
 
 
-#define MAX_ITEM_DROPS	8
-#define MAX_LV			9999
-#define MAX_EXP			999999999
-#define MAX_GOLD		999999999
+#define MAX_ITEM_DROPS		8
+#define MAX_LV				9999
+#define MAX_EXP				999999999
+#define MAX_GOLD			999999999
+
+#define MAX_PARAM_VALUE		999999999
+#define MAX_STAT_VALUE		9999
+#define MAX_ELEMENT_VALUE	100
+#define MAX_STATUS_VALUE	100
 
 
 

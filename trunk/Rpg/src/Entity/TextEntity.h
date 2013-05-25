@@ -35,7 +35,7 @@ public:
 	TextAlignment GetTextAlignment() const { return m_textAlignment; }
 
 	virtual void Update() {}
-	virtual void Render( SpriteBatch* spriteBatch );
+	virtual void Render();
 
 protected:
 	fc::string		m_text;

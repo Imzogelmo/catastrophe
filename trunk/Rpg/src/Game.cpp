@@ -11,6 +11,8 @@
 
 #include "Game.h"
 #include "Database.h"
+#include "BattleScreen.h"
+
 
 Game* game = 0;
 ScriptEngine* g_scriptEngine = 0;
@@ -37,7 +39,7 @@ int Game::Initialize()
 	//m_resourceManager.GetResourceDirectory().SetRootDirectory("data/");
 
 	int ret(0);
-	ret = InternalInitScriptEngine();
+	//ret = InternalInitScriptEngine();
 	if(ret != 0)
 		return ret;
 
@@ -97,7 +99,7 @@ void Game::Update()
 	static bool testInit = false;
 	if(!testInit)
 	{
-	//	m_screenManager.Add( new TestScreen(&m_screenManager) ); //....
+		m_screenManager.Add( new BattleScreen() ); //....
 		testInit = true;
 	}
 

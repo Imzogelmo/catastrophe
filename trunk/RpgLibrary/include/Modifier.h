@@ -11,21 +11,40 @@
 
 #pragma once
 
-#include "TextEntity.h"
+#include <fc/string.h>
+
+#include "RpgCommon.h"
+#include "Attributes.h"
 
 
-class FloatyText : public TextEntity
+struct Modifier
 {
-public:
-	FloatyText( int lifetime = 120 );
+	enum Target
+	{
+		MaxParam,
+		Stat,
+		ElementDef,
+		StatusAtk,
+		StatusDef
+	};
 
-	void Update();
-	void Render();
+	enum Type
+	{
+		BonusMalus,
+		Multiplier
+	};
 
-protected:
-	int		m_lifetime;
-	
+	int		value;
+	short	index;
+	byte	target;
+	byte	type;
+
+	Modifier();
+
+	Attributes ConvertToAttributes() const;
+	void ApplyToAttributes( Attributes& attributes ) const;
+
+	void SerializeXml( XmlWriter* xml );
+	void DeserializeXml( XmlReader* xml );
 };
-
-
 
