@@ -17,6 +17,7 @@
 #include "asBindUtil.h"
 #include "ScriptEngine.h"
 #include "Game.h"
+#include "Database.h"
 
 
 namespace script
@@ -88,6 +89,13 @@ namespace script
 		game->GetScriptEngine()->SetEngineProperty(param, val);
 	}
 
+	Actor* GameGetActor( int param )
+	{
+		return 0;
+		//game->GetScriptEngine()->SetEngineProperty(param, val);
+	}
+
+
 
 } //namespace script
 
@@ -110,6 +118,11 @@ void ScriptEngine::RegisterGame()
 
 
 	r = engine->RegisterGlobalFunction( "void set_engine_property(int, int)", asFUNCTION(GameSetEngineProperty), asCALL_CDECL); assert( r >= 0 );
+
+
+
+	// Database functions
+	//r = engine->RegisterGlobalFunction( "actor @get_actor(int)", asFUNCTION(GameGetActor), asCALL_CDECL); assert( r >= 0 );
 
 
 	r = engine->SetDefaultNamespace(""); assert( r >= 0 );

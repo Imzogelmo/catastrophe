@@ -209,6 +209,18 @@ void XmlWriter::SetBool( const char* name, bool value )
 }
 
 
+void XmlWriter::SetByte( const fc::string& name, char value )
+{
+	SetInt(name.c_str(), (int)value);
+}
+
+
+void XmlWriter::SetByte( const char* name, char value )
+{
+	SetInt(name, (int)value);
+}
+
+
 void XmlWriter::SetShort( const fc::string& name, short value )
 {
 	SetInt(name.c_str(), (int)value);

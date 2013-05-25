@@ -29,10 +29,10 @@ void BouncyText::Update()
 }
 
 
-void BouncyText::Render( SpriteBatch* spriteBatch )
+void BouncyText::Render()
 {
 	fc::string str;
-	TextEntity::Render(spriteBatch);
+	TextEntity::Render();
 
 
 

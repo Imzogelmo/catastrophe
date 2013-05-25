@@ -24,12 +24,12 @@ TextEntity::TextEntity( EntityType derivedType, const fc::string& text, Font* fo
 }
 
 
-void TextEntity::Render( SpriteBatch* spriteBatch )
+void TextEntity::Render()
 {
 	if( !m_font )
 		return;
 
-	spriteBatch->DrawString(m_font, m_text, pos, m_color, m_textAlignment);
+	gGetSpriteBatch()->DrawString(m_font, m_text, pos, m_color, m_textAlignment);
 }
 
 

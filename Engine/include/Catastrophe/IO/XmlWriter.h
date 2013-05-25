@@ -46,6 +46,7 @@ public:
 
 	void SetString( const fc::string& name, const fc::string& value );
 	void SetBool( const fc::string& name, bool value );
+	void SetByte( const fc::string& name, char value );
 	void SetShort( const fc::string& name, short value );
 	void SetInt( const fc::string& name, int value );
 	void SetUInt( const fc::string& name, size_t value );
@@ -53,6 +54,7 @@ public:
 
 	void SetString( const char* name, const char* value );
 	void SetBool( const char* name, bool value );
+	void SetByte( const char* name, char value );
 	void SetShort( const char* name, short value );
 	void SetInt( const char* name, int value );
 	void SetUInt( const char* name, size_t value );

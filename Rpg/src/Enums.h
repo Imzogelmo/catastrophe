@@ -22,9 +22,9 @@ enum Gender
 
 enum Handedness
 {
-	Handed_Right = 1,
-	Handed_Left = 2,
-	Handed_Ambidextrous = 3
+	Handed_Right,
+	Handed_Left,
+	Handed_Ambidextrous
 };
 
 
@@ -69,7 +69,7 @@ enum CursorStart
 
 enum CursorModeFlags
 {
-	CursorMode_Selectablle = 1,      // Cam be moved off the starting target
+	CursorMode_Selectable = 1,       // Cam be moved off the starting target
 	CursorMode_Spreadable = 2,       // Can be spread optionally
 	CursorMode_FactionRestricted = 4 // Keep cursor within the faction it starts in
 };

@@ -59,11 +59,16 @@ bool ScreenManager::IsEmpty() const
 
 void ScreenManager::Add( Screen* screen )
 {
-	if( !screen )
-		return;
+	ASSERT(screen != 0);
+
+	ScreenManager* parent = screen->GetScreenManager();
+	if( parent )
+	{
+		parent->Remove(screen);
+	}
 
 	Screen* top = GetTop();
-	if(top)
+	if( top )
 	{
 		//transition bottom..? maybe.
 	}

@@ -189,9 +189,4 @@ bool DataArray<T>::DeserializeXml( const fc::string& name ) {
 	return Database::DeserializeDataArray( *this, name.empty() ? filename : name, root_name, item_name );
 }
 
-/*
-template <>
-bool DataArray<AnimatedSpriteSetAsset>::SerializeXml( const fc::string& filename ) {
-	return Database::SerializeDataArray< DataArray<AnimatedSpriteSetAsset> >( *this, filename, root_name, item_name );
-}
-*/
+

@@ -20,7 +20,7 @@ public:
 	BouncyText( int lifetime = 120, int bounceHeight = 32, bool stagger = false );
 
 	void Update();
-	void Render( SpriteBatch* spriteBatch );
+	void Render();
 
 protected:
 	int		m_lifetime;

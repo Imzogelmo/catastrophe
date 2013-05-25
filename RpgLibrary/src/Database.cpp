@@ -14,6 +14,7 @@
 // data
 #include "Attributes.inl"
 #include "AttributeFlags.inl"
+#include "Modifier.inl"
 #include "BattleCommand.inl"
 #include "Item.inl"
 #include "EquipmentItem.inl"
@@ -87,7 +88,9 @@ void Database::SetAllDefaultDataArrayFilenames()
 
 	monsters.SetFileame("monsters.xml");
 	monster_troops.SetFileame("monster_troops.xml");
+	characters.SetFileame("characters.xml");
 	character_classes.SetFileame("character_classes.xml");
+	races.SetFileame("races.xml");
 
 	character_map_sprites.SetFileame("character_map_sprites.xml");
 	character_battle_sprites.SetFileame("character_battle_sprites.xml");
@@ -116,7 +119,9 @@ void Database::SetAllDefaultDataArrayNodeNames()
 
 	monsters.SetNodeNames("MonsterList", "Monster");
 	monster_troops.SetNodeNames("MonsterTroopList", "MonsterTroop");
+	characters.SetNodeNames("CharacterList", "Character");
 	character_classes.SetNodeNames("CharacterClassList", "CharacterClass");
+	races.SetNodeNames("RaceList", "Race");
 
 	character_map_sprites.SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet");
 	character_battle_sprites.SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet");
@@ -128,8 +133,6 @@ void Database::SetAllDefaultDataArrayNodeNames()
 
 bool Database::SerializeAllDataXml()
 {
-	//todo: need filenames
-
 	items.SerializeXml("");
 	weapons.SerializeXml("");
 	armor.SerializeXml("");
@@ -153,8 +156,6 @@ bool Database::SerializeAllDataXml()
 
 bool Database::DeserializeAllDataXml()
 {
-	//todo: need filenames
-
 	items.DeserializeXml("");
 	weapons.DeserializeXml("");
 	armor.DeserializeXml("");
