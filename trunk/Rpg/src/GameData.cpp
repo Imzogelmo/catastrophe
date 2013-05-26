@@ -29,11 +29,26 @@ GameData::~GameData()
 }
 
 
+void GameData::Clear()
+{
+	//todo: free memory
+	m_partyList.clear();
+	m_characterActors.clear();
+	m_monsterActors.clear();
+
+	m_activeParty = 0;
+}
+
+
 void GameData::InitializeFromDatabase( Database* database )
 {
 	ASSERT(database != 0);
 
 	m_database = database;
+
+	Clear();
+	CreateParty();
+
 	size_t characterSize = database->characters.size();
 	m_characterActors.reserve(characterSize * 2);
 
