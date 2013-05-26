@@ -20,7 +20,7 @@ GameData* GetGameData(){ return &g_GameData; }
 GameData::GameData() :
 	m_activeParty(0)
 {
-	m_partyList.push_back( new Party() );
+	CreateParty();
 }
 
 
@@ -95,6 +95,38 @@ Actor* GameData::GetMonsterActorById( int id )
 }
 
 
+
+int GameData::CreateParty()
+{
+	int id = (int)m_partyList.size();
+	m_partyList.push_back( new Party() );
+	return id;
+}
+
+
+int GameData::RemoveParty( int id )
+{
+	if( m_partyList.empty() )
+		return m_activeParty;
+
+	if( (size_t)id < m_partyList.size() )
+	{
+		m_partyList.erase_at(id); //todo: free memory
+		if( id <= m_activeParty )
+			m_activeParty--;
+	}
+
+	return m_activeParty;
+}
+
+
+void GameData::SetActiveParty( int id )
+{
+	if( (size_t)id < m_partyList.size() )
+		m_activeParty = id;
+}
+
+
 Party* GameData::GetParty( int id ) const
 {
 	Party* party = 0;
@@ -107,7 +139,7 @@ Party* GameData::GetParty( int id ) const
 
 Party* GameData::GetActiveParty() const
 {
-	return m_partyList[m_activeParty];
+	return m_partyList.empty() ? 0 : m_partyList[m_activeParty];
 }
 
 

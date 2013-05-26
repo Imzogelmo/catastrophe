@@ -14,9 +14,8 @@
 
 #include "Catastrophe/MathTypes.h"
 
-#include "Catastrophe/Gui/TextElement.h"
-#include "Catastrophe/Gui/MessageElement.h"
-#include "Catastrophe/Gui/MenuElement.h"
+#include "Catastrophe/Gui/Label.h"
+#include "Catastrophe/Gui/TextBox.h"
 
 #include "Catastrophe/Input/Input.h"
 

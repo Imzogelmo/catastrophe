@@ -20,9 +20,9 @@
 
 
 #include "Common.h"
-#include "Graphics/AnimationFrames.h"
-#include "Graphics/Animation.h"
-#include "Graphics/AnimationSet.h"
+#include "Graphics/Sprite.h"
+#include "Graphics/SpriteAnimation.h"
+#include "Graphics/AnimatedSpriteSet.h"
 #include "Graphics/Font.h"
 #include "Graphics/Image.h"
 #include "Graphics/OpenGL.h"

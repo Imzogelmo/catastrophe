@@ -90,9 +90,6 @@ public:
 	/*
 	DataArray<Skill>			skills;
 	DataArray<Spell>			spells;
-	DataArray<CharacterData>	characters;
-	DataArray<CharacterClass>	classes;
-	DataArray<MonsterTroop>		troops;
 	DataArray<EncounterGroup>	encounters;
 	*/
 
@@ -123,6 +120,9 @@ public:
 	//music
 	//sfx
 
+	/// Initializes the database.
+	void Initialize();
+
 	/// Clears all data from all arrays and deallocated any memory used.
 	void ClearAll();
 
@@ -132,11 +132,18 @@ public:
 	/// Sets all node names to default. (This should never need to be used)
 	void SetAllDefaultDataArrayNodeNames();
 
+	/// Sets the current resource directory.
+	void SetResourceDirectory( ResourceDirectory* resourceDirectory );
+
+	/// Gets the current resource directory.
+	ResourceDirectory* GetResourceDirectory() const;
+
 	/// Save the entire database to xml. This will override any existing files.
 	bool SerializeAllDataXml();
 
 	/// Load the entire database from xml files.
 	bool DeserializeAllDataXml();
+
 
 	/// Called internally by DataArray. (This also keep the header files clean) ;)
 	template <class T> static bool SerializeDataArray( T& arr, const fc::string& filename, const char* root, const char* item );
@@ -169,6 +176,8 @@ public:
 	inline AnimatedSpriteSetAsset* GetMonsterMapSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(monster_map_sprites, id); }
 	inline AnimatedSpriteSetAsset* GetMonsterBattleSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(monster_battle_sprites, id); }
 
+private:
+	ResourceDirectory*	m_resourceDirectory;
 
 };
 
@@ -178,6 +187,7 @@ template <class T>
 bool DataArray<T>::SerializeXml( const fc::string& name ) {
 	ASSERT(root_name != 0);
 	ASSERT(item_name != 0);
+	ASSERT(!(name.empty() && filename.empty()));
 	return Database::SerializeDataArray( *this, name.empty() ? filename : name, root_name, item_name );
 }
 
@@ -186,6 +196,7 @@ template <class T>
 bool DataArray<T>::DeserializeXml( const fc::string& name ) {
 	ASSERT(root_name != 0);
 	ASSERT(item_name != 0);
+	ASSERT(!(name.empty() && filename.empty()));
 	return Database::DeserializeDataArray( *this, name.empty() ? filename : name, root_name, item_name );
 }
 

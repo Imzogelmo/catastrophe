@@ -184,10 +184,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\Entity.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\Equipment.cpp"
 				>
 			</File>
@@ -221,10 +217,6 @@
 			</File>
 			<File
 				RelativePath=".\src\Rpg.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Screens.cpp"
 				>
 			</File>
 			<File
@@ -415,19 +407,35 @@
 				Name="Battle"
 				>
 				<File
+					RelativePath=".\src\Battle\Battle.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Battle\BattleAction.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Battle\BattleActionQueue.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Battle\BattleEngine.inl"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Modules"
+				>
+				<File
 					RelativePath=".\src\Battle.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\BattleAction.cpp"
+					RelativePath=".\src\Entity.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\BattleActionQueue.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\BattleEngine.cpp"
+					RelativePath=".\src\Screens.cpp"
 					>
 				</File>
 			</Filter>
@@ -657,19 +665,19 @@
 				Name="Battle"
 				>
 				<File
-					RelativePath=".\src\Battle.h"
+					RelativePath=".\src\Battle\Battle.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\BattleAction.h"
+					RelativePath=".\src\Battle\BattleAction.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\BattleActionQueue.h"
+					RelativePath=".\src\Battle\BattleActionQueue.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\BattleEngine.h"
+					RelativePath=".\src\Battle\BattleEngine.h"
 					>
 				</File>
 			</Filter>

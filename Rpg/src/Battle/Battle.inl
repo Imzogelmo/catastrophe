@@ -9,15 +9,30 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
+#include "Battle.h"
 
-// The unity-component-build experiment continues! :D
-// Battle related files and code are likely to ret out of hand pretty fast
-// so this is a good candidate for a module-based build system also.
 
-#include "BattleAction.inl"
-#include "BattleActionQueue.inl"
-#include "Battle.inl"
-#include "BattleEngine.inl"
+
+Battle::Battle()
+{
+}
+
+
+Battle::~Battle()
+{
+}
+
+
+void Battle::AddEvent( BattleEvent* battleEvent )
+{
+	m_eventQueue.push_back(battleEvent);
+}
+
+
+void Battle::AddOutroEvent( BattleEvent* battleEvent )
+{
+	m_outroEvents.push_back(battleEvent);
+}
 
 
 

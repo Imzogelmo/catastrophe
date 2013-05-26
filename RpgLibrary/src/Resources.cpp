@@ -58,7 +58,7 @@ void RpgLibShutdown()
 
 
 
-
+/*
 void _test()
 {
 	Point p;
@@ -77,4 +77,4 @@ void _test()
 
 
 }
-
+*/
