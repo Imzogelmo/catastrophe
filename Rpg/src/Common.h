@@ -49,36 +49,23 @@ USING_NAMESPACE_CE
 
 // forward declarations
 
-class Actor;
-class Character;
-class Monster;
-
 class Battle;
 class BattleAction;
 class BattleActionQueue;
 class BattleEngine;
 
-/*
-class ItemList;
-class SpellList;
-class MonsterList;
-class MonsterPartyList;
-class EncounterGroupList;
-class EncounterGroupList;
-class CharacterClassList;
-class ExpTableList;
-*/
-class Database;
 
-
-//class Item;
 class InventoryItem;
 class Inventory;
 class Equipment;
 class BuffSet;
+class Actor;
+class Party;
 
 
 class Game;
+class GameData;
+
 class Screen;
 class ScreenManager;
 class GameScreen;
@@ -147,6 +134,7 @@ template<class T> class ScriptArray;
 // TODO: implement these proper as more subsystems are functional.
 ScriptEngine* gGetScriptEngine();
 Game* gGetGame();
+GameData* GetGameData();
 
 Database* GetDatabase();
 SpriteBatch* gGetSpriteBatch(); //need to hook into game for now.

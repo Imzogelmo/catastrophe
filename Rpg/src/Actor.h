@@ -29,6 +29,7 @@ public:
 	int			portrait_id;
 	int			map_spriteset_id;
 	int			battle_spriteset_id;
+	int			battle_row;
 
 	enum ActorType
 	{

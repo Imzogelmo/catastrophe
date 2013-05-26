@@ -11,6 +11,7 @@
 
 #include <Catastrophe/Graphics/SpriteBatch.h>
 #include "Combatant.h"
+#include "GameData.h"
 
 
 
@@ -35,6 +36,16 @@ void Combatant::InitializeFromActor( Actor* actor )
 	m_actor->LoadBattleSpriteSet(m_spriteset);
 	m_scriptInstance.Initialize(actor->script);
 	m_scriptInstance.CreateScriptObject();
+}
+
+
+void Combatant::InitializeFromActorId( int id )
+{
+	Actor* actor = GetGameData()->GetCharacterActorById(id);
+	if( actor )
+	{
+		InitializeFromActor(actor);
+	}
 }
 
 

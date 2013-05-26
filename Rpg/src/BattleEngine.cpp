@@ -10,6 +10,11 @@
 // GNU General Public License for more details.
 
 #include "BattleEngine.h"
+#include "Combatant.h"
+#include "Actor.h"
+#include "Party.h"
+#include "Game.h"
+#include "GameData.h"
 
 
 
@@ -47,6 +52,31 @@ BattlePolicy BattleEngine::GetCurrentBattlePolicy()
 		battlePolicy = b->GetBattlePolicy();
 
 	return battlePolicy;
+}
+
+
+void BattleEngine::AddPlayerCombatantsFromParty( Party* party )
+{
+	ASSERT(party != 0);
+
+	Party::vec_type& partyMembers = party->GetActiveMembers();
+	if( partyMembers.empty() )
+	{
+		//what to do???
+	}
+
+	for( size_t i(0); i < partyMembers.size(); ++i )
+	{
+		int actor_id = partyMembers[i];
+		Actor* actor = GetGameData()->GetCharacterActorById(actor_id);
+
+		if( actor )
+		{
+			Combatant* playerCombatant = new Combatant();
+			playerCombatant->InitializeFromActor(actor);
+			AddPlayerCombatant(playerCombatant);
+		}
+	}
 }
 
 
@@ -95,6 +125,7 @@ void BattleEngine::Update()
 		{
 			if( battlePolicy.ShouldRemoveDeadMonsters() )
 			{
+				//todo: should it be stored inside object?
 			}
 		}
 	}
@@ -119,25 +150,25 @@ void BattleEngine::Render()
 	// players
 	for( player_vec_type::iterator it = m_players.begin(); it != m_players.end(); ++it )
 	{
-		//(*it)->Render();
+		(*it)->Render();
 	}
 
 	// monsters
 	for( monster_vec_type::iterator it = m_monsters.begin(); it != m_monsters.end(); ++it )
 	{
-		//(*it)->Render();
+		(*it)->Render();
 	}
 
 	// entities
 	for( entity_vec_type::iterator it = m_entities.begin(); it != m_entities.end(); ++it )
 	{
-		//(*it)->Render();
+		(*it)->Render();
 	}
 
 	// battle texts
 	for( entity_vec_type::iterator it = m_textEntities.begin(); it != m_textEntities.end(); ++it )
 	{
-		//(*it)->Render();
+		(*it)->Render();
 	}
 
 	//m_sortedEntities.RemoveDeadEntities();
