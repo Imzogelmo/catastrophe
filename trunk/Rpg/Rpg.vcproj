@@ -196,6 +196,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\GameData.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Inventory.cpp"
 				>
 			</File>
@@ -438,10 +442,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\BattleEngine.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\BuffSet.h"
 				>
 			</File>
@@ -463,6 +463,10 @@
 			</File>
 			<File
 				RelativePath=".\src\Game.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\GameData.h"
 				>
 			</File>
 			<File
@@ -662,6 +666,10 @@
 				</File>
 				<File
 					RelativePath=".\src\BattleActionQueue.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\BattleEngine.h"
 					>
 				</File>
 			</Filter>

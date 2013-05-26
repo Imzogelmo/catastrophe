@@ -51,6 +51,7 @@ public:
 	BattlePolicy GetCurrentBattlePolicy();
 
 		
+	void AddPlayerCombatantsFromParty( Party* party );
 	void AddPlayerCombatant( Combatant* player );
 	void AddMonsterCombatant( Combatant* monster );
 	void AddEntity( Entity* e );
@@ -65,6 +66,7 @@ protected:
 	battle_vec_type				m_battles;
 
 	//EntitySorter<EntitySortZ>	m_sortedEntities;
+	entity_vec_type				m_entityGarbageBin;
 	entity_vec_type				m_textEntities;
 	entity_vec_type				m_entities;
 	player_vec_type				m_players;

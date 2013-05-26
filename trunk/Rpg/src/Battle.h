@@ -40,10 +40,25 @@ public:
 };
 
 
+class BattlerGroup
+{
+public:
+	typedef fc::fixed_vector<int, 16>				vec_type;
+
+	vec_type battlers;
+
+	void AddBattler( int id );
+	void RemoveBattler( int id );
+
+};
+
+
 class Battle
 {
 public:
 	typedef fc::vector<BattleEvent*>	event_vec_type;
+	typedef fc::vector<BattlerGroup>	battler_vec_type;
+	typedef fc::vector<int>				vec_type;
 
 	Battle();
 	~Battle();
@@ -54,9 +69,15 @@ public:
 	//void SetMusic( Sound* sound );
 	//Sound* GetMusic() const { return m_bgm; }
 
+	BattlerGroup& GetBattlerGroup( int index ) { return m_battlerGroups.at(index); }
+	const BattlerGroup& GetBattlerGroup( int index ) const { return m_battlerGroups.at(index); }
+
+
 	BattlePolicy GetBattlePolicy() const { return m_battlePolicy; }
 
 protected:
+	battler_vec_type	m_battlerGroups;
+
 	//MonsterTroop	m_monsterParty;
 	//Party			m_party;...?
 	BattlePolicy		m_battlePolicy;
@@ -66,6 +87,7 @@ protected:
 
 	//Sound*				m_bgm;
 	//AnimatedSprite		m_background;
+	//int		m_background_id;
 
 
 };

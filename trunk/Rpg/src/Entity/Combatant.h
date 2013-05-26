@@ -23,6 +23,7 @@ public:
 	virtual ~Combatant();
 
 	void InitializeFromActor( Actor* actor );
+	void InitializeFromActorId( int id );
 
 	virtual void Update();
 	virtual void Render();

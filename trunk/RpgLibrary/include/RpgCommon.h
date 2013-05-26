@@ -55,6 +55,8 @@ template <class T, size_t N> struct FixedAttributeArray;
 
 struct Attributes;
 struct AttributeFlags;
+//struct Buff;
+struct Modifier;
 struct Item;
 struct Skill;
 struct Spell;
