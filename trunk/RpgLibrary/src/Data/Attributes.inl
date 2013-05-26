@@ -20,9 +20,9 @@ Attributes Attributes::operator +(const Attributes& rhs) const
 
 	ret.max_params = max_params + rhs.max_params;
 	ret.stats = stats + rhs.stats;
-	//ret.elements = elements + rhs.elements;
-	ret.status_atk = status_atk.Add<int>(rhs.status_atk, 0, 100);
-	ret.status_def = status_def.Add<int>(rhs.status_def, 0, 100);
+	ret.elemental_def = elemental_def.Add<int>(rhs.elemental_def, -MAX_ELEMENT_VALUE, MAX_ELEMENT_VALUE);
+	ret.status_atk = status_atk.Add<int>(rhs.status_atk, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
+	ret.status_def = status_def.Add<int>(rhs.status_def, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
 
 	return ret;
 }
@@ -34,9 +34,9 @@ Attributes Attributes::operator -(const Attributes& rhs) const
 
 	ret.max_params = max_params - rhs.max_params;
 	ret.stats = stats - rhs.stats;
-	//ret.elements = elements - rhs.elements;
-	ret.status_atk = status_atk.Subtract<int>(rhs.status_atk, 0, 100);
-	ret.status_def = status_def.Subtract<int>(rhs.status_def, 0, 100);
+	ret.elemental_def = elemental_def.Subtract<int>(rhs.elemental_def, -MAX_ELEMENT_VALUE, MAX_ELEMENT_VALUE);
+	ret.status_atk = status_atk.Subtract<int>(rhs.status_atk, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
+	ret.status_def = status_def.Subtract<int>(rhs.status_def, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
 
 	return ret;
 }
@@ -46,12 +46,11 @@ Attributes& Attributes::operator +=(const Attributes& rhs)
 {
 	max_params += rhs.max_params;
 	stats += rhs.stats;
+	elemental_def.AddAssign<int>(rhs.elemental_def, -MAX_ELEMENT_VALUE, MAX_ELEMENT_VALUE);
+	status_atk.AddAssign<int>(rhs.status_atk, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
+	status_def.AddAssign<int>(rhs.status_def, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
 
-	//elements += rhs.elements;
-	status_atk.AddAssign<int>(rhs.status_atk, 0, 100);
-	status_def.AddAssign<int>(rhs.status_def, 0, 100);
-
-	//flags |= rhs.flags;
+	flags |= rhs.flags;
 
 	return *this;
 }
@@ -61,9 +60,9 @@ Attributes& Attributes::operator -=(const Attributes& rhs)
 {
 	max_params -= rhs.max_params;
 	stats -= rhs.stats;
-	//elements -= rhs.elements;
-	status_atk.SubtractAssign<int>(rhs.status_atk, 0, 100);
-	status_def.SubtractAssign<int>(rhs.status_def, 0, 100);
+	elemental_def.SubtractAssign<int>(rhs.elemental_def, -MAX_ELEMENT_VALUE, MAX_ELEMENT_VALUE);
+	status_atk.SubtractAssign<int>(rhs.status_atk, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
+	status_def.SubtractAssign<int>(rhs.status_def, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
 
 	//flags -= rhs.flags;
 
@@ -98,6 +97,10 @@ void Attributes::SerializeXml( XmlWriter* xml )
 	xml->WriteBlock(&stats[0], MAX_STATS);
 	xml->EndNode();
 
+	xml->BeginNode("ElementalDef");
+	xml->WriteBlock((ubyte*)&elemental_def[0], MAX_ELEMENTS);
+	xml->EndNode();
+
 	xml->BeginNode("StatusAtk");
 	xml->WriteBlock((ubyte*)&status_atk[0], MAX_STATUS);
 	xml->EndNode();
@@ -123,6 +126,12 @@ void Attributes::DeserializeXml( XmlReader* xml )
 	if( xml->FirstChild("Stats") )
 	{
 		xml->ReadBlock(&stats[0], MAX_STATS);
+		xml->SetToParent();
+	}
+
+	if( xml->FirstChild("ElementalDef") )
+	{
+		xml->ReadBlock((ubyte*)&elemental_def[0], MAX_ELEMENTS);
 		xml->SetToParent();
 	}
 

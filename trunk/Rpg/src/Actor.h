@@ -70,6 +70,8 @@ public:
 	int GetBaseMaxParam( int param ) const;
 	int GetBaseStat( int stat ) const;
 	int GetStat( int stat ) const;
+	int GetBaseElementalDef( int element ) const;
+	int GetElementalDef( int element ) const;
 	int GetBaseStatusAtk( int status ) const;
 	int GetStatusAtk( int status ) const;
 	int GetBaseStatusDef( int status ) const;
@@ -79,6 +81,7 @@ public:
 	void SetParam( int param, int val );
 	void SetBaseMaxParam( int param, int val );
 	void SetBaseStat( int stat, int val );
+	void SetBaseElementalDef( int element, int val );
 	void SetBaseStatusAtk( int status, int val );
 	void SetBaseStatusDef( int status, int val );
 

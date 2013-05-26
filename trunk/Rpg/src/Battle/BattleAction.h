@@ -17,8 +17,6 @@
 #include "Common.h"
 //#include "TargetInfo.h"
 
-class BattleActionQueue;
-class Character;
 
 
 struct TargetInfo
@@ -85,7 +83,7 @@ public:
 
 
 	BattleActionQueue* m_parent;
-	Character*	m_performer;
+	Combatant*	m_performer;
 	//int			type;
 	//int			flags;
 	int			m_preparationTime;

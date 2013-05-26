@@ -180,10 +180,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\Character.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\Equipment.cpp"
 				>
 			</File>
@@ -201,10 +197,6 @@
 			</File>
 			<File
 				RelativePath=".\src\InventoryItem.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Monster.cpp"
 				>
 			</File>
 			<File
@@ -458,10 +450,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\Character.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\Common.h"
 				>
 			</File>
@@ -487,10 +475,6 @@
 			</File>
 			<File
 				RelativePath=".\src\ItemSort.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Monster.h"
 				>
 			</File>
 			<File

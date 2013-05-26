@@ -19,8 +19,6 @@
 #include "Battle.h"
 #include "BattleActionQueue.h"
 #include "Entity.h"
-#include "PlayerCombatant.h"
-#include "MonsterCombatant.h"
 
 
 
