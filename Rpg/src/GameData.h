@@ -31,6 +31,7 @@ public:
 	~GameData();
 
 	//void SetDatabase( Database* database );
+	void Clear();
 	void InitializeFromDatabase( Database* database );
 
 	Actor* GetCharacterActor( int index );
