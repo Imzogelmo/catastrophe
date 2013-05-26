@@ -147,7 +147,8 @@ void ScriptEngine::RegisterRpgDataTypes()
 
 
 	// Item
-	r = engine->RegisterObjectType( "item", sizeof(Item), asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS_CDAK ); assert( r >= 0 );
+	// ...BIG BUG... item < equipment_item. item is virtual, therefore item can never have attributes.
+	r = engine->RegisterObjectType( "item", sizeof(Item), asOBJ_VALUE | asOBJ_APP_CLASS_CDAK ); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour( "item", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(ValueConstruct<Item>), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour( "item", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(ValueDestruct<Item>), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour( "item", asBEHAVE_CONSTRUCT, "void f(const item &in)", asFUNCTION(ValueCopyConstruct<Item>), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
@@ -352,14 +353,17 @@ void ScriptEngine::RegisterClassContainingAttributes( const char* name )
 	r = engine->RegisterObjectMethod( name, "int get_base_max_param(int) const", asMETHODPR(T, GetBaseMaxParam, (int) const, int), asCALL_THISCALL ); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( name, "int get_stat(int) const", asMETHODPR(T, GetStat, (int) const, int), asCALL_THISCALL ); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( name, "int get_base_stat(int) const", asMETHODPR(T, GetBaseStat, (int) const, int), asCALL_THISCALL ); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( name, "int get_elem_def(int) const", asMETHODPR(T, GetElementalDef, (int) const, int), asCALL_THISCALL ); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( name, "int get_status_atk(int) const", asMETHODPR(T, GetStatusAtk, (int) const, int), asCALL_THISCALL ); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( name, "int get_status_def(int) const", asMETHODPR(T, GetStatusDef, (int) const, int), asCALL_THISCALL ); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( name, "int get_base_elem_def(int) const", asMETHODPR(T, GetBaseElementalDef, (int) const, int), asCALL_THISCALL ); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( name, "int get_base_status_atk(int) const", asMETHODPR(T, GetBaseStatusAtk, (int) const, int), asCALL_THISCALL ); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( name, "int get_base_status_def(int) const", asMETHODPR(T, GetBaseStatusDef, (int) const, int), asCALL_THISCALL ); assert( r >= 0 );
 
 	r = engine->RegisterObjectMethod( name, "void set_param(int, int) const", asMETHODPR(T, SetParam, (int, int), void), asCALL_THISCALL ); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( name, "void set_base_max_param(int, int) const", asMETHODPR(T, SetBaseMaxParam, (int, int), void), asCALL_THISCALL ); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( name, "void set_base_stat(int, int) const", asMETHODPR(T, SetBaseStat, (int, int), void), asCALL_THISCALL ); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( name, "void set_base_elem_def(int, int) const", asMETHODPR(T, SetBaseElementalDef, (int, int), void), asCALL_THISCALL ); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( name, "void set_base_status_atk(int, int) const", asMETHODPR(T, SetBaseStatusAtk, (int, int), void), asCALL_THISCALL ); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( name, "void set_base_status_def(int, int) const", asMETHODPR(T, SetBaseStatusDef, (int, int), void), asCALL_THISCALL ); assert( r >= 0 );
 

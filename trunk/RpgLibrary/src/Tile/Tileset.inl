@@ -259,7 +259,6 @@ bool Tileset::DeserializeXml( const fc::string& directory, const fc::string& fil
 		m_tiles.resize(h, w);
 		ValidateTiles();
 
-		array_type::iterator it = m_tiles.begin();
 		for( array_type::iterator it = m_tiles.begin(); it != m_tiles.end(); ++it )
 		{
 			if( xml.NextChild("Tile") )

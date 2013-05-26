@@ -46,9 +46,8 @@ public:
 	ResourceDirectory();
 
 	void SetRootDirectory( const fc::string& directory ) { m_root = directory; }
-	const fc::string& GetRootDirectory( BaseDirectoryType type ) const { return m_root; }
+	const fc::string& GetRootDirectory() const { return m_root; }
 
-	//void GetDirectory( BaseDirectoryType type ) const;
 	fc::string GetDirectory( BaseDirectoryType type ) const;
 	fc::string GetTextureDirectory() const;
 	fc::string GetFontDirectory() const;

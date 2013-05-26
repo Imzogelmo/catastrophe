@@ -23,7 +23,7 @@ struct Modifier
 	{
 		MaxParam,
 		Stat,
-		ElementDef,
+		ElementalDef,
 		StatusAtk,
 		StatusDef
 	};

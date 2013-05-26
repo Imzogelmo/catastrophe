@@ -25,7 +25,7 @@ Map::Map() :
 
 
 Map::Map( const fc::string& mapName, size_t numLayers, size_t mapWidth, size_t mapHeight ) :
-	m_name(),
+	m_name(mapName),
 	m_layers(),
 	m_width(0),
 	m_height(0)

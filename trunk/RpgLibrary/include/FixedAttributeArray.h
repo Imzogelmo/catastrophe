@@ -11,6 +11,11 @@
 
 #pragma once
 
+#ifdef _MSC_VER
+	#pragma warning ( push )
+	#pragma warning ( disable : 4480 )
+#endif
+
 
 template <class T, size_t N>
 struct FixedAttributeArray
@@ -202,3 +207,8 @@ struct FixedAttributeArray
 
 };
 
+
+
+#ifdef _MSC_VER
+	#pragma warning ( pop )
+#endif
