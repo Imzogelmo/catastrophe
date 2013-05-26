@@ -58,7 +58,7 @@ void RpgLibShutdown()
 
 
 
-/*
+
 void _test()
 {
 	Point p;
@@ -75,6 +75,5 @@ void _test()
 	DeserializeObject(0,r);
 	DeserializeObject("test",0,r);
 
-
 }
-*/
+
