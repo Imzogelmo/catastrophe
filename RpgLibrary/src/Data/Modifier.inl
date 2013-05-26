@@ -41,28 +41,35 @@ void Modifier::ApplyToAttributes( Attributes& attributes ) const
 			{
 				if( index < MAX_PARAMS )
 					attributes.max_params.AddAssignIndex<int>
-						(index, value, MAX_PARAM_VALUE, -MAX_PARAM_VALUE);
+						(index, value, -MAX_PARAM_VALUE, MAX_PARAM_VALUE);
 			}
 			break;
 			case Stat:
 			{
 				if( index < MAX_STATS )
 					attributes.stats.AddAssignIndex<int>
-						(index, value, MAX_STAT_VALUE, -MAX_STAT_VALUE);
+						(index, value, -MAX_STAT_VALUE, MAX_STAT_VALUE);
+			}
+			break;
+			case ElementalDef:
+			{
+				if( index < MAX_ELEMENTS )
+					attributes.elemental_def.AddAssignIndex<int>
+						(index, value, -MAX_ELEMENT_VALUE, MAX_ELEMENT_VALUE);
 			}
 			break;
 			case StatusAtk:
 			{
 				if( index < MAX_STATUS )
 					attributes.status_atk.AddAssignIndex<int>
-						(index, value, MAX_STATUS_VALUE, -MAX_STATUS_VALUE);
+						(index, value, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
 			}
 			break;
 			case StatusDef:
 			{
 				if( index < MAX_STATUS )
 					attributes.status_atk.AddAssignIndex<int>
-						(index, value, MAX_STATUS_VALUE, -MAX_STATUS_VALUE);
+						(index, value, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
 			}
 			break;
 		}
@@ -76,28 +83,35 @@ void Modifier::ApplyToAttributes( Attributes& attributes ) const
 			{
 				if( index < MAX_PARAMS )
 					attributes.max_params.ApplyPercentageModifierToIndex<int>
-						(index, value, MAX_PARAM_VALUE, -MAX_PARAM_VALUE);
+						(index, value, -MAX_PARAM_VALUE, MAX_PARAM_VALUE);
 			}
 			break;
 			case Stat:
 			{
 				if( index < MAX_STATS )
 					attributes.max_params.ApplyPercentageModifierToIndex<int>
-						(index, value, MAX_STAT_VALUE, -MAX_STAT_VALUE);
+						(index, value, -MAX_STAT_VALUE, MAX_STAT_VALUE);
+			}
+			break;
+			case ElementalDef:
+			{
+				if( index < MAX_ELEMENTS )
+					attributes.elemental_def.ApplyPercentageModifierToIndex<int>
+						(index, value, -MAX_ELEMENT_VALUE, MAX_ELEMENT_VALUE);
 			}
 			break;
 			case StatusAtk:
 			{
 				if( index < MAX_STATUS )
 					attributes.max_params.ApplyPercentageModifierToIndex<int>
-						(index, value, MAX_STATUS_VALUE, -MAX_STATUS_VALUE);
+						(index, value, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
 			}
 			break;
 			case StatusDef:
 			{
 				if( index < MAX_STATUS )
 					attributes.max_params.ApplyPercentageModifierToIndex<int>
-						(index, value, MAX_STATUS_VALUE, -MAX_STATUS_VALUE);
+						(index, value, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
 			}
 			break;
 		}
@@ -117,7 +131,7 @@ void Modifier::SerializeXml( XmlWriter* xml )
 void Modifier::DeserializeXml( XmlReader* xml )
 {
 	value = xml->GetInt("value");
-	index = xml->GetInt("index");
+	index = xml->GetShort("index");
 	target = xml->GetInt("target");
 	type = xml->GetInt("type");
 }

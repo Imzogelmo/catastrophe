@@ -155,7 +155,7 @@ void Tile::SerializeXml( XmlWriter* xml )
 
 void Tile::DeserializeXml( XmlReader* xml )
 {
-	num_frames = xml->GetInt("num_frames", 1);
+	num_frames = xml->GetShort("num_frames", 1);
 	anim_speed = xml->GetShort("speed", 16);
 	flags = xml->GetShort("flags", 0);
 
