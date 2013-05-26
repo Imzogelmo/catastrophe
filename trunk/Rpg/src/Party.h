@@ -109,6 +109,7 @@ public:
 
 	Party();
 
+	void Clear();
 	void AddMember( int id );
 	void RemoveMember( int id );
 

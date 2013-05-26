@@ -2,8 +2,7 @@
 #pragma once
 
 #include "Catastrophe/Gui.h"
-#include "Catastrophe/Gui/TextElement.h"
-#include "Catastrophe/Gui/MenuElement.h"
+#include "Catastrophe/Gui/Label.h"
 #include "Catastrophe/Graphics/SpriteBatch.h"
 #include "Catastrophe/Graphics/Texture.h"
 #include "Catastrophe/Graphics/Image.h"
@@ -330,7 +329,7 @@ public:
 	Font sans;
 
 	FrameWidget frame;
-	TextElement te1;
+	Label te1;
 	MenuElement me;
 
 	static const int FSIZE = 16;

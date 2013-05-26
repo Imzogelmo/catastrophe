@@ -41,16 +41,25 @@
 #include "ResourceDirectory.h"
 
 
-Database::Database()
+Database::Database() :
+	m_resourceDirectory(0)
 {
 	// these must always be called on init.
 	SetAllDefaultDataArrayFilenames();
 	SetAllDefaultDataArrayNodeNames();
+
+	m_resourceDirectory = g_resourceDirectory;
 }
 
 
 Database::~Database()
 {
+}
+
+
+void Database::Initialize()
+{
+	m_resourceDirectory = g_resourceDirectory;
 }
 
 
@@ -150,7 +159,7 @@ bool Database::SerializeAllDataXml()
 	monster_map_sprites.SerializeXml("");
 	monster_battle_sprites.SerializeXml("");
 
-	return false;
+	return true;
 }
 
 
@@ -173,7 +182,19 @@ bool Database::DeserializeAllDataXml()
 	monster_map_sprites.DeserializeXml("");
 	monster_battle_sprites.DeserializeXml("");
 
-	return false;
+	return true;
+}
+
+
+void Database::SetResourceDirectory( ResourceDirectory* resourceDirectory )
+{
+	m_resourceDirectory = resourceDirectory;
+}
+
+
+ResourceDirectory* Database::GetResourceDirectory() const
+{
+	return m_resourceDirectory;
 }
 
 

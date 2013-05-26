@@ -13,6 +13,7 @@
 
 #include <fc/string.h>
 #include <fc/vector.h>
+#include <fc/fixed_vector.h>
 
 #include "Common.h"
 #include "Actor.h"
@@ -23,8 +24,8 @@ class GameData
 {
 public:
 	// todo: Custom allocators for speed and fragmentation.
-	typedef fc::vector<Actor*>		actor_vec_type;
-	typedef fc::vector<Party*>		party_vec_type;
+	typedef fc::vector<Actor*>				actor_vec_type;
+	typedef fc::fixed_vector<Party*, 16>	party_vec_type;
 
 	GameData();
 	~GameData();
@@ -37,6 +38,10 @@ public:
 	Actor* GetCharacterActorById( int id );
 	Actor* GetMonsterActorById( int id );
 
+	int CreateParty();
+	int RemoveParty( int id );
+	void SetActiveParty( int id );
+
 	Party* GetParty( int id ) const;
 	Party* GetActiveParty() const;
 
@@ -48,7 +53,7 @@ private:
 	actor_vec_type		m_characterActors;
 	actor_vec_type		m_monsterActors;
 
-	size_t				m_activeParty;
+	int					m_activeParty;
 
 };
 

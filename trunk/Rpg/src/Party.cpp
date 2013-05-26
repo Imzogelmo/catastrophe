@@ -20,6 +20,13 @@ Party::Party()
 }
 
 
+void Party::Clear()
+{
+	m_activeMembers.clear();
+	m_reserveMembers.clear();
+}
+
+
 void Party::AddMember( int id )
 {
 	//todo: sanity check - verify that id is valid
