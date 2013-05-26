@@ -3,7 +3,7 @@
 
 #include "Screen.h"
 #include "Game.h"
-#include "Monster.h"
+#include "MonsterData.h"
 
 #include <fc/rand.h>
 #include <Catastrophe/Graphics/OpenGL.h>

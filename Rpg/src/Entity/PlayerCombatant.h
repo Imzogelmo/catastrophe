@@ -12,7 +12,6 @@
 #pragma once
 
 #include "Combatant.h"
-#include "Character.h"
 
 
 class PlayerCombatant : public Combatant

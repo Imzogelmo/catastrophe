@@ -20,14 +20,11 @@
 #include "MonsterData.h"
 #include "CharacterData.h"
 
-
-#include "Monster.h"
 #include "Buff.h"
 #include "Equipment.h"
 
 // TODO: engine <--> script character integration.
 //       
-#include "Character.h"
 #include "Actor.h"
 #include "Party.h"
 
@@ -37,12 +34,6 @@
 
 namespace script
 {
-	Monster* MonsterConstructor()
-	{
-		static Monster uninitializedMonster; //fixme
-		return &uninitializedMonster;
-		//return gGetGame()->GetDatabase()->GetMonsterList()->GetMonster(0);
-	}
 
 	void BindPlayerCharacterProperties()
 	{
@@ -65,62 +56,62 @@ namespace script
 	int AttributesGetMaxParam( size_t index, Attributes* self )
 	{
 		CLAMP_INDEX(index, MAX_PARAMS);
-		return self->max_params[index];
+		return (int)self->max_params[index];
 	}
 
 	int AttributesGetStat( size_t index, Attributes* self )
 	{
 		CLAMP_INDEX(index, MAX_STATS);
-		return self->stats[index];
+		return (int)self->stats[index];
 	}
-/*
-	short AttributesGetElement( size_t index, Attributes* self )
+
+	int AttributesGetElementDef( size_t index, Attributes* self )
 	{
 		CLAMP_INDEX(index, MAX_ELEMENTS);
-		return self->elements[index];
+		return (int)self->elemental_def[index];
 	}
-*/
+
 	int AttributesGetStatusAtk( size_t index, Attributes* self )
 	{
 		CLAMP_INDEX(index, MAX_STATUS);
-		return self->status_atk[index];
+		return (int)self->status_atk[index];
 	}
 
 	int AttributesGetStatusDef( size_t index, Attributes* self )
 	{
 		CLAMP_INDEX(index, MAX_STATUS);
-		return self->status_def[index];
+		return (int)self->status_def[index];
 	}
 
 
 	void AttributesSetMaxParam( size_t index, int value, Attributes* self )
 	{
 		CLAMP_INDEX(index, MAX_PARAMS);
-		self->max_params[index] = value;
+		self->SetMaxParam(index, value);
 	}
 
 	void AttributesSetStat( size_t index, int value, Attributes* self )
 	{
 		CLAMP_INDEX(index, MAX_STATS);
-		self->stats[index] = value;
+		self->SetStat(index, value);
 	}
-/*
-	void AttributesSetElement( size_t index, short value, Attributes* self )
+
+	void AttributesSetElementalDef( size_t index, short value, Attributes* self )
 	{
 		CLAMP_INDEX(index, MAX_ELEMENTS);
-		self->elements[index] = value;
+		self->SetElementalDef(index, value);
 	}
-*/
+
 	void AttributesSetStatusAtk( size_t index, int value, Attributes* self )
 	{
 		CLAMP_INDEX(index, MAX_STATUS);
-		self->status_atk[index] = value;
+		self->SetStatusAtk(index, value);
 	}
 
 	void AttributesSetStatusDef( size_t index, int value, Attributes* self )
 	{
 		CLAMP_INDEX(index, MAX_STATUS);
-		self->status_def[index] = value;
+		self->SetStatusDef(index, value);
 	}
 
 } //namespace script

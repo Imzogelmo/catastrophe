@@ -33,6 +33,8 @@ public:
 	int GetBaseMaxParam( int param ) const { return m_actor->GetBaseMaxParam(param); }
 	int GetBaseStat( int stat ) const { return m_actor->GetBaseStat(stat); }
 	int GetStat( int stat ) const { return m_actor->GetStat(stat); }
+	int GetBaseElementalDef( int element ) const { return m_actor->GetBaseElementalDef(element); }
+	int GetElementalDef( int element ) const { return m_actor->GetElementalDef(element); }
 	int GetBaseStatusAtk( int status ) const { return m_actor->GetBaseStatusAtk(status); }
 	int GetStatusAtk( int status ) const { return m_actor->GetStatusAtk(status); }
 	int GetBaseStatusDef( int status ) const { return m_actor->GetBaseStatusDef(status); }
@@ -41,6 +43,7 @@ public:
 	void SetParam( int param, int val ) { m_actor->SetParam(param, val); }
 	void SetBaseMaxParam( int param, int val ) { m_actor->SetBaseMaxParam(param, val); }
 	void SetBaseStat( int stat, int val ) { m_actor->SetBaseStat(stat, val); }
+	void SetBaseElementalDef( int element, int val ) { m_actor->SetBaseElementalDef(element, val); }
 	void SetBaseStatusAtk( int status, int val ) { m_actor->SetBaseStatusAtk(status, val); }
 	void SetBaseStatusDef( int status, int val ) { m_actor->SetBaseStatusDef(status, val); }
 

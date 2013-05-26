@@ -233,6 +233,20 @@ int Actor::GetStat( int stat ) const
 }
 
 
+int Actor::GetBaseElementalDef( int element ) const
+{
+	return m_attributes.elemental_def[element];
+}
+
+
+int Actor::GetElementalDef( int element ) const
+{
+	return m_attributes.elemental_def[element] +
+		m_equipment.GetCombinedAttributes().elemental_def[element] +
+		m_buffs.GetCombinedAttributes().elemental_def[element];
+}
+
+
 int Actor::GetBaseStatusAtk( int status ) const
 {
 	return m_attributes.status_atk[status];
@@ -263,31 +277,38 @@ int Actor::GetStatusDef( int status ) const
 
 void Actor::SetParam( int param, int val )
 {
-	m_params[param] = val;
+	m_params[param] = fc::clamp<int>
+		(val, -MAX_PARAM_VALUE, MAX_PARAM_VALUE);
 }
 
 
 void Actor::SetBaseMaxParam( int param, int val )
 {
-	m_attributes.max_params[param] = val;
+	m_attributes.SetMaxParam(param, val);
 }
 
 
 void Actor::SetBaseStat( int stat, int val )
 {
-	m_attributes.stats[stat] = val;
+	m_attributes.SetStat(stat, val);
+}
+
+
+void Actor::SetBaseElementalDef( int element, int val )
+{
+	m_attributes.SetElementalDef(element, val);
 }
 
 
 void Actor::SetBaseStatusAtk( int status, int val )
 {
-	m_attributes.status_atk[status] = val;
+	m_attributes.SetStatusAtk(status, val);
 }
 
 
 void Actor::SetBaseStatusDef( int status, int val )
 {
-	m_attributes.status_def[status] = val;
+	m_attributes.SetStatusDef(status, val);
 }
 
 

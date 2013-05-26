@@ -18,9 +18,9 @@
 
 typedef FixedAttributeArray<int, MAX_PARAMS>		ParamValueArrayType;
 typedef FixedAttributeArray<short, MAX_STATS>		StatisticsValueArrayType;
-//typedef FixedAttributeArray<short, MAX_ELEMENTS>	ElementalArrayType;
-typedef FixedAttributeArray<sbyte, MAX_STATUS>		StatusArrayType;
-typedef FixedAttributeArray<short, MAX_MISC>		MiscArrayType;
+typedef FixedAttributeArray<short, MAX_ELEMENTS>	ElementalArrayType;
+typedef FixedAttributeArray<char, MAX_STATUS>		StatusArrayType;
+//typedef FixedAttributeArray<short, MAX_MISC>		MiscArrayType;
 
 
 struct RPG_API Attributes
@@ -29,8 +29,7 @@ struct RPG_API Attributes
 
 	ParamValueArrayType			max_params;
 	StatisticsValueArrayType	stats;
-	//ElementalArrayType			element_atk;
-	//ElementalArrayType			element_def;
+	ElementalArrayType			elemental_def;
 	StatusArrayType				status_atk;
 	StatusArrayType				status_def;
 	//MiscArrayType				misc;
@@ -42,6 +41,37 @@ struct RPG_API Attributes
 	this_type operator -(const this_type& rhs) const;
 	this_type &operator +=(const this_type& rhs);
 	this_type &operator -=(const this_type& rhs);
+
+
+	inline void SetMaxParam( size_t index, int value )
+	{
+		max_params[index] = fc::clamp<int>
+			(value, -MAX_PARAM_VALUE, MAX_PARAM_VALUE);
+	}
+
+	inline void SetStat( size_t index, int value )
+	{
+		stats[index] = (short)fc::clamp<int>
+			(value, -MAX_STAT_VALUE, MAX_STAT_VALUE);
+	}
+
+	inline void SetElementalDef( size_t index, short value )
+	{
+		elemental_def[index] = (char)fc::clamp<int>
+			(value, -MAX_ELEMENT_VALUE, MAX_ELEMENT_VALUE);
+	}
+
+	inline void SetStatusAtk( size_t index, int value )
+	{
+		status_atk[index] = (char)fc::clamp<int>
+			(value, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
+	}
+
+	inline void SetStatusDef( size_t index, int value )
+	{
+		status_def[index] = (char)fc::clamp<int>
+			(value, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
+	}
 
 
 /*
