@@ -15,18 +15,12 @@
 #include "Script/ScriptClass.h"
 
 
-class ScriptEntity : public Entity
+class ScriptEntity : public Entity, public ScriptClass
 {
 public:
 	ScriptEntity( EntityType derivedType = EntityType_ScriptEntity );
 
 	virtual void Update();
-
-	ScriptClass* GetScriptClass() { return &m_scriptInstance; }
-	const ScriptClass* GetScriptClass() const { return &m_scriptInstance; }
-
-protected:
-	ScriptClass		m_scriptInstance;
 
 };
 

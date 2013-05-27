@@ -15,6 +15,7 @@
 
 #include "asBindUtil.h"
 #include "ScriptEngine.h"
+#include "Combatant.h"
 
 
 namespace script
@@ -22,9 +23,9 @@ namespace script
 
 	void SuspendScript( int frames )
 	{
-		//ScriptObject* object = asGetActiveContext()->GetUserData();
-		//if(object)
-		//	object->Suspend(frames);
+		ScriptEntity* object = (ScriptEntity*)asGetActiveContext()->GetUserData();
+		if(object)
+			object->Suspend(frames);
 	}
 
 	void ThrowException( const fc::string &message )
@@ -74,23 +75,67 @@ namespace script
 		//ScriptEngine* engine = asGetActiveContext()->GetEngine()->GetUserData();
 		//engine->GarbageCollect(gcFlags);
 	}
+/*
+	void BindCombatant()( asIScriptObject* obj )
+	{
+		asIScriptContext* ctx = asGetActiveContext();
+		void* p = ctx->GetUserData();
+		if( p != 0 )
+		{
+			Combatant* combatant = dynamic_cast<Combatant*>(p);
+			if( combatant != 0 )
+			{
+				//if( combatant->GetScriptObject() != obj )
+				//	Log("WTF!! combatant->GetScriptObject() != obj");
 
+				return combatant;
+			}
+		}
+
+		// failed.
+		ScriptEngine* engine = (ScriptEngine*)ctx->GetEngine()->GetUserData();
+		engine->SetException(ctx, "BindCombatant() call failed with address (%i)", (int)p);
+		return 0;
+	}
+*/
+	void* BindCombatant( Combatant& c )
+	{
+		asIScriptContext* ctx = asGetActiveContext();
+		void* p = ctx->GetUserData();
+		if( p != 0 )
+		{
+			Combatant* combatant = dynamic_cast<Combatant*>((Entity*)p);
+			if( combatant != 0 )
+			{
+				//if( combatant->GetScriptObject() != obj )
+				//	Log("WTF!! combatant->GetScriptObject() != obj");
+
+				return combatant;
+			}
+		}
+
+		// failed.
+		ScriptEngine* engine = (ScriptEngine*)ctx->GetEngine()->GetUserData();
+		engine->SetException(ctx, "BindCombatant() call failed");
+		return 0;
+	}
 
 } //namespace script
 
-/*
+
 void ScriptEngine::RegisterScriptInterfaces()
 {
-	int r = engine->RegisterInterface( "IGameObject" );
-	assert( r >= 0 );
+	int r(0);
+	using namespace script;
+	r = engine->RegisterInterface("IGameEntity"); assert( r >= 0 );
 }
-*/
+
 
 void ScriptEngine::RegisterGlobalFunctions()
 {
 	int r(0);
 	using namespace script;
-	r = engine->RegisterGlobalFunction( "void wait(int)", asFUNCTIONPR(SuspendScript, (int), void), asCALL_CDECL); assert( r >= 0 );
+	r = engine->RegisterGlobalFunction( "void wait(int i = 0)", asFUNCTIONPR(SuspendScript, (int), void), asCALL_CDECL); assert( r >= 0 );
 
 	//r = engine->RegisterGlobalFunction( "void __print(const string &in)", asFUNCTIONPR(Print, (const std::string &), void), asCALL_CDECL); assert( r >= 0 );
 	r = engine->RegisterGlobalFunction( "void throw(const string &in)", asFUNCTIONPR(ThrowException, (const fc::string &), void), asCALL_CDECL); assert( r >= 0 );
@@ -103,6 +148,11 @@ void ScriptEngine::RegisterGlobalFunctions()
 
 	//GC.
 	r = engine->RegisterGlobalFunction( "void garbage_collect(int)", asFUNCTIONPR(GarbageCollect, (int), void), asCALL_CDECL); assert( r >= 0 );
+
+
+	// combatant init callback
+	//r = engine->RegisterGlobalFunction( "combatant@ __init_combatant(IGameEntity@)", asFUNCTION(BindCombatant), asCALL_CDECL); assert( r >= 0 );
+	r = engine->RegisterGlobalFunction( "void __init_combatant(combatant&)", asFUNCTION(BindCombatant), asCALL_CDECL); assert( r >= 0 );
 
 }
 

@@ -181,9 +181,21 @@ int main(int argc, char* argv[])
 	// init lib
 	//todo: ...
 	RpgLibInit();
+/*
+	DataArray<Item> idl;
 
+	Database *db = GetDatabase();
+	db->characters.resize(12);
+	foreachi(i,12)
+	{
+		db->characters[i].class_id = i;
+		db->characters[i].battle_spriteset_id = i;
+		db->characters[i].script = "Combatant";
+	}
+	db->characters.SerializeXml();
+	return 0;
 	GetDatabase()->DeserializeAllDataXml();
-
+*/
 	// read config file and parse command-line arguments.
 	LoadConfigSettings(argc, argv);
 

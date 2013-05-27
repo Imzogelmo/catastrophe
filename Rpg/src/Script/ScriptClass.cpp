@@ -33,7 +33,7 @@ ScriptClass::ScriptClass( ContextPool* contextPool ) :
 
 ScriptClass::~ScriptClass()
 {
-	Destroy();
+	DestroyScript();
 	m_ctx->SetUserData((void*)0);
 	m_contextPool->ReleaseContext(&m_ctx);
 }
@@ -45,25 +45,34 @@ asIScriptEngine* ScriptClass::GetScriptEngine()
 }
 
 
-void ScriptClass::Initialize( const fc::string& class_decl, const fc::string& method_decl )
+bool ScriptClass::InitializeScript( const ScriptClassDeclarations& declarations )
 {
 	m_ctx = m_contextPool->AquireContext();
 	if(!m_ctx)
 	{
 		m_destroyed = true;
 		Log( "Error: No script context could be created." );
-		return;
+		return false;
 	}
 
 	m_ctx->SetUserData(this);
 	asIScriptEngine *engine = m_contextPool->GetScriptEngine();
 
-	int typeID = engine->GetModule(0)->GetTypeIdByDecl(class_decl.c_str());
+	int typeID = engine->GetModule(0)->GetTypeIdByDecl(declarations.class_decl.c_str());
 	if( typeID < 0 )
 	{
-		m_destroyed = true;
-		Log("Error: Script class (%s) could not be instantiated.", class_decl.c_str());
-		return;
+		// debug info only.
+		LogDebug("Info: Script class (%s) was not found.", declarations.class_decl.c_str());
+
+		// If no specialization is given, we instantiate the base class.
+		typeID = engine->GetModule(0)->GetTypeIdByDecl(declarations.base_class_decl.c_str());
+		if( typeID < 0 )
+		{
+			m_destroyed = true;
+			Log( "Error: Script class (%s) or base class (%s) could not be instantiated.",
+				declarations.class_decl.c_str(), declarations.base_class_decl.c_str() );
+			return false;
+		}
 	}
 
 	m_objectType = engine->GetObjectTypeById(typeID);
@@ -71,10 +80,10 @@ void ScriptClass::Initialize( const fc::string& class_decl, const fc::string& me
 	{
 		m_destroyed = true;
 		Log( "Error: asIObjectType (%i) returned null.", typeID );
-		return;
+		return false;
 	}
 
-	m_function = m_objectType->GetMethodByDecl(method_decl.c_str());
+	m_function = m_objectType->GetMethodByDecl(declarations.method_decl.c_str());
 	if( !m_function )
 	{
 		//class exists but no update method.
@@ -82,14 +91,15 @@ void ScriptClass::Initialize( const fc::string& class_decl, const fc::string& me
 		m_suspend = INFINITE_SUSPEND;
 	}
 
-	fc::string factoryString = class_decl;
-	factoryString.append(" @").append(class_decl).append("()");
+	fc::string factoryString = declarations.class_decl;
+	factoryString.append(" @").append(declarations.class_decl).append("()");
 	m_factory = m_objectType->GetFactoryByDecl(factoryString.c_str());
 	if( !m_factory )
 	{
 		Log("Error: No factory method (%s) found", factoryString.c_str());
 	}
 
+	return true;
 }
 
 
@@ -113,7 +123,7 @@ asIScriptObject* ScriptClass::CreateScriptObject()
 	//if the function does not exist we have to destroy the object.
 	if( !m_function )
 	{
-		Destroy();
+		DestroyScript();
 		Log("Error: Function does not exist.");
 		return (asIScriptObject*)0;
 	}
@@ -122,7 +132,7 @@ asIScriptObject* ScriptClass::CreateScriptObject()
 }
 
 
-void ScriptClass::Update()
+void ScriptClass::UpdateScript()
 {
 	int status = m_script_status;
 
@@ -163,7 +173,7 @@ void ScriptClass::Suspend( int frames )
 }
 
 
-void ScriptClass::Destroy()
+void ScriptClass::DestroyScript()
 {
 	if( !m_destroyed )
 	{

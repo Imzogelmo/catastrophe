@@ -39,7 +39,7 @@ int Game::Initialize()
 	//m_resourceManager.GetResourceDirectory().SetRootDirectory("data/");
 
 	int ret(0);
-	//ret = InternalInitScriptEngine();
+	ret = InternalInitScriptEngine();
 	if(ret != 0)
 		return ret;
 
@@ -66,13 +66,13 @@ int Game::InternalInitScriptEngine()
 	engine->SetDefaultEngineProperties();
 	engine->RegisterScriptingInterfaces();
 
-	return 0;
+	//return 0;
 
 	//WIP build - this will be removed later
 	Log( "Compiling scripts..." );
 	for( bool exit(false); exit != true; )
 	{
-		if( engine->Compile("script/blocks.cpp", fc::vector<fc::string>()) != 0 )
+		if( engine->Compile("data/scripts/Combatant.h", fc::vector<fc::string>()) != 0 )
 		{
 			printf("-press [c] to recompile, or any key to exit.");
 			int c = _getch();

@@ -56,9 +56,9 @@ public:
 class Battle
 {
 public:
-	typedef fc::vector<BattleEvent*>	event_vec_type;
-	typedef fc::vector<BattlerGroup>	battler_vec_type;
-	typedef fc::vector<int>				vec_type;
+	typedef fc::vector<BattleEvent*>			event_vec_type;
+	typedef fc::fixed_vector<BattlerGroup, 16>	battler_vec_type;
+	typedef fc::vector<int>						vec_type;
 
 	Battle();
 	~Battle();

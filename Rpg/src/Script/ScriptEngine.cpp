@@ -276,6 +276,9 @@ void ScriptEngine::RegisterScriptingInterfaces()
 		Be sure not to create circular references when regestering them.
 	*/
 
+	//abstract interface classes.
+	RegisterScriptInterfaces();
+
 	//register the container types first.
 	RegisterString();
 	RegisterArrayTemplate();
@@ -312,10 +315,9 @@ void* ScriptMemoryAlloc( size_t n )
 	__total_mem += n;
 	//LogInfo("---Info : Script Alloc : bytes (%i), total kbytes(%i).", n, (__total_mem / 1024));
 
-	//return malloc(n);
+	return malloc(n);
 
-	return scriptMemPool.allocate(n);
-	//return new(scriptMemPool) char[n];//(n);
+	//return scriptMemPool.allocate(n);
 }
 
 
@@ -323,8 +325,8 @@ void ScriptMemoryFree( void* ptr )
 {
 	//LogInfo("---Info : Script Memory Free.");
 
-	scriptMemPool.deallocate(ptr);
-	//free(ptr);
+	//scriptMemPool.deallocate(ptr);
+	free(ptr);
 }
 
 

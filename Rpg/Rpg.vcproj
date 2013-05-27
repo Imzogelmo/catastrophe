@@ -238,10 +238,6 @@
 					RelativePath=".\src\Script\ScriptGarbage.cpp"
 					>
 				</File>
-				<File
-					RelativePath=".\src\Script\ScriptObject.cpp"
-					>
-				</File>
 				<Filter
 					Name="Collections"
 					>
@@ -322,10 +318,6 @@
 						>
 					</File>
 				</Filter>
-			</Filter>
-			<Filter
-				Name="Util"
-				>
 			</Filter>
 			<Filter
 				Name="Screens"
@@ -505,15 +497,15 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Script\ScriptClassDeclarations.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Script\ScriptEngine.h"
 					>
 				</File>
 				<File
 					RelativePath=".\src\Script\ScriptGarbage.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Script\ScriptObject.h"
 					>
 				</File>
 				<Filter
@@ -564,14 +556,6 @@
 						>
 					</File>
 				</Filter>
-			</Filter>
-			<Filter
-				Name="Util"
-				>
-				<File
-					RelativePath=".\src\Util\StringAlias.h"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="Screens"

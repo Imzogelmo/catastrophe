@@ -24,7 +24,7 @@ MonsterData::MonsterData() :
 	portrait_id(0),
 	map_spriteset_id(0),
 	battle_spriteset_id(0),
-	lv(0),
+	lv(1),
 	exp(0),
 	gold(0),
 	attributes()
