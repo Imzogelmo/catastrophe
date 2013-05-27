@@ -49,6 +49,23 @@ Database::Database() :
 	SetAllDefaultDataArrayNodeNames();
 
 	m_resourceDirectory = g_resourceDirectory;
+
+	items.SetResourceDirectory(m_resourceDirectory);
+	weapons.SetResourceDirectory(m_resourceDirectory);
+	armor.SetResourceDirectory(m_resourceDirectory);
+	accessories.SetResourceDirectory(m_resourceDirectory);
+
+	monsters.SetResourceDirectory(m_resourceDirectory);
+	monster_troops.SetResourceDirectory(m_resourceDirectory);
+	characters.SetResourceDirectory(m_resourceDirectory);
+	character_classes.SetResourceDirectory(m_resourceDirectory);
+	races.SetResourceDirectory(m_resourceDirectory);
+
+	character_map_sprites.SetResourceDirectory(m_resourceDirectory);
+	character_battle_sprites.SetResourceDirectory(m_resourceDirectory);
+	monster_map_sprites.SetResourceDirectory(m_resourceDirectory);
+	monster_battle_sprites.SetResourceDirectory(m_resourceDirectory);
+
 }
 
 
@@ -87,9 +104,6 @@ void Database::ClearAll()
 
 void Database::SetAllDefaultDataArrayFilenames()
 {
-	// *Note* Sets all filenames. (But not Paths!)
-	// -Uses a ResourceDirectory for paths.
-
 	items.SetFileame("items.xml");
 	weapons.SetFileame("weapons.xml");
 	armor.SetFileame("armor.xml");
@@ -112,12 +126,8 @@ void Database::SetAllDefaultDataArrayFilenames()
 void Database::SetAllDefaultDataArrayNodeNames()
 {
 	/*
-	items.SetNodeNames("ItemList", "Item");
 	skills.SetNodeNames("SkillList", "Skill");
 	spells.SetNodeNames("SpellList", "Spell");
-	characters.SetNodeNames("CharacterList", "Character");
-	monsters.SetNodeNames("MonsterList", "Monster");
-	troops.SetNodeNames("MonsterTroopList", "MonsterTroop");
 	encounters.SetNodeNames("EncounterGroupList", "EncounterGroup");
 	*/
 
@@ -199,17 +209,14 @@ ResourceDirectory* Database::GetResourceDirectory() const
 
 
 template <class T>
-bool Database::SerializeDataArray( T& arr, const fc::string& filename, const char* root, const char* item )
+bool Database::SerializeDataArray( T& arr, ResourceDirectory* resourceDirectory, const fc::string& filename, const char* root, const char* item )
 {
-	fc::string fn = g_resourceDirectory->GetDataDirectory();
+	fc::string fn = resourceDirectory ? resourceDirectory->GetDataDirectory() : "";
 	fn += filename;
 
 	XmlWriter xml(fn);
 	if( !xml.IsOpen() )
-	{
-		Log("Could not open file (%s)", fn.c_str());
 		return false;
-	}
 
 	xml.BeginNode(root);
 	xml.SetUInt("count", arr.size());
@@ -228,17 +235,14 @@ bool Database::SerializeDataArray( T& arr, const fc::string& filename, const cha
 
 
 template <class T>
-bool Database::DeserializeDataArray( T& arr, const fc::string& filename, const char* root, const char* item )
+bool Database::DeserializeDataArray( T& arr, ResourceDirectory* resourceDirectory, const fc::string& filename, const char* root, const char* item )
 {
-	fc::string fn = g_resourceDirectory->GetDataDirectory();
+	fc::string fn = resourceDirectory ? resourceDirectory->GetDataDirectory() : "";
 	fn += filename;
 
 	XmlReader xml(fn);
 	if( !xml.IsOpen() )
-	{
-		Log("Could not open file (%s)", fn.c_str());
 		return false;
-	}
 
 	if( xml.GetCurrentNodeName() == root )
 	{

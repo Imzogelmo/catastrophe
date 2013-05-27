@@ -22,6 +22,22 @@
 
 
 
+class BattleCombatantGroup
+{
+public:
+	typedef fc::vector<Combatant*>		vec_type;
+
+	void CreateGroup( int monster_id, int n )
+	{
+	}
+
+
+protected:
+	vec_type	m_combatants;
+
+};
+
+
 class BattleEngine
 {
 public:
@@ -29,6 +45,7 @@ public:
 	typedef fc::vector<Entity*>				entity_vec_type;
 	typedef fc::vector<Combatant*>			player_vec_type;
 	typedef fc::vector<Combatant*>			monster_vec_type;
+	typedef fc::vector<BattleCombatantGroup>	group_vec_type;
 
 	//So...
 	//we need to,
@@ -48,7 +65,7 @@ public:
 	BattleActionQueue* GetBattleActionQueue() { return &m_actionQueue; }
 	BattlePolicy GetCurrentBattlePolicy();
 
-		
+
 	void AddPlayerCombatantsFromParty( Party* party );
 	void AddPlayerCombatant( Combatant* player );
 	void AddMonsterCombatant( Combatant* monster );
@@ -69,6 +86,7 @@ protected:
 	entity_vec_type				m_entities;
 	player_vec_type				m_players;
 	monster_vec_type			m_monsters;
+	group_vec_type				m_groups;
 
 
 };

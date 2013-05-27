@@ -2,20 +2,18 @@
 #pragma once
 
 // Required engine format. This cannot be changed.
-#define CHARACTER_REQUIRED_FORMAT(base, obj, decl) \
-	private obj decl; \
-	base() { __internal_init_character__(decl); }
+#define COMBATANT_REQUIRED_FORMAT(decl) __init_combatant(decl);
 
 
 #define HP 0
 #define MP 1
 
 // stats ...misc???
-#define STR				24 //strength
-#define AGI				25 //agility
-#define INT				26 //intelligence
-#define VIT				27 //vitality
-#define LUCK			28 //luck
+#define STR				11 //strength
+#define AGI				12 //agility
+#define INT				13 //intelligence
+#define VIT				14 //vitality
+#define LUCK			15 //luck
 
 #define ATK				0
 #define DEF				1
@@ -33,7 +31,7 @@
 
 
 
-class Combatant
+class Combatant : IGameEntity
 {
 	// ~ Combatant ~
 	// * Base class is implemented through composite inheritence.
@@ -41,7 +39,8 @@ class Combatant
 
 	Combatant()
 	{
-		__internal_init_character(self);
+		// Do not place anything above this line.
+		COMBATANT_REQUIRED_FORMAT(self);
 	}
 
 	//-------------------------------------
@@ -68,30 +67,6 @@ class Combatant
 		set
 		{
 			self.base_max_param[MP] = value;
-		}
-	}
-
-	int base_hp
-	{
-		get const
-		{
-			return self.base_param[HP];
-		}
-		set
-		{
-			self.base_param[HP] = value;
-		}
-	}
-
-	int base_mp
-	{
-		get const
-		{
-			return self.base_param[MP];
-		}
-		set
-		{
-			self.base_param[MP] = value;
 		}
 	}
 
@@ -337,10 +312,14 @@ class Combatant
 
 	vec2 GetCenter()
 	{
-		return self.pos + self.spriteset.size / 2f;
+		return self.pos + self.spriteset.size / 2.f;
 	}
 
 
+	void update()
+	{
+		wait(); //testing
+	}
 
 };
 

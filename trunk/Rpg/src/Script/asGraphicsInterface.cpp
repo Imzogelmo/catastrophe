@@ -278,7 +278,7 @@ void ScriptEngine::RegisterSpriteAnimation()
 	r = engine->RegisterObjectBehaviour( "animation", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(ValueDestruct<SpriteAnimation>), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( "animation", "animation &opAssign(const animation &in)", asFUNCTION((ValueAssignment<SpriteAnimation, SpriteAnimation>)), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 
-	RegisterSpriteAnimationBase<AnimatedSprite>("animation");
+	RegisterSpriteAnimationBase<SpriteAnimation>("animation");
 }
 
 
@@ -314,8 +314,11 @@ void ScriptEngine::RegisterAnimatedSpriteSet()
 
 	r = engine->RegisterObjectMethod( "spriteset", "animation &opIndex(int)", asFUNCTION(AnimatedSpriteSetIndexOperator), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( "spriteset", "const animation &opIndex(int) const", asFUNCTION(AnimatedSpriteSetIndexOperator), asCALL_CDECL_OBJLAST); assert( r >= 0 );
+
 	r = engine->RegisterObjectMethod( "spriteset", "animation &get_animation(int)", asFUNCTION(AnimatedSpriteSetIndexOperator), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( "spriteset", "const animation &get_animation(int) const", asFUNCTION(AnimatedSpriteSetIndexOperator), asCALL_CDECL_OBJLAST); assert( r >= 0 );
+	//r = engine->RegisterObjectMethod( "spriteset", "animation &opIndex(int)", asFUNCTION(AnimatedSpriteSetIndexOperator), asCALL_CDECL_OBJLAST); assert( r >= 0 );
+	//r = engine->RegisterObjectMethod( "spriteset", "const animation &opIndex(int) const", asFUNCTION(AnimatedSpriteSetIndexOperator), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 
 	r = engine->RegisterObjectMethod( "spriteset", "int get_num_animations() const", asMETHOD(AnimatedSpriteSet, GetNumAnimations), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( "spriteset", "int get_state() const", asMETHOD(AnimatedSpriteSet, SetCurrentAnimation), asCALL_THISCALL); assert( r >= 0 );

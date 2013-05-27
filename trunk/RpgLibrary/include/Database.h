@@ -50,13 +50,23 @@ class DataArray : public fc::dynamic_array<T>
 {
 public:
 	typedef fc::dynamic_array<T>	base_type;
-	fc::string	filename;
-	const char* root_name;
-	const char* item_name;
 
-	DataArray()
-		: base_type(), filename(), root_name(0), item_name(0)
+	ResourceDirectory*	resource_directory;
+	fc::string			filename;
+	const char*			root_name;
+	const char*			item_name;
+
+	DataArray() : base_type(),
+		resource_directory(0),
+		filename(),
+		root_name(0),
+		item_name(0)
 	{}
+
+	void SetResourceDirectory( ResourceDirectory* resourceDirectory )
+	{
+		resource_directory = resourceDirectory;
+	}
 
 	void SetNodeNames( const char* root, const char* item )
 	{
@@ -146,8 +156,11 @@ public:
 
 
 	/// Called internally by DataArray. (This also keep the header files clean) ;)
-	template <class T> static bool SerializeDataArray( T& arr, const fc::string& filename, const char* root, const char* item );
-	template <class T> static bool DeserializeDataArray( T& arr, const fc::string& filename, const char* root, const char* item );
+	template <class T> static bool SerializeDataArray
+		( T& arr, ResourceDirectory* resourceDirectory, const fc::string& filename, const char* root, const char* item );
+
+	template <class T> static bool DeserializeDataArray
+		( T& arr, ResourceDirectory* resourceDirectory, const fc::string& filename, const char* root, const char* item );
 
 	/// *Safe* lookup of data by id. If the id is invalid it will return null.
 	template <class T> static inline T* GetArrayContent( DataArray<T>& arr, int id ) {
@@ -188,7 +201,7 @@ bool DataArray<T>::SerializeXml( const fc::string& name ) {
 	ASSERT(root_name != 0);
 	ASSERT(item_name != 0);
 	ASSERT(!(name.empty() && filename.empty()));
-	return Database::SerializeDataArray( *this, name.empty() ? filename : name, root_name, item_name );
+	return Database::SerializeDataArray( *this, resource_directory, name.empty() ? filename : name, root_name, item_name );
 }
 
 
@@ -197,7 +210,49 @@ bool DataArray<T>::DeserializeXml( const fc::string& name ) {
 	ASSERT(root_name != 0);
 	ASSERT(item_name != 0);
 	ASSERT(!(name.empty() && filename.empty()));
-	return Database::DeserializeDataArray( *this, name.empty() ? filename : name, root_name, item_name );
+	return Database::DeserializeDataArray( *this, resource_directory, name.empty() ? filename : name, root_name, item_name );
 }
+
+
+template <>
+DataArray<Item>::DataArray() : base_type(), resource_directory(0), filename(), root_name(0), item_name(0) {
+	SetNodeNames("ItemList", "Item");
+}
+
+template <>
+DataArray<EquipmentItem>::DataArray() : base_type(), resource_directory(0), filename(), root_name(0), item_name(0) {
+	SetNodeNames("ItemList", "Item");
+}
+
+template <>
+DataArray<MonsterData>::DataArray() : base_type(), resource_directory(0), filename(), root_name(0), item_name(0) {
+	SetNodeNames("MonsterList", "Monster");
+}
+
+template <>
+DataArray<MonsterTroop>::DataArray() : base_type(), resource_directory(0), filename(), root_name(0), item_name(0) {
+	SetNodeNames("MonsterTroopList", "MonsterTroop");
+}
+
+template <>
+DataArray<CharacterData>::DataArray() : base_type(), resource_directory(0), filename(), root_name(0), item_name(0) {
+	SetNodeNames("CharacterList", "Character");
+}
+
+template <>
+DataArray<CharacterClass>::DataArray() : base_type(), resource_directory(0), filename(), root_name(0), item_name(0) {
+	SetNodeNames("CharacterClassList", "CharacterClass");
+}
+
+template <>
+DataArray<Race>::DataArray() : base_type(), resource_directory(0), filename(), root_name(0), item_name(0) {
+	SetNodeNames("RaceList", "Race");
+}
+
+template <>
+DataArray<AnimatedSpriteSetAsset>::DataArray() : base_type(), resource_directory(0), filename(), root_name(0), item_name(0) {
+	SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet");
+}
+
 
 

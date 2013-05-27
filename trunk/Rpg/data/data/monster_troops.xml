@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<MonsterTroops ver="1.0" count="244">
+<MonsterTroopList ver="1.0" count="244">
     <Troop name="Goblin(3-5)" num_groups="1">
         <Monster index="0" min="3" max="5"/>
     </Troop>
@@ -836,4 +836,4 @@
     <Troop name="Iron Golem(1-2)" num_groups="1">
         <Monster index="110" min="1" max="2"/>
     </Troop>
-</MonsterTroops>
+</MonsterTroopList>

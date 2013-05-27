@@ -13,7 +13,8 @@
 
 
 BattleScreen::BattleScreen() :
-	Screen()
+	Screen(),
+	m_battleEngine()
 {
 }
 

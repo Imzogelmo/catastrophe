@@ -12,38 +12,38 @@
 #pragma once
 
 #include <fc/string.h>
-#include <Catastrophe/Util/Indexable.h>
 #include <Catastrophe/Util/NonCopyable.h>
 #include "Common.h"
 #include "ContextPool.h"
+#include "ScriptClassDeclarations.h"
 
 
 #define INFINITE_SUSPEND 2147483647
 //#define STATUS_TERMINATE -2147483647
 
+
+
 /*
- * @ScriptClass differs from an object because it has no
- * physical body, cannot collide with other entities, and
- * does not need to be rendered.
+ * @ScriptClass
  */
-class ScriptClass : public Indexable<size_t>, public NonCopyable
+class ScriptClass : public NonCopyable
 {
 public:
 	ScriptClass( ContextPool* contextPool = 0 );
 	~ScriptClass();
 
-	void Initialize( const fc::string& class_decl, const fc::string& method_decl = "void run()" );
+	bool InitializeScript( const ScriptClassDeclarations& declarations );
 	asIScriptObject* CreateScriptObject();
 
 	asIScriptEngine* GetScriptEngine();
 	ContextPool* GetContextPool() const { return m_contextPool; }
 	asIScriptObject* GetScriptObject() const { return m_object; }
 	
-	void Update();
+	void UpdateScript();
 	void Suspend( int frames );
-	void Destroy();
+	void DestroyScript();
 
-	bool IsDestroyed() const { return m_destroyed; }
+	bool IsScriptDestroyed() const { return m_destroyed; }
 
 protected:
 	ContextPool*		m_contextPool;

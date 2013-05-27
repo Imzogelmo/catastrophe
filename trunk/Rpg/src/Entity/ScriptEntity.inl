@@ -14,14 +14,14 @@
 
 ScriptEntity::ScriptEntity( EntityType derivedType ) :
 	Entity(derivedType),
-	m_scriptInstance()
+	ScriptClass()
 {
 }
 
 
 void ScriptEntity::Update()
 {
-	m_scriptInstance.Update();
+	ScriptClass::UpdateScript();
 }
 
 

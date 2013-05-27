@@ -392,7 +392,7 @@ void ScriptEngine::RegisterEntityType( const char* name )
 	fc::string decl = name;
 	fc::string const_ref = "const " + decl + " &in";
 	fc::string factory_decl = decl + "@ f()";
-	fc::string factory_copy_decl = decl + "@ f(" + const_ref + ")";
+	//fc::string factory_copy_decl = decl + "@ f(" + const_ref + ")";
 	fc::string opAssignString = decl;
 	opAssignString.append(" &opAssign(").append(const_ref).append(")");
 
@@ -416,8 +416,8 @@ void ScriptEngine::RegisterEntityBaseProperties( const char* name )
 	r = engine->RegisterObjectProperty( name, "vec2 velocity", offsetof(T, velocity)); assert( r >= 0 );
 	r = engine->RegisterObjectProperty( name, "rectf hitbox", offsetof(T, hitbox)); assert( r >= 0 );
 
-	r = engine->RegisterObjectMethod( name, "rectf get_aabb() const", asMETHOD(T, GetBoundingRect), asCALL_THISCALL ); assert( r >= 0 );
-	r = engine->RegisterObjectMethod( name, "bool get_alive() const", asMETHOD(T, IsAlive), asCALL_THISCALL ); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( name, "rectf get_aabb() const", asMETHOD(Entity, GetBoundingRect), asCALL_THISCALL ); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( name, "bool get_alive() const", asMETHOD(Entity, IsAlive), asCALL_THISCALL ); assert( r >= 0 );
 
 }
 
@@ -439,7 +439,9 @@ void ScriptEngine::RegisterCombatant()
 	r = engine->RegisterObjectMethod("combatant", "combatant &opAssign(const combatant &in)", asFUNCTION((PointerAssignment<Combatant>)), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
 	*/
 
-	r = engine->RegisterObjectMethod("combatant", "actor@ get_actor() const", asMETHODPR(Combatant, GetActor, () const, Actor*), asCALL_THISCALL ); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( "combatant", "spriteset& get_spriteset()", asMETHODPR(Combatant, GetAnimatedSpriteSet, (void), AnimatedSpriteSet&), asCALL_THISCALL ); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( "combatant", "const spriteset& get_spriteset() const", asMETHODPR(Combatant, GetAnimatedSpriteSet, (void) const, const AnimatedSpriteSet&), asCALL_THISCALL ); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( "combatant", "actor@ get_actor() const", asMETHODPR(Combatant, GetActor, () const, Actor*), asCALL_THISCALL ); assert( r >= 0 );
 
 }
 

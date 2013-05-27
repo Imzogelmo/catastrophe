@@ -33,9 +33,23 @@ void Combatant::InitializeFromActor( Actor* actor )
 	ASSERT(actor != 0);
 
 	m_actor = actor;
-	m_actor->LoadBattleSpriteSet(m_spriteset);
-	m_scriptInstance.Initialize(actor->script);
-	m_scriptInstance.CreateScriptObject();
+	actor->LoadBattleSpriteSet(m_spriteset);
+
+	// load script data
+	ScriptClassDeclarations scd;
+	scd.class_decl = actor->script;
+
+	if( actor->IsCharacter() )
+		scd = ScriptClassCharacterDeclarations();
+
+	else if( actor->IsMonster() )
+		scd = ScriptClassMonsterDeclarations();
+
+	// always initialize the script first.
+	ScriptEntity::InitializeScript(scd);
+
+	// finaly create the script object which links back to us.
+	ScriptEntity::CreateScriptObject();
 }
 
 
