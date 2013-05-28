@@ -110,7 +110,6 @@ Actor* GameData::GetMonsterActorById( int id )
 }
 
 
-
 int GameData::CreateParty()
 {
 	int id = (int)m_partyList.size();
