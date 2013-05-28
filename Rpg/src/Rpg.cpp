@@ -21,6 +21,7 @@
 #include "Common.h"
 #include "GlobalSettings.h"
 #include "Game.h"
+#include "GameData.h"
 #include "Database.h"
 
 
@@ -200,7 +201,13 @@ int main(int argc, char* argv[])
 	return 0;
 	*/
 
-	GetDatabase()->DeserializeAllDataXml();
+	GameData* gd = GetGameData();
+	Database* db = GetDatabase();
+	db->DeserializeAllDataXml();
+	gd->InitializeFromDatabase(GetDatabase());
+	foreachi(i,4){
+		gd->GetActiveParty()->AddMember(i);
+	}
 
 	// read config file and parse command-line arguments.
 	LoadConfigSettings(argc, argv);

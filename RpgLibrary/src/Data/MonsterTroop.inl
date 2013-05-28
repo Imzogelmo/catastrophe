@@ -60,7 +60,8 @@ void MonsterGroup::DeserializeXml( XmlReader* xml )
 
 
 MonsterTroop::MonsterTroop() :
-	groups()
+	groups(),
+	id(0)
 {
 }
 
