@@ -51,17 +51,12 @@ class DataArray : public fc::dynamic_array<T>
 public:
 	typedef fc::dynamic_array<T>	base_type;
 
-	ResourceDirectory*	resource_directory;
 	fc::string			filename;
 	const char*			root_name;
 	const char*			item_name;
+	ResourceDirectory*	resource_directory;
 
-	DataArray() : base_type(),
-		resource_directory(0),
-		filename(),
-		root_name(0),
-		item_name(0)
-	{}
+	DataArray();
 
 	void SetResourceDirectory( ResourceDirectory* resourceDirectory )
 	{
@@ -214,43 +209,53 @@ bool DataArray<T>::DeserializeXml( const fc::string& name ) {
 }
 
 
-template <>
-DataArray<Item>::DataArray() : base_type(), resource_directory(0), filename(), root_name(0), item_name(0) {
+// DataArray constructor overloads
+template <class T> inline
+DataArray<T>::DataArray() : base_type(),
+		filename(),
+		root_name(0),
+		item_name(0),
+		resource_directory(0),
+{
+}
+
+template <> inline
+DataArray<Item>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
 	SetNodeNames("ItemList", "Item");
 }
 
-template <>
-DataArray<EquipmentItem>::DataArray() : base_type(), resource_directory(0), filename(), root_name(0), item_name(0) {
+template <> inline
+DataArray<EquipmentItem>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
 	SetNodeNames("ItemList", "Item");
 }
 
-template <>
-DataArray<MonsterData>::DataArray() : base_type(), resource_directory(0), filename(), root_name(0), item_name(0) {
+template <> inline
+DataArray<MonsterData>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
 	SetNodeNames("MonsterList", "Monster");
 }
 
-template <>
-DataArray<MonsterTroop>::DataArray() : base_type(), resource_directory(0), filename(), root_name(0), item_name(0) {
+template <> inline
+DataArray<MonsterTroop>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
 	SetNodeNames("MonsterTroopList", "MonsterTroop");
 }
 
-template <>
-DataArray<CharacterData>::DataArray() : base_type(), resource_directory(0), filename(), root_name(0), item_name(0) {
+template <> inline
+DataArray<CharacterData>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
 	SetNodeNames("CharacterList", "Character");
 }
 
-template <>
-DataArray<CharacterClass>::DataArray() : base_type(), resource_directory(0), filename(), root_name(0), item_name(0) {
+template <> inline
+DataArray<CharacterClass>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
 	SetNodeNames("CharacterClassList", "CharacterClass");
 }
 
-template <>
-DataArray<Race>::DataArray() : base_type(), resource_directory(0), filename(), root_name(0), item_name(0) {
+template <> inline
+DataArray<Race>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
 	SetNodeNames("RaceList", "Race");
 }
 
-template <>
-DataArray<AnimatedSpriteSetAsset>::DataArray() : base_type(), resource_directory(0), filename(), root_name(0), item_name(0) {
+template <> inline
+DataArray<AnimatedSpriteSetAsset>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
 	SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet");
 }
 

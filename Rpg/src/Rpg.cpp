@@ -181,21 +181,27 @@ int main(int argc, char* argv[])
 	// init lib
 	//todo: ...
 	RpgLibInit();
-/*
-	DataArray<Item> idl;
+	GetDatabase()->Initialize(); //fixme
 
+	/*
+	DataArray<Item> idl;
 	Database *db = GetDatabase();
 	db->characters.resize(12);
 	foreachi(i,12)
 	{
 		db->characters[i].class_id = i;
 		db->characters[i].battle_spriteset_id = i;
-		db->characters[i].script = "Combatant";
+		db->characters[i].map_spriteset_id = i;
+		db->characters[i].portrait_id = i;
+		db->characters[i].script = "Fighter";
+		db->characters[i].name = "Name" + fc::to_string(i);
 	}
 	db->characters.SerializeXml();
 	return 0;
+	*/
+
 	GetDatabase()->DeserializeAllDataXml();
-*/
+
 	// read config file and parse command-line arguments.
 	LoadConfigSettings(argc, argv);
 

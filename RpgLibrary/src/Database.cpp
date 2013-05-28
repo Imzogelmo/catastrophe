@@ -48,6 +48,16 @@ Database::Database() :
 	SetAllDefaultDataArrayFilenames();
 	SetAllDefaultDataArrayNodeNames();
 
+}
+
+
+Database::~Database()
+{
+}
+
+
+void Database::Initialize()
+{
 	m_resourceDirectory = g_resourceDirectory;
 
 	items.SetResourceDirectory(m_resourceDirectory);
@@ -65,18 +75,6 @@ Database::Database() :
 	character_battle_sprites.SetResourceDirectory(m_resourceDirectory);
 	monster_map_sprites.SetResourceDirectory(m_resourceDirectory);
 	monster_battle_sprites.SetResourceDirectory(m_resourceDirectory);
-
-}
-
-
-Database::~Database()
-{
-}
-
-
-void Database::Initialize()
-{
-	m_resourceDirectory = g_resourceDirectory;
 }
 
 
