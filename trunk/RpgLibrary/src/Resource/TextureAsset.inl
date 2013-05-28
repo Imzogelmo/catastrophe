@@ -21,6 +21,7 @@
 
 
 TextureAsset::TextureAsset() :
+	id(0),
 	m_textureFilename(),
 	m_textureResourceId(-1),
 	m_refCount(0),

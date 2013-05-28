@@ -18,6 +18,8 @@
 class RPG_API TextureAsset
 {
 public:
+	int id;
+
 	TextureAsset();
 	~TextureAsset();
 

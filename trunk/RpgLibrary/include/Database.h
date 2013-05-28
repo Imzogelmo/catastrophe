@@ -58,6 +58,9 @@ public:
 
 	DataArray();
 
+	/// Generate a unique id forr each item in array.
+	void GenerateIds();
+
 	void SetResourceDirectory( ResourceDirectory* resourceDirectory )
 	{
 		resource_directory = resourceDirectory;
@@ -162,6 +165,9 @@ public:
 		return (size_t)id < arr.size() ? &arr[id] : (T*)0;
 	}
 
+	/// Generate IDs from a DataArray. (Types must have an 'int id' property.)
+	template <class T> static void GenerateIds( T& arr );
+
 	/*
 	Skill*			GetSkill( int id ) { return GetArrayContent<Skill>(skills, id); }
 	Spell*			GetSpell( int id ) { return GetArrayContent<Spell>(spells, id); }
@@ -196,7 +202,9 @@ bool DataArray<T>::SerializeXml( const fc::string& name ) {
 	ASSERT(root_name != 0);
 	ASSERT(item_name != 0);
 	ASSERT(!(name.empty() && filename.empty()));
-	return Database::SerializeDataArray( *this, resource_directory, name.empty() ? filename : name, root_name, item_name );
+
+	bool ret = Database::SerializeDataArray(*this, resource_directory, name.empty() ? filename : name, root_name, item_name);
+	return ret;
 }
 
 
@@ -205,7 +213,11 @@ bool DataArray<T>::DeserializeXml( const fc::string& name ) {
 	ASSERT(root_name != 0);
 	ASSERT(item_name != 0);
 	ASSERT(!(name.empty() && filename.empty()));
-	return Database::DeserializeDataArray( *this, resource_directory, name.empty() ? filename : name, root_name, item_name );
+
+	bool ret = Database::DeserializeDataArray(*this, resource_directory, name.empty() ? filename : name, root_name, item_name);
+	GenerateIds();
+
+	return ret;
 }
 
 
@@ -259,5 +271,11 @@ DataArray<AnimatedSpriteSetAsset>::DataArray() : base_type(), filename(), root_n
 	SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet");
 }
 
+
+template <class T> inline
+void DataArray<T>::GenerateIds()
+{
+	Database::GenerateIds(*this);
+}
 
 

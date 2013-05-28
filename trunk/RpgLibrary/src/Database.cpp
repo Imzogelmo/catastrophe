@@ -207,6 +207,18 @@ ResourceDirectory* Database::GetResourceDirectory() const
 
 
 template <class T>
+void Database::GenerateIds( T& arr )
+{
+	int size = (int)arr.size();
+	for( int i(0); i < size; ++i )
+	{
+		//id needs to match the indices.
+		arr[i].id = i;
+	}
+}
+
+
+template <class T>
 bool Database::SerializeDataArray( T& arr, ResourceDirectory* resourceDirectory, const fc::string& filename, const char* root, const char* item )
 {
 	fc::string fn = resourceDirectory ? resourceDirectory->GetDataDirectory() : "";

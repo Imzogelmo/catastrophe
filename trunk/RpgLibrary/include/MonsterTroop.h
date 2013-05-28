@@ -40,7 +40,8 @@ struct RPG_API MonsterTroop
 	typedef fc::fixed_vector<MonsterGroup, 4> vec_type;
 
 	fc::fixed_string128 name; //this is editor only....
-	vec_type groups;
+	vec_type	groups;
+	int			id;
 
 	MonsterTroop();
 
