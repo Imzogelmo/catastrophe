@@ -10,6 +10,7 @@
 // GNU General Public License for more details.
 
 
+#include <fc/rand.h>
 #include <Catastrophe/System.h>
 #include <Catastrophe/Input.h>
 #include <Catastrophe/IO/ConfigFile.h>
@@ -205,12 +206,23 @@ int main(int argc, char* argv[])
 	Database* db = GetDatabase();
 	db->DeserializeAllDataXml();
 	gd->InitializeFromDatabase(GetDatabase());
-	foreachi(i,4){
+
+	foreachi(i,10){
+		gd->AddCharacterActor(i);
+	}
+	foreachi(i,10){
+		gd->AddCharacterActor(i);
+	}
+
+	gd->GetActiveParty()->SetMaxActivePartySize(32);
+	foreachi(i,32){
 		gd->GetActiveParty()->AddMember(i);
 	}
 
+
 	// read config file and parse command-line arguments.
 	LoadConfigSettings(argc, argv);
+	fc::srand(123456789);
 
 
 	Game* game = new Game();

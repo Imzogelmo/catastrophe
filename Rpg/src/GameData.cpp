@@ -55,10 +55,17 @@ void GameData::InitializeFromDatabase( Database* database )
 	for( size_t i(0); i < characterSize; ++i )
 	{
 		int actorId = database->characters[i].id;
-		Actor* actor = new Actor();
-		actor->InitializeFromCharacter(actorId);
-		m_characterActors.push_back(actor);
+		AddCharacterActor(actorId);
 	}
+}
+
+
+void GameData::AddCharacterActor( int id )
+{
+	Actor* actor = new Actor();
+	actor->InitializeFromCharacter(id);
+	actor->id = (int)m_characterActors.size();
+	m_characterActors.push_back(actor);
 }
 
 

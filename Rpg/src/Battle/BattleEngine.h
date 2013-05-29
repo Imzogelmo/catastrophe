@@ -19,6 +19,7 @@
 #include "Battle.h"
 #include "BattleActionQueue.h"
 #include "Entity.h"
+#include "EntitySorter.h"
 
 
 
@@ -67,6 +68,7 @@ public:
 
 
 	void AddPlayerCombatantsFromParty( Party* party );
+	//void AddMonsterCombatantsFromTroop( MonsterTroop* monsterTroop );
 	void AddPlayerCombatant( Combatant* player );
 	void AddMonsterCombatant( Combatant* monster );
 	void AddEntity( Entity* e );
@@ -80,7 +82,7 @@ protected:
 	BattleActionQueue			m_actionQueue;
 	battle_vec_type				m_battles;
 
-	//EntitySorter<EntitySortZ>	m_sortedEntities;
+	EntitySorter<EntitySortY>	m_sortedEntities;
 	entity_vec_type				m_entityGarbageBin;
 	entity_vec_type				m_textEntities;
 	entity_vec_type				m_entities;

@@ -37,7 +37,6 @@ void Combatant::InitializeFromActor( Actor* actor )
 
 	// load script data
 	ScriptClassDeclarations scd;
-	scd.class_decl = actor->script;
 
 	if( actor->IsCharacter() )
 		scd = ScriptClassCharacterDeclarations();
@@ -45,8 +44,10 @@ void Combatant::InitializeFromActor( Actor* actor )
 	else if( actor->IsMonster() )
 		scd = ScriptClassMonsterDeclarations();
 
+	scd.class_decl = actor->script;
+
 	// always initialize the script first.
-	ScriptEntity::InitializeScript(scd);
+	ScriptEntity::InitializeScript(scd, this);
 
 	// finaly create the script object which links back to us.
 	ScriptEntity::CreateScriptObject();
@@ -65,6 +66,7 @@ void Combatant::InitializeFromActorId( int id )
 
 void Combatant::Update()
 {
+	m_spriteset.Update();
 	ScriptEntity::Update();
 }
 

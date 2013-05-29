@@ -55,7 +55,7 @@ SpriteAnimation::SpriteAnimation( Texture* texturePtr, const Rect& sourceRect, i
 
 void SpriteAnimation::SetTexture( Texture* texturePtr )
 {
-	if( m_texture && texturePtr && m_texture != texturePtr )
+	if( texturePtr && m_texture != texturePtr )
 	{
 		m_texture = texturePtr;
 

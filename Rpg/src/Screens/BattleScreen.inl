@@ -24,6 +24,12 @@ BattleScreen::~BattleScreen()
 }
 
 
+BattleEngine* BattleScreen::GetBattleEngine()
+{
+	return &m_battleEngine;
+}
+
+
 void BattleScreen::Update()
 {
 	m_battleEngine.Update();

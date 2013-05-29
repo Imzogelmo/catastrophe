@@ -406,6 +406,14 @@
 					RelativePath=".\src\Battle\BattleEngine.inl"
 					>
 				</File>
+				<File
+					RelativePath=".\src\Battle\BattleEvent.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Battle\BattleGroup.inl"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Modules"
@@ -646,6 +654,14 @@
 				</File>
 				<File
 					RelativePath=".\src\Battle\BattleEngine.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Battle\BattleEvent.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Battle\BattleGroup.h"
 					>
 				</File>
 			</Filter>

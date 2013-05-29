@@ -15,6 +15,9 @@
 #include <fc/fixed_vector.h>
 
 #include "Common.h"
+#include "BattleEvent.h"
+#include "BattleGroup.h"
+#include "BattleEvent.h"
 
 
 
@@ -33,62 +36,46 @@ struct BattlePolicy
 
 };
 
-class BattleEvent
-{
-public:
-
-};
-
-
-class BattlerGroup
-{
-public:
-	typedef fc::fixed_vector<int, 16>				vec_type;
-
-	vec_type battlers;
-
-	void AddBattler( int id );
-	void RemoveBattler( int id );
-
-};
 
 
 class Battle
 {
 public:
-	typedef fc::vector<BattleEvent*>			event_vec_type;
-	typedef fc::fixed_vector<BattlerGroup, 16>	battler_vec_type;
-	typedef fc::vector<int>						vec_type;
+	typedef fc::vector<BattleEvent*>								event_vec_type;
+	typedef fc::fixed_vector<BattleGroupData, MAX_BATTLE_GROUPS>	vec_type;
+
+	int		bgm_id;
+	int		background_sprite_id;
+
 
 	Battle();
 	~Battle();
 
+	void CreateFromMonsterTroop( const MonsterTroop& monsterTroop );
+	void AddMonsterTroop( const MonsterTroop& monsterTroop );
+
 	void AddEvent( BattleEvent* battleEvent );
 	void AddOutroEvent( BattleEvent* battleEvent );
 
-	//void SetMusic( Sound* sound );
-	//Sound* GetMusic() const { return m_bgm; }
+	void SetUseBattleGroups( bool enable );
+	bool GetUseBattleGroups();
+	int GetNumGroups() const { return (int)m_battlerGroups.size(); }
+	int GetBattlerCount() const;
 
-	BattlerGroup& GetBattlerGroup( int index ) { return m_battlerGroups.at(index); }
-	const BattlerGroup& GetBattlerGroup( int index ) const { return m_battlerGroups.at(index); }
-
+	BattleGroupData& GetBattleGroup( int index ) { return m_battlerGroups.at(index); }
+	const BattleGroupData& GetBattleGroup( int index ) const { return m_battlerGroups.at(index); }
 
 	BattlePolicy GetBattlePolicy() const { return m_battlePolicy; }
 
 protected:
-	battler_vec_type	m_battlerGroups;
+	vec_type			m_battlerGroups;
 
-	//MonsterTroop	m_monsterParty;
-	//Party			m_party;...?
-	BattlePolicy		m_battlePolicy;
+	BattlePolicy		m_battlePolicy; //todo: remove this
 
 	event_vec_type		m_eventQueue;
 	event_vec_type		m_outroEvents;
 
-	//Sound*				m_bgm;
-	//AnimatedSprite		m_background;
-	//int		m_background_id;
-
+	bool				m_useGroups;
 
 };
 

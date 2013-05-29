@@ -17,6 +17,8 @@
 #include "BattleAction.inl"
 #include "BattleActionQueue.inl"
 #include "Battle.inl"
+#include "BattleGroup.inl"
+#include "BattleEvent.inl"
 #include "BattleEngine.inl"
 
 

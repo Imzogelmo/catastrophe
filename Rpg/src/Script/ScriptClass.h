@@ -32,7 +32,7 @@ public:
 	ScriptClass( ContextPool* contextPool = 0 );
 	~ScriptClass();
 
-	bool InitializeScript( const ScriptClassDeclarations& declarations );
+	bool InitializeScript( const ScriptClassDeclarations& declarations, void* userData );
 	asIScriptObject* CreateScriptObject();
 
 	asIScriptEngine* GetScriptEngine();

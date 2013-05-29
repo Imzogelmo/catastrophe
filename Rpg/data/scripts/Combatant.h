@@ -2,7 +2,9 @@
 #pragma once
 
 // Required engine format. This cannot be changed.
-#define COMBATANT_REQUIRED_FORMAT(decl) __init_combatant(decl);
+#define COMBATANT_REQUIRED_FORMAT(decl) @decl = __init_combatant(decl);
+//#define print(x) __print(x, __FILE__, __LINE__)
+#define print(x) __print(x, "", __LINE__)
 
 
 #define HP 0
@@ -35,7 +37,7 @@ class Combatant : IGameEntity
 {
 	// ~ Combatant ~
 	// * Base class is implemented through composite inheritence.
-	private combatant self;
+	private combatant@ self;
 
 	Combatant()
 	{
@@ -324,4 +326,37 @@ class Combatant : IGameEntity
 };
 
 
+
+
+class Character : public Combatant
+{
+	Character()
+	{
+		super();
+	}
+
+};
+
+
+int vary = 0;
+
+class Fighter : public Character
+{
+	Fighter()
+	{
+		super();
+		//self.pos.x = rand(100,240);
+		//self.pos.y = rand(0,210);
+		self.pos.x = 180.f + (vary * 8.f);
+		self.pos.y = 64.f + (vary * 32.f);
+		print("position set! x=" + self.pos.x + " y=" + self.pos.y);
+		vary++;
+	}
+
+	void update()
+	{
+		wait();
+	}
+
+};
 
