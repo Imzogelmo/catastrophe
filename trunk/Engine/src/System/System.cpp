@@ -172,13 +172,18 @@ void System::InitOpenGL()
 #define WIN32_LEAN_AND_MEAN
 #define WIN32_EXTRA_LEAN
 #define NOGDI
-#include <windef.h>
-#include <winbase.h>
-#include <wincon.h>
-#include <fcntl.h>
-#include <io.h>
-#include <iostream>
-//#include <xiosbase>
+
+// add any compilers that need to include the full windows.h here
+#if (_MSC_VER > 1500)
+	#include <windows.h>
+#else
+	#include <windef.h>
+	#include <winbase.h>
+	#include <wincon.h>
+	#include <fcntl.h>
+	#include <io.h>
+	#include <iostream>
+#endif
 
 
 extern int main(int argc, char* argv[]);
