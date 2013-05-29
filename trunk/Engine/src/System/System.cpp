@@ -180,10 +180,12 @@ void System::InitOpenGL()
 	#include <windef.h>
 	#include <winbase.h>
 	#include <wincon.h>
-	#include <fcntl.h>
-	#include <io.h>
-	#include <iostream>
 #endif
+
+#include <fcntl.h>
+#include <io.h>
+#include <iostream>
+
 
 
 extern int main(int argc, char* argv[]);
