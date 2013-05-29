@@ -10,6 +10,7 @@
 // GNU General Public License for more details.
 
 #include "Game.h"
+#include "GameData.h"
 #include "Database.h"
 #include "BattleScreen.h"
 
@@ -94,12 +95,12 @@ int Game::InternalInitScriptEngine()
 
 void Game::Update()
 {
-	m_spriteBatch.Begin();
-
 	static bool testInit = false;
 	if(!testInit)
 	{
-		m_screenManager.Add( new BattleScreen() ); //....
+		BattleScreen* bs = new BattleScreen();
+		bs->GetBattleEngine()->AddPlayerCombatantsFromParty( GetGameData()->GetActiveParty() );
+		m_screenManager.Add( bs ); //....
 		testInit = true;
 	}
 
@@ -110,6 +111,9 @@ void Game::Update()
 
 void Game::Render()
 {
+	m_spriteBatch.Begin();
+	//m_spriteBatch.DrawTexture(GetDatabase()->character_battle_sprites[0].LoadTexture(), Vector2(30,30));
+
 	m_screenManager.Render();
 
 	//script drawing is stuck here for now.

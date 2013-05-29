@@ -45,7 +45,7 @@ asIScriptEngine* ScriptClass::GetScriptEngine()
 }
 
 
-bool ScriptClass::InitializeScript( const ScriptClassDeclarations& declarations )
+bool ScriptClass::InitializeScript( const ScriptClassDeclarations& declarations, void* userData )
 {
 	m_ctx = m_contextPool->AquireContext();
 	if(!m_ctx)
@@ -55,9 +55,11 @@ bool ScriptClass::InitializeScript( const ScriptClassDeclarations& declarations 
 		return false;
 	}
 
-	m_ctx->SetUserData(this);
+	m_ctx->SetUserData(userData);
+	//m_ctx->SetUserData(this);
 	asIScriptEngine *engine = m_contextPool->GetScriptEngine();
 
+	bool useBaseClassDecl = false;
 	int typeID = engine->GetModule(0)->GetTypeIdByDecl(declarations.class_decl.c_str());
 	if( typeID < 0 )
 	{
@@ -73,6 +75,8 @@ bool ScriptClass::InitializeScript( const ScriptClassDeclarations& declarations 
 				declarations.class_decl.c_str(), declarations.base_class_decl.c_str() );
 			return false;
 		}
+
+		useBaseClassDecl = true;
 	}
 
 	m_objectType = engine->GetObjectTypeById(typeID);
@@ -91,8 +95,11 @@ bool ScriptClass::InitializeScript( const ScriptClassDeclarations& declarations 
 		m_suspend = INFINITE_SUSPEND;
 	}
 
-	fc::string factoryString = declarations.class_decl;
-	factoryString.append(" @").append(declarations.class_decl).append("()");
+	// Get the full factory declaration.
+	fc::string classString = useBaseClassDecl ? declarations.base_class_decl : declarations.class_decl;
+	fc::string factoryString = classString;
+	factoryString.append(" @").append(classString).append("()");
+
 	m_factory = m_objectType->GetFactoryByDecl(factoryString.c_str());
 	if( !m_factory )
 	{

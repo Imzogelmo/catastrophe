@@ -24,7 +24,7 @@ class Actor
 public:
 	fc::string	name;
 	fc::string	script;
-	int			id;
+	int			id; //dont use this... fixme:
 	int			data_id;
 	int			portrait_id;
 	int			map_spriteset_id;

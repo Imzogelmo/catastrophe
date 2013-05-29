@@ -34,6 +34,8 @@ public:
 	void Clear();
 	void InitializeFromDatabase( Database* database );
 
+	void AddCharacterActor( int id );
+
 	Actor* GetCharacterActor( int index );
 	Actor* GetMonsterActor( int index );
 	Actor* GetCharacterActorById( int id );

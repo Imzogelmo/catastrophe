@@ -17,17 +17,17 @@
 
 
 struct EntitySortY {
-	inline operator bool() const (const Entity* a, const Entity* b) {
+	inline bool operator()(const Entity* a, const Entity* b) const {
 		return a->pos.y < b->pos.y;
 	}
-}
+};
 
 //todo:
 struct EntitySortZ {
-	inline operator bool() const (const Entity* a, const Entity* b) {
+	inline bool operator()(const Entity* a, const Entity* b) const {
 		return a->pos.y < b->pos.y;
 	}
-}
+};
 
 
 template <class SortType>
@@ -68,6 +68,6 @@ public:
 	}
 
 	vec_type m_entities;
-}
+};
 
 

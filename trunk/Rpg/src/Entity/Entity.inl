@@ -15,6 +15,7 @@
 Entity::Entity( EntityType derivedType ) :
 	type(derivedType),
 	pos(Vector2::Zero),
+	velocity(Vector2::Zero),
 	hitbox(Rectf::Zero),
 	filter()
 {

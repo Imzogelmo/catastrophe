@@ -398,11 +398,20 @@ void ScriptEngine::RegisterEntityType( const char* name )
 
 	int r(0);
 	using namespace script;
+
+	/*
 	r = engine->RegisterObjectType( name, 0, asOBJ_REF | asOBJ_SCOPED ); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour( name, asBEHAVE_FACTORY, factory_decl.c_str(), asFUNCTION(EntityFactory), asCALL_CDECL ); assert( r >= 0 );
 	//r = engine->RegisterObjectBehaviour( name, asBEHAVE_FACTORY, factory_copy_decl.c_str(), asFUNCTION(PointerCopyConstruct<T>), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour( name, asBEHAVE_RELEASE, "void f()", asFUNCTION(DummyReleaseRef), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( name, opAssignString.c_str(), asFUNCTION((PointerAssignment<T>)), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
+	*/
+
+	r = engine->RegisterObjectType( name, 0, asOBJ_REF ); assert( r >= 0 );
+	//r = engine->RegisterObjectBehaviour( name, asBEHAVE_FACTORY, factory_decl.c_str(), asFUNCTION(EntityFactory), asCALL_CDECL ); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour( name, asBEHAVE_ADDREF, "void f()", asFUNCTION(DummyAddRef), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour( name, asBEHAVE_RELEASE, "void f()", asFUNCTION(DummyReleaseRef), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
+	//r = engine->RegisterObjectMethod( name, opAssignString.c_str(), asFUNCTION((PointerAssignment<T>)), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
 
 }
 

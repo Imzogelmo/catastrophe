@@ -46,6 +46,9 @@ bool Actor::InitializeFromCharacter( int character_id )
 	if( character_class )
 		compiledAttributes += character_class->attributes;
 
+	name = character->name;
+	script = character->script;
+
 	data_id = character_id;
 	portrait_id = character->portrait_id;
 	map_spriteset_id = character->map_spriteset_id;
@@ -189,7 +192,6 @@ void Actor::RemoveGold( int val )
 {
 	SetGold(m_gold - val);
 }
-
 
 
 int Actor::GetParam( int param ) const

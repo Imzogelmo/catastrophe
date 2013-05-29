@@ -68,7 +68,8 @@ void BattleEngine::AddPlayerCombatantsFromParty( Party* party )
 	for( size_t i(0); i < partyMembers.size(); ++i )
 	{
 		int actor_id = partyMembers[i];
-		Actor* actor = GetGameData()->GetCharacterActorById(actor_id);
+		//Actor* actor = GetGameData()->GetCharacterActorById(actor_id);
+		Actor* actor = GetGameData()->GetCharacterActor(actor_id);
 
 		if( actor )
 		{
@@ -83,7 +84,7 @@ void BattleEngine::AddPlayerCombatantsFromParty( Party* party )
 void BattleEngine::AddPlayerCombatant( Combatant* player )
 {
 	m_players.push_back(player);
-	//m_sortedEntities.push_back(player);
+	m_sortedEntities.AddEntity(player);
 }
 
 
@@ -150,7 +151,7 @@ void BattleEngine::Render()
 	// players
 	for( player_vec_type::iterator it = m_players.begin(); it != m_players.end(); ++it )
 	{
-		(*it)->Render();
+		//(*it)->Render();
 	}
 
 	// monsters
@@ -171,8 +172,14 @@ void BattleEngine::Render()
 		(*it)->Render();
 	}
 
+	// battle texts
+	for( entity_vec_type::iterator it = m_sortedEntities.m_entities.begin(); it != m_sortedEntities.m_entities.end(); ++it )
+	{
+		(*it)->Render();
+	}
+
 	//m_sortedEntities.RemoveDeadEntities();
-	//m_sortedEntities.Sort();
+	m_sortedEntities.Sort();
 	//todo:
 
 }

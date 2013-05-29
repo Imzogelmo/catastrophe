@@ -30,6 +30,7 @@ struct RPG_API CharacterData
 	int				portrait_id;
 	int				map_spriteset_id;
 	int				battle_spriteset_id;
+	int				flags; //todo
 
 	int				lv;
 	int				exp;

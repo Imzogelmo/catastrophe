@@ -104,7 +104,16 @@ namespace script
 		void* p = ctx->GetUserData();
 		if( p != 0 )
 		{
-			Combatant* combatant = dynamic_cast<Combatant*>((Entity*)p);
+			Entity* entity = (Entity*)p;
+			Combatant* combatant = 0;
+			combatant = dynamic_cast<Combatant*>(entity);
+
+			int gh = (int)p;
+			if(gh > 90 )
+			{
+				Log("debug");
+			}
+
 			if( combatant != 0 )
 			{
 				//if( combatant->GetScriptObject() != obj )
@@ -152,7 +161,7 @@ void ScriptEngine::RegisterGlobalFunctions()
 
 	// combatant init callback
 	//r = engine->RegisterGlobalFunction( "combatant@ __init_combatant(IGameEntity@)", asFUNCTION(BindCombatant), asCALL_CDECL); assert( r >= 0 );
-	r = engine->RegisterGlobalFunction( "void __init_combatant(combatant&)", asFUNCTION(BindCombatant), asCALL_CDECL); assert( r >= 0 );
+	r = engine->RegisterGlobalFunction( "combatant@ __init_combatant(combatant@)", asFUNCTION(BindCombatant), asCALL_CDECL); assert( r >= 0 );
 
 }
 
