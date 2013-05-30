@@ -23,9 +23,11 @@
 
 struct BattlePolicy
 {
+	bool can_escape;
 	bool remove_dead_monsters;
 
 	BattlePolicy() :
+		can_escape(true),
 		remove_dead_monsters(true)
 	{}
 
@@ -34,10 +36,20 @@ struct BattlePolicy
 		return remove_dead_monsters;
 	}
 
+	bool CanEscape() const
+	{
+		return can_escape;
+	}
+
 };
 
 
-
+/*
+ * Battle class.
+ * Provides an interface to quickly inlitialize enemy combatants from data,
+ * queue battle events, and set things like music, background, etc.
+ * Also abstracts battlegroup and group management for simplicity.
+ */
 class Battle
 {
 public:
@@ -51,6 +63,8 @@ public:
 	Battle();
 	~Battle();
 
+	void CreateFromMonsterTroopId( int troop_id );
+	void AddMonsterTroopId( int troop_id );
 	void CreateFromMonsterTroop( const MonsterTroop& monsterTroop );
 	void AddMonsterTroop( const MonsterTroop& monsterTroop );
 
@@ -59,6 +73,7 @@ public:
 
 	void SetUseBattleGroups( bool enable );
 	bool GetUseBattleGroups();
+
 	int GetNumGroups() const { return (int)m_battlerGroups.size(); }
 	int GetBattlerCount() const;
 

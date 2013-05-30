@@ -16,7 +16,7 @@
 
 #include "Common.h"
 
-#define MAX_BATTLE_GROUP_SIZE	256
+#define MAX_BATTLE_GROUP_SIZE	16
 #define MAX_BATTLE_GROUPS		16
 
 
@@ -35,7 +35,7 @@ struct BattleGroupEntityData
 
 struct BattleGroupData
 {
-	typedef fc::vector<BattleGroupEntityData>		vec_type;
+	typedef fc::fixed_vector<BattleGroupEntityData, MAX_BATTLE_GROUP_SIZE>	vec_type;
 	
 	vec_type	battlers;
 

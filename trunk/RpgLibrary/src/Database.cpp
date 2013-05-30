@@ -135,7 +135,7 @@ void Database::SetAllDefaultDataArrayNodeNames()
 	accessories.SetNodeNames("ItemList", "Item");
 
 	monsters.SetNodeNames("MonsterList", "Monster");
-	monster_troops.SetNodeNames("MonsterTroopList", "MonsterTroop");
+	monster_troops.SetNodeNames("MonsterTroopList", "Troop");
 	characters.SetNodeNames("CharacterList", "Character");
 	character_classes.SetNodeNames("CharacterClassList", "CharacterClass");
 	races.SetNodeNames("RaceList", "Race");
