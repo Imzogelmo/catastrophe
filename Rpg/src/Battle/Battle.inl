@@ -11,6 +11,7 @@
 
 #include "Battle.h"
 #include "MonsterTroop.h"
+#include "Database.h"
 
 
 
@@ -22,6 +23,22 @@ Battle::Battle() :
 
 Battle::~Battle()
 {
+}
+
+
+void Battle::CreateFromMonsterTroopId( int troop_id )
+{
+	MonsterTroop* troop = GetDatabase()->GetMonsterTroop(troop_id);
+	if( troop )
+		CreateFromMonsterTroop(*troop);
+}
+
+
+void Battle::AddMonsterTroopId( int troop_id )
+{
+	MonsterTroop* troop = GetDatabase()->GetMonsterTroop(troop_id);
+	if( troop )
+		AddMonsterTroop(*troop);
 }
 
 
@@ -71,7 +88,7 @@ void Battle::AddMonsterTroop( const MonsterTroop& monsterTroop )
 		}
 	}
 
-	// If no monsters were added, we force-add the leader.
+	// If no monsters were added, and the total is zero, we force-add the leader.
 	if( GetBattlerCount() == 0 )
 	{
 		if( m_battlerGroups.empty() )
@@ -92,7 +109,6 @@ void Battle::AddOutroEvent( BattleEvent* battleEvent )
 {
 	m_outroEvents.push_back(battleEvent);
 }
-
 
 
 void Battle::SetUseBattleGroups( bool enable )

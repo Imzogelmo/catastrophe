@@ -46,6 +46,7 @@ public:
 	typedef fc::vector<Entity*>				entity_vec_type;
 	typedef fc::vector<Combatant*>			player_vec_type;
 	typedef fc::vector<Combatant*>			monster_vec_type;
+	typedef fc::vector<Actor*>				actor_vec_type;
 	typedef fc::vector<BattleCombatantGroup>	group_vec_type;
 
 	//So...
@@ -59,6 +60,8 @@ public:
 	BattleEngine();
 	virtual ~BattleEngine();
 
+	void Setup();
+	void SetupMonsterCombatantsFromBattle( Battle* battle );
 	void AddBattle( Battle* battle );
 	//void RemoveBattle( Battle* battle );
 
@@ -89,6 +92,7 @@ protected:
 	player_vec_type				m_players;
 	monster_vec_type			m_monsters;
 	group_vec_type				m_groups;
+	actor_vec_type				m_tempActors;
 
 
 };

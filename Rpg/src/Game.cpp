@@ -98,8 +98,19 @@ void Game::Update()
 	static bool testInit = false;
 	if(!testInit)
 	{
+		// TEST ONLY
+		Battle* b = new Battle();
+		b->CreateFromMonsterTroopId(238);
+		b->AddMonsterTroopId(244);
+		b->AddMonsterTroopId(242);
+		b->AddMonsterTroopId(240);
+		b->AddMonsterTroopId(4);
+
 		BattleScreen* bs = new BattleScreen();
 		bs->GetBattleEngine()->AddPlayerCombatantsFromParty( GetGameData()->GetActiveParty() );
+		bs->GetBattleEngine()->AddBattle(b);
+		bs->GetBattleEngine()->Setup();
+
 		m_screenManager.Add( bs ); //....
 		testInit = true;
 	}
@@ -108,11 +119,18 @@ void Game::Update()
 	m_screenManager.Update();
 }
 
-
+Texture* bgt = 0;
 void Game::Render()
 {
 	m_spriteBatch.Begin();
+
+	if(!bgt)
+	{
+		bgt = new Texture();
+		bgt->LoadFromFile("data/textures/backgrounds/16.png");
+	}
 	//m_spriteBatch.DrawTexture(GetDatabase()->character_battle_sprites[0].LoadTexture(), Vector2(30,30));
+	m_spriteBatch.DrawTexture(bgt, Vector2(0,0));
 
 	m_screenManager.Render();
 

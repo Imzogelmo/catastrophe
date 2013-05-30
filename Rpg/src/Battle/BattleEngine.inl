@@ -28,6 +28,40 @@ BattleEngine::~BattleEngine()
 }
 
 
+void BattleEngine::Setup()
+{
+	Battle* battle = GetCurrentBattle();
+	if( !battle )
+		return;
+
+	// for each monster in each group of the battle class,
+	// we have to create an instance Combatant, and if
+	// need be, a base Actor class as well.
+	int n = battle->GetNumGroups();
+
+	for( int j(0); j < n; ++j )
+	{
+		BattleGroupData & group = battle->GetBattleGroup(j);
+
+		for( size_t i(0); i < group.battlers.size(); ++i )
+		{
+			Actor* actor = new Actor(); //todo: We can actually pool these.
+			actor->InitializeFromMonster(group.battlers[i].id);
+			m_tempActors.push_back(actor);
+
+			Combatant* enemy = new Combatant();
+			enemy->InitializeFromActor(actor);
+			AddMonsterCombatant(enemy);
+		}
+	}
+}
+
+
+void BattleEngine::SetupMonsterCombatantsFromBattle( Battle* battle )
+{
+}
+
+
 void BattleEngine::AddBattle( Battle* battle )
 {
 	if( battle )
@@ -91,7 +125,7 @@ void BattleEngine::AddPlayerCombatant( Combatant* player )
 void BattleEngine::AddMonsterCombatant( Combatant* monster )
 {
 	m_monsters.push_back(monster);
-	//m_sortedEntities.push_back(monster);
+	m_sortedEntities.AddEntity(monster);
 }
 
 
@@ -157,7 +191,7 @@ void BattleEngine::Render()
 	// monsters
 	for( monster_vec_type::iterator it = m_monsters.begin(); it != m_monsters.end(); ++it )
 	{
-		(*it)->Render();
+		//(*it)->Render();
 	}
 
 	// entities
@@ -180,6 +214,14 @@ void BattleEngine::Render()
 
 	//m_sortedEntities.RemoveDeadEntities();
 	m_sortedEntities.Sort();
+	//for( int i(m_sortedEntities.m_entities.size()); i > 0 ; )
+	//{
+	//	m_sortedEntities.m_entities[--i]->Render();
+	//}
+	for( int i(0); i < (m_sortedEntities.m_entities.size()); ++i )
+	{
+		m_sortedEntities.m_entities[i]->Render();
+	}
 	//todo:
 
 }

@@ -248,7 +248,7 @@ DataArray<MonsterData>::DataArray() : base_type(), filename(), root_name(0), ite
 
 template <> inline
 DataArray<MonsterTroop>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
-	SetNodeNames("MonsterTroopList", "MonsterTroop");
+	SetNodeNames("MonsterTroopList", "Troop");
 }
 
 template <> inline

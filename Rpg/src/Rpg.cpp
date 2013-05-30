@@ -11,6 +11,7 @@
 
 
 #include <fc/rand.h>
+#include <time.h>
 #include <Catastrophe/System.h>
 #include <Catastrophe/Input.h>
 #include <Catastrophe/IO/ConfigFile.h>
@@ -222,7 +223,9 @@ int main(int argc, char* argv[])
 
 	// read config file and parse command-line arguments.
 	LoadConfigSettings(argc, argv);
-	fc::srand(123456789);
+
+	// seed rng
+	fc::srand(int(time(0)));
 
 
 	Game* game = new Game();
