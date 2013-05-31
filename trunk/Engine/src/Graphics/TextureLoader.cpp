@@ -94,11 +94,11 @@ bool TextureLoader::SaveToFile( const fc::string& filename, const void* data, in
 bool TextureLoader::SaveToFile( const fc::string& filename, const Texture& texture, ImageFileFormat fFormat )
 {
 	bool ret = false;
-	ubyte* p = texture.GetPixels();
-	if( p != 0 )
+	ubyte* p = new ubyte[ texture.Width() * texture.Height() * 4 ];
+	if( texture.GetPixels(p) )
 	{
 		ret = SaveToFile(filename, p, texture.Width(), texture.Height(), tfRgba, fFormat);
-		delete p;
+		delete []p;
 	}
 
 	return ret;
@@ -110,7 +110,7 @@ bool TextureLoader::SaveToFile( const fc::string& filename, const Image& image, 
 	if( image.GetPixelArray().empty() )
 		return false;
 
-	return SaveToFile(filename, image.GetPixelData(), (int)image.Width(), (int)image.Height(), tfRgba, fFormat);
+	return SaveToFile(filename, image.GetPixelData(), image.Width(), image.Height(), tfRgba, fFormat);
 }
 
 

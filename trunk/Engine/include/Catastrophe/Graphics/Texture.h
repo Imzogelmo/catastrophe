@@ -42,34 +42,53 @@ class CE_API Texture
 {
 public:
 	Texture();
-	Texture( int w, int h, int m_format, int m_internalformat, int m_wrapmode, int m_minfilter, int m_magfilter, bool m_mipmaps, const void *const data );
+	Texture( const fc::string& filename );
+	Texture( int w, int h, int format, int filterMode, int wrapMode, const void *const data );
 
 	void Dispose();
-	bool CreateTexture( const void* data );
-	bool CreateTexture( const void* data, int w, int h );
+	bool CreateFromData( const void* data, int w, int h );
 
 	bool LoadFromFile( const fc::string& filename );
 	bool SaveToFile( const fc::string& filename );
 
-	ubyte* GetPixels() const;
-	void SetName( const fc::string& name ) { m_name = name; }
-	void SetMinFilter( int filter );
-	void SetMagFilter( int filter );
+	void SetWrapMode( int wrapMode );
+	void SetFilterMode( int filterMode );
+
+	/// Binds this texture to the gpu.
 	void Bind() const;
+
+	/// True if this is a valid texture in gpu memory.
 	bool IsValid() const;
 
+	/// Update pixel area. pixels must be large enough for rect.
+	void UpdateTexture( const Rect& subRect, ubyte* pixels );
+
+	void SetName( const fc::string& name ) { m_name = name; }
 	const fc::string& GetName() const { return m_name; }
 	//void* GetUserData() const { return m_userdata; }
-	gluint GetTextureID() const { return m_texture; }
 	int Width() const { return m_width; }
 	int Height() const { return m_height; }
 	float Widthf() const { return m_floatWidth; }
 	float Heightf() const { return m_floatHeight; }
 
+	/// Gets the textures pixel data. ptr must be large enough to hold the data.
+	bool GetPixels( ubyte* ptr ) const;
+
+	/// Gets the OpenGL id of this texture.
+	gluint GetTextureID() const { return m_texture; }
+
+	/// Gets the normalized uv coords from a point on the texture.
 	Vector2 GetUV( const Point& pos ) const;
 	Vector2 GetUV( int x, int y ) const;
+
+	/// Gets the normalized uv coords from a source rectangle.
 	Rectf GetUVRect( const Rect& sourceRect ) const;
+
+	/// Retrieves the source rect, in pixel size, from a uv rect.
 	Rect GetSourceRect( const Rectf& uv ) const;
+
+	/// Gets the max texture size that can be uploaded to the gpu.
+	static int GetMaxTextureSize();
 
 protected:
 	fc::string m_name;
@@ -79,11 +98,10 @@ protected:
 	float	m_floatWidth;
 	float	m_floatHeight;
 	int		m_format;
-	int		m_internalformat;
-	int		m_wrapmode;
-	int		m_minfilter;
-	int		m_magfilter;
+	int		m_wrapMode;
+	int		m_filterMode;
 	//void	m_userdata;
+	int		m_internalformat;
 	bool	m_mipmaps;
 };
 

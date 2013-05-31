@@ -26,20 +26,32 @@
 
 #include "Graphics/OpenGL.h"
 #include "Graphics/Image.h"
+#include "Graphics/TextureLoader.h"
 
 
 CE_NAMESPACE_BEGIN
 
 
-Image::Image() : m_pixels(), m_texture()
+Image::Image() :
+	Texture(), m_pixels()
 {
 }
 
 
-Image::Image( int width, int height, const ubyte *const data, int wrapmode, int minfilter, int magfilter, bool mipmapping )
-	: m_pixels(), m_texture()
+Image::Image( const fc::string& filename ) :
+	Texture(), m_pixels()
 {
-	CreateFromPixels( width, height, data, wrapmode, minfilter, magfilter, mipmapping );
+	LoadFromFile(filename);
+}
+
+
+Image::Image( int w, int h, int filterMode, int wrapMode, const void *const data ) :
+	Texture(), m_pixels()
+{
+	m_wrapMode = wrapMode;
+	m_filterMode = filterMode;
+
+	CreateFromData(data, w, h);
 }
 
 
@@ -48,21 +60,43 @@ Image::~Image()
 }
 
 
-void Image::CreateFromPixels( int width, int height, const ubyte *const data, int wrapmode, int minfilter, int magfilter, bool mipmapping )
+void Image::Dispose()
 {
-	if(m_texture.IsValid())
+	Texture::Dispose();
+	m_pixels.resize(0, 0);
+}
+
+
+bool Image::CreateFromData( const void* data, int w, int h )
+{
+	Texture::Dispose();
+
+	bool success = Texture::CreateFromData(data, w, h);
+	if( success )
 	{
-		m_texture.Dispose();
-		m_texture = Texture();
+		InternalPackPixels(w, h, (ubyte*)data);
 	}
 
-	wrapmode = wrapmode;
-	minfilter = minfilter;
-	magfilter = magfilter;
-	mipmapping = mipmapping;
+	return success;
+}
 
-	InternalPackPixels( width, height, data );
-	m_texture.CreateTexture(data, width, height);
+
+bool Image::LoadFromFile( const fc::string& filename )
+{
+	Point size;
+	uchar* ptr = TextureLoader::LoadFromFile(filename, size);
+	if(!ptr)
+		return false;
+
+	bool ret = CreateFromData(ptr, size.x, size.y);
+	TextureLoader::FreePtr(ptr);
+	return ret;
+}
+
+
+bool Image::SaveToFile( const fc::string& filename )
+{
+	return TextureLoader::SaveToFile(filename, *this);
 }
 
 
@@ -181,12 +215,6 @@ void Image::SwapColorRegion( size_t firstColorIndex, size_t secondColorIndex, co
 }
 
 
-Rectf Image::GetUVRect( const Rect& r )
-{
-	return m_texture.GetUVRect(r);
-}
-
-
 void Image::Update()
 {
 	UpdateRegion( Rect(0, 0, Width(), Height()) );
@@ -208,15 +236,7 @@ void Image::UpdateRegion( const Rect& r )
 		ptr = temp.data();
 	}
 
-	m_texture.Bind();
-	glTexSubImage2D( GL_TEXTURE_2D, 0, r.pos.x, r.pos.y, r.Width(), r.Height(), GL_RGBA, GL_UNSIGNED_BYTE, ptr );
-}
-
-
-void Image::Dispose()
-{
-	m_texture.Dispose();
-	m_pixels.resize(0, 0);
+	Texture::UpdateTexture(r, (ubyte*)ptr);
 }
 
 

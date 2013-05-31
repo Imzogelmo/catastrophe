@@ -60,6 +60,7 @@ void ShaderObject::Dispose()
 		m_shader_object = 0;
 	}
 
+	m_name.clear();
 	m_source.clear();
 	m_infolog.clear();
 }
@@ -101,7 +102,7 @@ bool ShaderObject::Compile()
 {
 	InternalCreateShaderObject();
 
-	const int length = m_source.size();
+	const int length = (int)m_source.size();
 	const char *source = m_source.c_str();
 	glShaderSource( m_shader_object, 1, &source, &length );
 	glCompileShader( m_shader_object );

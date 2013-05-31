@@ -30,86 +30,83 @@
 CE_NAMESPACE_BEGIN
 
 
-Shader::Shader( VertexShader* vertex_shader, FragmentShader* fragment_shader ) :
-	m_vertex_shader(vertex_shader),
-	m_fragment_shader(fragment_shader),
-	m_program_object(0),
+Shader::Shader( VertexShader* vertexShader, FragmentShader* fragmentShader ) :
+	m_vertexShader(0),
+	m_fragmentShader(0),
+	m_programObject(0),
 	m_infolog(),
-	m_uniform_locations(),
-	m_linked(false),
-	m_link_error(false)
+	m_uniformLocations(),
+	m_vertexShaderAttached(false),
+	m_fragmentShaderAttached(false),
+	m_isDirty(false),
+	m_isLinked(false)
 {
-	//link it if we recieved valid shader objects.
-	if( m_vertex_shader && m_fragment_shader )
-	{
-		if( m_vertex_shader->IsCompiled() && m_fragment_shader->IsCompiled() )
-		{
-			if( !Link() )
-			{
-				Log("Shader Link Error.");
-				Log(GetInfoLog().c_str());
-			}
-		}
-	}
+	SetVertexShader(vertexShader);
+	SetFragmentShader(fragmentShader);
 }
 
 
 void Shader::Dispose()
 {
 	//TODO: these can be shared shaders and should only be destroyed by the resource manager...
-	//m_vertex_shader->Dispose();
-	//m_fragment_shader->Dispose();
+	//m_vertexShader->Dispose();
+	//m_fragmentShader->Dispose();
 
-	if( m_program_object > 0 )
+	if( m_programObject > 0 )
 	{
-		GLboolean isProgram = glIsProgram( m_program_object );
+		GLboolean isProgram = glIsProgram( m_programObject );
 		if( isProgram == GL_TRUE )
-			glDeleteProgram( m_program_object );
+			glDeleteProgram( m_programObject );
 
-		m_program_object = 0;
+		m_programObject = 0;
 	}
 
 	m_infolog.clear();
 }
 
 
-void Shader::SetVertexShader( VertexShader* vertex_shader )
+void Shader::SetVertexShader( VertexShader* vertexShader )
 {
-	//TODO: re-link program
-	m_vertex_shader = vertex_shader;
+	if( m_vertexShader != vertexShader )
+	{
+		if( m_vertexShader != 0 && m_vertexShaderAttached )
+		{
+			glDetachShader( m_programObject, m_vertexShader->GetObject() );
+			m_vertexShaderAttached = false;
+		}
+
+		m_vertexShader = vertexShader;
+		m_isDirty = true;
+	}
 }
 
 
-void Shader::SetFragmentShader( FragmentShader* fragment_shader )
+void Shader::SetFragmentShader( FragmentShader* fragmentShader )
 {
-	m_fragment_shader = fragment_shader;
+	m_fragmentShader = fragmentShader;
+	if( m_fragmentShader != fragmentShader )
+	{
+		if( m_fragmentShader != 0 && m_fragmentShaderAttached )
+		{
+			glDetachShader( m_programObject, m_fragmentShader->GetObject() );
+			m_fragmentShaderAttached = false;
+		}
+
+		m_fragmentShader = fragmentShader;
+		m_isDirty = true;
+	}
 }
 
 
 void Shader::Bind()
 {
-	if( !m_fragment_shader || !m_vertex_shader )
-	{
-		Log("Shader::Begin() error: shader is null.");
+	if( m_isDirty )
+		Link();
+
+	if( !m_isLinked )
 		return;
-	}
 
-	if( m_link_error )
-	{
-		return;
-	}
-
-	if( (!m_linked && !m_link_error) || m_program_object == 0 )
-	{
-		if( m_fragment_shader->IsCompiled() && m_vertex_shader->IsCompiled() )
-		{
-			if( !Link() )
-				return;
-		}
-		else return;
-	}
-
-	glUseProgram( m_program_object );
+	glUseProgram( m_programObject );
 }
 
 
@@ -121,15 +118,15 @@ void Shader::Unbind()
 
 int Shader::GetUniformLocation(const fc::string& name)
 {
-	map_type::iterator it = m_uniform_locations.find(name);
-	if( it != m_uniform_locations.end() )
+	map_type::iterator it = m_uniformLocations.find(name);
+	if( it != m_uniformLocations.end() )
 	{
 		return it->second;
 	}
 
-	int location = glGetUniformLocation( m_program_object, name.c_str() );
+	int location = glGetUniformLocation( m_programObject, name.c_str() );
 	if( location > 0 )
-		m_uniform_locations[ name ] = location;
+		m_uniformLocations[ name ] = location;
 
 	return location;
 }
@@ -141,7 +138,7 @@ bool Shader::GetUniform( const fc::string& name, float* values )
 	if( location < 0 )
 		return false;
 
-	glGetUniformfv( m_program_object, location, values );
+	glGetUniformfv( m_programObject, location, values );
 	return true;
 }
 
@@ -152,7 +149,7 @@ bool Shader::GetUniform( const fc::string& name, int* values )
 	if( location < 0 )
 		return false;
 
-	glGetUniformiv( m_program_object, location, values );
+	glGetUniformiv( m_programObject, location, values );
 	return true;
 }
 
@@ -309,33 +306,34 @@ bool Shader::SetUniformMatrix4fv( const fc::string& name, int count, bool transp
 
 bool Shader::Link()
 {
-	InternalCreateProgramObject();
-	if( !m_fragment_shader || !m_vertex_shader )
-	{
-		Log("Shader::Link() error: shader is null.");
+	if( !m_fragmentShader && !m_vertexShader )
 		return false;
-	}
 
-	m_link_error = false;
-	if( m_linked )
+	m_infolog.clear();
+	InternalCreateProgramObject();
+
+	// attach vertex shader
+	if( m_vertexShader != 0 && m_vertexShader->IsCompiled() )
 	{
-		m_infolog.clear();
-		glDetachShader( m_program_object, m_vertex_shader->GetObject() );
-		glDetachShader( m_program_object, m_fragment_shader->GetObject() );
+		glAttachShader( m_programObject, m_vertexShader->GetObject() );
+		m_vertexShaderAttached = true;
 	}
 
-	glAttachShader( m_program_object, m_vertex_shader->GetObject() );
-	glAttachShader( m_program_object, m_fragment_shader->GetObject() );
-	
-	glLinkProgram( m_program_object );
+	// attach fragment shader
+	if( m_fragmentShader != 0 && m_fragmentShader->IsCompiled() )
+	{
+		glAttachShader( m_programObject, m_fragmentShader->GetObject() );
+		m_fragmentShaderAttached = true;
+	}
 
 	glint status(0);
-	glGetProgramiv( m_program_object, GL_LINK_STATUS, &status );
+	glLinkProgram( m_programObject );
+	glGetProgramiv( m_programObject, GL_LINK_STATUS, &status );
 
-	m_linked = (status == GL_TRUE ? true : false);
-	m_link_error = !m_linked;
+	m_isLinked = (status == GL_TRUE ? true : false);
+	m_isDirty = false;
 
-	return m_linked;
+	return m_isLinked;
 }
 
 
@@ -344,23 +342,31 @@ const fc::string& Shader::GetInfoLog()
 	int infolog_length(0);
 	int length(0);
 
-	if( m_program_object > 0 && m_infolog.empty() && glIsProgram(m_program_object) )
+	if( m_programObject > 0 && m_infolog.empty() && glIsProgram(m_programObject) )
 	{
-		glGetProgramiv( m_program_object, GL_INFO_LOG_LENGTH, &length );
+		glGetProgramiv( m_programObject, GL_INFO_LOG_LENGTH, &length );
 		m_infolog.resize( length );
 
-		glGetProgramInfoLog( m_program_object, length, &infolog_length, &m_infolog[0] );
+		glGetProgramInfoLog( m_programObject, length, &infolog_length, &m_infolog[0] );
 	}
 
 	return m_infolog;
 }
 
 
+int Shader::GetMaxTextureUnits()
+{
+	int maxTextureUnits;
+	glGetIntegerv(GL_MAX_TEXTURE_COORDS_ARB, &maxTextureUnits);
+	return maxTextureUnits;
+}
+
+
 void Shader::InternalCreateProgramObject()
 {
-	if( m_program_object == 0 )
+	if( m_programObject == 0 )
 	{
-		m_program_object = glCreateProgram();
+		m_programObject = glCreateProgram();
 	}
 }
 

@@ -20,7 +20,10 @@
 
 #include "../Common.h"
 
-
+/**
+ * High performance timer class.
+ * -uses timer_lib under the hood for portability.
+ */
 class CE_API Timer
 {
 public:
