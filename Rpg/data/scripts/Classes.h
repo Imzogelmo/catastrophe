@@ -53,7 +53,7 @@ class Fighter : LightWarrior
 {
 	Fighter()
 	{
-		SetStartingStats( 35, 0, 20, 5, 1, 5, 5, 10, 10 );
+		//SetStartingStats( 35, 0, 20, 5, 1, 5, 5, 10, 10 );
 	}
 
 	bool LevelUp()
@@ -67,7 +67,7 @@ class Thief : LightWarrior
 {
 	Thief()
 	{
-		SetStartingStats( 30, 0, 5, 10, 5, 5, 15, 5, 15 );
+		//SetStartingStats( 30, 0, 5, 10, 5, 5, 15, 5, 15 );
 	}
 
 	bool LevelUp()
@@ -81,7 +81,7 @@ class BlackBelt : LightWarrior
 {
 	BlackBelt()
 	{
-		SetStartingStats( 33, 0, 5, 5, 5, 20, 5, 5, 10 );
+		//SetStartingStats( 33, 0, 5, 5, 5, 20, 5, 5, 10 );
 	}
 
 	bool LevelUp()
@@ -95,7 +95,7 @@ class RedMage : LightWarrior
 {
 	RedMage()
 	{
-		SetStartingStats( 30, 10, 10, 10, 10, 5, 5, 7, 20 );
+		//SetStartingStats( 30, 10, 10, 10, 10, 5, 5, 7, 20 );
 	}
 
 	bool LevelUp()
@@ -109,7 +109,7 @@ class WhiteMage : LightWarrior
 {
 	WhiteMage()
 	{
-		SetStartingStats( 28, 10, 5, 5, 15, 10, 5, 5, 25 );
+		//SetStartingStats( 28, 10, 5, 5, 15, 10, 5, 5, 25 );
 	}
 
 	bool LevelUp()
@@ -123,7 +123,7 @@ class BlackMage : LightWarrior
 {
 	BlackMage()
 	{
-		SetStartingStats( 25, 10, 1, 10, 20, 1, 10, 5, 25 );
+		//SetStartingStats( 25, 10, 1, 10, 20, 1, 10, 5, 25 );
 	}
 
 	bool LevelUp()
@@ -137,7 +137,7 @@ class BlueMage : LightWarrior
 {
 	BlueMage()
 	{
-		SetStartingStats( 30, 10, 5, 5, 10, 5, 5, 5, 20 );
+		//SetStartingStats( 30, 10, 5, 5, 10, 5, 5, 5, 20 );
 	}
 
 	void LearnEnemySkill()

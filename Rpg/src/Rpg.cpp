@@ -207,16 +207,8 @@ int main(int argc, char* argv[])
 	Database* db = GetDatabase();
 	db->DeserializeAllDataXml();
 	gd->InitializeFromDatabase(GetDatabase());
-
-	foreachi(i,10){
-		gd->AddCharacterActor(i);
-	}
-	foreachi(i,10){
-		gd->AddCharacterActor(i);
-	}
-
-	gd->GetActiveParty()->SetMaxActivePartySize(32);
-	foreachi(i,32){
+	//gd->GetActiveParty()->SetMaxActivePartySize(32);
+	foreachi(i,4){
 		gd->GetActiveParty()->AddMember(i);
 	}
 

@@ -304,6 +304,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Resource\SpriteAsset.inl"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Resource\TextureAsset.inl"
 					>
 				</File>
@@ -435,6 +439,10 @@
 				</File>
 				<File
 					RelativePath=".\include\Spell.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\SpriteAsset.h"
 					>
 				</File>
 				<File

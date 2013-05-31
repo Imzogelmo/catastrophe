@@ -137,6 +137,13 @@ class Character : public Combatant
 	}
 
 
+	//todo
+	void Attack(){}
+	void Defend(){}
+	void Spell(){}
+	void Item(){}
+	void Escape(){}
+
 };
 
 

@@ -13,12 +13,12 @@
 #include <Catastrophe/IO/XmlWriter.h>
 #include <Catastrophe/IO/XmlReader.h>
 #include "BattleCommand.h"
-#include "Serialization.h"
 
 
 
 BattleCommand::BattleCommand() :
 	id(0),
+	type(0),
 	flags(0)
 {
 }
@@ -28,8 +28,9 @@ void BattleCommand::SerializeXml( XmlWriter* xml )
 {
 	xml->SetString("name", name.c_str());
 	xml->SetString("description", description.c_str());
-
 	xml->SetInt("id", id);
+	xml->SetInt("type", type);
+	xml->SetInt("flags", flags);
 
 }
 
@@ -38,8 +39,9 @@ void BattleCommand::DeserializeXml( XmlReader* xml )
 {
 	name = xml->GetString("name");
 	description = xml->GetString("description");
-
 	id = xml->GetInt("id");
+	type = xml->GetInt("type");
+	flags = xml->GetInt("flags");
 
 }
 

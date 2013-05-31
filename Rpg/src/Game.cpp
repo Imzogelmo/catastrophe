@@ -100,10 +100,10 @@ void Game::Update()
 	{
 		// TEST ONLY
 		Battle* b = new Battle();
-		b->CreateFromMonsterTroopId(238);
+	/*	b->CreateFromMonsterTroopId(238);
 		b->AddMonsterTroopId(244);
 		b->AddMonsterTroopId(242);
-		b->AddMonsterTroopId(240);
+		b->AddMonsterTroopId(240);*/
 		b->AddMonsterTroopId(4);
 
 		BattleScreen* bs = new BattleScreen();
