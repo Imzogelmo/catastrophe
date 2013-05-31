@@ -25,6 +25,7 @@
 #include "MapManager.inl"
 
 #include "TextureAsset.inl"
+#include "SpriteAsset.inl"
 #include "AnimatedSpriteAsset.inl"
 #include "AnimatedSpriteSetAsset.inl"
 

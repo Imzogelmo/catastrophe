@@ -12,22 +12,25 @@
 #pragma once
 
 #include <fc/string.h>
+#include <Catastrophe/Graphics/Sprite.h>
+
 #include "RpgCommon.h"
+#include "TextureAsset.h"
 
 
-struct BattleCommand
+class RPG_API SpriteAsset : public Sprite, public TextureAsset
 {
-	fc::string	name;
-	fc::string	description;
-	int			id;
-	int			type;
-	int			flags;
+public:
+	SpriteAsset();
 
-	BattleCommand();
+	bool LoadSprite( Sprite& SpriteRef );
+	void ReleaseSprite();
 
 	void SerializeXml( XmlWriter* xml );
 	void DeserializeXml( XmlReader* xml );
 
 };
+
+
 
 
