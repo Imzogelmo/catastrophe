@@ -40,17 +40,17 @@ public:
 	void SetVertexShader( VertexShader* vertex_shader );
 	void SetFragmentShader( FragmentShader* fragment_shader );
 
-	VertexShader* GetVertexShader() const { return m_vertex_shader; }
-	FragmentShader* GetFragmentShader() const { return m_fragment_shader; }
+	VertexShader* GetVertexShader() const { return m_vertexShader; }
+	FragmentShader* GetFragmentShader() const { return m_fragmentShader; }
 
 	void Bind();
 	void Unbind();
 
 	bool Link();
-	bool IsLinked() const { return m_linked; }
-	bool IsLinkError() const { return m_link_error; }
-	const fc::string& GetInfoLog();
+	bool IsLinked() const { return m_isLinked; }
+	bool IsDirty() const { return m_isDirty; }
 
+	const fc::string& GetInfoLog();
 	int GetUniformLocation(const fc::string& name);
 
 	bool GetUniform( const fc::string& name, float* values );
@@ -72,16 +72,20 @@ public:
 	bool SetUniformMatrix3fv( const fc::string& name, int count, bool transpose, const float* m );
 	bool SetUniformMatrix4fv( const fc::string& name, int count, bool transpose, const float* m );
 
+	static int GetMaxTextureUnits();
+
 protected:
 	void InternalCreateProgramObject();
 
-	VertexShader*	m_vertex_shader;
-	FragmentShader*	m_fragment_shader;
-	gluint			m_program_object;
+	VertexShader*	m_vertexShader;
+	FragmentShader*	m_fragmentShader;
+	gluint			m_programObject;
 	fc::string		m_infolog;
-	map_type		m_uniform_locations;
-	bool			m_linked;
-	bool			m_link_error;
+	map_type		m_uniformLocations;
+	bool			m_vertexShaderAttached;
+	bool			m_fragmentShaderAttached;
+	bool			m_isDirty;
+	bool			m_isLinked;
 };
 
 

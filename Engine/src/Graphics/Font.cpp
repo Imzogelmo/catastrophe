@@ -306,7 +306,7 @@ int Font::LoadFromFile( const fc::string& filename, int faceSize, int dpi )
 
 	// todo: make this optional.
 	//m_texture.SetMagFilter( 0x2601 );
-	if( !m_texture.CreateTexture( pixels.data(), tWidth, tHeight ) )
+	if( !m_texture.CreateFromData( pixels.data(), tWidth, tHeight ) )
 		return -12;
 
 	FT_Done_Face( face );
@@ -319,7 +319,7 @@ int Font::InternalLoadGenericBitmapFont( const fc::string& filename, int startCo
 	// generic bitmap fonts contain no font metrics and
 	// are basically a bunch of rectangles inside a bitmap.
 
-	m_texture.SetMagFilter( 0x2601 );
+	m_texture.SetFilterMode( 0x2601 );
 	if( !m_texture.LoadFromFile(filename) )
 		return -1;
 

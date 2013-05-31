@@ -28,29 +28,30 @@
 CE_NAMESPACE_BEGIN
 
 
-class CE_API Image //TODO: should inherit from Texture...
+class CE_API Image : public Texture
 {
 public:
 	typedef fc::dynamic_array2d<Color> array_type;
 
 	Image();
-	Image( int width, int height, const ubyte *const data = 0, int wrapmode = 0, int minfilter = 0, int magfilter = 0, bool mipmapping = false );
+	Image( const fc::string& filename );
+	Image( int w, int h, int filterMode, int wrapMode, const void *const data );
 	~Image();
+
+	void Dispose();
+	bool CreateFromData( const void* data, int w, int h );
+	bool LoadFromFile( const fc::string& filename );
+	bool SaveToFile( const fc::string& filename );
 
 	void SetPixelArray( const array_type& pixelData );
 	void CopyPixelArray( array_type& outPixelData );
+
+	bool GetPixels( ubyte* ) const;
+	array_type& GetPixelArray() { return m_pixels; }
 	const array_type& GetPixelArray() const { return m_pixels; }
 	const Color* GetPixelData() const { return m_pixels.data(); }
 
-	void CreateFromPixels( int width, int height, const ubyte *const data = 0, int wrapmode = 0, int minfilter = 0, int magfilter = 0, bool mipmapping = false );
-
-	size_t Width() const { return m_pixels.x(); }
-	size_t Height() const { return m_pixels.y(); }
 	size_t Size() const { return m_pixels.size(); }
-
-	const Texture& GetTexture() const { return m_texture; }
-	gluint GetTextureID() const { return m_texture.GetTextureID(); }
-
 	Color GetPixel( size_t x, size_t y ) const;
 
 	void SetPixel( size_t x, size_t y, const Color& pixel );
@@ -66,16 +67,12 @@ public:
 	void SwapColor( size_t firstColorIndex, size_t secondColorIndex );
 	void SwapColorRegion( size_t firstColorIndex, size_t secondColorIndex, const Rect& subrect );
 
-	Rectf GetUVRect( const Rect& subrect );
-	
 	void Update();
 	void UpdateRegion( const Rect& subrect );
-	void Dispose();
 
 protected:
 	void InternalPackPixels( int width, int height, const ubyte *const data );
 
-	Texture		m_texture;
 	array_type	m_pixels;
 
 };
