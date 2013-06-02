@@ -21,6 +21,7 @@ ScriptClass::ScriptClass( ContextPool* contextPool ) :
 	m_object(0),
 	m_objectType(0),
 	m_function(0),
+	m_factory(0),
 	m_suspend(0),
 	m_script_status(0),
 	m_destroyed(false),
@@ -123,6 +124,7 @@ asIScriptObject* ScriptClass::CreateScriptObject()
 	}
 	else
 	{
+		Log("Warning: ScriptClass::CreateScriptObject() : m_factory was null.");
 		m_object = (asIScriptObject*)m_contextPool->GetScriptEngine()->CreateScriptObject(m_objectType->GetTypeId());
 	}
 

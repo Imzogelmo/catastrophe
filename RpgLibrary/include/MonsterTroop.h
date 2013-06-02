@@ -41,6 +41,7 @@ struct RPG_API MonsterTroop
 
 	fc::fixed_string128 name; //this is editor only....
 	vec_type	groups;
+	int			max_monsters;
 	int			id;
 
 	MonsterTroop();

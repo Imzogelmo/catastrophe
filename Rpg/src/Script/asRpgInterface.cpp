@@ -32,6 +32,28 @@
 #include "Combatant.h"
 
 
+/*
+void ScriptEngine::RegisterAttributeFlags()
+{
+	int r;
+	using namespace script;
+	REGISTER_OBJECT_TYPE("attributes", sizeof(AttributeFlags), asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS_CA); assert( r >= 0 );
+	
+	// operator overloads
+	r = engine->RegisterObjectMethod( "rect", "rect &opAssign(const rect &in)", asMETHODPR(Rect, operator =, (const Rect&), Rect&), asCALL_THISCALL); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( "rect", "rect &opAssign(int)", asMETHODPR(Rect, operator =, (const Rect&), Rect&), asCALL_THISCALL); assert( r >= 0 );
+
+	r = engine->RegisterObjectMethod( "rect", "bool get(int)", asMETHODPR(Flags32, operator [], (size_t), bool), asCALL_THISCALL); assert( r >= 0 );
+	r = engine->RegisterObjectMethod( "rect", "bool set(int)", asMETHODPR(Flags32, operator [], (size_t), bool), asCALL_THISCALL); assert( r >= 0 );
+
+	// Register the constructors
+	r = engine->RegisterObjectBehaviour( "point", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(PointDefaultConstructor), asCALL_CDECL_OBJLAST); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour( "point", asBEHAVE_CONSTRUCT, "void f(const point &in)", asFUNCTION(ValueCopyConstruct<Point>), asCALL_CDECL_OBJLAST); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour( "point", asBEHAVE_CONSTRUCT, "void f(int, int)", asFUNCTION(ValueInitConstruct_2Arg<Point, int>), asCALL_CDECL_OBJLAST); assert( r >= 0 );
+
+}
+*/
+
 namespace script
 {
 
@@ -53,6 +75,7 @@ namespace script
 	#define CLAMP_INDEX(x,y) \
 		if(FC_UNLIKELY(x >= y)) { x = 0; LogDebug("Attribute index out of range."); }
 
+	// attribute get
 	int AttributesGetMaxParam( size_t index, Attributes* self )
 	{
 		CLAMP_INDEX(index, MAX_PARAMS);
@@ -84,6 +107,7 @@ namespace script
 	}
 
 
+	// attribute set
 	void AttributesSetMaxParam( size_t index, int value, Attributes* self )
 	{
 		CLAMP_INDEX(index, MAX_PARAMS);

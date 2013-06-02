@@ -290,17 +290,8 @@ class Combatant : IGameEntity
 
 
 
-
-
-
-
-
-
-
-
-
 	//////////////////////////////////////////
-	/*
+
 	vec2 pos
 	{
 		get const
@@ -312,85 +303,13 @@ class Combatant : IGameEntity
 			self.pos = value;
 		}
 	}
-	*/
 
-	vec2& get_pos()
-	{
-		return self.pos;
-	}
-
-	void set_pos(const vec2& v)
-	{
-		self.pos = v;
-	}
 
 	vec2 GetCenter()
 	{
 		return self.pos + self.spriteset.size / 2.f;
 	}
 
-
-	void update()
-	{
-		wait(); //testing
-		pos.x = 8.f;
-	}
-
-};
-
-
-
-
-class Character : public Combatant
-{
-	Character()
-	{
-		super();
-	}
-
-};
-
-
-int vary3 = 0;
-
-class Monster : public Combatant
-{
-	Monster()
-	{
-		super();
-		self.pos.x = rand(0,150) + rand(1) + vary3;
-		self.pos.y = rand(0,190) + rand(1);
-		print("position set! x=" + self.pos.x + " y=" + self.pos.y);
-		vary3 += 4;
-	}
-
-	void update()
-	{
-		wait();
-	}
-
-};
-
-
-int vary = 0;
-
-class Fighter : public Character
-{
-	Fighter()
-	{
-		super();
-		self.pos.x = rand(160,240);
-		self.pos.y = rand(0,210);
-		//self.pos.x = 180.f + (vary * 8.f);
-		//self.pos.y = 64.f + (vary * 32.f);
-		print("position set! x=" + self.pos.x + " y=" + self.pos.y);
-		vary++;
-	}
-
-	void update()
-	{
-		wait();
-	}
 
 };
 

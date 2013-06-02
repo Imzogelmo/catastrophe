@@ -23,20 +23,23 @@
 #include "TextureManager.inl"
 #include "TilesetManager.inl"
 #include "MapManager.inl"
+#include "ShaderObjectManager.inl"
 
 #include "TextureAsset.inl"
 #include "SpriteAsset.inl"
 #include "AnimatedSpriteAsset.inl"
 #include "AnimatedSpriteSetAsset.inl"
+#include "ShaderAsset.inl"
 
 #include "SerializeObject.inl"
 #include "DeserializeObject.inl"
 
 
-ResourceDirectory*	g_resourceDirectory = 0;
-TextureManager*		g_textureManager = 0;
-TilesetManager*		g_tilesetManager = 0;
-MapManager*			g_mapManager = 0;
+ResourceDirectory*		g_resourceDirectory = 0;
+TextureManager*			g_textureManager = 0;
+TilesetManager*			g_tilesetManager = 0;
+MapManager*				g_mapManager = 0;
+ShaderObjectManager*	g_shaderObjectManager = 0;
 
 
 
@@ -46,6 +49,7 @@ void RpgLibInit()
 	g_textureManager = new TextureManager();
 	g_tilesetManager = new TilesetManager();
 	g_mapManager = new MapManager();
+	g_shaderObjectManager = new ShaderObjectManager();
 }
 
 
@@ -55,6 +59,7 @@ void RpgLibShutdown()
 	delete g_textureManager;
 	delete g_tilesetManager;
 	delete g_mapManager;
+	delete g_shaderObjectManager;
 }
 
 
