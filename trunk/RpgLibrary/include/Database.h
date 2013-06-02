@@ -40,8 +40,10 @@
 #include "Enhancement.h"
 #include "Synthesis.h"
 
+#include "SpriteAsset.h"
 #include "AnimatedSpriteAsset.h"
 #include "AnimatedSpriteSetAsset.h"
+#include "ShaderAsset.h"
 
 
 
@@ -58,7 +60,7 @@ public:
 
 	DataArray();
 
-	/// Generate a unique id forr each item in array.
+	/// Generate a unique id for each item in array.
 	void GenerateIds();
 
 	void SetResourceDirectory( ResourceDirectory* resourceDirectory )
@@ -112,10 +114,12 @@ public:
 	DataArray<CharacterClass>	character_classes;
 	DataArray<Race>				races;
 
+	DataArray<SpriteAsset>				character_portrait_sprites;
 	DataArray<AnimatedSpriteSetAsset>	character_map_sprites;
 	DataArray<AnimatedSpriteSetAsset>	character_battle_sprites;
 	DataArray<AnimatedSpriteSetAsset>	monster_map_sprites;
 	DataArray<AnimatedSpriteSetAsset>	monster_battle_sprites;
+	DataArray<ShaderAsset>				shaders;
 
 	//todo:
 	//player/npc sprites
@@ -165,6 +169,15 @@ public:
 		return (size_t)id < arr.size() ? &arr[id] : (T*)0;
 	}
 
+	/// Linear lookup of data by name. If the name is not found it will return null.
+	template <class T> static inline T* GetArrayContentByName( DataArray<T>& arr, const fc::string& name ) {
+		for( size_t i(0); i < arr.size(); ++i )
+			if( arr[i].GetName() == name )
+				return &arr[i];
+
+		return (T*)0;
+	}
+
 	/// Generate IDs from a DataArray. (Types must have an 'int id' property.)
 	template <class T> static void GenerateIds( T& arr );
 
@@ -174,6 +187,7 @@ public:
 	EncounterGroup*	GetEncounterGroup( int id ) { return GetArrayContent<EncounterGroup>(encounters, id); }
 	*/
 
+	// Lookup by id
 	inline Item*				GetItem(int id) { return GetArrayContent<Item>(items, id); }
 	inline Item*				GetWeapon(int id) { return GetArrayContent<EquipmentItem>(weapons, id); }
 	inline Item*				GetArmor(int id) { return GetArrayContent<EquipmentItem>(armor, id); }
@@ -185,10 +199,15 @@ public:
 	inline CharacterClass*		GetCharacterClass(int id) { return GetArrayContent<CharacterClass>(character_classes, id); }
 	inline Race*				GetRace(int id) { return GetArrayContent<Race>(races, id); }
 
-	inline AnimatedSpriteSetAsset* GetCharacterMapSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(character_map_sprites, id); }
-	inline AnimatedSpriteSetAsset* GetCharacterBattleSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(character_battle_sprites, id); }
-	inline AnimatedSpriteSetAsset* GetMonsterMapSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(monster_map_sprites, id); }
-	inline AnimatedSpriteSetAsset* GetMonsterBattleSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(monster_battle_sprites, id); }
+	inline SpriteAsset*				GetCharacterPortraitSpriteAsset(int id) { return GetArrayContent<SpriteAsset>(character_portrait_sprites, id); }
+	inline AnimatedSpriteSetAsset*	GetCharacterMapSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(character_map_sprites, id); }
+	inline AnimatedSpriteSetAsset*	GetCharacterBattleSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(character_battle_sprites, id); }
+	inline AnimatedSpriteSetAsset*	GetMonsterMapSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(monster_map_sprites, id); }
+	inline AnimatedSpriteSetAsset*	GetMonsterBattleSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(monster_battle_sprites, id); }
+	inline ShaderAsset*				GetShaderAsset(int id) { return GetArrayContent<ShaderAsset>(shaders, id); }
+
+	// Lookup by name
+	inline ShaderAsset*				GetShaderAsset(const fc::string& name) { return GetArrayContentByName<ShaderAsset>(shaders, name); }
 
 private:
 	ResourceDirectory*	m_resourceDirectory;
@@ -227,7 +246,7 @@ DataArray<T>::DataArray() : base_type(),
 		filename(),
 		root_name(0),
 		item_name(0),
-		resource_directory(0),
+		resource_directory(0)
 {
 }
 
@@ -267,9 +286,25 @@ DataArray<Race>::DataArray() : base_type(), filename(), root_name(0), item_name(
 }
 
 template <> inline
+DataArray<SpriteAsset>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
+	SetNodeNames("SpriteList", "Sprite");
+}
+
+template <> inline
+DataArray<AnimatedSpriteAsset>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
+	SetNodeNames("AnimatedSpriteList", "AnimatedSprite");
+}
+
+template <> inline
 DataArray<AnimatedSpriteSetAsset>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
 	SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet");
 }
+
+template <> inline
+DataArray<ShaderAsset>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
+	SetNodeNames("ShaderList", "Shader");
+}
+
 
 
 template <class T> inline

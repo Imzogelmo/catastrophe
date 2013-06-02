@@ -54,11 +54,22 @@ enum PlayerAnimationState
 	//dead
 };
 
+#define ACTION_PREPARE	0
+#define ACTION_ADVANCE	1
+#define ACTION_EXECUTE	2
+#define ACTION_RETURN	3
+#define ACTION_COMPLETE	4
+
 
 //something like this
 class CombatActionState
 {
-	int state = 0;
+	int state;
+
+	CombatActionState()
+	{
+		state = 0;
+	}
 
 	bool IsFinished() const
 	{
@@ -111,7 +122,7 @@ class Character : public Combatant
 
 	Character()
 	{
-		state = ps_IDLE;
+		//state = ps_IDLE;
 	}
 
 	void run()
@@ -125,14 +136,14 @@ class Character : public Combatant
 
 	void MoveToHomePosition( float speed = 2f )
 	{
-		vec2 dist = vec2(pos - home).abs();
+		vec2 dist = vec2(self.pos - home).abs();
 		if( dist.x < speed && dist.y < speed )
 		{
-			pos = home;
+			self.pos = home;
 		}
 		else
 		{
-			pos += pos.direction(home) * speed;
+			//pos += pos.direction(home) * speed;
 		}
 	}
 
@@ -148,7 +159,4 @@ class Character : public Combatant
 
 
 
-
-
-};
 

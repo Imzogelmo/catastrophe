@@ -16,62 +16,39 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "Gui/Icon.h"
-#include "Graphics/SpriteBatch.h"
+#pragma once
+
+#include "Widget.h"
+#include "Icon.h"
 
 CE_NAMESPACE_BEGIN
 
 
-Icon::Icon() :
-	Widget()
+class BackgroundImage : public Icon
 {
-}
+public:
 
+	enum Corners
+	{
+		TOP_LEFT,
+		BOTTOM_LEFT,
+		BOTTOM_RIGHT,
+		TOP_RIGHT,
+		MAX_CORNERS
+	};
 
-void Icon::Render( SpriteBatch* spritebatch )
-{
-	if( !m_sprite.GetTexture() )
-		return;
+	BackgroundImage();
 
-	spritebatch->DrawSprite(m_sprite, GetScreenPosition());
+	void SetCornerColor( int corner, const Color& color );
+	Color GetCornerColor( int corner ) const;
 
-	// render children
-	Widget::Render(spritebatch);
-}
+	virtual void Update();
+	virtual void Render( SpriteBatch* spritebatch );
 
+protected:
+	Color	m_cornerColors[MAX_CORNERS];
 
-
-
-AnimatedIcon::AnimatedIcon() :
-	Widget()
-{
-}
-
-
-void AnimatedIcon::Update()
-{
-	m_sprite.Update();
-
-	// update children
-	Widget::Update();
-}
-
-
-void AnimatedIcon::Render( SpriteBatch* spritebatch )
-{
-	if( !m_sprite.GetTexture() )
-		return;
-
-	spritebatch->DrawAnimatedSprite(m_sprite, GetScreenPosition());
-
-	// render children
-	Widget::Render(spritebatch);
-}
-
-
-
+};
 
 
 CE_NAMESPACE_END
-
-

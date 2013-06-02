@@ -16,53 +16,71 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "Gui/Icon.h"
+#include "Gui/BackgroundImage.h"
 #include "Graphics/SpriteBatch.h"
 
 CE_NAMESPACE_BEGIN
 
 
-Icon::Icon() :
-	Widget()
+
+BackgroundImage::BackgroundImage() :
+	Icon()
 {
+	for( int i(0); i < MAX_CORNERS; ++i )
+		m_cornerColors[i] = Color::White();
 }
 
 
-void Icon::Render( SpriteBatch* spritebatch )
+void BackgroundImage::SetCornerColor( int corner, const Color& color )
 {
-	if( !m_sprite.GetTexture() )
-		return;
-
-	spritebatch->DrawSprite(m_sprite, GetScreenPosition());
-
-	// render children
-	Widget::Render(spritebatch);
+	if( corner < MAX_CORNERS )
+		m_cornerColors[corner] = color;
 }
 
 
-
-
-AnimatedIcon::AnimatedIcon() :
-	Widget()
+Color BackgroundImage::GetCornerColor( int corner ) const
 {
+	if( corner < MAX_CORNERS )
+		return m_cornerColors[corner];
+
+	return Color::White();
 }
 
 
-void AnimatedIcon::Update()
+void BackgroundImage::Update()
 {
-	m_sprite.Update();
-
 	// update children
-	Widget::Update();
+	Icon::Update();
 }
 
 
-void AnimatedIcon::Render( SpriteBatch* spritebatch )
+void BackgroundImage::Render( SpriteBatch* spritebatch )
 {
 	if( !m_sprite.GetTexture() )
 		return;
 
-	spritebatch->DrawAnimatedSprite(m_sprite, GetScreenPosition());
+	Vector2 minPos = GetScreenPosition();
+	Vector2 maxPos = minPos + m_sprite.size;
+
+	Vector2 vtx[4];
+	vtx[0] = minPos;
+	vtx[1] = Vector2(minPos.x, maxPos.y);
+	vtx[2] = maxPos;
+	vtx[3] = Vector2(maxPos.x, minPos.y);
+
+	Vector2 uv[4];
+	m_sprite.GetUVRect().GetCorners(uv);
+
+	spritebatch->DrawRotatedScaled(
+		m_sprite.GetTextureID(),
+		m_sprite.angle,
+		m_sprite.scale,
+		minPos + (m_sprite.size * 0.5f),
+		vtx,
+		uv,
+		m_cornerColors,
+		1
+	);
 
 	// render children
 	Widget::Render(spritebatch);

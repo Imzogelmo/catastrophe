@@ -304,6 +304,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Resource\ShaderAsset.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Resource\ShaderObjectManager.inl"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Resource\SpriteAsset.inl"
 					>
 				</File>
@@ -511,6 +519,14 @@
 				</File>
 				<File
 					RelativePath=".\include\Serialization.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\ShaderAsset.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\ShaderObjectManager.h"
 					>
 				</File>
 				<File

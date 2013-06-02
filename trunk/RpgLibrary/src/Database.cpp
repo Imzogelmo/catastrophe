@@ -71,10 +71,14 @@ void Database::Initialize()
 	character_classes.SetResourceDirectory(m_resourceDirectory);
 	races.SetResourceDirectory(m_resourceDirectory);
 
+
+	character_portrait_sprites.SetResourceDirectory(m_resourceDirectory);
 	character_map_sprites.SetResourceDirectory(m_resourceDirectory);
 	character_battle_sprites.SetResourceDirectory(m_resourceDirectory);
 	monster_map_sprites.SetResourceDirectory(m_resourceDirectory);
 	monster_battle_sprites.SetResourceDirectory(m_resourceDirectory);
+	shaders.SetResourceDirectory(m_resourceDirectory);
+
 }
 
 
@@ -92,10 +96,12 @@ void Database::ClearAll()
 	races.clear();
 
 
+	character_portrait_sprites.clear();
 	character_map_sprites.clear();
 	character_battle_sprites.clear();
 	monster_map_sprites.clear();
 	monster_battle_sprites.clear();
+	shaders.clear();
 
 }
 
@@ -113,10 +119,12 @@ void Database::SetAllDefaultDataArrayFilenames()
 	character_classes.SetFileame("character_classes.xml");
 	races.SetFileame("races.xml");
 
+	character_portrait_sprites.SetFileame("character_portrait_sprites.xml");
 	character_map_sprites.SetFileame("character_map_sprites.xml");
 	character_battle_sprites.SetFileame("character_battle_sprites.xml");
 	monster_map_sprites.SetFileame("monster_map_sprites.xml");
 	monster_battle_sprites.SetFileame("monster_battle_sprites.xml");
+	shaders.SetFileame("shaders.xml");
 
 }
 
@@ -140,10 +148,12 @@ void Database::SetAllDefaultDataArrayNodeNames()
 	character_classes.SetNodeNames("CharacterClassList", "CharacterClass");
 	races.SetNodeNames("RaceList", "Race");
 
+	character_portrait_sprites.SetNodeNames("SpriteList", "Sprite");
 	character_map_sprites.SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet");
 	character_battle_sprites.SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet");
 	monster_map_sprites.SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet");
 	monster_battle_sprites.SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet");
+	shaders.SetNodeNames("ShaderList", "Shader");
 
 }
 
@@ -162,10 +172,12 @@ bool Database::SerializeAllDataXml()
 	races.SerializeXml("");
 
 
+	character_portrait_sprites.SerializeXml("");
 	character_map_sprites.SerializeXml("");
 	character_battle_sprites.SerializeXml("");
 	monster_map_sprites.SerializeXml("");
 	monster_battle_sprites.SerializeXml("");
+	shaders.SerializeXml("");
 
 	return true;
 }
@@ -185,10 +197,12 @@ bool Database::DeserializeAllDataXml()
 	races.DeserializeXml("");
 
 
+	character_portrait_sprites.DeserializeXml("");
 	character_map_sprites.DeserializeXml("");
 	character_battle_sprites.DeserializeXml("");
 	monster_map_sprites.DeserializeXml("");
 	monster_battle_sprites.DeserializeXml("");
+	shaders.DeserializeXml("");
 
 	return true;
 }

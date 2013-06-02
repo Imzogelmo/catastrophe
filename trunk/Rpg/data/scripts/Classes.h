@@ -7,7 +7,7 @@
 #define FIGHTER		0
 #define KNIGHT		1
 #define THIEF		2
-#define NINJA_FLAG	3
+#define NINJA		3
 #define BLACK_BELT	4
 #define MASTER		5
 #define RED_MAGE	6
@@ -49,91 +49,91 @@
 
 
 
-class Fighter : LightWarrior
+class Fighter : Character
 {
 	Fighter()
 	{
 		//SetStartingStats( 35, 0, 20, 5, 1, 5, 5, 10, 10 );
 	}
 
-	bool LevelUp()
+	void LevelUp()
 	{
-		return LevelUpFighter(self.actor);
+		//return LevelUpFighter(self.actor);
 	}
 }
 
 
-class Thief : LightWarrior
+class Thief : Character
 {
 	Thief()
 	{
 		//SetStartingStats( 30, 0, 5, 10, 5, 5, 15, 5, 15 );
 	}
 
-	bool LevelUp()
+	void LevelUp()
 	{
-		return LevelUpThief(self.actor);
+		//return LevelUpThief(self.actor);
 	}
 }
 
 
-class BlackBelt : LightWarrior
+class BlackBelt : Character
 {
 	BlackBelt()
 	{
 		//SetStartingStats( 33, 0, 5, 5, 5, 20, 5, 5, 10 );
 	}
 
-	bool LevelUp()
+	void LevelUp()
 	{
-		return LevelUpBlackBelt(self.actor);
+		//return LevelUpBlackBelt(self.actor);
 	}
 }
 
 
-class RedMage : LightWarrior
+class RedMage : Character
 {
 	RedMage()
 	{
 		//SetStartingStats( 30, 10, 10, 10, 10, 5, 5, 7, 20 );
 	}
 
-	bool LevelUp()
+	void LevelUp()
 	{
-		return LevelUpRedMage(self.actor);
+		//return LevelUpRedMage(self.actor);
 	}
 }
 
 
-class WhiteMage : LightWarrior
+class WhiteMage : Character
 {
 	WhiteMage()
 	{
 		//SetStartingStats( 28, 10, 5, 5, 15, 10, 5, 5, 25 );
 	}
 
-	bool LevelUp()
+	void LevelUp()
 	{
-		return LevelUpWhiteMage(self.actor);
+		//return LevelUpWhiteMage(self.actor);
 	}
 }
 
 
-class BlackMage : LightWarrior
+class BlackMage : Character
 {
 	BlackMage()
 	{
 		//SetStartingStats( 25, 10, 1, 10, 20, 1, 10, 5, 25 );
 	}
 
-	bool LevelUp()
+	void LevelUp()
 	{
-		return LevelUpBlackMage(self.actor);
+		//return LevelUpBlackMage(self.actor);
 	}
 }
 
 
-class BlueMage : LightWarrior
+class BlueMage : Character
 {
 	BlueMage()
 	{
@@ -144,9 +144,9 @@ class BlueMage : LightWarrior
 	{
 	}
 
-	bool LevelUp()
+	void LevelUp()
 	{
-		return LevelUpBlueMage(self.actor);
+		//return LevelUpBlueMage(self.actor);
 	}
 }
 

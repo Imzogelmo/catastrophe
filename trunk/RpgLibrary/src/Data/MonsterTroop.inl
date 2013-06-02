@@ -61,6 +61,7 @@ void MonsterGroup::DeserializeXml( XmlReader* xml )
 
 MonsterTroop::MonsterTroop() :
 	groups(),
+	max_monsters(9),
 	id(0)
 {
 }
@@ -70,6 +71,7 @@ void MonsterTroop::SerializeXml( XmlWriter* xml )
 {
 	xml->SetString("name", name);
 	xml->SetUInt("num_groups", groups.size());
+	//xml->SetInt("max", max_monsters);
 
 	for( vec_type::iterator it = groups.begin(); it < groups.end(); ++it )
 	{
@@ -81,7 +83,8 @@ void MonsterTroop::SerializeXml( XmlWriter* xml )
 void MonsterTroop::DeserializeXml( XmlReader* xml )
 {
 	name = xml->GetString("name");
-	size_t n = xml->GetUInt("num_groups");
+	//max_monsters = xml->GetUInt("max");
+	size_t n = xml->GetInt("num_groups");
 	groups.resize(n);
 
 	bool nested = false;

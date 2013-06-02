@@ -74,6 +74,12 @@ struct ExpCurve;
 template <class T> class DataArray;
 
 //resource
+class TextureAsset;
+class SpriteAsset;
+class AnimatedSpriteAsset;
+class AnimatedSpriteSetAsset;
+class ShaderAsset;
+
 class Database;
 class Resource;
 class ResourceDirectory;
@@ -82,6 +88,7 @@ class ResourceManagerTypeBase;
 class TextureManager;
 class TilesetManager;
 class MapManager;
+class ShaderObjectManager;
 
 
 
@@ -119,6 +126,7 @@ extern ResourceDirectory*	g_resourceDirectory;
 extern TextureManager*		g_textureManager;
 extern TilesetManager*		g_tilesetManager;
 extern MapManager*			g_mapManager;
+extern ShaderObjectManager*	g_shaderObjectManager;
 
 
 void RpgLibInit();
