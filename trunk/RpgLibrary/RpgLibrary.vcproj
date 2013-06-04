@@ -248,6 +248,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Data\Switches.inl"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Data\Synthesis.inl"
 					>
 				</File>
@@ -450,15 +454,15 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\SpriteAsset.h"
-					>
-				</File>
-				<File
 					RelativePath=".\include\StatusEffect.h"
 					>
 				</File>
 				<File
 					RelativePath=".\include\Summon.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Switches.h"
 					>
 				</File>
 				<File
@@ -527,6 +531,10 @@
 				</File>
 				<File
 					RelativePath=".\include\ShaderObjectManager.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\SpriteAsset.h"
 					>
 				</File>
 				<File
