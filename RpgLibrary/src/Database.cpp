@@ -34,6 +34,7 @@
 #include "Shops.inl"
 #include "Enhancement.inl"
 #include "Synthesis.inl"
+#include "Switches.inl"
 
 #include "StringAlias.inl"
 

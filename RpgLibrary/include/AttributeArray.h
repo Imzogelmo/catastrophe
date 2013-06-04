@@ -153,6 +153,15 @@ struct AttributeArray
 		return ret;
 	}
 
+	template <class I> inline
+	void AddAssignIndex(size_t i, I value, I min, I max)
+	{
+		I val = ((I)attribute[i] + value);
+		if( val < min ) val = min;
+		if( val > max ) val = min;
+		attribute[i] = (T)val;
+	}
+
 	template <class I>
 	this_type& AddAssign(const this_type& rhs, I min, I max)
 	{
@@ -181,19 +190,25 @@ struct AttributeArray
 		return *this;
 	}
 
+	template <class I> inline
+	void ApplyPercentageModifierToIndex(size_t i, I value, I min, I max)
+	{
+		if( value != 0 )
+		{
+			float x = ((float)attribute[i] * (1.f + ((float)value / 100.f)));
+			I val = I((x > 0.f) ? (x + 0.5f) : (x - 0.5f));
+			if( val < min ) val = min;
+			if( val > max ) val = min;
+			attribute[i] = (T)val;
+		}
+	}
+
 	template <class I>
 	this_type& ApplyPercentageModifier(const this_type& rhs, I min, I max)
 	{
 		for( size_t i(0); i < m_size; ++i )
 		{
-			if( rhs.attribute[i] != 0 )
-			{
-				float x = ((float)attribute[i] * (1.f + ((float)rhs.attribute[i] / 100.f)));
-				I val = I((x > 0.f) ? (x + 0.5f) : (x - 0.5f))
-				if( val < min ) val = min;
-				if( val > max ) val = min;
-				attribute[i] = (T)val;
-			}
+			ApplyPercentageModifierToIndex(i, (I)rhs.attribute[i], min, max);
 		}
 
 		return *this;

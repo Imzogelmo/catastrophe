@@ -10,11 +10,9 @@
 // GNU General Public License for more details.
 
 #pragma once
-#include <fc/dynamic_array.h>
-
 
 #include <fc/dynamic_array.h>
-//#include <fc/tiny_string.h>
+//#include <fc/fixed_bit_array.h>
 #include <fc/string.h>
 
 #include "RpgCommon.h"
@@ -39,6 +37,7 @@
 #include "Shops.h"
 #include "Enhancement.h"
 #include "Synthesis.h"
+#include "Switches.h"
 
 #include "SpriteAsset.h"
 #include "AnimatedSpriteAsset.h"
@@ -121,6 +120,9 @@ public:
 	DataArray<AnimatedSpriteSetAsset>	monster_battle_sprites;
 	DataArray<ShaderAsset>				shaders;
 
+
+	//extra
+	Switches	switches;
 	//todo:
 	//player/npc sprites
 	//icons (sprites)
