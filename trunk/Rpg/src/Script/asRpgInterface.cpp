@@ -20,6 +20,7 @@
 #include "MonsterData.h"
 #include "CharacterData.h"
 
+#include "Item.h"
 #include "Buff.h"
 #include "Equipment.h"
 

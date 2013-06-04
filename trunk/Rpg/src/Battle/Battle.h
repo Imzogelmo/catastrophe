@@ -24,6 +24,10 @@
 struct BattlePolicy
 {
 	bool can_escape;
+	bool can_lose;
+	bool preemptive;
+	bool ambush;
+	bool back_attack;
 	bool remove_dead_monsters;
 
 	BattlePolicy() :

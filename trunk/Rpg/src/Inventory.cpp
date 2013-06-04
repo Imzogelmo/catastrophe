@@ -12,6 +12,7 @@
 #include <fc/vector.h>
 #include <fc/sort.h>
 
+#include "Item.h"
 #include "Inventory.h"
 
 

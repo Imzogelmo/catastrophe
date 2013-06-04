@@ -32,6 +32,7 @@
 	#define CE_SYSTEM_TYPE			GLFWSystem
 	#define CE_SYSTEM_WINDOW_TYPE	GLFWWindow
 #else
+	// By default, we have to include something.
 	#include "System/GLFWSystem.h"
 	#define CE_SYSTEM_TYPE			GLFWSystem
 	#define CE_SYSTEM_WINDOW_TYPE	GLFWWindow
@@ -158,6 +159,18 @@ void System::InitOpenGL()
 }
 
 
+void System::SetOpenGLVersion( int major, int minor )
+{
+	GetInstance()->m_gl_major_version = major;
+	GetInstance()->m_gl_minor_version = minor;
+}
+
+
+void System::Sleep(int milliseconds)
+{
+	CE_SYSTEM_TYPE* system = (CE_SYSTEM_TYPE*)m_instance;
+	system->Sleep(milliseconds);
+}
 
 
 // Win32 main entry point defined, for portability.

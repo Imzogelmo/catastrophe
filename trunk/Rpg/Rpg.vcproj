@@ -41,6 +41,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\Engine\include;..\RpgLibrary\include;src;src\Screens;src\Entity;src\Battle;src\Script"
+				PreprocessorDefinitions="WIN32;_DEBUG;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -60,6 +61,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="ce-core-d.lib ce-system-d.lib ce-gui-d.lib rpglibd.lib glfwd.lib mcppd.lib angelscriptd.lib freetype.lib glew32sd.lib OpenGL32.lib glu32.lib"
 				AdditionalLibraryDirectories="&quot;../Engine/lib&quot;;&quot;..\RpgLibrary\lib&quot;"
+				IgnoreDefaultLibraryNames="libcmt;libcmtd;libcpmtd;libcpmt"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
@@ -113,6 +115,7 @@
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				AdditionalIncludeDirectories="..\Engine\include;..\RpgLibrary\include;src;src\Screens;src\Entity;src\Battle;src\Script"
+				PreprocessorDefinitions="WIN32;NDEBUG;"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				WarningLevel="3"

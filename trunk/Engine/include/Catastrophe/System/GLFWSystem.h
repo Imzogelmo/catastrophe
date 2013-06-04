@@ -26,6 +26,9 @@ CE_NAMESPACE_BEGIN
 
 class CE_API GLFWSystem : public System
 {
+public:
+	void Sleep( int milliseconds );
+
 protected:
 	bool InternalInit();
 	void InternalTerminate();
@@ -36,17 +39,25 @@ protected:
 class CE_API GLFWWindow : public Window
 {
 public:
+	GFLWWindow();
 	virtual ~GLFWWindow();
 
-	virtual bool Open(int w = 640, int h = 480, bool fullscreen = false, bool resizable = true,
-		int depth_buffer_bits = 8, int stencil_bits = 0, int multisample_level = 0);
+	virtual bool Open(
+			int w = 640,
+			int h = 480,
+			bool fullscreen = false,
+			bool resizable = true,
+			int depth_buffer_bits = 8,
+			int stencil_bits = 0,
+			int multisample_level = 0
+		);
 
 	virtual void Close();
 	virtual double GetTime() const;
 
 	virtual void SetTitle( const fc::string& title );
 	virtual void SetSize( int w, int h );
-	virtual void SetPosition( const Point& size );
+	virtual void SetPosition( const Point& pos );
 
 	virtual void SetVSync( bool vsync = true );
 
@@ -54,7 +65,6 @@ public:
 	virtual Point GetDesktopSize() const;
 	virtual Point GetPosition() const;
 
-	virtual void Sleep( int milliseconds );
 	virtual void Iconify();
 	virtual void Restore();
 	virtual void SetCursorVisible( bool visible = true );

@@ -130,6 +130,7 @@ enum Keys
 };
 
 
+/*
 #ifdef CE_SFML
 //namespace Key
 enum Keys
@@ -239,7 +240,7 @@ enum Keys
 };
 
 #endif //CE_SFML
-
+*/
 
 CE_NAMESPACE_END
 

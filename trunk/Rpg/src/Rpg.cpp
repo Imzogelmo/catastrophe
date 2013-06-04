@@ -256,7 +256,7 @@ int main(int argc, char* argv[])
 		{
 			int tMS = elapsedMS;
 			//Log( "-------------TMS-----------: (%i)", elapsedMS );
-			window->Sleep( (16 - tMS) > 0 ? (16 - tMS) - 1 : 0 );
+			System::Sleep( (16 - tMS) > 0 ? (16 - tMS) - 1 : 0 );
 			elapsedMS = (int)loopTimer.ElapsedMilliseconds();
 		}
 		//Log("frame time: (%0.4f)", float(loopTimer.ElapsedMicroseconds() / 1000.0f));

@@ -19,92 +19,166 @@
 
 #ifdef CE_SFML
 
+#include "System/SFMLSystem.h"
+#include "Input/Input.h"
+
+// we only link to static libs on windows.
+#if defined (WIN32) || defined (_WIN32)
+	#define SFML_STATIC
+#endif
+
 #include <SFML/Window.hpp>
+#include <SFML/System.hpp>
 
 
 #ifdef _MSC_VER
 	#pragma warning ( push )
 	#pragma warning ( disable : 4996 )
+
+	// Link againt standard SFML libraries.
+	#ifdef CE_DEBUG
+		#pragma comment ( lib, "sfml-system-s.lib" )
+		#pragma comment ( lib, "sfml-window-s.lib" )
+	#else
+		#pragma comment ( lib, "sfml-system-s.lib" )
+		#pragma comment ( lib, "sfml-window-s.lib" )
+	#endif
 #endif
 
 
-SFMLSystem::~SFMLSystem()
+CE_NAMESPACE_BEGIN
+
+
+bool SFMLSystem::InternalInit()
 {
+	return true;
+}
+
+
+void SFMLSystem::InternalTerminate()
+{
+}
+
+
+void SFMLSystem::Sleep(int milliseconds)
+{
+	sf::sleep( sf::milliseconds(milliseconds) );
+}
+
+
+
+// Window
+
+SFMLWindow::SFMLWindow() :
+	Window(),
+	m_window(0)
+{
+}
+
+
+SFMLWindow::~SFMLWindow()
+{
+	Close();
 	if(m_window)
 		delete m_window;
 }
 
-void SFMLSystem::CloseWindow()
-{
-	if(m_window && m_window->IsOpen())
-		m_window->Close();
-}
 
-double SFMLSystem::GetTime()
+double SFMLWindow::GetTime() const
 {
 	return 0.0;
 }
 
-void SFMLSystem::SetWindowTitle(const char* title)
+
+Point SFMLWindow::GetSize() const
 {
-	m_window->SetWindowTitle(title);
+	sf::Vector2u size = m_window->getSize();
+	return Point(size.x, size.y);
 }
 
-void SFMLSystem::SetWindowSize(const Point& size)
+
+Point SFMLWindow::GetPosition() const
 {
-	m_window->SetSize( (uint)size.x, (uint)size.y );
+	sf::Vector2u pos = m_window->getSize();
+	return Point(pos.x, pos.y);
 }
 
-Point SFMLSystem::GetWindowSize()
+
+void SFMLWindow::SetVSync( bool vsync )
 {
-	return m_windowSize;
+	m_window->setVerticalSyncEnabled(vsync);
 }
 
-void SFMLSystem::Sleep(int milliseconds)
+
+void SFMLWindow::SetTitle( const fc::string& title )
 {
-	sf::Sleep((float)milliseconds);
+	m_window->setTitle(title.c_str());
 }
 
-void SFMLSystem::Iconify()
+
+void SFMLWindow::SetSize( int x, int y )
+{
+	m_window->setSize( sf::Vector2u(x, y) );
+	m_size = GetSize();
+}
+
+
+void SFMLWindow::SetPosition( const Point& pos )
+{ 
+	m_window->setPosition( sf::Vector2i(pos.x, pos.y) );
+	m_position = GetPosition();
+}
+
+
+void SFMLWindow::Iconify()
 {
 }
 
-void SFMLSystem::Restore()
+
+void SFMLWindow::Restore()
 {
 }
 
-void SFMLSystem::SetCursorVisible(bool visible)
+
+bool SFMLWindow::IsActive() const
 {
+    return true;
 }
 
-void SFMLSystem::Update()
+
+void SFMLWindow::SetCursorVisible(bool visible)
+{
+	m_window->setMouseCursorVisible(visible);
+}
+
+
+void SFMLWindow::Update()
 {
 	sfmlProcessEvents();
 }
 
-void SFMLSystem::SwapBuffers()
+
+void SFMLWindow::SwapBuffers()
 {
-	m_window->SwapBuffers();
+	m_window->display();
 }
 
-bool SFMLSystem::HasFocus() const
+
+bool SFMLWindow::HasFocus() const
 {
 	return m_hasFocus;
 }
 
 
-bool SFMLSystem::CreateWindow(const Point& size, bool fullscreen, bool resizable,
-		const Color& bits, int depth_buffer_bits, int stencil_bits, int multisample_level)
+bool SFMLWindow::Open(int w, int h, bool fullscreen, bool resizable,
+	int depth_buffer_bits, int stencil_bits, int multisample_level)
 {
-	const char* windowTitle	= "Game";
-	uint screenWidth	= (uint)size.x;
-	uint screenHeight	= (uint)size.y;
-	uint colorDepth		= (uint)((bits.r + bits.g + bits.b + bits.a) > 16 ? 32 : 16);
-	uint depthBits		= (uint)depth_buffer_bits;
-	uint stencilBits	= (uint)stencil_bits;
-	uint antialiasLevel = (uint)multisample_level; //"antialias" is actually multisample.
-
-	unsigned long windowStyle = fullscreen ? sf::Style::Fullscreen : sf::Style::Default;
+	size_t screenWidth		= (size_t)w;
+	size_t screenHeight		= (size_t)h;
+	size_t depthBits		= (size_t)depth_buffer_bits;
+	size_t stencilBits		= (size_t)stencil_bits;
+	size_t antialiasLevel	= (size_t)multisample_level;
+	size_t windowStyle		= fullscreen ? sf::Style::Fullscreen : sf::Style::Default;
 
 	if( !m_window )
 	{
@@ -112,82 +186,126 @@ bool SFMLSystem::CreateWindow(const Point& size, bool fullscreen, bool resizable
 	}
 	else
 	{
-		m_window->Close();
+		m_window->close();
 	}
 
-	m_window->Create(
-		sf::VideoMode( screenWidth, screenHeight, colorDepth ),
-		windowTitle, windowStyle,
-		sf::ContextSettings( depthBits, stencilBits, antialiasLevel, 2, 0 )
+	m_window->create(
+		sf::VideoMode( screenWidth, screenHeight, 32 ),
+		m_title.c_str(),
+		windowStyle,
+		sf::ContextSettings( depthBits, stencilBits, antialiasLevel, 2, 1 )
 	);
 
-	if(!m_window->IsOpened())
+	if(!m_window->isOpen())
 	{
 		//fullscreen is probably the lowest common denominator here
 		if(fullscreen)
 		{
 			fullscreen = false;
-			return CreateWindow(size, fullscreen, resizable, bits, depth_buffer_bits, stencil_bits, multisample_level);
+			return Open(w, h, fullscreen, resizable, depth_buffer_bits, stencil_bits, multisample_level);
 		}
 
 		return false;
 	}
 
+	// we don't want key repeat.
+	m_window->setKeyRepeatEnabled(false);
+
+	m_position = GetPosition();
+	m_size = GetSize();
+	m_depth_bits	= m_window->getSettings().depthBits;
+	m_isOpen		= m_window->isOpen();
+	m_hasFocus		= m_isOpen;
+
+	// set up default opengl states
+	InternalResize(m_size);
+	SetOrthographicProjection();
+	SetDefaultOpenGLState();
+
 	return true;
 }
 
 
-void SFMLSystem::sfmlProcessEvents()
+void SFMLWindow::Close()
+{
+	m_window->close();
+	m_isOpen = false;
+}
+
+
+Point SFMLWindow::GetDesktopSize() const
+{
+	sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
+	return Point(desktop.width, desktop.height);
+}
+
+
+void SFMLWindow::sfmlProcessEvents()
 {
 	sf::Event event;
 
-	while(m_window->GetEvent(event))
+	while(m_window->pollEvent(event))
 	{
-		switch( event.Type )
+		switch( event.type )
 		{
 			case sf::Event::Closed:
 			{
-				postQuitMessage = true;
+				SetRequestClose(true);
 				break;
 			}
+
 			case sf::Event::Resized:
 			{
-				ResizeWindow( Point(event.Size.Width, event.Size.Height) );
+				SetSize(event.size.width, event.size.height);
 				break;
 			}
+
 			case sf::Event::LostFocus:
 			{
 				m_hasFocus = false;
 				break;
 			}
+
 			case sf::Event::GainedFocus:
 			{
 				m_hasFocus = true;
 				break;
 			}
 
-			//Key released events
-			case sf::Event::KeyReleased:
-			{
-				Input::SetKeyReleased(event.Key.Code);
-				break;
-			}
-			//Key pressed events
 			case sf::Event::KeyPressed:
 			{
-				Input::SetKeyPressed(event.Key.Code);
+				Input::GetKeyboard()->SetKeyPress(event.key.code);
+				break;
+			}
 
-				switch( event.Key.Code )
-				{
-					// Esc: exit fullscreen
-					case sf::Key::Escape:
-					{
-						postQuitMessage = true;
-						break;
-					}
-					default:
-						break;
-				}
+			case sf::Event::KeyReleased:
+			{
+				Input::GetKeyboard()->SetKeyRelease(event.key.code);
+				break;
+			}
+
+			case sf::Event::MouseWheelMoved:
+			{
+				Mouse* mouse = Input::GetMouse();
+				mouse->SetWheelPos( mouse->GetWheel() + event.mouseWheel.delta );
+				break;
+			}
+
+			case sf::Event::MouseButtonPressed:
+			{
+				Input::GetMouse()->SetButton(event.mouseButton.button, true);
+				break;
+			}
+
+			case sf::Event::MouseButtonReleased:
+			{
+				Input::GetMouse()->SetButton(event.mouseButton.button, false);
+				break;
+			}
+
+			case sf::Event::MouseMoved:
+			{
+				Input::GetMouse()->SetPos( Point(event.mouseMove.x, event.mouseMove.y) );
 				break;
 			}
 
@@ -198,77 +316,80 @@ void SFMLSystem::sfmlProcessEvents()
 
 		if( !m_hasFocus )
 		{
-			sf::Sleep( 1.f / 60.f ); //one frame
+			//sf::Sleep( 1.f / 60.f ); //one frame
 			//todo: need to repaint..
-		}
-
-		if( postQuitMessage )
-		{
-			//request to exit the application granted.
-			return;
 		}
 	}
 }
 
 
-void SFMLSystem::sfmlPollJoystick()
-{
-	const sf::Input * joy = (sf::Input*)*joystickInput;
 
-	for( int i(0); i < 3; ++i )
+/////////////////////////////////////
+//         Joystick
+/////////////////////////////////////
+
+void Joystick::Update()
+{
+	for( int i(0); i < 2; ++i )
 	{
-		_previous_analog[ i ] = _analog[ i ];
+		m_previous_analog[i] = m_analog[i];
 
 		const int axis = (i * 2);
-		_analog[ i ].x = (joy->GetJoystickAxis( _joyNumber, (sf::Joy::Axis)(axis    ) ) / 100.f);
-		_analog[ i ].y = (joy->GetJoystickAxis( _joyNumber, (sf::Joy::Axis)(axis + 1) ) / 100.f);
+		m_analog[i].x = sf::Joystick::getAxisPosition(m_joyNumber, (sf::Joystick::Axis)(axis)) / 100.f;
+		m_analog[i].y = sf::Joystick::getAxisPosition(m_joyNumber, (sf::Joystick::Axis)(axis + 1)) / 100.f;
 	}
 
-	for( uint i(0); i < 12; ++i )
+	for( uint i(0); i < MaxButtons; ++i )
 	{
-		if( joy->IsJoystickButtonDown( _joyNumber, i ) )
+		if( sf::Joystick::isButtonPressed(m_joyNumber, i) )
 		{
-			_button[ i ]++;
-			_buttonReleaseFlags &= ~( (uint)(1 << i) );
+			m_button[ i ]++;
+			m_buttonReleaseFlags &= ~(1 << i);
 		}
 		else
 		{
-			if( _button[ i ] != 0 )
+			if( m_button[i] != 0 )
 			{
-				_button[ i ] = 0;
-				_buttonReleaseFlags |= ( (uint)(1 << i) );
+				m_button[i] = 0;
+				m_buttonReleaseFlags |= (1 << i);
 			}
 		}
 	}
 
-	_pov = (0x00000000);
-	const int joyPov = (int) joy->GetJoystickAxis( _joyNumber, sf::Joy::AxisPOV );
+	float povX = sf::Joystick::getAxisPosition(0, sf::Joystick::PovX);
+	float povY = sf::Joystick::getAxisPosition(0, sf::Joystick::PovY);
 
 	enum _Pov_Directions 
 	{
-		_Up = 0x01, _Right = 0x02, _Down = 0x04, _Left = 0x08
+		POV_UP = 0x01, POV_RIGHT = 0x02, POV_DOWN = 0x04, POV_LEFT = 0x08
 	};
 
-	if( joyPov > 270 || joyPov <  90 )	_pov |= _Up;
-	if( joyPov >   0 && joyPov < 180 )	_pov |= _Right;
-	if( joyPov >  90 && joyPov < 270 )	_pov |= _Down;
-	if( joyPov > 180 )					_pov |= _Left;
+	m_pov = (0x00000000);
+	if( povX < 0.f ) m_pov |= POV_LEFT;
+	else if( povX > 0.f ) m_pov |= POV_RIGHT;
+	if( povY < 0.f ) m_pov |= POV_UP;
+	else if( povY > 0.f ) m_pov |= POV_DOWN;
 
 }
 
+/*
 void Mouse::Poll( const void* const* mouseInput, int wheelParam )
 {
 	const sf::Input* mouse = (sf::Input*)*mouseInput;
 
-	_previous = _pos;
-	_pos.x = mouse->GetMouseX();
-	_pos.y = mouse->GetMouseY();
+	m_previous = m_pos;
+	m_pos.x = mouse->GetMouseX();
+	m_pos.y = mouse->GetMouseY();
 
 	for( int i(0); i < MaxMouseButtons; ++i )
-		_button[ i ] =  mouse->IsMouseButtonDown( (sf::Mouse::Button) i );
+		m_button[ i ] =  mouse->IsMouseButtonDown( (sf::Mouse::Button) i );
 
-	_wheel = wheelParam;
+	m_wheel = wheelParam;
 }
+*/
+
+
+CE_NAMESPACE_END
 
 
 #ifdef _MSC_VER
@@ -276,7 +397,7 @@ void Mouse::Poll( const void* const* mouseInput, int wheelParam )
 #endif
 
 
-#endif
+#endif //CE_SFML
 
 
 
