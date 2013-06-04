@@ -21,37 +21,63 @@
 #include "System.h"
 #include "Window.h"
 
+// forward declare all used sf classes.
+namespace sf { class Window; }
 
-class sf::Window;
+CE_NAMESPACE_BEGIN
 
 
-class CE_API SFMLSystem
+class CE_API SFMLSystem : public System
 {
 public:
-	virtual ~SFMLSystem()
-	{}
+	void Sleep( int milliseconds );
 
-	//virtual bool CreateWindow(const Point& size = Point(640, 480), bool fullscreen = false, bool resizable = true) = 0;
-	bool CreateWindow(const Point& size = Point(640, 480), bool fullscreen = false, bool resizable = true,
-		int depth_buffer_bits = 8, int stencil_bits = 0);
+protected:
+	bool InternalInit();
+	void InternalTerminate();
 
-	void CloseWindow();
-	double GetTime();
+};
 
-	void SetVSync(bool vsync = true);
-	void SetWindowTitle(const char* title);
-	void SetWindowSize(const Point& size);
-	Point GetWindowSize();
 
-	void Sleep(int milliseconds);
-	void Iconify();
-	void Restore();
-	void SetCursorVisible(bool visible = true);
+class CE_API SFMLWindow : public Window
+{
+public:
+	SFMLWindow();
+	virtual ~SFMLWindow();
 
-	void Update();
-	void SwapBuffers();
+	virtual bool Open(
+			int w = 640,
+			int h = 480,
+			bool fullscreen = false,
+			bool resizable = true,
+			int depth_buffer_bits = 8,
+			int stencil_bits = 0,
+			int multisample_level = 0
+		);
 
-	bool HasFocus() const;
+	virtual void Close();
+	virtual double GetTime() const;
+
+	virtual void SetTitle( const fc::string& title );
+	virtual void SetSize( int w, int h );
+	virtual void SetPosition( const Point& pos );
+
+	virtual void SetVSync( bool vsync = true );
+
+	virtual Point GetSize() const;
+	virtual Point GetDesktopSize() const;
+	virtual Point GetPosition() const;
+
+	virtual void Iconify();
+	virtual void Restore();
+	virtual void SetCursorVisible( bool visible = true );
+
+	virtual void Update();
+	virtual void SwapBuffers();
+
+	virtual bool HasFocus() const;
+	virtual bool IsActive() const;
+
 
 protected:
 	void sfmlProcessEvents();
@@ -61,3 +87,4 @@ protected:
 };
 
 
+CE_NAMESPACE_END

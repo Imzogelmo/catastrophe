@@ -12,6 +12,7 @@
 
 #include <fc/math.h>
 #include "InventoryItem.h"
+#include "Item.h"
 
 int InventoryItem::m_defaultMax = 99;
 
@@ -26,7 +27,7 @@ InventoryItem::InventoryItem( Item* item, int amount, int maxAmount ) :
 
 int InventoryItem::Add( int amount )
 {
-	if(amount < 0)
+	if( amount < 0 )
 		return Remove( fc::abs(amount) );
 
 	int num_added = amount;
@@ -42,7 +43,7 @@ int InventoryItem::Add( int amount )
 
 int InventoryItem::Remove( int amount )
 {
-	if(amount < 0)
+	if( amount < 0 )
 		return Add( fc::abs(amount) );
 
 	int num_removed = amount;
@@ -56,6 +57,18 @@ int InventoryItem::Remove( int amount )
 }
 
 
+int InventoryItem::GetItemType() const
+{
+	return m_item ? m_item->type : -1;
+}
+
+
+int InventoryItem::GetItemId() const
+{
+	return m_item ? m_item->id : -1;
+}
+
+
 void InventoryItem::SetItem( Item* item )
 {
 	m_item = item;
@@ -66,17 +79,19 @@ void InventoryItem::SetItem( Item* item )
 
 void InventoryItem::SetAmount( int amount )
 {
-	if(amount < 0)
+	if( amount < 0 )
 		amount = 0;
+
 	m_amount = (amount < m_maxAmount ? amount : m_maxAmount);
 }
 
 
 void InventoryItem::SetMaxAmount( int maxAmount )
 {
-	if(maxAmount < 0)
+	if( maxAmount < 0 )
 		maxAmount = 0;
-	if(m_amount > maxAmount)
+
+	if( m_amount > maxAmount )
 		m_amount = maxAmount;
 
 	m_maxAmount = maxAmount;

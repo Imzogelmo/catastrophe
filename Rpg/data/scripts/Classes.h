@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "Player.h"
+#include "Character.h"
 
 
 #define FIGHTER		0

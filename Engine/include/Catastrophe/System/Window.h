@@ -45,7 +45,8 @@ public:
 
 	virtual void SetTitle( const fc::string& title ) = 0;
 	virtual void SetSize( int w, int h ) = 0;
-	virtual void SetPosition( const Point& size ) = 0;
+	virtual void SetSize( const Point& size ) { SetSize(size.x, size.y); }
+	virtual void SetPosition( const Point& pos ) = 0;
 
 	virtual void SetVSync( bool vsync = true ) = 0;
 
@@ -54,7 +55,6 @@ public:
 	virtual Point GetDesktopSize() const = 0;
 	virtual Point GetPosition() const = 0;
 
-	virtual void Sleep( int milliseconds ) = 0;
 	virtual void Iconify() = 0;
 	virtual void Restore() = 0;
 	virtual void SetCursorVisible( bool visible = true ) = 0;

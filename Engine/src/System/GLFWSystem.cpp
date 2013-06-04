@@ -16,8 +16,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#ifdef CE_GLFW
+
 #include "System/GLFWSystem.h"
-#include "Graphics/OpenGL.h"
 #include "Input/Input.h"
 
 #include <GL/glfw.h>
@@ -33,11 +34,26 @@ bool GLFWSystem::InternalInit()
 	return true;
 }
 
+
 void GLFWSystem::InternalTerminate()
 {
 	glfwTerminate();
 }
 
+
+void GLFWSystem::Sleep( int milliseconds )
+{
+	glfwSleep( (double)milliseconds / 1000.0 );
+}
+
+
+
+// Window
+
+GLFWWindow::GLFWWindow() :
+	Window()
+{
+}
 
 
 GLFWWindow::~GLFWWindow()
@@ -45,35 +61,36 @@ GLFWWindow::~GLFWWindow()
 	Close();
 }
 
+
 double GLFWWindow::GetTime() const
 {
 	return glfwGetTime();
 }
+
 
 Point GLFWWindow::GetSize() const
 {
 	return m_size;
 }
 
+
 Point GLFWWindow::GetPosition() const
 {
 	return m_position;
 }
 
-void GLFWWindow::Sleep( int milliseconds )
-{
-	glfwSleep( (double)milliseconds / 1000.0 );
-}
 
 void GLFWWindow::SetVSync( bool vsync )
 {
 	glfwSwapInterval( vsync ? 1 : 0 );
 }
 
+
 void GLFWWindow::SetTitle( const fc::string& title )
 {
 	glfwSetWindowTitle(title.c_str());
 }
+
 
 void GLFWWindow::SetSize( int w, int h )
 { 
@@ -81,26 +98,31 @@ void GLFWWindow::SetSize( int w, int h )
 	glfwGetWindowSize(&m_size.x, &m_size.y);
 }
 
+
 void GLFWWindow::SetPosition( const Point& pos )
 { 
 	m_position = pos;
 	glfwSetWindowPos(pos.x, pos.y);
 }
 
+
 void GLFWWindow::Iconify()
 {
 	glfwIconifyWindow();
 }
+
 
 void GLFWWindow::Restore()
 {
 	glfwRestoreWindow();
 }
 
+
 bool GLFWWindow::IsActive() const
 {
     return glfwGetWindowParam( GLFW_ACTIVE ) != 0;
 }
+
 
 void GLFWWindow::SetCursorVisible( bool visible )
 {
@@ -114,10 +136,12 @@ void GLFWWindow::SetCursorVisible( bool visible )
 	}
 }
 
+
 void GLFWWindow::SwapBuffers()
 {
 	glfwSwapBuffers();
 }
+
 
 bool GLFWWindow::Open(int w, int h, bool fullscreen, bool resizable,
 	int depth_buffer_bits, int stencil_bits, int multisample_level)
@@ -173,6 +197,7 @@ bool GLFWWindow::Open(int w, int h, bool fullscreen, bool resizable,
 	return true;
 }
 
+
 Point GLFWWindow::GetDesktopSize() const
 {
 	GLFWvidmode desktop;
@@ -181,16 +206,19 @@ Point GLFWWindow::GetDesktopSize() const
 	return Point(desktop.Width, desktop.Height);
 }
 
+
 void GLFWWindow::Close()
 {
 	glfwCloseWindow();
 	m_isOpen = false;
 }
 
+
 void GLFWWindow::Update() 
 {
 	glfwPollEvents();
 }
+
 
 void GLFWWindow::SetCallbacks() 
 {
@@ -203,12 +231,14 @@ void GLFWWindow::SetCallbacks()
 	glfwSetWindowCloseCallback( &glfwWindowCloseCallback );
 }
 
+
 void GLFWWindow::glfwWindowResizeCallback( int width, int height )
 {
 	GLFWWindow* w = (GLFWWindow*)System::GetWindow();
 	w->m_size = Point(width, height);
 	w->InternalResize( Rect(0, 0, width, height) );
 }
+
 
 void GLFWWindow::glfwKeyboardCallback( int key, int action )
 {
@@ -225,10 +255,12 @@ void GLFWWindow::glfwKeyboardCallback( int key, int action )
 	}
 }
 
+
 void GLFWWindow::glfwCharacterCallback( int key, int action )
 {
 	key = action; //todo
 }
+
 
 void GLFWWindow::glfwMousePosCallback( int x, int y )
 {
@@ -250,7 +282,7 @@ void GLFWWindow::glfwMouseButtonCallback( int button, int action )
 
 int GLFWWindow::glfwWindowCloseCallback()
 {
-	System::GetWindow()->SetRequestClose();
+	System::GetWindow()->SetRequestClose(true);
 	return GL_FALSE;
 }
 
@@ -310,3 +342,6 @@ void Joystick::Update()
 
 
 CE_NAMESPACE_END
+
+
+#endif //CE_GLFW

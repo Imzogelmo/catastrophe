@@ -22,6 +22,8 @@ class Battle : IGameEntity
 	void Setup()
 	{
 	}
+
+
 /*
 	void SetStartingPositions()
 	{
@@ -57,7 +59,9 @@ class Battle : IGameEntity
 		{
 			if( small > 9 ) small = 9;
 		}
-*/
 	}
+	*/
+
+
 };
 
