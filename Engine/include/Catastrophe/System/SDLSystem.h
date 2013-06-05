@@ -21,10 +21,13 @@
 #include "System.h"
 #include "Window.h"
 
+// forward declare all used sf classes.
+namespace sf { class Window; }
+
 CE_NAMESPACE_BEGIN
 
 
-class CE_API GLFWSystem : public System
+class CE_API SDLSystem : public System
 {
 public:
 	void Sleep( int milliseconds );
@@ -35,12 +38,15 @@ protected:
 
 };
 
+// sdl forward declarations.
+struct SDL_Window;
 
-class CE_API GLFWWindow : public Window
+
+class CE_API SDLWindow : public Window
 {
 public:
-	GLFWWindow();
-	virtual ~GLFWWindow();
+	SDLWindow();
+	virtual ~SDLWindow();
 
 	virtual bool Open(
 			int w = 640,
@@ -72,20 +78,15 @@ public:
 	virtual void Update();
 	virtual void SwapBuffers();
 
-	virtual bool HasFocus() const { return m_hasFocus; }
+	virtual bool HasFocus() const;
 	virtual bool IsActive() const;
 
+
 protected:
-	void SetCallbacks();
-	static void glfwWindowResizeCallback( int width, int height );
-	static void glfwKeyboardCallback( int key, int action );
-	static void glfwCharacterCallback( int key, int action );
-	static void glfwMousePosCallback( int x, int y );
-	static void glfwMouseWheelPosCallback( int pos );
-	static void glfwMouseButtonCallback( int button, int action );
-	static int glfwWindowCloseCallback();
+	SDL_Window*		m_window;
+	void*			m_glContext;
 
 };
 
-CE_NAMESPACE_END
 
+CE_NAMESPACE_END

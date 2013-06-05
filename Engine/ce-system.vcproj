@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;include\Catastrophe&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;CE_SFML"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;CE_SDL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -109,7 +109,7 @@
 				EnableIntrinsicFunctions="true"
 				WholeProgramOptimization="false"
 				AdditionalIncludeDirectories="&quot;include\Catastrophe&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;CE_SFML"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;CE_GLFW"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
@@ -213,6 +213,10 @@
 				>
 				<File
 					RelativePath=".\include\Catastrophe\System\GLFWSystem.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Catastrophe\System\SDLSystem.h"
 					>
 				</File>
 				<File

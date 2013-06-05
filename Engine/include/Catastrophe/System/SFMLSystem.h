@@ -80,8 +80,6 @@ public:
 
 
 protected:
-	void sfmlProcessEvents();
-
 	sf::Window* m_window;
 
 };
