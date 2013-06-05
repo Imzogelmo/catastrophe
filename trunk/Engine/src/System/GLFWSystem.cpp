@@ -23,6 +23,15 @@
 
 #include <GL/glfw.h>
 
+#ifdef _MSC_VER
+	// Link againt standard GLFW libraries.
+	#ifdef CE_DEBUG
+		#pragma comment ( lib, "glfwd.lib" )
+	#else
+		#pragma comment ( lib, "glfw.lib" )
+	#endif
+#endif
+
 CE_NAMESPACE_BEGIN
 
 

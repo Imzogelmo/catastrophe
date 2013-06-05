@@ -31,6 +31,10 @@
 	#include "System/GLFWSystem.h"
 	#define CE_SYSTEM_TYPE			GLFWSystem
 	#define CE_SYSTEM_WINDOW_TYPE	GLFWWindow
+#elif defined CE_SDL
+	#include "System/SDLSystem.h"
+	#define CE_SYSTEM_TYPE			SDLSystem
+	#define CE_SYSTEM_WINDOW_TYPE	SDLWindow
 #else
 	// By default, we have to include something.
 	#include "System/GLFWSystem.h"

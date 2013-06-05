@@ -152,12 +152,6 @@ void SFMLWindow::SetCursorVisible(bool visible)
 }
 
 
-void SFMLWindow::Update()
-{
-	sfmlProcessEvents();
-}
-
-
 void SFMLWindow::SwapBuffers()
 {
 	m_window->display();
@@ -240,7 +234,7 @@ Point SFMLWindow::GetDesktopSize() const
 }
 
 
-void SFMLWindow::sfmlProcessEvents()
+void SFMLWindow::Update()
 {
 	sf::Event event;
 

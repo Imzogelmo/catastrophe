@@ -39,6 +39,7 @@ File::File() :
 {
 }
 
+
 File::File(const fc::string& fileName, FileMode mode) :
 	m_mode(FileRead),
 	m_handle(0),
@@ -49,10 +50,12 @@ File::File(const fc::string& fileName, FileMode mode) :
 	Open(fileName, mode);
 }
 
+
 File::~File()
 {
 	Close();
 }
+
 
 bool File::Open(const fc::string& fileName, FileMode mode)
 {
@@ -78,6 +81,7 @@ bool File::Open(const fc::string& fileName, FileMode mode)
 
 	return true;
 }
+
 
 size_t File::Read(void* dest, size_t size)
 {
@@ -105,6 +109,7 @@ size_t File::Read(void* dest, size_t size)
 	return size;
 }
 
+
 size_t File::Seek(size_t position)
 {
 	if (m_mode == FileRead && position > m_size)
@@ -121,6 +126,7 @@ size_t File::Seek(size_t position)
 	return m_position;
 }
 
+
 size_t File::Write(const void* data, size_t size)
 {
 	CE_ASSERT(m_mode != FileRead);
@@ -129,7 +135,7 @@ size_t File::Write(const void* data, size_t size)
 
 	if(!m_handle)
 	{
-		Log("File not open");
+		Log("Error: File not open");
 		return 0;
 	}
 
@@ -147,6 +153,7 @@ size_t File::Write(const void* data, size_t size)
 	return size;
 }
 
+
 void File::Close()
 {
 	if(m_handle)
@@ -159,11 +166,13 @@ void File::Close()
 	}
 }
 
+
 void File::Flush()
 {
 	if(m_handle)
 		fflush((FILE*)m_handle);
 }
+
 
 fc::string File::GetNativePath(const fc::string& path)
 {
