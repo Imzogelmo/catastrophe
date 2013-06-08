@@ -61,9 +61,9 @@ void ScriptEngine::RegisterWidgetType( const char* name )
 	//r = engine->RegisterObjectMethod( name, "void set_y(int)", asMETHOD(T, SetY), asCALL_THISCALL ); assert( r >= 0 );
 	//r = engine->RegisterObjectMethod( name, "void set_width(int)", asMETHOD(T, SetWidth), asCALL_THISCALL ); assert( r >= 0 );
 	//r = engine->RegisterObjectMethod( name, "void set_height(int)", asMETHOD(T, SetHeight), asCALL_THISCALL ); assert( r >= 0 );
-	r = engine->RegisterObjectMethod( name, "void set_pos(const point &in)", asMETHODPR(T, SetPosition, (const Point &), void), asCALL_THISCALL ); assert( r >= 0 );
-	r = engine->RegisterObjectMethod( name, "void set_size(const point &in)", asMETHODPR(T, SetPosition, (const Point &), void), asCALL_THISCALL ); assert( r >= 0 );
-	r = engine->RegisterObjectMethod( name, "void set_color(const color &in)", asMETHOD(T, SetColor), asCALL_THISCALL ); assert( r >= 0 );
+//	r = engine->RegisterObjectMethod( name, "void set_pos(const point &in)", asMETHODPR(T, SetPosition, (const Point &), void), asCALL_THISCALL ); assert( r >= 0 );
+//	r = engine->RegisterObjectMethod( name, "void set_size(const point &in)", asMETHODPR(T, SetPosition, (const Point &), void), asCALL_THISCALL ); assert( r >= 0 );
+//	r = engine->RegisterObjectMethod( name, "void set_color(const color &in)", asMETHOD(T, SetColor), asCALL_THISCALL ); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( name, "void set_visible(bool)", asMETHOD(T, SetVisible), asCALL_THISCALL ); assert( r >= 0 );
 	//engine->RegisterObjectMethod( name, "void set_selected(bool)", asMETHOD(T, SetSelected), asCALL_THISCALL ); assert( r >= 0 );
 	//engine->RegisterObjectMethod( name, "void set_active(bool)", asMETHOD(T, SetActive), asCALL_THISCALL ); assert( r >= 0 );
@@ -74,7 +74,7 @@ void ScriptEngine::RegisterWidgetType( const char* name )
 	//r = engine->RegisterObjectMethod( name, "int get_height() const", asMETHOD(T, GetHeight), asCALL_THISCALL ); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( name, "const point& get_pos() const", asMETHOD(T, GetPosition), asCALL_THISCALL ); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( name, "const point& get_size() const", asMETHOD(T, GetSize), asCALL_THISCALL ); assert( r >= 0 );
-	r = engine->RegisterObjectMethod( name, "const color& get_color() const", asMETHOD(T, GetColor), asCALL_THISCALL ); assert( r >= 0 );
+//	r = engine->RegisterObjectMethod( name, "const color& get_color() const", asMETHOD(T, GetColor), asCALL_THISCALL ); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( name, "point get_screen_pos() const", asMETHOD(T, GetScreenPosition), asCALL_THISCALL ); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( name, "widget@ get_child(int) const", asMETHODPR(T, GetChild, (size_t) const, Widget*), asCALL_THISCALL ); assert( r >= 0 );
 	r = engine->RegisterObjectMethod( name, "widget@ get_parent() const", asMETHOD(T, GetParent), asCALL_THISCALL ); assert( r >= 0 );

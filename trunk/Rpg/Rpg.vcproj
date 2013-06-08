@@ -61,7 +61,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="ce-core-d.lib ce-system-d.lib ce-gui-d.lib rpglibd.lib glfwd.lib mcppd.lib angelscriptd.lib freetype.lib glew32sd.lib OpenGL32.lib glu32.lib"
 				AdditionalLibraryDirectories="&quot;../Engine/lib&quot;;&quot;..\RpgLibrary\lib&quot;"
-				IgnoreDefaultLibraryNames="libcmt;libcmtd;libcpmtd;libcpmt"
+				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>

@@ -39,8 +39,10 @@ void BattleGroupData::ForceAddSingleMonsterFromGroup( const MonsterGroup& monste
 	BattleGroupEntityData data;
 
 	data.id = monsterGroup.monster_id;
-	data.pos.x = (float)monsterGroup.x;
-	data.pos.y = (float)monsterGroup.y;
+
+	//TODO
+	//data.pos.x = (float)monsterGroup.x;
+//	data.pos.y = (float)monsterGroup.y;
 
 	AddBattler(data);
 }
