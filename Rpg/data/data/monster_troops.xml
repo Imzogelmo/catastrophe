@@ -1,839 +1,839 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<MonsterTroopList ver="1.0" count="244">
-    <Troop name="Goblin(3-5)" num_groups="1">
+<MonsterTroopList ver="1" count="244">
+    <Troop name="Goblin(3-5)" formation="0" max="9" num_groups="1">
         <Monster index="0" min="3" max="5"/>
     </Troop>
-    <Troop name="Goblin(3-6),Goblin Guard(0-4)" num_groups="2">
+    <Troop name="Goblin(3-6),Goblin Guard(0-4)" formation="0" max="9" num_groups="2">
         <Monster index="0" min="3" max="6"/>
         <Monster index="1" min="0" max="4"/>
     </Troop>
-    <Troop name="Skeleton(2-4)" num_groups="1">
+    <Troop name="Skeleton(2-4)" formation="0" max="9" num_groups="1">
         <Monster index="21" min="2" max="4"/>
     </Troop>
-    <Troop name="Skeleton(3-5),Crawler(0-2)" num_groups="2">
+    <Troop name="Skeleton(3-5),Crawler(0-2)" formation="0" max="9" num_groups="2">
         <Monster index="21" min="3" max="5"/>
         <Monster index="24" min="0" max="2"/>
     </Troop>
-    <Troop name="Goblin Guard(1-3),Wolf(0-2),Warg Wolf(0-2),Goblin(0-2)" num_groups="4">
+    <Troop name="Goblin Guard(1-3),Wolf(0-2),Warg Wolf(0-2),Goblin(0-2)" formation="0" max="9" num_groups="4">
         <Monster index="1" min="1" max="3"/>
         <Monster index="2" min="0" max="2"/>
         <Monster index="3" min="0" max="2"/>
         <Monster index="0" min="0" max="2"/>
     </Troop>
-    <Troop name="Goblin Guard(1-3)" num_groups="1">
+    <Troop name="Goblin Guard(1-3)" formation="0" max="9" num_groups="1">
         <Monster index="1" min="1" max="3"/>
     </Troop>
-    <Troop name="Wolf(1-2)" num_groups="1">
+    <Troop name="Wolf(1-2)" formation="0" max="9" num_groups="1">
         <Monster index="2" min="1" max="2"/>
     </Troop>
-    <Troop name="Wolf(4-6),Warg Wolf(0-1)" num_groups="2">
+    <Troop name="Wolf(4-6),Warg Wolf(0-1)" formation="0" max="9" num_groups="2">
         <Monster index="2" min="4" max="6"/>
         <Monster index="3" min="0" max="1"/>
     </Troop>
-    <Troop name="Zombie(2-4)" num_groups="1">
+    <Troop name="Zombie(2-4)" formation="0" max="9" num_groups="1">
         <Monster index="43" min="2" max="4"/>
     </Troop>
-    <Troop name="Zombie(2-3),Ghoul(2-4)" num_groups="2">
+    <Troop name="Zombie(2-3),Ghoul(2-4)" formation="0" max="9" num_groups="2">
         <Monster index="43" min="2" max="3"/>
         <Monster index="44" min="2" max="4"/>
     </Troop>
-    <Troop name="Black Widow(1-2)" num_groups="1">
+    <Troop name="Black Widow(1-2)" formation="0" max="9" num_groups="1">
         <Monster index="73" min="1" max="2"/>
     </Troop>
-    <Troop name="Green Slime(2-4)" num_groups="1">
+    <Troop name="Green Slime(2-4)" formation="0" max="9" num_groups="1">
         <Monster index="69" min="2" max="4"/>
     </Troop>
-    <Troop name="Crazy Horse(1)" num_groups="1">
+    <Troop name="Crazy Horse(1)" formation="2" max="4" num_groups="1">
         <Monster index="116" min="1" max="1"/>
     </Troop>
-    <Troop name="Crazy Horse(2-4)" num_groups="1">
+    <Troop name="Crazy Horse(2-4)" formation="2" max="4" num_groups="1">
         <Monster index="116" min="2" max="4"/>
     </Troop>
-    <Troop name="Gigas Worm(1-2)" num_groups="1">
+    <Troop name="Gigas Worm(1-2)" formation="0" max="9" num_groups="1">
         <Monster index="23" min="1" max="2"/>
     </Troop>
-    <Troop name="Gigas Worm(1-3),Ogre(1)" num_groups="2">
-        <Monster index="23" min="1" max="3"/>
+    <Troop name="Gigas Worm(1-3),Ogre(1)" formation="1" max="8" num_groups="2">
         <Monster index="27" min="1" max="1"/>
+        <Monster index="23" min="1" max="3"/>
     </Troop>
-    <Troop name="Ghoul(1)" num_groups="1">
+    <Troop name="Ghoul(1)" formation="0" max="9" num_groups="1">
         <Monster index="44" min="1" max="1"/>
     </Troop>
-    <Troop name="Ghoul(2-5),Ghast(0-4)" num_groups="2">
+    <Troop name="Ghoul(2-5),Ghast(0-4)" formation="0" max="9" num_groups="2">
         <Monster index="44" min="2" max="5"/>
         <Monster index="45" min="0" max="4"/>
     </Troop>
-    <Troop name="Lizard(1)" num_groups="1">
+    <Troop name="Lizard(1)" formation="2" max="4" num_groups="1">
         <Monster index="6" min="1" max="1"/>
     </Troop>
-    <Troop name="Hill Gigas(1-3),Lizard(0-2)" num_groups="2">
+    <Troop name="Hill Gigas(1-3),Lizard(0-2)" formation="2" max="4" num_groups="2">
         <Monster index="9" min="1" max="3"/>
         <Monster index="6" min="0" max="2"/>
     </Troop>
-    <Troop name="Shadow(2-4)" num_groups="1">
+    <Troop name="Shadow(2-4)" formation="0" max="9" num_groups="1">
         <Monster index="39" min="2" max="4"/>
     </Troop>
-    <Troop name="Shadow(3-7)" num_groups="1">
+    <Troop name="Shadow(3-7)" formation="0" max="9" num_groups="1">
         <Monster index="39" min="3" max="7"/>
     </Troop>
-    <Troop name="Warg Wolf(2-5),Wolf(0-3)" num_groups="2">
+    <Troop name="Warg Wolf(2-5),Wolf(0-3)" formation="0" max="9" num_groups="2">
         <Monster index="3" min="2" max="5"/>
         <Monster index="2" min="0" max="3"/>
     </Troop>
-    <Troop name="Warg Wolf(4-8)" num_groups="1">
+    <Troop name="Warg Wolf(4-8)" formation="0" max="9" num_groups="1">
         <Monster index="3" min="4" max="8"/>
     </Troop>
-    <Troop name="Ogre(1-2)" num_groups="1">
+    <Troop name="Ogre(1-2)" formation="2" max="4" num_groups="1">
         <Monster index="27" min="1" max="2"/>
     </Troop>
-    <Troop name="Ogre(1-3),Hyenadon(0-2)" num_groups="2">
+    <Troop name="Ogre(1-3),Hyenadon(0-2)" formation="1" max="8" num_groups="2">
         <Monster index="27" min="1" max="3"/>
         <Monster index="25" min="0" max="2"/>
     </Troop>
-    <Troop name="Cobra(1-2)" num_groups="1">
+    <Troop name="Cobra(1-2)" formation="0" max="9" num_groups="1">
         <Monster index="30" min="1" max="2"/>
     </Troop>
-    <Troop name="Cobra(3-7)" num_groups="1">
+    <Troop name="Cobra(3-7)" formation="0" max="9" num_groups="1">
         <Monster index="30" min="3" max="7"/>
     </Troop>
-    <Troop name="Goblin Guard(0-5),Werewolf(1-3),Hill Gigas(0-2),Lizard(0-2)" num_groups="4">
-        <Monster index="1" min="0" max="5"/>
-        <Monster index="4" min="1" max="3"/>
+    <Troop name="Goblin Guard(0-5),Werewolf(1-3),Hill Gigas(0-2),Lizard(0-2)" formation="1" max="8" num_groups="4">
         <Monster index="9" min="0" max="2"/>
         <Monster index="6" min="0" max="2"/>
+        <Monster index="1" min="0" max="5"/>
+        <Monster index="4" min="1" max="3"/>
     </Troop>
-    <Troop name="Goblin Guard(2-5),Werewolf(0-2)" num_groups="2">
+    <Troop name="Goblin Guard(2-5),Werewolf(0-2)" formation="0" max="9" num_groups="2">
         <Monster index="1" min="2" max="5"/>
         <Monster index="4" min="0" max="2"/>
     </Troop>
-    <Troop name="Ghast(1-4)" num_groups="1">
+    <Troop name="Ghast(1-4)" formation="0" max="9" num_groups="1">
         <Monster index="45" min="1" max="4"/>
     </Troop>
-    <Troop name="Wight(2-5),Ghast(2-5)" num_groups="2">
+    <Troop name="Wight(2-5),Ghast(2-5)" formation="0" max="9" num_groups="2">
         <Monster index="46" min="2" max="5"/>
         <Monster index="45" min="2" max="5"/>
     </Troop>
-    <Troop name="Gargoyle(2-3)" num_groups="1">
+    <Troop name="Gargoyle(2-3)" formation="0" max="9" num_groups="1">
         <Monster index="62" min="2" max="3"/>
     </Troop>
-    <Troop name="Gargoyle(3-8)" num_groups="1">
+    <Troop name="Gargoyle(3-8)" formation="0" max="9" num_groups="1">
         <Monster index="62" min="3" max="8"/>
     </Troop>
-    <Troop name="Werewolf(3-6)" num_groups="1">
+    <Troop name="Werewolf(3-6)" formation="0" max="9" num_groups="1">
         <Monster index="4" min="3" max="6"/>
     </Troop>
-    <Troop name="Werewolf(2-5),Warg Wolf(0-5)" num_groups="2">
+    <Troop name="Werewolf(2-5),Warg Wolf(0-5)" formation="0" max="9" num_groups="2">
         <Monster index="4" min="2" max="5"/>
         <Monster index="3" min="0" max="5"/>
     </Troop>
-    <Troop name="Tarantula(1-4)" num_groups="1">
+    <Troop name="Tarantula(1-4)" formation="0" max="9" num_groups="1">
         <Monster index="74" min="1" max="4"/>
     </Troop>
-    <Troop name="Ochre Jelly(2-5),Tarantula(0-5)" num_groups="2">
+    <Troop name="Ochre Jelly(2-5),Tarantula(0-5)" formation="0" max="9" num_groups="2">
         <Monster index="71" min="2" max="5"/>
         <Monster index="74" min="0" max="5"/>
     </Troop>
-    <Troop name="Ogre Chief(1),Ogre(1-2)" num_groups="2">
+    <Troop name="Ogre Chief(1),Ogre(1-2)" formation="2" max="4" num_groups="2">
         <Monster index="28" min="1" max="1"/>
         <Monster index="27" min="1" max="2"/>
     </Troop>
-    <Troop name="Ogre Chief(1-4),Ogre(0-2)" num_groups="2">
+    <Troop name="Ogre Chief(1-4),Ogre(0-2)" formation="2" max="4" num_groups="2">
         <Monster index="28" min="1" max="4"/>
         <Monster index="27" min="0" max="2"/>
     </Troop>
-    <Troop name="Tarantula(1-2)" num_groups="1">
+    <Troop name="Tarantula(1-2)" formation="0" max="9" num_groups="1">
         <Monster index="74" min="1" max="2"/>
     </Troop>
-    <Troop name="Tarantula(4-8)" num_groups="1">
+    <Troop name="Tarantula(4-8)" formation="0" max="9" num_groups="1">
         <Monster index="74" min="4" max="8"/>
     </Troop>
-    <Troop name="Anaconda(2-6)" num_groups="1">
+    <Troop name="Anaconda(2-6)" formation="0" max="9" num_groups="1">
         <Monster index="31" min="2" max="6"/>
     </Troop>
-    <Troop name="Anaconda(2-6),Scorpion(0-4)" num_groups="2">
+    <Troop name="Anaconda(2-6),Scorpion(0-4)" formation="0" max="9" num_groups="2">
         <Monster index="31" min="2" max="6"/>
         <Monster index="33" min="0" max="4"/>
     </Troop>
-    <Troop name="Cockatrice(2-6)" num_groups="1">
+    <Troop name="Cockatrice(2-6)" formation="0" max="9" num_groups="1">
         <Monster index="81" min="2" max="6"/>
     </Troop>
-    <Troop name="Cockatrice(2-6),Mummy(1-5)" num_groups="2">
+    <Troop name="Cockatrice(2-6),Mummy(1-5)" formation="0" max="9" num_groups="2">
         <Monster index="81" min="2" max="6"/>
         <Monster index="79" min="1" max="5"/>
     </Troop>
-    <Troop name="Centipede(1-4)" num_groups="1">
+    <Troop name="Centipede(1-4)" formation="2" max="4" num_groups="1">
         <Monster index="56" min="1" max="4"/>
     </Troop>
-    <Troop name="Centipede(1-4)" num_groups="1">
+    <Troop name="Centipede(1-4)" formation="2" max="4" num_groups="1">
         <Monster index="56" min="1" max="4"/>
     </Troop>
-    <Troop name="Wraith(2-6)" num_groups="1">
+    <Troop name="Wraith(2-6)" formation="0" max="9" num_groups="1">
         <Monster index="40" min="2" max="6"/>
     </Troop>
-    <Troop name="Wraith(2-6),Specter(0-4)" num_groups="2">
+    <Troop name="Wraith(2-6),Specter(0-4)" formation="0" max="9" num_groups="2">
         <Monster index="40" min="2" max="6"/>
         <Monster index="41" min="0" max="4"/>
     </Troop>
-    <Troop name="Lesser Tiger(1-3)" num_groups="1">
+    <Troop name="Lesser Tiger(1-3)" formation="2" max="4" num_groups="1">
         <Monster index="58" min="1" max="3"/>
     </Troop>
-    <Troop name="Sabertooth(1-3),Lesser Tiger(0-2)" num_groups="2">
+    <Troop name="Sabertooth(1-3),Lesser Tiger(0-2)" formation="2" max="4" num_groups="2">
         <Monster index="59" min="1" max="3"/>
         <Monster index="58" min="0" max="2"/>
     </Troop>
-    <Troop name="Scorpion(2-4)" num_groups="1">
+    <Troop name="Scorpion(2-4)" formation="0" max="9" num_groups="1">
         <Monster index="33" min="2" max="4"/>
     </Troop>
-    <Troop name="Scorpion(2-6),Minotaur(1-2)" num_groups="2">
-        <Monster index="33" min="2" max="6"/>
+    <Troop name="Scorpion(2-6),Minotaur(1-2)" formation="1" max="8" num_groups="2">
         <Monster index="35" min="1" max="2"/>
+        <Monster index="33" min="2" max="6"/>
     </Troop>
-    <Troop name="Troll(1-2),Minotaur(0-1)" num_groups="2">
+    <Troop name="Troll(1-2),Minotaur(0-1)" formation="2" max="4" num_groups="2">
         <Monster index="37" min="1" max="2"/>
         <Monster index="35" min="0" max="1"/>
     </Troop>
-    <Troop name="Troll(1-2),Minotaur(0-2)" num_groups="2">
+    <Troop name="Troll(1-2),Minotaur(0-2)" formation="2" max="4" num_groups="2">
         <Monster index="37" min="1" max="2"/>
         <Monster index="35" min="0" max="2"/>
     </Troop>
-    <Troop name="Piscodemon(2-4)" num_groups="1">
+    <Troop name="Piscodemon(2-4)" formation="0" max="9" num_groups="1">
         <Monster index="103" min="2" max="4"/>
     </Troop>
-    <Troop name="Piscodemon(3-7)" num_groups="1">
+    <Troop name="Piscodemon(3-7)" formation="0" max="9" num_groups="1">
         <Monster index="103" min="3" max="7"/>
     </Troop>
-    <Troop name="Mummy(2-5)" num_groups="1">
+    <Troop name="Mummy(2-5)" formation="0" max="9" num_groups="1">
         <Monster index="79" min="2" max="5"/>
     </Troop>
-    <Troop name="Mummy(3-7),King Mummy(1)" num_groups="2">
+    <Troop name="Mummy(3-7),King Mummy(1)" formation="0" max="9" num_groups="2">
         <Monster index="79" min="3" max="7"/>
         <Monster index="80" min="1" max="1"/>
     </Troop>
-    <Troop name="Hill Gigas(1-2)" num_groups="1">
+    <Troop name="Hill Gigas(1-2)" formation="2" max="4" num_groups="1">
         <Monster index="9" min="1" max="2"/>
     </Troop>
-    <Troop name="Hill Gigas(2-4)" num_groups="1">
+    <Troop name="Hill Gigas(2-4)" formation="2" max="4" num_groups="1">
         <Monster index="9" min="2" max="4"/>
     </Troop>
-    <Troop name="Hill Gigas(1-2),Lizard(0-3)" num_groups="2">
+    <Troop name="Hill Gigas(1-2),Lizard(0-3)" formation="2" max="4" num_groups="2">
         <Monster index="9" min="1" max="2"/>
         <Monster index="6" min="0" max="3"/>
     </Troop>
-    <Troop name="Hill Gigas(1-4),Lizard(1)" num_groups="2">
+    <Troop name="Hill Gigas(1-4),Lizard(1)" formation="2" max="4" num_groups="2">
         <Monster index="9" min="1" max="4"/>
         <Monster index="6" min="1" max="1"/>
     </Troop>
-    <Troop name="Hydra(1-2)" num_groups="1">
+    <Troop name="Hydra(1-2)" formation="2" max="4" num_groups="1">
         <Monster index="93" min="1" max="2"/>
     </Troop>
-    <Troop name="Hydra(1-2),Crocodile(0-3)" num_groups="2">
+    <Troop name="Hydra(1-2),Crocodile(0-3)" formation="1" max="8" num_groups="2">
         <Monster index="93" min="1" max="2"/>
         <Monster index="89" min="0" max="3"/>
     </Troop>
-    <Troop name="Fire Elemental(1)" num_groups="1">
+    <Troop name="Fire Elemental(1)" formation="2" max="4" num_groups="1">
         <Monster index="65" min="1" max="1"/>
     </Troop>
-    <Troop name="Fire Elemental(2-4)" num_groups="1">
+    <Troop name="Fire Elemental(2-4)" formation="2" max="4" num_groups="1">
         <Monster index="65" min="2" max="4"/>
     </Troop>
-    <Troop name="Hellhound(0-1),Ogre Mage(1-2)" num_groups="2">
-        <Monster index="26" min="0" max="1"/>
+    <Troop name="Hellhound(0-1),Ogre Mage(1-2)" formation="1" max="8" num_groups="2">
         <Monster index="29" min="1" max="2"/>
+        <Monster index="26" min="0" max="1"/>
     </Troop>
-    <Troop name="Hellhound(1-3),Ogre Mage(0-2)" num_groups="2">
-        <Monster index="26" min="1" max="3"/>
+    <Troop name="Hellhound(1-3),Ogre Mage(0-2)" formation="1" max="8" num_groups="2">
         <Monster index="29" min="0" max="2"/>
+        <Monster index="26" min="1" max="3"/>
     </Troop>
-    <Troop name="Pyrolisk(2-5)" num_groups="1">
+    <Troop name="Pyrolisk(2-5)" formation="0" max="9" num_groups="1">
         <Monster index="82" min="2" max="5"/>
     </Troop>
-    <Troop name="Pyrolisk(4-8)" num_groups="1">
+    <Troop name="Pyrolisk(4-8)" formation="0" max="9" num_groups="1">
         <Monster index="82" min="4" max="8"/>
     </Troop>
-    <Troop name="Fire Hydra(1-2)" num_groups="1">
+    <Troop name="Fire Hydra(1-2)" formation="2" max="4" num_groups="1">
         <Monster index="94" min="1" max="2"/>
     </Troop>
-    <Troop name="Fire Hydra(4)" num_groups="1">
+    <Troop name="Fire Hydra(4)" formation="2" max="4" num_groups="1">
         <Monster index="94" min="4" max="4"/>
     </Troop>
-    <Troop name="Ochu(1-3)" num_groups="1">
+    <Troop name="Ochu(1-3)" formation="2" max="4" num_groups="1">
         <Monster index="91" min="1" max="3"/>
     </Troop>
-    <Troop name="Ochu(1),Piranha(0-2)" num_groups="2">
+    <Troop name="Ochu(1),Piranha(0-2)" formation="1" max="8" num_groups="2">
         <Monster index="91" min="1" max="1"/>
         <Monster index="87" min="0" max="2"/>
     </Troop>
-    <Troop name="Fire Gigas(1-2)" num_groups="1">
+    <Troop name="Fire Gigas(1-2)" formation="2" max="4" num_groups="1">
         <Monster index="11" min="1" max="2"/>
     </Troop>
-    <Troop name="Fire Gigas(1),Fire Lizard(0-3)" num_groups="2">
+    <Troop name="Fire Gigas(1),Fire Lizard(0-3)" formation="2" max="4" num_groups="2">
         <Monster index="11" min="1" max="1"/>
         <Monster index="7" min="0" max="3"/>
     </Troop>
-    <Troop name="Fire Elemental(1-2)" num_groups="1">
+    <Troop name="Fire Elemental(1-2)" formation="2" max="4" num_groups="1">
         <Monster index="65" min="1" max="2"/>
     </Troop>
-    <Troop name="Fire Elemental(3-4)" num_groups="1">
+    <Troop name="Fire Elemental(3-4)" formation="2" max="4" num_groups="1">
         <Monster index="65" min="3" max="4"/>
     </Troop>
-    <Troop name="Lava Worm(1)" num_groups="1">
+    <Troop name="Lava Worm(1)" formation="2" max="4" num_groups="1">
         <Monster index="49" min="1" max="1"/>
     </Troop>
-    <Troop name="Lava Worm(2-4)" num_groups="1">
+    <Troop name="Lava Worm(2-4)" formation="2" max="4" num_groups="1">
         <Monster index="49" min="2" max="4"/>
     </Troop>
-    <Troop name="Fire Lizard(1)" num_groups="1">
+    <Troop name="Fire Lizard(1)" formation="2" max="4" num_groups="1">
         <Monster index="7" min="1" max="1"/>
     </Troop>
-    <Troop name="Fire Lizard(2-4)" num_groups="1">
+    <Troop name="Fire Lizard(2-4)" formation="2" max="4" num_groups="1">
         <Monster index="7" min="2" max="4"/>
     </Troop>
-    <Troop name="Red Dragon(1)" num_groups="1">
+    <Troop name="Red Dragon(1)" formation="2" max="4" num_groups="1">
         <Monster index="67" min="1" max="1"/>
     </Troop>
-    <Troop name="Red Dragon(2-4)" num_groups="1">
+    <Troop name="Red Dragon(2-4)" formation="2" max="4" num_groups="1">
         <Monster index="67" min="2" max="4"/>
     </Troop>
-    <Troop name="Bloodbones(1),Skeleton(2-4),Crawler(1)" num_groups="3">
+    <Troop name="Bloodbones(1),Skeleton(2-4),Crawler(1)" formation="0" max="9" num_groups="3">
         <Monster index="22" min="1" max="1"/>
         <Monster index="21" min="2" max="4"/>
         <Monster index="24" min="1" max="1"/>
     </Troop>
-    <Troop name="Bloodbones(3-6)" num_groups="1">
+    <Troop name="Bloodbones(3-6)" formation="0" max="9" num_groups="1">
         <Monster index="22" min="3" max="6"/>
     </Troop>
-    <Troop name="Specter(1-5),Wraith(0-3),Wight(0-3),Ghast(0-3)" num_groups="4">
+    <Troop name="Specter(1-5),Wraith(0-3),Wight(0-3),Ghast(0-3)" formation="0" max="9" num_groups="4">
         <Monster index="41" min="1" max="5"/>
         <Monster index="40" min="0" max="3"/>
         <Monster index="46" min="0" max="3"/>
         <Monster index="45" min="0" max="3"/>
     </Troop>
-    <Troop name="Specter(2-6)" num_groups="1">
+    <Troop name="Specter(2-6)" formation="0" max="9" num_groups="1">
         <Monster index="41" min="2" max="6"/>
     </Troop>
-    <Troop name="Winter Wolf(3-7)" num_groups="1">
+    <Troop name="Winter Wolf(3-7)" formation="0" max="9" num_groups="1">
         <Monster index="5" min="3" max="7"/>
     </Troop>
-    <Troop name="Winter Wolf(4-7)" num_groups="1">
+    <Troop name="Winter Wolf(4-7)" formation="0" max="9" num_groups="1">
         <Monster index="5" min="4" max="7"/>
     </Troop>
-    <Troop name="Ice Gigas(1),Winter Wolf(0-2)" num_groups="2">
+    <Troop name="Ice Gigas(1),Winter Wolf(0-2)" formation="1" max="8" num_groups="2">
         <Monster index="10" min="1" max="1"/>
         <Monster index="5" min="0" max="2"/>
     </Troop>
-    <Troop name="Ice Gigas(2),Winter Wolf(2-6)" num_groups="2">
+    <Troop name="Ice Gigas(2),Winter Wolf(2-6)" formation="1" max="8" num_groups="2">
         <Monster index="10" min="2" max="2"/>
         <Monster index="5" min="2" max="6"/>
     </Troop>
-    <Troop name="Dark Wizard(1-4)" num_groups="1">
+    <Troop name="Dark Wizard(1-4)" formation="0" max="9" num_groups="1">
         <Monster index="114" min="1" max="4"/>
     </Troop>
-    <Troop name="Dark Wizard(2-3),Dark Fighter(1)" num_groups="2">
+    <Troop name="Dark Wizard(2-3),Dark Fighter(1)" formation="0" max="9" num_groups="2">
         <Monster index="114" min="2" max="3"/>
         <Monster index="115" min="1" max="1"/>
     </Troop>
-    <Troop name="White Dragon(1-2)" num_groups="1">
+    <Troop name="White Dragon(1-2)" formation="2" max="4" num_groups="1">
         <Monster index="66" min="1" max="2"/>
     </Troop>
-    <Troop name="White Dragon(3-4)" num_groups="1">
+    <Troop name="White Dragon(3-4)" formation="2" max="4" num_groups="1">
         <Monster index="66" min="3" max="4"/>
     </Troop>
-    <Troop name="Remora(1)" num_groups="1">
+    <Troop name="Remora(1)" formation="2" max="4" num_groups="1">
         <Monster index="57" min="1" max="1"/>
     </Troop>
-    <Troop name="Remora(1-2)" num_groups="1">
+    <Troop name="Remora(1-2)" formation="2" max="4" num_groups="1">
         <Monster index="57" min="1" max="2"/>
     </Troop>
-    <Troop name="Necrotaur(1-3)" num_groups="1">
+    <Troop name="Necrotaur(1-3)" formation="2" max="4" num_groups="1">
         <Monster index="36" min="1" max="3"/>
     </Troop>
-    <Troop name="Necrotaur(1-4),Troll(0-2)" num_groups="2">
+    <Troop name="Necrotaur(1-4),Troll(0-2)" formation="2" max="4" num_groups="2">
         <Monster index="36" min="1" max="4"/>
         <Monster index="37" min="0" max="2"/>
     </Troop>
-    <Troop name="Rakshasa(3-5)" num_groups="1">
+    <Troop name="Rakshasa(3-5)" formation="0" max="9" num_groups="1">
         <Monster index="55" min="3" max="5"/>
     </Troop>
-    <Troop name="Rakshasa(3-7),Medusa(0-5)" num_groups="2">
+    <Troop name="Rakshasa(3-7),Medusa(0-5)" formation="0" max="9" num_groups="2">
         <Monster index="55" min="3" max="7"/>
         <Monster index="52" min="0" max="5"/>
     </Troop>
-    <Troop name="Medusa(2-5)" num_groups="1">
+    <Troop name="Medusa(2-5)" formation="0" max="9" num_groups="1">
         <Monster index="52" min="2" max="5"/>
     </Troop>
-    <Troop name="Mindflayer(2-5)" num_groups="1">
+    <Troop name="Mindflayer(2-5)" formation="0" max="9" num_groups="1">
         <Monster index="104" min="2" max="5"/>
     </Troop>
-    <Troop name="Mindflayer(1-6),Clay Golem(1-2)" num_groups="2">
-        <Monster index="104" min="1" max="6"/>
+    <Troop name="Mindflayer(1-6),Clay Golem(1-2)" formation="1" max="8" num_groups="2">
         <Monster index="108" min="1" max="2"/>
+        <Monster index="104" min="1" max="6"/>
     </Troop>
-    <Troop name="Manticore(1-3)" num_groups="1">
+    <Troop name="Manticore(1-3)" formation="2" max="4" num_groups="1">
         <Monster index="75" min="1" max="3"/>
     </Troop>
-    <Troop name="Manticore(3-4)" num_groups="1">
+    <Troop name="Manticore(3-4)" formation="2" max="4" num_groups="1">
         <Monster index="75" min="3" max="4"/>
     </Troop>
-    <Troop name="Wyrm(1-3)" num_groups="1">
+    <Troop name="Wyrm(1-3)" formation="2" max="4" num_groups="1">
         <Monster index="84" min="1" max="3"/>
     </Troop>
-    <Troop name="Wyrm(1-3)" num_groups="1">
+    <Troop name="Wyrm(1-3)" formation="2" max="4" num_groups="1">
         <Monster index="84" min="1" max="3"/>
     </Troop>
-    <Troop name="Baretta(1-3)" num_groups="1">
+    <Troop name="Baretta(1-3)" formation="2" max="4" num_groups="1">
         <Monster index="77" min="1" max="3"/>
     </Troop>
-    <Troop name="Baretta(1-4)" num_groups="1">
+    <Troop name="Baretta(1-4)" formation="2" max="4" num_groups="1">
         <Monster index="77" min="1" max="4"/>
     </Troop>
-    <Troop name="Weretiger(2-4)" num_groups="1">
+    <Troop name="Weretiger(2-4)" formation="0" max="9" num_groups="1">
         <Monster index="54" min="2" max="4"/>
     </Troop>
-    <Troop name="Weretiger(3-6),Sabertooth(1-2)" num_groups="2">
-        <Monster index="54" min="3" max="6"/>
+    <Troop name="Weretiger(3-6),Sabertooth(1-2)" formation="1" max="8" num_groups="2">
         <Monster index="59" min="1" max="2"/>
+        <Monster index="54" min="3" max="6"/>
     </Troop>
-    <Troop name="Basilisk(1-2)" num_groups="1">
+    <Troop name="Basilisk(1-2)" formation="2" max="4" num_groups="1">
         <Monster index="8" min="1" max="2"/>
     </Troop>
-    <Troop name="Basilisk(2-4)" num_groups="1">
+    <Troop name="Basilisk(2-4)" formation="2" max="4" num_groups="1">
         <Monster index="8" min="2" max="4"/>
     </Troop>
-    <Troop name="Chimera(1-3)" num_groups="1">
+    <Troop name="Chimera(1-3)" formation="2" max="4" num_groups="1">
         <Monster index="101" min="1" max="3"/>
     </Troop>
-    <Troop name="Chimera(3-4)" num_groups="1">
+    <Troop name="Chimera(3-4)" formation="2" max="4" num_groups="1">
         <Monster index="101" min="3" max="4"/>
     </Troop>
-    <Troop name="Sand Worm(1)" num_groups="1">
+    <Troop name="Sand Worm(1)" formation="2" max="4" num_groups="1">
         <Monster index="48" min="1" max="1"/>
     </Troop>
-    <Troop name="Sand Worm(1-2)" num_groups="1">
+    <Troop name="Sand Worm(1-2)" formation="2" max="4" num_groups="1">
         <Monster index="48" min="1" max="2"/>
     </Troop>
-    <Troop name="Allosaurus(1)" num_groups="1">
+    <Troop name="Allosaurus(1)" formation="2" max="4" num_groups="1">
         <Monster index="85" min="1" max="1"/>
     </Troop>
-    <Troop name="Allosaurus(1),Wyvern(0-1)" num_groups="2">
+    <Troop name="Allosaurus(1),Wyvern(0-1)" formation="2" max="4" num_groups="2">
         <Monster index="85" min="1" max="1"/>
         <Monster index="83" min="0" max="1"/>
     </Troop>
-    <Troop name="Tyrannosaur(1)" num_groups="1">
+    <Troop name="Tyrannosaur(1)" formation="2" max="4" num_groups="1">
         <Monster index="86" min="1" max="1"/>
     </Troop>
-    <Troop name="Wyvern(1-3),Wyrm(0-3)" num_groups="2">
+    <Troop name="Wyvern(1-3),Wyrm(0-3)" formation="2" max="4" num_groups="2">
         <Monster index="83" min="1" max="3"/>
         <Monster index="84" min="0" max="3"/>
     </Troop>
-    <Troop name="Clay Golem(1-3)" num_groups="1">
+    <Troop name="Clay Golem(1-3)" formation="2" max="4" num_groups="1">
         <Monster index="108" min="1" max="3"/>
     </Troop>
-    <Troop name="Clay Golem(1-4),Stone Golem(1-3)" num_groups="2">
+    <Troop name="Clay Golem(1-4),Stone Golem(1-3)" formation="2" max="4" num_groups="2">
         <Monster index="108" min="1" max="4"/>
         <Monster index="109" min="1" max="3"/>
     </Troop>
-    <Troop name="Earth Medusa(1-4)" num_groups="1">
+    <Troop name="Earth Medusa(1-4)" formation="0" max="9" num_groups="1">
         <Monster index="53" min="1" max="4"/>
     </Troop>
-    <Troop name="Earth Medusa(4-7)" num_groups="1">
+    <Troop name="Earth Medusa(4-7)" formation="0" max="9" num_groups="1">
         <Monster index="53" min="4" max="7"/>
     </Troop>
-    <Troop name="Neochu(1)" num_groups="1">
+    <Troop name="Neochu(1)" formation="2" max="4" num_groups="1">
         <Monster index="92" min="1" max="1"/>
     </Troop>
-    <Troop name="Neochu(1-2)" num_groups="1">
+    <Troop name="Neochu(1-2)" formation="2" max="4" num_groups="1">
         <Monster index="92" min="1" max="2"/>
     </Troop>
-    <Troop name="Sea Troll(1-2),Sea Scorpion(1-3)" num_groups="2">
+    <Troop name="Sea Troll(1-2),Sea Scorpion(1-3)" formation="1" max="8" num_groups="2">
         <Monster index="38" min="1" max="2"/>
         <Monster index="34" min="1" max="3"/>
     </Troop>
-    <Troop name="Sea Troll(1-2),Sea Scorpion(1-4)" num_groups="2">
+    <Troop name="Sea Troll(1-2),Sea Scorpion(1-4)" formation="1" max="8" num_groups="2">
         <Monster index="38" min="1" max="2"/>
         <Monster index="34" min="1" max="4"/>
     </Troop>
-    <Troop name="Sea Scorpion(2-6)" num_groups="1">
+    <Troop name="Sea Scorpion(2-6)" formation="0" max="9" num_groups="1">
         <Monster index="34" min="2" max="6"/>
     </Troop>
-    <Troop name="Sea Scorpion(3-7)" num_groups="1">
+    <Troop name="Sea Scorpion(3-7)" formation="0" max="9" num_groups="1">
         <Monster index="34" min="3" max="7"/>
     </Troop>
-    <Troop name="Sea Scorpion(1-6),Sea Snake(2-5),Sea Troll(2)" num_groups="3">
+    <Troop name="Sea Scorpion(1-6),Sea Snake(2-5),Sea Troll(2)" formation="1" max="8" num_groups="3">
+        <Monster index="38" min="2" max="2"/>
         <Monster index="34" min="1" max="6"/>
         <Monster index="32" min="2" max="5"/>
-        <Monster index="38" min="2" max="2"/>
     </Troop>
-    <Troop name="Sea Scorpion(1-5),Sea Snake(0-3)" num_groups="2">
+    <Troop name="Sea Scorpion(1-5),Sea Snake(0-3)" formation="0" max="9" num_groups="2">
         <Monster index="34" min="1" max="5"/>
         <Monster index="32" min="0" max="3"/>
     </Troop>
-    <Troop name="Sahagin Prince(0-1),White Shark(1-2)" num_groups="2">
-        <Monster index="14" min="0" max="1"/>
+    <Troop name="Sahagin Prince(0-1),White Shark(1-2)" formation="1" max="8" num_groups="2">
         <Monster index="18" min="1" max="2"/>
+        <Monster index="14" min="0" max="1"/>
     </Troop>
-    <Troop name="Sahagin Prince(3-6),White Shark(2)" num_groups="2">
-        <Monster index="14" min="3" max="6"/>
+    <Troop name="Sahagin Prince(3-6),White Shark(2)" formation="1" max="8" num_groups="2">
         <Monster index="18" min="2" max="2"/>
+        <Monster index="14" min="3" max="6"/>
     </Troop>
-    <Troop name="Death Eye(1)" num_groups="1">
+    <Troop name="Death Eye(1)" formation="2" max="4" num_groups="1">
         <Monster index="51" min="1" max="1"/>
     </Troop>
-    <Troop name="Ghost(2-5)" num_groups="1">
+    <Troop name="Ghost(2-5)" formation="0" max="9" num_groups="1">
         <Monster index="42" min="2" max="5"/>
     </Troop>
-    <Troop name="Water Naga(1),Water Elemental(0-1)" num_groups="2">
+    <Troop name="Water Naga(1),Water Elemental(0-1)" formation="1" max="8" num_groups="2">
         <Monster index="99" min="1" max="1"/>
         <Monster index="97" min="0" max="1"/>
     </Troop>
-    <Troop name="Water Naga(1-2),Water Elemental(3-6)" num_groups="2">
+    <Troop name="Water Naga(1-2),Water Elemental(3-6)" formation="1" max="8" num_groups="2">
         <Monster index="99" min="1" max="2"/>
         <Monster index="97" min="3" max="6"/>
     </Troop>
-    <Troop name="White Shark(1),Deepeyes(0-1)" num_groups="2">
+    <Troop name="White Shark(1),Deepeyes(0-1)" formation="2" max="4" num_groups="2">
         <Monster index="18" min="1" max="1"/>
         <Monster index="20" min="0" max="1"/>
     </Troop>
-    <Troop name="White Shark(1-2),Deepeyes(1-2)" num_groups="2">
+    <Troop name="White Shark(1-2),Deepeyes(1-2)" formation="2" max="4" num_groups="2">
         <Monster index="18" min="1" max="2"/>
         <Monster index="20" min="1" max="2"/>
     </Troop>
-    <Troop name="Water Elemental(1-3)" num_groups="1">
+    <Troop name="Water Elemental(1-3)" formation="0" max="9" num_groups="1">
         <Monster index="97" min="1" max="3"/>
     </Troop>
-    <Troop name="Water Elemental(3-6)" num_groups="1">
+    <Troop name="Water Elemental(3-6)" formation="0" max="9" num_groups="1">
         <Monster index="97" min="3" max="6"/>
     </Troop>
-    <Troop name="King Mummy(1-5),Mummy(0-8),Cockatrice(0-8),Pyrolisk(0-8)" num_groups="4">
+    <Troop name="King Mummy(1-5),Mummy(0-8),Cockatrice(0-8),Pyrolisk(0-8)" formation="0" max="9" num_groups="4">
         <Monster index="80" min="1" max="5"/>
         <Monster index="79" min="0" max="8"/>
         <Monster index="81" min="0" max="8"/>
         <Monster index="82" min="0" max="8"/>
     </Troop>
-    <Troop name="King Mummy(1-2),Mummy(1-6)" num_groups="2">
+    <Troop name="King Mummy(1-2),Mummy(1-6)" formation="0" max="9" num_groups="2">
         <Monster index="80" min="1" max="2"/>
         <Monster index="79" min="1" max="6"/>
     </Troop>
-    <Troop name="Dragon Zombie(1-2)" num_groups="1">
+    <Troop name="Dragon Zombie(1-2)" formation="2" max="4" num_groups="1">
         <Monster index="68" min="1" max="2"/>
     </Troop>
-    <Troop name="Dragon Zombie(2-4)" num_groups="1">
+    <Troop name="Dragon Zombie(2-4)" formation="2" max="4" num_groups="1">
         <Monster index="68" min="2" max="4"/>
     </Troop>
-    <Troop name="Guardian(2-5)" num_groups="1">
+    <Troop name="Guardian(2-5)" formation="0" max="9" num_groups="1">
         <Monster index="95" min="2" max="5"/>
     </Troop>
-    <Troop name="Guardian(0-1),Soldier(1)" num_groups="2">
+    <Troop name="Guardian(0-1),Soldier(1)" formation="0" max="9" num_groups="2">
         <Monster index="95" min="0" max="1"/>
         <Monster index="96" min="1" max="1"/>
     </Troop>
-    <Troop name="Black Knight(2-5)" num_groups="1">
+    <Troop name="Black Knight(2-5)" formation="0" max="9" num_groups="1">
         <Monster index="111" min="2" max="5"/>
     </Troop>
-    <Troop name="Black Knight(5-9)" num_groups="1">
+    <Troop name="Black Knight(5-9)" formation="0" max="9" num_groups="1">
         <Monster index="111" min="5" max="9"/>
     </Troop>
-    <Troop name="Blue Dragon(1)" num_groups="1">
+    <Troop name="Blue Dragon(1)" formation="2" max="4" num_groups="1">
         <Monster index="107" min="1" max="1"/>
     </Troop>
-    <Troop name="Blue Dragon(2-3)" num_groups="1">
+    <Troop name="Blue Dragon(2-3)" formation="2" max="4" num_groups="1">
         <Monster index="107" min="2" max="3"/>
     </Troop>
-    <Troop name="Nightmare(1-2)" num_groups="1">
+    <Troop name="Nightmare(1-2)" formation="2" max="4" num_groups="1">
         <Monster index="117" min="1" max="2"/>
     </Troop>
-    <Troop name="Nightmare(1-2),Black Knight(1-2)" num_groups="2">
+    <Troop name="Nightmare(1-2),Black Knight(1-2)" formation="1" max="8" num_groups="2">
         <Monster index="117" min="1" max="2"/>
         <Monster index="111" min="1" max="2"/>
     </Troop>
-    <Troop name="Dark Flan(3-6)" num_groups="1">
+    <Troop name="Dark Flan(3-6)" formation="0" max="9" num_groups="1">
         <Monster index="72" min="3" max="6"/>
     </Troop>
-    <Troop name="Dark Flan(4-8)" num_groups="1">
+    <Troop name="Dark Flan(4-8)" formation="0" max="9" num_groups="1">
         <Monster index="72" min="4" max="8"/>
     </Troop>
-    <Troop name="Air Elemental(2-4)" num_groups="1">
+    <Troop name="Air Elemental(2-4)" formation="0" max="9" num_groups="1">
         <Monster index="98" min="2" max="4"/>
     </Troop>
-    <Troop name="Air Elemental(3-6)" num_groups="1">
+    <Troop name="Air Elemental(3-6)" formation="0" max="9" num_groups="1">
         <Monster index="98" min="3" max="6"/>
     </Troop>
-    <Troop name="Spirit Naga(1),Air Elemental(0-1)" num_groups="2">
+    <Troop name="Spirit Naga(1),Air Elemental(0-1)" formation="1" max="8" num_groups="2">
         <Monster index="100" min="1" max="1"/>
         <Monster index="98" min="0" max="1"/>
     </Troop>
-    <Troop name="Spirit Naga(0-1),Air Elemental(1-3)" num_groups="2">
+    <Troop name="Spirit Naga(0-1),Air Elemental(1-3)" formation="1" max="8" num_groups="2">
         <Monster index="100" min="0" max="1"/>
         <Monster index="98" min="1" max="3"/>
     </Troop>
-    <Troop name="Vampire Lord(1-3)" num_groups="1">
+    <Troop name="Vampire Lord(1-3)" formation="0" max="9" num_groups="1">
         <Monster index="61" min="1" max="3"/>
     </Troop>
-    <Troop name="Vampire Lord(1-3),Dragon Zombie(1-2)" num_groups="2">
-        <Monster index="61" min="1" max="3"/>
+    <Troop name="Vampire Lord(1-3),Dragon Zombie(1-2)" formation="1" max="8" num_groups="2">
         <Monster index="68" min="1" max="2"/>
+        <Monster index="61" min="1" max="3"/>
     </Troop>
-    <Troop name="Death Knight(1),Nightmare(1-2)" num_groups="2">
+    <Troop name="Death Knight(1),Nightmare(1-2)" formation="1" max="8" num_groups="2">
+        <Monster index="117" min="1" max="2"/>
         <Monster index="112" min="1" max="1"/>
-        <Monster index="117" min="1" max="2"/>
     </Troop>
-    <Troop name="Death Knight(1-2),Nightmare(1-2)" num_groups="2">
+    <Troop name="Death Knight(1-2),Nightmare(1-2)" formation="1" max="8" num_groups="2">
+        <Monster index="117" min="1" max="2"/>
         <Monster index="112" min="1" max="2"/>
-        <Monster index="117" min="1" max="2"/>
     </Troop>
-    <Troop name="Chimera(1-2),Rhyos(1-2)" num_groups="2">
+    <Troop name="Chimera(1-2),Rhyos(1-2)" formation="2" max="4" num_groups="2">
         <Monster index="101" min="1" max="2"/>
         <Monster index="102" min="1" max="2"/>
     </Troop>
-    <Troop name="Chimera(1)" num_groups="1">
+    <Troop name="Chimera(1)" formation="2" max="4" num_groups="1">
         <Monster index="101" min="1" max="1"/>
     </Troop>
-    <Troop name="Warmech(1)" num_groups="1">
+    <Troop name="Warmech(1)" formation="2" max="4" num_groups="1">
         <Monster index="118" min="1" max="1"/>
     </Troop>
-    <Troop name="Dark Fighter(1-2)" num_groups="1">
+    <Troop name="Dark Fighter(1-2)" formation="0" max="9" num_groups="1">
         <Monster index="115" min="1" max="2"/>
     </Troop>
-    <Troop name="Purple Worm(1-2)" num_groups="1">
+    <Troop name="Purple Worm(1-2)" formation="2" max="4" num_groups="1">
         <Monster index="47" min="1" max="2"/>
     </Troop>
-    <Troop name="Purple Worm(3-4)" num_groups="1">
+    <Troop name="Purple Worm(3-4)" formation="2" max="4" num_groups="1">
         <Monster index="47" min="3" max="4"/>
     </Troop>
-    <Troop name="Stone Golem(1-2)" num_groups="1">
+    <Troop name="Stone Golem(1-2)" formation="2" max="4" num_groups="1">
         <Monster index="109" min="1" max="2"/>
     </Troop>
-    <Troop name="Stone Golem(2-4)" num_groups="1">
+    <Troop name="Stone Golem(2-4)" formation="2" max="4" num_groups="1">
         <Monster index="109" min="2" max="4"/>
     </Troop>
-    <Troop name="Green Dragon(1)" num_groups="1">
+    <Troop name="Green Dragon(1)" formation="2" max="4" num_groups="1">
         <Monster index="106" min="1" max="1"/>
     </Troop>
-    <Troop name="Green Dragon(2-4)" num_groups="1">
+    <Troop name="Green Dragon(2-4)" formation="2" max="4" num_groups="1">
         <Monster index="106" min="2" max="4"/>
     </Troop>
-    <Troop name="White Shark(1-2),Shark(0-1)" num_groups="2">
+    <Troop name="White Shark(1-2),Shark(0-1)" formation="2" max="4" num_groups="2">
         <Monster index="18" min="1" max="2"/>
         <Monster index="17" min="0" max="1"/>
     </Troop>
-    <Troop name="White Shark(1-2),Shark(0-1)" num_groups="2">
+    <Troop name="White Shark(1-2),Shark(0-1)" formation="2" max="4" num_groups="2">
         <Monster index="18" min="1" max="2"/>
         <Monster index="17" min="0" max="1"/>
     </Troop>
-    <Troop name="Sahagin(0-6),Bigeyes(1-2)" num_groups="2">
-        <Monster index="12" min="0" max="6"/>
+    <Troop name="Sahagin(0-6),Bigeyes(1-2)" formation="1" max="8" num_groups="2">
         <Monster index="19" min="1" max="2"/>
+        <Monster index="12" min="0" max="6"/>
     </Troop>
-    <Troop name="Sahagin(3-7),Sahagin Chief(0-2)" num_groups="2">
+    <Troop name="Sahagin(3-7),Sahagin Chief(0-2)" formation="0" max="9" num_groups="2">
         <Monster index="12" min="3" max="7"/>
         <Monster index="13" min="0" max="2"/>
     </Troop>
-    <Troop name="Buccaneer(1-5)" num_groups="1">
+    <Troop name="Buccaneer(1-5)" formation="0" max="9" num_groups="1">
         <Monster index="16" min="1" max="5"/>
     </Troop>
-    <Troop name="Shark(1)" num_groups="1">
+    <Troop name="Shark(1)" formation="2" max="4" num_groups="1">
         <Monster index="17" min="1" max="1"/>
     </Troop>
-    <Troop name="Shark(1-2),Sahagin(0-2),Bigeyes(0-1)" num_groups="3">
+    <Troop name="Shark(1-2),Sahagin(0-2),Bigeyes(0-1)" formation="1" max="8" num_groups="3">
         <Monster index="17" min="1" max="2"/>
-        <Monster index="12" min="0" max="2"/>
         <Monster index="19" min="0" max="1"/>
+        <Monster index="12" min="0" max="2"/>
     </Troop>
-    <Troop name="Sahagin(4-6)" num_groups="1">
+    <Troop name="Sahagin(4-6)" formation="0" max="9" num_groups="1">
         <Monster index="12" min="4" max="6"/>
     </Troop>
-    <Troop name="Shark(1),Sahagin Chief(0-1)" num_groups="2">
+    <Troop name="Shark(1),Sahagin Chief(0-1)" formation="1" max="8" num_groups="2">
         <Monster index="17" min="1" max="1"/>
         <Monster index="13" min="0" max="1"/>
     </Troop>
-    <Troop name="Shark(1-2),Sahagin Chief(0-3)" num_groups="2">
+    <Troop name="Shark(1-2),Sahagin Chief(0-3)" formation="1" max="8" num_groups="2">
         <Monster index="17" min="1" max="2"/>
         <Monster index="13" min="0" max="3"/>
     </Troop>
-    <Troop name="Piranha(2-6)" num_groups="1">
+    <Troop name="Piranha(2-6)" formation="0" max="9" num_groups="1">
         <Monster index="87" min="2" max="6"/>
     </Troop>
-    <Troop name="Piranha(3-8)" num_groups="1">
+    <Troop name="Piranha(3-8)" formation="0" max="9" num_groups="1">
         <Monster index="87" min="3" max="8"/>
     </Troop>
-    <Troop name="Hydra(1-2),Ochu(0-2)" num_groups="2">
+    <Troop name="Hydra(1-2),Ochu(0-2)" formation="2" max="4" num_groups="2">
         <Monster index="93" min="1" max="2"/>
         <Monster index="91" min="0" max="2"/>
     </Troop>
-    <Troop name="Hydra(1),Ochu(0-1)" num_groups="2">
+    <Troop name="Hydra(1),Ochu(0-1)" formation="2" max="4" num_groups="2">
         <Monster index="93" min="1" max="1"/>
         <Monster index="91" min="0" max="1"/>
     </Troop>
-    <Troop name="Sea Troll(1-2),Sea Snake(0-2),Sea Scorpion(0-2)" num_groups="3">
+    <Troop name="Sea Troll(1-2),Sea Snake(0-2),Sea Scorpion(0-2)" formation="1" max="8" num_groups="3">
         <Monster index="38" min="1" max="2"/>
         <Monster index="32" min="0" max="2"/>
         <Monster index="34" min="0" max="2"/>
     </Troop>
-    <Troop name="Sea Troll(1),Sea Snake(0-3)" num_groups="2">
+    <Troop name="Sea Troll(1),Sea Snake(0-3)" formation="1" max="8" num_groups="2">
         <Monster index="38" min="1" max="1"/>
         <Monster index="32" min="0" max="3"/>
     </Troop>
-    <Troop name="White Croc(1-2),Red Piranha(0-3)" num_groups="2">
+    <Troop name="White Croc(1-2),Red Piranha(0-3)" formation="0" max="9" num_groups="2">
         <Monster index="90" min="1" max="2"/>
         <Monster index="88" min="0" max="3"/>
     </Troop>
-    <Troop name="White Croc(1),Red Piranha(1-4)" num_groups="2">
+    <Troop name="White Croc(1),Red Piranha(1-4)" formation="0" max="9" num_groups="2">
         <Monster index="90" min="1" max="1"/>
         <Monster index="88" min="1" max="4"/>
     </Troop>
-    <Troop name="Troll(1-2)" num_groups="1">
+    <Troop name="Troll(1-2)" formation="2" max="4" num_groups="1">
         <Monster index="37" min="1" max="2"/>
     </Troop>
-    <Troop name="Troll(2-4)" num_groups="1">
+    <Troop name="Troll(2-4)" formation="2" max="4" num_groups="1">
         <Monster index="37" min="2" max="4"/>
     </Troop>
-    <Troop name="Minotaur(1-2)" num_groups="1">
+    <Troop name="Minotaur(1-2)" formation="2" max="4" num_groups="1">
         <Monster index="35" min="1" max="2"/>
     </Troop>
-    <Troop name="Minotaur(2-4)" num_groups="1">
+    <Troop name="Minotaur(2-4)" formation="2" max="4" num_groups="1">
         <Monster index="35" min="2" max="4"/>
     </Troop>
-    <Troop name="Piranha(0-2),Crocodile(0-2),Ochu(1),Hydra(0-1)" num_groups="4">
-        <Monster index="87" min="0" max="2"/>
-        <Monster index="89" min="0" max="2"/>
+    <Troop name="Piranha(0-2),Crocodile(0-2),Ochu(1),Hydra(0-1)" formation="1" max="8" num_groups="4">
         <Monster index="91" min="1" max="1"/>
         <Monster index="93" min="0" max="1"/>
+        <Monster index="87" min="0" max="2"/>
+        <Monster index="89" min="0" max="2"/>
     </Troop>
-    <Troop name="Piranha(2-4),Crocodile(0-2)" num_groups="2">
+    <Troop name="Piranha(2-4),Crocodile(0-2)" formation="0" max="9" num_groups="2">
         <Monster index="87" min="2" max="4"/>
         <Monster index="89" min="0" max="2"/>
     </Troop>
-    <Troop name="Tarantula(1-2),Black Widow(0-2),Green Slime(0-1),Gray Ooze(0-1)" num_groups="4">
+    <Troop name="Tarantula(1-2),Black Widow(0-2),Green Slime(0-1),Gray Ooze(0-1)" formation="0" max="9" num_groups="4">
         <Monster index="74" min="1" max="2"/>
         <Monster index="73" min="0" max="2"/>
         <Monster index="69" min="0" max="1"/>
         <Monster index="70" min="0" max="1"/>
     </Troop>
-    <Troop name="Tarantula(3-6),Black Widow(0-2)" num_groups="2">
+    <Troop name="Tarantula(3-6),Black Widow(0-2)" formation="0" max="9" num_groups="2">
         <Monster index="74" min="3" max="6"/>
         <Monster index="73" min="0" max="2"/>
     </Troop>
-    <Troop name="Weretiger(1-3),Sabertooth(0-2),Lesser Tiger(0-2)" num_groups="3">
-        <Monster index="54" min="1" max="3"/>
+    <Troop name="Weretiger(1-3),Sabertooth(0-2),Lesser Tiger(0-2)" formation="1" max="8" num_groups="3">
         <Monster index="59" min="0" max="2"/>
         <Monster index="58" min="0" max="2"/>
+        <Monster index="54" min="1" max="3"/>
     </Troop>
-    <Troop name="Weretiger(4-7)" num_groups="1">
+    <Troop name="Weretiger(4-7)" formation="0" max="9" num_groups="1">
         <Monster index="54" min="4" max="7"/>
     </Troop>
-    <Troop name="Vampire(2-5)" num_groups="1">
+    <Troop name="Vampire(2-5)" formation="0" max="9" num_groups="1">
         <Monster index="60" min="2" max="5"/>
     </Troop>
-    <Troop name="Vampire Lord(1),Vampire(3-6)" num_groups="2">
+    <Troop name="Vampire Lord(1),Vampire(3-6)" formation="0" max="9" num_groups="2">
         <Monster index="61" min="1" max="1"/>
         <Monster index="60" min="3" max="6"/>
     </Troop>
-    <Troop name="Evil Eye(1)" num_groups="1">
+    <Troop name="Evil Eye(1)" formation="2" max="4" num_groups="1">
         <Monster index="50" min="1" max="1"/>
     </Troop>
-    <Troop name="Evil Eye(2-3)" num_groups="1">
+    <Troop name="Evil Eye(2-3)" formation="2" max="4" num_groups="1">
         <Monster index="50" min="2" max="3"/>
     </Troop>
-    <Troop name="Horned Devil(2-5)" num_groups="1">
+    <Troop name="Horned Devil(2-5)" formation="0" max="9" num_groups="1">
         <Monster index="63" min="2" max="5"/>
     </Troop>
-    <Troop name="Horned Devil(3-7)" num_groups="1">
+    <Troop name="Horned Devil(3-7)" formation="0" max="9" num_groups="1">
         <Monster index="63" min="3" max="7"/>
     </Troop>
-    <Troop name="Gray Ooze(1-3)" num_groups="1">
+    <Troop name="Gray Ooze(1-3)" formation="0" max="9" num_groups="1">
         <Monster index="70" min="1" max="3"/>
     </Troop>
-    <Troop name="Gray Ooze(4-7)" num_groups="1">
+    <Troop name="Gray Ooze(4-7)" formation="0" max="9" num_groups="1">
         <Monster index="70" min="4" max="7"/>
     </Troop>
-    <Troop name="Mindflayer(1-3)" num_groups="1">
+    <Troop name="Mindflayer(1-3)" formation="0" max="9" num_groups="1">
         <Monster index="104" min="1" max="3"/>
     </Troop>
-    <Troop name="Mindflayer(3-7)" num_groups="1">
+    <Troop name="Mindflayer(3-7)" formation="0" max="9" num_groups="1">
         <Monster index="104" min="3" max="7"/>
     </Troop>
-    <Troop name="Hellhound(1-2)" num_groups="1">
+    <Troop name="Hellhound(1-2)" formation="0" max="9" num_groups="1">
         <Monster index="26" min="1" max="2"/>
     </Troop>
-    <Troop name="Hellhound(3-4)" num_groups="1">
+    <Troop name="Hellhound(3-4)" formation="0" max="9" num_groups="1">
         <Monster index="26" min="3" max="4"/>
     </Troop>
-    <Troop name="Ogre Mage(1),Ogre Chief(1),Hyenadon(0-2)" num_groups="3">
+    <Troop name="Ogre Mage(1),Ogre Chief(1),Hyenadon(0-2)" formation="1" max="8" num_groups="3">
         <Monster index="29" min="1" max="1"/>
         <Monster index="28" min="1" max="1"/>
         <Monster index="25" min="0" max="2"/>
     </Troop>
-    <Troop name="Ogre Mage(1-3),Ogre Chief(0-2)" num_groups="2">
+    <Troop name="Ogre Mage(1-3),Ogre Chief(0-2)" formation="2" max="4" num_groups="2">
         <Monster index="29" min="1" max="3"/>
         <Monster index="28" min="0" max="2"/>
     </Troop>
-    <Troop name="Sphinx(1-2)" num_groups="1">
+    <Troop name="Sphinx(1-2)" formation="2" max="4" num_groups="1">
         <Monster index="76" min="1" max="2"/>
     </Troop>
-    <Troop name="Sphinx(1-4)" num_groups="1">
+    <Troop name="Sphinx(1-4)" formation="2" max="4" num_groups="1">
         <Monster index="76" min="1" max="4"/>
     </Troop>
-    <Troop name="Wyvern(1-3)" num_groups="1">
+    <Troop name="Wyvern(1-3)" formation="2" max="4" num_groups="1">
         <Monster index="83" min="1" max="3"/>
     </Troop>
-    <Troop name="Wyvern(1-4)" num_groups="1">
+    <Troop name="Wyvern(1-4)" formation="2" max="4" num_groups="1">
         <Monster index="83" min="1" max="4"/>
     </Troop>
-    <Troop name="Desert Baretta(1)" num_groups="1">
+    <Troop name="Desert Baretta(1)" formation="2" max="4" num_groups="1">
         <Monster index="78" min="1" max="1"/>
     </Troop>
-    <Troop name="Desert Baretta(1-2)" num_groups="1">
+    <Troop name="Desert Baretta(1-2)" formation="2" max="4" num_groups="1">
         <Monster index="78" min="1" max="2"/>
     </Troop>
-    <Troop name="Sea Snake(2-4)" num_groups="1">
+    <Troop name="Sea Snake(2-4)" formation="0" max="9" num_groups="1">
         <Monster index="32" min="2" max="4"/>
     </Troop>
-    <Troop name="Sea Snake(3-6)" num_groups="1">
+    <Troop name="Sea Snake(3-6)" formation="0" max="9" num_groups="1">
         <Monster index="32" min="3" max="6"/>
     </Troop>
-    <Troop name="Lich(1)" num_groups="1">
+    <Troop name="Lich(1)" formation="0" max="9" num_groups="1">
         <Monster index="119" min="1" max="1"/>
     </Troop>
-    <Troop name="Marilith(1)" num_groups="1">
+    <Troop name="Marilith(1)" formation="0" max="9" num_groups="1">
         <Monster index="121" min="1" max="1"/>
     </Troop>
-    <Troop name="Kraken(1)" num_groups="1">
+    <Troop name="Kraken(1)" formation="0" max="9" num_groups="1">
         <Monster index="123" min="1" max="1"/>
     </Troop>
-    <Troop name="Tiamat(1)" num_groups="1">
+    <Troop name="Tiamat(1)" formation="0" max="9" num_groups="1">
         <Monster index="125" min="1" max="1"/>
     </Troop>
-    <Troop name="Tiamat(1)" num_groups="1">
+    <Troop name="Tiamat(1)" formation="0" max="9" num_groups="1">
         <Monster index="125" min="1" max="1"/>
     </Troop>
-    <Troop name="Kraken(1)" num_groups="1">
+    <Troop name="Kraken(1)" formation="0" max="9" num_groups="1">
         <Monster index="123" min="1" max="1"/>
     </Troop>
-    <Troop name="Marilith(1)" num_groups="1">
+    <Troop name="Marilith(1)" formation="0" max="9" num_groups="1">
         <Monster index="121" min="1" max="1"/>
     </Troop>
-    <Troop name="Lich(1)" num_groups="1">
+    <Troop name="Lich(1)" formation="0" max="9" num_groups="1">
         <Monster index="119" min="1" max="1"/>
     </Troop>
-    <Troop name="Chaos(1)" num_groups="1">
+    <Troop name="Chaos(1)" formation="0" max="9" num_groups="1">
         <Monster index="127" min="1" max="1"/>
     </Troop>
-    <Troop name="Vampire(1)" num_groups="1">
+    <Troop name="Vampire(1)" formation="0" max="9" num_groups="1">
         <Monster index="60" min="1" max="1"/>
     </Troop>
-    <Troop name="Astos(1)" num_groups="1">
+    <Troop name="Astos(1)" formation="2" max="4" num_groups="1">
         <Monster index="113" min="1" max="1"/>
     </Troop>
-    <Troop name="Pirate(9)" num_groups="1">
+    <Troop name="Pirate(9)" formation="0" max="9" num_groups="1">
         <Monster index="15" min="9" max="9"/>
     </Troop>
-    <Troop name="Sahagin Prince(1-2),Sahagin Chief(8)" num_groups="2">
+    <Troop name="Sahagin Prince(1-2),Sahagin Chief(8)" formation="0" max="9" num_groups="2">
         <Monster index="14" min="1" max="2"/>
         <Monster index="13" min="8" max="8"/>
     </Troop>
-    <Troop name="Garland(1)" num_groups="1">
+    <Troop name="Garland(1)" formation="2" max="4" num_groups="1">
         <Monster index="105" min="1" max="1"/>
     </Troop>
-    <Troop name="Iron Golem(1-2)" num_groups="1">
+    <Troop name="Iron Golem(1-2)" formation="2" max="4" num_groups="1">
         <Monster index="110" min="1" max="2"/>
     </Troop>
 </MonsterTroopList>

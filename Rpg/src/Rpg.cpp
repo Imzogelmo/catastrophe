@@ -44,6 +44,8 @@ GlobalSettings::~GlobalSettings()
 	delete m_configfile;
 }
 
+void GenMonForm();
+void GenMonTroopForm();
 
 
 void LoadConfigSettings( int argc, char *argv[] )
@@ -203,6 +205,10 @@ int main(int argc, char* argv[])
 	return 0;
 	*/
 
+	//GenMonForm();
+	//GenMonTroopForm();
+	//return 0;
+
 	GameData* gd = GetGameData();
 	Database* db = GetDatabase();
 	db->DeserializeAllDataXml();
@@ -224,8 +230,8 @@ int main(int argc, char* argv[])
 
 	Timer timer;
 	timer.Reset();
-	if( game->Initialize() != 0 )
-		return -1;
+	//if( game->Initialize() != 0 )
+	//	return -1;
 	Log( "game->Initialize milliseconds : %0.4f", float(timer.MilliSeconds()) );
 
 	Window* window = CreateWindow();
@@ -246,8 +252,8 @@ int main(int argc, char* argv[])
 		Input::Update();
 		//Log("update %0.4f", float(timer.Seconds()));
 
-		game->Update();
-		game->Render();
+	//	game->Update();
+	//	game->Render();
 
 		window->SwapBuffers();
 
@@ -276,4 +282,144 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
+
+
+
+
+// more data generators.
+///////////////////////////////////////////////////////////////////////////////////////
+void GenMonForm()
+{
+	Database * db = GetDatabase();
+	MonsterFormation* m = 0;
+	db->monster_formations.resize(4);
+
+	//pos
+	//int sX[9] = { 32, 32, 32, 64, 64, 64, 96, 96, 96 };
+	//int sY[9] = { 64, 32, 96, 64, 32, 96, 64, 32, 96 };
+	int sX[9] = { 0, 0, 0, 32, 32, 32, 64, 64, 64 };
+	int sY[9] = { 64, 32, 96, 64, 32, 96, 64, 32, 96 };
+	//int lX[4] = { 32, 32, 80, 80 };
+	//int lY[4] = { 32, 80, 32, 80 };
+	int lX[4] = { 0, 0, 48, 48 };
+	int lY[4] = { 48, 96, 48, 96 };
+
+	// 1
+	m = db->GetMonsterFormation(0);
+	m->formations.resize(9);
+	foreachi(i, 9)
+	{
+		m->formations[i].x = sX[i];
+		m->formations[i].y = sY[i];
+	}
+
+	// 2
+	m = db->GetMonsterFormation(1);
+	m->formations.resize(8);
+	foreachi(i, 8)
+	{
+		if( i < 2 ) {
+			m->formations[i].x = lX[i];
+			m->formations[i].y = lY[i];
+		}
+		else {
+			m->formations[i].x = sX[i] - 16;
+			m->formations[i].y = sY[i];
+		}
+	}
+
+	// 3
+	m = db->GetMonsterFormation(2);
+	m->formations.resize(4);
+	foreachi(i, 4)
+	{
+		m->formations[i].x = lX[i];
+		m->formations[i].y = lY[i];
+	}
+
+
+	// Boss formation - center x,y
+	// 4
+	m = db->GetMonsterFormation(3);
+	m->formations.resize(1);
+
+	m->formations[0].x = 48;
+	m->formations[0].y = 48;
+
+
+
+
+
+
+	db->monster_formations.SerializeXml("monster_formations.xml");
+
+}
+
+
+void GenMonTroopForm()
+{
+	Database * db = GetDatabase();
+	MonsterTroop* t = 0;
+	db->DeserializeAllDataXml();
+
+
+	foreachi(i, db->monster_troops.size())
+	{
+		bool boss = false;
+		int small = 0;
+		int large = 0;
+		int lastSize = 0; //0 - small
+		int curSize = 0; //0 - small
+
+		t = db->GetMonsterTroop(i);
+		foreachi( j, t->groups.size() )
+		{
+			int id = t->groups[j].monster_id;
+			float x = db->monster_battle_sprites.at(id).size.x;
+			if( x < 40 )
+			{
+				small++;
+				curSize = 0;
+			}
+			else if( x < 64 )
+			{
+				large++;
+				curSize = 1;
+			}
+
+			else boss = true;
+
+			if( j > 0 && curSize == 1 )
+			{
+				if( lastSize == 0 )
+				{
+					fc::swap(t->groups[j], t->groups[j-1]);
+					curSize = 0;
+				}
+			}
+
+			lastSize = curSize;
+		}
+
+		int form = 0;
+		if(large > 0)
+		{
+			if(small > 0)
+				form = 1;
+			else
+				form = 2;
+		}
+
+		t->formation_id = form;
+
+		if(form == 0) t->max_monsters = 9;
+		else if(form == 1) t->max_monsters = 8;
+		else if(form == 2) t->max_monsters = 4;
+		else if(form == 3) t->max_monsters = 1;
+
+	}
+
+	db->monster_troops.SerializeXml("monster_troops.xml");
+
+}
 
