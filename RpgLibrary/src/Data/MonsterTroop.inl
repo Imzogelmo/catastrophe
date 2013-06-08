@@ -17,12 +17,10 @@
 
 
 
-MonsterGroup::MonsterGroup( int monsterIndex, int minNum, int maxNum, int x, int y ) :
+MonsterGroup::MonsterGroup( int monsterIndex, int minNum, int maxNum ) :
 	monster_id(monsterIndex),
 	min(minNum),
-	max(maxNum),
-	x(x),
-	y(y)
+	max(maxNum)
 {
 }
 
@@ -41,8 +39,6 @@ void MonsterGroup::SerializeXml( XmlWriter* xml )
 	xml->SetInt("index", monster_id);
 	xml->SetInt("min", min);
 	xml->SetInt("max", max);
-	//xml->SetInt("x", x);
-	//xml->SetInt("y", y);
 	xml->EndNode();
 }
 
@@ -52,8 +48,6 @@ void MonsterGroup::DeserializeXml( XmlReader* xml )
 	monster_id = xml->GetInt("index");
 	min = xml->GetInt("min");
 	max = xml->GetInt("max");
-	//x = xml->GetInt("x");
-	//y = xml->GetInt("y");
 }
 
 
@@ -61,8 +55,9 @@ void MonsterGroup::DeserializeXml( XmlReader* xml )
 
 MonsterTroop::MonsterTroop() :
 	groups(),
-	max_monsters(9),
-	id(0)
+	id(0),
+	formation_id(0),
+	max_monsters(9)
 {
 }
 
@@ -70,8 +65,9 @@ MonsterTroop::MonsterTroop() :
 void MonsterTroop::SerializeXml( XmlWriter* xml )
 {
 	xml->SetString("name", name);
+	xml->SetInt("formation", formation_id);
+	xml->SetInt("max", max_monsters);
 	xml->SetUInt("num_groups", groups.size());
-	//xml->SetInt("max", max_monsters);
 
 	for( vec_type::iterator it = groups.begin(); it < groups.end(); ++it )
 	{
@@ -83,7 +79,8 @@ void MonsterTroop::SerializeXml( XmlWriter* xml )
 void MonsterTroop::DeserializeXml( XmlReader* xml )
 {
 	name = xml->GetString("name");
-	//max_monsters = xml->GetUInt("max");
+	formation_id = xml->GetInt("formation");
+	max_monsters = xml->GetInt("max", 9);
 	size_t n = xml->GetInt("num_groups");
 	groups.resize(n);
 

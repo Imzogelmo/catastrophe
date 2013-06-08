@@ -224,6 +224,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Data\MonsterFormation.inl"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Data\MonsterTroop.inl"
 					>
 				</File>
@@ -241,6 +245,10 @@
 				</File>
 				<File
 					RelativePath=".\src\Data\Spell.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Data\StringReader.inl"
 					>
 				</File>
 				<File
@@ -434,6 +442,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\MonsterFormation.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\MonsterTroop.h"
 					>
 				</File>
@@ -455,6 +467,10 @@
 				</File>
 				<File
 					RelativePath=".\include\StatusEffect.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\StringReader.h"
 					>
 				</File>
 				<File
