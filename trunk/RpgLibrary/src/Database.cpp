@@ -23,6 +23,7 @@
 #include "Spell.inl"
 #include "MonsterData.inl"
 #include "MonsterTroop.inl"
+#include "MonsterFormation.inl"
 #include "Encounter.inl"
 #include "Race.inl"
 #include "CharacterData.inl"
@@ -92,6 +93,7 @@ void Database::ClearAll()
 
 	monsters.clear();
 	monster_troops.clear();
+	monster_formations.clear();
 	characters.clear();
 	character_classes.clear();
 	races.clear();
@@ -116,6 +118,7 @@ void Database::SetAllDefaultDataArrayFilenames()
 
 	monsters.SetFileame("monsters.xml");
 	monster_troops.SetFileame("monster_troops.xml");
+	monster_formations.SetFileame("monster_formations.xml");
 	characters.SetFileame("characters.xml");
 	character_classes.SetFileame("character_classes.xml");
 	races.SetFileame("races.xml");
@@ -145,6 +148,7 @@ void Database::SetAllDefaultDataArrayNodeNames()
 
 	monsters.SetNodeNames("MonsterList", "Monster");
 	monster_troops.SetNodeNames("MonsterTroopList", "Troop");
+	//monster_formations
 	characters.SetNodeNames("CharacterList", "Character");
 	character_classes.SetNodeNames("CharacterClassList", "CharacterClass");
 	races.SetNodeNames("RaceList", "Race");
@@ -168,6 +172,7 @@ bool Database::SerializeAllDataXml()
 
 	monsters.SerializeXml("");
 	monster_troops.SerializeXml("");
+	monster_formations.SerializeXml("");
 	characters.SerializeXml("");
 	character_classes.SerializeXml("");
 	races.SerializeXml("");
@@ -193,6 +198,7 @@ bool Database::DeserializeAllDataXml()
 
 	monsters.DeserializeXml("");
 	monster_troops.DeserializeXml("");
+	monster_formations.DeserializeXml("");
 	characters.DeserializeXml("");
 	character_classes.DeserializeXml("");
 	races.DeserializeXml("");
@@ -244,6 +250,7 @@ bool Database::SerializeDataArray( T& arr, ResourceDirectory* resourceDirectory,
 		return false;
 
 	xml.BeginNode(root);
+	xml.SetInt("ver", 1);
 	xml.SetUInt("count", arr.size());
 	for( size_t i(0); i < arr.size(); ++i )
 	{

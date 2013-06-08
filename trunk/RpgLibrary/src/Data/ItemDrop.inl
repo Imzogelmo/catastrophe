@@ -12,7 +12,8 @@
 #pragma once
 
 #include <Catastrophe/Math/Math.h>
-#include <Catastrophe/FileIO.h>
+#include <Catastrophe/IO/XmlWriter.h>
+#include <Catastrophe/IO/XmlReader.h>
 #include <fc/rand.h>
 
 #include "ItemDrop.h"

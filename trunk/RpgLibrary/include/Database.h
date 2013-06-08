@@ -27,6 +27,7 @@
 #include "Spell.h"
 #include "MonsterData.h"
 #include "MonsterTroop.h"
+#include "MonsterFormation.h"
 #include "Encounter.h"
 #include "Race.h"
 #include "CharacterData.h"
@@ -109,6 +110,7 @@ public:
 
 	DataArray<MonsterData>		monsters;
 	DataArray<MonsterTroop>		monster_troops;
+	DataArray<MonsterFormation>	monster_formations;
 	DataArray<CharacterData>	characters;
 	DataArray<CharacterClass>	character_classes;
 	DataArray<Race>				races;
@@ -197,6 +199,8 @@ public:
 
 	inline MonsterData*			GetMonster(int id) { return GetArrayContent<MonsterData>(monsters, id); }
 	inline MonsterTroop*		GetMonsterTroop(int id) { return GetArrayContent<MonsterTroop>(monster_troops, id); }
+	inline MonsterFormation*	GetMonsterFormation(int id) { return GetArrayContent<MonsterFormation>(monster_formations, id); }
+
 	inline CharacterData*		GetCharacter(int id) { return GetArrayContent<CharacterData>(characters, id); }
 	inline CharacterClass*		GetCharacterClass(int id) { return GetArrayContent<CharacterClass>(character_classes, id); }
 	inline Race*				GetRace(int id) { return GetArrayContent<Race>(races, id); }
@@ -270,6 +274,11 @@ DataArray<MonsterData>::DataArray() : base_type(), filename(), root_name(0), ite
 template <> inline
 DataArray<MonsterTroop>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
 	SetNodeNames("MonsterTroopList", "Troop");
+}
+
+template <> inline
+DataArray<MonsterFormation>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
+	SetNodeNames("MonsterFormationList", "Formation");
 }
 
 template <> inline

@@ -17,15 +17,18 @@
 #include "RpgCommon.h"
 
 
+/*
+ * @MonsterGroup
+ * class that represents data on how to instantiate
+ * monsters.
+ */
 struct RPG_API MonsterGroup
 {
 	int		monster_id;
 	int		min;
 	int		max;
-	int		x;
-	int		y;
 
-	MonsterGroup(int monsterIndex = 0, int minNum = 1, int maxNum = 1, int x = 0, int y = 0);
+	MonsterGroup(int monsterIndex = 0, int minNum = 1, int maxNum = 1);
 
 	//simply to ensure data is sane before saving.
 	void Validate();
@@ -35,18 +38,26 @@ struct RPG_API MonsterGroup
 };
 
 
+
+/*
+ * @MonsterTroop
+ * class that holds an array of monster groups.
+ */
 struct RPG_API MonsterTroop
 {
 	typedef fc::fixed_vector<MonsterGroup, 4> vec_type;
 
 	fc::fixed_string128 name; //this is editor only....
 	vec_type	groups;
-	int			max_monsters;
 	int			id;
+	int			formation_id;
+	int			max_monsters;
 
 	MonsterTroop();
 
 	void SerializeXml( XmlWriter* xml );
 	void DeserializeXml( XmlReader* xml );
 };
+
+
 
