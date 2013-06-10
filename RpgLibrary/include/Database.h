@@ -12,7 +12,7 @@
 #pragma once
 
 #include <fc/dynamic_array.h>
-//#include <fc/fixed_bit_array.h>
+#include <fc/fixed_tiny_vector.h>
 #include <fc/string.h>
 
 #include "RpgCommon.h"
@@ -46,42 +46,9 @@
 #include "ShaderAsset.h"
 
 
+// include last
+#include "DataArray.h"
 
-template <class T>
-class DataArray : public fc::dynamic_array<T>
-{
-public:
-	typedef fc::dynamic_array<T>	base_type;
-
-	fc::string			filename;
-	const char*			root_name;
-	const char*			item_name;
-	ResourceDirectory*	resource_directory;
-
-	DataArray();
-
-	/// Generate a unique id for each item in array.
-	void GenerateIds();
-
-	void SetResourceDirectory( ResourceDirectory* resourceDirectory )
-	{
-		resource_directory = resourceDirectory;
-	}
-
-	void SetNodeNames( const char* root, const char* item )
-	{
-		root_name = root;
-		item_name = item;
-	}
-
-	void SetFileame( const fc::string& name )
-	{
-		filename = name;
-	}
-
-	NO_INLINE bool SerializeXml( const fc::string& filename = "" );
-	NO_INLINE bool DeserializeXml( const fc::string& filename = "" );
-};
 
 
 /*
@@ -216,7 +183,8 @@ public:
 	inline ShaderAsset*				GetShaderAsset(const fc::string& name) { return GetArrayContentByName<ShaderAsset>(shaders, name); }
 
 private:
-	ResourceDirectory*	m_resourceDirectory;
+	ResourceDirectory*		m_resourceDirectory;
+	DatabaseArrayAnyHolder	m_arrayAny;
 
 };
 

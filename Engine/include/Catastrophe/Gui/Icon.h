@@ -32,12 +32,19 @@ public:
 	void Render( SpriteBatch* spritebatch );
 
 	void SetSprite( const Sprite& sprite );
+	void SetAutoFitSprite( bool stretch = true );
+	void SetAutoCenterSprite( bool center = true );
+
+	bool GetAutoFitSprite() const { return m_stretchSprite; }
+	bool GetAutoCenterSprite() const { return m_centerSprite; }
 
 	Sprite& GetSprite() { return m_sprite; }
 	const Sprite& GetSprite() const { return m_sprite; }
 
 protected:
 	Sprite			m_sprite;
+	bool			m_stretchSprite;
+	bool			m_centerSprite;
 
 };
 
@@ -51,12 +58,19 @@ public:
 	void Render( SpriteBatch* spritebatch );
 
 	void SetSprite( const AnimatedSprite& sprite );
+	void SetAutoFitSprite( bool stretch = true );
+	void SetAutoCenterSprite( bool center = true );
+
+	bool GetAutoFitSprite() const { return m_stretchSprite; }
+	bool GetAutoCenterSprite() const { return m_centerSprite; }
 
 	AnimatedSprite& GetSprite() { return m_sprite; }
 	const AnimatedSprite& GetSprite() const { return m_sprite; }
 
 protected:
 	AnimatedSprite	m_sprite;
+	bool			m_stretchSprite;
+	bool			m_centerSprite;
 
 };
 

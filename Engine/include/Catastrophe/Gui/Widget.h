@@ -18,10 +18,10 @@
 
 #pragma once
 
-#include <fc/fixed_vector.h>
+#include <fc/vector.h>
 
 #include "../Common.h"
-#include "../Math/Point.h"
+#include "../Math/Vector2.h"
 #include "../Math/Vector2.h"
 #include "../Math/Color.h"
 
@@ -33,7 +33,7 @@ class CE_API Widget
 public:
 	typedef fc::vector<Widget*>		child_vec_type;
 
-	Widget( Point pos = Point::Zero, Point size = Point::Zero );
+	Widget( const Vector2 pos = Vector2::Zero, Vector2 size = Vector2::Zero );
 
 	virtual ~Widget();
 	virtual void Update();
@@ -42,21 +42,19 @@ public:
 	virtual void UpdateChildren();
 	virtual void RenderChildren( SpriteBatch* spritebatch );
 
-	void SetPosition( const Point& position );
-	void SetPosition( int x, int y ) { SetPosition( Point(x, y) ); }
-	void SetX( int x ) { SetPosition( Point( x, m_pos.y ) ); }
-	void SetY( int y ) { SetPosition( Point( m_pos.x, y ) ); }
-	void SetSize( const Point& size );
-	void SetSize( int width, int height ) { SetSize( Point(width, height) ); }
-	void SetWidth( int width ) { SetSize( Point( width, m_size.y ) ); }
-	void SetHeight( int height ) { SetSize( Point( m_size.x, height ) ); }
-	void SetDimensions( const Rect& rect );
-	void SetColor( const Color& color );
+	void SetPosition( const Vector2& position );
+	void SetPosition( float x, float y ) { SetPosition( Vector2(x, y) ); }
+	void SetX( float x ) { SetPosition( Vector2( x, m_pos.y ) ); }
+	void SetY( float y ) { SetPosition( Vector2( m_pos.x, y ) ); }
+	void SetSize( const Vector2& size );
+	void SetSize( float width, float height ) { SetSize( Vector2(width, height) ); }
+	void SetWidth( float width ) { SetSize( Vector2( width, m_size.y ) ); }
+	void SetHeight( float height ) { SetSize( Vector2( m_size.x, height ) ); }
+	void SetDimensions( const Rectf& rect );
 	void SetActive( bool enable );
-	void SetFocus( bool enable );
 	void SetSelected( bool enable );
 	void SetVisible( bool enable );
-	void SetFocusable( bool enable );
+	void SetEnabled( bool enable );
 
 	void AddChild( Widget* element );
 	void InsertChild( size_t index, Widget* element );
@@ -65,30 +63,30 @@ public:
 	void Remove();
 	void SetParent( Widget* parent );
 
-	const Point& GetPosition() const { return m_pos; }
-	const Point& GetSize() const { return m_size; }
-	int GetWidth() const { return m_size.x; }
-	int GetHeight() const { return m_size.y; }
-	Rect GetDimensions() const;
-	Point GetScreenPosition() const;
-	const Color& GetColor() const { return m_color; }
+	const Vector2& GetPosition() const { return m_pos; }
+	const Vector2& GetSize() const { return m_size; }
+	float GetWidth() const { return m_size.x; }
+	float GetHeight() const { return m_size.y; }
+	Rectf GetDimensions() const;
+	Vector2 GetScreenPosition() const;
 
-	bool HasFocus() const;
 	bool IsRoot() const;
 	bool IsActive() const { return m_active; }
 	bool IsSelected() const { return m_selected; }
 	bool IsVisible() const { return m_visible; }
-	bool IsFocusable() const { return m_focusable; }
+	bool IsLocked() const { return m_locked; }
+	bool IsEnabled() const { return m_enabled; }
 
 	size_t GetNumChildren( bool recurse = false ) const;
 	Widget* GetChild( size_t index ) const;
+	bool HasChild( Widget* element, size_t* index = 0 ) const;
 
 	const child_vec_type& GetChildren() const { return m_children; }
 	void GetChildren( child_vec_type& dest, bool recurse = false ) const;
 
 	Widget* GetParent() const { return m_parent; }
 	Widget* GetRoot();
-	Rect GetBoundingRect() const;
+	Rectf GetBoundingRect( bool recurse = false ) const;
 
 	template <class Compare>
 	void SortChildren( Compare comp );
@@ -100,20 +98,17 @@ protected:
 	Widget*			m_parent;
 	child_vec_type	m_children;
 
-	Point			m_pos;
-	Point			m_size;
-	Color			m_color;
+	Vector2			m_pos;
+	Vector2			m_size;
 
 	int				m_ref_count;
-	//bool			m_locked; //...
 	bool			m_active;
 	bool			m_selected;
 	bool			m_visible;
-	bool			m_focusable;
-
+	bool			m_enabled;
+	bool			m_locked;
 
 };
-
 
 
 

@@ -115,7 +115,7 @@ public:
 	static Color DarkBlue( ubyte alpha = 255 )		{ return Color(  0, 0, 139, alpha); }
 	static Color DarkCyan( ubyte alpha = 255 )		{ return Color(  0, 139, 139, alpha); }
 	static Color DarkGoldenrod( ubyte alpha = 255 )	{ return Color(184, 134, 11, alpha); }
-	static Color DarkGray( ubyte alpha = 255 )		{ return Color(169, 169, 169, alpha); }
+	static Color DarkGray( ubyte alpha = 255 )		{ return Color(64, 64, 64, alpha); }
 	static Color DarkGreen( ubyte alpha = 255 )		{ return Color(  0, 100, 0, alpha); }
 	static Color DarkKhaki( ubyte alpha = 255 )		{ return Color(189, 183, 107, alpha); }
 	static Color DarkMagenta( ubyte alpha = 255 )		{ return Color(139, 0, 139, alpha); }
@@ -160,7 +160,6 @@ public:
 	static Color LightGoldenrodYellow( ubyte alpha = 255 ) { return Color(250, 250, 210, alpha); }
 	static Color LightGray( ubyte alpha = 255 )		{ return Color(211, 211, 211, alpha); }
 	static Color LightGreen( ubyte alpha = 255 )		{ return Color(144, 238, 144, alpha); }
-	static Color LightGrey( ubyte alpha = 255 )		{ return Color(211, 211, 211, alpha); }
 	static Color LightPink( ubyte alpha = 255 )		{ return Color(255, 182, 193, alpha); }
 	static Color LightSalmon( ubyte alpha = 255 )		{ return Color(255, 160, 122, alpha); }
 	static Color LightSeaGreen( ubyte alpha = 255 )	{ return Color( 32, 178, 170, alpha); }
@@ -237,19 +236,47 @@ public:
 	static Color TransparentBlack() { return Color(0, 0, 0, 0); }
 
 protected:
+
+#ifdef CE_BIG_ENDIAN
+	#define BIT_SHIFT_24	0
+	#define BIT_SHIFT_16	8
+	#define BIT_SHIFT_8		16
+	#define BIT_SHIFT_0		24
+#else
+	#define BIT_SHIFT_24	24
+	#define BIT_SHIFT_16	16
+	#define BIT_SHIFT_8		8
+	#define BIT_SHIFT_0		0
+#endif
+
 	static uint _Pack( float r, float g, float b, float a )
 	{
-		return (uint) ( (_ToByte(a) << 24) | (_ToByte(b) << 16) | (_ToByte(g) <<  8) | (_ToByte(r)) );
+		return (uint)( 
+			(_ToByte(a) << BIT_SHIFT_24) |
+			(_ToByte(b) << BIT_SHIFT_16) |
+			(_ToByte(g) << BIT_SHIFT_8) |
+			(_ToByte(r) << BIT_SHIFT_0)
+		);
 	}
 
 	static uint _Pack( int r, int g, int b, int a )
 	{
-		return (uint) ( (a<<24) | (b<<16) | (g<<8) | r );
+		return (uint)( 
+			(a << BIT_SHIFT_24) |
+			(b << BIT_SHIFT_16) |
+			(g << BIT_SHIFT_8) |
+			(r << BIT_SHIFT_0)
+		);
 	}
 
 	static uint _Pack( ubyte r, ubyte g, ubyte b, ubyte a )
 	{
-		return (uint) ( (a<<24) | (b<<16) | (g<<8) | r );
+		return (uint)( 
+			(a << BIT_SHIFT_24) |
+			(b << BIT_SHIFT_16) |
+			(g << BIT_SHIFT_8) |
+			(r << BIT_SHIFT_0)
+		);
 	}
 
 	static uint _Pack( const Colorf &c )
@@ -267,6 +294,11 @@ protected:
 		const float inv = 1.f / 255.f;
 		return (float) (t * inv);
 	}
+
+#undef BIT_SHIFT_24
+#undef BIT_SHIFT_16
+#undef BIT_SHIFT_8
+#undef BIT_SHIFT_0
 
 public:
 	/* must be 32-bit aligned */

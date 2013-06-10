@@ -62,128 +62,83 @@ void Database::Initialize()
 {
 	m_resourceDirectory = g_resourceDirectory;
 
-	items.SetResourceDirectory(m_resourceDirectory);
-	weapons.SetResourceDirectory(m_resourceDirectory);
-	armor.SetResourceDirectory(m_resourceDirectory);
-	accessories.SetResourceDirectory(m_resourceDirectory);
+	m_arrayAny.Add(items);
+	m_arrayAny.Add(weapons);
+	m_arrayAny.Add(armor);
+	m_arrayAny.Add(accessories);
 
-	monsters.SetResourceDirectory(m_resourceDirectory);
-	monster_troops.SetResourceDirectory(m_resourceDirectory);
-	characters.SetResourceDirectory(m_resourceDirectory);
-	character_classes.SetResourceDirectory(m_resourceDirectory);
-	races.SetResourceDirectory(m_resourceDirectory);
+	m_arrayAny.Add(monsters);
+	m_arrayAny.Add(monster_troops);
+	m_arrayAny.Add(monster_formations);
+	m_arrayAny.Add(characters);
+	m_arrayAny.Add(races);
+
+	m_arrayAny.Add(character_portrait_sprites);
+	m_arrayAny.Add(character_map_sprites);
+	m_arrayAny.Add(character_battle_sprites);
+	m_arrayAny.Add(monster_map_sprites);
+	m_arrayAny.Add(monster_battle_sprites);
+	m_arrayAny.Add(shaders);
+
+	DatabaseArrayAnyHolder::vec_type & v = m_arrayAny.GetVector();
+	for( size_t i(0); i < v.size(); ++i )
+	{
+		v[i]->SetResourceDirectory(m_resourceDirectory);
+	}
+}
 
 
-	character_portrait_sprites.SetResourceDirectory(m_resourceDirectory);
-	character_map_sprites.SetResourceDirectory(m_resourceDirectory);
-	character_battle_sprites.SetResourceDirectory(m_resourceDirectory);
-	monster_map_sprites.SetResourceDirectory(m_resourceDirectory);
-	monster_battle_sprites.SetResourceDirectory(m_resourceDirectory);
-	shaders.SetResourceDirectory(m_resourceDirectory);
+void Database::SetAllDefaultDataArrayFilenames()
+{
+	items.SetFilename("items.xml");
+	weapons.SetFilename("weapons.xml");
+	armor.SetFilename("armor.xml");
+	accessories.SetFilename("accessories.xml");
+
+	monsters.SetFilename("monsters.xml");
+	monster_troops.SetFilename("monster_troops.xml");
+	monster_formations.SetFilename("monster_formations.xml");
+	characters.SetFilename("characters.xml");
+	character_classes.SetFilename("character_classes.xml");
+	races.SetFilename("races.xml");
+
+	character_portrait_sprites.SetFilename("character_portrait_sprites.xml");
+	character_map_sprites.SetFilename("character_map_sprites.xml");
+	character_battle_sprites.SetFilename("character_battle_sprites.xml");
+	monster_map_sprites.SetFilename("monster_map_sprites.xml");
+	monster_battle_sprites.SetFilename("monster_battle_sprites.xml");
+	shaders.SetFilename("shaders.xml");
 
 }
 
 
 void Database::ClearAll()
 {
-	items.clear();
-	weapons.clear();
-	armor.clear();
-	accessories.clear();
-
-	monsters.clear();
-	monster_troops.clear();
-	monster_formations.clear();
-	characters.clear();
-	character_classes.clear();
-	races.clear();
-
-
-	character_portrait_sprites.clear();
-	character_map_sprites.clear();
-	character_battle_sprites.clear();
-	monster_map_sprites.clear();
-	monster_battle_sprites.clear();
-	shaders.clear();
-
-}
-
-
-void Database::SetAllDefaultDataArrayFilenames()
-{
-	items.SetFileame("items.xml");
-	weapons.SetFileame("weapons.xml");
-	armor.SetFileame("armor.xml");
-	accessories.SetFileame("accessories.xml");
-
-	monsters.SetFileame("monsters.xml");
-	monster_troops.SetFileame("monster_troops.xml");
-	monster_formations.SetFileame("monster_formations.xml");
-	characters.SetFileame("characters.xml");
-	character_classes.SetFileame("character_classes.xml");
-	races.SetFileame("races.xml");
-
-	character_portrait_sprites.SetFileame("character_portrait_sprites.xml");
-	character_map_sprites.SetFileame("character_map_sprites.xml");
-	character_battle_sprites.SetFileame("character_battle_sprites.xml");
-	monster_map_sprites.SetFileame("monster_map_sprites.xml");
-	monster_battle_sprites.SetFileame("monster_battle_sprites.xml");
-	shaders.SetFileame("shaders.xml");
-
+	DatabaseArrayAnyHolder::vec_type & v = m_arrayAny.GetVector();
+	for( size_t i(0); i < v.size(); ++i )
+	{
+		v[i]->Clear();
+	}
 }
 
 
 void Database::SetAllDefaultDataArrayNodeNames()
 {
-	/*
-	skills.SetNodeNames("SkillList", "Skill");
-	spells.SetNodeNames("SpellList", "Spell");
-	encounters.SetNodeNames("EncounterGroupList", "EncounterGroup");
-	*/
-
-	items.SetNodeNames("ItemList", "Item");
-	weapons.SetNodeNames("ItemList", "Item");
-	armor.SetNodeNames("ItemList", "Item");
-	accessories.SetNodeNames("ItemList", "Item");
-
-	monsters.SetNodeNames("MonsterList", "Monster");
-	monster_troops.SetNodeNames("MonsterTroopList", "Troop");
-	//monster_formations
-	characters.SetNodeNames("CharacterList", "Character");
-	character_classes.SetNodeNames("CharacterClassList", "CharacterClass");
-	races.SetNodeNames("RaceList", "Race");
-
-	character_portrait_sprites.SetNodeNames("SpriteList", "Sprite");
-	character_map_sprites.SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet");
-	character_battle_sprites.SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet");
-	monster_map_sprites.SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet");
-	monster_battle_sprites.SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet");
-	shaders.SetNodeNames("ShaderList", "Shader");
-
+	DatabaseArrayAnyHolder::vec_type & v = m_arrayAny.GetVector();
+	for( size_t i(0); i < v.size(); ++i )
+	{
+		v[i]->SetDefaultNodeNames();
+	}
 }
 
 
 bool Database::SerializeAllDataXml()
 {
-	items.SerializeXml("");
-	weapons.SerializeXml("");
-	armor.SerializeXml("");
-	accessories.SerializeXml("");
-
-	monsters.SerializeXml("");
-	monster_troops.SerializeXml("");
-	monster_formations.SerializeXml("");
-	characters.SerializeXml("");
-	character_classes.SerializeXml("");
-	races.SerializeXml("");
-
-
-	character_portrait_sprites.SerializeXml("");
-	character_map_sprites.SerializeXml("");
-	character_battle_sprites.SerializeXml("");
-	monster_map_sprites.SerializeXml("");
-	monster_battle_sprites.SerializeXml("");
-	shaders.SerializeXml("");
+	DatabaseArrayAnyHolder::vec_type & v = m_arrayAny.GetVector();
+	for( size_t i(0); i < v.size(); ++i )
+	{
+		v[i]->SerializeXml("");
+	}
 
 	return true;
 }
@@ -191,25 +146,11 @@ bool Database::SerializeAllDataXml()
 
 bool Database::DeserializeAllDataXml()
 {
-	items.DeserializeXml("");
-	weapons.DeserializeXml("");
-	armor.DeserializeXml("");
-	accessories.DeserializeXml("");
-
-	monsters.DeserializeXml("");
-	monster_troops.DeserializeXml("");
-	monster_formations.DeserializeXml("");
-	characters.DeserializeXml("");
-	character_classes.DeserializeXml("");
-	races.DeserializeXml("");
-
-
-	character_portrait_sprites.DeserializeXml("");
-	character_map_sprites.DeserializeXml("");
-	character_battle_sprites.DeserializeXml("");
-	monster_map_sprites.DeserializeXml("");
-	monster_battle_sprites.DeserializeXml("");
-	shaders.DeserializeXml("");
+	DatabaseArrayAnyHolder::vec_type & v = m_arrayAny.GetVector();
+	for( size_t i(0); i < v.size(); ++i )
+	{
+		v[i]->DeserializeXml("");
+	}
 
 	return true;
 }

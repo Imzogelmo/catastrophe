@@ -17,7 +17,7 @@
 // THE SOFTWARE.
 
 
-#include "Math/Rect.h"
+#include "Math/Rectf.h"
 
 #include "Gui/Widget.h"
 
@@ -29,16 +29,15 @@
 CE_NAMESPACE_BEGIN
 
 
-Widget::Widget( Point pos, Point size ) :
+Widget::Widget( Vector2 pos, Vector2 size ) :
 	m_parent(0),
 	m_pos(pos),
 	m_size(size),
-	m_color(Color::White()),
 	m_ref_count(1),
 	m_active(false),
 	m_selected(false),
 	m_visible(true),
-	m_focusable(false)
+	m_locked(false)
 {
 }
 
@@ -85,28 +84,22 @@ void Widget::RenderChildren( SpriteBatch* spritebatch )
 }
 
 
-void Widget::SetPosition( const Point& position )
+void Widget::SetPosition( const Vector2& position )
 {
 	m_pos = position;
 }
 
 
-void Widget::SetSize( const Point& size )
+void Widget::SetSize( const Vector2& size )
 {
 	m_size = size;
 }
 
 
-void Widget::SetDimensions( const Rect& rect )
+void Widget::SetDimensions( const Rectf& rect )
 {
-	SetPosition( rect.pos );
-	SetSize( rect.size );
-}
-
-
-void Widget::SetColor( const Color& color )
-{
-	m_color = color;
+	SetPosition( rect.min );
+	SetSize( rect.Size() );
 }
 
 
@@ -116,24 +109,15 @@ void Widget::SetActive( bool enable )
 }
 
 
-void Widget::SetFocusable( bool enable )
-{
-	m_focusable = enable;
-}
-
-
-void Widget::SetFocus( bool enable )
-{
-	if( m_focusable )
-	{
-		(void*)enable;
-	}
-}
-
-
 void Widget::SetSelected( bool enable )
 {
 	m_selected = enable;
+}
+
+
+void Widget::SetEnabled( bool enable )
+{
+	m_enabled = enable;
 }
 
 
@@ -151,10 +135,10 @@ void Widget::AddChild( Widget* element )
 
 void Widget::InsertChild( size_t index, Widget* element )
 {
-	if( index >= m_children.size() )
+	if( index > m_children.size() )
 		index = m_children.size();
 
-	if( !element || element == this || element->m_parent == this )
+	if( !element || element->m_locked || element == this || element->m_parent == this )
 		return;
 
 	for( Widget* parent = m_parent; parent != 0; parent = parent->m_parent )
@@ -216,9 +200,19 @@ void Widget::SetParent( Widget* parent )
 }
 
 
-bool Widget::HasFocus() const
+bool Widget::HasChild( Widget* element, size_t* index ) const
 {
-	//return m_selected; //...not good
+	for( child_vec_type::const_iterator it = m_children.begin(); it != m_children.end(); ++it )
+	{
+		if( element = *it )
+		{
+			if( index )
+				*index = (size_t)(it - m_children.begin());
+
+			return true;
+		}
+	}
+
 	return false;
 }
 
@@ -267,10 +261,10 @@ Widget* Widget::GetChild( size_t index ) const
 }
 
 
-Point Widget::GetScreenPosition() const
+Vector2 Widget::GetScreenPosition() const
 {
-	Point screenPosition = m_pos;
-	if( !IsRoot() )
+	Vector2 screenPosition = m_pos;
+	if( m_parent )
 	{
 		screenPosition += m_parent->GetScreenPosition();
 	}
@@ -279,9 +273,9 @@ Point Widget::GetScreenPosition() const
 }
 
 
-Rect Widget::GetDimensions() const
+Rectf Widget::GetDimensions() const
 {
-	return Rect(GetPosition(), GetSize());
+	return Rectf(m_pos, m_pos + m_size);
 }
 
 
@@ -301,14 +295,18 @@ Widget* Widget::GetRoot()
 }
 
 
-Rect Widget::GetBoundingRect() const
+Rectf Widget::GetBoundingRect( bool recurse ) const
 {
-	Rect rect = Rect( GetScreenPosition(), GetSize() );
+	Vector2 screenPos = GetScreenPosition();
+	Rectf rect = Rectf( screenPos, screenPos + m_size );
 
-	for( child_vec_type::const_iterator it = m_children.begin(); it != m_children.end(); ++it )
+	if( recurse )
 	{
-		Rect childRect = (*it)->GetBoundingRect();
-		rect.Merge(childRect);
+		for( child_vec_type::const_iterator it = m_children.begin(); it != m_children.end(); ++it )
+		{
+			Rectf childRect = (*it)->GetBoundingRect();
+			rect.Merge(childRect);
+		}
 	}
 
 	return rect;

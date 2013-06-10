@@ -209,6 +209,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\Catastrophe\Gui\TextBox.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\Catastrophe\Gui\Widget.h"
 				>
 			</File>

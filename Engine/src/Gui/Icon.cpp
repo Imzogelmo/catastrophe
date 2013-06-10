@@ -23,24 +23,67 @@ CE_NAMESPACE_BEGIN
 
 
 Icon::Icon() :
-	Widget()
+	Widget(),
+	m_stretchSprite(true),
+	m_centerSprite(false)
 {
 }
 
 
 void Icon::Render( SpriteBatch* spritebatch )
 {
-	if( !m_sprite.GetTexture() )
+	Texture* texture = m_sprite.GetTexture();
+	if( !texture )
 		return;
 
-	spritebatch->DrawSprite(m_sprite, GetScreenPosition());
+	Vector2 pos = GetScreenPosition();
+	Vector2 size = m_sprite.size;
+
+	if( m_stretchSprite )
+	{
+		size = m_size;
+	}
+	else if( m_centerSprite )
+	{
+		Vector2 diff = (m_size - size) * 0.5f;
+		pos += diff;
+	}
+
+	spritebatch->DrawRotatedScaled(
+		texture->GetTextureID(),
+		m_sprite.angle,
+		m_sprite.scale,
+		pos + (size * 0.5f),
+		Rectf(pos, pos + size),
+		m_sprite.GetUVRect(),
+		m_sprite.color
+	);
 
 	// render children
 	Widget::Render(spritebatch);
 }
 
 
+void Icon::SetSprite( const Sprite& sprite )
+{
+	m_sprite = sprite;
+}
 
+
+void Icon::SetAutoFitSprite( bool stretch )
+{
+	m_stretchSprite = stretch;
+}
+
+
+void Icon::SetAutoCenterSprite( bool center )
+{
+	m_centerSprite = center;
+}
+
+
+
+// AnimatedIcon
 
 AnimatedIcon::AnimatedIcon() :
 	Widget()
@@ -59,15 +102,48 @@ void AnimatedIcon::Update()
 
 void AnimatedIcon::Render( SpriteBatch* spritebatch )
 {
-	if( !m_sprite.GetTexture() )
+	Texture* texture = m_sprite.GetTexture();
+	if( !texture )
 		return;
 
-	spritebatch->DrawAnimatedSprite(m_sprite, GetScreenPosition());
+	Vector2 pos = GetScreenPosition();
+	Vector2 size = m_sprite.size;
+
+	if( m_stretchSprite )
+	{
+		size = m_size;
+	}
+	else if( m_centerSprite )
+	{
+		Vector2 diff = (m_size - size) * 0.5f;
+		pos += diff;
+	}
+
+	spritebatch->DrawRotatedScaled(
+		texture->GetTextureID(),
+		m_sprite.angle,
+		m_sprite.scale,
+		pos + (size * 0.5f),
+		Rectf(pos, pos + size),
+		m_sprite.GetUVRect(),
+		m_sprite.color
+	);
 
 	// render children
 	Widget::Render(spritebatch);
 }
 
+
+void AnimatedIcon::SetAutoFitSprite( bool stretch )
+{
+	m_stretchSprite = stretch;
+}
+
+
+void AnimatedIcon::SetAutoCenterSprite( bool center )
+{
+	m_centerSprite = center;
+}
 
 
 
