@@ -28,7 +28,9 @@ Label::Label( const fc::string& text, Font* font, TextAlignment alignment ) :
 	Widget(),
 	m_font(font),
 	m_text(text),
-	m_textAlignment(alignment)
+	m_textAlignment(alignment),
+	m_color(Color::White()),
+	m_disabledColor(Color::Gray())
 {
 }
 
@@ -38,13 +40,14 @@ void Label::Render( SpriteBatch* spritebatch )
 	if( !m_font || m_text.empty() )
 		return;
 
+	Color renderColor = GetCurrentTextColor();
 	Vector2 pos = GetScreenPosition();
 	pos.x += (float)GetTextAlignmentOffset();
 
 	spritebatch->DrawString( m_font,
 		m_text,
 		pos,
-		m_color,
+		renderColor,
 		m_textAlignment
 	);
 }
@@ -63,12 +66,12 @@ void Label::SetText( const fc::string& text )
 }
 
 
-int Label::GetTextAlignmentOffset() const
+float Label::GetTextAlignmentOffset() const
 {
-	int offset = 0;
+	float offset = 0;
 	if( m_textAlignment == AlignCenter )
 	{
-		offset += m_size.x / 2;
+		offset += m_size.x / 2.f;
 	}
 	else if( m_textAlignment == AlignRight )
 	{
@@ -76,6 +79,12 @@ int Label::GetTextAlignmentOffset() const
 	}
 
 	return offset;
+}
+
+
+Color Label::GetCurrentTextColor() const
+{
+	return IsEnabled() ? m_color : m_disabledColor;
 }
 
 

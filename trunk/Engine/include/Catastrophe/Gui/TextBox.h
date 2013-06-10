@@ -18,6 +18,8 @@
 
 #pragma once
 
+#include <fc/fixed_vector.h>
+
 #include "Label.h"
 #include "Frame.h"
 

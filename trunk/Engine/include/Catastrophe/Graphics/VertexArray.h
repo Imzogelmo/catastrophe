@@ -62,7 +62,7 @@ public:
 			T* ptr = m_vertices.push_back_uninitialized(vSize);
 			for( size_t i(0); i < vSize; ++i )
 			{
-				*ptr++ = v.m_vertices[ i ];
+				*ptr++ = v.m_vertices[i];
 			}
 		}
 

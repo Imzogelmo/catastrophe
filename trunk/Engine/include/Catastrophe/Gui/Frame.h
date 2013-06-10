@@ -43,6 +43,7 @@ public:
 
 	Frame();
 
+	void SetColor( const Color& color ) { m_color = color; }
 	void SetBackground( const Sprite& bgSprite );
 	void SetBackgroundTexture( Texture* texture );
 	void SetBackgroundOffset( const Vector2& offset );
@@ -54,6 +55,7 @@ public:
 	void SetPatchData( Texture* texture, const Vector2& spriteSize, const Rectf& uv );
 	void SetBlendMode( const BlendMode& value ) { m_blendmode = value; }
 
+	const Color& GetColor() const { return m_color; }
 	const BlendMode& GetBlendMode() const { return m_blendmode; }
 	const Vector2& GetBackgroundOffset() const { return m_bgOffset; }
 	const Sprite& GetBackground() const { return m_backgroundSprite; }
@@ -63,6 +65,7 @@ public:
 
 protected:
 	BlendMode		m_blendmode;
+	Color			m_color;
 	Patch			m_corners[4];
 	Patch			m_sides[4];
 	Sprite			m_backgroundSprite;

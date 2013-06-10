@@ -77,6 +77,27 @@ Sprite::Sprite( Texture* texture, const Rectf& uv ) :
 }
 
 
+Sprite::Sprite( const AnimatedSprite& sprite )
+{
+	*this = sprite;
+}
+
+
+Sprite& Sprite::operator =( const AnimatedSprite& sprite )
+{
+	size		= sprite.size;
+	scale		= sprite.scale;
+	color		= sprite.color;
+	blendmode	= sprite.blendmode;
+	angle		= sprite.angle;
+
+	m_texture	= sprite.GetTexture();
+	m_uv		= sprite.GetUVRect();
+
+	return *this;
+}
+
+
 void Sprite::Create( Texture* texture, const Rect& sourceRect )
 {
 	SetTexture(texture);
@@ -144,6 +165,28 @@ AnimatedSprite::AnimatedSprite(
 	SpriteAnimation(texture, sourceRect, numberOfFrames, frameOffsetX, frameOffsetY)
 {
 	SetSize( Vector2((float)sourceRect.size.x, (float)sourceRect.size.y) );
+}
+
+
+AnimatedSprite::AnimatedSprite( const Sprite& sprite )
+{
+	*this = sprite;
+}
+
+
+AnimatedSprite& AnimatedSprite::operator =( const Sprite& sprite )
+{
+	size		= sprite.size;
+	scale		= sprite.scale;
+	color		= sprite.color;
+	blendmode	= sprite.blendmode;
+	angle		= sprite.angle;
+
+	Texture* texture = sprite.GetTexture();
+	Rect sourceRect = texture ? texture->GetSourceRect(sprite.GetUVRect()) : Rect::Zero;
+	Create( texture, sourceRect, 1, sourceRect.Width(), sourceRect.Height() );
+
+	return *this;
 }
 
 

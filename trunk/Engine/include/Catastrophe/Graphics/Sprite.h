@@ -76,6 +76,9 @@ public:
 	Sprite();
 	Sprite( Texture* texture, const Rect& sourceRect );
 	Sprite( Texture* texture, const Rectf& uv );
+	Sprite( const AnimatedSprite& sprite );
+
+	Sprite& operator =( const AnimatedSprite& sprite );
 
 	void SetTexture( Texture* texture );
 	void SetSourceRect( const Rect& sourceRect );
@@ -102,6 +105,7 @@ class CE_API AnimatedSprite : public SpriteBase, public SpriteAnimation
 {
 public:
 	AnimatedSprite();
+	AnimatedSprite( const Sprite& sprite );
 	AnimatedSprite(
 		Texture* texture,
 		const Rect& sourceRect,
@@ -109,6 +113,8 @@ public:
 		int frameOffsetX = 0,
 		int frameOffsetY = 0
 	);
+
+	AnimatedSprite& operator =( const Sprite& sprite );
 
 	bool IsValid() const; //depricated
 

@@ -85,7 +85,8 @@ FC_MAKE_TRAIT(SpriteData, is_pod);
 class CE_API SpriteBatch
 {
 public:
-	typedef fc::vector<SpriteData> vec_type;
+	typedef fc::vector<SpriteData>	vec_type;
+	//typedef fc::vector<Rect>		clip_vec_type;
 
 	 SpriteBatch( size_t reserve = 256 );
 	~SpriteBatch();
@@ -171,6 +172,7 @@ private:
 	void InternalFlush( gluint texture, size_t blendmodevalue, size_t first, size_t count );
 
 	vec_type		m_queue;
+	//clip_vec_type	m_clip_stack;
 	BlendMode		m_current_blendmode;
 	Rect			m_clip_rect;
 	SpriteSortMode	m_sortmode;

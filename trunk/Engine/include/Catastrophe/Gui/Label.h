@@ -34,16 +34,24 @@ public:
 	void SetFont( Font* font );
 	void SetText( const fc::string& text );
 	void SetTextAlignment( TextAlignment alignment ) { m_textAlignment = alignment; }
+	void SetColor( const Color& color ) { m_color = color; }
+	void SetDisabledColor( const Color& color ) { m_disabledColor = color; }
 
 	const Font* GetFont() const { return m_font; }
 	const fc::string& GetText() const { return m_text; }
 	TextAlignment GetTextAlignment() const { return m_textAlignment; }
-	int GetTextAlignmentOffset() const;
+	const Color& GetColor() const { return m_color; }
+	const Color& GetDisabledColor() const { return m_disabledColor; }
+
+	float GetTextAlignmentOffset() const;
+	Color GetCurrentTextColor() const;
 
 protected:
 	Font*			m_font;
 	fc::string		m_text;
 	TextAlignment	m_textAlignment;
+	Color			m_color;
+	Color			m_disabledColor;
 
 };
 

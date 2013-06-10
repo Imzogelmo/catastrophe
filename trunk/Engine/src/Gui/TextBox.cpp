@@ -166,15 +166,13 @@ void TextBox::UpdateText()
 	//current text. By caching this data we can speed up font rendering.
 	m_textRows.clear();
 
-	int w = GetWidth();
-	//int h = GetHeight();
+	float textWidth = 0.f;
+	float textWidthBeforeCurrentWord = 0.f;
 
-	int textWidth = 0;
 	int rowStartIndex = 0;
 	int lastWordStartIndex = 0;
 	int currentWordSize = 0;
 	int numWordsInRow = 0;
-	int textWidthBeforeCurrentWord = 0;
 	int textSize = (int)m_text.size();
 
 	for( int i(0); i < textSize; ++i )
@@ -218,8 +216,8 @@ void TextBox::UpdateText()
 			currentWordSize++;
 		}
 
-		textWidth += (int)glyph.advance;
-		if( textWidth > w )
+		textWidth += glyph.advance;
+		if( textWidth > GetWidth() )
 		{
 			if( numWordsInRow == 0 )
 			{
