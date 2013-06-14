@@ -258,6 +258,9 @@ void SpriteBatch::InternalQueueString
 {
 	CE_ASSERT(first <= last);
 
+	if( face_size == -1 )
+		face_size = font->GetFaceSize();
+
 	Vector2 originalPos = pos;
 
 	if(alignment == AlignCenter)
@@ -270,7 +273,7 @@ void SpriteBatch::InternalQueueString
 	}
 
 	//Vector2 origin = pos;
-	//Vector2 scale = (float)font->GetFaceSize() / (float)faceSize;
+	Vector2 s =  (float)face_size / (float)font->GetFaceSize();
 
 	//for( fc::string::const_iterator it = text.begin(); it != text.end(); ++it )
 	for( ; first != last; ++first )
@@ -279,22 +282,23 @@ void SpriteBatch::InternalQueueString
 		if(*first == '\n')
 		{
 			pos.x = originalPos.x;
-			pos.y += (float)font->GetLineHeight();
+			pos.y += (float)font->GetLineHeight() * s.x;
 			continue;
 		}
 
 		if(*first != ' ')
 		{
-			Vector2 translation = pos + Vector2( float(glyph->translation.x), float(glyph->translation.y) );
-			Vector2 size( float(glyph->size.x), float(glyph->size.y) );
+			Vector2 translation = pos + glyph->translation * s;
+			Vector2 size = glyph->size * s;
 
-			if( !scale.Equals(Vector2::One) )
-				size *= scale;
+			//if( !scale.Equals(Vector2::One) )
+			//	size *= scale;
 
 			InternalQueueSprite( font->GetTextureID(), 0.f, 1.f, 0.f, Rectf(translation, translation + size), glyph->uv, c, depth );
 		}
 
-		pos.x += (float(glyph->advance) * scale.x);
+		pos.x += glyph->advance * s.x;
+		//pos.x += (float(glyph->advance) * scale.x);
 	}
 }
 

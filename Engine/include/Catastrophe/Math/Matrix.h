@@ -21,9 +21,6 @@
 #include "Common.h"
 #include "Vector2.h"
 #include "Vector3.h"
-#include "../Math/Math.h"
-//#include "Vector4.h"
-//#include "Quaternion.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -73,17 +70,7 @@ public:
 	Vector3 operator * ( const Vector3& v ) const { return Multiply( *this, v ); }
 
 	Matrix &operator *=( const Matrix& m );
-
-	Matrix &operator = ( const Matrix& mat )
-	{
-		if( this == &mat )
-			return *this;
-
-		for( int i(0); i < 16; ++i )
-			m[ i ] = mat.m[ i ];
-
-		return *this;
-	}
+	Matrix &operator = ( const Matrix& mat );
 
 	bool operator == ( const Matrix& other ) const;
 	bool operator != ( const Matrix& other ) const
@@ -129,66 +116,11 @@ public:
 	static const Matrix Zero;
 	static const Matrix Identity;
 
-	static Matrix CreateTranslation( const Vector3& pos )
-	{
-		return Matrix
-		(
-			1.0f,	0.0f,	0.0f,	0.0f,
-			0.0f,	1.0f,	0.0f,	0.0f,
-			0.0f,	0.0f,	1.0f,	0.0f,
-			pos.x,	pos.y,	pos.z,	1.0f
-		);
-	}
-
-	static Matrix CreateScale( const Vector3& scale )
-	{
-		return Matrix
-		(
-			scale.x, 0.0f,	  0.0f,	   0.0f,
-			0.0f,	 scale.y, 0.0f,	   0.0f,
-			0.0f,	 0.0f,	  scale.z, 0.0f,
-			0.0f,	 0.0f,	  0.0f,	   1.0f
-		);
-	}
-
-	static Matrix CreateRotationX( float radians )
-	{
-		Vector2 v( cosf(radians), sinf(radians) );
-
-		return Matrix
-		(
-			1.0f,	0.0f,	0.0f,	0.0f,
-			0.0f,	v.x,	-v.y,	0.0f,
-			0.0f,	v.y,	v.x,	0.0f,
-			0.0f,	0.0f,	0.0f,	1.0f
-		);
-	}
-
-	static Matrix CreateRotationY( float radians )
-	{
-		Vector2 v( cosf(radians), sinf(radians) );
-
-		return Matrix
-		(
-			v.x,	0.0f,	v.y,	0.0f,
-			0.0f,	1.0f,	0.0f,	0.0f,
-			-v.y,	0.0f,	v.x,	0.0f,
-			0.0f,	0.0f,	0.0f,	1.0f
-		);
-	}
-
-	static Matrix CreateRotationZ( float radians )
-	{
-		Vector2 v = Math::SinCos(radians);
-
-		return Matrix
-		(
-			v.x,	v.y,	0.0f,	0.0f,
-			-v.y,	v.x,	0.0f,	0.0f,
-			0.0f,	0.0f,	1.0f,	0.0f,
-			0.0f,	0.0f,	0.0f,	1.0f
-		);
-	}
+	static Matrix CreateTranslation( const Vector3& pos );
+	static Matrix CreateScale( const Vector3& scale );
+	static Matrix CreateRotationX( float radians );
+	static Matrix CreateRotationY( float radians );
+	static Matrix CreateRotationZ( float radians );
 
 
 };

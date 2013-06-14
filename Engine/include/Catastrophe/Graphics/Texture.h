@@ -46,6 +46,7 @@ public:
 	Texture( int w, int h, int format, int filterMode, int wrapMode, const void *const data );
 
 	void Dispose();
+	bool CreateBlank( const Color& backgroundColor, int w, int h );
 	bool CreateFromData( const void* data, int w, int h );
 
 	bool LoadFromFile( const fc::string& filename );

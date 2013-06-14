@@ -214,7 +214,7 @@ ConfigSection* ConfigFile::AddSection( const fc::string& section )
 
 bool ConfigFile::Read()
 {
-	File file(m_filename, FileReadText);
+	File file(m_filename, FileRead);
 	if( !file.IsOpen() )
 	{
 		file.Close();
@@ -237,8 +237,16 @@ bool ConfigFile::Read()
 
 	while( index < size )
 	{
-		if( !fc::tokenizer::get_token(data, "\n", index, line) || line.empty() )
+		if( !fc::tokenizer::get_token(data, "\n", index, line) )
+		{
+			index += fc::max((size_t)1, line.size());
+		}
+
+		if( line.empty() )
+		{
+			++index;
 			continue;
+		}
 
 		tokenizer.set_string(line);
 
