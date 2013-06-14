@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;include\Catastrophe&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;CE_SDL"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;CE_GLFW"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"

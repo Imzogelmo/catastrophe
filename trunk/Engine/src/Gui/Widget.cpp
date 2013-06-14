@@ -34,7 +34,7 @@ Widget::Widget( Vector2 pos, Vector2 size ) :
 	m_pos(pos),
 	m_size(size),
 	m_ref_count(1),
-	m_active(false),
+	m_active(true),
 	m_selected(false),
 	m_visible(true),
 	m_locked(false)

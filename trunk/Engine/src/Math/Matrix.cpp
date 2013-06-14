@@ -17,6 +17,7 @@
 // THE SOFTWARE.
 
 #include "Math/Matrix.h"
+#include "Math/Math.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -37,6 +38,18 @@ const Matrix Matrix::Identity = Matrix
 	0.0f,  0.0f,  1.0f,  0.0f,  
 	0.0f,  0.0f,  0.0f,  1.0f
 );
+
+
+Matrix &Matrix::operator = ( const Matrix& mat )
+{
+	if( this == &mat )
+		return *this;
+
+	for( int i(0); i < 16; ++i )
+		m[ i ] = mat.m[ i ];
+
+	return *this;
+}
 
 
 bool Matrix::operator == ( const Matrix& other ) const
@@ -320,6 +333,72 @@ Matrix Matrix::Create2DTransformation( const Vector2& pos, float rotation, const
 	transform[13] -= origin.y;
 
 	return transform;
+}
+
+
+Matrix Matrix::CreateTranslation( const Vector3& pos )
+{
+	return Matrix
+	(
+		1.0f,	0.0f,	0.0f,	0.0f,
+		0.0f,	1.0f,	0.0f,	0.0f,
+		0.0f,	0.0f,	1.0f,	0.0f,
+		pos.x,	pos.y,	pos.z,	1.0f
+	);
+}
+
+
+Matrix Matrix::CreateScale( const Vector3& scale )
+{
+	return Matrix
+	(
+		scale.x, 0.0f,	  0.0f,	   0.0f,
+		0.0f,	 scale.y, 0.0f,	   0.0f,
+		0.0f,	 0.0f,	  scale.z, 0.0f,
+		0.0f,	 0.0f,	  0.0f,	   1.0f
+	);
+}
+
+
+Matrix Matrix::CreateRotationX( float radians )
+{
+	Vector2 v( cosf(radians), sinf(radians) );
+
+	return Matrix
+	(
+		1.0f,	0.0f,	0.0f,	0.0f,
+		0.0f,	v.x,	-v.y,	0.0f,
+		0.0f,	v.y,	v.x,	0.0f,
+		0.0f,	0.0f,	0.0f,	1.0f
+	);
+}
+
+
+Matrix Matrix::CreateRotationY( float radians )
+{
+	Vector2 v( cosf(radians), sinf(radians) );
+
+	return Matrix
+	(
+		v.x,	0.0f,	v.y,	0.0f,
+		0.0f,	1.0f,	0.0f,	0.0f,
+		-v.y,	0.0f,	v.x,	0.0f,
+		0.0f,	0.0f,	0.0f,	1.0f
+	);
+}
+
+
+Matrix Matrix::CreateRotationZ( float radians )
+{
+	Vector2 v = Math::SinCos(radians);
+
+	return Matrix
+	(
+		v.x,	v.y,	0.0f,	0.0f,
+		-v.y,	v.x,	0.0f,	0.0f,
+		0.0f,	0.0f,	1.0f,	0.0f,
+		0.0f,	0.0f,	0.0f,	1.0f
+	);
 }
 
 

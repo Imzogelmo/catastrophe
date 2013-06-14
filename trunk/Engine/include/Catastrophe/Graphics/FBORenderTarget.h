@@ -29,7 +29,9 @@ public:
     FBORenderTarget();
     virtual ~FBORenderTarget();
 
-	void Attach( Texture* texture );
+	void AttachTexture( Texture* texture );
+	void RemoveTexture();
+
 	Texture* GetTexture() const;
 
 	void Bind();

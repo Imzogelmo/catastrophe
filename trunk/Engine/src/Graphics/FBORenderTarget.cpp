@@ -18,6 +18,7 @@
 
 #include "Graphics/FBORenderTarget.h"
 #include "Graphics/OpenGL.h"
+//#include "Math/Matrix.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -38,7 +39,8 @@ FBORenderTarget::~FBORenderTarget()
 	}
 }
 
-void FBORenderTarget::Attach( Texture* texture )
+
+void FBORenderTarget::AttachTexture( Texture* texture )
 {
 	CE_ASSERT(texture != 0);
 	m_texturePtr = texture;
@@ -56,6 +58,13 @@ void FBORenderTarget::Attach( Texture* texture )
 	}
 }
 
+
+void FBORenderTarget::RemoveTexture()
+{
+	m_texturePtr = 0;
+}
+
+
 Texture* FBORenderTarget::GetTexture() const
 {
 	return m_texturePtr;
@@ -65,12 +74,34 @@ Texture* FBORenderTarget::GetTexture() const
 void FBORenderTarget::Bind()
 {
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, m_fbo);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	GLfloat mat[16] = {
+		1.f, 0.f, 0.f, 0.f,
+		0.f, -1.f, 0.f, 0.f,
+		0.f, 0.f, 1.f, 0.f,
+		0.f, 0.f, 0.f, 1.f
+	};
+
+	//glPushMatrix();
+	glPushAttrib(GL_VIEWPORT_BIT);
+	glViewport(0, 0, m_texturePtr->Width(), m_texturePtr->Height());
+
+	//glMatrixMode(GL_TEXTURE);
+	//glMatrixMode(GL_MODELVIEW);
+	//glMultMatrixf(mat);
+	//glMatrixMode(GL_MODELVIEW);
+	//glViewport(0, 0, m_texturePtr->Width(), m_texturePtr->Height());
+
 }
 
 
 void FBORenderTarget::Unbind()
 {
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+
+	//glPopMatrix();
+	glPopAttrib();
 }
 
 
@@ -81,6 +112,7 @@ bool FBORenderTarget::InternalGenerateFramebufferObject()
 
 	return true;
 }
+
 
 CE_NAMESPACE_END
 

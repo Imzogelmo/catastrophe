@@ -17,9 +17,11 @@
 // THE SOFTWARE.
 
 #include <fc/string.h>
+#include <fc/dynamic_array2d.h>
 #include <fc/math.h>
 
 #include "Math/Rect.h"
+#include "Math/Color.h"
 
 #include "Graphics/Texture.h"
 #include "Graphics/TextureLoader.h"
@@ -114,8 +116,21 @@ bool Texture::SaveToFile( const fc::string& filename )
 }
 
 
+bool Texture::CreateBlank( const Color& backgroundColor, int w, int h )
+{
+	fc::dynamic_array2d<Color> p(h, w, backgroundColor);
+	return CreateFromData( (void*)p.data(), w, h );
+}
+
+
 bool Texture::CreateFromData( const void* data, int w, int h )
 {
+	CE_ASSERT(w > 0 && h > 0);
+
+	int maxTextureSize = GetMaxTextureSize();
+	w = fc::min(w, maxTextureSize);
+	h = fc::min(h, maxTextureSize);
+
 	m_width = w;
 	m_height = h;
 	m_floatWidth = (float)w;

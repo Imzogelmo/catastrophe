@@ -71,6 +71,14 @@ public:
 		MaxGlyphSize = Glyph::MaxSize
 	};
 
+	/*
+	enum FontType
+	{
+		Type_TrueType,
+		Type_Bitmap
+	};
+	*/
+
 	Font();
 	Font( const fc::string& filename, int faceSize, int dpi = DefaultDpi );
 	~Font();
@@ -89,24 +97,25 @@ public:
 	Texture* GetTexture() { return &m_texture; }
 	const Texture* GetTexture() const { return &m_texture; }
 	gluint GetTextureID() const { return m_texture.GetTextureID(); }
-	gluint GetFaceSize() const { return m_face_size; }
+	gluint GetFaceSize() const { return m_faceSize; }
 	int GetLineHeight() const { return m_line_height; }
 
-	Glyph& GetGlyph( ubyte glyph ) { return m_glyphs[ m_glyph_map[glyph] ]; }
-	const Glyph& GetGlyph( ubyte glyph ) const { return m_glyphs[ m_glyph_map[glyph] ]; }
+	Glyph& GetGlyph( ubyte glyph ) { return m_glyphs[ m_glyphMap[glyph] ]; }
+	const Glyph& GetGlyph( ubyte glyph ) const { return m_glyphs[ m_glyphMap[glyph] ]; }
 
 	void Dispose();
 
 protected:
 	void InternalInitialize();
 	int InternalLoadGenericBitmapFont( const fc::string& filename, int startCode = 32 );
+	int InternalLoadBitmapFont( const fc::string& filename, int startCode = 32 );
 
 	vec_type	m_glyphs;
-	int			m_glyph_map[256];
+	int			m_glyphMap[256];
 	Texture		m_texture;
-	int			m_face_size;
+	int			m_faceSize;
 	int			m_line_height;
-	int			m_max_advance;
+	int			m_maxAdvance;
 
 };
 
