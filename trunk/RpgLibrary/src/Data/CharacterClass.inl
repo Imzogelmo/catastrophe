@@ -31,8 +31,26 @@ CharacterClass::CharacterClass() :
 }
 
 
+void CharacterClass::RegisterObject()
+{
+	REGISTER_ATTRIBUTE_FACTORY_TYPE(CharacterClass);
+	REGISTER_ATTRIBUTE(CharacterClass, VAR_TYPE_STRING, "name", name);
+	REGISTER_ATTRIBUTE(CharacterClass, VAR_TYPE_STRING, "script", script);
+	REGISTER_ATTRIBUTE(CharacterClass, VAR_TYPE_STRING, "description", description);
+
+	PUSH_ATTRIBUTE_NODE(CharacterClass, "Data");
+	REGISTER_ATTRIBUTE(CharacterClass, VAR_TYPE_INT, "portrait_id", portrait_id);
+	REGISTER_ATTRIBUTE(CharacterClass, VAR_TYPE_INT, "map_spriteset_id", map_spriteset_id);
+	REGISTER_ATTRIBUTE(CharacterClass, VAR_TYPE_INT, "battle_spriteset_id", battle_spriteset_id);
+	POP_ATTRIBUTE_NODE(CharacterClass);
+}
+
+
 void CharacterClass::SerializeXml( XmlWriter* xml )
 {
+	SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+
+	/*
 	xml->SetString("name", name.c_str());
 	xml->SetString("script", script.c_str());
 	xml->SetString("description", description.c_str());
@@ -42,6 +60,7 @@ void CharacterClass::SerializeXml( XmlWriter* xml )
 	xml->SetInt("map_spriteset_id", portrait_id);
 	xml->SetInt("battle_spriteset_id", portrait_id);
 	xml->EndNode();
+	*/
 
 	attributes.SerializeXml(xml);
 
@@ -50,6 +69,9 @@ void CharacterClass::SerializeXml( XmlWriter* xml )
 
 void CharacterClass::DeserializeXml( XmlReader* xml )
 {
+	DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+
+	/*
 	name = xml->GetString("name");
 	script = xml->GetString("script");
 	description = xml->GetString("description");
@@ -61,6 +83,7 @@ void CharacterClass::DeserializeXml( XmlReader* xml )
 		battle_spriteset_id = xml->GetInt("battle_spriteset_id");
 		xml->SetToParent();
 	}
+	*/
 
 	attributes.DeserializeXml(xml);
 

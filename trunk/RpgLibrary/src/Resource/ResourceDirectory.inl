@@ -63,3 +63,16 @@ fc::string ResourceDirectory::GetDataDirectory() const
 	return GetDirectory(BaseDir_Data);
 }
 
+
+fc::string ResourceDirectory::GetScriptDirectory() const
+{
+	return GetDirectory(BaseDir_Scripts);
+}
+
+
+fc::string ResourceDirectory::GetScriptDefineDirectory() const
+{
+	return GetDirectory(BaseDir_ScriptDefs);
+}
+
+

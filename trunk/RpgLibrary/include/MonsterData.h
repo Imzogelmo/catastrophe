@@ -38,6 +38,8 @@ struct RPG_API MonsterData
 
 	MonsterData();
 
+	static void RegisterObject();
+
 	void SerializeXml( XmlWriter* xml );
 	void DeserializeXml( XmlReader* xml );
 

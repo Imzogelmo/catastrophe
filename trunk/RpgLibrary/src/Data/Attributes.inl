@@ -97,9 +97,9 @@ void Attributes::SerializeXml( XmlWriter* xml )
 	xml->WriteBlock(&stats[0], MAX_STATS);
 	xml->EndNode();
 
-	xml->BeginNode("ElementalDef");
-	xml->WriteBlock((ubyte*)&elemental_def[0], MAX_ELEMENTS);
-	xml->EndNode();
+	//xml->BeginNode("ElementalDef");
+	//xml->WriteBlock((ubyte*)&elemental_def[0], MAX_ELEMENTS);
+	//xml->EndNode();
 
 	xml->BeginNode("StatusAtk");
 	xml->WriteBlock((ubyte*)&status_atk[0], MAX_STATUS);
@@ -109,7 +109,7 @@ void Attributes::SerializeXml( XmlWriter* xml )
 	xml->WriteBlock((ubyte*)&status_def[0], MAX_STATUS);
 	xml->EndNode();
 
-	flags.SerializeXml(xml);
+	//flags.SerializeXml(xml);
 
 }
 
@@ -147,7 +147,7 @@ void Attributes::DeserializeXml( XmlReader* xml )
 		xml->SetToParent();
 	}
 
-	flags.DeserializeXml(xml);
+	//flags.DeserializeXml(xml);
 
 }
 

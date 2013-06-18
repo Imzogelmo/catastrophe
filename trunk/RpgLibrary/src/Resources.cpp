@@ -16,6 +16,8 @@
 // Why would you do this, you ask? -Why not. ;)
 
 
+#include "Database.h"
+
 // resource
 #include "Resource.inl"
 #include "ResourceDirectory.inl"
@@ -33,6 +35,7 @@
 
 #include "SerializeObject.inl"
 #include "DeserializeObject.inl"
+#include "AttributeSerializer.inl"
 
 
 ResourceDirectory*		g_resourceDirectory = 0;
@@ -50,6 +53,13 @@ void RpgLibInit()
 	g_tilesetManager = new TilesetManager();
 	g_mapManager = new MapManager();
 	g_shaderObjectManager = new ShaderObjectManager();
+
+	MonsterData::RegisterObject();
+	MonsterGroup::RegisterObject();
+	MonsterTroop::RegisterObject();
+
+	CharacterClass::RegisterObject();
+
 }
 
 
@@ -60,6 +70,8 @@ void RpgLibShutdown()
 	delete g_tilesetManager;
 	delete g_mapManager;
 	delete g_shaderObjectManager;
+
+	ObjectAttributeSerializerFactory::GetInstance()->DeleteFactories();
 }
 
 

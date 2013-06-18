@@ -14,6 +14,7 @@
 #include <Catastrophe/IO/XmlReader.h>
 #include "MonsterData.h"
 #include "Serialization.h"
+#include "AttributeSerializer.h"
 
 
 MonsterData::MonsterData() :
@@ -32,9 +33,27 @@ MonsterData::MonsterData() :
 }
 
 
+void MonsterData::RegisterObject()
+{
+	REGISTER_ATTRIBUTE_FACTORY_TYPE(MonsterData);
+	REGISTER_ATTRIBUTE(MonsterData, VAR_TYPE_STRING, "name", name);
+	REGISTER_ATTRIBUTE(MonsterData, VAR_TYPE_STRING, "script", script);
+	REGISTER_ATTRIBUTE(MonsterData, VAR_TYPE_STRING, "description", description);
+
+	PUSH_ATTRIBUTE_NODE(MonsterData, "Data");
+	REGISTER_ATTRIBUTE(MonsterData, VAR_TYPE_INT, "lv", lv);
+	REGISTER_ATTRIBUTE(MonsterData, VAR_TYPE_INT, "exp", exp);
+	REGISTER_ATTRIBUTE(MonsterData, VAR_TYPE_INT, "gold", gold);
+	REGISTER_ATTRIBUTE(MonsterData, VAR_TYPE_INT, "portrait_id", portrait_id);
+	REGISTER_ATTRIBUTE(MonsterData, VAR_TYPE_INT, "map_spriteset_id", map_spriteset_id);
+	REGISTER_ATTRIBUTE(MonsterData, VAR_TYPE_INT, "battle_spriteset_id", battle_spriteset_id);
+	POP_ATTRIBUTE_NODE(MonsterData);
+}
+
 
 void MonsterData::SerializeXml( XmlWriter* xml )
 {
+	/*
 	xml->SetString("name", name.c_str());
 	xml->SetString("script", script.c_str());
 	xml->SetString("description", description.c_str());
@@ -47,6 +66,9 @@ void MonsterData::SerializeXml( XmlWriter* xml )
 	xml->SetInt("map_spriteset_id", map_spriteset_id);
 	xml->SetInt("battle_spriteset_id", battle_spriteset_id);
 	xml->EndNode();
+	*/
+
+	SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
 
 	attributes.SerializeXml(xml);
 	item_dropset.SerializeXml(xml);
