@@ -55,9 +55,10 @@ public:
 			Plane right;
 			Plane top;
 			Plane bottom;
-			Plane front;
-			Plane back;
+			Plane near;
+			Plane far;
 		};
+
 		struct { Plane planes[MAX_PLANES]; };
 	};
 

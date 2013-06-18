@@ -106,6 +106,7 @@ public:
 
 	Vector4 Normal() const;
 	Vector4& Normalize();
+	Vector4& Set( float x_, float y_, float z_, float w_ ) { x = x_; y = y_; z = z_; w = w_; return *this; }
 
 	void Clamp( const Vector4& min, const Vector4& max );
 

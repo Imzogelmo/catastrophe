@@ -18,8 +18,34 @@
 
 #include "Math/Quaternion.h"
 #include "Math/Matrix.h"
+#include "Math/Math.h"
 
 CE_NAMESPACE_BEGIN
+
+
+
+Quaternion::Quaternion( const Vector3 &axis, float angle )
+{
+	SetFromAxis(axis, angle);
+}
+
+
+Quaternion& Quaternion::SetFromAxis( const Vector3& axis, float angle )
+{
+	float d = axis.Length();
+	if( d != 0.f )
+	{
+		d = 1.f / d;
+		Vector2 v = Math::SinCos(angle);
+		*this = Quaternion(d * axis.x * v.y, d * axis.y * v.y, d * axis.z * v.y, w = v.x).Normalize();
+	}
+	else
+	{
+		*this = Quaternion();
+	}
+
+	return *this;
+}
 
 
 Quaternion Quaternion::operator *( const Quaternion &q ) const
@@ -31,6 +57,15 @@ Quaternion Quaternion::operator *( const Quaternion &q ) const
 		w * q.z + z * q.w + x * q.y - y * q.x,
 		w * q.w - x * q.x - y * q.y - z * q.z
 	);
+}
+
+
+Vector3 Quaternion::Transform( const Vector3& v )
+{
+	Quaternion t = Conjugate();
+	t = (*this * (Quaternion(v.x, v.y, v.z, 0.f) * t));
+
+	return Vector3( t.x, t.y, t.z );
 }
 
 
@@ -50,9 +85,9 @@ Quaternion Quaternion::Concatenate( const Quaternion &q1, const Quaternion &q2 )
 Quaternion Quaternion::CreateFromYawPitchRoll( const Vector3& rot )
 {
 	//rot *= 0.5f;
-	const Vector2 yaw  ( cosf( rot.x ), sinf( rot.x ) );
-	const Vector2 pitch( cosf( rot.y ), sinf( rot.y ) );
-	const Vector2 roll ( cosf( rot.z ), sinf( rot.z ) );
+	Vector2 yaw = Math::SinCos(rot.x);
+	Vector2 pitch = Math::SinCos(rot.y);
+	Vector2 roll = Math::SinCos(rot.z);
 
 	return Quaternion
 	(

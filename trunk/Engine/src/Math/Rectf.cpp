@@ -35,6 +35,14 @@ Rectf::Rectf( const Rect& r )
 }
 
 
+void Rectf::Scale( const Vector2& scale )
+{
+	const Vector2 radius = (Extents() * scale) * 0.5f;
+	min -= radius;
+	max += radius;
+}
+
+
 void Rectf::Merge( const Rectf& r )
 {
 	if(r.min.x < min.x) min.x = r.min.x;

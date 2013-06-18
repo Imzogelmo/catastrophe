@@ -170,6 +170,12 @@ bool XmlReader::GetBool( const fc::string& name, bool defaultValue ) const
 }
 
 
+byte XmlReader::GetByte( const fc::string& name, byte defaultValue ) const
+{
+	return (byte)GetInt(name, defaultValue);
+}
+
+
 short XmlReader::GetShort( const fc::string& name, short defaultValue ) const
 {
 	return (short)GetInt(name, defaultValue);

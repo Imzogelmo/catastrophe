@@ -33,51 +33,38 @@ public:
 
 	Quaternion()										: x(0.0f), y(0.0f), z(0.0f), w(1.0f)	{}
 	Quaternion( float x, float y, float z, float w )	: x(x), y(y), z(z), w(w)				{}
-	Quaternion( const Vector3 &q, float scalar )		{ x = q.x; y = q.y; z = q.z; w = scalar;	}
-	Quaternion( const Vector4 &q )						{ x = q.x; y = q.y; z = q.z; w = q.w;		}
+	Quaternion( const Vector4 &q )						: x(q.x), y(q.y), z(q.z), w(q.w)		{}
+	Quaternion( const Vector3 &axis, float angle );
 
-	Quaternion &operator = ( const Quaternion &q )	{ x = q.x; y = q.y; z = q.z; w = q.w;  return *this; }
-	Quaternion &operator = ( const Vector4 &q )		{ x = q.x; y = q.y; z = q.z; w = q.w;	return *this; }
+	Quaternion& Set( float x_, float y_, float z_, float w_ ) { x = x_; y = y_; z = z_; w = w_; return *this; }
+	Quaternion& Scale( float scale ) { x *= scale, y *= scale, z *= scale, w *= scale; return *this; }
+	Quaternion& SetFromAxis( const Vector3& axis, float angle );
+
+	Quaternion &operator = ( const Vector4 &q )			{ x = q.x; y = q.y; z = q.z; w = q.w;	return *this; }
 
 	Quaternion operator - () const { return Quaternion( -x, -y, -z, w ); }
-	//Quaternion operator + () const { return Quaternion( +x, +y, +z, +w ); }
-	
-	Quaternion operator + ( const Quaternion &q ) const { return Quaternion ( x + q.x, y + q.y, z + q.z, w + q.w ); }
-	Quaternion operator - ( const Quaternion &q ) const { return Quaternion ( x - q.x, y - q.y, z - q.z, w - q.w ); }
+	Quaternion operator + ( const Quaternion &q ) const { return Quaternion(x + q.x, y + q.y, z + q.z, w + q.w); }
+	Quaternion operator - ( const Quaternion &q ) const { return Quaternion(x - q.x, y - q.y, z - q.z, w - q.w); }
 	Quaternion operator * ( const Quaternion &q ) const;
-	Quaternion operator / ( const Quaternion &q ) const
-	{
-	  return Quaternion( *this * Quaternion( q ).Inverse() );
-	}
+	Quaternion operator / ( const Quaternion &q ) const { return Quaternion( *this * Quaternion( q ).Inverse() ); }
 
-	Quaternion Scale( float scale ) const
-	{
-		return Quaternion( x * scale, y * scale, z * scale, w * scale ); 
-	}
+	Quaternion Scaled( float scale ) const { return Quaternion( x * scale, y * scale, z * scale, w * scale ); }
+	Quaternion Inverse() const { return Quaternion( Conjugate() ).Scaled( 1.0f / LengthSquared() ); }
+	Quaternion Conjugate() const { return Quaternion( -x, -y, -z, w ); }
 
-	Quaternion Inverse() const
-	{
-	  return Quaternion( Conjugate() ).Scale( 1.0f / LengthSquared() );
-	}
-
-	Quaternion Conjugate() const
-	{
-		return Quaternion( -x, -y, -z, w );
-	}
+	float Length() const		{ return (*((Vector4*)this)).Length(); }
+	float LengthSquared() const	{ return (*((Vector4*)this)).LengthSquared(); }
+	Quaternion& Normalize()		{ (*((Vector4*)this)).Normalize(); return *this;}
+	Quaternion Normal()			{ return (*((Vector4*)this)).Normal(); }
+	Vector3 Transform( const Vector3& v );
 
 	static Quaternion Concatenate( const Quaternion &q1, const Quaternion &q2 );
-
 	static Quaternion Add		( const Quaternion &q1, const Quaternion &q2 )  { return q1 + q2; }
 	static Quaternion Subtract	( const Quaternion &q1, const Quaternion &q2 )  { return q1 - q2; }
 	static Quaternion Multiply	( const Quaternion &q1, const Quaternion &q2 )  { return q1 * q2; }
 	static Quaternion Divide	( const Quaternion &q1, const Quaternion &q2 )  { return q1 / q2; }
 
-	float Length() const		{ return Vector4(x, y, z, w).Length(); }
-	float LengthSquared() const	{ return Vector4(x, y, z, w).LengthSquared(); }
-	Quaternion& Normalize()		{ Vector4(x, y, z, w).Normalize(); return *this;}
-	Quaternion Normal()			{ return Vector4(x, y, z, w).Normal(); }
-
-	Quaternion CreateFromYawPitchRoll( const Vector3& rot );
+	static Quaternion CreateFromYawPitchRoll( const Vector3& rot );
 	static Quaternion CreateFromRotationMatrix( const Matrix& matrix );
 
 };

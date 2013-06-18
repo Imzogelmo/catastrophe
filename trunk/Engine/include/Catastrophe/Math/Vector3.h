@@ -128,7 +128,7 @@ public:
 	Vector3& Normalize()
 	{
 		const float length = Length();
-		if( length != 0 )
+		if( length != 0.f )
 		{
 			const float inv = 1.f / length;
 			x *= inv;
@@ -146,6 +146,7 @@ public:
 	Vector3 Reflect( const Vector3& unit ) const;
 	Vector3 Refract( const Vector3& unit, float const eta ) const;
 
+	Vector3& Set( float x_, float y_, float z_ ) { x = x_; y = y_; z = z_; return *this; }
 	Vector3& Clamp( const Vector3& min, const Vector3& max )
 	{
 		Math::FastClamp(x, min.x, max.x);
