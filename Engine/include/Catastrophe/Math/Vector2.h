@@ -131,6 +131,7 @@ public:
 		return *this;
 	}
 
+	Vector2& Set( float x_, float y_ ) { x = x_; y = y_; return *this; }
 	Vector2& Swap() { Math::Swap(x, y); return *this; }
 
 	Vector2 Reflect( const Vector2& unit ) const;

@@ -57,6 +57,7 @@ public:
 
 	fc::string GetString( const fc::string& name ) const;
 	bool GetBool( const fc::string& name, bool defaultValue = false ) const;
+	byte GetByte( const fc::string& name, byte defaultValue = 0 ) const;
 	short GetShort( const fc::string& name, short defaultValue = 0 ) const;
 	int GetInt( const fc::string& name, int defaultValue = 0 ) const;
 	size_t GetUInt( const fc::string& name, size_t defaultValue = 0 ) const;

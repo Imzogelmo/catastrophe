@@ -79,15 +79,9 @@ public:
 	void SetSize( const Vector2& s ) { max = min + s; }
 	void SetWidth( float w ) { max.x = min.x + w; }
 	void SetHeight( float h ) { max.y = min.y + h; }
+	void Scale( const Vector2& scale );
 
-	void Scale( const Vector2& scale )
-	{
-		const Vector2 radius = (Extents() * scale) * 0.5f;
-		min -= radius;
-		max += radius;
-	}
-
-	void GetSides( float* ptrTopBotLeftRight ) const
+	inline void GetSides( float* ptrTopBotLeftRight ) const
 	{
 		ptrTopBotLeftRight[0] = Top();
 		ptrTopBotLeftRight[1] = Bottom();
@@ -95,7 +89,7 @@ public:
 		ptrTopBotLeftRight[3] = Right();
 	}
 
-	void GetCorners( Vector2* ptrToplBotlBotrTopr ) const
+	inline void GetCorners( Vector2* ptrToplBotlBotrTopr ) const
 	{
 		ptrToplBotlBotrTopr[0] = TopLeft();
 		ptrToplBotlBotrTopr[1] = BottomLeft();
@@ -103,12 +97,7 @@ public:
 		ptrToplBotlBotrTopr[3] = TopRight();
 	}
 
-	//Rect ToRect() const
-	//{
-	//	return Rectf( min, Size() );
-	//}
-
-	bool Empty() const
+	inline bool Empty() const
 	{
 		return min == max;
 	}

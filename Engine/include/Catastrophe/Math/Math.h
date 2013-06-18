@@ -157,42 +157,6 @@ namespace Math
 	}
 	*/
 
-	//Flip uv coordinates horizontal/vertical
-	/*
-	inline void FlipUV( Rectf& uv, int flags )
-	{
-		if( (flags & 1) != 0 ) Swap(uv.min.x, uv.max.x); //horizontal
-		if( (flags & 2) != 0 ) Swap(uv.min.y, uv.max.y); //vertical
-
-		//rotation flags are mutually exclusive.
-		if( (flags & 4) != 0 ) //rotate 90 degrees
-		{
-			float temp = uv.min.x;
-			uv.min.x = uv.max.x;
-			uv.max.x = uv.max.y;
-			uv.max.y = uv.min.y;
-			uv.min.y = temp;
-
-		}
-		else if( (flags & 8) != 0 ) //rotate 180 degrees
-		{
-			Vector2 temp = uv.min;
-			uv.min.x = uv.max.y;
-			uv.min.y = uv.max.x;
-			uv.max.x = temp.y;
-			uv.max.y = temp.x;
-		}
-		else if( (flags & 16) != 0 ) //rotate 270 degrees
-		{
-			float temp = uv.min.x;
-			uv.min.x = uv.min.y;
-			uv.min.y = uv.max.y;
-			uv.max.y = uv.max.x;
-			uv.max.x = temp;
-		}
-	}
-	*/
-
 	float DistancetoLineSegment( const Vector2 & a, const Vector2 & b, const Vector2 & point );
 	float DistancetoLineSegment( const Vector3 & a, const Vector3 & b, const Vector3 & point );
 
