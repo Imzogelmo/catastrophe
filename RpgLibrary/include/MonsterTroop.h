@@ -33,6 +33,8 @@ struct RPG_API MonsterGroup
 	//simply to ensure data is sane before saving.
 	void Validate();
 
+	static void RegisterObject();
+
 	void SerializeXml( XmlWriter* xml );
 	void DeserializeXml( XmlReader* xml );
 };
@@ -47,7 +49,7 @@ struct RPG_API MonsterTroop
 {
 	typedef fc::fixed_vector<MonsterGroup, 4> vec_type;
 
-	fc::fixed_string128 name; //this is editor only....
+	fc::string	name; //this is editor only....
 	vec_type	groups;
 	int			id;
 	int			formation_id;
@@ -55,8 +57,10 @@ struct RPG_API MonsterTroop
 
 	MonsterTroop();
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
+	static void RegisterObject();
+
+	NO_INLINE void SerializeXml( XmlWriter* xml );
+	NO_INLINE void DeserializeXml( XmlReader* xml );
 };
 
 

@@ -14,6 +14,7 @@
 #include <Catastrophe/IO/XmlReader.h>
 #include "MonsterTroop.h"
 #include "Serialization.h"
+#include "AttributeSerializer.h"
 
 
 
@@ -22,6 +23,16 @@ MonsterGroup::MonsterGroup( int monsterIndex, int minNum, int maxNum ) :
 	min(minNum),
 	max(maxNum)
 {
+}
+
+
+void MonsterGroup::RegisterObject()
+{
+	REGISTER_ATTRIBUTE_FACTORY_TYPE(MonsterGroup);
+	REGISTER_ATTRIBUTE(MonsterGroup, VAR_TYPE_INT, "index", monster_id);
+	REGISTER_ATTRIBUTE(MonsterGroup, VAR_TYPE_INT, "min", min);
+	REGISTER_ATTRIBUTE(MonsterGroup, VAR_TYPE_INT, "max", max);
+
 }
 
 
@@ -35,19 +46,13 @@ void MonsterGroup::Validate()
 
 void MonsterGroup::SerializeXml( XmlWriter* xml )
 {
-	xml->BeginNode("Monster");
-	xml->SetInt("index", monster_id);
-	xml->SetInt("min", min);
-	xml->SetInt("max", max);
-	xml->EndNode();
+	SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
 }
 
 
 void MonsterGroup::DeserializeXml( XmlReader* xml )
 {
-	monster_id = xml->GetInt("index");
-	min = xml->GetInt("min");
-	max = xml->GetInt("max");
+	DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
 }
 
 
@@ -62,8 +67,22 @@ MonsterTroop::MonsterTroop() :
 }
 
 
+void MonsterTroop::RegisterObject()
+{
+	REGISTER_ATTRIBUTE_FACTORY_TYPE(MonsterTroop);
+	REGISTER_ATTRIBUTE(MonsterTroop, VAR_TYPE_STRING, "name", name);
+	REGISTER_ATTRIBUTE(MonsterTroop, VAR_TYPE_INT, "formation", formation_id);
+	REGISTER_ATTRIBUTE(MonsterTroop, VAR_TYPE_INT, "max", max_monsters);
+	REGISTER_ATTRIBUTE_ARRAY(MonsterTroop, "Monster", "num_groups", vec_type, groups);
+
+}
+
+
 void MonsterTroop::SerializeXml( XmlWriter* xml )
 {
+	SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+
+	/*
 	xml->SetString("name", name);
 	xml->SetInt("formation", formation_id);
 	xml->SetInt("max", max_monsters);
@@ -71,13 +90,19 @@ void MonsterTroop::SerializeXml( XmlWriter* xml )
 
 	for( vec_type::iterator it = groups.begin(); it < groups.end(); ++it )
 	{
+		xml->BeginNode("Monster");
 		it->SerializeXml(xml);
+		xml->EndNode();
 	}
+	*/
 }
 
 
 void MonsterTroop::DeserializeXml( XmlReader* xml )
 {
+	DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+
+	/*
 	name = xml->GetString("name");
 	formation_id = xml->GetInt("formation");
 	max_monsters = xml->GetInt("max", 9);
@@ -99,6 +124,7 @@ void MonsterTroop::DeserializeXml( XmlReader* xml )
 
 	if( nested )
 		xml->SetToParent();
+	*/
 }
 
 

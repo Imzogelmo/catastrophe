@@ -11,32 +11,46 @@
 
 #pragma once
 
-#include <fc/string.h>
+#include <fc/dynamic_array.h>
 
 #include "RpgCommon.h"
-#include "Attributes.h"
 
 
-struct RPG_API CharacterClass
+/*
+ * @MonsterFormationCellData
+ * class that represents data on where to instantiate
+ * monsters.
+ */
+struct RPG_API MonsterFormationCellData
 {
-	fc::string		name;
-	fc::string		script;
-	fc::string		description;
+	short	x;
+	short	y;
 
-	int				id;
-	int				portrait_id;
-	int				map_spriteset_id;
-	int				battle_spriteset_id;
-	int				exp_table_id;
-
-	Attributes		attributes;
-
-	CharacterClass();
-
-	static void RegisterObject();
+	MonsterFormationCellData();
+	MonsterFormationCellData( short x, short y );
 
 	void SerializeXml( XmlWriter* xml );
 	void DeserializeXml( XmlReader* xml );
-
 };
+
+
+
+/*
+ * @MonsterFormation
+ * class that holds an array of formation cells.
+ */
+struct RPG_API MonsterFormation
+{
+	typedef fc::dynamic_array<MonsterFormationCellData> array_type;
+
+	array_type	formations;
+	int			id;
+
+	MonsterFormation();
+
+	void SerializeXml( XmlWriter* xml );
+	void DeserializeXml( XmlReader* xml );
+};
+
+
 

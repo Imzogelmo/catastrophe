@@ -70,7 +70,7 @@ public:
 };
 
 
-template<class T>
+template <class T>
 class DatabaseArrayAnyProxyType : public DatabaseArrayAnyProxyBase
 {
 public:
@@ -97,8 +97,13 @@ private:
 class DatabaseArrayAnyHolder
 {
 public:
-	typedef fc::fixed_tiny_vector<DatabaseArrayAnyProxyBase*, 64>				vec_type;
-	typedef fc::aligned_buffer<256, FC_ALIGNOF(DatabaseArrayAnyProxyBase*)>		buffer_type;
+	enum : size_t
+	{
+		MaxBufferBytes = 256
+	};
+
+	typedef fc::fixed_tiny_vector<DatabaseArrayAnyProxyBase*, MaxBufferBytes / sizeof(DatabaseArrayAnyProxyBase*)> vec_type;
+	typedef fc::aligned_buffer<MaxBufferBytes, FC_ALIGNOF(DatabaseArrayAnyProxyBase)> buffer_type;
 
 	DatabaseArrayAnyHolder() :
 		m_bin(),
@@ -107,13 +112,13 @@ public:
 	{
 	}
 
-	template<class T> inline
+	template <class T> inline
 	void Add( T& arr )
 	{
-		ASSERT(m_offset < 256);
+		ASSERT(m_offset < MaxBufferBytes);
 
-		DatabaseArrayAnyProxyType<T>* p = new (&m_buffer + m_offset) DatabaseArrayAnyProxyType<T>(&arr);
-		m_offset += sizeof(DatabaseArrayAnyProxyBase*);
+		DatabaseArrayAnyProxyType<T>* p = new (m_buffer.buffer + m_offset) DatabaseArrayAnyProxyType<T>(&arr);
+		m_offset += sizeof(DatabaseArrayAnyProxyType<T>);
 		m_bin.push_back(p);
 	}
 

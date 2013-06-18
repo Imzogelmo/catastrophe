@@ -71,6 +71,7 @@ void Database::Initialize()
 	m_arrayAny.Add(monster_troops);
 	m_arrayAny.Add(monster_formations);
 	m_arrayAny.Add(characters);
+	m_arrayAny.Add(character_classes);
 	m_arrayAny.Add(races);
 
 	m_arrayAny.Add(character_portrait_sprites);
@@ -85,6 +86,19 @@ void Database::Initialize()
 	{
 		v[i]->SetResourceDirectory(m_resourceDirectory);
 	}
+}
+
+
+void Database::GenerateScriptHeaders()
+{
+	GenerateHeader( items, m_resourceDirectory, "items.h", "ITEM_" );
+	GenerateHeader( weapons, m_resourceDirectory, "weapons.h", "WEAPON_" );
+	GenerateHeader( armor, m_resourceDirectory, "armor.h", "ARMOR_" );
+	GenerateHeader( accessories, m_resourceDirectory, "accessories.h", "ACCESSORY_" );
+	GenerateHeader( monsters, m_resourceDirectory, "monsters.h", "MONSTER_" );
+	GenerateHeader( characters, m_resourceDirectory, "characters.h", "CHARACTER_" );
+	GenerateHeader( character_classes, m_resourceDirectory, "classes.h", "CLASS_" );
+	GenerateHeader( races, m_resourceDirectory, "races.h", "RACE_" );
 }
 
 
@@ -238,3 +252,56 @@ bool Database::DeserializeDataArray( T& arr, ResourceDirectory* resourceDirector
 
 	return true;
 }
+
+
+//
+// this whole thing is a WIP.
+//
+template <class Array>
+bool Database::GenerateHeader( const Array& arr, ResourceDirectory* resourceDirectory, const fc::string& filename, const fc::string& prependStr )
+{
+	fc::string fn = resourceDirectory ? resourceDirectory->GetScriptDefineDirectory() : "";
+	fn += filename;
+
+	File f;
+	if( !f.Open(fn, FileWrite) )
+	{
+		return false;
+	}
+
+	f.WriteLine("");
+	f.WriteLine("/* !GENERATED FILE - DO NOT HAND EDIT! */");
+	f.WriteLine("");
+	f.WriteLine("#pragma once");
+	f.WriteLine("");
+
+	fc::string str;
+	fc::string name;
+	for( size_t i(0); i < arr.size(); ++i )
+	{
+		str = "#define " + prependStr;
+		name = arr[i].name;
+
+		// replace spaces with underscores.
+		fc::replace(name.begin(), name.end(), ' ', '_');
+
+		// TODO: just remove anything not a valid char
+		name.erase( fc::remove(name.begin(), name.end(), '\''), name.end() );
+		name.erase( fc::remove(name.begin(), name.end(), '\"'), name.end() );
+
+		name.make_upper();
+		str.append(name);
+
+		// add whitespace and id.
+		str.append(40 - str.size(), ' ');
+		str.append_int(i);
+
+		f.WriteLine(str);
+	}
+
+	f.WriteLine("");
+	f.Close();
+
+	return true;
+}
+

@@ -24,6 +24,8 @@ enum BaseDirectoryType
 	BaseDir_Maps,
 	BaseDir_Tilesets,
 	BaseDir_Data,
+	BaseDir_Scripts,
+	BaseDir_ScriptDefs,
 	BaseDir_Max
 };
 
@@ -36,7 +38,9 @@ static const char* default_base_directories[BaseDir_Max] =
 	"sfx/",
 	"maps/",
 	"tilesets/",
-	"data/"
+	"data/",
+	"scripts/",
+	"scripts/defs/"
 };
 
 
@@ -55,6 +59,8 @@ public:
 	fc::string GetMapDirectory() const;
 	fc::string GetTilesetDirectory() const;
 	fc::string GetDataDirectory() const;
+	fc::string GetScriptDirectory() const;
+	fc::string GetScriptDefineDirectory() const;
 
 protected:
 	fc::string m_root;

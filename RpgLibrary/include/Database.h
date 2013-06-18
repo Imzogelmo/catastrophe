@@ -61,9 +61,6 @@ public:
 	Database();
 	~Database();
 
-	//void Initialize();
-	//void Shutdown();
-
 	/*
 	DataArray<Skill>			skills;
 	DataArray<Spell>			spells;
@@ -127,6 +124,9 @@ public:
 	/// Load the entire database from xml files.
 	bool DeserializeAllDataXml();
 
+	/// Generate all applicable script headers.
+	void GenerateScriptHeaders();
+
 
 	/// Called internally by DataArray. (This also keep the header files clean) ;)
 	template <class T> static bool SerializeDataArray
@@ -151,6 +151,10 @@ public:
 
 	/// Generate IDs from a DataArray. (Types must have an 'int id' property.)
 	template <class T> static void GenerateIds( T& arr );
+
+	/// Generate script header from array. (must contain T(item).name member).
+	template <class Array> bool GenerateHeader
+		( const Array& arr, ResourceDirectory* resourceDirectory, const fc::string& filename, const fc::string& prependStr );
 
 	/*
 	Skill*			GetSkill( int id ) { return GetArrayContent<Skill>(skills, id); }
