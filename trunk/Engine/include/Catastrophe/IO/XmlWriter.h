@@ -37,12 +37,14 @@ public:
 
 	bool BeginNode( const fc::string& nodeName );
 	void EndNode();
+
 	void Write( const fc::string& text );
 	void Write( const char* text );
-	void WriteByteBlock( ubyte* ptr, size_t n );
-	void WriteShortBlock( short* ptr, size_t n );
-	void WriteIntBlock( int* ptr, size_t n );
-	template <class T> void WriteBlock( T* ptr, size_t n, bool isIntegral = true );
+	void WriteByteArray( const ubyte* ptr, size_t n );
+	void WriteShortArray( const short* ptr, size_t n );
+	void WriteIntArray( const int* ptr, size_t n );
+	void WriteFloatArray( const float* ptr, size_t n );
+	void WriteArray( const void* ptr, size_t strideInBytes, size_t n, bool isIntegral = true );
 
 	void SetString( const fc::string& name, const fc::string& value );
 	void SetBool( const fc::string& name, bool value );
@@ -59,7 +61,25 @@ public:
 	void SetInt( const char* name, int value );
 	void SetUInt( const char* name, size_t value );
 	void SetFloat( const char* name, float value );
-	
+
+	void SetStringElement( const char* name, const char* value );
+	void SetBoolElement( const char* name, bool value );
+	void SetByteElement( const char* name, char value );
+	void SetShortElement( const char* name, short value );
+	void SetIntElement( const char* name, int value );
+	void SetUIntElement( const char* name, size_t value );
+	void SetFloatElement( const char* name, float value );
+
+	void SetRectElement( const char* name, const Rect& value );
+	void SetRectfElement( const char* name, const Rectf& value );
+	void SetPointElement( const char* name, const Point& value );
+	void SetVector2Element( const char* name, const Vector2& value );
+	void SetVector3Element( const char* name, const Vector3& value );
+	void SetVector4Element( const char* name, const Vector4& value );
+	void SetColorElement( const char* name, const Color& value );
+	void SetColorfElement( const char* name, const Colorf& value );
+	void SetMatrixElement( const char* name, const Matrix& value );
+
 	bool IsOpen() const { return ( m_document != 0 ); }
 
 private:

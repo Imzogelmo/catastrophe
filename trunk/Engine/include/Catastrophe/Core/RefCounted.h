@@ -16,78 +16,38 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "Math/Vector2.h"
-#include "Math/Vector3.h"
-#include "Math/Vector4.h"
-#include "Math/Color.h"
-#include "Math/Colorf.h"
-#include "Math/HSVColor.h"
-#include "Math/HSLColor.h"
-
+#pragma once
 
 CE_NAMESPACE_BEGIN
 
 
-Color::Color( const HSVColor &c )
+/*
+ * RefCounted
+ * assignment of inherited classes is undefined.
+ */
+class RefCounted
 {
-	*this = HSVColor::HsvToRgb(c);
-}
+public:
+	RefCounted( int refCount = 0 ) : m_ref_count(refCount) {}
 
+	void AddRef()
+	{
+		++m_ref_count;
+	}
 
-Color::Color( const HSLColor &c )
-{
-	*this = HSLColor::HslToRgb(c);
-}
+	void ReleaseRef()
+	{
+		--m_ref_count;
+	}
 
+	int GetRefCount()
+	{
+		return m_ref_count;
+	}
 
-Color& Color::operator = ( const HSVColor &c )
-{
-	*this = HSVColor::HsvToRgb(c);
-	return *this;
-}
-
-
-Color& Color::operator = ( const HSLColor &c )
-{
-	*this = HSLColor::HslToRgb(c);
-	return *this;
-}
-
-
-Color Color::Lerp( const Color& c1, const Color& c2, float t)
-{
-	int x = int(t * 256.f);
-	return Color
-	(
-		ubyte((c1.r * (255 - x) + c2.r * x) / 255),
-		ubyte((c1.g * (255 - x) + c2.g * x) / 255),
-		ubyte((c1.b * (255 - x) + c2.b * x) / 255),
-		ubyte((c1.a * (255 - x) + c2.a * x) / 255)
-	);
-}
-
-
-Colorf Color::ToColorf() const
-{
-	return Colorf(*this);
-}
-
-
-Vector4 Color::ToVector4() const
-{
-	return Vector4( _ToFloat(r), _ToFloat(g), _ToFloat(b), _ToFloat(a) );
-}
-
-
-Vector3 Color::ToVector3() const
-{
-	return Vector3( _ToFloat(r), _ToFloat(g), _ToFloat(b) );
-}
-
+protected:
+	int m_ref_count;
+};
 
 
 CE_NAMESPACE_END
-
-
-
-

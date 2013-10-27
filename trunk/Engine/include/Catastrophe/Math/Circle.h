@@ -88,9 +88,14 @@ public:
 		return (pos.DistanceSquared( point ) < (radius * radius));
 	}
 
-	float Circumference()
+	float Circumference() const
 	{
 		return 2.0f * Math::Pi * radius;
+	}
+
+	float Diameter() const
+	{
+		return 2.0f * radius;
 	}
 
 /*

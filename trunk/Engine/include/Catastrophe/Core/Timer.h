@@ -18,40 +18,43 @@
 
 #pragma once
 
-#include "File.h"
+#include "../Common.h"
 
-CE_NAMESPACE_BEGIN
-
-extern void __Internal_Log_Write( const char* format, ... );
-extern void __Internal_Log_Write( const fc::string& message );
-
-
-class CE_API Logger
+/**
+ * High performance timer class.
+ * -uses timer_lib under the hood for portability.
+ */
+class CE_API Timer
 {
 public:
-	Logger();
-	Logger( const fc::string& filename, bool create_debug_console = true, bool auto_append_new_line = true );
-	~Logger();
+	struct Time
+	{
+		uint64 clock;
+		uint64 ref;
+		uint64 freq;
+		double oofreq;
+	};
 
-	static Logger& GetInstance();
-	bool Open( const fc::string& filename, bool create_debug_console = true, bool auto_append_new_line = true );
-	void Close();
+	Timer();
+	~Timer();
 
-	void Write( const fc::string& message );
-	void AppendNewLine( fc::string& str );
+	void Reset();
+	uint64 Frequency();
+	uint64 TicksPerSecond();
 
-	File* GetFile() { return &m_file; }
+	uint64 ElapsedTicks();
+	uint64 ElapsedMinutes();
+	uint64 ElapsedSeconds();
+	uint64 ElapsedMilliseconds();
+	uint64 ElapsedMicroseconds();
 
-private:
-	void FlushString( const fc::string& str );
+	double MilliSeconds();
+	double Seconds();
+	double Minutes();
 
-	File			m_file;
-	bool			m_console;
-	bool			m_append_new_line;
-	static Logger	m_instance;
+protected:
+	Time		m_time;
+	static bool m_timer_init;
 };
 
-
-
-CE_NAMESPACE_END
 

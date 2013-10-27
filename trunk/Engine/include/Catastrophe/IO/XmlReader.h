@@ -40,6 +40,7 @@ public:
 
 	virtual bool Open( const fc::string& filename );
 	virtual void Close();
+	virtual bool IsOpen() const { return (m_document != 0); }
 
 	fc::string GetCurrentNodeName() const;
 
@@ -49,21 +50,46 @@ public:
 	bool HasAttribute( const fc::string& attr ) const;
 
 	fc::string ReadText() const;
-	bool ReadByteBlock( ubyte* ptr, size_t n );
-	bool ReadShortBlock( short* ptr, size_t n );
-	bool ReadIntBlock( int* ptr, size_t n );
-	bool ReadFloatBlock( float* ptr, size_t n );
-	template <class T> bool ReadBlock( T* ptr, size_t n, bool isIntegral = true );
+	bool ReadByteArray( ubyte* ptr, size_t n );
+	bool ReadShortArray( short* ptr, size_t n );
+	bool ReadIntArray( int* ptr, size_t n );
+	bool ReadFloatArray( float* ptr, size_t n );
+	bool ReadArray( void* ptr, size_t strideInBytes, size_t n, bool isIntegral = true );
 
-	fc::string GetString( const fc::string& name ) const;
-	bool GetBool( const fc::string& name, bool defaultValue = false ) const;
-	byte GetByte( const fc::string& name, byte defaultValue = 0 ) const;
-	short GetShort( const fc::string& name, short defaultValue = 0 ) const;
-	int GetInt( const fc::string& name, int defaultValue = 0 ) const;
-	size_t GetUInt( const fc::string& name, size_t defaultValue = 0 ) const;
-	float GetFloat( const fc::string& name, float defaultValue = 0.f ) const;
+	bool ReadString( const char* name, fc::string& value ) const;
+	bool ReadBool( const char* name, bool& value ) const;
+	bool ReadByte( const char* name, byte& value ) const;
+	bool ReadShort( const char* name, short& value ) const;
+	bool ReadInt( const char* name, int& value ) const;
+	bool ReadUInt( const char* name, size_t& value ) const;
+	bool ReadFloat( const char* name, float& value ) const;
 
-	bool IsOpen() const { return (m_document != 0); }
+	bool GetStringElement( const char* name, fc::string& value );
+	bool GetBoolElement( const char* name, bool& value );
+	bool GetByteElement( const char* name, char& value );
+	bool GetShortElement( const char* name, short& value );
+	bool GetIntElement( const char* name, int& value );
+	bool GetUIntElement( const char* name, size_t& value );
+	bool GetFloatElement( const char* name, float& value );
+	bool GetRectElement( const char* name, Rect& value );
+	bool GetRectfElement( const char* name, Rectf& value );
+	bool GetPointElement( const char* name, Point& value );
+	bool GetVector2Element( const char* name, Vector2& value );
+	bool GetVector3Element( const char* name, Vector3& value );
+	bool GetVector4Element( const char* name, Vector4& value );
+	bool GetColorElement( const char* name, Color& value );
+	bool GetColorfElement( const char* name, Colorf& value );
+	bool GetMatrixElement( const char* name, Matrix& value );
+
+	CE_NO_INLINE bool GetTypeElement( const char* name, void* value, int type );
+
+	fc::string GetString( const char* name ) const;
+	bool GetBool( const char* name, bool defaultValue = false ) const;
+	byte GetByte( const char* name, byte defaultValue = 0 ) const;
+	short GetShort( const char* name, short defaultValue = 0 ) const;
+	int GetInt( const char* name, int defaultValue = 0 ) const;
+	size_t GetUInt( const char* name, size_t defaultValue = 0 ) const;
+	float GetFloat( const char* name, float defaultValue = 0.f ) const;
 
 private:
 	fc::string		m_filename;

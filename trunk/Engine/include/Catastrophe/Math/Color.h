@@ -55,6 +55,8 @@ public:
 	bool operator == ( const Color &c )	const { return (packed_value == c.packed_value); }
 	bool operator != ( const Color &c )	const { return (packed_value != c.packed_value); }
 
+	bool Equals( const Color &c) const { return (packed_value == c.packed_value); }
+
 	uint Rgba() const { return packed_value; }
 	uint Bgra() const { return _Pack( b, g, r, a ); }
 	uint Argb() const { return _Pack( a, r, g, b ); }

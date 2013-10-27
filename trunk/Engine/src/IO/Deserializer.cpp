@@ -164,7 +164,7 @@ bool Deserializer::ReadVector4( Vector4& value )
 
 bool Deserializer::ReadRectf( Rectf& value )
 {
-	return (ReadVector2(value.min ) && ReadVector2(value.max));
+	return (ReadVector2(value.min) && ReadVector2(value.max));
 }
 
 
@@ -198,7 +198,7 @@ bool Deserializer::ReadString( fc::string& value )
 	for( size_t i(0); i < size; ++i )
 	{
 		char c;
-		if(!ReadByte( c))
+		if( !ReadByte(c) )
 			return false;
 
 		value += c;
@@ -218,7 +218,7 @@ bool Deserializer::ReadLine( fc::string& value )
 			break;
 		if( c == 13)
 		{
-			if(!IsEof())
+			if( !IsEof() )
 			{
 				char next = ReadByte();
 				if (next != 10)

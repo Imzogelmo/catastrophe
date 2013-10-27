@@ -16,77 +16,95 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "Math/Vector2.h"
-#include "Math/Vector3.h"
-#include "Math/Vector4.h"
-#include "Math/Color.h"
-#include "Math/Colorf.h"
-#include "Math/HSVColor.h"
-#include "Math/HSLColor.h"
+
+#include "Core/Timer.h"
+#include "timer_lib/timer.c"
 
 
-CE_NAMESPACE_BEGIN
+bool Timer::m_timer_init = false;
 
 
-Color::Color( const HSVColor &c )
+Timer::Timer()
 {
-	*this = HSVColor::HsvToRgb(c);
+	if( !m_timer_init )
+	{
+		m_timer_init = true;
+		timer_lib_initialize();
+	}
+
+	timer_initialize( (timer*)&m_time );
 }
 
 
-Color::Color( const HSLColor &c )
+Timer::~Timer()
 {
-	*this = HSLColor::HslToRgb(c);
 }
 
 
-Color& Color::operator = ( const HSVColor &c )
+uint64 Timer::Frequency()
 {
-	*this = HSVColor::HsvToRgb(c);
-	return *this;
+	return m_time.freq;
 }
 
 
-Color& Color::operator = ( const HSLColor &c )
+uint64 Timer::TicksPerSecond()
 {
-	*this = HSLColor::HslToRgb(c);
-	return *this;
+	return m_time.freq;
 }
 
 
-Color Color::Lerp( const Color& c1, const Color& c2, float t)
+void Timer::Reset()
 {
-	int x = int(t * 256.f);
-	return Color
-	(
-		ubyte((c1.r * (255 - x) + c2.r * x) / 255),
-		ubyte((c1.g * (255 - x) + c2.g * x) / 255),
-		ubyte((c1.b * (255 - x) + c2.b * x) / 255),
-		ubyte((c1.a * (255 - x) + c2.a * x) / 255)
-	);
+	timer_reset( (timer*)&m_time );
 }
 
 
-Colorf Color::ToColorf() const
+uint64 Timer::ElapsedTicks()
 {
-	return Colorf(*this);
+	return timer_elapsed_ticks( (timer*)&m_time, 0 );
 }
 
 
-Vector4 Color::ToVector4() const
+uint64 Timer::ElapsedMinutes()
 {
-	return Vector4( _ToFloat(r), _ToFloat(g), _ToFloat(b), _ToFloat(a) );
+	return (ElapsedTicks() / TicksPerSecond()) / 60;
 }
 
 
-Vector3 Color::ToVector3() const
+uint64 Timer::ElapsedSeconds()
 {
-	return Vector3( _ToFloat(r), _ToFloat(g), _ToFloat(b) );
+	return ElapsedTicks() / TicksPerSecond();
 }
 
 
+uint64 Timer::ElapsedMilliseconds()
+{
+	return ((uint64)1000 * ElapsedTicks()) / TicksPerSecond();
+}
 
-CE_NAMESPACE_END
+
+uint64 Timer::ElapsedMicroseconds()
+{
+	return ((uint64)1000000 * ElapsedTicks()) / TicksPerSecond();
+}
+
+
+double Timer::MilliSeconds()
+{
+	return Seconds() * 1000.0;
+}
+
+
+double Timer::Seconds()
+{
+	return timer_elapsed( (timer*)&m_time, 0 );
+}
+
+
+double Timer::Minutes()
+{
+	return Seconds() / 60.0;
+}
 
 
 
