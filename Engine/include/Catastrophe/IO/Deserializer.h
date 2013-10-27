@@ -74,29 +74,6 @@ public:
 	fc::string ReadString();
 	fc::string ReadLine();
 
-	/* //Should probably be formated...
-	// operator >> overloads for convenience.
-	Deserializer& operator >>( int& value );
-	Deserializer& operator >>( short& value );
-	Deserializer& operator >>( char& value );
-	Deserializer& operator >>( unsigned int& value );
-	Deserializer& operator >>( unsigned short& value );
-	Deserializer& operator >>( unsigned char& value );
-	Deserializer& operator >>( bool& value );
-	Deserializer& operator >>( float& value );
-
-	Deserializer& operator >>( Rect& value );
-	Deserializer& operator >>( Rectf& value );
-	Deserializer& operator >>( Point& value );
-	Deserializer& operator >>( Vector2& value );
-	Deserializer& operator >>( Vector3& value );
-	Deserializer& operator >>( Vector4& value );
-	Deserializer& operator >>( Color& value );
-	Deserializer& operator >>( Colorf& value );
-	Deserializer& operator >>( Matrix& value );
-
-	Deserializer& operator >>( fc::string& value );
-	*/
 };
 
 

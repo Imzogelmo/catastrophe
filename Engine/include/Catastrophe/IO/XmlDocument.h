@@ -19,48 +19,33 @@
 #pragma once
 
 #include <fc/string.h>
-
-#include "../Common.h"
+#include "XmlElement.h"
 
 CE_NAMESPACE_BEGIN
 
 
-class CE_API Serializer
+class CE_API XmlDocument
 {
 public:
-	virtual ~Serializer() {}
-	
-	virtual size_t Write( const void* data, size_t size ) = 0;
-	
-	bool WriteInt( int value );
-	bool WriteShort( short value );
-	bool WriteByte( signed char value );
-	bool WriteUInt( unsigned int value );
-	bool WriteUShort( unsigned short value );
-	bool WriteUByte( unsigned char value );
-	bool WriteBool( bool value );
-	bool WriteFloat( float value );
+	XmlDocument();
+	virtual ~XmlDocument();
 
-	bool WriteRect( const Rect& value );
-	bool WriteRectf( const Rectf& value );
-	bool WritePoint( const Point& value );
-	bool WriteVector2( const Vector2& value );
-	bool WriteVector3( const Vector3& value );
-	bool WriteVector4( const Vector4& value );
-	bool WriteColor( const Color& value );
-	bool WriteColorf( const Colorf& value );
-	bool WriteMatrix( const Matrix& value );
+	void Reset();
+	bool Load( const fc::string& filename );
+	bool Save( const fc::string& filename );
+	bool Parse( const fc::string& xml );
 
-	bool WriteShortArray( const short* ptr, size_t n );
-	bool WriteIntArray( const int* ptr, size_t n );
-	bool WriteFloatArray( const float* ptr, size_t n );
+	void CreateDeclaration();
+	XmlElement CreateRoot( const char* name );
+	XmlElement GetRoot() const;
+	XmlDocument_t* GetDocumentPtr() const { return m_document; }
 
-	bool WriteString( const fc::string& value );
-	bool WriteString( const char* value );
-	bool WriteLine( const fc::string& value, bool newline = true );
+private:
+	XmlDocument( const XmlDocument& );
+	XmlDocument& operator =( const XmlDocument& );
 
+	XmlDocument_t*	m_document;
 };
-
 
 
 CE_NAMESPACE_END

@@ -165,6 +165,11 @@ class PackFile;
 class VectorBuffer;
 class XmlReader;
 class XmlWriter;
+class XmlElement;
+class XmlDocument;
+class AttributeReader;
+class AttributeWriter;
+
 
 class Sound;
 class SoundEngine;

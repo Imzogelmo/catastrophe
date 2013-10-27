@@ -16,10 +16,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "xml/tinyxml2.cpp"
+#include "xml/tinyxml2.h"
 
 #include "Common.h"
-#include "IO/XMLWriter.h"
+#include "IO/XmlWriter.h"
+
+#include "Math/Point.h"
+#include "Math/Rect.h"
+#include "Math/Rectf.h"
+#include "Math/Vector2.h"
+#include "Math/Vector3.h"
+#include "Math/Vector4.h"
+#include "Math/Color.h"
+#include "Math/Colorf.h"
+#include "Math/Matrix.h"
+
 
 #ifdef _MSC_VER
 	#pragma warning ( push )
@@ -139,26 +150,31 @@ void XmlWriter::Write( const char* s )
 }
 
 
-void XmlWriter::WriteByteBlock( ubyte* ptr, size_t n )
+void XmlWriter::WriteByteArray( const ubyte* ptr, size_t n )
 {
-	WriteBlock<ubyte>(ptr, n, true);
+	WriteArray(ptr, sizeof(ubyte), n, true);
 }
 
 
-void XmlWriter::WriteShortBlock( short* ptr, size_t n )
+void XmlWriter::WriteShortArray( const short* ptr, size_t n )
 {
-	WriteBlock<short>(ptr, n, true);
+	WriteArray(ptr, sizeof(short), n, true);
 }
 
 
-void XmlWriter::WriteIntBlock( int* ptr, size_t n )
+void XmlWriter::WriteIntArray( const int* ptr, size_t n )
 {
-	WriteBlock<int>(ptr, n, true);
+	WriteArray(ptr, sizeof(int), n, true);
 }
 
 
-template <class T>
-void XmlWriter::WriteBlock( T* ptr, size_t n, bool isIntegral )
+void XmlWriter::WriteFloatArray( const float* ptr, size_t n )
+{
+	WriteArray(ptr, sizeof(float), n, false);
+}
+
+
+void XmlWriter::WriteArray( const void* ptr, size_t strideInBytes, size_t n, bool isIntegral )
 {
 	fc::string str;
 	str.reserve(n * 4); //best guess
@@ -166,10 +182,17 @@ void XmlWriter::WriteBlock( T* ptr, size_t n, bool isIntegral )
 	char buf[64];
 	for( size_t i(0); i < n; ++i )
 	{
+		size_t byteOffset = i * strideInBytes;
+
 		if( isIntegral )
 		{
-			int val = (int)ptr[i];
+			int val = int(*((char*)ptr + byteOffset));
 			sprintf(buf, "%i", val);
+		}
+		else
+		{
+			float val = float(*((char*)ptr + byteOffset));
+			sprintf(buf, "%f", val);
 		}
 
 		str.append(buf).append(',');
@@ -271,6 +294,155 @@ void XmlWriter::SetFloat( const char* name, float value )
 	CE_ASSERT(m_element);
 	m_element->SetAttribute(name, fc::to_string(value).c_str());
 }
+
+
+void XmlWriter::SetStringElement( const char* name, const char* value )
+{
+	BeginNode(name);
+	SetString("value", value);
+	EndNode();
+}
+
+
+void XmlWriter::SetBoolElement( const char* name, bool value )
+{
+	BeginNode(name);
+	SetBool("value", value);
+	EndNode();
+}
+
+
+void XmlWriter::SetByteElement( const char* name, char value )
+{
+	BeginNode(name);
+	SetByte("value", value);
+	EndNode();
+}
+
+
+void XmlWriter::SetShortElement( const char* name, short value )
+{
+	BeginNode(name);
+	SetShort("value", value);
+	EndNode();
+}
+
+
+void XmlWriter::SetIntElement( const char* name, int value )
+{
+	BeginNode(name);
+	SetInt("value", value);
+	EndNode();
+}
+
+
+void XmlWriter::SetUIntElement( const char* name, size_t value )
+{
+	BeginNode(name);
+	SetUInt("value", value);
+	EndNode();
+}
+
+
+void XmlWriter::SetFloatElement( const char* name, float value )
+{
+	BeginNode(name);
+	SetFloat("value", value);
+	EndNode();
+}
+
+
+void XmlWriter::SetRectElement( const char* name, const Rect& value )
+{
+	BeginNode(name);
+	SetInt("x", value.pos.x);
+	SetInt("y", value.pos.y);
+	SetInt("w", value.size.x);
+	SetInt("h", value.size.y);
+	EndNode();
+}
+
+
+void XmlWriter::SetRectfElement( const char* name, const Rectf& value )
+{
+	BeginNode(name);
+	SetFloat("min_x", value.min.x);
+	SetFloat("min_y", value.min.y);
+	SetFloat("max_x", value.max.x);
+	SetFloat("max_y", value.max.y);
+	EndNode();
+}
+
+
+void XmlWriter::SetPointElement( const char* name, const Point& value )
+{
+	BeginNode(name);
+	SetInt("x", value.x);
+	SetInt("y", value.y);
+	EndNode();
+}
+
+
+void XmlWriter::SetVector2Element( const char* name, const Vector2& value )
+{
+	BeginNode(name);
+	SetFloat("x", value.x);
+	SetFloat("y", value.y);
+	EndNode();
+}
+
+
+void XmlWriter::SetVector3Element( const char* name, const Vector3& value )
+{
+	BeginNode(name);
+	SetFloat("x", value.x);
+	SetFloat("y", value.y);
+	SetFloat("z", value.z);
+	EndNode();
+}
+
+
+void XmlWriter::SetVector4Element( const char* name, const Vector4& value )
+{
+	BeginNode(name);
+	SetFloat("x", value.x);
+	SetFloat("y", value.y);
+	SetFloat("z", value.z);
+	SetFloat("w", value.w);
+	EndNode();
+}
+
+
+void XmlWriter::SetColorElement( const char* name, const Color& value )
+{
+	BeginNode(name);
+	SetByte("r", value.r);
+	SetByte("g", value.g);
+	SetByte("b", value.b);
+	SetByte("a", value.a);
+	EndNode();
+}
+
+
+void XmlWriter::SetColorfElement( const char* name, const Colorf& value )
+{
+	BeginNode(name);
+	SetFloat("r", value.r);
+	SetFloat("g", value.g);
+	SetFloat("b", value.b);
+	SetFloat("a", value.a);
+	EndNode();
+}
+
+
+void XmlWriter::SetMatrixElement( const char* name, const Matrix& value )
+{
+	BeginNode(name);
+	WriteFloatArray(&value[0], 16);
+	EndNode();
+}
+
+
 
 
 

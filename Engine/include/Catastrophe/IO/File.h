@@ -40,16 +40,16 @@ class CE_API File : public Deserializer, public Serializer
 {
 public:
 	File();
-	File(const fc::string& fileName, FileMode mode = FileRead);
+	File( const fc::string& fileName, FileMode mode = FileRead );
 	virtual ~File();
 
-	virtual size_t Read(void* dest, size_t size);
-	virtual size_t Seek(size_t position);
-	virtual size_t Write(const void* data, size_t size);
+	virtual size_t Read( void* dest, size_t size );
+	virtual size_t Write( const void* data, size_t size );
+	virtual size_t Seek( size_t position );
 
-	bool Open(const fc::string& fileName, FileMode mode = FileRead);
-	void Close();
-	void Flush();
+	virtual bool Open( const fc::string& filename, FileMode mode = FileRead );
+	virtual void Close();
+	virtual void Flush();
 
 	const fc::string& GetFileName() const { return m_filename; }
 	
@@ -61,9 +61,9 @@ public:
 	bool IsEof() const { return m_position >= m_size; }
 	bool Eof() const { return IsEof(); }
 
-	fc::string GetNativePath(const fc::string& path);
+	fc::string GetNativePath( const fc::string& path );
 
-private:
+protected:
 	FileMode	m_mode;
 	void*		m_handle;
 	size_t		m_position;
