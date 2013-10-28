@@ -42,7 +42,9 @@ public:
 	bool BeginNode( const fc::string& name );
 	bool BeginNode( const char* name );
 	bool EndNode();
+
 	bool SetToParent();
+	bool SetToChild( const char* name );
 
 	XmlElement CreateChild( const fc::string& name );
 	XmlElement CreateChild( const char* name );
@@ -63,7 +65,7 @@ public:
 	bool SetAttribute( const char* name, const char* value );
 	bool SetString( const char* name, const char* value );
 	bool SetBool( const char* name, bool value );
-	bool SetByte( const char* name, char value );
+	bool SetByte( const char* name, byte value );
 	bool SetShort( const char* name, short value );
 	bool SetInt( const char* name, int value );
 	bool SetUInt( const char* name, size_t value );

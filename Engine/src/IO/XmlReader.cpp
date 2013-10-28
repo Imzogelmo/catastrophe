@@ -66,30 +66,19 @@ bool XmlReader::Open( const fc::string& filename )
 		Close();
 
 	m_filename = filename;
-	m_document = new XmlDocument_t();
-
-	if( m_document->LoadFile(filename.c_str()) != 0 )
-	{
-		Close();
-		Log("Failed to open file (%s)", filename.c_str());
+	if( !m_document.Open(m_filename) )
 		return false;
-	}
 
-	m_element = m_document->RootElement();
+	m_element = m_document.GetRoot();
 	return true;
 }
 
 
 void XmlReader::Close()
 {
-	if(m_document)
-	{
-		delete m_document;
-		m_document = 0;
-	}
-
 	m_filename.clear();
-	m_element = 0;
+	m_document.Reset();
+	m_element = XmlElement();
 }
 
 
@@ -100,54 +89,15 @@ fc::string XmlReader::GetCurrentNodeName() const
 }
 
 
-bool XmlReader::FirstChild( const fc::string& name )
-{
-	CE_ASSERT(m_element != 0);
-
-	XmlElement_t* child = m_element->FirstChildElement(name.c_str());
-	if( child )
-	{
-		m_element = child;
-		return true;
-	}
-
-	return false;
-}
-
-
-bool XmlReader::NextChild( const fc::string& name )
-{
-	CE_ASSERT(m_element != 0);
-
-	XmlElement_t* sibling = m_element->NextSiblingElement(name.c_str());
-	if( !sibling ) 
-	{
-		//get the first child element if no sibling is found.
-		sibling = m_element->FirstChildElement(name.c_str());
-	}
-	else
-	{
-		m_element = sibling;
-		return true;
-	}
-
-	return false;
-}
-
-
 bool XmlReader::SetToParent()
 {
-	CE_ASSERT(m_element != 0);
-	CE_ASSERT((void*)m_element != (void*)m_document);
+	return m_element.SetToParent();
+}
 
-	XmlNode_t* parent = m_element->Parent();
-	if(parent)
-	{
-		m_element = parent->ToElement();
-		return true;
-	}
 
-	return false;
+bool XmlReader::SetToChild( const char* name )
+{
+	return m_element.SetToChild(name);
 }
 
 
@@ -158,444 +108,300 @@ bool XmlReader::HasAttribute( const fc::string& name ) const
 }
 
 
-bool XmlReader::ReadString( const char* name, fc::string& value ) const
+fc::string XmlReader::ReadString( const char* name, const fc::string& defaultValue ) const
 {
-	bool ret = false;
-	const char* s = m_element->Attribute(name);
-	if( s != 0 )
-	{
-		value = s;
-		ret = true;
-	}
-
-	return ret;
+	XML_READER_CHECK();
+	return m_element.GetString(name, defaultValue);
 }
 
 
-bool XmlReader::ReadBool( const char* name, bool& value ) const
+bool XmlReader::ReadBool( const char* name, bool defaultValue ) const
 {
-	CE_ASSERT(m_element != 0);
-	return m_element->QueryBoolAttribute(name, &value) == tinyxml2::XML_NO_ERROR;
+	XML_READER_CHECK();
+	return m_element.GetBool(name, defaultValue);
 }
 
 
-bool XmlReader::ReadByte( const char* name, byte& value ) const
+byte XmlReader::ReadByte( const char* name, byte defaultValue ) const
 {
-	int v = 0;
-	bool ret = false;
-	if( GetInt(name, v) )
-	{
-		value = (byte)v;
-		ret = true;
-	}
-
-	return ret;
+	XML_READER_CHECK();
+	return m_element.GetByte(name, defaultValue);
 }
 
 
-bool XmlReader::ReadShort( const char* name, short& value ) const
+short XmlReader::ReadShort( const char* name, short defaultValue ) const
 {
-	int v = 0;
-	bool ret = false;
-	if( GetInt(name, v) )
-	{
-		value = (short)v;
-		ret = true;
-	}
-
-	return ret;
+	XML_READER_CHECK();
+	return m_element.GetShort(name, defaultValue);
 }
 
 
-bool XmlReader::ReadInt( const char* name, int& value ) const
+int XmlReader::ReadInt( const char* name, int defaultValue ) const
 {
-	CE_ASSERT(m_element != 0);
-	return m_element->QueryIntAttribute(name, &value) == tinyxml2::XML_NO_ERROR;
+	XML_READER_CHECK();
+	return m_element.GetInt(name, defaultValue);
 }
 
 
-bool XmlReader::ReadUInt( const char* name, size_t& value ) const
+size_t XmlReader::ReadUInt( const char* name, size_t defaultValue ) const
 {
-	int v = 0;
-	bool ret = false;
-	if( GetInt(name, v) )
-	{
-		value = (size_t)v;
-		ret = true;
-	}
-
-	return ret;
+	XML_READER_CHECK();
+	return m_element.GetUInt(name, defaultValue);
 }
 
 
-bool XmlReader::ReadFloat( const char* name, float& value ) const
+float XmlReader::ReadFloat( const char* name, float defaultValue ) const
 {
-	CE_ASSERT(m_element != 0);
-	return m_element->QueryFloatAttribute(name, &value) == tinyxml2::XML_NO_ERROR;
+	XML_READER_CHECK();
+	return m_element.GetFloat(name, defaultValue);
 }
 
 
-
-enum TypeAttributeEnum
+Rect XmlReader::ReadRect( const char* name, const Rect& defaultValue ) const
 {
-	AttributeType_Bool,
-	AttributeType_Byte,
-	AttributeType_Short,
-	AttributeType_Int,
-	AttributeType_UInt,
-	AttributeType_Float,
-	AttributeType_String,
-	AttributeType_Rect,
-	AttributeType_Rectf,
-	AttributeType_Point,
-	AttributeType_Vector2,
-	AttributeType_Vector3,
-	AttributeType_Vector4,
-	AttributeType_Color,
-	AttributeType_Colorf,
-	AttributeType_Matrix,
-
-};
-
-
-bool XmlReader::GetBoolElement( const char* name, bool& value )
-{
-	return GetTypeElement(name, (void*)&value, AttributeType_Bool);
+	XML_READER_CHECK();
+	return m_element.GetRect(name, defaultValue);
 }
 
 
-bool XmlReader::GetByteElement( const char* name, char& value )
+Rectf XmlReader::ReadRectf( const char* name, const Rectf& defaultValue ) const
 {
-	return GetTypeElement(name, (void*)&value, AttributeType_Byte);
+	XML_READER_CHECK();
+	return m_element.GetRectf(name, defaultValue);
 }
 
 
-bool XmlReader::GetShortElement( const char* name, short& value )
+Point XmlReader::ReadPoint( const char* name, const Point& defaultValue ) const
 {
-	return GetTypeElement(name, (void*)&value, AttributeType_Short);
+	XML_READER_CHECK();
+	return m_element.GetPoint(name, defaultValue);
 }
 
 
-bool XmlReader::GetIntElement( const char* name, int& value )
+Vector2 XmlReader::ReadVector2( const char* name, const Vector2& defaultValue ) const
 {
-	return GetTypeElement(name, (void*)&value, AttributeType_Int);
+	XML_READER_CHECK();
+	return m_element.GetVector2(name, defaultValue);
 }
 
 
-bool XmlReader::GetUIntElement( const char* name, size_t& value )
+Vector3 XmlReader::ReadVector3( const char* name, const Vector3& defaultValue ) const
 {
-	return GetTypeElement(name, (void*)&value, AttributeType_UInt);
+	XML_READER_CHECK();
+	return m_element.GetVector3(name, defaultValue);
 }
 
 
-bool XmlReader::GetFloatElement( const char* name, float& value )
+Vector4 XmlReader::ReadVector4( const char* name, const Vector4& defaultValue ) const
 {
-	return GetTypeElement(name, (void*)&value, AttributeType_Float);
+	XML_READER_CHECK();
+	return m_element.GetVector4(name, defaultValue);
 }
 
 
-bool XmlReader::GetStringElement( const char* name, fc::string& value )
+Color XmlReader::ReadColor( const char* name, const Color& defaultValue ) const
 {
-	return GetTypeElement(name, (void*)&value, AttributeType_String);
+	XML_READER_CHECK();
+	return m_element.GetColor(name, defaultValue);
 }
 
 
-bool XmlReader::GetRectElement( const char* name, Rect& value )
+Colorf XmlReader::ReadColorf( const char* name, const Colorf& defaultValue ) const
 {
-	return GetTypeElement(name, (void*)&value, AttributeType_Rect);
+	XML_READER_CHECK();
+	return m_element.GetColorf(name, defaultValue);
 }
 
 
-bool XmlReader::GetRectfElement( const char* name, Rectf& value )
+fc::string XmlReader::ReadStringElement( const char* name, const fc::string& defaultValue ) const
 {
-	return GetTypeElement(name, (void*)&value, AttributeType_Rectf);
+	XML_READER_CHECK();
+	return m_element.GetStringElement(name, defaultValue);
 }
 
 
-bool XmlReader::GetPointElement( const char* name, Point& value )
+bool XmlReader::ReadBoolElement( const char* name, bool defaultValue ) const
 {
-	return GetTypeElement(name, (void*)&value, AttributeType_Point);
+	XML_READER_CHECK();
+	return m_element.GetBoolElement(name, defaultValue);
 }
 
 
-bool XmlReader::GetVector2Element( const char* name, Vector2& value )
+byte XmlReader::ReadByteElement( const char* name, byte defaultValue ) const
 {
-	return GetTypeElement(name, (void*)&value, AttributeType_Vector2);
+	XML_READER_CHECK();
+	return m_element.GetByteElement(name, defaultValue);
 }
 
 
-bool XmlReader::GetVector3Element( const char* name, Vector3& value )
+short XmlReader::ReadShortElement( const char* name, short defaultValue ) const
 {
-	return GetTypeElement(name, (void*)&value, AttributeType_Vector3);
+	XML_READER_CHECK();
+	return m_element.GetShortElement(name, defaultValue);
 }
 
 
-bool XmlReader::GetVector4Element( const char* name, Vector4& value )
+int XmlReader::ReadIntElement( const char* name, int defaultValue ) const
 {
-	return GetTypeElement(name, (void*)&value, AttributeType_Vector4);
+	XML_READER_CHECK();
+	return m_element.GetIntElement(name, defaultValue);
 }
 
 
-bool XmlReader::GetColorElement( const char* name, Color& value )
+size_t XmlReader::ReadUIntElement( const char* name, size_t defaultValue ) const
 {
-	return GetTypeElement(name, (void*)&value, AttributeType_Color);
+	XML_READER_CHECK();
+	return m_element.GetUIntElement(name, defaultValue);
 }
 
 
-bool XmlReader::GetColorfElement( const char* name, Colorf& value )
+float XmlReader::ReadFloatElement( const char* name, float defaultValue ) const
 {
-	return GetTypeElement(name, (void*)&value, AttributeType_Colorf);
+	XML_READER_CHECK();
+	return m_element.GetFloatElement(name, defaultValue);
 }
 
 
-bool XmlReader::GetMatrixElement( const char* name, Matrix& value )
+Rect XmlReader::ReadRectElement( const char* name, const Rect& defaultValue ) const
 {
-	return GetTypeElement(name, (void*)&value, AttributeType_Matrix);
+	XML_READER_CHECK();
+	return m_element.GetRectElement(name, defaultValue);
 }
 
 
-bool XmlReader::GetTypeElement( const char* name, void* value, int type )
+Rectf XmlReader::ReadRectfElement( const char* name, const Rectf& defaultValue ) const
 {
-	bool ret = false;
-	if( FirstChild(name) )
-	{
-		switch( type )
-		{
-			case AttributeType_Bool: ret = ReadBool("value", *(bool*)value); break;
-			case AttributeType_Byte: ret = ReadByte("value", *(byte*)value); break;
-			case AttributeType_Short: ret = ReadShort("value", *(short*)value); break;
-			case AttributeType_Int: ret = ReadInt("value", *(int*)value); break;
-			case AttributeType_UInt: ret = ReadUInt("value", *(unsigned int*)value); break;
-			case AttributeType_Float: ret = ReadFloat("value", *(float*)value); break;
-			case AttributeType_String: ret = ReadString("value", *(fc::string*)value); break;
-			case AttributeType_Rect:
-			{
-				Rect& r = *(Rect*)value;
-				ret = ReadInt("x", r.pos.x);
-				ret &= ReadInt("y", r.pos.y);
-				ret &= ReadInt("w", r.size.x);
-				ret &= ReadInt("h", r.size.y);
-				break;
-			}
-			case AttributeType_Rectf:
-			{
-				Rectf& r = *(Rectf*)value;
-				ret = ReadFloat("min_x", r.min.x);
-				ret &= ReadFloat("min_y", r.min.y);
-				ret &= ReadFloat("max_x", r.max.x);
-				ret &= ReadFloat("max_y", r.max.y);
-				break;
-			}
-			case AttributeType_Point:
-			{
-				Point& p = *(Point*)value;
-				ret = ReadInt("x", p.x);
-				ret &= ReadInt("y", p.y);
-				break;
-			}
-			case AttributeType_Vector2:
-			{
-				Vector2& v = *(Vector2*)value;
-				ret = ReadFloat("x", v.x);
-				ret &= ReadFloat("y", v.y);
-				break;
-			}
-			case AttributeType_Vector3:
-			{
-				Vector3& v = *(Vector3*)value;
-				ret = ReadFloat("x", v.x);
-				ret &= ReadFloat("y", v.y);
-				ret &= ReadFloat("z", v.z);
-				break;
-			}
-			case AttributeType_Vector4:
-			{
-				Vector4& v = *(Vector4*)value;
-				ret = ReadFloat("x", v.x);
-				ret &= ReadFloat("y", v.y);
-				ret &= ReadFloat("z", v.z);
-				ret &= ReadFloat("w", v.w);
-				break;
-			}
-			case AttributeType_Color:
-			{
-				Color& c = *(Color*)value;
-				ret = ReadByte("r", c.r);
-				ret &= ReadByte("g", c.g);
-				ret &= ReadByte("b", c.b);
-				ret &= ReadByte("a", c.a);
-				break;
-			}
-			case AttributeType_Colorf:
-			{
-				Colorf& c = *(Colorf*)value;
-				ret = ReadFloat("r", c.r);
-				ret &= ReadFloat("g", c.g);
-				ret &= ReadFloat("b", c.b);
-				ret &= ReadFloat("a", c.a);
-				break;
-			}
-			case AttributeType_Matrix:
-			{
-				ret = ReadFloatArray((float*)value, 16);
-				break;
-			}
-			default:
-			{
-				Log("XmlReader::GetTypeElement: invalid AttributeType enum value.");
-				break;
-			}
-
-		}
-
-		SetToParent();
-	}
-
-	if( !ret )
-	{
-		Log("XmlReader: Failed to read from element (%s).", name);
-	}
-
-	return ret;
+	XML_READER_CHECK();
+	return m_element.GetRectfElement(name, defaultValue);
 }
 
 
-fc::string XmlReader::GetString( const char* name ) const
+Point XmlReader::ReadPointElement( const char* name, const Point& defaultValue ) const
 {
-	fc::string ret;
-	ReadString(name, ret);
-	return ret;
+	XML_READER_CHECK();
+	return m_element.GetPointElement(name, defaultValue);
 }
 
 
-bool XmlReader::GetBool( const char* name, bool defaultValue ) const
+Vector2 XmlReader::ReadVector2Element( const char* name, const Vector2& defaultValue ) const
 {
-	ReadBool(name, defaultValue);
-	return defaultValue;
+	XML_READER_CHECK();
+	return m_element.GetVector2Element(name, defaultValue);
 }
 
 
-byte XmlReader::GetByte( const char* name, byte defaultValue ) const
+Vector3 XmlReader::ReadVector3Element( const char* name, const Vector3& defaultValue ) const
 {
-	ReadByte(name, defaultValue);
-	return defaultValue;
+	XML_READER_CHECK();
+	return m_element.GetVector3Element(name, defaultValue);
 }
 
 
-short XmlReader::GetShort( const char* name, short defaultValue ) const
+Vector4 XmlReader::ReadVector4Element( const char* name, const Vector4& defaultValue ) const
 {
-	ReadShort(name, defaultValue);
-	return defaultValue;
+	XML_READER_CHECK();
+	return m_element.GetVector4Element(name, defaultValue);
 }
 
 
-int XmlReader::GetInt( const char* name, int defaultValue ) const
+Color XmlReader::ReadColorElement( const char* name, const Color& defaultValue ) const
 {
-	ReadInt(name, defaultValue);
-	return defaultValue;
+	XML_READER_CHECK();
+	return m_element.GetColorElement(name, defaultValue);
 }
 
 
-size_t XmlReader::GetUInt( const char* name, size_t defaultValue ) const
+Colorf XmlReader::ReadColorfElement( const char* name, const Colorf& defaultValue ) const
 {
-	ReadUInt(name, defaultValue);
-	return defaultValue;
+	XML_READER_CHECK();
+	return m_element.GetColorfElement(name, defaultValue);
 }
 
 
-float XmlReader::GetFloat( const char* name, float defaultValue ) const
+bool XmlReader::ReadBoolArray( const char* name, bool* ptr, size_t n ) const
 {
-	ReadFloat(name, defaultValue);
-	return defaultValue;
+	XML_READER_CHECK();
+	return m_element.ReadByteArray(name, (byte*)ptr, defaultValue);
 }
 
 
-fc::string XmlReader::ReadText() const
+bool XmlReader::ReadByteArray( const char* name, byte* ptr, size_t n ) const
 {
-	CE_ASSERT(m_element != 0);
-
-	XmlNode_t* child = m_element->FirstChild();
-	if( !child )
-		return fc::string();
-
-	return fc::string(child->Value());
+	XML_READER_CHECK();
+	return m_element.ReadByteArray(name, ptr, defaultValue);
 }
 
 
-bool XmlReader::ReadByteArray( ubyte* ptr, size_t n )
+bool XmlReader::ReadShortArray( const char* name, short* ptr, size_t n ) const
 {
-	return ReadArray(ptr, sizeof(ubyte), n, true);
+	XML_READER_CHECK();
+	return m_element.ReadShortArray(name, ptr, defaultValue);
 }
 
 
-bool XmlReader::ReadShortArray( short* ptr, size_t n )
+bool XmlReader::ReadIntArray( const char* name, int* ptr, size_t n ) const
 {
-	return ReadArray(ptr, sizeof(short), n, true);
+	XML_READER_CHECK();
+	return m_element.ReadIntArray(name, ptr, defaultValue);
 }
 
 
-bool XmlReader::ReadIntArray( int* ptr, size_t n )
+bool XmlReader::ReadUIntArray( const char* name, size_t* ptr, size_t n ) const
 {
-	return ReadArray(ptr, sizeof(int), n, true);
+	XML_READER_CHECK();
+	return m_element.ReadIntArray(name, (int*)ptr, defaultValue);
 }
 
 
-bool XmlReader::ReadFloatArray( float* ptr, size_t n )
+bool XmlReader::ReadFloatArray( const char* name, float* ptr, size_t n ) const
 {
-	return ReadArray(ptr, sizeof(float), n, false);
+	XML_READER_CHECK();
+	return m_element.ReadFloatArray(name, ptr, defaultValue);
 }
 
 
-bool XmlReader::ReadArray( void* ptr, size_t strideInBytes, size_t n, bool isIntegral )
+bool XmlReader::ReadBoolArrayElement( const char* name, bool* ptr, size_t n ) const
 {
-	fc::string str = ReadText();
-	if(str.empty())
-		return false;
-
-	fc::string token;
-	fc::tokenizer t(str, ", \n\t()\"");
-	for( size_t i(0); i < n; ++i )
-	{
-		int byteOffset = i * strideInBytes;
-		if( t.next(token) )
-		{
-			if( isIntegral )
-			{
-				if( strideInBytes == sizeof(char) )
-					*((char*)ptr + byteOffset) = (char)token.to_int();
-
-				else if( strideInBytes == sizeof(short) )
-					*((short*)((char*)ptr + byteOffset)) = (short)token.to_int();
-	
-				else if( strideInBytes == sizeof(int) )
-					*((int*)((char*)ptr + byteOffset)) = (int)token.to_int();
-
-				else if( strideInBytes == sizeof(int64) )
-					*((int64*)((char*)ptr + byteOffset)) = (int64)token.to_int();
-
-				else
-				{
-					//unsupported type.
-					return false;
-				}
-			}
-			else
-			{
-				if( strideInBytes == sizeof(float) )
-					*((float*)((char*)ptr + byteOffset)) = (float)token.to_float();
-
-				else if( strideInBytes == sizeof(double) )
-					*((double*)((char*)ptr + byteOffset)) = (double)token.to_float();
-			}
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	return true;
+	XML_READER_CHECK();
+	return m_element.ReadByteArrayElement(name, (byte*)ptr, defaultValue);
 }
+
+
+bool XmlReader::ReadByteArrayElement( const char* name, byte* ptr, size_t n ) const
+{
+	XML_READER_CHECK();
+	return m_element.ReadByteArrayElement(name, ptr, defaultValue);
+}
+
+
+bool XmlReader::ReadShortArrayElement( const char* name, short* ptr, size_t n ) const
+{
+	XML_READER_CHECK();
+	return m_element.ReadShortArrayElement(name, ptr, defaultValue);
+}
+
+
+bool XmlReader::ReadIntArrayElement( const char* name, int* ptr, size_t n ) const
+{
+	XML_READER_CHECK();
+	return m_element.ReadIntArrayElement(name, ptr, defaultValue);
+}
+
+
+bool XmlReader::ReadUIntArrayElement( const char* name, size_t* ptr, size_t n ) const
+{
+	XML_READER_CHECK();
+	return m_element.ReadIntArrayElement(name, (int*)ptr, defaultValue);
+}
+
+
+bool XmlReader::ReadFloatArrayElement( const char* name, float* ptr, size_t n ) const
+{
+	XML_READER_CHECK();
+	return m_element.ReadFloatArrayElement(name, ptr, defaultValue);
+}
+
+
 
 
 CE_NAMESPACE_END
