@@ -85,6 +85,20 @@ bool XmlElement::SetToParent()
 }
 
 
+bool XmlElement::SetToChild( const char* name )
+{
+	CE_ASSERT(m_element);
+	XmlElement element = NextChild(name);
+	if( element )
+	{
+		m_element = element;
+		return true;
+	}
+
+	return false;
+}
+
+
 XmlElement XmlElement::CreateChild( const fc::string& name )
 {
 	return CreateChild(name.c_str());

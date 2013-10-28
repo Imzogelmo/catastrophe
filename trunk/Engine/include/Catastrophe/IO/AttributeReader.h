@@ -18,38 +18,30 @@
 
 #pragma once
 
-#include <fc/string.h>
-
-#include "XmlElement.h"
-#include "XmlDocument.h"
+#include "../Common.h"
+#include "../Math/Point.h"
+#include "../Math/Rect.h"
+#include "../Math/Rectf.h"
+#include "../Math/Vector2.h"
+#include "../Math/Vector3.h"
+#include "../Math/Vector4.h"
+#include "../Math/Color.h"
+#include "../Math/Colorf.h"
 
 CE_NAMESPACE_BEGIN
 
 
-class CE_API XmlReader
+class CE_API AtributeDeserializer
 {
 public:
-	enum eTokenType
-	{
-		Boolean,
-		Integral,
-		Float
-	};
+	AtributeDeserializer() {}
+	virtual ~AtributeDeserializer() {}
+	virtual bool IsOpen() const = 0;
 
-	XmlReader();
-	XmlReader( const fc::string& filename );
-	virtual ~XmlReader();
-
-	virtual bool Open( const fc::string& filename );
-	virtual void Close();
-	virtual bool IsOpen() const { return (m_document != 0); }
-
-	fc::string GetCurrentNodeName() const;
-
-	bool FirstChild( const fc::string& name = "" );
-	bool NextChild( const fc::string& name = "" );
-	bool SetToParent();
-	bool HasAttribute( const fc::string& attr ) const;
+	virtual bool PushNode( const fc::string& name ) { return PushNode(name.c_str()); }
+	virtual bool PopNode( const fc::string& name ) { return PopNode(name.c_str()); }
+	virtual bool PushNode( const char* name ) = 0;
+	virtual bool PopNode( const char* name ) = 0;
 
 	virtual fc::string ReadString( const char* name, const fc::string& defaultValue = "" ) const = 0;
 	virtual bool ReadBool( const char* name, bool defaultValue = false ) const = 0;
@@ -67,7 +59,6 @@ public:
 	virtual Color ReadColor( const char* name, const Color& defaultValue = Color::White() ) const = 0;
 	virtual Colorf ReadColorf( const char* name, const Colorf& defaultValue = Colorf() ) const = 0;
 
-	virtual fc::string ReadStringElement( const char* name, const fc::string& defaultValue = "" ) const = 0;
 	virtual bool ReadBoolElement( const char* name, bool defaultValue = false ) const = 0;
 	virtual byte ReadByteElement( const char* name, byte defaultValue = 0 ) const = 0;
 	virtual short ReadShortElement( const char* name, short defaultValue = 0 ) const = 0;
@@ -96,11 +87,6 @@ public:
 	virtual bool ReadIntArrayElement( const char* name, int* ptr, size_t n ) const = 0;
 	virtual bool ReadUIntArrayElement( const char* name, size_t* ptr, size_t n ) const = 0;
 	virtual bool ReadFloatArrayElement( const char* name, float* ptr, size_t n ) const = 0;
-
-private:
-	fc::string		m_filename;
-	XmlDocument		m_document;
-	XmlElement		m_element;
 
 };
 
