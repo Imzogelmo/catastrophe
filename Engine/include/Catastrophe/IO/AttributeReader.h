@@ -65,7 +65,7 @@ public:
 	virtual int ReadIntElement( const char* name, int defaultValue = 0 ) const = 0;
 	virtual size_t ReadUIntElement( const char* name, size_t defaultValue = 0 ) const = 0;
 	virtual float ReadFloatElement( const char* name, float defaultValue = 0.f ) const = 0;
-	virtual Rect ReadRectElement( const char* name, const Rect defaultValue = Rect::Zero ) const = 0;
+	virtual Rect ReadRectElement( const char* name, const Rect& defaultValue = Rect::Zero ) const = 0;
 	virtual Rectf ReadRectfElement( const char* name, const Rectf& defaultValue = Rectf::Zero ) const = 0;
 	virtual Point ReadPointElement( const char* name, const Point& defaultValue = Point::Zero ) const = 0;
 	virtual Vector2 ReadVector2Element( const char* name, const Vector2& defaultValue = Vector2::Zero ) const = 0;

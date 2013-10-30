@@ -32,22 +32,23 @@
 #include "Math/Colorf.h"
 #include "Math/Matrix.h"
 
+#define XML_READER_CHECK()
 
 CE_NAMESPACE_BEGIN
 
 
 XmlReader::XmlReader() :
 	m_filename(),
-	m_document(0),
-	m_element(0)
+	m_document(),
+	m_element()
 {
 }
 
 
 XmlReader::XmlReader( const fc::string& filename ) :
 	m_filename(),
-	m_document(0),
-	m_element(0)
+	m_document(),
+	m_element()
 {
 	Open(filename);
 }
@@ -66,7 +67,7 @@ bool XmlReader::Open( const fc::string& filename )
 		Close();
 
 	m_filename = filename;
-	if( !m_document.Open(m_filename) )
+	if( !m_document.Load(m_filename) )
 		return false;
 
 	m_element = m_document.GetRoot();
@@ -84,8 +85,8 @@ void XmlReader::Close()
 
 fc::string XmlReader::GetCurrentNodeName() const
 {
-	CE_ASSERT(m_element != 0);
-	return fc::string(m_element->Value());
+	CE_ASSERT(m_element);
+	return fc::string(m_element.GetCurrentNodeName());
 }
 
 
@@ -101,17 +102,17 @@ bool XmlReader::SetToChild( const char* name )
 }
 
 
-bool XmlReader::HasAttribute( const fc::string& name ) const
+bool XmlReader::HasAttribute( const char* name ) const
 {
-	CE_ASSERT(m_element != 0);
-	return (m_element->Attribute(name.c_str()) != 0);
+	CE_ASSERT(m_element);
+	return m_element.HasAttribute(name);
 }
 
 
-fc::string XmlReader::ReadString( const char* name, const fc::string& defaultValue ) const
+fc::string XmlReader::ReadString( const char* name, const fc::string& ) const
 {
 	XML_READER_CHECK();
-	return m_element.GetString(name, defaultValue);
+	return m_element.GetString(name); //fixme
 }
 
 
@@ -213,10 +214,10 @@ Colorf XmlReader::ReadColorf( const char* name, const Colorf& defaultValue ) con
 }
 
 
-fc::string XmlReader::ReadStringElement( const char* name, const fc::string& defaultValue ) const
+fc::string XmlReader::ReadStringElement( const char* name, const fc::string& ) const
 {
 	XML_READER_CHECK();
-	return m_element.GetStringElement(name, defaultValue);
+	return m_element.GetTextElement(name); //fixme
 }
 
 
@@ -321,84 +322,84 @@ Colorf XmlReader::ReadColorfElement( const char* name, const Colorf& defaultValu
 bool XmlReader::ReadBoolArray( const char* name, bool* ptr, size_t n ) const
 {
 	XML_READER_CHECK();
-	return m_element.ReadByteArray(name, (byte*)ptr, defaultValue);
+	return m_element.ReadByteArray(name, (byte*)ptr, n);
 }
 
 
 bool XmlReader::ReadByteArray( const char* name, byte* ptr, size_t n ) const
 {
 	XML_READER_CHECK();
-	return m_element.ReadByteArray(name, ptr, defaultValue);
+	return m_element.ReadByteArray(name, ptr, n);
 }
 
 
 bool XmlReader::ReadShortArray( const char* name, short* ptr, size_t n ) const
 {
 	XML_READER_CHECK();
-	return m_element.ReadShortArray(name, ptr, defaultValue);
+	return m_element.ReadShortArray(name, ptr, n);
 }
 
 
 bool XmlReader::ReadIntArray( const char* name, int* ptr, size_t n ) const
 {
 	XML_READER_CHECK();
-	return m_element.ReadIntArray(name, ptr, defaultValue);
+	return m_element.ReadIntArray(name, ptr, n);
 }
 
 
 bool XmlReader::ReadUIntArray( const char* name, size_t* ptr, size_t n ) const
 {
 	XML_READER_CHECK();
-	return m_element.ReadIntArray(name, (int*)ptr, defaultValue);
+	return m_element.ReadIntArray(name, (int*)ptr, n);
 }
 
 
 bool XmlReader::ReadFloatArray( const char* name, float* ptr, size_t n ) const
 {
 	XML_READER_CHECK();
-	return m_element.ReadFloatArray(name, ptr, defaultValue);
+	return m_element.ReadFloatArray(name, ptr, n);
 }
 
 
 bool XmlReader::ReadBoolArrayElement( const char* name, bool* ptr, size_t n ) const
 {
 	XML_READER_CHECK();
-	return m_element.ReadByteArrayElement(name, (byte*)ptr, defaultValue);
+	return m_element.ReadByteArrayElement(name, (byte*)ptr, n);
 }
 
 
 bool XmlReader::ReadByteArrayElement( const char* name, byte* ptr, size_t n ) const
 {
 	XML_READER_CHECK();
-	return m_element.ReadByteArrayElement(name, ptr, defaultValue);
+	return m_element.ReadByteArrayElement(name, ptr, n);
 }
 
 
 bool XmlReader::ReadShortArrayElement( const char* name, short* ptr, size_t n ) const
 {
 	XML_READER_CHECK();
-	return m_element.ReadShortArrayElement(name, ptr, defaultValue);
+	return m_element.ReadShortArrayElement(name, ptr, n);
 }
 
 
 bool XmlReader::ReadIntArrayElement( const char* name, int* ptr, size_t n ) const
 {
 	XML_READER_CHECK();
-	return m_element.ReadIntArrayElement(name, ptr, defaultValue);
+	return m_element.ReadIntArrayElement(name, ptr, n);
 }
 
 
 bool XmlReader::ReadUIntArrayElement( const char* name, size_t* ptr, size_t n ) const
 {
 	XML_READER_CHECK();
-	return m_element.ReadIntArrayElement(name, (int*)ptr, defaultValue);
+	return m_element.ReadIntArrayElement(name, (int*)ptr, n);
 }
 
 
 bool XmlReader::ReadFloatArrayElement( const char* name, float* ptr, size_t n ) const
 {
 	XML_READER_CHECK();
-	return m_element.ReadFloatArrayElement(name, ptr, defaultValue);
+	return m_element.ReadFloatArrayElement(name, ptr, n);
 }
 
 

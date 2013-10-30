@@ -29,16 +29,16 @@ CE_NAMESPACE_BEGIN
 
 XmlWriter::XmlWriter() :
 	m_filename(),
-	m_document(0),
-	m_element(0)
+	m_document(),
+	m_element()
 {
 }
 
 
 XmlWriter::XmlWriter( const fc::string& filename ) :
 	m_filename(),
-	m_document(0),
-	m_element(0)
+	m_document(),
+	m_element()
 {
 	Open(filename);
 }
@@ -57,8 +57,8 @@ bool XmlWriter::Open( const fc::string& filename )
 	CE_ASSERT(!filename.empty());
 
 	m_filename = filename;
-	m_document.NewDeclaration();
-	m_element = m_document.CreateRoot();
+	m_document.CreateDeclaration();
+	//m_element = m_document.CreateRoot();
 
 	return true;
 }
@@ -76,14 +76,20 @@ bool XmlWriter::Close()
 bool XmlWriter::BeginNode( const char* name )
 {
 	CE_ASSERT(IsOpen());
+	if( !m_document.GetRoot() )
+	{
+		m_element = m_document.CreateRoot(name);
+		return m_element;
+	}
+
 	return m_element.BeginNode(name);
 }
 
 
-void XmlWriter::EndNode( const char* )
+bool XmlWriter::EndNode( const char* )
 {
 	CE_ASSERT(IsOpen());
-	return m_element.SetToParent(name);
+	return m_element.SetToParent();
 }
 
 
@@ -252,7 +258,7 @@ bool XmlWriter::WriteFloatElement( const char* name, float value )
 bool XmlWriter::WriteStringElement( const char* name, const fc::string& value )
 {
 	XML_WRITER_CHECK();
-	return m_element.SetStringElement(name, value);
+	return m_element.SetTextElement(name, value.c_str());
 }
 
 
@@ -315,70 +321,70 @@ bool XmlWriter::WriteColorfElement( const char* name, const Colorf& value )
 bool XmlWriter::WriteBoolArray( const char* name, const bool* ptr, size_t n )
 {
 	XML_WRITER_CHECK();
-	return m_element.WriteByteArray(name, value);
+	return m_element.WriteByteArray(name, (const byte*)ptr, n);
 }
 
 
 bool XmlWriter::WriteByteArray( const char* name, const byte* ptr, size_t n )
 {
 	XML_WRITER_CHECK();
-	return m_element.WriteByteArray(name, value);
+	return m_element.WriteByteArray(name, ptr, n);
 }
 
 
 bool XmlWriter::WriteShortArray( const char* name, const short* ptr, size_t n )
 {
 	XML_WRITER_CHECK();
-	return m_element.WriteShortArray(name, value);
+	return m_element.WriteShortArray(name, ptr, n);
 }
 
 
 bool XmlWriter::WriteIntArray( const char* name, const int* ptr, size_t n )
 {
 	XML_WRITER_CHECK();
-	return m_element.WriteIntArray(name, value);
+	return m_element.WriteIntArray(name, ptr, n);
 }
 
 
 bool XmlWriter::WriteFloatArray( const char* name, const float* ptr, size_t n )
 {
 	XML_WRITER_CHECK();
-	return m_element.WriteFloatArray(name, value);
+	return m_element.WriteFloatArray(name, ptr, n);
 }
 
 
 bool XmlWriter::WriteBoolArrayElement( const char* name, const bool* ptr, size_t n )
 {
 	XML_WRITER_CHECK();
-	return m_element.WriteByteArrayElement(name, value);
+	return m_element.WriteByteArrayElement(name, (const byte*)ptr, n);
 }
 
 
 bool XmlWriter::WriteByteArrayElement( const char* name, const byte* ptr, size_t n )
 {
 	XML_WRITER_CHECK();
-	return m_element.WriteByteArrayElement(name, value);
+	return m_element.WriteByteArrayElement(name, ptr, n);
 }
 
 
 bool XmlWriter::WriteShortArrayElement( const char* name, const short* ptr, size_t n )
 {
 	XML_WRITER_CHECK();
-	return m_element.WriteShortArrayElement(name, value);
+	return m_element.WriteShortArrayElement(name, ptr, n);
 }
 
 
 bool XmlWriter::WriteIntArrayElement( const char* name, const int* ptr, size_t n )
 {
 	XML_WRITER_CHECK();
-	return m_element.WriteIntArrayElement(name, value);
+	return m_element.WriteIntArrayElement(name, ptr, n);
 }
 
 
 bool XmlWriter::WriteFloatArrayElement( const char* name, const float* ptr, size_t n )
 {
 	XML_WRITER_CHECK();
-	return m_element.WriteFloatArrayElement(name, value);
+	return m_element.WriteFloatArrayElement(name, ptr, n);
 }
 
 

@@ -91,7 +91,7 @@ bool XmlElement::SetToChild( const char* name )
 	XmlElement element = NextChild(name);
 	if( element )
 	{
-		m_element = element;
+		m_element = element.m_element;
 		return true;
 	}
 
@@ -185,7 +185,7 @@ void XmlElement::DeleteChild( XmlElement element )
 }
 
 
-const char* XmlElement::GetCurrentElement() const
+const char* XmlElement::GetCurrentNodeName() const
 {
 	CE_ASSERT(m_element);
 	return m_element->Value();
@@ -219,9 +219,9 @@ bool XmlElement::SetAttribute( const char* name, const char* value )
 }
 
 
-bool XmlElement::SetString( const char* name, const char* value )
+bool XmlElement::SetString( const char* name, const fc::string& value )
 {
-	return SetAttribute(name, value);
+	return SetAttribute(name, value.c_str());
 }
 
 
@@ -231,7 +231,7 @@ bool XmlElement::SetBool( const char* name, bool value )
 }
 
 
-bool XmlElement::SetByte( const char* name, char value )
+bool XmlElement::SetByte( const char* name, byte value )
 {
 	return SetInt(name, (int)value);
 }

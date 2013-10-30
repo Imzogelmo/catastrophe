@@ -240,6 +240,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\IO\XmlDocument.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\IO\XmlElement.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\IO\XmlReader.cpp"
 					>
 				</File>
@@ -319,8 +327,16 @@
 					RelativePath=".\src\Util\TexturePacker.cpp"
 					>
 				</File>
+			</Filter>
+			<Filter
+				Name="Core"
+				>
 				<File
-					RelativePath=".\src\Util\Timer.cpp"
+					RelativePath=".\src\Core\StringUtils.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Core\Timer.cpp"
 					>
 				</File>
 			</Filter>
@@ -450,6 +466,14 @@
 				Name="IO"
 				>
 				<File
+					RelativePath=".\include\Catastrophe\IO\AttributeReader.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Catastrophe\IO\AttributeWriter.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\Catastrophe\IO\ConfigFile.h"
 					>
 				</File>
@@ -467,6 +491,14 @@
 				</File>
 				<File
 					RelativePath=".\include\Catastrophe\IO\Serializer.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Catastrophe\IO\XmlDocument.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Catastrophe\IO\XmlElement.h"
 					>
 				</File>
 				<File
@@ -590,10 +622,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\Catastrophe\Util\ReferenceCounted.h"
-					>
-				</File>
-				<File
 					RelativePath=".\include\Catastrophe\Util\Singleton.h"
 					>
 				</File>
@@ -602,11 +630,27 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\Catastrophe\Util\Timer.h"
+					RelativePath=".\include\Catastrophe\Util\UniqueID.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Core"
+				>
+				<File
+					RelativePath=".\include\Catastrophe\Core\RefCounted.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\Catastrophe\Util\UniqueID.h"
+					RelativePath=".\include\Catastrophe\Core\SharedPtr.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Catastrophe\Core\StringUtils.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Catastrophe\Core\Timer.h"
 					>
 				</File>
 			</Filter>

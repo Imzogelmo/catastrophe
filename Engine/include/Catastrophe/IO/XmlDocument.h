@@ -40,6 +40,8 @@ public:
 	XmlElement GetRoot() const;
 	XmlDocument_t* GetDocumentPtr() const { return m_document; }
 
+	operator bool () const { return m_document != 0; }
+
 private:
 	XmlDocument( const XmlDocument& );
 	XmlDocument& operator =( const XmlDocument& );
