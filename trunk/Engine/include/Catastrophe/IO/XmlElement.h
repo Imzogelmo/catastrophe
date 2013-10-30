@@ -58,12 +58,12 @@ public:
 	void DeleteChildren();
 	void DeleteChild( XmlElement element );
 
-	const char* GetCurrentElement() const;
+	const char* GetCurrentNodeName() const;
 	bool HasAttribute( const char* attr ) const;
 	void DeleteAttribute( const char* name );
 
 	bool SetAttribute( const char* name, const char* value );
-	bool SetString( const char* name, const char* value );
+	bool SetString( const char* name, const fc::string& value );
 	bool SetBool( const char* name, bool value );
 	bool SetByte( const char* name, byte value );
 	bool SetShort( const char* name, short value );

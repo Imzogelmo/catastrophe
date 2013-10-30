@@ -37,8 +37,8 @@ public:
 	virtual bool Open( const fc::string& filename );
 	virtual bool Close();
 
-	virtual bool PushNode( const char* name );
-	virtual bool PopNode( const char* name = "" );
+	virtual bool BeginNode( const char* name );
+	virtual bool EndNode( const char* name = "" );
 
 	virtual bool WriteBool( const char* name, bool value );
 	virtual bool WriteByte( const char* name, byte value );

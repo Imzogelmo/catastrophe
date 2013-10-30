@@ -42,15 +42,16 @@ public:
 
 	virtual bool Open( const fc::string& filename );
 	virtual void Close();
-	virtual bool IsOpen() const { return (m_document != 0); }
+	virtual bool IsOpen() const { return m_document; }
 
 	fc::string GetCurrentNodeName() const;
 
-	bool FirstChild( const fc::string& name = "" );
-	bool NextChild( const fc::string& name = "" );
+	bool FirstChild( const char* name = "" );
+	bool NextChild( const char* name = "" );
 	bool SetToParent();
-	bool HasAttribute( const fc::string& attr ) const;
+	bool SetToChild( const char* name );
 
+	bool HasAttribute( const char* name ) const;
 	virtual fc::string ReadString( const char* name, const fc::string& defaultValue = "" ) const = 0;
 	virtual bool ReadBool( const char* name, bool defaultValue = false ) const = 0;
 	virtual byte ReadByte( const char* name, byte defaultValue = 0 ) const = 0;
@@ -74,7 +75,7 @@ public:
 	virtual int ReadIntElement( const char* name, int defaultValue = 0 ) const = 0;
 	virtual size_t ReadUIntElement( const char* name, size_t defaultValue = 0 ) const = 0;
 	virtual float ReadFloatElement( const char* name, float defaultValue = 0.f ) const = 0;
-	virtual Rect ReadRectElement( const char* name, const Rect defaultValue = Rect::Zero ) const = 0;
+	virtual Rect ReadRectElement( const char* name, const Rect& defaultValue = Rect::Zero ) const = 0;
 	virtual Rectf ReadRectfElement( const char* name, const Rectf& defaultValue = Rectf::Zero ) const = 0;
 	virtual Point ReadPointElement( const char* name, const Point& defaultValue = Point::Zero ) const = 0;
 	virtual Vector2 ReadVector2Element( const char* name, const Vector2& defaultValue = Vector2::Zero ) const = 0;
