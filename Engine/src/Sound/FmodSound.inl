@@ -16,6 +16,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+
+#ifdef CE_SOUND_FMOD
+
 #include <Fmod/fmod.hpp>
 #include <Fmod/fmod_dsp.h>
 #include <Fmod/fmod_errors.h>
@@ -24,11 +27,6 @@
 #include "Sound/FmodSoundEngine.h"
 
 CE_NAMESPACE_BEGIN
-
-#define ERRCHECK(result) { \
-	if( result != FMOD_OK ) { \
-		Log( "FMOD error (%d) %s", result, FMOD_ErrorString(result) ); \
-	}}
 
 
 FMOD_RESULT F_CALLBACK ChannelCallback( FMOD_CHANNEL *fmodChannel, FMOD_CHANNEL_CALLBACKTYPE type, void *commanddata1, void *commanddata2 )
@@ -60,7 +58,7 @@ void FmodSound::Release()
 	if(m_sound)
 	{
 		FMOD_RESULT result = m_sound->release();
-		ERRCHECK(result);
+		FMOD_ERRCHECK(result);
 
 		m_channel = 0;
 	}
@@ -83,7 +81,7 @@ void FmodSound::Play( bool restart )
 		}
 
 		FMOD_RESULT result = m_parent->GetSystem()->playSound(channelID, m_sound, true, &m_channel);
-		ERRCHECK(result);
+		FMOD_ERRCHECK(result);
 
 		//store the pointer to our channel. -evil-
 		m_channel->setUserData((void*)&m_channel);
@@ -100,7 +98,7 @@ void FmodSound::Pause()
 	if(m_channel)
 	{
 		FMOD_RESULT result = m_channel->setPaused(true);
-		ERRCHECK(result);
+		FMOD_ERRCHECK(result);
 	}
 }
 
@@ -110,7 +108,7 @@ void FmodSound::Stop()
 	if(m_channel)
 	{
 		FMOD_RESULT result = m_channel->stop();
-		ERRCHECK(result);
+		FMOD_ERRCHECK(result);
 	}
 }
 
@@ -120,7 +118,7 @@ void FmodSound::Resume()
 	if(m_channel)
 	{
 		FMOD_RESULT result = m_channel->setPaused(false);
-		ERRCHECK(result);
+		FMOD_ERRCHECK(result);
 	}
 }
 
@@ -131,7 +129,7 @@ bool FmodSound::IsPlaying() const
 	if(m_channel)
 	{
 		FMOD_RESULT result = m_channel->isPlaying(&playing);
-		ERRCHECK(result);
+		FMOD_ERRCHECK(result);
 	}
 	return playing;
 }
@@ -143,7 +141,7 @@ bool FmodSound::IsPaused() const
 	if(m_channel)
 	{
 		FMOD_RESULT result = m_channel->getPaused(&paused);
-		ERRCHECK(result);
+		FMOD_ERRCHECK(result);
 	}
 	return paused;
 }
@@ -155,7 +153,7 @@ bool FmodSound::IsStopped() const
 	if(m_channel)
 	{
 		//FMOD_RESULT result = m_channel->getStopped(&stopped);
-		//ERRCHECK(result);
+		//FMOD_ERRCHECK(result);
 	}
 	return stopped;
 }
@@ -174,7 +172,7 @@ void FmodSound::SetVolume( float vol )
 	if(m_channel)
 	{
 		FMOD_RESULT result = m_channel->setVolume(m_volume);
-		ERRCHECK(result);
+		FMOD_ERRCHECK(result);
 	}
 }
 
@@ -191,7 +189,7 @@ void FmodSound::SetPan( float pan )
 	if(m_channel)
 	{
 		FMOD_RESULT result = m_channel->setPan(pan);
-		ERRCHECK(result);
+		FMOD_ERRCHECK(result);
 	}
 }
 
@@ -202,7 +200,7 @@ float FmodSound::GetPan() const
 	if(m_channel)
 	{
 		FMOD_RESULT result = m_channel->getPan(&pan);
-		ERRCHECK(result);
+		FMOD_ERRCHECK(result);
 	}
 	return pan;
 }
@@ -214,7 +212,7 @@ void FmodSound::SetLooping( bool enable )
 	if(m_channel)
 	{
 		FMOD_RESULT result = m_channel->setLoopCount( (m_loop ? -1 : 0) );
-		ERRCHECK(result);
+		FMOD_ERRCHECK(result);
 	}
 }
 
@@ -226,7 +224,7 @@ void FmodSound::SetPosition( int pos )
 		int length = GetLength();
 		int time = fc::clamp( pos, 0, length );
 		FMOD_RESULT result = m_channel->setPosition( time, FMOD_TIMEUNIT_MS );
-		ERRCHECK(result);
+		FMOD_ERRCHECK(result);
 	}
 }
 
@@ -237,7 +235,7 @@ int FmodSound::GetPosition() const
 	if(m_channel)
 	{
 		FMOD_RESULT result = m_channel->getPosition( (size_t*)&pos, FMOD_TIMEUNIT_MS );
-		ERRCHECK(result);
+		FMOD_ERRCHECK(result);
 	}
 	return pos;
 }
@@ -249,13 +247,13 @@ int FmodSound::GetLength() const
 	if(m_sound)
 	{
 		FMOD_RESULT result = m_sound->getLength( (size_t*)&length, FMOD_TIMEUNIT_MS );
-		ERRCHECK(result);
+		FMOD_ERRCHECK(result);
 	}
 	return length;
 }
 
 
-#undef ERRCHECK
-
 CE_NAMESPACE_END
 
+
+#endif // CE_SOUND_FMOD

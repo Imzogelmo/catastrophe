@@ -17,7 +17,7 @@
 // THE SOFTWARE.
 
 
-#if defined CE_BASS
+#if defined CE_SOUND_BASS
 
 #include "Sound/BassSound.h"
 #include "Sound/BassSoundEngine.h"
@@ -133,5 +133,5 @@ int BassSound::GetLength() const
 
 CE_NAMESPACE_END
 
-#endif //CE_BASS
+#endif //CE_SOUND_BASS
 

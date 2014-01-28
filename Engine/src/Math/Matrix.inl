@@ -540,16 +540,23 @@ Matrix Matrix::Create2DTransformation( const Vector2& pos, float rotation, const
 	Vector2 v = Math::SinCos(rotation);
 	float tx = origin.x * (1.f - v.x) + origin.y * v.x;
 	float ty = origin.y * (1.f - v.x) - origin.x * v.y;
+	float vx = v.x * scale.x;
+	float vy = v.x * scale.y;
+
+	//???
+	tx += pos.x;
+	ty += pos.y;
 
 	return Matrix
 	(
-		v.x,	v.y,	0.0f,	0.0f,
-		-v.y,	v.x,	0.0f,	0.0f,
+		vx,		v.y,	0.0f,	0.0f,
+		-v.y,	vy,		0.0f,	0.0f,
 		0.0f,	0.0f,	1.0f,	0.0f,
 		tx,		ty,		0.0f,	1.0f
 	);
 
 
+	/*
 	//fixme: this is wrong..
 	const Vector2 t = pos + origin;
 	Matrix transform(
@@ -576,6 +583,7 @@ Matrix Matrix::Create2DTransformation( const Vector2& pos, float rotation, const
 	transform[13] -= origin.y;
 
 	return transform;
+	*/
 }
 
 
