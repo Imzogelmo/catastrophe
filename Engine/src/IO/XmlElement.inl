@@ -17,7 +17,7 @@
 // THE SOFTWARE.
 
 #include <fc/tokenizer.h>
-#include "xml/tinyxml2.h"
+#include "xml/rapidxml.h"
 
 #include "Common.h"
 #include "IO/XmlElement.h"
@@ -38,7 +38,7 @@ XmlElement::XmlElement() :
 }
 
 
-XmlElement::XmlElement( XmlElement_t* element ) :
+XmlElement::XmlElement( XmlNode_t* element ) :
 	m_element(element)
 {
 }
@@ -54,12 +54,9 @@ bool XmlElement::BeginNode( const char* name )
 {
 	XmlElement element = CreateChild(name);
 	if( element )
-	{
 		*this = element;
-		return true;
-	}
 
-	return false;
+	return *this;
 }
 
 
@@ -72,30 +69,23 @@ bool XmlElement::EndNode()
 bool XmlElement::SetToParent()
 {
 	CE_ASSERT(m_element);
-	CE_ASSERT((void*)m_element->GetDocument() != (void*)m_element);
 
-	XmlNode_t* parent = m_element->Parent();
+	XmlNode_t* parent = m_element->parent();
 	if( parent )
-	{
-		m_element = parent->ToElement();
-		return true;
-	}
+		m_element = parent;
 
-	return false;
+	return parent != 0;
 }
 
 
 bool XmlElement::SetToChild( const char* name )
 {
 	CE_ASSERT(m_element);
-	XmlElement element = NextChild(name);
+	XmlElement element = FirstChild(name);
 	if( element )
-	{
-		m_element = element.m_element;
-		return true;
-	}
+		*this = element;
 
-	return false;
+	return element;
 }
 
 
@@ -108,31 +98,32 @@ XmlElement XmlElement::CreateChild( const fc::string& name )
 XmlElement XmlElement::CreateChild( const char* name )
 {
 	CE_ASSERT(m_element);
-	XmlDocument_t* document = m_element->GetDocument();
 
-	XmlElement_t* element = 0;
-	if(m_element)
+	XmlNode_t* node = 0;
+	if( m_element )
 	{
-		XmlElement_t* e = document->NewElement(name);
-		element = m_element->InsertEndChild(e)->ToElement();
-	}
-	else
-	{
-		XmlElement_t* e = document->NewElement(name);
-		element = document->InsertEndChild(e)->ToElement();
+		XmlDocument_t* document = m_element->document();
+		if( document )
+		{
+			char* nodeName = document->allocate_string(name);
+			node = document->allocate_node(rapidxml::node_element, nodeName);
+			m_element->append_node(node);
+		}
 	}
 
-	return XmlElement(element);
+	return XmlElement(node);
 }
 
 
 XmlElement XmlElement::GetParent()
 {
-	XmlNode_t* parent = m_element->Parent();
-	if( parent )
-		return XmlElement(parent->ToElement());
+	CE_ASSERT(m_element);
 
-	return XmlElement();
+	XmlNode_t* parent = 0;
+	if( m_element )
+		parent = m_element->parent();
+
+	return XmlElement(parent);
 }
 
 
@@ -144,65 +135,102 @@ XmlElement XmlElement::FirstChild( const fc::string& name ) const
 
 XmlElement XmlElement::FirstChild( const char* name ) const
 {
-	CE_ASSERT(m_element != 0);
-	XmlElement_t* child = m_element->FirstChildElement(name);
+	CE_ASSERT(m_element);
+
+	XmlNode_t* child = 0;
+	if( m_element )
+		child = m_element->first_node(name);
+
 	return XmlElement(child);
 }
 
 
-XmlElement XmlElement::NextChild( const fc::string& name ) const
+XmlElement XmlElement::LastChild( const fc::string& name ) const
 {
-	return NextChild(name.c_str());
+	return LastChild(name.c_str());
 }
 
 
-XmlElement XmlElement::NextChild( const char* name ) const
+XmlElement XmlElement::LastChild( const char* name ) const
 {
 	CE_ASSERT(m_element);
 
-	XmlElement_t* sibling = m_element->NextSiblingElement(name);
-	if( !sibling ) 
-	{
-		//get the first child element if no sibling is found.
-		sibling = m_element->FirstChildElement(name);
-	}
+	XmlNode_t* child = 0;
+	if( m_element )
+		child = m_element->last_node(name);
+
+	return XmlElement(child);
+}
+
+
+XmlElement XmlElement::NextSibling( const fc::string& name ) const
+{
+	return NextSibling(name.c_str());
+}
+
+
+XmlElement XmlElement::NextSibling( const char* name ) const
+{
+	CE_ASSERT(m_element);
+
+	XmlNode_t* sibling = 0;
+	if( m_element )
+		sibling = m_element->next_sibling(name);
 
 	return XmlElement(sibling);
 }
 
 
-void XmlElement::DeleteChildren()
+void XmlElement::RemoveChildren()
 {
 	CE_ASSERT(m_element);
-	m_element->DeleteChildren();
+	if( m_element )
+		m_element->remove_all_nodes();
 }
 
 
-void XmlElement::DeleteChild( XmlElement element )
+void XmlElement::RemoveChild( XmlElement element )
 {
 	CE_ASSERT(m_element);
-	m_element->DeleteChild(element.m_element);
+	if( m_element )
+		m_element->remove_node(element.m_element);
+}
+
+
+void XmlElement::RemoveAttributes()
+{
+	CE_ASSERT(m_element);
+	if( m_element )
+		m_element->remove_all_attributes();
+}
+
+
+void XmlElement::RemoveAttribute( const char* name )
+{
+	CE_ASSERT(m_element);
+	if( m_element )
+	{
+		rapidxml::xml_attribute<>* attribute = m_element->first_attribute(name);
+		m_element->remove_attribute(attribute);
+	}
 }
 
 
 const char* XmlElement::GetCurrentNodeName() const
 {
 	CE_ASSERT(m_element);
-	return m_element->Value();
+	return m_element ? m_element->name() : 0;
 }
 
 
 bool XmlElement::HasAttribute( const char* name ) const
 {
 	CE_ASSERT(m_element);
-	return (m_element->Attribute(name) != 0);
-}
+	if( !m_element )
+		return false;
 
-
-void XmlElement::DeleteAttribute( const char* name )
-{
-	CE_ASSERT(m_element);
-	m_element->DeleteAttribute(name);
+	rapidxml::xml_attribute<>* attribute = m_element->first_attribute(name);
+	return attribute != 0;
 }
 
 
@@ -213,9 +241,20 @@ bool XmlElement::SetAttribute( const char* name, const char* value )
 {
 	CE_ASSERT(m_element);
 	if( m_element )
-		m_element->SetAttribute(name, value);
+	{
+		rapidxml::xml_document<>* document = m_element->document();
+		if( document )
+		{
+			char* attributeName = document->allocate_string(name);
+			char* attributeValue = document->allocate_string(value);
+			rapidxml::xml_attribute<>* attribute = document->allocate_attribute(attributeName, attributeValue);
+			m_element->append_attribute(attribute);
 
-	return m_element != 0;
+			return true;
+		}
+	}
+
+	return false;
 }
 
 
@@ -410,10 +449,12 @@ bool XmlElement::WriteText( const char* s )
 	CE_ASSERT(m_element);
 	if( m_element )
 	{
-		XmlDocument_t* document = m_element->GetDocument();
+		XmlDocument_t* document = m_element->document();
 		if( document )
 		{
-			m_element->InsertEndChild( document->NewText(s) );
+			char* value = document->allocate_string(s);
+			m_element->value(value);
+
 			return true;
 		}
 	}
@@ -534,14 +575,13 @@ bool XmlElement::WriteArrayElement( const char* name, const void* ptr, size_t st
 const char* XmlElement::GetText() const
 {
 	CE_ASSERT(m_element);
-	return m_element->GetText();
+	return m_element ? m_element->value() : 0;
 }
 
 
 bool XmlElement::GetAttribute( const char* name, fc::string& value ) const
 {
-	CE_ASSERT(m_element);
-	const char* s = m_element->Attribute(name);
+	const char* s = GetAttribute(name);
 	if( s )
 		value = s;
 
@@ -552,7 +592,14 @@ bool XmlElement::GetAttribute( const char* name, fc::string& value ) const
 const char* XmlElement::GetAttribute( const char* name ) const
 {
 	CE_ASSERT(m_element);
-	return m_element->Attribute(name);
+	if( m_element )
+	{
+		rapidxml::xml_attribute<>* attribute = m_element->first_attribute(name, 0, false);
+		if( attribute )
+			return attribute->value();
+	}
+
+	return 0;
 }
 
 
