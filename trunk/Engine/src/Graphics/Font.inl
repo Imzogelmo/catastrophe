@@ -223,8 +223,8 @@ int Font::LoadFromFile( const fc::string& filename, int faceSize, int dpi )
 	m_glyphs.reserve(max_glyphs);
 	fc::dynamic_array2d<Color> pixels(tHeight, tWidth);
 	fc::dynamic_array2d<Color> glyphPixels( 128, 128 );
-	pixels.assign(Color::Black(0));
-	glyphPixels.assign(Color::White(0));
+	pixels.fill(Color::Black(0));
+	glyphPixels.fill(Color::White(0));
 
 	RectangleTexturePacker texturePacker(tWidth, tHeight);
 	int maxGlyphTranslationY = 0;
@@ -275,7 +275,7 @@ int Font::LoadFromFile( const fc::string& filename, int faceSize, int dpi )
 		}
 		else
 		{
-			glyphPixels.assign( Color::White(0) );
+			glyphPixels.fill( Color::White(0) );
 			for( int y(0); y < size.y; ++y )
 			{
 				ubyte* bitmapPixels = slot->bitmap.buffer + slot->bitmap.pitch * y;

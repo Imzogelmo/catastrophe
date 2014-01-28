@@ -76,12 +76,14 @@ void FBORenderTarget::Bind()
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, m_fbo);
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	/*
 	GLfloat mat[16] = {
 		1.f, 0.f, 0.f, 0.f,
 		0.f, -1.f, 0.f, 0.f,
 		0.f, 0.f, 1.f, 0.f,
 		0.f, 0.f, 0.f, 1.f
 	};
+	*/
 
 	//glPushMatrix();
 	glPushAttrib(GL_VIEWPORT_BIT);

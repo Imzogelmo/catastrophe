@@ -55,7 +55,7 @@ void SpriteBatch::Reserve( size_t reserve )
 
 void SpriteBatch::Clear()
 {
-	m_queue.clear_uninitialized();
+	m_queue.reset();
 }
 
 
@@ -223,13 +223,13 @@ void SpriteBatch::DrawTexture( const Texture* texture, const Vector2& pos, const
 
 void SpriteBatch::DrawSpriteData( const SpriteData& data )
 {
-	m_queue.push_back_uninitialized() = data;
+	*m_queue.push_back_uninitialized() = data;
 }
 
 
 void SpriteBatch::DrawSpriteData( const SpriteData& data, float rotation, const Vector2& scale, const Vector2& origin )
 {
-	SpriteData& s = m_queue.push_back_uninitialized();
+	SpriteData& s = *m_queue.push_back_uninitialized();
 	s = data;
 	TransformSprite( rotation, scale, origin, s );
 }
@@ -310,7 +310,7 @@ void SpriteBatch::InternalQueueSprite
 	vertices.GetCorners( v );
 	uv.GetCorners( t );
 
-	SpriteData & s = m_queue.push_back_uninitialized();
+	SpriteData & s = *m_queue.push_back_uninitialized();
 	for( size_t i(0); i < 4; ++i )
 	{
 		s.data[i].pos = v[i];
