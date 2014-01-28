@@ -71,6 +71,12 @@ void BackgroundImage::Render( SpriteBatch* spritebatch )
 	Vector2 uv[4];
 	m_sprite.GetUVRect().GetCorners(uv);
 
+	Color colors[4];
+	colors[0] = m_cornerColors[0];
+	colors[1] = m_cornerColors[1];
+	colors[2] = m_cornerColors[2];
+	colors[3] = m_cornerColors[3];
+
 	spritebatch->DrawRotatedScaled(
 		m_sprite.GetTextureID(),
 		m_sprite.angle,
@@ -78,7 +84,7 @@ void BackgroundImage::Render( SpriteBatch* spritebatch )
 		minPos + (m_sprite.size * 0.5f),
 		vtx,
 		uv,
-		m_cornerColors,
+		colors,
 		1
 	);
 
