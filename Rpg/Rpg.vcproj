@@ -171,157 +171,9 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\src\Actor.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\BuffSet.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Camera.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Equipment.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Game.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\GameData.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Inventory.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\InventoryItem.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Party.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\RenderEngine.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\Rpg.cpp"
 				>
 			</File>
-			<File
-				RelativePath=".\src\SpellBook.cpp"
-				>
-			</File>
-			<Filter
-				Name="Script"
-				>
-				<File
-					RelativePath=".\src\Script\Bytecode.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Script\ContextPool.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Script\ScriptClass.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Script\ScriptEngine.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Script\ScriptGarbage.cpp"
-					>
-				</File>
-				<Filter
-					Name="Collections"
-					>
-					<File
-						RelativePath=".\src\Script\asArray.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\asArrayTemplate.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\asScriptTemplate.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\asString.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\asVector.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\asVectorTemplate.cpp"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="Bindings"
-					>
-					<File
-						RelativePath=".\src\Script\asGameInterface.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\asGlobalInterface.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\asGraphicsInterface.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\asGuiInterface.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\asInputInterface.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\asMathInterface.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\asRpgInterface.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\asSoundInterface.cpp"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="Compiler"
-					>
-					<File
-						RelativePath=".\src\Script\Compiler.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\PostProcessor.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\Preprocessor.cpp"
-						>
-					</File>
-				</Filter>
-			</Filter>
 			<Filter
 				Name="Screens"
 				>
@@ -422,17 +274,133 @@
 				Name="Modules"
 				>
 				<File
-					RelativePath=".\src\Battle.cpp"
+					RelativePath=".\src\BattleModule.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Entity.cpp"
+					RelativePath=".\src\EntityModule.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Screens.cpp"
+					RelativePath=".\src\GameModule.cpp"
 					>
 				</File>
+				<File
+					RelativePath=".\src\ScreenModule.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\ScriptModule.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Script"
+				>
+				<File
+					RelativePath=".\src\Script\Bytecode.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Script\ContextPool.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Script\ScriptClass.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Script\ScriptEngine.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Script\ScriptGarbage.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Script\ScriptMemory.inl"
+					>
+				</File>
+				<Filter
+					Name="Bindings"
+					>
+					<File
+						RelativePath=".\src\Script\asGameInterface.inl"
+						>
+					</File>
+					<File
+						RelativePath=".\src\Script\asGlobalInterface.inl"
+						>
+					</File>
+					<File
+						RelativePath=".\src\Script\asGraphicsInterface.inl"
+						>
+					</File>
+					<File
+						RelativePath=".\src\Script\asGuiInterface.inl"
+						>
+					</File>
+					<File
+						RelativePath=".\src\Script\asInputInterface.inl"
+						>
+					</File>
+					<File
+						RelativePath=".\src\Script\asMathInterface.inl"
+						>
+					</File>
+					<File
+						RelativePath=".\src\Script\asRpgInterface.inl"
+						>
+					</File>
+					<File
+						RelativePath=".\src\Script\asSoundInterface.inl"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Collections"
+					>
+					<File
+						RelativePath=".\src\Script\asArray.inl"
+						>
+					</File>
+					<File
+						RelativePath=".\src\Script\asArrayTemplate.inl"
+						>
+					</File>
+					<File
+						RelativePath=".\src\Script\asScriptTemplate.inl"
+						>
+					</File>
+					<File
+						RelativePath=".\src\Script\asString.inl"
+						>
+					</File>
+					<File
+						RelativePath=".\src\Script\asVector.inl"
+						>
+					</File>
+					<File
+						RelativePath=".\src\Script\asVectorTemplate.inl"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Compiler"
+					>
+					<File
+						RelativePath=".\src\Script\Compiler.inl"
+						>
+					</File>
+					<File
+						RelativePath=".\src\Script\PostProcessor.inl"
+						>
+					</File>
+					<File
+						RelativePath=".\src\Script\Preprocessor.inl"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
@@ -517,6 +485,10 @@
 				</File>
 				<File
 					RelativePath=".\src\Script\ScriptGarbage.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Script\ScriptMemory.h"
 					>
 				</File>
 				<Filter

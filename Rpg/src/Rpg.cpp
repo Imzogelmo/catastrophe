@@ -10,8 +10,10 @@
 // GNU General Public License for more details.
 
 
-#include <fc/rand.h>
 #include <time.h>
+#include <stdlib.h>
+
+#include <fc/rand.h>
 #include <Catastrophe/System.h>
 #include <Catastrophe/Input.h>
 #include <Catastrophe/IO/ConfigFile.h>
@@ -46,6 +48,17 @@ GlobalSettings::~GlobalSettings()
 
 void GenMonForm();
 void GenMonTroopForm();
+
+class _TestCrap
+{
+public:
+	bool DArg( const fc::string& n = "", int val = 0 )
+	{
+		if( n.empty() && val > 9 )
+			return true;
+		return false;
+	}
+};
 
 
 void LoadConfigSettings( int argc, char *argv[] )
@@ -171,7 +184,6 @@ Window* CreateWindow()
 
 
 
-
 int main(int argc, char* argv[])
 {
 	// enable memory leak checking.
@@ -182,6 +194,11 @@ int main(int argc, char* argv[])
 	// initialize system and sub-systems.
 	System::Init();
 	System::InitLogging("debug.log", true); //todo put this after config..
+
+
+	//_TestCrap tc;
+	//return tc.DArg(76) ? 1 : 0;
+
 
 	// init lib
 	//todo: ...
@@ -218,6 +235,24 @@ int main(int argc, char* argv[])
 		gd->GetActiveParty()->AddMember(i);
 	}
 
+	//MonsterData::RegisterObject();
+	//CharacterClass::RegisterObject();
+	db->monsters.filename = "testMonsters.xml";
+	db->monsters.resource_directory = 0;
+	db->monsters.SerializeXml();
+
+	db->character_classes.filename = "testClass.xml";
+	db->character_classes.resource_directory = 0;
+	db->character_classes.SerializeXml();
+
+	db->monster_troops.filename = "testTroops.xml";
+	db->monster_troops.resource_directory = 0;
+	db->monster_troops.SerializeXml();
+
+	return 0;
+
+	//db->GenerateScriptHeaders();
+	//return 0;
 
 	// read config file and parse command-line arguments.
 	LoadConfigSettings(argc, argv);
@@ -243,7 +278,7 @@ int main(int argc, char* argv[])
 	window->SetOrthographicProjection(0, 256, 224, 0);
 	while( !window->RequestClose() )
 	{
-		window->ClearColor();
+		window->ClearColor(Color::DarkBlue());
 		window->Update();
 
 		// DETECTS BUGS IN MULTI-MEDIA DRIVERS ON WIN32 (true story)
@@ -252,8 +287,8 @@ int main(int argc, char* argv[])
 		Input::Update();
 		//Log("update %0.4f", float(timer.Seconds()));
 
-	//	game->Update();
-	//	game->Render();
+		game->Update();
+		game->Render();
 
 		window->SwapBuffers();
 

@@ -235,7 +235,13 @@ class Combatant : IGameEntity
 	{
 		get const
 		{
-			return self.stat[HIT];
+			int val = self.stat[HIT];
+			if( self.status[BLIND] )
+			{
+				val /= 2;
+			}
+
+			return val;
 		}
 	}
 
@@ -292,6 +298,22 @@ class Combatant : IGameEntity
 
 	//////////////////////////////////////////
 
+	int OnModifyDamage(int type, int damage)
+	{
+		if( type == 0 )
+		{
+			if( self.abilities[PASSIVE]
+		}
+		return damage;
+	}
+
+	int OnAttacked( Combatant@ c )
+	{
+	}
+
+
+	//////////////////////////////////////////
+
 	vec2 pos
 	{
 		get const
@@ -310,6 +332,7 @@ class Combatant : IGameEntity
 		return self.pos + self.spriteset.size / 2.f;
 	}
 
+	///////////////////////////////////////////
 
 };
 

@@ -218,7 +218,7 @@ void BattleEngine::Render()
 	//{
 	//	m_sortedEntities.m_entities[--i]->Render();
 	//}
-	for( int i(0); i < (m_sortedEntities.m_entities.size()); ++i )
+	for( size_t i(0); i < m_sortedEntities.m_entities.size(); ++i )
 	{
 		m_sortedEntities.m_entities[i]->Render();
 	}
