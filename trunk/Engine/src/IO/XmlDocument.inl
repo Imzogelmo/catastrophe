@@ -17,13 +17,18 @@
 // THE SOFTWARE.
 
 #include <fc/tokenizer.h>
-#include "xml/tinyxml2.cpp"
+#include <fc/iterator.h>
+
+#include "xml/rapidxml.h"
 
 #include "Common.h"
+#include "IO/File.h"
 #include "IO/XmlDocument.h"
 #include "Core/StringUtils.h"
 
 CE_NAMESPACE_BEGIN
+
+bool xml_doc_has_parse_error = false;
 
 
 XmlDocument::XmlDocument() :
@@ -42,12 +47,24 @@ XmlDocument::~XmlDocument()
 bool XmlDocument::Load( const fc::string& filename )
 {
 	Reset();
-	if( m_document->LoadFile(filename.c_str()) != 0 )
-	{
-		Log("Failed to load file (%s)", filename.c_str());
-		m_document->PrintError();
+
+	File f(filename, FileRead);
+	if( !f.IsOpen() )
 		return false;
-	}
+
+	//allocate buffer and terminate string.
+	size_t size = f.Size();
+	m_buffer.resize(size + 1, 0);
+
+	//read file into memory and close.
+	f.Read(&m_buffer[0], size);
+	f.Close();
+
+	xml_doc_has_parse_error = false;
+
+	m_document->parse<0>(&m_buffer[0]);
+	if( xml_doc_has_parse_error )
+		return false;
 
 	return true;
 }
@@ -55,63 +72,77 @@ bool XmlDocument::Load( const fc::string& filename )
 
 bool XmlDocument::Save( const fc::string& filename )
 {
-	if( m_document->SaveFile(filename.c_str()) != 0 )
+	fc::string xmlString;
+	xmlString.reserve(RAPIDXML_STATIC_POOL_SIZE * 4);
+
+	xml_doc_has_parse_error = false;
+	rapidxml::print(fc::back_inserter(xmlString), *m_document);
+
+	File f(filename, FileWriteText);
+	if( !xmlString.empty() && f.IsOpen() )
 	{
-		Log("Failed to save file (%s)", filename.c_str());
-		m_document->PrintError();
-		return false;
+		f.Write((void*)&xmlString[0], xmlString.size() + 1);
+		f.Close();
+
+		return true;
 	}
 
-	return true;
-}
-
-
-bool XmlDocument::Parse( const fc::string& xml )
-{
-	if( m_document->Parse(xml.c_str(), xml.size()) != 0)
-	{
-		Log("Failed to parse string.");
-		m_document->PrintError();
-		return false;
-	}
-
-	return true;
+	return false;
 }
 
 
 void XmlDocument::CreateDeclaration()
 {
 	// <?xml version="1.0" encoding="UTF-8"?>
-	tinyxml2::XMLDeclaration* declaration = m_document->NewDeclaration();
-	m_document->LinkEndChild(declaration);
+	rapidxml::xml_node<>* decl = m_document->allocate_node(rapidxml::node_declaration);
+	decl->append_attribute(m_document->allocate_attribute("version", "1.0"));
+	decl->append_attribute(m_document->allocate_attribute("encoding", "utf-8"));
+	m_document->append_node(decl);
 }
 
 
 void XmlDocument::Reset()
 {
-	m_document->DeleteChildren();
+	m_document->clear();
 }
 
 
 XmlElement XmlDocument::GetRoot() const
 {
 	CE_ASSERT(m_document);
-	return XmlElement(m_document->RootElement());
+	XmlNode_t* root = m_document->first_node();
+	while( root && (
+		root->type() == rapidxml::node_declaration ||
+		root->type() == rapidxml::node_doctype ||
+		root->type() == rapidxml::node_comment )
+		)
+	{
+		root = root->next_sibling();
+	}
+
+	return XmlElement(root);
 }
 
 
 XmlElement XmlDocument::CreateRoot( const char* name )
 {
 	CE_ASSERT(m_document);
+	CE_ASSERT(!GetRoot());
 
-	//Reset();
-	XmlElement_t* element = m_document->NewElement(name);
-	XmlElement_t* root = m_document->InsertEndChild(element)->ToElement();
+	char* nodeName = m_document->allocate_string(name);
+	XmlNode_t* root = m_document->allocate_node(rapidxml::node_element, nodeName);
+	m_document->append_node(root);
 
 	return XmlElement(root);
 }
 
 
+//rapidxml required user error handler
+void rapidxml::parse_error_handler( char const *msg, void* )
+{
+	xml_doc_has_parse_error = true;
+	Log(msg);
+}
 
 
 CE_NAMESPACE_END

@@ -16,8 +16,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "xml/tinyxml2.h"
-
 #include "Common.h"
 #include "IO/XmlWriter.h"
 
@@ -52,9 +50,8 @@ XmlWriter::~XmlWriter()
 
 bool XmlWriter::Open( const fc::string& filename )
 {
-	CE_ASSERT(!m_document);
-	CE_ASSERT(!m_element);
-	CE_ASSERT(!filename.empty());
+	if( filename.empty() )
+		return false;
 
 	m_filename = filename;
 	m_document.CreateDeclaration();
@@ -73,15 +70,17 @@ bool XmlWriter::Close()
 }
 
 
-bool XmlWriter::BeginNode( const char* name )
+bool XmlWriter::CreateRoot( const char* name )
 {
 	CE_ASSERT(IsOpen());
-	if( !m_document.GetRoot() )
-	{
-		m_element = m_document.CreateRoot(name);
-		return m_element;
-	}
 
+	m_element = m_document.CreateRoot(name);
+	return m_element;
+}
+
+
+bool XmlWriter::BeginNode( const char* name )
+{
 	return m_element.BeginNode(name);
 }
 
@@ -93,112 +92,119 @@ bool XmlWriter::EndNode( const char* )
 }
 
 
-bool XmlWriter::WriteBool( const char* name, bool value )
+bool XmlWriter::SetString( const char* name, const char* value )
 {
 	XML_WRITER_CHECK();
-	return m_element.SetBool(name, value);
+	return m_element.SetAttribute(name, value);
 }
 
 
-bool XmlWriter::WriteByte( const char* name, byte value )
-{
-	XML_WRITER_CHECK();
-	return m_element.SetInt(name, (int)value);
-}
-
-
-bool XmlWriter::WriteShort( const char* name, short value )
-{
-	XML_WRITER_CHECK();
-	return m_element.SetInt(name, (int)value);
-}
-
-
-bool XmlWriter::WriteUShort( const char* name, ushort value )
-{
-	XML_WRITER_CHECK();
-	return m_element.SetInt(name, (int)value);
-}
-
-
-bool XmlWriter::WriteInt( const char* name, int value )
-{
-	XML_WRITER_CHECK();
-	return m_element.SetInt(name, value);
-}
-
-
-bool XmlWriter::WriteUInt( const char* name, size_t value )
-{
-	XML_WRITER_CHECK();
-	return m_element.SetUInt(name, value);
-}
-
-
-bool XmlWriter::WriteFloat( const char* name, float value )
-{
-	XML_WRITER_CHECK();
-	return m_element.SetFloat(name, value);
-}
-
-
-bool XmlWriter::WriteString( const char* name, const fc::string& value )
+bool XmlWriter::SetString( const char* name, const fc::string& value )
 {
 	XML_WRITER_CHECK();
 	return m_element.SetString(name, value);
 }
 
 
-bool XmlWriter::WriteRect( const char* name, const Rect& value )
+bool XmlWriter::SetBool( const char* name, bool value )
+{
+	XML_WRITER_CHECK();
+	return m_element.SetBool(name, value);
+}
+
+
+bool XmlWriter::SetByte( const char* name, byte value )
+{
+	XML_WRITER_CHECK();
+	return m_element.SetInt(name, (int)value);
+}
+
+
+bool XmlWriter::SetShort( const char* name, short value )
+{
+	XML_WRITER_CHECK();
+	return m_element.SetInt(name, (int)value);
+}
+
+
+bool XmlWriter::SetUShort( const char* name, ushort value )
+{
+	XML_WRITER_CHECK();
+	return m_element.SetInt(name, (int)value);
+}
+
+
+bool XmlWriter::SetInt( const char* name, int value )
+{
+	XML_WRITER_CHECK();
+	return m_element.SetInt(name, value);
+}
+
+
+bool XmlWriter::SetUInt( const char* name, size_t value )
+{
+	XML_WRITER_CHECK();
+	return m_element.SetUInt(name, value);
+}
+
+
+bool XmlWriter::SetFloat( const char* name, float value )
+{
+	XML_WRITER_CHECK();
+	return m_element.SetFloat(name, value);
+}
+
+
+bool XmlWriter::SetRect( const char* name, const Rect& value )
 {
 	XML_WRITER_CHECK();
 	return m_element.SetRect(name, value);
 }
 
 
-bool XmlWriter::WriteRectf( const char* name, const Rectf& value )
+bool XmlWriter::SetRectf( const char* name, const Rectf& value )
 {
 	XML_WRITER_CHECK();
 	return m_element.SetRectf(name, value);
 }
 
 
-bool XmlWriter::WritePoint( const char* name, const Point& value )
+bool XmlWriter::SetPoint( const char* name, const Point& value )
 {
 	XML_WRITER_CHECK();
 	return m_element.SetPoint(name, value);
 }
 
 
-bool XmlWriter::WriteVector2( const char* name, const Vector2& value )
+bool XmlWriter::SetVector2( const char* name, const Vector2& value )
 {
 	XML_WRITER_CHECK();
 	return m_element.SetVector2(name, value);
 }
 
 
-bool XmlWriter::WriteVector3( const char* name, const Vector3& value )
+bool XmlWriter::SetVector3( const char* name, const Vector3& value )
 {
 	XML_WRITER_CHECK();
 	return m_element.SetVector3(name, value);
 }
 
 
-bool XmlWriter::WriteVector4( const char* name, const Vector4& value )
+bool XmlWriter::SetVector4( const char* name, const Vector4& value )
 {
 	XML_WRITER_CHECK();
 	return m_element.SetVector4(name, value);
 }
 
 
-bool XmlWriter::WriteColor( const char* name, const Color& value )
+bool XmlWriter::SetColor( const char* name, const Color& value )
 {
 	XML_WRITER_CHECK();
 	return m_element.SetColor(name, value);
 }
 
 
-bool XmlWriter::WriteColorf( const char* name, const Colorf& value )
+bool XmlWriter::SetColorf( const char* name, const Colorf& value )
 {
 	XML_WRITER_CHECK();
 	return m_element.SetColorf(name, value);
@@ -206,112 +212,112 @@ bool XmlWriter::WriteColorf( const char* name, const Colorf& value )
 
 
 
-bool XmlWriter::WriteBoolElement( const char* name, bool value )
+bool XmlWriter::SetBoolElement( const char* name, bool value )
 {
 	XML_WRITER_CHECK();
 	return m_element.SetBoolElement(name, value);
 }
 
 
-bool XmlWriter::WriteByteElement( const char* name, byte value )
+bool XmlWriter::SetByteElement( const char* name, byte value )
 {
 	XML_WRITER_CHECK();
 	return m_element.SetByteElement(name, value);
 }
 
 
-bool XmlWriter::WriteShortElement( const char* name, short value )
+bool XmlWriter::SetShortElement( const char* name, short value )
 {
 	XML_WRITER_CHECK();
 	return m_element.SetShortElement(name, value);
 }
 
 
-bool XmlWriter::WriteUShortElement( const char* name, ushort value )
+bool XmlWriter::SetUShortElement( const char* name, ushort value )
 {
 	XML_WRITER_CHECK();
 	return m_element.SetIntElement(name, (int)value);
 }
 
 
-bool XmlWriter::WriteIntElement( const char* name, int value )
+bool XmlWriter::SetIntElement( const char* name, int value )
 {
 	XML_WRITER_CHECK();
 	return m_element.SetIntElement(name, value);
 }
 
 
-bool XmlWriter::WriteUIntElement( const char* name, size_t value )
+bool XmlWriter::SetUIntElement( const char* name, size_t value )
 {
 	XML_WRITER_CHECK();
 	return m_element.SetUIntElement(name, value);
 }
 
 
-bool XmlWriter::WriteFloatElement( const char* name, float value )
+bool XmlWriter::SetFloatElement( const char* name, float value )
 {
 	XML_WRITER_CHECK();
 	return m_element.SetFloatElement(name, value);
 }
 
 
-bool XmlWriter::WriteStringElement( const char* name, const fc::string& value )
+bool XmlWriter::SetStringElement( const char* name, const fc::string& value )
 {
 	XML_WRITER_CHECK();
 	return m_element.SetTextElement(name, value.c_str());
 }
 
 
-bool XmlWriter::WriteRectElement( const char* name, const Rect& value )
+bool XmlWriter::SetRectElement( const char* name, const Rect& value )
 {
 	XML_WRITER_CHECK();
 	return m_element.SetRectElement(name, value);
 }
 
 
-bool XmlWriter::WriteRectfElement( const char* name, const Rectf& value )
+bool XmlWriter::SetRectfElement( const char* name, const Rectf& value )
 {
 	XML_WRITER_CHECK();
 	return m_element.SetRectfElement(name, value);
 }
 
 
-bool XmlWriter::WritePointElement( const char* name, const Point& value )
+bool XmlWriter::SetPointElement( const char* name, const Point& value )
 {
 	XML_WRITER_CHECK();
 	return m_element.SetPointElement(name, value);
 }
 
 
-bool XmlWriter::WriteVector2Element( const char* name, const Vector2& value )
+bool XmlWriter::SetVector2Element( const char* name, const Vector2& value )
 {
 	XML_WRITER_CHECK();
 	return m_element.SetVector2Element(name, value);
 }
 
 
-bool XmlWriter::WriteVector3Element( const char* name, const Vector3& value )
+bool XmlWriter::SetVector3Element( const char* name, const Vector3& value )
 {
 	XML_WRITER_CHECK();
 	return m_element.SetVector3Element(name, value);
 }
 
 
-bool XmlWriter::WriteVector4Element( const char* name, const Vector4& value )
+bool XmlWriter::SetVector4Element( const char* name, const Vector4& value )
 {
 	XML_WRITER_CHECK();
 	return m_element.SetVector4Element(name, value);
 }
 
 
-bool XmlWriter::WriteColorElement( const char* name, const Color& value )
+bool XmlWriter::SetColorElement( const char* name, const Color& value )
 {
 	XML_WRITER_CHECK();
 	return m_element.SetColorElement(name, value);
 }
 
 
-bool XmlWriter::WriteColorfElement( const char* name, const Colorf& value )
+bool XmlWriter::SetColorfElement( const char* name, const Colorf& value )
 {
 	XML_WRITER_CHECK();
 	return m_element.SetColorfElement(name, value);

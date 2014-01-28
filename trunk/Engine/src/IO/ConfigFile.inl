@@ -39,7 +39,7 @@ void ConfigFile::SetInt( const fc::string& section, const fc::string& entry, int
 	}
 	else
 	{
-		LogDebug("ConfigFile error on section %s.", section.c_str());
+		Log("ConfigFile error on section %s.", section.c_str());
 	}
 }
 
@@ -59,7 +59,7 @@ void ConfigFile::SetFloat( const fc::string& section, const fc::string& entry, f
 	}
 	else
 	{
-		LogDebug("ConfigFile error on section %s.", section.c_str());
+		Log("ConfigFile error on section %s.", section.c_str());
 	}
 }
 
@@ -73,7 +73,7 @@ void ConfigFile::SetString( const fc::string& section, const fc::string& entry, 
 	}
 	else
 	{
-		LogDebug("ConfigFile error on section %s.", section.c_str());
+		Log("ConfigFile error on section %s.", section.c_str());
 	}
 }
 

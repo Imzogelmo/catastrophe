@@ -17,7 +17,6 @@
 // THE SOFTWARE.
 
 #include <fc/tokenizer.h>
-#include "xml/tinyxml2.h"
 
 #include "Common.h"
 #include "IO/XmlReader.h"
@@ -102,6 +101,18 @@ bool XmlReader::SetToChild( const char* name )
 }
 
 
+bool XmlReader::FirstChild( const char* name )
+{
+	return m_element.SetToChild(name); //fixme
+}
+
+
+bool XmlReader::NextChild( const char* name )
+{
+	return m_element.SetToChild(name);
+}
+
+
 bool XmlReader::HasAttribute( const char* name ) const
 {
 	CE_ASSERT(m_element);
@@ -109,210 +120,210 @@ bool XmlReader::HasAttribute( const char* name ) const
 }
 
 
-fc::string XmlReader::ReadString( const char* name, const fc::string& ) const
+fc::string XmlReader::GetString( const char* name, const fc::string& ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetString(name); //fixme
 }
 
 
-bool XmlReader::ReadBool( const char* name, bool defaultValue ) const
+bool XmlReader::GetBool( const char* name, bool defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetBool(name, defaultValue);
 }
 
 
-byte XmlReader::ReadByte( const char* name, byte defaultValue ) const
+byte XmlReader::GetByte( const char* name, byte defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetByte(name, defaultValue);
 }
 
 
-short XmlReader::ReadShort( const char* name, short defaultValue ) const
+short XmlReader::GetShort( const char* name, short defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetShort(name, defaultValue);
 }
 
 
-int XmlReader::ReadInt( const char* name, int defaultValue ) const
+int XmlReader::GetInt( const char* name, int defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetInt(name, defaultValue);
 }
 
 
-size_t XmlReader::ReadUInt( const char* name, size_t defaultValue ) const
+size_t XmlReader::GetUInt( const char* name, size_t defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetUInt(name, defaultValue);
 }
 
 
-float XmlReader::ReadFloat( const char* name, float defaultValue ) const
+float XmlReader::GetFloat( const char* name, float defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetFloat(name, defaultValue);
 }
 
 
-Rect XmlReader::ReadRect( const char* name, const Rect& defaultValue ) const
+Rect XmlReader::GetRect( const char* name, const Rect& defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetRect(name, defaultValue);
 }
 
 
-Rectf XmlReader::ReadRectf( const char* name, const Rectf& defaultValue ) const
+Rectf XmlReader::GetRectf( const char* name, const Rectf& defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetRectf(name, defaultValue);
 }
 
 
-Point XmlReader::ReadPoint( const char* name, const Point& defaultValue ) const
+Point XmlReader::GetPoint( const char* name, const Point& defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetPoint(name, defaultValue);
 }
 
 
-Vector2 XmlReader::ReadVector2( const char* name, const Vector2& defaultValue ) const
+Vector2 XmlReader::GetVector2( const char* name, const Vector2& defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetVector2(name, defaultValue);
 }
 
 
-Vector3 XmlReader::ReadVector3( const char* name, const Vector3& defaultValue ) const
+Vector3 XmlReader::GetVector3( const char* name, const Vector3& defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetVector3(name, defaultValue);
 }
 
 
-Vector4 XmlReader::ReadVector4( const char* name, const Vector4& defaultValue ) const
+Vector4 XmlReader::GetVector4( const char* name, const Vector4& defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetVector4(name, defaultValue);
 }
 
 
-Color XmlReader::ReadColor( const char* name, const Color& defaultValue ) const
+Color XmlReader::GetColor( const char* name, const Color& defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetColor(name, defaultValue);
 }
 
 
-Colorf XmlReader::ReadColorf( const char* name, const Colorf& defaultValue ) const
+Colorf XmlReader::GetColorf( const char* name, const Colorf& defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetColorf(name, defaultValue);
 }
 
 
-fc::string XmlReader::ReadStringElement( const char* name, const fc::string& ) const
+fc::string XmlReader::GetStringElement( const char* name, const fc::string& ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetTextElement(name); //fixme
 }
 
 
-bool XmlReader::ReadBoolElement( const char* name, bool defaultValue ) const
+bool XmlReader::GetBoolElement( const char* name, bool defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetBoolElement(name, defaultValue);
 }
 
 
-byte XmlReader::ReadByteElement( const char* name, byte defaultValue ) const
+byte XmlReader::GetByteElement( const char* name, byte defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetByteElement(name, defaultValue);
 }
 
 
-short XmlReader::ReadShortElement( const char* name, short defaultValue ) const
+short XmlReader::GetShortElement( const char* name, short defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetShortElement(name, defaultValue);
 }
 
 
-int XmlReader::ReadIntElement( const char* name, int defaultValue ) const
+int XmlReader::GetIntElement( const char* name, int defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetIntElement(name, defaultValue);
 }
 
 
-size_t XmlReader::ReadUIntElement( const char* name, size_t defaultValue ) const
+size_t XmlReader::GetUIntElement( const char* name, size_t defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetUIntElement(name, defaultValue);
 }
 
 
-float XmlReader::ReadFloatElement( const char* name, float defaultValue ) const
+float XmlReader::GetFloatElement( const char* name, float defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetFloatElement(name, defaultValue);
 }
 
 
-Rect XmlReader::ReadRectElement( const char* name, const Rect& defaultValue ) const
+Rect XmlReader::GetRectElement( const char* name, const Rect& defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetRectElement(name, defaultValue);
 }
 
 
-Rectf XmlReader::ReadRectfElement( const char* name, const Rectf& defaultValue ) const
+Rectf XmlReader::GetRectfElement( const char* name, const Rectf& defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetRectfElement(name, defaultValue);
 }
 
 
-Point XmlReader::ReadPointElement( const char* name, const Point& defaultValue ) const
+Point XmlReader::GetPointElement( const char* name, const Point& defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetPointElement(name, defaultValue);
 }
 
 
-Vector2 XmlReader::ReadVector2Element( const char* name, const Vector2& defaultValue ) const
+Vector2 XmlReader::GetVector2Element( const char* name, const Vector2& defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetVector2Element(name, defaultValue);
 }
 
 
-Vector3 XmlReader::ReadVector3Element( const char* name, const Vector3& defaultValue ) const
+Vector3 XmlReader::GetVector3Element( const char* name, const Vector3& defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetVector3Element(name, defaultValue);
 }
 
 
-Vector4 XmlReader::ReadVector4Element( const char* name, const Vector4& defaultValue ) const
+Vector4 XmlReader::GetVector4Element( const char* name, const Vector4& defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetVector4Element(name, defaultValue);
 }
 
 
-Color XmlReader::ReadColorElement( const char* name, const Color& defaultValue ) const
+Color XmlReader::GetColorElement( const char* name, const Color& defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetColorElement(name, defaultValue);
 }
 
 
-Colorf XmlReader::ReadColorfElement( const char* name, const Colorf& defaultValue ) const
+Colorf XmlReader::GetColorfElement( const char* name, const Colorf& defaultValue ) const
 {
 	XML_READER_CHECK();
 	return m_element.GetColorfElement(name, defaultValue);
