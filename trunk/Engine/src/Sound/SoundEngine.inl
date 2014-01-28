@@ -20,12 +20,12 @@
 
 #include "Sound/SoundEngine.h"
 
-#if defined CE_FMOD
+#if defined CE_SOUND_FMOD
 	#include "Sound/FmodSound.h"
 	#include "Sound/FmodSoundEngine.h"
 	#define CE_SOUND_TYPE			FmodSound
 	#define CE_SOUND_ENGINE_TYPE	FmodSoundEngine
-#elif defined CE_BASS
+#elif defined CE_SOUND_BASS
 	#include "Sound/BassSound.h"
 	#include "Sound/BassSoundEngine.h"
 	#define CE_SOUND_TYPE			BassSound

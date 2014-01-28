@@ -112,10 +112,10 @@ Color ToColor( const char* s, const Color& defaultValue )
 	if( s )
 	{
 		char* ptr = (char*)s;
-		c.r = ToInt(ptr, &ptr, (int)defaultValue.r);
-		c.g = ToInt(ptr, &ptr, (int)defaultValue.g);
-		c.b = ToInt(ptr, &ptr, (int)defaultValue.b);
-		c.a = ToInt(ptr, &ptr, (int)defaultValue.a);
+		c.r = (ubyte)ToInt(ptr, &ptr, (int)defaultValue.r);
+		c.g = (ubyte)ToInt(ptr, &ptr, (int)defaultValue.g);
+		c.b = (ubyte)ToInt(ptr, &ptr, (int)defaultValue.b);
+		c.a = (ubyte)ToInt(ptr, &ptr, (int)defaultValue.a);
 	}
 
 	return c;
@@ -298,7 +298,7 @@ fc::string ToString( float value )
 
 fc::string ToString( const Point& value )
 {
-	char buf[64];
+	char buf[32];
 	sprintf(buf, "%i %i", value.x, value.y);
 	return fc::string(buf);
 }
@@ -322,8 +322,9 @@ fc::string ToString( const Rectf& value )
 
 fc::string ToString( const Color& value )
 {
-	char buf[64];
-	sprintf(buf, "%c %c %c %c", value.r, value.g, value.b, value.a);
+	char buf[32];
+	int c[4] = { value.r, value.g, value.b, value.a };
+	sprintf(buf, "%i %i %i %i", c[0], c[1], c[2], c[3]);
 	return fc::string(buf);
 }
 
@@ -338,7 +339,7 @@ fc::string ToString( const Colorf& value )
 
 fc::string ToString( const Vector2& value )
 {
-	char buf[64];
+	char buf[32];
 	sprintf(buf, "%f %f", value.x, value.y);
 	return fc::string(buf);
 }
@@ -371,7 +372,7 @@ fc::string ToString( const Quaternion& value )
 fc::string ToString( const Matrix& value )
 {
 	fc::string ret;
-	char buf[64];
+	char buf[256];
 	for( int i(0); i < 16; ++i )
 	{
 		sprintf(buf, "%f ", value[i]);

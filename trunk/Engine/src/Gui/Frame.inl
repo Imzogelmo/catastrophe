@@ -16,8 +16,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#pragma once
-
 #include "Gui/Frame.h"
 #include "Graphics/SpriteBatch.h"
 #include "Graphics/Sprite.h"

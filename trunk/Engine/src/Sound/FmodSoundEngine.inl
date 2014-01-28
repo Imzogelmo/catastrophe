@@ -17,6 +17,8 @@
 // THE SOFTWARE.
 
 
+#ifdef CE_SOUND_FMOD
+
 #include <Fmod/fmod.hpp>
 #include <Fmod/fmod_dsp.h>
 #include <Fmod/fmod_errors.h>
@@ -27,11 +29,6 @@
 #ifdef _MSC_VER
 	#pragma comment(lib, "fmodex_vc.lib")
 #endif
-
-#define ERRCHECK(result) { \
-	if( result != FMOD_OK ) { \
-		Log( "FMOD error (%d) %s", result, FMOD_ErrorString(result) ); \
-	}}
 
 CE_NAMESPACE_BEGIN
 
@@ -49,10 +46,10 @@ void FmodSoundEngine::Initialize()
 	FMOD_RESULT result;
 
 	result = FMOD::System_Create(&m_system);
-	ERRCHECK(result);
+	FMOD_ERRCHECK(result);
 
 	result = m_system->init(128, FMOD_INIT_NORMAL, 0);
-	ERRCHECK(result);
+	FMOD_ERRCHECK(result);
 }
 
 
@@ -70,10 +67,10 @@ void FmodSoundEngine::Shutdown()
 
 	m_sounds.clear();
 	result = m_system->close();
-	ERRCHECK(result);
+	FMOD_ERRCHECK(result);
 
 	result = m_system->release();
-	ERRCHECK(result);
+	FMOD_ERRCHECK(result);
 }
 
 
@@ -146,7 +143,7 @@ void FmodSoundEngine::SetVolume( float volume )
 {
 	m_volume = fc::clamp(volume, 0.f, 1.f);
 	//FMOD_RESULT result = m_system->setVolume(m_volume);
-	//ERRCHECK(result);
+	//FMOD_ERRCHECK(result);
 }
 
 
@@ -159,12 +156,11 @@ float FmodSoundEngine::GetVolume()
 void FmodSoundEngine::Update()
 {
 	FMOD_RESULT result = m_system->update();
-	ERRCHECK(result);
+	FMOD_ERRCHECK(result);
 }
 
 
 
-#undef ERRCHECK
-
 CE_NAMESPACE_END
 
+#endif // CE_SOUND_FMOD

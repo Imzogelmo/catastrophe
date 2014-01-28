@@ -17,7 +17,7 @@
 // THE SOFTWARE.
 
 
-#if defined CE_BASS
+#if defined CE_SOUND_BASS
 
 #include "Sound/BassSoundEngine.h"
 #include <Bass.h>
@@ -104,5 +104,5 @@ void BassSoundEngine::Update()
 
 CE_NAMESPACE_END
 
-#endif //CE_BASS
+#endif //CE_SOUND_BASS
 
