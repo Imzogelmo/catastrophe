@@ -325,7 +325,7 @@ void Postprocessor::ProcessLineDirective( fc::string& code, size_t& index, fc::s
 	//GetNextToken( code, index, token );
 	fc::tokenizer::get_token( code, FC_DEFAULT_DELIMITERS, index, token );
 
-	line_number = (size_t) atoi( token.c_str() );
+	line_number = (size_t) fc::to_int(token.c_str());
 
 	// get the filename
 	//GetNextToken( code, index, filename );

@@ -16,16 +16,14 @@
 #include "Compiler.h"
 #include "ByteCode.h"
 #include "ContextPool.h"
-
-
-void* ScriptMemoryAlloc( size_t n );
-void ScriptMemoryFree( void* ptr );
+#include "ScriptMemory.h"
 
 
 #ifdef _MSC_VER
 	#pragma warning ( push )
 	#pragma warning ( disable : 4996 )
 #endif
+
 
 
 ScriptEngine::ScriptEngine() :
@@ -303,31 +301,6 @@ void ScriptEngine::RegisterScriptingInterfaces()
 #ifdef _MSC_VER
 	#pragma warning ( pop )
 #endif
-
-
-#include <fc/fixed_memory_pool.h>
-fc::fixed_memory_pool<509612> scriptMemPool;
-
-size_t __total_mem = 0;
-
-void* ScriptMemoryAlloc( size_t n )
-{
-	__total_mem += n;
-	//LogInfo("---Info : Script Alloc : bytes (%i), total kbytes(%i).", n, (__total_mem / 1024));
-
-	return malloc(n);
-
-	//return scriptMemPool.allocate(n);
-}
-
-
-void ScriptMemoryFree( void* ptr )
-{
-	//LogInfo("---Info : Script Memory Free.");
-
-	//scriptMemPool.deallocate(ptr);
-	free(ptr);
-}
 
 
 

@@ -81,13 +81,8 @@ namespace script
 
 	fc::string ToString( Rect *self )
 	{
-		fc::fixed_string64 s;
-		s.append("x: ").append( fc::to_string(self->pos.x) )
-		.append(", y: ").append( fc::to_string(self->pos.y) )
-		.append(", width: ").append( fc::to_string(self->size.x) )
-		.append(", height: ").append( fc::to_string(self->size.y) );
-
-		return s;
+		//fixme
+		return fc::string();
 	}
 
 	void RectSetX( int x, Rect *self )
@@ -178,11 +173,7 @@ namespace script
 
 	fc::string Vector2ToString( Vector2 *self )
 	{
-		fc::fixed_string32 s;
-		s.append("x: ").append( fc::to_string(self->x) )
-		.append("y: ").append( fc::to_string(self->y) );
-
-		return s;
+		return fc::string();
 	}
 
 } //namespace script
@@ -272,13 +263,7 @@ namespace script
 
 	fc::string RectfToString( Rectf *self )
 	{
-		fc::fixed_string64 s;
-		s.append("x: ").append( fc::to_string(self->min.x) )
-		.append(", y: ").append( fc::to_string(self->min.y) )
-		.append(", width: ").append( fc::to_string(self->Width()) )
-		.append(", height: ").append( fc::to_string(self->Height()) );
-
-		return s;
+		return fc::string();
 	}
 
 	void RectfSetX( float x, Rectf *self )
@@ -399,12 +384,7 @@ namespace script
 
 	fc::string Vector3ToString( Vector3 *self )
 	{
-		fc::fixed_string32 s;
-		s.append("x: ").append( fc::to_string(self->x) )
-		.append("y: ").append( fc::to_string(self->y) )
-		.append("z: ").append( fc::to_string(self->z) );
-
-		return s;
+		return fc::string();
 	}
 
 } //namespace script

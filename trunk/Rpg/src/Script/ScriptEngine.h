@@ -102,6 +102,7 @@ private:
 	//ui
 	void RegisterGuiInterface();
 	template <class T> void RegisterWidgetType( const char* name );
+	template <class T> void RegisterWidgetContainerMethods( const char* name );
 	void RegisterFrame();
 
 	//rpg

@@ -7,6 +7,7 @@
 
 #include <fc/rand.h>
 #include <Catastrophe/Graphics/OpenGL.h>
+#include <Catastrophe/Graphics/Font.h>
 #include <Catastrophe/Graphics/Texture.h>
 #include <Catastrophe/Graphics/SpriteBatch.h>
 #include <Catastrophe/Input.h>
@@ -15,6 +16,7 @@
 #include <Catastrophe/Gui/Label.h>
 #include <Catastrophe/Gui/TextBox.h>
 #include <Catastrophe/Gui/Frame.h>
+#include <Catastrophe/Math/Matrix.h>
 
 #include "Script/ScriptClass.h"
 #include "Item.h"
@@ -349,9 +351,75 @@ protected:
 */
 
 
+#include "Catastrophe/Graphics/FBORenderTarget.h"
+
 class TestScreen : public Screen
 {
 public:
+	Font f;
+
+	FBORenderTarget rt;
+	Texture rtTex;
+
+	//Font f2[12];
+	TextBox tb;
+	SpriteBatch m_spriteBatch;
+
+	TestScreen()
+	{
+		f.LoadFromFile("data/fonts/ff1_gba_font.png", 8);
+	//	f.LoadFromFile("data/fonts/sansation.ttf", 12);
+		f.GetTexture()->SaveToFile("fnt.png");
+		tb.SetFont(&f);
+		tb.SetText("Test of the \n emergency FONT system.");
+		tb.SetSize(128,64);
+
+		rtTex.SetFilterMode(0x2601);
+		rtTex.CreateBlank(Color::ForestGreen(), 256, 224);
+		rt.AttachTexture(&rtTex);
+		foreachi(i, 8)
+		{
+			//f2[i].LoadFromFile("data/fonts/ff_7.ttf", 32 + i);
+		}
+	}
+
+	void Update()
+	{
+		if( Input::GetKeyboard()->IsKeyPressed(KEY_T) )
+			rtTex.SetFilterMode(0x2600);
+
+		tb.Update();
+	}
+
+	void Render()
+	{
+		rt.Bind();
+
+		m_spriteBatch.Begin();
+
+		//tb.Render(&m_spriteBatch);
+		m_spriteBatch.DrawString(&f, "ABCDEFGHIJKLmnopqrstuvwxyz\n<>':-+1234567890", Vector2(0, 0), Color(255,255,255,255));
+		m_spriteBatch.DrawString(&f, "ABCDEFGHIJKLmnopqrstuvwxyz\n<>':-+1234567890", Vector2(0, 48), Color(255,255,255,255), AlignLeft, 16);
+		m_spriteBatch.DrawString(&f, "ABCDEFGHIJKLmnopqrstuvwxyz\n<>':-+1234567890", Vector2(0, 128), Color(255,255,255,255), AlignLeft, 32);
+
+		foreachi(i, 8)
+		{
+			//Vector2 pos_ = Vector2(0, (float)(i * 16 + 16));
+			//m_spriteBatch.DrawString(&f2[i], "ABCDEFGHIJKLmnopqrstuvwxyz 1234567890", pos_);
+		}
+
+
+		//m_spriteBatch.Render( Matrix::CreateScale(Vector3(1,-1,1)) );
+		m_spriteBatch.Render();
+		m_spriteBatch.End();
+
+		rt.Unbind();
+		m_spriteBatch.Begin();
+		m_spriteBatch.DrawTexture(rt.GetTexture(), 0.f);
+		m_spriteBatch.Render();
+		m_spriteBatch.End();
+	}
+
 };
 
 
