@@ -154,51 +154,59 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
-			<Filter
-				Name="System"
+			<File
+				RelativePath=".\src\InputModule.cpp"
 				>
-				<File
-					RelativePath=".\src\System\GLFWSystem.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\System\SDLSystem.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\System\SFMLSystem.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\System\System.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\System\Window.cpp"
-					>
-				</File>
-			</Filter>
+			</File>
+			<File
+				RelativePath=".\src\SystemModule.cpp"
+				>
+			</File>
 			<Filter
 				Name="Input"
 				>
 				<File
-					RelativePath=".\src\Input\Controller.cpp"
+					RelativePath=".\src\Input\Controller.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Input\Input.cpp"
+					RelativePath=".\src\Input\Input.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Input\JoystickController.cpp"
+					RelativePath=".\src\Input\JoystickController.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Input\Keyboard.cpp"
+					RelativePath=".\src\Input\Keyboard.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Input\KeyboardController.cpp"
+					RelativePath=".\src\Input\KeyboardController.inl"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="System"
+				>
+				<File
+					RelativePath=".\src\System\GLFWSystem.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\System\SDLSystem.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\System\SFMLSystem.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\System\System.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\System\Window.inl"
 					>
 				</File>
 			</Filter>

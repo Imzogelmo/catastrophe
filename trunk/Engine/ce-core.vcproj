@@ -156,167 +156,59 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
-			<Filter
-				Name="Math"
+			<File
+				RelativePath=".\src\CoreModule.cpp"
 				>
-				<File
-					RelativePath=".\src\Math\BoundingBox.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Math\Color.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Math\Colorf.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Math\Frustum.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Math\HSLColor.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Math\HSVColor.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Math\Math.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Math\Matrix.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Math\Quaternion.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Math\Rect.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Math\Rectf.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Math\Vector2.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Math\Vector3.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Math\Vector4.cpp"
-					>
-				</File>
-			</Filter>
+			</File>
+			<File
+				RelativePath=".\src\GraphicsModule.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\IOModule.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\MathModule.cpp"
+				>
+			</File>
 			<Filter
 				Name="IO"
 				>
 				<File
-					RelativePath=".\src\IO\ConfigFile.cpp"
+					RelativePath=".\src\IO\ConfigFile.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\IO\Deserializer.cpp"
+					RelativePath=".\src\IO\Deserializer.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\IO\File.cpp"
+					RelativePath=".\src\IO\File.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\IO\Log.cpp"
+					RelativePath=".\src\IO\Log.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\IO\Serializer.cpp"
+					RelativePath=".\src\IO\Serializer.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\IO\XmlDocument.cpp"
+					RelativePath=".\src\IO\XmlDocument.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\IO\XmlElement.cpp"
+					RelativePath=".\src\IO\XmlElement.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\IO\XmlReader.cpp"
+					RelativePath=".\src\IO\XmlReader.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\IO\XmlWriter.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Graphics"
-				>
-				<File
-					RelativePath=".\src\Graphics\AnimatedSpriteSet.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Graphics\BlendMode.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Graphics\FBORenderTarget.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Graphics\Font.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Graphics\Image.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Graphics\PackedSprite.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Graphics\Primitive.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Graphics\PrimitiveBatch.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Graphics\Shader.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Graphics\ShaderObject.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Graphics\Sprite.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Graphics\SpriteAnimation.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Graphics\SpriteBatch.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Graphics\Texture.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Graphics\TextureLoader.cpp"
+					RelativePath=".\src\IO\XmlWriter.inl"
 					>
 				</File>
 			</Filter>
@@ -332,11 +224,139 @@
 				Name="Core"
 				>
 				<File
-					RelativePath=".\src\Core\StringUtils.cpp"
+					RelativePath=".\src\Core\StringUtils.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Core\Timer.cpp"
+					RelativePath=".\src\Core\Timer.inl"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Graphics"
+				>
+				<File
+					RelativePath=".\src\Graphics\AnimatedSpriteSet.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Graphics\AnimationFrames.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Graphics\BlendMode.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Graphics\FBORenderTarget.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Graphics\Font.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Graphics\Image.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Graphics\PackedSprite.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Graphics\Primitive.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Graphics\PrimitiveBatch.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Graphics\Shader.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Graphics\ShaderObject.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Graphics\Sprite.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Graphics\SpriteAnimation.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Graphics\SpriteBatch.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Graphics\Texture.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Graphics\TextureLoader.inl"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Math"
+				>
+				<File
+					RelativePath=".\src\Math\BoundingBox.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Math\Color.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Math\Colorf.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Math\Frustum.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Math\HSLColor.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Math\HSVColor.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Math\Math.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Math\Matrix.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Math\Quaternion.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Math\Rect.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Math\Rectf.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Math\Vector2.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Math\Vector3.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Math\Vector4.inl"
 					>
 				</File>
 			</Filter>
@@ -515,6 +535,10 @@
 				>
 				<File
 					RelativePath=".\include\Catastrophe\Graphics\AnimatedSpriteSet.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Catastrophe\Graphics\AnimationFrames.h"
 					>
 				</File>
 				<File
