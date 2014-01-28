@@ -9,6 +9,9 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
+#include <fc/search.h>
+#include <fc/copy.h>
+
 // these are not actually 'inlined'.
 
 // data

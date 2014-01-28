@@ -13,7 +13,7 @@
 
 #include <fc/string.h>
 #include <fc/vector.h>
-#include <fc/fixed_tiny_vector.h>
+#include <fc/fixed_vector.h>
 
 #include "RpgCommon.h"
 
@@ -38,6 +38,11 @@ enum AttributeAccessorVariableType
 	VAR_TYPE_RECT,
 	VAR_TYPE_RECTF,
 	VAR_TYPE_STRING,
+	VAR_TYPE_OBJECT,
+	VAR_TYPE_BYTE_ARRAY,
+	VAR_TYPE_SHORT_ARRAY,
+	VAR_TYPE_INT_ARRAY,
+	VAR_TYPE_FLOAT_ARRAY,
 	VAR_TYPE_OBJECT_ARRAY,
 	VAR_TYPE_OBJECT_ARRAY_SET_SIZE,
 	VAR_TYPE_PUSH_NODE,
@@ -45,8 +50,7 @@ enum AttributeAccessorVariableType
 	VAR_TYPE_MAX //always last
 };
 
-//static char gTbuffer[256];
-//static int gBufOffset = 0;
+
 
 template <class T>
 void SerializeObjectArrayXml( T* obj, const char* node, XmlWriter* xml )
@@ -139,12 +143,20 @@ public:
 	AttributeAccessorInfo() : typeInfo(), type(VAR_TYPE_NONE), name(0), offset(0) {}
 	AttributeAccessorInfo( AttributeAccessorVariableType type, const char* name, int offset )
 		: typeInfo(), type(type), name(name), offset(offset)
-	{}
+	{
+	}
+
+	AttributeAccessorInfo( AttributeAccessorVariableType type, size_t arraySize, const char* name, int offset )
+		: typeInfo(), type(type), name(name), offset(offset)
+	{
+		// store pod-type array sizes in typeInfo.
+		*((size_t*)&typeInfo) = arraySize;
+	}
 
 	template <class T>
 	AttributeAccessorInfo& SetTypeInfo()
 	{
-		new (typeInfo.buffer) AttributeAccessorTemplateTypeInfoImpl<T>();
+		new (typeInfo.data) AttributeAccessorTemplateTypeInfoImpl<T>();
 		return *this;
 	}
 
@@ -209,7 +221,7 @@ public:
 		MaxBufferBytes = 512
 	};
 
-	typedef fc::fixed_tiny_vector<AttributeAccessorObjectTypeBase*, MaxBufferBytes / sizeof(AttributeAccessorObjectTypeBase*)> vec_type;
+	typedef fc::fixed_vector<AttributeAccessorObjectTypeBase*, MaxBufferBytes / sizeof(AttributeAccessorObjectTypeBase*)> vec_type;
 	typedef fc::aligned_buffer<MaxBufferBytes, FC_ALIGNOF(AttributeAccessorObjectTypeBase*)> buffer_type;
 
 	ObjectAttributeSerializerFactory() :
@@ -228,6 +240,9 @@ public:
 	void RegisterAttribute( const AttributeAccessorInfo& attrInfo )
 	{
 		int registeredTypeId = AttributeAccessorObjectTypeInfo<T>::GetTypeId();
+
+		// assert validation
+		ASSERT((size_t)registeredTypeId < m_factories.size());
 		m_instance.m_factories[registeredTypeId]->RegisterAttributeAccessor(attrInfo);
 	}
 
@@ -242,7 +257,7 @@ public:
 		{
 			ASSERT(m_offset <= MaxBufferBytes - sizeof(AttributeAccessorObjectTypeInfo<T>));
 
-			AttributeAccessorObjectTypeInfo<T>* p = new (m_buffer.buffer + m_offset) AttributeAccessorObjectTypeInfo<T>(className);
+			AttributeAccessorObjectTypeInfo<T>* p = new (m_buffer.data + m_offset) AttributeAccessorObjectTypeInfo<T>(className);
 			m_offset += sizeof(AttributeAccessorObjectTypeInfo<T>);
 			m_factories.push_back(p);
 		}
@@ -252,6 +267,9 @@ public:
 	void SerializeObjectAttributesXml( T* obj, XmlWriter* xml )
 	{
 		int registeredTypeId = AttributeAccessorObjectTypeInfo<T>::GetTypeId();
+
+		// verify type has been registered.
+		ASSERT((size_t)registeredTypeId < m_factories.size());
 		m_instance.m_factories[registeredTypeId]->SerializeObjectAttributesXml(obj, xml);
 	}
 
@@ -259,6 +277,9 @@ public:
 	void DeserializeObjectAttributesXml( T* obj, XmlReader* xml )
 	{
 		int registeredTypeId = AttributeAccessorObjectTypeInfo<T>::GetTypeId();
+
+		// verify type has been registered.
+		ASSERT((size_t)registeredTypeId < m_factories.size());
 		m_instance.m_factories[registeredTypeId]->DeserializeObjectAttributesXml(obj, xml);
 	}
 
@@ -295,19 +316,31 @@ private:
 	ObjectAttributeSerializerFactory::GetInstance()->RegisterAttribute<class_> \
 		(AttributeAccessorInfo(type, name, offsetof(class_, var)))
 
-#define REGISTER_ATTRIBUTE_ARRAY(class_, name, resizeName, T_, array_) \
+#define REGISTER_ATTRIBUTE_ARRAY(class_, type, arraySize, name, var) \
+	ObjectAttributeSerializerFactory::GetInstance()->RegisterAttribute<class_> \
+		(AttributeAccessorInfo(type, arraySize, name, offsetof(class_, var)))
+
+// not implemented
+#define REGISTER_ATTRIBUTE_OBJECT(class_, T_, obj) \
+	ObjectAttributeSerializerFactory::GetInstance()->RegisterAttribute<class_> \
+		(AttributeAccessorInfo(VAR_TYPE_OBJECT, 0, offsetof(class_, obj)).SetTypeInfo<T_>());
+
+#define REGISTER_ATTRIBUTE_OBJECT_ARRAY(class_, name, resizeName, T_, array_) \
 	ObjectAttributeSerializerFactory::GetInstance()->RegisterAttribute<class_> \
 		(AttributeAccessorInfo(VAR_TYPE_OBJECT_ARRAY_SET_SIZE, resizeName, offsetof(class_, array_)).SetTypeInfo<T_>()); \
 	ObjectAttributeSerializerFactory::GetInstance()->RegisterAttribute<class_> \
 		(AttributeAccessorInfo(VAR_TYPE_OBJECT_ARRAY, name, offsetof(class_, array_)).SetTypeInfo<T_>())
 
-	//{ AttributeAccessorTemplateTypeInfoImpl<T_> tmp; (void)tmp; }
 
-
+// xml serialization
 #define SERIALIZE_OBJECT_ATTRIBUTES_XML(obj, xml) \
 	ObjectAttributeSerializerFactory::GetInstance()->SerializeObjectAttributesXml(obj, xml)
 
 #define DESERIALIZE_OBJECT_ATTRIBUTES_XML(obj, xml) \
 	ObjectAttributeSerializerFactory::GetInstance()->DeserializeObjectAttributesXml(obj, xml)
 
+
+// binary serialization
+#define SERIALIZE_OBJECT_ATTRIBUTES(obj, f)
+#define DESERIALIZE_OBJECT_ATTRIBUTES(obj, f)
 

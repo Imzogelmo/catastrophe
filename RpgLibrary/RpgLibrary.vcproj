@@ -196,6 +196,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Data\EquipmentItem.inl"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Data\ExpTable.inl"
 					>
 				</File>
@@ -419,6 +423,10 @@
 				</File>
 				<File
 					RelativePath=".\include\Enhancement.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\EquipmentItem.h"
 					>
 				</File>
 				<File

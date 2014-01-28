@@ -11,13 +11,13 @@
 
 #pragma once
 
-#include <fc/fixed_bit_array.h>
+#include <fc/static_bit_array.h>
 #include "RpgCommon.h"
 
 
 struct Switches
 {
-	typedef fc::fixed_bit_array<4096>	bit_array_type;
+	typedef fc::static_bit_array<4096>	bit_array_type;
 	bit_array_type bits;
 
 	Switches();

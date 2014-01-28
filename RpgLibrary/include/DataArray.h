@@ -12,7 +12,7 @@
 #pragma once
 
 #include <fc/dynamic_array.h>
-#include <fc/fixed_tiny_vector.h>
+#include <fc/fixed_vector.h>
 #include <fc/string.h>
 
 #include "RpgCommon.h"
@@ -77,7 +77,7 @@ public:
 	DatabaseArrayAnyProxyType( T* ptr ) : p(ptr)
 	{}
 
-	void Clear() { p->clear(); }
+	void Clear() { }; //p->Clear(); }
 	void GenerateIds() { p->GenerateIds(); }
 	void SetResourceDirectory( ResourceDirectory* resourceDirectory ) { p->SetResourceDirectory(resourceDirectory); }
 	void SetDefaultNodeNames()
@@ -102,7 +102,7 @@ public:
 		MaxBufferBytes = 256
 	};
 
-	typedef fc::fixed_tiny_vector<DatabaseArrayAnyProxyBase*, MaxBufferBytes / sizeof(DatabaseArrayAnyProxyBase*)> vec_type;
+	typedef fc::fixed_vector<DatabaseArrayAnyProxyBase*, MaxBufferBytes / sizeof(DatabaseArrayAnyProxyBase*)> vec_type;
 	typedef fc::aligned_buffer<MaxBufferBytes, FC_ALIGNOF(DatabaseArrayAnyProxyBase)> buffer_type;
 
 	DatabaseArrayAnyHolder() :
@@ -117,7 +117,7 @@ public:
 	{
 		ASSERT(m_offset < MaxBufferBytes);
 
-		DatabaseArrayAnyProxyType<T>* p = new (m_buffer.buffer + m_offset) DatabaseArrayAnyProxyType<T>(&arr);
+		DatabaseArrayAnyProxyType<T>* p = new (m_buffer.data + m_offset) DatabaseArrayAnyProxyType<T>(&arr);
 		m_offset += sizeof(DatabaseArrayAnyProxyType<T>);
 		m_bin.push_back(p);
 	}

@@ -13,7 +13,6 @@
 #include <Catastrophe/IO/XmlWriter.h>
 #include <Catastrophe/IO/XmlReader.h>
 #include "MonsterTroop.h"
-#include "Serialization.h"
 #include "AttributeSerializer.h"
 
 
@@ -32,7 +31,6 @@ void MonsterGroup::RegisterObject()
 	REGISTER_ATTRIBUTE(MonsterGroup, VAR_TYPE_INT, "index", monster_id);
 	REGISTER_ATTRIBUTE(MonsterGroup, VAR_TYPE_INT, "min", min);
 	REGISTER_ATTRIBUTE(MonsterGroup, VAR_TYPE_INT, "max", max);
-
 }
 
 
@@ -56,7 +54,21 @@ void MonsterGroup::DeserializeXml( XmlReader* xml )
 }
 
 
+void MonsterGroup::Serialize( Serializer* f )
+{
+	SERIALIZE_OBJECT_ATTRIBUTES(this, f);
+}
 
+
+void MonsterGroup::Deserialize( File* f )
+{
+	DESERIALIZE_OBJECT_ATTRIBUTES(this, f);
+}
+
+
+
+
+// MonsterTroop
 
 MonsterTroop::MonsterTroop() :
 	groups(),
@@ -73,58 +85,32 @@ void MonsterTroop::RegisterObject()
 	REGISTER_ATTRIBUTE(MonsterTroop, VAR_TYPE_STRING, "name", name);
 	REGISTER_ATTRIBUTE(MonsterTroop, VAR_TYPE_INT, "formation", formation_id);
 	REGISTER_ATTRIBUTE(MonsterTroop, VAR_TYPE_INT, "max", max_monsters);
-	REGISTER_ATTRIBUTE_ARRAY(MonsterTroop, "Monster", "num_groups", vec_type, groups);
-
+	REGISTER_ATTRIBUTE_OBJECT_ARRAY(MonsterTroop, "Monster", "num_groups", vec_type, groups);
 }
 
 
 void MonsterTroop::SerializeXml( XmlWriter* xml )
 {
 	SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
-
-	/*
-	xml->SetString("name", name);
-	xml->SetInt("formation", formation_id);
-	xml->SetInt("max", max_monsters);
-	xml->SetUInt("num_groups", groups.size());
-
-	for( vec_type::iterator it = groups.begin(); it < groups.end(); ++it )
-	{
-		xml->BeginNode("Monster");
-		it->SerializeXml(xml);
-		xml->EndNode();
-	}
-	*/
 }
 
 
 void MonsterTroop::DeserializeXml( XmlReader* xml )
 {
 	DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
-
-	/*
-	name = xml->GetString("name");
-	formation_id = xml->GetInt("formation");
-	max_monsters = xml->GetInt("max", 9);
-	size_t n = xml->GetInt("num_groups");
-	groups.resize(n);
-
-	bool nested = false;
-	for( size_t i(0); i < groups.size(); ++i )
-	{
-		if( xml->NextChild("Monster") )
-		{
-			groups[i].DeserializeXml(xml);
-			nested = true;
-		}
-		else
-		{
-		}
-	}
-
-	if( nested )
-		xml->SetToParent();
-	*/
 }
+
+
+void MonsterTroop::Serialize( Serializer* f )
+{
+	SERIALIZE_OBJECT_ATTRIBUTES(this, f);
+}
+
+
+void MonsterTroop::Deserialize( File* f )
+{
+	DESERIALIZE_OBJECT_ATTRIBUTES(this, f);
+}
+
 
 

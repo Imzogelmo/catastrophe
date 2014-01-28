@@ -55,7 +55,7 @@ bool Switches::GetBit( int bit )
 void Switches::SerializeXml( XmlWriter* xml )
 {
 	xml->BeginNode("Switches");
-	xml->WriteIntBlock((int*)bits.data(), bit_array_type::NWords);
+	//xml->WriteIntBlock((int*)bits.data(), bit_array_type::NWords);
 	xml->EndNode();
 }
 
@@ -64,7 +64,7 @@ void Switches::DeserializeXml( XmlReader* xml )
 {
 	if( xml->FirstChild("MaxParams") )
 	{
-		xml->ReadIntBlock((int*)bits.data(), bit_array_type::NWords);
+		//xml->ReadIntBlock((int*)bits.data(), bit_array_type::NWords);
 		xml->SetToParent();
 	}
 }

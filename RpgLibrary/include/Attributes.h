@@ -78,8 +78,12 @@ struct RPG_API Attributes
 	void ApplyPercentageModifier(const this_type& modifier);
 	void Clamp(const this_type& min, const this_type& max);
 */
+	static void RegisterObject();
+
 	void SerializeXml( XmlWriter* xml );
 	void DeserializeXml( XmlReader* xml );
+	void Serialize( Serializer* f );
+	void Deserialize( Deserializer* f );
 
 };
 

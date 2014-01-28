@@ -113,6 +113,34 @@ int AttributeAccessorObjectTypeBase::OnReadAttributeInfoXml( void* obj, XmlReade
 			*((fc::string*)dest) = xml->GetString(attr.name);
 			break;
 		}
+		case VAR_TYPE_OBJECT:
+		{
+			// not implemented
+			break;
+		}
+		case VAR_TYPE_BYTE_ARRAY:
+		{
+			//if( xml->FirstChild(attr.name) ) {
+				xml->ReadByteArrayElement(attr.name, (byte*)dest, *((size_t*)&attr.typeInfo));
+			//	xml->SetToParent();
+			//}
+			break;
+		}
+		case VAR_TYPE_SHORT_ARRAY:
+		{
+			xml->ReadShortArrayElement(attr.name, (short*)dest, *((size_t*)&attr.typeInfo));
+			break;
+		}
+		case VAR_TYPE_INT_ARRAY:
+		{
+			xml->ReadIntArrayElement(attr.name, (int*)dest, *((size_t*)&attr.typeInfo));
+			break;
+		}
+		case VAR_TYPE_FLOAT_ARRAY:
+		{
+			xml->ReadFloatArrayElement(attr.name, (float*)dest, *((size_t*)&attr.typeInfo));
+			break;
+		}
 		case VAR_TYPE_OBJECT_ARRAY:
 		{
 			AttributeAccessorTemplateTypeInfo* typeInfo = (AttributeAccessorTemplateTypeInfo*)&attr.typeInfo;
@@ -206,6 +234,33 @@ int AttributeAccessorObjectTypeBase::OnWriteAttributeInfoXml( void* obj, XmlWrit
 		case VAR_TYPE_STRING:
 		{
 			xml->SetString(attr.name, *((const fc::string*)dest));
+			break;
+		}
+		case VAR_TYPE_OBJECT:
+		{
+			// not implemented
+			break;
+		}
+		case VAR_TYPE_BYTE_ARRAY:
+		{
+			//xml->BeginNode(attr.name);
+			xml->WriteByteArrayElement(attr.name, (byte*)dest, *((size_t*)&attr.typeInfo));
+			//xml->EndNode();
+			break;
+		}
+		case VAR_TYPE_SHORT_ARRAY:
+		{
+			xml->WriteShortArrayElement(attr.name, (short*)dest, *((size_t*)&attr.typeInfo));
+			break;
+		}
+		case VAR_TYPE_INT_ARRAY:
+		{
+			xml->WriteIntArrayElement(attr.name, (int*)dest, *((size_t*)&attr.typeInfo));
+			break;
+		}
+		case VAR_TYPE_FLOAT_ARRAY:
+		{
+			xml->WriteFloatArrayElement(attr.name, (float*)dest, *((size_t*)&attr.typeInfo));
 			break;
 		}
 		case VAR_TYPE_OBJECT_ARRAY:

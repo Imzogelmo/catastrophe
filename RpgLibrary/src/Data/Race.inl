@@ -13,7 +13,7 @@
 #include <Catastrophe/IO/XmlWriter.h>
 #include <Catastrophe/IO/XmlReader.h>
 #include "Race.h"
-#include "Serialization.h"
+#include "AttributeSerializer.h"
 
 
 
@@ -23,23 +23,37 @@ Race::Race() :
 }
 
 
+void Race::RegisterObject()
+{
+	REGISTER_ATTRIBUTE_FACTORY_TYPE(Race);
+	REGISTER_ATTRIBUTE(Race, VAR_TYPE_STRING, "name", name);
+	REGISTER_ATTRIBUTE(Race, VAR_TYPE_STRING, "description", description);
+}
+
+
 void Race::SerializeXml( XmlWriter* xml )
 {
-	xml->SetString("name", name.c_str());
-	xml->SetString("description", description.c_str());
-
+	SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
 	attributes.SerializeXml(xml);
-
 }
 
 
 void Race::DeserializeXml( XmlReader* xml )
 {
-	name = xml->GetString("name");
-	description = xml->GetString("description");
-
+	DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
 	attributes.DeserializeXml(xml);
+}
 
+
+void Race::Serialize( Serializer* f )
+{
+	SERIALIZE_OBJECT_ATTRIBUTES(this, f);
+}
+
+
+void Race::Deserialize( Deserializer* f )
+{
+	DESERIALIZE_OBJECT_ATTRIBUTES(this, f);
 }
 
 

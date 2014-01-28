@@ -54,11 +54,19 @@ void RpgLibInit()
 	g_mapManager = new MapManager();
 	g_shaderObjectManager = new ShaderObjectManager();
 
+	// register all object types (order does not matter).
+	Attributes::RegisterObject();
+	Item::RegisterObject();
+	EquipmentItem::RegisterObject();
 	MonsterData::RegisterObject();
 	MonsterGroup::RegisterObject();
 	MonsterTroop::RegisterObject();
+	MonsterFormationCellData::RegisterObject();
+	MonsterFormation::RegisterObject();
 
+	CharacterData::RegisterObject();
 	CharacterClass::RegisterObject();
+	Race::RegisterObject();
 
 }
 
@@ -70,6 +78,12 @@ void RpgLibShutdown()
 	delete g_tilesetManager;
 	delete g_mapManager;
 	delete g_shaderObjectManager;
+
+	g_resourceDirectory = 0;
+	g_textureManager = 0;
+	g_tilesetManager = 0;
+	g_mapManager = 0;
+	g_shaderObjectManager = 0;
 
 	ObjectAttributeSerializerFactory::GetInstance()->DeleteFactories();
 }
