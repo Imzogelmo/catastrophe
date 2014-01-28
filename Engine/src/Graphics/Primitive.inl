@@ -105,7 +105,7 @@ void Primitive::RotateScaleVertices( float rotation, const Vector2 &scale, const
 
 void Primitive::AddVertex( const Vector2 &pos, const Color &color )
 {
-	VertexColor & v = m_vertices.push_back_uninitialized();
+	VertexColor & v = *m_vertices.push_back_uninitialized();
 	v.pos = pos;
 	v.color = color;
 }
