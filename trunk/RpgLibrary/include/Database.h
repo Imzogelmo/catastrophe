@@ -12,7 +12,7 @@
 #pragma once
 
 #include <fc/dynamic_array.h>
-#include <fc/fixed_tiny_vector.h>
+#include <fc/fixed_vector.h>
 #include <fc/string.h>
 
 #include "RpgCommon.h"

@@ -66,8 +66,12 @@ struct RPG_API Item
 	virtual Attributes& GetAttributes() { return m_static_attributes; }
 	virtual const Attributes& GetAttributes() const { return m_static_attributes; }
 
+	static void RegisterObject();
+
 	void SerializeXml( XmlWriter* xml );
 	void DeserializeXml( XmlReader* xml );
+	void Serialize( Serializer* f );
+	void Deserialize( Deserializer* f );
 
 protected:
 	static Attributes m_static_attributes;

@@ -12,6 +12,7 @@
 #include <Catastrophe/IO/XmlWriter.h>
 #include <Catastrophe/IO/XmlReader.h>
 #include "Item.h"
+#include "AttributeSerializer.h"
 
 Attributes Item::m_static_attributes = Attributes();
 
@@ -28,38 +29,42 @@ Item::Item() :
 }
 
 
+void Item::RegisterObject()
+{
+	REGISTER_ATTRIBUTE_FACTORY_TYPE(Item);
+	REGISTER_ATTRIBUTE(Item, VAR_TYPE_STRING, "name", name);
+	REGISTER_ATTRIBUTE(Item, VAR_TYPE_STRING, "script", script);
+	REGISTER_ATTRIBUTE(Item, VAR_TYPE_STRING, "description", description);
+
+	PUSH_ATTRIBUTE_NODE(Item, "Data");
+	REGISTER_ATTRIBUTE(Item, VAR_TYPE_INT, "type", type);
+	REGISTER_ATTRIBUTE(Item, VAR_TYPE_INT, "subtype", subtype);
+	REGISTER_ATTRIBUTE(Item, VAR_TYPE_INT, "price", price);
+	POP_ATTRIBUTE_NODE(Item);
+}
+
+
 void Item::SerializeXml( XmlWriter* xml )
 {
-	xml->SetString("name", name.c_str());
-	xml->SetString("script", script.c_str());
-	xml->SetString("description", description.c_str());
-
-	xml->BeginNode("Data");
-	xml->SetShort("type", type);
-	xml->SetShort("subtype", subtype);
-	xml->SetInt("price", price);
-	xml->EndNode();
-
-	//attributes.SerializeXml(xml);
-
+	SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
 }
 
 
 void Item::DeserializeXml( XmlReader* xml )
 {
-	name = xml->GetString("name");
-	script = xml->GetString("script");
-	description = xml->GetString("description");
-
-	if( xml->NextChild("Data") )
-	{
-		type = xml->GetShort("type");
-		subtype = xml->GetShort("subtype");
-		price = xml->GetInt("price");
-		xml->SetToParent();
-	}
-
-	//attributes.DeserializeXml(xml);
-
+	DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
 }
+
+
+void Item::Serialize( Serializer* f )
+{
+	SERIALIZE_OBJECT_ATTRIBUTES(this, f);
+}
+
+
+void Item::Deserialize( Deserializer* f )
+{
+	DESERIALIZE_OBJECT_ATTRIBUTES(this, f);
+}
+
 

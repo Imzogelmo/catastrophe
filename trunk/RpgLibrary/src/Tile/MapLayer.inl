@@ -30,7 +30,7 @@ MapLayer::MapLayer() :
 
 void MapLayer::Clear()
 {
-	m_tiles.assign(LayerTile());
+	m_tiles.fill(LayerTile());
 }
 
 

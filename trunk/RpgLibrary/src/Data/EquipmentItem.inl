@@ -22,11 +22,15 @@ EquipmentItem::EquipmentItem() :
 }
 
 
+void EquipmentItem::RegisterObject()
+{
+}
+
+
 void EquipmentItem::SerializeXml( XmlWriter* xml )
 {
 	Item::SerializeXml(xml);
 	attributes.SerializeXml(xml);
-
 }
 
 
@@ -34,6 +38,20 @@ void EquipmentItem::DeserializeXml( XmlReader* xml )
 {
 	Item::DeserializeXml(xml);
 	attributes.DeserializeXml(xml);
-
 }
+
+
+void EquipmentItem::Serialize( Serializer* f )
+{
+	//Item::Serialize(xml);
+	//attributes.Serialize(xml);
+}
+
+
+void EquipmentItem::Deserialize( File* f )
+{
+	//Item::Deserialize(xml);
+	//attributes.Deserialize(xml);
+}
+
 

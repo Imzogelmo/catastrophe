@@ -9,9 +9,12 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include <Catastrophe/FileIO.h>
+#include <Catastrophe/IO/File.h>
+#include <Catastrophe/IO/XmlWriter.h>
+#include <Catastrophe/IO/XmlReader.h>
 
 #include "Attributes.h"
+#include "AttributeSerializer.h"
 
 
 Attributes Attributes::operator +(const Attributes& rhs) const
@@ -87,8 +90,21 @@ void Attributes::Clamp(const Attributes& min, const Attributes& max)
 }
 */
 
+void Attributes::RegisterObject()
+{
+	REGISTER_ATTRIBUTE_FACTORY_TYPE(Attributes);
+	REGISTER_ATTRIBUTE_ARRAY(Attributes, VAR_TYPE_INT_ARRAY, MAX_PARAMS, "MaxParams", max_params);
+	REGISTER_ATTRIBUTE_ARRAY(Attributes, VAR_TYPE_SHORT_ARRAY, MAX_STATS, "Stats", stats);
+	REGISTER_ATTRIBUTE_ARRAY(Attributes, VAR_TYPE_BYTE_ARRAY, MAX_STATUS, "StatusAtk", status_atk);
+	REGISTER_ATTRIBUTE_ARRAY(Attributes, VAR_TYPE_BYTE_ARRAY, MAX_STATUS, "StatusDef", status_def);
+}
+
+
 void Attributes::SerializeXml( XmlWriter* xml )
 {
+	SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+
+	/*
 	xml->BeginNode("MaxParams");
 	xml->WriteBlock(&max_params[0], MAX_PARAMS);
 	xml->EndNode();
@@ -108,6 +124,7 @@ void Attributes::SerializeXml( XmlWriter* xml )
 	xml->BeginNode("StatusDef");
 	xml->WriteBlock((ubyte*)&status_def[0], MAX_STATUS);
 	xml->EndNode();
+	*/
 
 	//flags.SerializeXml(xml);
 
@@ -116,7 +133,8 @@ void Attributes::SerializeXml( XmlWriter* xml )
 
 void Attributes::DeserializeXml( XmlReader* xml )
 {
-
+	DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+/*
 	if( xml->FirstChild("MaxParams") )
 	{
 		xml->ReadBlock(&max_params[0], MAX_PARAMS);
@@ -146,37 +164,21 @@ void Attributes::DeserializeXml( XmlReader* xml )
 		xml->ReadBlock((ubyte*)&status_def[0], MAX_STATUS);
 		xml->SetToParent();
 	}
-
+*/
 	//flags.DeserializeXml(xml);
 
 }
 
-/*
-void Attributes::DeserializeXml( XmlReader* xml )
+
+void Attributes::Serialize( Serializer* f )
 {
-	temp[0] = temp[1] = temp[2] = 0;
-
-	int a[32];
-	xml->FirstChild("Attributes");
-	xml->ReadBlock(&a[0], 32);
-	xml->SetToParent();
-
-	temp[0] = a[0];
-	temp[1] = a[1];
-	temp[2] = a[2];
-
-	max_params[0] = a[4];
-
-	for(int i(0); i<16; ++i)
-	{
-		stats[i] = a[i + 8];
-	}
-
-	//xml->FirstChild("Attributes");
-	//xml->ReadBlock(&stats[0], MAX_STATS);
-	//xml->SetToParent();
-
-	//attribute_flags.DeserializeXml(xml);
-
+	SERIALIZE_OBJECT_ATTRIBUTES(this, f);
 }
-*/
+
+
+void Attributes::Deserialize( Deserializer* f )
+{
+	DESERIALIZE_OBJECT_ATTRIBUTES(this, f);
+}
+
+
