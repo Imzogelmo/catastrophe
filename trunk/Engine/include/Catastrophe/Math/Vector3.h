@@ -20,7 +20,7 @@
 
 #include "Common.h"
 #include "Vector2.h"
-#include <cmath>
+#include <math.h>
 
 CE_NAMESPACE_BEGIN
 

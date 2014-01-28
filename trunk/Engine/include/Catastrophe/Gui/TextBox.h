@@ -25,6 +25,69 @@
 
 CE_NAMESPACE_BEGIN
 
+/*
+class CE_API IntrusiveTextSegment
+{
+public:
+	typedef const char*	iterator;
+	TextSegment() : m_textBegin(0), m_textEnd(0), m_scale(Vector2::One), m_color(Color::White)
+	{}
+
+	TextSegment( iterator first, iterator last, const Vector2& scale, const Color& color)
+		: m_textBegin(first), m_textEnd(last), m_scale(scale), m_color(color)
+	{}
+
+	iterator Begin() const { return m_textBegin; }
+	iterator End() const { return m_textEnd; }
+
+	virtual float GetLineWidth( Font* );
+	virtual float GetLineHeight();
+
+protected:
+	Font*		m_font;
+	iterator	m_textBegin;
+	iterator	m_textEnd;
+	Vector2		m_scale;
+	Color		m_color;
+
+};
+
+
+// represents a line of text
+class CE_API TextLine
+{
+public:
+	virtual TextSegment* GetTextSegment( int i );
+	virtual int GetNumTexts();
+	virtual int GetLineWidth();
+	virtual int GetLineHeight();
+
+
+
+protected:
+	fc::vector<TextSegment*> m_textSegments;
+
+};
+
+
+// represents a page of text
+class CE_API TextPage
+{
+public:
+	virtual TextSegment* GetTextSegment( int i );
+	virtual int GetNumTexts();
+	virtual int GetLineWidth();
+	virtual int GetLineHeight();
+
+
+
+protected:
+	fc::vector<TextSegment*> m_textSegments;
+
+};
+
+
+*/
 
 class CE_API TextBox : public Label
 {

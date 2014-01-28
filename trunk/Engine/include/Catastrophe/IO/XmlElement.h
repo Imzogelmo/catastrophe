@@ -37,7 +37,7 @@ class CE_API XmlElement
 {
 public:
 	XmlElement();
-	XmlElement( XmlElement_t* element );
+	XmlElement( XmlNode_t* element );
 
 	bool BeginNode( const fc::string& name );
 	bool BeginNode( const char* name );
@@ -52,15 +52,18 @@ public:
 
 	XmlElement FirstChild( const fc::string& name ) const;
 	XmlElement FirstChild( const char* name = "" ) const;
-	XmlElement NextChild( const fc::string& name ) const;
-	XmlElement NextChild( const char* name = "" ) const;
+	XmlElement LastChild( const fc::string& name ) const;
+	XmlElement LastChild( const char* name = "" ) const;
+	XmlElement NextSibling( const fc::string& name ) const;
+	XmlElement NextSibling( const char* name = "" ) const;
  
-	void DeleteChildren();
-	void DeleteChild( XmlElement element );
+	void RemoveChildren();
+	void RemoveChild( XmlElement element );
+	void RemoveAttributes();
+	void RemoveAttribute( const char* name );
 
 	const char* GetCurrentNodeName() const;
-	bool HasAttribute( const char* attr ) const;
-	void DeleteAttribute( const char* name );
+	bool HasAttribute( const char* name ) const;
 
 	bool SetAttribute( const char* name, const char* value );
 	bool SetString( const char* name, const fc::string& value );
@@ -166,7 +169,7 @@ public:
 	operator bool () const { return m_element != 0; }
 
 protected:
-	XmlElement_t*	m_element;
+	XmlNode_t*	m_element;
 
 };
 

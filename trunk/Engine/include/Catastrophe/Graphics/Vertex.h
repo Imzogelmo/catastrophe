@@ -24,6 +24,7 @@
 #include "../Math/Vector2.h"
 #include "../Math/Vector3.h"
 #include "../Math/Color.h"
+#include "../Math/Math.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -36,6 +37,14 @@ struct VertexColor
 
 	Vector2 pos;
 	Color color;
+
+	static VertexColor Lerp( const VertexColor &a, const VertexColor &b, float t )
+	{
+		return VertexColor(
+			Math::Lerp(a.pos, a.pos, t),
+			Color::Lerp(a.color, b.color, t)
+		);
+	}
 };
 
 
@@ -47,6 +56,38 @@ struct VertexColorTexture
 
 	Vector2 pos, uv;
 	Color color;
+
+	static VertexColorTexture Lerp( const VertexColorTexture &a, const VertexColorTexture &b, float t )
+	{
+		return VertexColorTexture(
+			Math::Lerp(a.pos, a.pos, t),
+			Math::Lerp(a.uv, b.uv, t),
+			Color::Lerp(a.color, b.color, t)
+		);
+	}
+};
+
+
+struct Vertex3D
+{
+	Vector3 pos;
+	Vector3 normal;
+	Vector2 uv;
+	Color color;
+
+	Vertex3D() {}
+	Vertex3D( const Vector3 &pos, const Vector3 &normal, const Vector2 &uv, const Color &color)
+		: pos(pos), normal(normal), uv(uv), color(color) {}
+
+	static Vertex3D Lerp( const Vertex3D &a, const Vertex3D &b, float t )
+	{
+		return Vertex3D(
+			Math::Lerp(a.pos, a.pos, t),
+			Math::Lerp(a.normal, b.normal, t),
+			Math::Lerp(a.uv, b.uv, t),
+			Color::Lerp(a.color, b.color, t)
+		);
+	}
 };
 
 

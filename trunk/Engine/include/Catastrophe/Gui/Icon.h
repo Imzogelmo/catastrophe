@@ -29,11 +29,11 @@ class Icon : public Widget
 public:
 	Icon();
 
-	void Render( SpriteBatch* spritebatch );
+	virtual void Render( SpriteBatch* spritebatch );
 
-	void SetSprite( const Sprite& sprite );
-	void SetAutoFitSprite( bool stretch = true );
-	void SetAutoCenterSprite( bool center = true );
+	virtual void SetSprite( const Sprite& sprite );
+	virtual void SetAutoFitSprite( bool stretch = true );
+	virtual void SetAutoCenterSprite( bool center = true );
 
 	bool GetAutoFitSprite() const { return m_stretchSprite; }
 	bool GetAutoCenterSprite() const { return m_centerSprite; }
@@ -48,31 +48,6 @@ protected:
 
 };
 
-
-class AnimatedIcon : public Widget
-{
-public:
-	AnimatedIcon();
-
-	void Update();
-	void Render( SpriteBatch* spritebatch );
-
-	void SetSprite( const AnimatedSprite& sprite );
-	void SetAutoFitSprite( bool stretch = true );
-	void SetAutoCenterSprite( bool center = true );
-
-	bool GetAutoFitSprite() const { return m_stretchSprite; }
-	bool GetAutoCenterSprite() const { return m_centerSprite; }
-
-	AnimatedSprite& GetSprite() { return m_sprite; }
-	const AnimatedSprite& GetSprite() const { return m_sprite; }
-
-protected:
-	AnimatedSprite	m_sprite;
-	bool			m_stretchSprite;
-	bool			m_centerSprite;
-
-};
 
 
 CE_NAMESPACE_END

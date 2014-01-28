@@ -20,13 +20,14 @@
 
 #include <fc/string.h>
 
+#include "AttributeWriter.h"
 #include "XmlElement.h"
 #include "XmlDocument.h"
 
 CE_NAMESPACE_BEGIN
 
 
-class CE_API XmlWriter
+class CE_API XmlWriter : public AttributeWriter
 {
 public:
 	XmlWriter();
@@ -37,42 +38,44 @@ public:
 	virtual bool Open( const fc::string& filename );
 	virtual bool Close();
 
+	virtual bool CreateRoot( const char* name );
 	virtual bool BeginNode( const char* name );
 	virtual bool EndNode( const char* name = "" );
 
-	virtual bool WriteBool( const char* name, bool value );
-	virtual bool WriteByte( const char* name, byte value );
-	virtual bool WriteShort( const char* name, short value );
-	virtual bool WriteUShort( const char* name, ushort value );
-	virtual bool WriteInt( const char* name, int value );
-	virtual bool WriteUInt( const char* name, size_t value );
-	virtual bool WriteFloat( const char* name, float value );
-	virtual bool WriteString( const char* name, const fc::string& value );
-	virtual bool WriteRect( const char* name, const Rect& value );
-	virtual bool WriteRectf( const char* name, const Rectf& value );
-	virtual bool WritePoint( const char* name, const Point& value );
-	virtual bool WriteVector2( const char* name, const Vector2& value );
-	virtual bool WriteVector3( const char* name, const Vector3& value );
-	virtual bool WriteVector4( const char* name, const Vector4& value );
-	virtual bool WriteColor( const char* name, const Color& value );
-	virtual bool WriteColorf( const char* name, const Colorf& value );
+	virtual bool SetString( const char* name, const char* value );
+	virtual bool SetString( const char* name, const fc::string& value );
+	virtual bool SetBool( const char* name, bool value );
+	virtual bool SetByte( const char* name, byte value );
+	virtual bool SetShort( const char* name, short value );
+	virtual bool SetUShort( const char* name, ushort value );
+	virtual bool SetInt( const char* name, int value );
+	virtual bool SetUInt( const char* name, size_t value );
+	virtual bool SetFloat( const char* name, float value );
+	virtual bool SetRect( const char* name, const Rect& value );
+	virtual bool SetRectf( const char* name, const Rectf& value );
+	virtual bool SetPoint( const char* name, const Point& value );
+	virtual bool SetVector2( const char* name, const Vector2& value );
+	virtual bool SetVector3( const char* name, const Vector3& value );
+	virtual bool SetVector4( const char* name, const Vector4& value );
+	virtual bool SetColor( const char* name, const Color& value );
+	virtual bool SetColorf( const char* name, const Colorf& value );
 
-	virtual bool WriteBoolElement( const char* name, bool value );
-	virtual bool WriteByteElement( const char* name, byte value );
-	virtual bool WriteShortElement( const char* name, short value );
-	virtual bool WriteUShortElement( const char* name, ushort value );
-	virtual bool WriteIntElement( const char* name, int value );
-	virtual bool WriteUIntElement( const char* name, size_t value );
-	virtual bool WriteFloatElement( const char* name, float value );
-	virtual bool WriteStringElement( const char* name, const fc::string& value );
-	virtual bool WriteRectElement( const char* name, const Rect& value );
-	virtual bool WriteRectfElement( const char* name, const Rectf& value );
-	virtual bool WritePointElement( const char* name, const Point& value );
-	virtual bool WriteVector2Element( const char* name, const Vector2& value );
-	virtual bool WriteVector3Element( const char* name, const Vector3& value );
-	virtual bool WriteVector4Element( const char* name, const Vector4& value );
-	virtual bool WriteColorElement( const char* name, const Color& value );
-	virtual bool WriteColorfElement( const char* name, const Colorf& value );
+	virtual bool SetBoolElement( const char* name, bool value );
+	virtual bool SetByteElement( const char* name, byte value );
+	virtual bool SetShortElement( const char* name, short value );
+	virtual bool SetUShortElement( const char* name, ushort value );
+	virtual bool SetIntElement( const char* name, int value );
+	virtual bool SetUIntElement( const char* name, size_t value );
+	virtual bool SetFloatElement( const char* name, float value );
+	virtual bool SetStringElement( const char* name, const fc::string& value );
+	virtual bool SetRectElement( const char* name, const Rect& value );
+	virtual bool SetRectfElement( const char* name, const Rectf& value );
+	virtual bool SetPointElement( const char* name, const Point& value );
+	virtual bool SetVector2Element( const char* name, const Vector2& value );
+	virtual bool SetVector3Element( const char* name, const Vector3& value );
+	virtual bool SetVector4Element( const char* name, const Vector4& value );
+	virtual bool SetColorElement( const char* name, const Color& value );
+	virtual bool SetColorfElement( const char* name, const Colorf& value );
 
 	virtual bool WriteBoolArray( const char* name, const bool* ptr, size_t n );
 	virtual bool WriteByteArray( const char* name, const byte* ptr, size_t n );

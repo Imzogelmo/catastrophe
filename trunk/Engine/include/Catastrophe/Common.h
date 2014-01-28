@@ -209,18 +209,15 @@ FC_MAKE_TRAIT(SpriteAnimation, is_pod);
 FC_MAKE_TRAIT(PackedSprite, is_pod);
 
 
-// tinyxml types
-namespace tinyxml2
+// rapidxml forward declared types
+namespace rapidxml
 {
-	class XMLDocument;
-	class XMLElement;
-	class XMLNode;
+	template <class Ch> class xml_document;
+	template <class Ch> class xml_node;
 }
 
-
-typedef tinyxml2::XMLDocument	XmlDocument_t;
-typedef tinyxml2::XMLElement	XmlElement_t;
-typedef tinyxml2::XMLNode		XmlNode_t;
+typedef rapidxml::xml_document<char> XmlDocument_t;
+typedef rapidxml::xml_node<char> XmlNode_t;
 
 
 CE_NAMESPACE_END

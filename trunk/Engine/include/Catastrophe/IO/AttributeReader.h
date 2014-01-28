@@ -31,48 +31,53 @@
 CE_NAMESPACE_BEGIN
 
 
-class CE_API AtributeDeserializer
+class CE_API AttributeReader
 {
 public:
-	AtributeDeserializer() {}
-	virtual ~AtributeDeserializer() {}
+	AttributeReader() {}
+	virtual ~AttributeReader() {}
 	virtual bool IsOpen() const = 0;
 
-	virtual bool PushNode( const fc::string& name ) { return PushNode(name.c_str()); }
-	virtual bool PopNode( const fc::string& name ) { return PopNode(name.c_str()); }
-	virtual bool PushNode( const char* name ) = 0;
-	virtual bool PopNode( const char* name ) = 0;
+	virtual bool FirstChild( const char* name = "" ) = 0;
+	virtual bool NextChild( const char* name = "" ) = 0;
+	virtual bool SetToParent() = 0;
+	virtual bool SetToChild( const char* name ) = 0;
 
-	virtual fc::string ReadString( const char* name, const fc::string& defaultValue = "" ) const = 0;
-	virtual bool ReadBool( const char* name, bool defaultValue = false ) const = 0;
-	virtual byte ReadByte( const char* name, byte defaultValue = 0 ) const = 0;
-	virtual short ReadShort( const char* name, short defaultValue = 0 ) const = 0;
-	virtual int ReadInt( const char* name, int defaultValue = 0 ) const = 0;
-	virtual size_t ReadUInt( const char* name, size_t defaultValue = 0 ) const = 0;
-	virtual float ReadFloat( const char* name, float defaultValue = 0.f ) const = 0;
-	virtual Rect ReadRect( const char* name, const Rect& defaultValue = Rect::Zero ) const = 0;
-	virtual Rectf ReadRectf( const char* name, const Rectf& defaultValue = Rectf::Zero ) const = 0;
-	virtual Point ReadPoint( const char* name, const Point& defaultValue = Point::Zero ) const = 0;
-	virtual Vector2 ReadVector2( const char* name, const Vector2& defaultValue = Vector2::Zero ) const = 0;
-	virtual Vector3 ReadVector3( const char* name, const Vector3& defaultValue = Vector3::Zero ) const = 0;
-	virtual Vector4 ReadVector4( const char* name, const Vector4& defaultValue = Vector4::Zero ) const = 0;
-	virtual Color ReadColor( const char* name, const Color& defaultValue = Color::White() ) const = 0;
-	virtual Colorf ReadColorf( const char* name, const Colorf& defaultValue = Colorf() ) const = 0;
+	virtual bool PopNode() { return SetToParent(); }
+	virtual bool PushNode( const char* name ) { return NextChild(name); }
 
-	virtual bool ReadBoolElement( const char* name, bool defaultValue = false ) const = 0;
-	virtual byte ReadByteElement( const char* name, byte defaultValue = 0 ) const = 0;
-	virtual short ReadShortElement( const char* name, short defaultValue = 0 ) const = 0;
-	virtual int ReadIntElement( const char* name, int defaultValue = 0 ) const = 0;
-	virtual size_t ReadUIntElement( const char* name, size_t defaultValue = 0 ) const = 0;
-	virtual float ReadFloatElement( const char* name, float defaultValue = 0.f ) const = 0;
-	virtual Rect ReadRectElement( const char* name, const Rect& defaultValue = Rect::Zero ) const = 0;
-	virtual Rectf ReadRectfElement( const char* name, const Rectf& defaultValue = Rectf::Zero ) const = 0;
-	virtual Point ReadPointElement( const char* name, const Point& defaultValue = Point::Zero ) const = 0;
-	virtual Vector2 ReadVector2Element( const char* name, const Vector2& defaultValue = Vector2::Zero ) const = 0;
-	virtual Vector3 ReadVector3Element( const char* name, const Vector3& defaultValue = Vector3::Zero ) const = 0;
-	virtual Vector4 ReadVector4Element( const char* name, const Vector4& defaultValue = Vector4::Zero ) const = 0;
-	virtual Color ReadColorElement( const char* name, const Color& defaultValue = Color::White() ) const = 0;
-	virtual Colorf ReadColorfElement( const char* name, const Colorf& defaultValue = Colorf() ) const = 0;
+	virtual fc::string GetCurrentNodeName() const = 0;
+
+	virtual fc::string GetString( const char* name, const fc::string& defaultValue = "" ) const = 0;
+	virtual bool GetBool( const char* name, bool defaultValue = false ) const = 0;
+	virtual byte GetByte( const char* name, byte defaultValue = 0 ) const = 0;
+	virtual short GetShort( const char* name, short defaultValue = 0 ) const = 0;
+	virtual int GetInt( const char* name, int defaultValue = 0 ) const = 0;
+	virtual size_t GetUInt( const char* name, size_t defaultValue = 0 ) const = 0;
+	virtual float GetFloat( const char* name, float defaultValue = 0.f ) const = 0;
+	virtual Rect GetRect( const char* name, const Rect& defaultValue = Rect::Zero ) const = 0;
+	virtual Rectf GetRectf( const char* name, const Rectf& defaultValue = Rectf::Zero ) const = 0;
+	virtual Point GetPoint( const char* name, const Point& defaultValue = Point::Zero ) const = 0;
+	virtual Vector2 GetVector2( const char* name, const Vector2& defaultValue = Vector2::Zero ) const = 0;
+	virtual Vector3 GetVector3( const char* name, const Vector3& defaultValue = Vector3::Zero ) const = 0;
+	virtual Vector4 GetVector4( const char* name, const Vector4& defaultValue = Vector4::Zero ) const = 0;
+	virtual Color GetColor( const char* name, const Color& defaultValue = Color::White() ) const = 0;
+	virtual Colorf GetColorf( const char* name, const Colorf& defaultValue = Colorf() ) const = 0;
+
+	virtual bool GetBoolElement( const char* name, bool defaultValue = false ) const = 0;
+	virtual byte GetByteElement( const char* name, byte defaultValue = 0 ) const = 0;
+	virtual short GetShortElement( const char* name, short defaultValue = 0 ) const = 0;
+	virtual int GetIntElement( const char* name, int defaultValue = 0 ) const = 0;
+	virtual size_t GetUIntElement( const char* name, size_t defaultValue = 0 ) const = 0;
+	virtual float GetFloatElement( const char* name, float defaultValue = 0.f ) const = 0;
+	virtual Rect GetRectElement( const char* name, const Rect& defaultValue = Rect::Zero ) const = 0;
+	virtual Rectf GetRectfElement( const char* name, const Rectf& defaultValue = Rectf::Zero ) const = 0;
+	virtual Point GetPointElement( const char* name, const Point& defaultValue = Point::Zero ) const = 0;
+	virtual Vector2 GetVector2Element( const char* name, const Vector2& defaultValue = Vector2::Zero ) const = 0;
+	virtual Vector3 GetVector3Element( const char* name, const Vector3& defaultValue = Vector3::Zero ) const = 0;
+	virtual Vector4 GetVector4Element( const char* name, const Vector4& defaultValue = Vector4::Zero ) const = 0;
+	virtual Color GetColorElement( const char* name, const Color& defaultValue = Color::White() ) const = 0;
+	virtual Colorf GetColorfElement( const char* name, const Colorf& defaultValue = Colorf() ) const = 0;
 
 	virtual bool ReadBoolArray( const char* name, bool* ptr, size_t n ) const = 0;
 	virtual bool ReadByteArray( const char* name, byte* ptr, size_t n ) const = 0;

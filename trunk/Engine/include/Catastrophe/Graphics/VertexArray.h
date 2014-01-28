@@ -71,7 +71,7 @@ public:
 
 	void AddVertex( const T& vertex )
 	{
-		m_vertices.push_back_uninitialized() = vertex;
+		*m_vertices.push_back_uninitialized() = vertex;
 	}
 
 	void AddVertex( const T* vertex, int num_vertices )
