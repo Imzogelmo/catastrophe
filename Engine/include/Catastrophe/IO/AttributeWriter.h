@@ -30,44 +30,43 @@ public:
 	virtual ~AttributeWriter() {}
 	virtual bool IsOpen() const = 0;
 
-	virtual bool PushNode( const fc::string& name ) { return PushNode(name.c_str()); }
-	virtual bool PopNode( const fc::string& name ) { return PopNode(name.c_str()); }
-	virtual bool PushNode( const char* name ) = 0;
-	virtual bool PopNode( const char* name = "" ) = 0;
+	virtual bool BeginNode( const char* name ) = 0;
+	virtual bool EndNode( const char* name = "" ) = 0;
 
-	virtual bool WriteBool( const char* name, bool value ) = 0;
-	virtual bool WriteByte( const char* name, byte value ) = 0;
-	virtual bool WriteShort( const char* name, short value ) = 0;
-	virtual bool WriteUShort( const char* name, ushort value ) = 0;
-	virtual bool WriteInt( const char* name, int value ) = 0;
-	virtual bool WriteUInt( const char* name, size_t value ) = 0;
-	virtual bool WriteFloat( const char* name, float value ) = 0;
-	virtual bool WriteString( const char* name, const fc::string& value ) = 0;
-	virtual bool WriteRect( const char* name, const Rect& value ) = 0;
-	virtual bool WriteRectf( const char* name, const Rectf& value ) = 0;
-	virtual bool WritePoint( const char* name, const Point& value ) = 0;
-	virtual bool WriteVector2( const char* name, const Vector2& value ) = 0;
-	virtual bool WriteVector3( const char* name, const Vector3& value ) = 0;
-	virtual bool WriteVector4( const char* name, const Vector4& value ) = 0;
-	virtual bool WriteColor( const char* name, const Color& value ) = 0;
-	virtual bool WriteColorf( const char* name, const Colorf& value ) = 0;
+	virtual bool SetString( const char* name, const char* value ) = 0;
+	virtual bool SetString( const char* name, const fc::string& value ) = 0;
+	virtual bool SetBool( const char* name, bool value ) = 0;
+	virtual bool SetByte( const char* name, byte value ) = 0;
+	virtual bool SetShort( const char* name, short value ) = 0;
+	virtual bool SetUShort( const char* name, ushort value ) = 0;
+	virtual bool SetInt( const char* name, int value ) = 0;
+	virtual bool SetUInt( const char* name, size_t value ) = 0;
+	virtual bool SetFloat( const char* name, float value ) = 0;
+	virtual bool SetRect( const char* name, const Rect& value ) = 0;
+	virtual bool SetRectf( const char* name, const Rectf& value ) = 0;
+	virtual bool SetPoint( const char* name, const Point& value ) = 0;
+	virtual bool SetVector2( const char* name, const Vector2& value ) = 0;
+	virtual bool SetVector3( const char* name, const Vector3& value ) = 0;
+	virtual bool SetVector4( const char* name, const Vector4& value ) = 0;
+	virtual bool SetColor( const char* name, const Color& value ) = 0;
+	virtual bool SetColorf( const char* name, const Colorf& value ) = 0;
 
-	virtual bool WriteBoolElement( const char* name, bool value ) = 0;
-	virtual bool WriteByteElement( const char* name, byte value ) = 0;
-	virtual bool WriteShortElement( const char* name, short value ) = 0;
-	virtual bool WriteUShortElement( const char* name, ushort value ) = 0;
-	virtual bool WriteIntElement( const char* name, int value ) = 0;
-	virtual bool WriteUIntElement( const char* name, size_t value ) = 0;
-	virtual bool WriteFloatElement( const char* name, float value ) = 0;
-	virtual bool WriteStringElement( const char* name, const fc::string& value ) = 0;
-	virtual bool WriteRectElement( const char* name, const Rect& value ) = 0;
-	virtual bool WriteRectfElement( const char* name, const Rectf& value ) = 0;
-	virtual bool WritePointElement( const char* name, const Point& value ) = 0;
-	virtual bool WriteVector2Element( const char* name, const Vector2& value ) = 0;
-	virtual bool WriteVector3Element( const char* name, const Vector3& value ) = 0;
-	virtual bool WriteVector4Element( const char* name, const Vector4& value ) = 0;
-	virtual bool WriteColorElement( const char* name, const Color& value ) = 0;
-	virtual bool WriteColorfElement( const char* name, const Colorf& value ) = 0;
+	virtual bool SetBoolElement( const char* name, bool value ) = 0;
+	virtual bool SetByteElement( const char* name, byte value ) = 0;
+	virtual bool SetShortElement( const char* name, short value ) = 0;
+	virtual bool SetUShortElement( const char* name, ushort value ) = 0;
+	virtual bool SetIntElement( const char* name, int value ) = 0;
+	virtual bool SetUIntElement( const char* name, size_t value ) = 0;
+	virtual bool SetFloatElement( const char* name, float value ) = 0;
+	virtual bool SetStringElement( const char* name, const fc::string& value ) = 0;
+	virtual bool SetRectElement( const char* name, const Rect& value ) = 0;
+	virtual bool SetRectfElement( const char* name, const Rectf& value ) = 0;
+	virtual bool SetPointElement( const char* name, const Point& value ) = 0;
+	virtual bool SetVector2Element( const char* name, const Vector2& value ) = 0;
+	virtual bool SetVector3Element( const char* name, const Vector3& value ) = 0;
+	virtual bool SetVector4Element( const char* name, const Vector4& value ) = 0;
+	virtual bool SetColorElement( const char* name, const Color& value ) = 0;
+	virtual bool SetColorfElement( const char* name, const Colorf& value ) = 0;
 
 	virtual bool WriteBoolArray( const char* name, const bool* ptr, size_t n ) = 0;
 	virtual bool WriteByteArray( const char* name, const byte* ptr, size_t n ) = 0;

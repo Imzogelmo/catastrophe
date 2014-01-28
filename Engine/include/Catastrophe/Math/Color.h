@@ -79,12 +79,17 @@ public:
 		return Color( (255 - r), (255 - g), (255 - b), a );
 	}
 
+	ubyte Luminance() const
+	{
+		return (ubyte)(((299 * (int)r) + (587 * (int)g) + (114 * (int)b)) / 1000);
+	}
+
 	Color Grayscale( bool average = false ) const
 	{
 		if( average )
 			return Color( (ubyte)((int)(r + g + b) / 3), a );
 
-		return Color( (ubyte)(((299 * (int)r) + (587 * (int)g) + (114 * (int)b)) / 1000), a );
+		return Color(Luminance(), a);
 	}
 
 	Colorf ToColorf()	const;
@@ -234,8 +239,8 @@ public:
 	static Color Yellow( ubyte alpha = 255 )			{ return Color(255, 255, 0, alpha); }
 	static Color YellowGreen( ubyte alpha = 255 )		{ return Color(154, 205, 50, alpha); }
 
-	static Color TransparentWhite() { return Color(255, 255, 255, 0); }
-	static Color TransparentBlack() { return Color(0, 0, 0, 0); }
+	static Color TransparentWhite;
+	static Color TransparentBlack;
 
 protected:
 

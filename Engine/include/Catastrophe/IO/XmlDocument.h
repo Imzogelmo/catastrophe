@@ -21,6 +21,7 @@
 #include <fc/string.h>
 #include "XmlElement.h"
 
+
 CE_NAMESPACE_BEGIN
 
 
@@ -47,6 +48,7 @@ private:
 	XmlDocument& operator =( const XmlDocument& );
 
 	XmlDocument_t*	m_document;
+	fc::string		m_buffer;
 };
 
 

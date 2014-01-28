@@ -76,6 +76,13 @@ protected:
 };
 
 
+#ifndef FMOD_ERRCHECK
+#define FMOD_ERRCHECK(result) { \
+	if( result != FMOD_OK ) { \
+		Log( "FMOD error (%d) %s", result, FMOD_ErrorString(result) ); \
+	}}
+#endif
+
 
 CE_NAMESPACE_END
 

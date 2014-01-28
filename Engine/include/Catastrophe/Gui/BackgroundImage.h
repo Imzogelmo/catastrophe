@@ -50,5 +50,33 @@ protected:
 
 };
 
+/*
+class AnimatedBackgroundImage : public AnimatedIcon
+{
+public:
+
+	enum Corners
+	{
+		TOP_LEFT,
+		BOTTOM_LEFT,
+		BOTTOM_RIGHT,
+		TOP_RIGHT,
+		MAX_CORNERS
+	};
+
+	AnimatedBackgroundImage();
+
+	void SetCornerColor( int corner, const Color& color );
+	Color GetCornerColor( int corner ) const;
+
+	virtual void Update();
+	virtual void Render( SpriteBatch* spritebatch );
+
+protected:
+	Color	m_cornerColors[MAX_CORNERS];
+
+};
+*/
+
 
 CE_NAMESPACE_END
