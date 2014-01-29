@@ -369,7 +369,7 @@ public:
 	{
 		f.LoadFromFile("data/fonts/ff1_gba_font.png", 8);
 	//	f.LoadFromFile("data/fonts/sansation.ttf", 12);
-		f.GetTexture()->SaveToFile("fnt.png");
+	//	f.GetTexture()->SaveToFile("fnt.png");
 		tb.SetFont(&f);
 		tb.SetText("Test of the \n emergency FONT system.");
 		tb.SetSize(128,64);

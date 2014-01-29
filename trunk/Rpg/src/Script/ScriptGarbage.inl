@@ -32,7 +32,7 @@ void ScriptGarbage::Update()
 	//todo: get a detailed measurement here.
 	if( current.objects > 0 && current.size > 0 )
 	{
-		int count = int(current.objects + current.size);
+		size_t count = size_t(current.objects + current.size);
 		if( m_counter > count )
 		{
 			GarbageCollect();
