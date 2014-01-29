@@ -109,7 +109,14 @@ bool XmlReader::FirstChild( const char* name )
 
 bool XmlReader::NextChild( const char* name )
 {
-	return m_element.SetToChild(name);
+	// FIXME: !!!
+	XmlElement element = m_element.FirstChild(name);
+	if( !element )
+		element = m_element.NextSibling(name);
+
+	m_element = element;
+	return m_element;
+	//return m_element.SetToChild(name);
 }
 
 

@@ -72,6 +72,12 @@ void AnimatedIcon::Render( SpriteBatch* spritebatch )
 }
 
 
+void AnimatedIcon::SetSprite( const AnimatedSprite& sprite )
+{
+	m_sprite = sprite;
+}
+
+
 void AnimatedIcon::SetAutoFitSprite( bool stretch )
 {
 	m_stretchSprite = stretch;

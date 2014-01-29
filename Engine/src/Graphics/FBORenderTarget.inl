@@ -76,13 +76,18 @@ void FBORenderTarget::Bind()
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, m_fbo);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	/*
+/*
 	GLfloat mat[16] = {
 		1.f, 0.f, 0.f, 0.f,
 		0.f, -1.f, 0.f, 0.f,
 		0.f, 0.f, 1.f, 0.f,
 		0.f, 0.f, 0.f, 1.f
 	};
+
+
+	glMatrixMode(GL_TEXTURE);
+	glLoadMatrixf(mat);
+	glMatrixMode(GL_MODELVIEW);
 	*/
 
 	//glPushMatrix();
@@ -101,6 +106,10 @@ void FBORenderTarget::Bind()
 void FBORenderTarget::Unbind()
 {
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+
+	//glMatrixMode(GL_TEXTURE);
+	//glLoadIdentity();
+	//glMatrixMode(GL_MODELVIEW);
 
 	//glPopMatrix();
 	glPopAttrib();

@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Rpg", "Rpg\Rpg 2008.vcproj", "{E92EC01E-0F58-45A1-97A0-9C0600830480}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RpgLibrary", "RpgLibrary\build\vs2008\RpgLibrary.vcproj", "{BE7D9EE6-B32E-4CAA-BF9D-FD031043A7D2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ce-core", "Engine\build\vs2008\ce-core.vcproj", "{8896BFA8-8888-4A61-8225-683568711CD1}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ce-gui", "Engine\build\vs2008\ce-gui.vcproj", "{51BD937C-A915-4421-8CE5-CAF0933B68C4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ce-particle", "Engine\build\vs2008\ce-particle.vcproj", "{BCAB3BDD-344A-4ECB-83D9-51BDFB86957A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ce-sound", "Engine\build\vs2008\ce-sound.vcproj", "{9557A9DF-F752-4983-88CA-CAD03F01905F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ce-system", "Engine\build\vs2008\ce-system.vcproj", "{92E877D2-1F0F-4265-8041-005ED766955C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E92EC01E-0F58-45A1-97A0-9C0600830480}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E92EC01E-0F58-45A1-97A0-9C0600830480}.Debug|Win32.Build.0 = Debug|Win32
+		{E92EC01E-0F58-45A1-97A0-9C0600830480}.Release|Win32.ActiveCfg = Release|Win32
+		{E92EC01E-0F58-45A1-97A0-9C0600830480}.Release|Win32.Build.0 = Release|Win32
+		{BE7D9EE6-B32E-4CAA-BF9D-FD031043A7D2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BE7D9EE6-B32E-4CAA-BF9D-FD031043A7D2}.Debug|Win32.Build.0 = Debug|Win32
+		{BE7D9EE6-B32E-4CAA-BF9D-FD031043A7D2}.Release|Win32.ActiveCfg = Release|Win32
+		{BE7D9EE6-B32E-4CAA-BF9D-FD031043A7D2}.Release|Win32.Build.0 = Release|Win32
+		{8896BFA8-8888-4A61-8225-683568711CD1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8896BFA8-8888-4A61-8225-683568711CD1}.Debug|Win32.Build.0 = Debug|Win32
+		{8896BFA8-8888-4A61-8225-683568711CD1}.Release|Win32.ActiveCfg = Release|Win32
+		{8896BFA8-8888-4A61-8225-683568711CD1}.Release|Win32.Build.0 = Release|Win32
+		{51BD937C-A915-4421-8CE5-CAF0933B68C4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{51BD937C-A915-4421-8CE5-CAF0933B68C4}.Debug|Win32.Build.0 = Debug|Win32
+		{51BD937C-A915-4421-8CE5-CAF0933B68C4}.Release|Win32.ActiveCfg = Release|Win32
+		{51BD937C-A915-4421-8CE5-CAF0933B68C4}.Release|Win32.Build.0 = Release|Win32
+		{BCAB3BDD-344A-4ECB-83D9-51BDFB86957A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BCAB3BDD-344A-4ECB-83D9-51BDFB86957A}.Debug|Win32.Build.0 = Debug|Win32
+		{BCAB3BDD-344A-4ECB-83D9-51BDFB86957A}.Release|Win32.ActiveCfg = Release|Win32
+		{BCAB3BDD-344A-4ECB-83D9-51BDFB86957A}.Release|Win32.Build.0 = Release|Win32
+		{9557A9DF-F752-4983-88CA-CAD03F01905F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9557A9DF-F752-4983-88CA-CAD03F01905F}.Debug|Win32.Build.0 = Debug|Win32
+		{9557A9DF-F752-4983-88CA-CAD03F01905F}.Release|Win32.ActiveCfg = Release|Win32
+		{9557A9DF-F752-4983-88CA-CAD03F01905F}.Release|Win32.Build.0 = Release|Win32
+		{92E877D2-1F0F-4265-8041-005ED766955C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{92E877D2-1F0F-4265-8041-005ED766955C}.Debug|Win32.Build.0 = Debug|Win32
+		{92E877D2-1F0F-4265-8041-005ED766955C}.Release|Win32.ActiveCfg = Release|Win32
+		{92E877D2-1F0F-4265-8041-005ED766955C}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

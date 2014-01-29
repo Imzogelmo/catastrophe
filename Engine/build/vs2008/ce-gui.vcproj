@@ -200,6 +200,10 @@
 				Name="Components"
 				>
 				<File
+					RelativePath="..\..\src\Gui\AnimatedIcon.inl"
+					>
+				</File>
+				<File
 					RelativePath=".\..\..\src\Gui\BackgroundImage.inl"
 					>
 				</File>

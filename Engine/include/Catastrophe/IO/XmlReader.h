@@ -43,7 +43,7 @@ public:
 
 	virtual bool Open( const fc::string& filename );
 	virtual void Close();
-	virtual bool IsOpen() const { return m_document; }
+	virtual bool IsOpen() const { return m_document && m_document.GetRoot(); }
 
 	virtual fc::string GetCurrentNodeName() const;
 

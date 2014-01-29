@@ -32,18 +32,21 @@ CE_NAMESPACE_BEGIN
 
 bool ToBool( const char* s, bool defaultValue )
 {
-	size_t length = strlen(s);
-	for( size_t i(0); i < length; ++i )
+	if( s )
 	{
-		char c = fc::to_lower(s[i]);
-		if( c == 't' || c == '1' )
-			return true;
+		size_t length = strlen(s);
+		for( size_t i(0); i < length; ++i )
+		{
+			char c = fc::to_lower(s[i]);
+			if( c == 't' || c == '1' )
+				return true;
 
-		if( c == 'f' || c == '0' )
-			return false;
+			if( c == 'f' || c == '0' )
+				return false;
 
-		else if( c != ' ' && c != '\t' )
-			break;
+			else if( c != ' ' && c != '\t' )
+				break;
+		}
 	}
 
 	return defaultValue;
