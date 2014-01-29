@@ -25,6 +25,7 @@
 // Emitters
 #include "Particle/Emitters/ParticleEmitter.inl"
 #include "Particle/Emitters/PointEmitter.inl"
+#include "Particle/Emitters/CircleEmitter.inl"
 #include "Particle/Emitters/RectEmitter.inl"
 
 // Modifiers
