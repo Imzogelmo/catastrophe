@@ -61,6 +61,35 @@ public:
 };
 
 
+namespace fc
+{
+	void* allocate( size_t n, size_t /*alignment*/ )
+	{
+		return malloc(n);
+	}
+
+	void deallocate( void* p, size_t /*size*/ )
+	{
+		free(p);
+	}
+
+	void* allocate_temporary( size_t n, size_t alignment )
+	{
+		return allocate( n, alignment );
+	}
+
+	void deallocate_temporary( void* p, size_t size )
+	{
+		deallocate( p, size );
+	}
+
+	void assert_failure( const char* assertion, const char*, unsigned int )
+	{
+		assert(false && assertion);
+	}
+}
+
+
 void LoadConfigSettings( int argc, char *argv[] )
 {
 	/*
@@ -235,21 +264,24 @@ int main(int argc, char* argv[])
 		gd->GetActiveParty()->AddMember(i);
 	}
 
-	//MonsterData::RegisterObject();
-	//CharacterClass::RegisterObject();
-	db->monsters.filename = "testMonsters.xml";
-	db->monsters.resource_directory = 0;
-	db->monsters.SerializeXml();
+	/*
+		//MonsterData::RegisterObject();
+		//CharacterClass::RegisterObject();
+		db->monsters.filename = "testMonsters.xml";
+		db->monsters.resource_directory = 0;
+		db->monsters.SerializeXml();
 
-	db->character_classes.filename = "testClass.xml";
-	db->character_classes.resource_directory = 0;
-	db->character_classes.SerializeXml();
+		db->character_classes.filename = "testClass.xml";
+		db->character_classes.resource_directory = 0;
+		db->character_classes.SerializeXml();
 
-	db->monster_troops.filename = "testTroops.xml";
-	db->monster_troops.resource_directory = 0;
-	db->monster_troops.SerializeXml();
+		db->monster_troops.filename = "testTroops.xml";
+		db->monster_troops.resource_directory = 0;
+		db->monster_troops.SerializeXml();
 
-	return 0;
+		return 0;
+	*/
+
 
 	//db->GenerateScriptHeaders();
 	//return 0;

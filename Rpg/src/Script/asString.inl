@@ -387,12 +387,12 @@ void ScriptEngine::RegisterString()
 	r = engine->RegisterObjectMethod("string", "void push_back(int8)", asMETHOD(fc::string, push_back), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectMethod("string", "void pop_back()", asFUNCTION(StringPopBack), asCALL_CDECL_OBJFIRST); assert( r >= 0 );
 
-	r = engine->RegisterObjectMethod("string", "string& append(const string& in)", asMETHODPR(fc::string, append, (const fc::string&), fc::string&), asCALL_THISCALL); assert( r >= 0 );
-	r = engine->RegisterObjectMethod("string", "string& append(const string& in, int, int)", asMETHODPR(fc::string, append, (const fc::string&, size_t, size_t), fc::string&), asCALL_THISCALL); assert( r >= 0 );
+	//r = engine->RegisterObjectMethod("string", "string& append(const string& in)", asMETHODPR(fc::string, append, (const fc::string&), fc::string&), asCALL_THISCALL); assert( r >= 0 );
+	//r = engine->RegisterObjectMethod("string", "string& append(const string& in, int, int)", asMETHODPR(fc::string, append, (const fc::string&, size_t, size_t), fc::string&), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectMethod("string", "string& append(int, int8)", asMETHODPR(fc::string, append, (size_t, char), fc::string&), asCALL_THISCALL); assert( r >= 0 );
 
-	r = engine->RegisterObjectMethod("string", "string& assign(const string& in)", asMETHODPR(fc::string, assign, (const fc::string&), fc::string&), asCALL_THISCALL); assert( r >= 0 );
-	r = engine->RegisterObjectMethod("string", "string& assign(const string& in, int, int)", asMETHODPR(fc::string, assign, (const fc::string&, size_t, size_t), fc::string&), asCALL_THISCALL); assert( r >= 0 );
+	//r = engine->RegisterObjectMethod("string", "string& assign(const string& in)", asMETHODPR(fc::string, assign, (const fc::string&), fc::string&), asCALL_THISCALL); assert( r >= 0 );
+	//r = engine->RegisterObjectMethod("string", "string& assign(const string& in, int, int)", asMETHODPR(fc::string, assign, (const fc::string&, size_t, size_t), fc::string&), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectMethod("string", "string& assign(int, int8)", asMETHODPR(fc::string, assign, (size_t, char), fc::string&), asCALL_THISCALL); assert( r >= 0 );
 
 	r = engine->RegisterObjectMethod("string", "string& insert(int, const string& in)", asFUNCTION(StringInsert1), asCALL_CDECL_OBJFIRST); assert( r >= 0 );
@@ -428,7 +428,7 @@ void ScriptEngine::RegisterString()
 	r = engine->RegisterObjectMethod("string", "int8 &opIndex(int)", asFUNCTION(StringCharAt), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 	r = engine->RegisterObjectMethod("string", "const int8 &opIndex(int) const", asFUNCTION(StringCharAt), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 	r = engine->RegisterObjectMethod("string", "string& opAssign(const string& in)", asMETHODPR(fc::string, operator =, (const fc::string&), fc::string&), asCALL_THISCALL); assert( r >= 0 );
-	r = engine->RegisterObjectMethod("string", "string& opAddAssign(const string& in)", asMETHODPR(fc::string, operator+=, (const fc::string&), fc::string&), asCALL_THISCALL); assert( r >= 0 );
+	//r = engine->RegisterObjectMethod("string", "string& opAddAssign(const string& in)", asMETHODPR(fc::string, operator+=, (const fc::string&), fc::string&), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectMethod("string", "string opAdd(const string& in) const", asFUNCTION(StringAddString), asCALL_CDECL_OBJFIRST); assert( r >= 0 );
 
 	r = engine->RegisterObjectMethod("string", "string& opAssign(float)", asFUNCTION(AssignFloatToString), asCALL_CDECL_OBJLAST); assert( r >= 0 );
