@@ -20,6 +20,7 @@
 
 #include <fc/vector.h>
 
+#include "Forward.h"
 #include "../Common.h"
 #include "../Math/Vector2.h"
 #include "../Math/Vector2.h"

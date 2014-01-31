@@ -16,43 +16,40 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#pragma once
-
-#include "Widget.h"
-#include "Icon.h"
+#include "Gui/Skin.h"
 
 CE_NAMESPACE_BEGIN
 
 
-class BackgroundImage : public Icon
+Skin::Skin() :
+	m_font(0),
+	m_frame(0),
+	m_backgroundImage(0)
 {
-public:
+}
 
-	enum Corners
-	{
-		TOP_LEFT,
-		BOTTOM_LEFT,
-		BOTTOM_RIGHT,
-		TOP_RIGHT,
-		MAX_CORNERS
-	};
 
-	BackgroundImage();
+void Skin::SetFont( Font* font )
+{
+	m_font = font;
+}
 
-	void SetCornerColor( int corner, const Color& color );
-	//void SetBlendMode( const BlendMode& value ) { m_blendmode = value; }
 
-	Color GetCornerColor( int corner ) const;
-	//const BlendMode& GetBlendMode() const { return m_blendmode; }
+void Skin::SetFrame( Frame* frame )
+{
+	m_frame = frame;
+}
 
-	virtual void Update();
-	virtual void Render( SpriteBatch* spritebatch );
 
-protected:
-	Color	m_cornerColors[MAX_CORNERS];
+void Skin::SetBackgroundImage( BackgroundImage* backgroundImage )
+{
+	m_backgroundImage = backgroundImage;
+}
 
-};
+
 
 
 
 CE_NAMESPACE_END
+
+

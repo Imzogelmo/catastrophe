@@ -25,5 +25,6 @@
 #include "Gui/Icon.inl"
 #include "Gui/Label.inl"
 #include "Gui/MenuElement.inl"
+#include "Gui/Skin.inl"
 #include "Gui/TextBox.inl"
 #include "Gui/Widget.inl"

@@ -60,7 +60,7 @@ void BackgroundImage::Render( SpriteBatch* spritebatch )
 		return;
 
 	Vector2 minPos = GetScreenPosition();
-	Vector2 maxPos = minPos + m_sprite.size;
+	Vector2 maxPos = minPos + (m_stretchSprite ? m_size : m_sprite.size);
 
 	Vector2 vtx[4];
 	vtx[0] = minPos;

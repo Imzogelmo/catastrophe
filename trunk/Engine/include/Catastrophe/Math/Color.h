@@ -239,8 +239,8 @@ public:
 	static Color Yellow( ubyte alpha = 255 )			{ return Color(255, 255, 0, alpha); }
 	static Color YellowGreen( ubyte alpha = 255 )		{ return Color(154, 205, 50, alpha); }
 
-	static Color TransparentWhite;
-	static Color TransparentBlack;
+	static Color TransparentWhite() { return Color(255, 255, 255, 0); }
+	static Color TransparentBlack() { return Color(0, 0, 0, 0); }
 
 protected:
 

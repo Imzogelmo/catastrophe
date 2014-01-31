@@ -255,6 +255,9 @@ int main(int argc, char* argv[])
 	//GenMonTroopForm();
 	//return 0;
 
+	Timer timer;
+	timer.Reset();
+
 	GameData* gd = GetGameData();
 	Database* db = GetDatabase();
 	db->DeserializeAllDataXml();
@@ -263,6 +266,8 @@ int main(int argc, char* argv[])
 	foreachi(i,4){
 		gd->GetActiveParty()->AddMember(i);
 	}
+
+	Log( "Database::DeserializeAllDataXml milliseconds : %0.4f", float(timer.MilliSeconds()) );
 
 	/*
 		//MonsterData::RegisterObject();
@@ -295,11 +300,8 @@ int main(int argc, char* argv[])
 
 	Game* game = new Game();
 
-	Timer timer;
-	timer.Reset();
 	//if( game->Initialize() != 0 )
 	//	return -1;
-	Log( "game->Initialize milliseconds : %0.4f", float(timer.MilliSeconds()) );
 
 	Window* window = CreateWindow();
 
