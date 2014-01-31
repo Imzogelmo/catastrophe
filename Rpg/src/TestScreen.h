@@ -16,7 +16,9 @@
 #include <Catastrophe/Gui/Label.h>
 #include <Catastrophe/Gui/TextBox.h>
 #include <Catastrophe/Gui/Frame.h>
+#include <Catastrophe/Gui/BackgroundImage.h>
 #include <Catastrophe/Math/Matrix.h>
+#include <Catastrophe/Core/StringUtils.h>
 
 #include "Script/ScriptClass.h"
 #include "Item.h"
@@ -353,6 +355,7 @@ protected:
 
 #include "Catastrophe/Graphics/FBORenderTarget.h"
 
+/*
 class TestScreen : public Screen
 {
 public:
@@ -421,5 +424,174 @@ public:
 	}
 
 };
+*/
+
+class TestScreen : public Screen
+{
+public:
+	Font f;
+	Texture frameTex;
+	Texture bgTex;
+	Sprite frameSprite;
+	Sprite bgSprite;
+	AnimatedSpriteSet curMonsterSprite;
+
+	SpriteBatch m_spriteBatch;
+
+	Widget mainMenu;
+	Frame frame[3];
+	Widget infoContainer;
+	Label monsterName;
+
+	Label attribNames[12];
+	Label monsterStats[12];
+
+	BackgroundImage bgImage;
+
+	int curID;
+	bool needsUpdate;
+
+	TestScreen()
+	{
+		curID = 0;
+		needsUpdate = true;
+
+		f.LoadFromFile("data/fonts/ff1_gba_font.png", 8);
+		bgTex.LoadFromFile("data/textures/gui.png");
+		//bgTex.SetFilterMode(0x2601);
+
+		frameSprite.Create( &bgTex, Rect(0,64,24,24) );
+		bgSprite.Create( &bgTex, Rect(64,0,64,64) );
+
+		bgImage.SetSize(256,224);
+		bgImage.SetSprite( bgSprite );
+		bgImage.SetAutoFitSprite(true);
+
+		foreachi(i, 3) {
+			frame[i].SetFromSprite(frameSprite);
+			//frame[i].SetBackground(bgSprite);
+		}
+
+		monsterName.SetFont(&f);
+		monsterName.SetPosition(12,12);
+		monsterName.SetSize(20, 80);
+		monsterName.SetTextAlignment(AlignCenter);
+		frame[0].AddChild(&monsterName);
+
+		frame[0].SetSize( 128, 32 );
+		frame[1].SetSize( 128, 224 );
+		frame[2].SetSize( 128, 32 );
+		frame[0].SetPosition( 0, 0 );
+		frame[1].SetPosition( 128, 0 );
+		frame[2].SetPosition( 0, 224-32 );
+
+		infoContainer.SetPosition(16,16);
+		infoContainer.SetSize(frame[1].GetSize() - 32.f);
+
+		const char* attr[12] = {
+			"Defeated",
+			"HP",
+			"Attack",
+			"Accuracy",
+			"Defense",
+			"Agility",
+			"Intelligence",
+			"Evasion",
+			"Magic Defense",
+			"Gil",
+			"EXP",
+			"Treasure"
+		};
+
+		foreachi(i, 12) {
+			//TODO: Implement a default "skin" for all parent GUI objects to make these go away.
+			attribNames[i].SetFont(&f);
+			attribNames[i].SetText(attr[i]);
+			monsterStats[i].SetFont(&f);
+			monsterStats[i].SetColor( Color::Yellow() );
+			monsterStats[i].SetTextAlignment(AlignRight);
+
+			//TODO improve ListBox to easily handle this kind of crap.
+			attribNames[i].SetPosition(0, i * 16);
+			monsterStats[i].SetPosition(80, i * 16);
+
+			attribNames[i].SetSize(80, 16);
+			monsterStats[i].SetSize(20, 16);
+
+			infoContainer.AddChild(&attribNames[i]);
+			infoContainer.AddChild(&monsterStats[i]);
+		}
+
+		frame[1].AddChild(&infoContainer);
+
+		mainMenu.AddChild(&bgImage);
+		mainMenu.AddChild(&frame[0]);
+		mainMenu.AddChild(&frame[1]);
+		mainMenu.AddChild(&frame[2]);
+
+
+	}
+
+	void Update()
+	{
+		if( Input::GetKeyboard()->IsKeyPressed(KEY_LEFT) )
+		{
+			if( --curID < 0 )
+				curID = 127;
+			needsUpdate = true;
+		}
+		else if( Input::GetKeyboard()->IsKeyPressed(KEY_RIGHT) )
+		{
+			if( ++curID > 127 )
+				curID = 0;
+			needsUpdate = true;
+		}
+
+		if(needsUpdate)
+		{
+			needsUpdate = false;
+			MonsterData* m = GetDatabase()->GetMonster(curID);
+			ASSERT(m);
+ 
+			AnimatedSpriteSetAsset* as = GetDatabase()->GetMonsterBattleSpriteSetAsset(m->battle_spriteset_id);
+			bool isLoaded = as->LoadAnimatedSpriteSet(curMonsterSprite);
+			ASSERT(isLoaded);
+
+			int i(0);
+			monsterName.SetText( m->name );
+			monsterStats[i++].SetText("0");
+			monsterStats[i++].SetText( ToString(m->attributes.max_params[0]) );
+			monsterStats[i++].SetText( ToString(m->attributes.stats[0]) );
+			monsterStats[i++].SetText( ToString(m->attributes.stats[2]) );
+			monsterStats[i++].SetText( ToString(m->attributes.stats[1]) );
+			monsterStats[i++].SetText( ToString(m->attributes.stats[3]) );
+			monsterStats[i++].SetText( ToString(m->attributes.stats[4]) );
+			monsterStats[i++].SetText( ToString(m->attributes.stats[3]) );
+			monsterStats[i++].SetText( ToString(m->attributes.stats[5]) );
+
+			monsterStats[i++].SetText( ToString(m->gold) );
+			monsterStats[i++].SetText( ToString(m->exp) );
+			monsterStats[i++].SetText(""); //treasure
+		}
+
+		mainMenu.Update();
+		curMonsterSprite.Update();
+	}
+
+	void Render()
+	{
+		m_spriteBatch.Begin();
+
+		// draw it
+		mainMenu.Render(&m_spriteBatch);
+		m_spriteBatch.DrawAnimatedSpriteSet( curMonsterSprite, Vector2(64,112) - (curMonsterSprite.size/2.f) );
+
+		m_spriteBatch.Render();
+		m_spriteBatch.End();
+
+	}
+
+};
+
 
 

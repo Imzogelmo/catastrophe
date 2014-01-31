@@ -28,9 +28,6 @@
 CE_NAMESPACE_BEGIN
 
 
-Color Color::TransparentWhite = Color(255, 255, 255, 0);
-Color Color::TransparentBlack = Color(0, 0, 0, 0);
-
 
 Color::Color( const HSVColor &c )
 {

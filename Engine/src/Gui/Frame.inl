@@ -26,42 +26,16 @@ CE_NAMESPACE_BEGIN
 
 Frame::Frame() : Widget()
 {
-	m_bgOffset = Vector2::Zero;
+	m_blendmode = BlendMode::Alpha;
+	m_color = Color::White();
+	m_backgroundImage = 0;
 	m_tiled = false;
-	m_bgTiled = false;
-	m_useBg = false;
 }
 
 
-void Frame::SetBackground( const Sprite& bgSprite )
+void Frame::SetBackgroundImage( BackgroundImage* backgroundImage )
 {
-	CE_ASSERT(bgSprite.GetTexture() != 0);
-	m_backgroundSprite = bgSprite;
-	m_useBg = true;
-}
-
-
-void Frame::SetBackgroundTexture( Texture* texture )
-{
-	CE_ASSERT(texture);
-	if(texture)
-	{
-		m_backgroundSprite.SetTexture(texture);
-		m_backgroundSprite.SetSize( Vector2( Point(texture->Width(), texture->Height()) ) );
-		m_useBg = true;
-	}
-}
-
-
-void Frame::SetBackgroundOffset( const Vector2& offset )
-{
-	m_bgOffset = offset;
-}
-
-
-void Frame::UseBackGround( bool enable )
-{
-	m_useBg = enable;
+	m_backgroundImage = backgroundImage;
 }
 
 
@@ -150,24 +124,9 @@ void Frame::Render( SpriteBatch* spriteBatch )
 	Vector2 max = min + GetSize();
 
 	// render the background first.
-	if( m_useBg && m_backgroundSprite.GetTexture() != 0 )
+	if( m_backgroundImage )
 	{
-		if( m_bgTiled )
-		{
-			//todo...
-		}
-		else
-		{
-			spriteBatch->DrawRotatedScaled(
-				m_backgroundSprite.GetTextureID(),
-				m_backgroundSprite.angle,
-				m_backgroundSprite.scale,
-				Rectf(min + m_bgOffset, max - m_bgOffset),
-				m_backgroundSprite.GetUVRect(),
-				m_backgroundSprite.color,
-				0
-			);
-		}
+		m_backgroundImage->Render(spriteBatch);
 	}
 
 	Rectf vtx;

@@ -6,7 +6,7 @@
 //#define print(x) __print(x, __FILE__, __LINE__)
 #define print(x) __print(x, "", __LINE__)
 
-
+//max_params
 #define HP 0
 #define MP 1
 
@@ -17,6 +17,7 @@
 #define VIT				14 //vitality
 #define LUCK			15 //luck
 
+//stats
 #define ATK				0
 #define DEF				1
 #define HIT				2

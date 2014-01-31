@@ -18,38 +18,28 @@
 
 #pragma once
 
-#include "Widget.h"
-#include "Icon.h"
+#include "Forward.h"
 
 CE_NAMESPACE_BEGIN
 
 
-class BackgroundImage : public Icon
+class Skin
 {
 public:
+	Skin();
 
-	enum Corners
-	{
-		TOP_LEFT,
-		BOTTOM_LEFT,
-		BOTTOM_RIGHT,
-		TOP_RIGHT,
-		MAX_CORNERS
-	};
+	void SetFont( Font* font );
+	void SetFrame( Frame* frame );
+	void SetBackgroundImage( BackgroundImage* backgroundImage );
 
-	BackgroundImage();
-
-	void SetCornerColor( int corner, const Color& color );
-	//void SetBlendMode( const BlendMode& value ) { m_blendmode = value; }
-
-	Color GetCornerColor( int corner ) const;
-	//const BlendMode& GetBlendMode() const { return m_blendmode; }
-
-	virtual void Update();
-	virtual void Render( SpriteBatch* spritebatch );
+	Font* GetFont() const { return m_font; }
+	Frame* GetFrame() const { return m_frame; }
+	BackgroundImage* GetBackgroundImage() const { return m_backgroundImage; }
 
 protected:
-	Color	m_cornerColors[MAX_CORNERS];
+	Font*				m_font;
+	Frame*				m_frame;
+	BackgroundImage*	m_backgroundImage;
 
 };
 
