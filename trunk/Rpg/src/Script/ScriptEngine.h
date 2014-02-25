@@ -32,9 +32,9 @@ public:
 
 	int Compile( const fc::string& filename, const fc::vector<fc::string>& _Args );
 
-	NO_INLINE void SetException( const fc::string& str = "" );
-	NO_INLINE void SetException( asIScriptContext *ctx, const fc::string& str = "" );
-	NO_INLINE void LogException( asIScriptContext *ctx );
+	NO_INLINE static void SetException( const fc::string& str = "" );
+	NO_INLINE static void SetException( asIScriptContext *ctx, const fc::string& str = "" );
+	NO_INLINE static void LogException( asIScriptContext *ctx );
 
 	int SaveByteCode( const fc::string filename );
 	int LoadByteCode( const fc::string filename );
@@ -111,6 +111,9 @@ private:
 	void RegisterActor();
 	void RegisterParty();
 	void RegisterCombatant();
+	void RegisterBattleAction();
+	void RegisterBattleEngine();
+
 	template <class T> void RegisterClassContainingAttributes( const char* name );
 	template <class T> void RegisterEntityType( const char* name );
 	template <class T> void RegisterEntityBaseProperties( const char* name );

@@ -24,10 +24,11 @@ CE_NAMESPACE_BEGIN
 
 
 
-Frame::Frame() : Widget()
+Frame::Frame() : Widget(),
+	m_texture(0),
+	m_blendmode(BlendMode::Alpha),
+	m_color(Color::White())
 {
-	m_blendmode = BlendMode::Alpha;
-	m_color = Color::White();
 	m_backgroundImage = 0;
 	m_tiled = false;
 }
@@ -41,18 +42,9 @@ void Frame::SetBackgroundImage( BackgroundImage* backgroundImage )
 
 void Frame::SetTexture( Texture* texture )
 {
-	CE_ASSERT(texture);
 	if(texture)
 	{
-		gluint id = texture->GetTextureID();
-		m_corners[0].texture = id;
-		m_corners[1].texture = id;
-		m_corners[2].texture = id;
-		m_corners[3].texture = id;
-		m_sides[0].texture = id;
-		m_sides[1].texture = id;
-		m_sides[2].texture = id;
-		m_sides[3].texture = id;
+		m_texture = texture;
 	}
 }
 
@@ -129,61 +121,77 @@ void Frame::Render( SpriteBatch* spriteBatch )
 		m_backgroundImage->Render(spriteBatch);
 	}
 
-	Rectf vtx;
-	vtx.min.x = min.x;
-	vtx.min.y = min.y;
-	vtx.max.x = min.x + m_corners[0].size.x;
-	vtx.max.y = min.y + m_corners[0].size.y;
-	spriteBatch->Draw( m_corners[0].texture, vtx, m_corners[0].uv, m_color );
-
-	vtx.min.x = max.x - m_corners[1].size.x;
-	vtx.min.y = min.y;
-	vtx.max.x = max.x;
-	vtx.max.y = min.y + m_corners[1].size.y;
-	spriteBatch->Draw( m_corners[1].texture, vtx, m_corners[1].uv, m_color );
-
-	vtx.min.x = min.x;
-	vtx.min.y = max.y - m_corners[2].size.y;
-	vtx.max.x = min.x + m_corners[2].size.x;
-	vtx.max.y = max.y;
-	spriteBatch->Draw( m_corners[2].texture, vtx, m_corners[2].uv, m_color );
-
-	vtx.min.x = max.x - m_corners[3].size.x;
-	vtx.min.y = max.y - m_corners[3].size.y;
-	vtx.max.x = max.x;
-	vtx.max.y = max.y;
-	spriteBatch->Draw( m_corners[3].texture, vtx, m_corners[3].uv, m_color );
-
-	if( m_tiled )
+	if( m_texture )
 	{
-		//todo...
-	}
-	else
-	{
-		vtx.min.x = min.x + m_corners[0].size.x;
+		gluint textureID = m_texture->GetTextureID();
+
+		Rectf vtx;
+		vtx.min.x = min.x;
 		vtx.min.y = min.y;
-		vtx.max.x = max.x - m_corners[1].size.x;
-		vtx.max.y = min.y + m_sides[0].size.y;
-		spriteBatch->Draw( m_sides[0].texture, vtx, m_sides[0].uv, m_color );
+		vtx.max.x = min.x + m_corners[0].size.x;
+		vtx.max.y = min.y + m_corners[0].size.y;
+		spriteBatch->Draw( textureID, vtx, m_corners[0].uv, m_color );
+
+		vtx.min.x = max.x - m_corners[1].size.x;
+		vtx.min.y = min.y;
+		vtx.max.x = max.x;
+		vtx.max.y = min.y + m_corners[1].size.y;
+		spriteBatch->Draw( textureID, vtx, m_corners[1].uv, m_color );
 
 		vtx.min.x = min.x;
-		vtx.min.y = min.y + m_corners[0].size.y;
-		vtx.max.x = min.x + m_sides[1].size.x;
-		vtx.max.y = max.y - m_corners[2].size.y;
-		spriteBatch->Draw( m_sides[1].texture, vtx, m_sides[1].uv, m_color );
-
-		vtx.min.x = max.x - m_sides[2].size.x;
-		vtx.min.y = min.y + m_corners[1].size.y;
-		vtx.max.x = max.x;
-		vtx.max.y = max.y - m_corners[3].size.y;
-		spriteBatch->Draw( m_sides[2].texture, vtx, m_sides[2].uv, m_color );
-
-		vtx.min.x = min.x + m_corners[2].size.x;
-		vtx.min.y = max.y - m_sides[3].size.y;
-		vtx.max.x = max.x - m_corners[3].size.x;
+		vtx.min.y = max.y - m_corners[2].size.y;
+		vtx.max.x = min.x + m_corners[2].size.x;
 		vtx.max.y = max.y;
-		spriteBatch->Draw( m_sides[3].texture, vtx, m_sides[3].uv, m_color );
+		spriteBatch->Draw( textureID, vtx, m_corners[2].uv, m_color );
 
+		vtx.min.x = max.x - m_corners[3].size.x;
+		vtx.min.y = max.y - m_corners[3].size.y;
+		vtx.max.x = max.x;
+		vtx.max.y = max.y;
+		spriteBatch->Draw( textureID, vtx, m_corners[3].uv, m_color );
+
+		if( m_tiled )
+		{
+			SpriteData q;
+
+			q.SetTexture(textureID);
+			q.SetBlendMode(m_blendmode);
+
+			q.data[0].color = m_color;
+			q.data[1].color = m_color;
+			q.data[2].color = m_color;
+			q.data[3].color = m_color;
+
+			q.data[0].uv.x = m_corners[0].uv.min.x;
+
+		}
+		else
+		{
+			vtx.min.x = min.x + m_corners[0].size.x;
+			vtx.min.y = min.y;
+			vtx.max.x = max.x - m_corners[1].size.x;
+			vtx.max.y = min.y + m_sides[0].size.y;
+			spriteBatch->Draw( textureID, vtx, m_sides[0].uv, m_color );
+
+			vtx.min.x = min.x;
+			vtx.min.y = min.y + m_corners[0].size.y;
+			vtx.max.x = min.x + m_sides[1].size.x;
+			vtx.max.y = max.y - m_corners[2].size.y;
+			spriteBatch->Draw( textureID, vtx, m_sides[1].uv, m_color );
+
+			vtx.min.x = max.x - m_sides[2].size.x;
+			vtx.min.y = min.y + m_corners[1].size.y;
+			vtx.max.x = max.x;
+			vtx.max.y = max.y - m_corners[3].size.y;
+			spriteBatch->Draw( textureID, vtx, m_sides[2].uv, m_color );
+
+			vtx.min.x = min.x + m_corners[2].size.x;
+			vtx.min.y = max.y - m_sides[3].size.y;
+			vtx.max.x = max.x - m_corners[3].size.x;
+			vtx.max.y = max.y;
+			spriteBatch->Draw( textureID, vtx, m_sides[3].uv, m_color );
+
+		}
 	}
 
 	// render children.

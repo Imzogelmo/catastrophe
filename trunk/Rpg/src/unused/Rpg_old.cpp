@@ -740,7 +740,7 @@ public:
         FindNextFileA(hfind,&found);        
     }
 
-    int getNextFile(char* fname){
+    int GetNextFile(char* fname){
         //skips .. when called for the first time
         chk=FindNextFileA(hfind,&found);
         if (chk)

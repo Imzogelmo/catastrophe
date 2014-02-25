@@ -32,12 +32,11 @@ class Frame : public Widget
 public:
 	struct Patch
 	{
-		gluint texture;
 		Rectf uv;
 		Vector2 size;
 
-		Patch( gluint texture_id = 0, const Rectf& uv = Rectf::Zero, const Vector2& size = Vector2::Zero)
-			: texture(texture_id), uv(uv), size(size)
+		Patch( const Rectf& uv = Rectf::Zero, const Vector2& size = Vector2::Zero )
+			: uv(uv), size(size)
 		{}
 	};
 
@@ -59,6 +58,7 @@ public:
 	void Render( SpriteBatch* spriteBatch );
 
 protected:
+	Texture*			m_texture;
 	BlendMode			m_blendmode;
 	Color				m_color;
 	Patch				m_corners[4];

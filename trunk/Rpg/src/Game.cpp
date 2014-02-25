@@ -17,18 +17,26 @@
 
 Game* game = 0;
 ScriptEngine* g_scriptEngine = 0;
+BattleEngine* g_battleEngine = 0;
 SpriteBatch* g_tempSpriteBatch = 0;
 
 ScriptEngine* gGetScriptEngine() { return g_scriptEngine; }
 Game* gGetGame() { return game; }
+Game* GetGame() { return game; }
 SpriteBatch* gGetSpriteBatch() { return g_tempSpriteBatch; }
 
 Database g_database;
+
 //I'm sticking this here for now also!
 Database* GetDatabase()
 {
 	return &g_database;
 }
+BattleEngine* GetBattleEngine()
+{
+	return g_battleEngine;
+}
+
 
 
 int Game::Initialize()
@@ -64,7 +72,7 @@ int Game::InternalInitScriptEngine()
 	ScriptEngine* engine = GetScriptEngine();
 	engine->SetGame(this);
 	engine->Initialize();
-	engine->SetDefaultEngineProperties();
+	//engine->SetDefaultEngineProperties();
 	engine->RegisterScriptingInterfaces();
 
 	//return 0;
@@ -106,14 +114,18 @@ void Game::Update()
 		b->AddMonsterTroopId(240);*/
 		b->AddMonsterTroopId(4);
 
-		/*
+		///*
 		BattleScreen* bs = new BattleScreen();
 		bs->GetBattleEngine()->AddPlayerCombatantsFromParty( GetGameData()->GetActiveParty() );
 		bs->GetBattleEngine()->AddBattle(b);
 		bs->GetBattleEngine()->Setup();
-		*/
 
-		m_screenManager.Add( new TestScreen() ); //....
+		g_battleEngine = bs->GetBattleEngine(); //fixme
+
+		m_screenManager.Add( bs );
+		//*/
+
+		//m_screenManager.Add( new TestScreen() ); //....
 		testInit = true;
 	}
 
@@ -129,10 +141,10 @@ void Game::Render()
 	if(!bgt)
 	{
 		bgt = new Texture();
-		bgt->LoadFromFile("data/textures/backgrounds/16.png");
+		bgt->LoadFromFile("data/textures/backgrounds/14.png");
 	}
 	//m_spriteBatch.DrawTexture(GetDatabase()->character_battle_sprites[0].LoadTexture(), Vector2(30,30));
-	//m_spriteBatch.DrawTexture(bgt, Vector2(0,0));
+	m_spriteBatch.DrawTexture(bgt, Vector2(0,0));
 
 	m_screenManager.Render();
 

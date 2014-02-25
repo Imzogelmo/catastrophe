@@ -18,7 +18,8 @@
 Combatant::Combatant( EntityType derivedType ) :
 	ScriptEntity(derivedType),
 	m_actor(0),
-	m_spriteset()
+	m_spriteset(),
+	m_battleGroup(0)
 {
 }
 

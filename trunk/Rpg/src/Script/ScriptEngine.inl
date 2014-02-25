@@ -79,7 +79,13 @@ void ScriptEngine::SetDefaultEngineProperties()
 	m_engine->SetEngineProperty( asEP_OPTIMIZE_BYTECODE, 1 );
 	m_engine->SetEngineProperty( asEP_BUILD_WITHOUT_LINE_CUES, 1 );
 	m_engine->SetEngineProperty( asEP_EXPAND_DEF_ARRAY_TO_TMPL, 1 );
+
+	m_engine->SetEngineProperty( asEP_REQUIRE_ENUM_SCOPE, 1 );
+	m_engine->SetEngineProperty( asEP_ALLOW_IMPLICIT_HANDLE_TYPES, 1 );
+
+	//m_engine->SetEngineProperty( asEP_AUTO_GARBAGE_COLLECT, 0 );
 }
+
 
 void ScriptEngine::SetEngineProperty( int param, int val )
 {

@@ -35,6 +35,7 @@ struct TargetInfo
 		TargetEnemyGroup,
 		TargetAllEnemies,
 		TargetAlly,
+		TargetAllyGroup,
 		TargetAllAllies,
 		TargetAll,
 
@@ -52,48 +53,53 @@ struct TargetInfo
 class BattleAction
 {
 public:
-	BattleAction() : m_parent(0), m_performer(0), m_preparationTime(0)
-	{
-	}
-
-	virtual ~BattleAction()
-	{}
+	BattleAction();
+	virtual ~BattleAction() {}
 
 	void SetParent( BattleActionQueue* parent ) { m_parent = parent; }
-	void Update()
-	{
-		if( m_preparationTime > 0 )
-			--m_preparationTime;
-	}
+	void SetPerformer( Combatant* performer ) { m_performer = performer; }
 
-	void OnTrigger()
-	{
-	}
+	void Update();
 
-	void Cancel()
-	{
-		m_cancelled = true;
-	}
+	void Cancel();
+	void GivePriority();
+	void MakeReady();
 
-	bool IsCancelled() const { return m_cancelled; }
 	bool HasPriority() const { return m_hasPriority; }
-	bool IsReady() const { return m_preparationTime <= 0; }
+	bool IsCancelled() const { return m_cancelled; }
+	bool IsReady() const { return m_isReady; }
 
 	BattleActionQueue* GetParent() const { return m_parent; }
+	Combatant* GetPerformer() const { return m_performer; }
 
 
+protected:
 	BattleActionQueue* m_parent;
 	Combatant*	m_performer;
+
 	//int			type;
 	//int			flags;
-	int			m_preparationTime;
-	TargetInfo	targetInfo;
+	float		BattleSpeed; //replace me
+
+	float		m_speedModifier;
+	float		m_waitDelayTime;
+	float		m_cooldownDelayTime;
+
+	float		m_waitDelayCounter;
+	float		m_cooldownDelayCounter;
+
+	int			m_targetInfo;
+
 	bool		m_hasPriority;
+	bool		m_isReady;
 	bool		m_cancelled;
 
 };
 
 
+
+
+/*
 class ActionWait : public BattleAction
 {
 public:
@@ -124,5 +130,5 @@ public:
 protected:
 
 };
-
+*/
 

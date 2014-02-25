@@ -44,6 +44,8 @@ class Combatant : IGameEntity
 	{
 		// Do not place anything above this line.
 		COMBATANT_REQUIRED_FORMAT(self);
+
+		print("Combatant ctor called.");
 	}
 
 	//-------------------------------------
@@ -237,10 +239,10 @@ class Combatant : IGameEntity
 		get const
 		{
 			int val = self.stat[HIT];
-			if( self.status[BLIND] )
-			{
-				val /= 2;
-			}
+			//if( self.status[BLIND] )
+			//{
+			//	val /= 2;
+			//}
 
 			return val;
 		}
@@ -303,12 +305,12 @@ class Combatant : IGameEntity
 	{
 		if( type == 0 )
 		{
-			if( self.abilities[PASSIVE]
+			//if( self.abilities[PASSIVE]
 		}
 		return damage;
 	}
 
-	int OnAttacked( Combatant@ c )
+	void OnAttacked( Combatant@ c )
 	{
 	}
 

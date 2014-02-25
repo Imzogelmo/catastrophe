@@ -16,7 +16,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-
+/*
 #include "Particle/Particle.h"
 #include "Particle/ParticleManager.h"
 #include "Particle/Emitters/ParticleEmitter.h"
@@ -25,6 +25,7 @@
 //renderers
 //#include "Renderers/SpriteBatchRenderer.inl"
 
+CE_NAMESPACE_BEGIN
 
 
 void ParticleManager::AddSystem( ParticleSystem* system )
@@ -80,4 +81,9 @@ void ParticleManager::Deserialize( AttributeReader* in )
 {
 }
 
+
+
+CE_NAMESPACE_END
+
+*/
 

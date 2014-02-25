@@ -213,8 +213,24 @@ Window* CreateWindow()
 
 
 
+void CreateUnityBuildModule(
+			fc::string directory,
+			fc::string outFilename = "Unity_Build.cpp",
+			fc::string extension = ".cpp" );
+
+
+void CreateTestHeaderCPPFiles(
+			fc::string directory,
+			fc::string outDirectory );
+
+
 int main(int argc, char* argv[])
 {
+	//const char* ubStr = "C:\\SVN\\EasyRPG\\Player\\src\\platform";
+	//CreateUnityBuildModule( ubStr, "Unity_Build2.cpp", ".cpp" );
+	//CreateTestHeaderCPPFiles( "C:\\C++\\include\\fc", "test" );
+	//return 0;
+
 	// enable memory leak checking.
 	static int crtDebugflags = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
 	crtDebugflags |= (crtDebugflags & 0x0000FFFF) | _CRTDBG_CHECK_ALWAYS_DF;
@@ -300,8 +316,8 @@ int main(int argc, char* argv[])
 
 	Game* game = new Game();
 
-	//if( game->Initialize() != 0 )
-	//	return -1;
+	if( game->Initialize() != 0 )
+		return -1;
 
 	Window* window = CreateWindow();
 
@@ -327,16 +343,24 @@ int main(int argc, char* argv[])
 		window->SwapBuffers();
 
 		int elapsedMS = (int)loopTimer.ElapsedMilliseconds();
-		while(elapsedMS <= 16)
+		if(elapsedMS > 17 || elapsedMS < 0)
+			elapsedMS = 0;
+
+		/*
+		//if(elapsedMS <= 16)
 		{
 			int tMS = elapsedMS;
 			//Log( "-------------TMS-----------: (%i)", elapsedMS );
-			System::Sleep( (16 - tMS) > 0 ? (16 - tMS) - 1 : 0 );
+			//System::Sleep( (16 - tMS) > 0 ? (16 - tMS) - 1 : 0 );
+			System::Sleep( (16 - tMS) > 0 ? (16 - tMS) : 0 );
 			elapsedMS = (int)loopTimer.ElapsedMilliseconds();
 		}
 		//Log("frame time: (%0.4f)", float(loopTimer.ElapsedMicroseconds() / 1000.0f));
 		//Log( "frame time: (%i)", int(loopTimer.ElapsedMilliseconds()) );
-		loopTimer.Reset();
+		//window->SetTitle( "FPS: " + fc::to_string(elapsedMS) );
+		//loopTimer.Reset();
+		*/
+		System::Sleep(16);
 
 	}
 
@@ -492,3 +516,88 @@ void GenMonTroopForm()
 
 }
 
+
+/////////////////////////////////////////////////////////////////////////////////
+
+#define WIN32_LEAN_AND_MEAN
+#define WIN32_EXTRA_LEAN
+#define NOGDI
+#include <windows.h>
+#include <fc/string.h>
+
+
+class FileGetter
+{
+    WIN32_FIND_DATAA found; 
+    HANDLE hfind;
+    char folderstar[255];       
+    int chk;
+
+public:
+    FileGetter(const char* folder)
+	{       
+        sprintf(folderstar,"%s\\*.*",folder);
+        hfind = FindFirstFileA(folderstar,&found);
+        //skip .
+        FindNextFileA(hfind,&found);        
+    }
+
+    int GetNextFile(char* fname)
+	{
+        //skips .. when called for the first time
+        chk=FindNextFileA(hfind,&found);
+        if (chk)
+            strcpy(fname, found.cFileName);     
+        return chk;
+    }
+
+};
+
+void CreateUnityBuildModule( fc::string directory, fc::string outFilename, fc::string extension )
+{
+	char buf[255];
+	fc::string t, line;
+	FileGetter fg( directory.c_str() );
+	FILE* f = fopen( outFilename.c_str(), "w" );
+	fwrite( "// Auto-generated file\n\n", 24, 1, f );
+
+	while( fg.GetNextFile(buf) != 0 )
+	{
+		t = buf;
+		if( t.size() > 4 && t.substr(t.size() - 4) == extension )
+		{
+			line = "#include \"" + t + "\"\n";
+			fwrite( line.data(), line.size(), 1, f );
+		}
+
+	}
+
+	fclose(f);
+}
+
+
+void CreateTestHeaderCPPFiles( fc::string directory, fc::string outDirectory )
+{
+	char buf[255];
+	fc::string t, line;
+	FileGetter fg( directory.c_str() );
+
+	while( fg.GetNextFile(buf) != 0 )
+	{
+		t = buf;
+		if( t.size() > 2 && t.substr(t.size() - 2) == ".h" )
+		{
+			t.pop_back();
+
+			FILE* f = fopen( (outDirectory + "/" + t + "cpp").c_str(), "w" );
+			line = "\n#include <fc/" + t + "h>\n";
+			fwrite( line.data(), line.size(), 1, f );
+			fclose(f);
+		}
+
+	}
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////////

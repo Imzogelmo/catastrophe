@@ -26,6 +26,9 @@ public:
 
 	void AddAction( BattleAction* action );
 	void RemoveAction( BattleAction* action );
+
+	//void RemoveAllActionsByCombatant( Combatant* combatant );
+
 	void CancelAction( size_t index );
 	void CancelAction( BattleAction* action );
 	void ClearActions();
@@ -34,12 +37,16 @@ public:
 	BattleAction* GetCurrentAction();
 	void SetCurrentAction();
 	void RemoveCancelledActions();
+
 	void Update();
 
 protected:
-	vec_type		m_actions;
+	vec_type		m_queuedActions;
+	vec_type		m_pendingActions;
 	vec_type		m_finishedActions;
 	BattleAction*	m_currentAction;
+
+	bool			m_wait;
 
 };
 

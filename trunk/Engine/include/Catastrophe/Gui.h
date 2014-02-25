@@ -18,5 +18,16 @@
 
 #pragma once
 
+
 #include "Gui/Widget.h"
+#include "Gui/AnimatedIcon.h"
+#include "Gui/BackgroundImage.h"
+#include "Gui/Frame.h"
+#include "Gui/Gui.h"
+#include "Gui/Icon.h"
+#include "Gui/Label.h"
+#include "Gui/ListBox.h"
+#include "Gui/MenuElement.h"
+#include "Gui/Skin.h"
+#include "Gui/TextBox.h"
 

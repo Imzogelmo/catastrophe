@@ -52,6 +52,10 @@ void BattleEngine::Setup()
 			Combatant* enemy = new Combatant();
 			enemy->InitializeFromActor(actor);
 			AddMonsterCombatant(enemy);
+
+			//todo:
+			enemy->pos.x = fc::randf(8, 96);
+			enemy->pos.y = fc::randf(16, 140);
 		}
 	}
 }
@@ -80,12 +84,8 @@ Battle* BattleEngine::GetCurrentBattle()
 
 BattlePolicy BattleEngine::GetCurrentBattlePolicy()
 {
-	BattlePolicy battlePolicy;
 	Battle* b = GetCurrentBattle();
-	if( b != 0 )
-		battlePolicy = b->GetBattlePolicy();
-
-	return battlePolicy;
+	return b ? b->GetBattlePolicy() : BattlePolicy();
 }
 
 
@@ -156,13 +156,6 @@ void BattleEngine::Update()
 	{
 		Combatant* m = *it;
 		m->Update();
-		if( !m->IsAlive() )
-		{
-			if( battlePolicy.ShouldRemoveDeadMonsters() )
-			{
-				//todo: should it be stored inside object?
-			}
-		}
 	}
 
 	// update other entities
@@ -175,6 +168,25 @@ void BattleEngine::Update()
 	for( entity_vec_type::iterator it = m_textEntities.begin(); it != m_textEntities.end(); ++it )
 	{
 		(*it)->Update();
+	}
+
+
+	// cleanup
+	if( battlePolicy.ShouldRemoveDeadMonsters() )
+	{
+		for( monster_vec_type::iterator it = m_monsters.begin(); it != m_monsters.end(); )
+		{
+			Combatant* monster = *it;
+			if( !monster->IsAlive() )
+			{
+				//monster->DestroyScript();
+				m_deadMonsters.push_back(monster);
+			}
+			else
+			{
+				++it;
+			}
+		}
 	}
 
 }

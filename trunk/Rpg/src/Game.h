@@ -40,6 +40,7 @@ public:
 	int	display_resolution_x;
 	int	display_resolution_y;
 
+	float battleSpeed;
 };
 
 

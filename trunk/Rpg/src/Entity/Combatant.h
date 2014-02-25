@@ -60,10 +60,16 @@ public:
 	AnimatedSpriteSet& GetAnimatedSpriteSet() { return m_spriteset; }
 	const AnimatedSpriteSet& GetAnimatedSpriteSet() const { return m_spriteset; }
 
+	int GetBattleGroup() const { return m_battleGroup; }
+	void SetBattleGroup( int group ) { m_battleGroup = group; }
+
+
 protected:
 	Actor*				m_actor;
 	AnimatedSpriteSet	m_spriteset;
+	int					m_battleGroup;
 
+	bool				m_isIncapacitated;
 };
 
 
