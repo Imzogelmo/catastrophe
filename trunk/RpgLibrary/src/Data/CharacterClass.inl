@@ -10,8 +10,8 @@
 // GNU General Public License for more details.
 
 
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 #include "CharacterClass.h"
 #include "Serialization.h"
 
@@ -46,46 +46,42 @@ void CharacterClass::RegisterObject()
 }
 
 
-void CharacterClass::SerializeXml( XmlWriter* xml )
+void CharacterClass::SerializeXml( AttributeWriter* f )
 {
-	SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+	//SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
 
-	/*
-	xml->SetString("name", name.c_str());
-	xml->SetString("script", script.c_str());
-	xml->SetString("description", description.c_str());
+	f->SetString("name", name.c_str());
+	f->SetString("script", script.c_str());
+	f->SetString("description", description.c_str());
 
-	xml->BeginNode("Data");
-	xml->SetInt("portrait_id", portrait_id);
-	xml->SetInt("map_spriteset_id", portrait_id);
-	xml->SetInt("battle_spriteset_id", portrait_id);
-	xml->EndNode();
-	*/
+	f->BeginNode("Data");
+	f->SetInt("portrait_id", portrait_id);
+	f->SetInt("map_spriteset_id", portrait_id);
+	f->SetInt("battle_spriteset_id", portrait_id);
+	f->EndNode();
 
-	attributes.SerializeXml(xml);
+	attributes.SerializeXml(f);
 
 }
 
 
-void CharacterClass::DeserializeXml( XmlReader* xml )
+void CharacterClass::DeserializeXml( AttributeReader* f )
 {
-	DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+	//DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
 
-	/*
-	name = xml->GetString("name");
-	script = xml->GetString("script");
-	description = xml->GetString("description");
+	name = f->GetString("name");
+	script = f->GetString("script");
+	description = f->GetString("description");
 
-	if( xml->NextChild("Data") )
+	if( f->NextChild("Data") )
 	{
-		portrait_id = xml->GetInt("portrait_id");
-		map_spriteset_id = xml->GetInt("map_spriteset_id");
-		battle_spriteset_id = xml->GetInt("battle_spriteset_id");
-		xml->SetToParent();
+		portrait_id = f->GetInt("portrait_id", portrait_id);
+		map_spriteset_id = f->GetInt("map_spriteset_id", map_spriteset_id);
+		battle_spriteset_id = f->GetInt("battle_spriteset_id", battle_spriteset_id);
+		f->SetToParent();
 	}
-	*/
 
-	attributes.DeserializeXml(xml);
+	attributes.DeserializeXml(f);
 
 }
 

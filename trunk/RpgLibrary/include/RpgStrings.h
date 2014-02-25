@@ -44,9 +44,9 @@ public:
 
 	}
 
-	void SerializeXml( XmlWriter* xml )
+	void SerializeXml( AttributeWriter* f )
 	{
-		xml->BeginNode("Strings");
+		f->BeginNode("Strings");
 
 		Util::SerializeStringArray(xml, "Stats", stats, MAX_STATS);
 		Util::SerializeStringArray(xml, "Elements", elements, MAX_ELEMENTS);
@@ -54,14 +54,14 @@ public:
 		Util::SerializeStringArray(xml, "ClassFlags", class_flags, MAX_CLASS_FLAGS);
 		Util::SerializeStringArray(xml, "FamilyFlags", family_flags, MAX_FAMILY_FLAGS);
 
-		xml->SetString("title", title.c_str());
-		xml->SetString("gold", gold.c_str());
-		xml->EndNode();
+		f->SetString("title", title.c_str());
+		f->SetString("gold", gold.c_str());
+		f->EndNode();
 	}
 
-	void DeserializeXml( XmlReader* xml )
+	void DeserializeXml( AttributeReader* f )
 	{
-		if( xml->NextChild("Strings") )
+		if( f->NextChild("Strings") )
 		{
 			Util::DeserializeStringArray(xml, "Stats", stats, MAX_STATS);
 			Util::DeserializeStringArray(xml, "Elements", elements, MAX_ELEMENTS);
@@ -70,9 +70,9 @@ public:
 			Util::DeserializeStringArray(xml, "FamilyFlags", family_flags, MAX_FAMILY_FLAGS);
 		}
 
-		title = xml->GetString("title");
-		gold = xml->GetString("gold");
-		xml->SetToParent();
+		title = f->GetString("title");
+		gold = f->GetString("gold");
+		f->SetToParent();
 	}
 
 };

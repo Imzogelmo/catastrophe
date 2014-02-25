@@ -55,8 +55,8 @@ public:
 	inline void SetIndex( size_t index ) { m_tilesetIndex = index; }
 	inline size_t GetIndex() const { return m_tilesetIndex; }
 
-	NO_INLINE void SerializeXml( XmlWriter* xml );
-	NO_INLINE void DeserializeXml( XmlReader* xml );
+	NO_INLINE void SerializeXml( AttributeWriter* f );
+	NO_INLINE void DeserializeXml( AttributeReader* f );
 
 public:
 	short counter;

@@ -47,8 +47,8 @@ USING_NAMESPACE_CE
 class Tile;
 class TileProperties;
 class Tileset;
-class Map;
-class MapLayer;
+class TileMap;
+class TileMapLayer;
 
 template <class T> struct AttributeArray;
 template <class T, size_t N> struct FixedAttributeArray;

@@ -27,8 +27,8 @@ struct RPG_API EncounterData
 	//simply to ensure data is sane before saving.
 	void Validate();
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
+	void SerializeXml( AttributeWriter* f );
+	void DeserializeXml( AttributeReader* f );
 };
 
 
@@ -45,7 +45,7 @@ struct RPG_API EncounterGroup
 
 	EncounterGroup();
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
+	void SerializeXml( AttributeWriter* f );
+	void DeserializeXml( AttributeReader* f );
 };
 

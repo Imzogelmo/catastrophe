@@ -52,8 +52,8 @@ struct RPG_API ExpTable
 	int GetExpDeltaForLevel( int lv );
 	void Resize( int maxLv );
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
+	void SerializeXml( AttributeWriter* f );
+	void DeserializeXml( AttributeReader* f );
 
 };
 

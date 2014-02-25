@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <Catastrophe/IO/XmlWriter.h>
+#include <Catastrophe/IO/AttributeWriter.h>
 #include <Catastrophe/Math/Point.h>
 #include <Catastrophe/Math/Rect.h>
 #include <Catastrophe/Graphics/Texture.h>
@@ -25,86 +25,86 @@
 
 
 template <class T>
-void SerializeObject<T>( const char* nodeName, XmlWriter* xml, const T& val )
+void SerializeObject<T>( const char* nodeName, AttributeWriter* f, const T& val )
 {
-	xml->BeginNode(nodeName);
-	SerializeObject<T>(xml, val);
-	xml->EndNode();
+	f->BeginNode(nodeName);
+	SerializeObject<T>(f, val);
+	f->EndNode();
 }
 
 
 template <>
-void SerializeObject<Point>( XmlWriter* xml, const Point& val )
+void SerializeObject<Point>( AttributeWriter* f, const Point& val )
 {
-	xml->SetInt("x", val.x);
-	xml->SetInt("y", val.y);
+	f->SetInt("x", val.x);
+	f->SetInt("y", val.y);
 }
 
 
 template <>
-void SerializeObject<Rect>( XmlWriter* xml, const Rect& val )
+void SerializeObject<Rect>( AttributeWriter* f, const Rect& val )
 {
-	xml->SetInt("x", val.pos.x);
-	xml->SetInt("y", val.pos.y);
-	xml->SetInt("w", val.size.x);
-	xml->SetInt("h", val.size.y);
+	f->SetInt("x", val.pos.x);
+	f->SetInt("y", val.pos.y);
+	f->SetInt("w", val.size.x);
+	f->SetInt("h", val.size.y);
 }
 
 
 template <>
-void SerializeObject<SpriteBase>( XmlWriter* xml, const SpriteBase& s )
+void SerializeObject<SpriteBase>( AttributeWriter* f, const SpriteBase& s )
 {
-	xml->SetInt("width", fc::iround(s.size.x));
-	xml->SetInt("height", fc::iround(s.size.y));
-	xml->SetFloat("scale_x", s.scale.x);
-	xml->SetFloat("scale_y", s.scale.y);
-	xml->SetFloat("angle", s.angle);
-	xml->SetUInt("color", s.color.packed_value);
-	xml->SetUInt("blendmode", s.blendmode.value);
+	f->SetInt("width", fc::iround(s.size.x));
+	f->SetInt("height", fc::iround(s.size.y));
+	f->SetFloat("scale_x", s.scale.x);
+	f->SetFloat("scale_y", s.scale.y);
+	f->SetFloat("angle", s.angle);
+	f->SetUInt("color", s.color.packed_value);
+	f->SetUInt("blendmode", s.blendmode.value);
 }
 
 
 template <>
-void SerializeObject<SpriteAnimation>( XmlWriter* xml, const SpriteAnimation& a )
+void SerializeObject<SpriteAnimation>( AttributeWriter* f, const SpriteAnimation& a )
 {
-	//xml->BeginNode("SpriteAnimation");
+	//f->BeginNode("SpriteAnimation");
 
-	SerializeObject<Rect>(xml, a.GetSourceRect());
-	xml->SetUInt("frames", a.GetNumFrames());
-	xml->SetInt("offset_x", a.GetFrameOffsetX());
-	xml->SetInt("offset_y", a.GetFrameOffsetY());
-	xml->SetFloat("speed", a.GetAnimationSpeed());
-	xml->SetInt("flags", a.GetFlags());
+	SerializeObject<Rect>(f, a.GetSourceRect());
+	f->SetUInt("frames", a.GetNumFrames());
+	f->SetInt("offset_x", a.GetFrameOffsetX());
+	f->SetInt("offset_y", a.GetFrameOffsetY());
+	f->SetFloat("speed", a.GetAnimationSpeed());
+	f->SetInt("flags", a.GetFlags());
 
-	//xml->EndNode();
+	//f->EndNode();
 }
 
 
 template <>
-void SerializeObject<AnimatedSpriteSet>( XmlWriter* xml, const AnimatedSpriteSet& s )
+void SerializeObject<AnimatedSpriteSet>( AttributeWriter* f, const AnimatedSpriteSet& s )
 {
-	//xml->BeginNode("AnimatedSpriteSet");
+	//f->BeginNode("AnimatedSpriteSet");
 
 	Texture* texture = s.GetTexture();
 	fc::string texStr = texture ? texture->GetName() : "";
 	size_t count = s.GetNumAnimations();
 
-	xml->SetString("texture", texStr.c_str());
-	xml->SetUInt("num_animations", count);
-	SerializeObject<SpriteBase>("SpriteBase", xml, s);
+	f->SetString("texture", texStr.c_str());
+	f->SetUInt("num_animations", count);
+	SerializeObject<SpriteBase>("SpriteBase", f, s);
 
 	for( size_t i(0); i < count; ++i )
 	{
-		SerializeObject<SpriteAnimation>(xml, s.GetAnimation(i));
+		SerializeObject<SpriteAnimation>(f, s.GetAnimation(i));
 	}
 
-	//xml->EndNode();
+	//f->EndNode();
 }
 
 
 /*
 template <>
-void SerializeObject<Sprite>( XmlWriter* xml, const Sprite& s )
+void SerializeObject<Sprite>( AttributeWriter* f, const Sprite& s )
 {
 	SerializeSpriteBase(xml, s);
 
@@ -121,36 +121,36 @@ void SerializeObject<Sprite>( XmlWriter* xml, const Sprite& s )
 		sourceRect = texture->GetSourceRect(s.GetUVRect());
 	}
 
-	xml->SetString("texture", textureName.c_str());
+	f->SetString("texture", textureName.c_str());
 	SerializeRect(xml, sourceRect);
 }
 
 
-void RpgSerializer::SerializeAnimatedSprite( XmlWriter* xml, const AnimatedSprite& a )
+void RpgSerializer::SerializeAnimatedSprite( AttributeWriter* f, const AnimatedSprite& a )
 {
 	SerializeSpriteBase(xml, a);
 
-	xml->BeginNode("Animation");
+	f->BeginNode("Animation");
 	SerializeAnimation(xml, a);
-	xml->EndNode();
+	f->EndNode();
 }
 
 
-void RpgSerializer::SerializeAnimationSet( XmlWriter* xml, const AnimationSet& a )
+void RpgSerializer::SerializeAnimationSet( AttributeWriter* f, const AnimationSet& a )
 {
 	SerializeSpriteBase(xml, a);
-	xml->SetUInt("count", a.NumAnimations());
+	f->SetUInt("count", a.NumAnimations());
 
 	for( size_t i(0); i < a.NumAnimations(); ++i )
 	{
-		xml->BeginNode("Animation");
+		f->BeginNode("Animation");
 		SerializeAnimation(xml, a.GetAnimation(i) );
-		xml->EndNode();
+		f->EndNode();
 	}
 }
 
 
-void RpgSerializer::SerializeAnimation( XmlWriter* xml, const Animation& a )
+void RpgSerializer::SerializeAnimation( AttributeWriter* f, const Animation& a )
 {
 	fc::string textureName;
 	Rect r1 = Rect::Zero;
@@ -178,32 +178,32 @@ void RpgSerializer::SerializeAnimation( XmlWriter* xml, const Animation& a )
 		}
 	}
 
-	xml->SetString("texture", textureName.c_str());
-	xml->SetFloat("speed", a.GetAnimSpeed() );
-	xml->SetBool("loop", a.IsLooping() );
-	xml->SetBool("paused", a.IsPaused() );
+	f->SetString("texture", textureName.c_str());
+	f->SetFloat("speed", a.GetAnimSpeed() );
+	f->SetBool("loop", a.IsLooping() );
+	f->SetBool("paused", a.IsPaused() );
 
-	xml->BeginNode("Frame");
-	xml->SetUInt("num_frames", a.NumFrames());
+	f->BeginNode("Frame");
+	f->SetUInt("num_frames", a.NumFrames());
 	SerializeRect(xml, r1);
-	xml->SetInt("offset_x", offset.x);
-	xml->SetInt("offset_y", offset.y);
-	xml->EndNode();
+	f->SetInt("offset_x", offset.x);
+	f->SetInt("offset_y", offset.y);
+	f->EndNode();
 }
 */
 
 
 template <class T> 
-void SerializeStringArray( XmlWriter* xml, const char* node, const T* stringArray, int n )
+void SerializeStringArray( AttributeWriter* f, const char* node, const T* stringArray, int n )
 {
-	xml->BeginNode(node);
-	xml->SetInt("count", n);
+	f->BeginNode(node);
+	f->SetInt("count", n);
 	for( int i(0); i < n; ++i )
 	{
-		xml->BeginNode("String");
-		xml->SetInt("id", i);
-		xml->SetString("s", stringArray[i].c_str());
-		xml->EndNode();
+		f->BeginNode("String");
+		f->SetInt("id", i);
+		f->SetString("s", stringArray[i].c_str());
+		f->EndNode();
 	}
-	xml->EndNode();
+	f->EndNode();
 }

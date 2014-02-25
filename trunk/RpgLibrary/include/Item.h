@@ -68,10 +68,8 @@ struct RPG_API Item
 
 	static void RegisterObject();
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
-	void Serialize( Serializer* f );
-	void Deserialize( Deserializer* f );
+	void SerializeXml( AttributeWriter* f );
+	void DeserializeXml( AttributeReader* f );
 
 protected:
 	static Attributes m_static_attributes;

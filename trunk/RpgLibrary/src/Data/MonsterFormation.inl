@@ -10,8 +10,8 @@
 // GNU General Public License for more details.
 
 
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 #include "MonsterFormation.h"
 #include "AttributeSerializer.h"
 
@@ -33,33 +33,23 @@ MonsterFormationCellData::MonsterFormationCellData( short x, short y ) :
 
 void MonsterFormationCellData::RegisterObject()
 {
-	REGISTER_ATTRIBUTE_FACTORY_TYPE(MonsterFormationCellData);
-	REGISTER_ATTRIBUTE(MonsterFormationCellData, VAR_TYPE_SHORT, "x", x);
-	REGISTER_ATTRIBUTE(MonsterFormationCellData, VAR_TYPE_SHORT, "y", y);
+	//REGISTER_ATTRIBUTE_FACTORY_TYPE(MonsterFormationCellData);
+	//REGISTER_ATTRIBUTE(MonsterFormationCellData, VAR_TYPE_SHORT, "x", x);
+	//REGISTER_ATTRIBUTE(MonsterFormationCellData, VAR_TYPE_SHORT, "y", y);
 }
 
 
-void MonsterFormationCellData::SerializeXml( XmlWriter* xml )
+void MonsterFormationCellData::SerializeXml( AttributeWriter* f )
 {
-	SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+	f->SetShort("x", x);
+	f->SetShort("y", y);
 }
 
 
-void MonsterFormationCellData::DeserializeXml( XmlReader* xml )
+void MonsterFormationCellData::DeserializeXml( AttributeReader* f )
 {
-	DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
-}
-
-
-void MonsterFormationCellData::Serialize( Serializer* f )
-{
-	SERIALIZE_OBJECT_ATTRIBUTES(this, f);
-}
-
-
-void MonsterFormationCellData::Deserialize( File* f )
-{
-	DESERIALIZE_OBJECT_ATTRIBUTES(this, f);
+	x = f->GetShort("x", x);
+	y = f->GetShort("y", y);
 }
 
 
@@ -77,32 +67,36 @@ MonsterFormation::MonsterFormation() :
 
 void MonsterFormation::RegisterObject()
 {
-	REGISTER_ATTRIBUTE_FACTORY_TYPE(MonsterFormation);
-	REGISTER_ATTRIBUTE_OBJECT_ARRAY(MonsterFormation, "Cell", "max", array_type, formations);
+	//REGISTER_ATTRIBUTE_FACTORY_TYPE(MonsterFormation);
+	//REGISTER_ATTRIBUTE_OBJECT_ARRAY(MonsterFormation, "Cell", "max", array_type, formations);
 }
 
 
-void MonsterFormation::SerializeXml( XmlWriter* xml )
+void MonsterFormation::SerializeXml( AttributeWriter* f )
 {
-	SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+	f->SetUInt( "max", formations.size() );
+	for( array_type::iterator it = formations.begin(); it < formations.end(); ++it )
+	{
+		f->BeginNode("Cell");
+		it->SerializeXml(f);
+		f->EndNode();
+	}
 }
 
 
-void MonsterFormation::DeserializeXml( XmlReader* xml )
+void MonsterFormation::DeserializeXml( AttributeReader* f )
 {
-	DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
-}
+	size_t numFormations = f->GetInt("max");
+	formations.resize(numFormations);
 
+	for( size_t i(0); i < numFormations; ++i )
+	{
+		if( f->NextChild("Cell") )
+			formations[i].DeserializeXml(f);
+	}
 
-void MonsterFormation::Serialize( Serializer* f )
-{
-	SERIALIZE_OBJECT_ATTRIBUTES(this, f);
-}
-
-
-void MonsterFormation::Deserialize( Deserializer* f )
-{
-	DESERIALIZE_OBJECT_ATTRIBUTES(this, f);
+	if( f->GetCurrentNodeName() == "Cell" )
+		f->SetToParent();
 }
 
 

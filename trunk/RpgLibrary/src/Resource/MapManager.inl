@@ -10,7 +10,7 @@
 // GNU General Public License for more details.
 
 #include "MapManager.h"
-#include "Map.h"
+#include "TileMap.h"
 
 
 
@@ -27,14 +27,14 @@ void MapManager::DisposeResource( void* p )
 }
 
 
-Map* MapManager::Load( const fc::string& filename, int* id  )
+TileMap* MapManager::Load( const fc::string& filename, int* id  )
 {
-	Map* map = GetResource(filename, id);
+	TileMap* map = GetResource(filename, id);
 	if( map )
 		return map;
 
 	//todo
-	map = new Map();
+	map = new TileMap();
 
 	return map;
 }

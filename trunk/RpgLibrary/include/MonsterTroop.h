@@ -35,10 +35,8 @@ struct RPG_API MonsterGroup
 
 	static void RegisterObject();
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
-	void Serialize( Serializer* f );
-	void Deserialize( File* f );
+	void SerializeXml( AttributeWriter* f );
+	void DeserializeXml( AttributeReader* f );
 
 };
 
@@ -62,10 +60,8 @@ struct RPG_API MonsterTroop
 
 	static void RegisterObject();
 
-	NO_INLINE void SerializeXml( XmlWriter* xml );
-	NO_INLINE void DeserializeXml( XmlReader* xml );
-	NO_INLINE void Serialize( Serializer* f );
-	NO_INLINE void Deserialize( File* f );
+	NO_INLINE void SerializeXml( AttributeWriter* f );
+	NO_INLINE void DeserializeXml( AttributeReader* f );
 
 };
 

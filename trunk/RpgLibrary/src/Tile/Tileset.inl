@@ -102,6 +102,7 @@ void Tileset::ValidateTiles()
 	//make sure all tile data is correct.
 	//since we do no runtime checks on these later 
 	//it's possible to get undefined behavior otherwise.
+
 	size_t size = m_tiles.size();
 	for( size_t i(0); i < size; ++i )
 	{

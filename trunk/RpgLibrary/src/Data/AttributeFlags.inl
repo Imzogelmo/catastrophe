@@ -15,34 +15,34 @@
 #include "AttributeFlags.h"
 
 
-void AttributeFlags::SerializeXml( XmlWriter* xml )
+void AttributeFlags::SerializeXml( AttributeWriter* f )
 {
-	xml->BeginNode("Flags");
-	xml->SetInt("elem_atk", element_atk);
-	xml->SetInt("elem_absorb", element_absorb);
-	xml->SetInt("elem_nullify", element_nullify);
-	xml->SetInt("elem_resist", element_resist);
-	xml->SetInt("elem_weak", element_weak);
-	xml->SetInt("family", family_flags);
-	xml->SetInt("class", class_flags);
-	xml->SetInt("misc", misc_flags);
-	xml->EndNode();
+	f->BeginNode("Flags");
+	f->SetInt("elem_atk", element_atk);
+	f->SetInt("elem_absorb", element_absorb);
+	f->SetInt("elem_nullify", element_nullify);
+	f->SetInt("elem_resist", element_resist);
+	f->SetInt("elem_weak", element_weak);
+	f->SetInt("family", family_flags);
+	f->SetInt("class", class_flags);
+	f->SetInt("misc", misc_flags);
+	f->EndNode();
 }
 
 
-void AttributeFlags::DeserializeXml( XmlReader* xml )
+void AttributeFlags::DeserializeXml( AttributeReader* f )
 {
-	if( xml->FirstChild("Flags") )
+	if( f->FirstChild("Flags") )
 	{
-		element_atk = xml->GetInt("elem_atk");
-		element_absorb = xml->GetInt("elem_absorb");
-		element_nullify = xml->GetInt("elem_nullify");
-		element_resist = xml->GetInt("elem_resist");
-		element_weak = xml->GetInt("elem_weak");
-		family_flags = xml->GetInt("family");
-		class_flags = xml->GetInt("class");
-		misc_flags = xml->GetInt("misc");
-		xml->SetToParent();
+		element_atk = f->GetInt("elem_atk");
+		element_absorb = f->GetInt("elem_absorb");
+		element_nullify = f->GetInt("elem_nullify");
+		element_resist = f->GetInt("elem_resist");
+		element_weak = f->GetInt("elem_weak");
+		family_flags = f->GetInt("family");
+		class_flags = f->GetInt("class");
+		misc_flags = f->GetInt("misc");
+		f->SetToParent();
 	}
 }
 

@@ -20,8 +20,8 @@ struct RPG_API Synthesis
 
 	Synthesis();
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
+	void SerializeXml( AttributeWriter* f );
+	void DeserializeXml( AttributeReader* f );
 
 };
 

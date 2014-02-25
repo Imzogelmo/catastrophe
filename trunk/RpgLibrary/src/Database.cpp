@@ -45,6 +45,9 @@
 #include "Database.h"
 #include "ResourceDirectory.h"
 
+#include <Catastrophe/IO/XmlWriter.h>
+#include <Catastrophe/IO/XmlReader.h>
+
 
 Database::Database() :
 	m_resourceDirectory(0)
@@ -197,9 +200,56 @@ void Database::GenerateIds( T& arr )
 }
 
 
+XmlWriter* SerializeDataArrayBeginImpl
+( ResourceDirectory* resourceDirectory, const fc::string& filename, const char* root, size_t size )
+{
+	fc::string fn = resourceDirectory ? resourceDirectory->GetDataDirectory() : "";
+	fn += filename;
+
+	XmlWriter* xml = new XmlWriter(fn);
+	if( !xml->IsOpen() )
+	{
+		delete xml;
+		return 0;
+	}
+
+	xml->BeginNode(root);
+	xml->SetInt("ver", 1);
+	xml->SetUInt("count", size);
+
+	return xml;
+}
+
+
+void SerializeDataArrayEndImpl( XmlWriter* xml )
+{
+	if( xml )
+	{
+		xml->EndNode();
+		xml->Close();
+		delete xml;
+	}
+}
+
+
 template <class T>
 bool Database::SerializeDataArray( T& arr, ResourceDirectory* resourceDirectory, const fc::string& filename, const char* root, const char* item )
 {
+	XmlWriter* xml = SerializeDataArrayBeginImpl(resourceDirectory, filename, root, arr.size());
+	if( xml )
+	{
+		for( size_t i(0); i < arr.size(); ++i )
+		{
+			xml->BeginNode(item);
+			arr[i].SerializeXml(xml);
+			xml->EndNode();
+		}
+	}
+
+	SerializeDataArrayEndImpl(xml);
+	return true;
+
+	/*
 	fc::string fn = resourceDirectory ? resourceDirectory->GetDataDirectory() : "";
 	fn += filename;
 
@@ -221,6 +271,7 @@ bool Database::SerializeDataArray( T& arr, ResourceDirectory* resourceDirectory,
 	xml.Close();
 
 	return true;
+	*/
 }
 
 
@@ -280,7 +331,9 @@ bool Database::GenerateHeader( const Array& arr, ResourceDirectory* resourceDire
 
 	fc::string str;
 	fc::string name;
-	for( size_t i(0); i < arr.size(); ++i )
+
+	size_t i = 0;
+	for( ; i < arr.size(); ++i )
 	{
 		str = "#define " + prependStr;
 		name = arr[i].name;
@@ -301,6 +354,12 @@ bool Database::GenerateHeader( const Array& arr, ResourceDirectory* resourceDire
 
 		f.WriteLine(str);
 	}
+
+	// finish by writing the maximum valid indices to this array.
+	str = "#define " + prependStr + "MAX";
+	str.append(40 - str.size(), ' ');
+	str.append_int(i);
+	f.WriteLine(str);
 
 	f.WriteLine("");
 	f.Close();

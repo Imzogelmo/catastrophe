@@ -9,8 +9,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 #include "AnimatedSpriteSetAsset.h"
 #include "Serialization.h"
 
@@ -45,47 +45,47 @@ void AnimatedSpriteSetAsset::ReleaseAnimatedSpriteSet()
 }
 
 
-void AnimatedSpriteSetAsset::SerializeXml( XmlWriter* xml )
+void AnimatedSpriteSetAsset::SerializeXml( AttributeWriter* f )
 {
-	//xml->BeginNode("AnimatedSpriteSet");
+	//f->BeginNode("AnimatedSpriteSet");
 
 	size_t count = AnimatedSpriteSet::GetNumAnimations();
-	xml->SetUInt("num_animations", count);
+	f->SetUInt("num_animations", count);
 
-	TextureAsset::SerializeXml(xml);
-	SerializeObject<SpriteBase>("SpriteBase", xml, *this);
+	TextureAsset::SerializeXml(f);
+	SerializeObject<SpriteBase>("SpriteBase", f, *this);
 
 	for( size_t i(0); i < count; ++i )
 	{
-		SerializeObject<SpriteAnimation>("SpriteAnimation", xml, AnimatedSpriteSet::GetAnimation(i));
+		SerializeObject<SpriteAnimation>("SpriteAnimation", f, AnimatedSpriteSet::GetAnimation(i));
 	}
 
-	//xml->EndNode();
+	//f->EndNode();
 }
 
 /*
-void AnimatedSpriteSetAsset::DeserializeXml( XmlReader* xml )
+void AnimatedSpriteSetAsset::DeserializeXml( AttributeReader* f )
 {
 	m_preload = true;
 	AnimatedSpriteSet::Resize(1);
 
-	xml->NextChild("AnimatedSprite");
-		size.x = (float)xml->GetInt("width");
-		size.y = (float)xml->GetInt("height");
-		scale.x = xml->GetFloat("scale_x", 1.f);
-		scale.y = xml->GetFloat("scale_y", 1.f);
-		angle = xml->GetFloat("angle");
-		color.packed_value = xml->GetUInt("color", Color::White().packed_value);
-		blendmode.value = xml->GetUInt("blendmode", BlendMode::Alpha.value);
+	f->NextChild("AnimatedSprite");
+		size.x = (float)f->GetInt("width");
+		size.y = (float)f->GetInt("height");
+		scale.x = f->GetFloat("scale_x", 1.f);
+		scale.y = f->GetFloat("scale_y", 1.f);
+		angle = f->GetFloat("angle");
+		color.packed_value = f->GetUInt("color", Color::White().packed_value);
+		blendmode.value = f->GetUInt("blendmode", BlendMode::Alpha.value);
 
-		xml->NextChild("Animation");
-			TextureAsset::m_textureFilename = xml->GetString("texture");
-			xml->NextChild("Frame");
+		f->NextChild("Animation");
+			TextureAsset::m_textureFilename = f->GetString("texture");
+			f->NextChild("Frame");
 				Rect r;
-				r.pos.x = xml->GetInt("x");
-				r.pos.y = xml->GetInt("y");
-				int w = xml->GetInt("w");
-				int h = xml->GetInt("h");
+				r.pos.x = f->GetInt("x");
+				r.pos.y = f->GetInt("y");
+				int w = f->GetInt("w");
+				int h = f->GetInt("h");
 
 				if(w < 32) w = 32;
 				else if(w > 32 && w < 48) w = 48;
@@ -100,9 +100,9 @@ void AnimatedSpriteSetAsset::DeserializeXml( XmlReader* xml )
 
 			AnimatedSpriteSet::operator[](0).Create(r);
 
-			xml->SetToParent();
-		xml->SetToParent();
-	xml->SetToParent();
+			f->SetToParent();
+		f->SetToParent();
+	f->SetToParent();
 
 
 
@@ -110,26 +110,26 @@ void AnimatedSpriteSetAsset::DeserializeXml( XmlReader* xml )
 }
 */
 
-void AnimatedSpriteSetAsset::DeserializeXml( XmlReader* xml )
+void AnimatedSpriteSetAsset::DeserializeXml( AttributeReader* f )
 {
-	size_t count = xml->GetUInt("num_animations");
+	size_t count = f->GetUInt("num_animations");
 
-	TextureAsset::DeserializeXml(xml);
-	DeserializeObject<SpriteBase>("SpriteBase", xml, *this);
+	TextureAsset::DeserializeXml(f);
+	DeserializeObject<SpriteBase>("SpriteBase", f, *this);
 	AnimatedSpriteSet::Resize(count);
 
 	bool nested = false;
 	for( size_t i(0); i < count; ++i )
 	{
-		if( xml->NextChild("SpriteAnimation") )
+		if( f->NextChild("SpriteAnimation") )
 		{
-			DeserializeObject<SpriteAnimation>(xml, AnimatedSpriteSet::GetAnimation(i));
+			DeserializeObject<SpriteAnimation>(f, AnimatedSpriteSet::GetAnimation(i));
 			nested = true;
 		}
 	}
 
 	if( nested )
-		xml->SetToParent();
+		f->SetToParent();
 
 	Reset();
 }

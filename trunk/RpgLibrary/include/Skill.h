@@ -42,8 +42,8 @@ struct RPG_API Skill
 
 	Skill();
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
+	void SerializeXml( AttributeWriter* f );
+	void DeserializeXml( AttributeReader* f );
 
 };
 

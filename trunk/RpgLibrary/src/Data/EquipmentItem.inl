@@ -10,8 +10,8 @@
 // GNU General Public License for more details.
 
 
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 #include "EquipmentItem.h"
 
 
@@ -27,31 +27,17 @@ void EquipmentItem::RegisterObject()
 }
 
 
-void EquipmentItem::SerializeXml( XmlWriter* xml )
+void EquipmentItem::SerializeXml( AttributeWriter* f )
 {
-	Item::SerializeXml(xml);
-	attributes.SerializeXml(xml);
+	Item::SerializeXml(f);
+	attributes.SerializeXml(f);
 }
 
 
-void EquipmentItem::DeserializeXml( XmlReader* xml )
+void EquipmentItem::DeserializeXml( AttributeReader* f )
 {
-	Item::DeserializeXml(xml);
-	attributes.DeserializeXml(xml);
-}
-
-
-void EquipmentItem::Serialize( Serializer* f )
-{
-	//Item::Serialize(xml);
-	//attributes.Serialize(xml);
-}
-
-
-void EquipmentItem::Deserialize( File* f )
-{
-	//Item::Deserialize(xml);
-	//attributes.Deserialize(xml);
+	Item::DeserializeXml(f);
+	attributes.DeserializeXml(f);
 }
 
 

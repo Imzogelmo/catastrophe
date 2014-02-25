@@ -10,27 +10,27 @@
 // GNU General Public License for more details.
 
 
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 #include "Shops.h"
 
 
 
-void ShopItem::SerializeXml( XmlWriter* xml )
+void ShopItem::SerializeXml( AttributeWriter* f )
 {
-	xml->BeginNode("Item");
+	f->BeginNode("Item");
 
-	xml->SetInt("id", item_id);
-	xml->SetInt("price", price);
+	f->SetInt("id", item_id);
+	f->SetInt("price", price);
 
-	xml->EndNode();
+	f->EndNode();
 }
 
 
-void ShopItem::DeserializeXml( XmlReader* xml )
+void ShopItem::DeserializeXml( AttributeReader* f )
 {
-	item_id = xml->GetInt("id");
-	price = xml->GetInt("price");
+	item_id = f->GetInt("id");
+	price = f->GetInt("price");
 }
 
 
@@ -53,46 +53,46 @@ Shop::Shop() :
 }
 
 
-void Shop::SerializeXml( XmlWriter* xml )
+void Shop::SerializeXml( AttributeWriter* f )
 {
-	xml->BeginNode("Shop");
+	f->BeginNode("Shop");
 
-	xml->SetUInt("num_items", items.size());
-	xml->SetString("name", name.c_str());
-	xml->SetString("greeting", greeting.c_str());
-	xml->SetString("transaction", greeting.c_str());
-	xml->SetString("buy", greeting.c_str());
-	xml->SetString("sell", greeting.c_str());
-	xml->SetInt("markup", markup_percent);
-	xml->SetInt("devaluation", devaluation_percent);
+	f->SetUInt("num_items", items.size());
+	f->SetString("name", name.c_str());
+	f->SetString("greeting", greeting.c_str());
+	f->SetString("transaction", greeting.c_str());
+	f->SetString("buy", greeting.c_str());
+	f->SetString("sell", greeting.c_str());
+	f->SetInt("markup", markup_percent);
+	f->SetInt("devaluation", devaluation_percent);
 
 	for( vec_type::iterator it = items.begin(); it < items.end(); ++it )
 	{
-		it->SerializeXml(xml);
+		it->SerializeXml(f);
 	}
 
-	xml->EndNode();
+	f->EndNode();
 }
 
 
-void Shop::DeserializeXml( XmlReader* xml )
+void Shop::DeserializeXml( AttributeReader* f )
 {
-	size_t n = xml->GetUInt("num_items");
-	name = xml->GetString("name");
-	greeting = xml->GetString("greeting");
-	transaction = xml->GetString("transaction");
-	buy = xml->GetString("buy");
-	sell = xml->GetString("sell");
-	markup_percent = xml->GetInt("markup");
-	devaluation_percent = xml->GetInt("devaluation");
+	size_t n = f->GetUInt("num_items");
+	name = f->GetString("name");
+	greeting = f->GetString("greeting");
+	transaction = f->GetString("transaction");
+	buy = f->GetString("buy");
+	sell = f->GetString("sell");
+	markup_percent = f->GetInt("markup");
+	devaluation_percent = f->GetInt("devaluation");
 
 	items.reserve(n);
-	while( xml->NextChild("Item") )
+	while( f->NextChild("Item") )
 	{
 		items.push_back();
-		items.back().DeserializeXml(xml);
+		items.back().DeserializeXml(f);
 	}
 
-	xml->SetToParent();
+	f->SetToParent();
 }
 

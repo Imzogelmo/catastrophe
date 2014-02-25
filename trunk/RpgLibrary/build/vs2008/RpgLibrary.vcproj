@@ -272,15 +272,15 @@
 				Name="Tile"
 				>
 				<File
-					RelativePath=".\..\..\src\Tile\Map.inl"
-					>
-				</File>
-				<File
-					RelativePath=".\..\..\src\Tile\MapLayer.inl"
-					>
-				</File>
-				<File
 					RelativePath=".\..\..\src\Tile\Tile.inl"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\Tile\TileMap.inl"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\Tile\TileMapLayer.inl"
 					>
 				</File>
 				<File
@@ -506,15 +506,15 @@
 				Name="Tile"
 				>
 				<File
-					RelativePath=".\..\..\include\Map.h"
-					>
-				</File>
-				<File
-					RelativePath=".\..\..\include\MapLayer.h"
-					>
-				</File>
-				<File
 					RelativePath=".\..\..\include\Tile.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\TileMap.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\TileMapLayer.h"
 					>
 				</File>
 				<File

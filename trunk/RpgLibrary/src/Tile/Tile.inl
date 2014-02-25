@@ -11,8 +11,8 @@
 
 
 #include <Catastrophe/Graphics/Texture.h>
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 
 #include "Serialization.h"
 #include "Tile.h"
@@ -140,26 +140,27 @@ void Tile::Update()
 }
 
 
-void Tile::SerializeXml( XmlWriter* xml )
+void Tile::SerializeXml( AttributeWriter* f )
 {
 	//set it just in case.
-	xml->SetUInt("id", m_tilesetIndex);
+	f->SetUInt("id", m_tilesetIndex);
 
-	xml->SetUInt("num_frames", num_frames);
-	xml->SetShort("speed", anim_speed);
-	xml->SetShort("flags", flags);
+	f->SetUInt("num_frames", num_frames);
+	f->SetShort("speed", anim_speed);
+	f->SetShort("flags", flags);
 
-	SerializeObject<Rect>("SouceRect", xml, m_sourceRect);
+	//Todo: fix this
+	SerializeObject<Rect>("SouceRect", f, m_sourceRect);
 }
 
 
-void Tile::DeserializeXml( XmlReader* xml )
+void Tile::DeserializeXml( AttributeReader* f )
 {
-	num_frames = xml->GetShort("num_frames", 1);
-	anim_speed = xml->GetShort("speed", 16);
-	flags = xml->GetShort("flags", 0);
+	num_frames = f->GetShort("num_frames", 1);
+	anim_speed = f->GetShort("speed", 16);
+	flags = f->GetShort("flags", 0);
 
-	DeserializeObject<Rect>("SouceRect", xml, m_sourceRect);
+	DeserializeObject<Rect>("SouceRect", f, m_sourceRect);
 
 	//todo: should have tileset create..?
 	Create(m_sourceRect, num_frames);

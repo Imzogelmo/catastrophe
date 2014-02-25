@@ -10,56 +10,56 @@
 // GNU General Public License for more details.
 
 
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 #include "LevelData.h"
 #include "Serialization.h"
 
 
 
 
-void LevelData::SerializeXml( XmlWriter* xml )
+void LevelData::SerializeXml( AttributeWriter* f )
 {
-	flags.SerializeXml(xml);
+	flags.SerializeXml(f);
 }
 
 
-void LevelData::DeserializeXml( XmlReader* xml )
+void LevelData::DeserializeXml( AttributeReader* f )
 {
-	flags.DeserializeXml(xml);
+	flags.DeserializeXml(f);
 }
 
 
 
-void LevelInfo::SerializeXml( XmlWriter* xml )
+void LevelInfo::SerializeXml( AttributeWriter* f )
 {
-	xml->BeginNode("LevelInfo");
-	xml->SetUInt("count", levels.size());
-	xml->SetInt("exp_table", exp_table_id);
+	f->BeginNode("LevelInfo");
+	f->SetUInt("count", levels.size());
+	f->SetInt("exp_table", exp_table_id);
 
 	for( size_t i(0); i < levels.size(); ++i )
 	{
-		xml->BeginNode("LevelData");
-		levels[i].SerializeXml(xml);
-		xml->EndNode();
+		f->BeginNode("LevelData");
+		levels[i].SerializeXml(f);
+		f->EndNode();
 	}
 
-	xml->EndNode();
+	f->EndNode();
 }
 
 
-void LevelInfo::DeserializeXml( XmlReader* xml )
+void LevelInfo::DeserializeXml( AttributeReader* f )
 {
-	size_t n = xml->GetUInt("count");
-	exp_table_id = xml->GetInt("exp_table");
+	size_t n = f->GetUInt("count");
+	exp_table_id = f->GetInt("exp_table");
 	levels.clear();
 	levels.reserve(n);
 
-	while( xml->NextChild("LevelData") )
+	while( f->NextChild("LevelData") )
 	{
 		levels.push_back();
-		levels.back().DeserializeXml(xml);
-		xml->SetToParent();
+		levels.back().DeserializeXml(f);
+		f->SetToParent();
 	}
 }
 

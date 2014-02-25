@@ -10,8 +10,8 @@
 // GNU General Public License for more details.
 
 
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 #include "Switches.h"
 #include "Serialization.h"
 
@@ -52,20 +52,20 @@ bool Switches::GetBit( int bit )
 }
 
 
-void Switches::SerializeXml( XmlWriter* xml )
+void Switches::SerializeXml( AttributeWriter* f )
 {
-	xml->BeginNode("Switches");
-	//xml->WriteIntBlock((int*)bits.data(), bit_array_type::NWords);
-	xml->EndNode();
+	f->BeginNode("Switches");
+	//f->WriteIntBlock((int*)bits.data(), bit_array_type::NWords);
+	f->EndNode();
 }
 
 
-void Switches::DeserializeXml( XmlReader* xml )
+void Switches::DeserializeXml( AttributeReader* f )
 {
-	if( xml->FirstChild("MaxParams") )
+	if( f->FirstChild("MaxParams") )
 	{
-		//xml->ReadIntBlock((int*)bits.data(), bit_array_type::NWords);
-		xml->SetToParent();
+		//f->ReadIntBlock((int*)bits.data(), bit_array_type::NWords);
+		f->SetToParent();
 	}
 }
 

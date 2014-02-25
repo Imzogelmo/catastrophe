@@ -53,12 +53,12 @@ struct LayerTile
 
 
 //todo: tile flip/flags
-class RPG_API MapLayer
+class RPG_API TileMapLayer
 {
 public:
 	typedef fc::dynamic_array2d<LayerTile> array_type;
 
-	MapLayer();
+	TileMapLayer();
 
 	void SetName( const fc::string& name ) { m_name = name; }
 	void SetVisible( bool enable = true ) { m_visible = enable; }
@@ -95,12 +95,12 @@ public:
 	void Update();
 	void Render( SpriteBatch* spriteBatch, const Rect& viewRect, bool wrap );
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
+	void SerializeXml( AttributeWriter* f );
+	void DeserializeXml( AttributeReader* f );
 
 protected:
 	fc::string		m_name;
-	Map*			m_parent;
+	TileMap*		m_parent;
 	Tileset*		m_tileset;
 	array_type		m_tiles;
 	BlendMode		m_blendmode;

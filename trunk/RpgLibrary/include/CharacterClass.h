@@ -35,8 +35,8 @@ struct RPG_API CharacterClass
 
 	static void RegisterObject();
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
+	void SerializeXml( AttributeWriter* f );
+	void DeserializeXml( AttributeReader* f );
 
 };
 

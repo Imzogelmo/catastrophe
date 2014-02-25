@@ -11,12 +11,12 @@
 
 #pragma once
 
-#include "MapLayer.h"
+#include "TileMapLayer.h"
 
 #include <fc/fixed_vector.h>
 
 
-class RPG_API Map
+class RPG_API TileMap
 {
 public:
 	enum : size_t
@@ -24,11 +24,11 @@ public:
 		MaxLayers = 16
 	};
 
-	typedef fc::fixed_vector<MapLayer*, MaxLayers>	vec_type;
+	typedef fc::fixed_vector<TileMapLayer*, MaxLayers>	vec_type;
 
-	Map();
-	Map( const fc::string& mapName, size_t numLayers, size_t mapWidth, size_t mapHeight );
-	~Map();
+	TileMap();
+	TileMap( const fc::string& mapName, size_t numLayers, size_t mapWidth, size_t mapHeight );
+	~TileMap();
 
 	void DeleteLayers();
 	void Clear();
@@ -37,12 +37,12 @@ public:
 	size_t Height() const { return m_height; }
 	size_t NumLayers() const { return m_layers.size(); }
 
-	bool AddLayer( MapLayer* layer = 0 );
+	bool AddLayer( TileMapLayer* layer = 0 );
 	void RemoveLayer( size_t index = size_t(-1) );
 	void Resize( size_t w, size_t h, size_t numLayers = size_t(-1) );
 	void SwapLayer( size_t first, size_t second );
 
-	MapLayer* GetLayer( size_t index ) const;
+	TileMapLayer* GetLayer( size_t index ) const;
 
 	void SetName( const fc::string& name ) { m_name = name; }
 	void SetFileName( const fc::string& filename ) { m_name = filename; }
