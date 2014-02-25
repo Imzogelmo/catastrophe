@@ -3,18 +3,18 @@
 
 
 // Player States
-#define ps_ENTER_IDLE				0 // Not doing anything.
+#define ps_ENTER_IDLE		0 // Not doing anything.
 #define ps_IDLE				0 // Not doing anything.
-#define ps_ENTER_INPUT			1 // Waiting for player to input commands.
+#define ps_ENTER_INPUT		1 // Waiting for player to input commands.
 #define ps_INPUT			1 // Waiting for player to input commands.
 #define ps_PREPARE_ATTACK	2 // Preparing to attack.
-#define ps_ENTER_ATTACK			3 // Attacking.
+#define ps_ENTER_ATTACK		3 // Attacking.
 #define ps_ATTACK			3 // Attacking.
 #define ps_PREPARE_CAST		4 // Preparing to cast a spell.
-#define ps_ENTER_CAST				5 // Casting a spell.
+#define ps_ENTER_CAST		5 // Casting a spell.
 #define ps_CAST				5 // Casting a spell.
 #define ps_PREPARE_ITEM		6 // Preparing to use an item.
-#define ps_ENTER_ITEM				7 // Using an item.
+#define ps_ENTER_ITEM		7 // Using an item.
 #define ps_ITEM				7 // Using an item.
 
 //these might not be needed.
@@ -27,6 +27,7 @@
 #define ps_MOVE_HOME		0x2000 // Flag | Player is moving to home position.
 #define ps_DAMAGED			0x4000 // Flag | Player is taking damage.
 
+/*
 enum PlayerAnimationState
 {
 	as_IDLE,
@@ -53,12 +54,13 @@ enum PlayerAnimationState
 	//hit
 	//dead
 };
+*/
 
-#define ACTION_PREPARE	0
-#define ACTION_ADVANCE	1
-#define ACTION_EXECUTE	2
-#define ACTION_RETURN	3
-#define ACTION_COMPLETE	4
+#define PlayerAction_PREPARE	0
+#define PlayerAction_ADVANCE	1
+#define PlayerAction_EXECUTE	2
+#define PlayerAction_RETURN		3
+#define PlayerAction_COMPLETE	4
 
 
 //something like this
@@ -73,34 +75,34 @@ class CombatActionState
 
 	bool IsFinished() const
 	{
-		return state == ACTION_COMPLETE;
+		return state == PlayerAction_COMPLETE;
 	}
 
 	void UpdateState()
 	{
 		switch(state)
 		{
-			case ACTION_PREPARE:
+			case PlayerAction_PREPARE:
 			{
 			}
 			break;
 
-			case ACTION_ADVANCE:
+			case PlayerAction_ADVANCE:
 			{
 			}
 			break;
 
-			case ACTION_EXECUTE:
+			case PlayerAction_EXECUTE:
 			{
 			}
 			break;
 
-			case ACTION_RETURN:
+			case PlayerAction_RETURN:
 			{
 			}
 			break;
 
-			case ACTION_COMPLETE:
+			case PlayerAction_COMPLETE:
 			{
 			}
 			break;
@@ -113,20 +115,30 @@ class CombatActionState
 	}
 };
 
+float px = 200;
+float py = 40;
 
-
-class Character : public Combatant
+class PlayerCombatant : public Combatant
 {
 	vec2 home;
 	int state;
 
-	Character()
+	PlayerCombatant()
 	{
-		//state = ps_IDLE;
+		state = ps_IDLE;
+		self.pos.x = px;
+		self.pos.y = py;
+		px += 10;
+		py += 28;
 	}
 
 	void run()
 	{
+	}
+
+	void update()
+	{
+		self.pos.x += randf(-0.3f, 0.3f);
 	}
 
 	// things that are maybe useful later on
@@ -134,7 +146,7 @@ class Character : public Combatant
 	void OnHit(){}
 
 
-	void MoveToHomePosition( float speed = 2f )
+	void MoveToHomePosition( float speed = 2.f )
 	{
 		vec2 dist = vec2(self.pos - home).abs();
 		if( dist.x < speed && dist.y < speed )

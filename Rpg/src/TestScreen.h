@@ -12,9 +12,11 @@
 #include <Catastrophe/Graphics/SpriteBatch.h>
 #include <Catastrophe/Input.h>
 #include <Catastrophe/Input/Input.h>
+#include <Catastrophe/Gui.h>
 #include <Catastrophe/Gui/MenuElement.h>
 #include <Catastrophe/Gui/Label.h>
 #include <Catastrophe/Gui/TextBox.h>
+#include <Catastrophe/Gui/ListBox.h>
 #include <Catastrophe/Gui/Frame.h>
 #include <Catastrophe/Gui/BackgroundImage.h>
 #include <Catastrophe/Math/Matrix.h>
@@ -426,6 +428,9 @@ public:
 };
 */
 
+
+/*
+// Test the BESTIARY
 class TestScreen : public Screen
 {
 public:
@@ -592,6 +597,130 @@ public:
 	}
 
 };
+*/
 
+
+/*
+class ItemListBox : public AbstractListBox
+{
+public:
+	class Item
+	{
+	public:
+		fc::string name;
+		fc::string amount;
+
+		void Render( SpriteBatch* spriteBatch, Font* f )
+		{
+			spriteBatch->DrawString(f, name, pos, Color::White(), AlignLeft );
+			spriteBatch->DrawString(f, amount, pos + Vector2(80,0), Color::White(), AlignRight );
+		}
+
+	};
+
+	typedef fc::vector_base<Item> vec_type;
+
+
+	void Update()
+	{
+		Keyboard* k = Input::GetKeyboard();
+
+		if( k->IsKeyPressed(KEY_LEFT) )
+			MoveSelection(-1);
+		else if( k->IsKeyPressed(KEY_RIGHT) )
+			MoveSelection(1);
+		else if( k->IsKeyPressed(KEY_UP) )
+			MoveSelection(-2);
+		else if( k->IsKeyPressed(KEY_DOWN) )
+			MoveSelection(2);
+	}
+
+	void Render( SpriteBatch* spriteBatch )
+	{
+		spriteBatch->DrawString(
+	}
+
+	vec_type m_items;
+
+};
+
+
+
+class TestScreen : public Screen
+{
+public:
+	Font f;
+	Texture frameTex;
+	Sprite frameSprite;
+	Sprite bgSprite;
+
+	SpriteBatch m_spriteBatch;
+
+	Frame frame;
+	BackgroundImage bgImage;
+	TextBox tb;
+	Texture t;
+
+	ItemListBox l;
+
+
+	TestScreen()
+	{
+		f.LoadFromFile("data/fonts/ff1_gba_font.png", 8);
+		t.LoadFromFile("data/textures/gui.png");
+
+		frameSprite.Create( &t, Rect(0,64,24,24) );
+		bgSprite.Create( &t, Rect(0,0,64,64) );
+
+		bgImage.SetSize(120,120);
+		bgImage.SetSprite( bgSprite );
+		bgImage.SetAutoFitSprite(true);
+		frame.SetFromSprite(frameSprite);
+		frame.SetSize(120,120);
+
+		tb.SetFont(&f);
+		tb.SetSize(120,120);
+		tb.SetPosition(32,32);
+
+		//tb.AddChild(&bgImage);
+		//tb.AddChild(&frame);
+
+		const char* text = "This is some text, blah blah... it should be auto formatted and junk! ..blah blah... 123456789.";
+		tb.SetText(text);
+
+	}
+
+	void Update()
+	{
+		tb.Update();
+	}
+
+	void Render()
+	{
+		m_spriteBatch.Begin();
+
+		// draw it
+		tb.Render(&m_spriteBatch);
+
+		m_spriteBatch.Render();
+		m_spriteBatch.End();
+
+	}
+
+};
+
+*/
+
+
+class TestScreen : public Screen
+{
+	void Update()
+	{
+	}
+
+	void Render()
+	{
+	}
+};
 
 

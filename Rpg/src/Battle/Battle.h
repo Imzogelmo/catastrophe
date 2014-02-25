@@ -13,6 +13,7 @@
 
 #include <fc/vector.h>
 #include <fc/fixed_vector.h>
+#include <fc/static_vector.h>
 
 #include "Common.h"
 #include "BattleEvent.h"
@@ -58,7 +59,7 @@ class Battle
 {
 public:
 	typedef fc::vector<BattleEvent*>								event_vec_type;
-	typedef fc::fixed_vector<BattleGroupData, MAX_BATTLE_GROUPS>	vec_type;
+	typedef fc::static_vector<BattleGroupData, MAX_BATTLE_GROUPS>	vec_type;
 
 	int		bgm_id;
 	int		background_sprite_id;

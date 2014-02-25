@@ -61,7 +61,7 @@ void Battle::AddMonsterTroop( const MonsterTroop& monsterTroop )
 
 		// if we are empty or the last group already has monsters in it, start a new group.
 		if( m_battlerGroups.empty() ||
-			( !m_battlerGroups.empty() && !m_battlerGroups.back().battlers.empty() )
+			(!m_battlerGroups.empty() && !m_battlerGroups.back().battlers.empty())
 		)
 		{
 			m_battlerGroups.push_back();
@@ -96,6 +96,16 @@ void Battle::AddMonsterTroop( const MonsterTroop& monsterTroop )
 
 		m_battlerGroups.back().ForceAddSingleMonsterFromGroup(monsterTroop.groups[0]);
 	}
+
+	// Set up the default monster positions based on the troop formation type.
+	// It's possible that this may set up incorrect positions if the data is not
+	// set correctly in the formation. This can happen any number of ways, however
+	// there is no meaningful way to determine what to do in such a case.
+
+	//int formationId = monsterTroop.formation_id;
+	//MonsterFormation* monsterFormation = GetDatabase()->GetMonsterFormation(formationId);
+	//monsterFormation->formations[0].x;
+
 }
 
 

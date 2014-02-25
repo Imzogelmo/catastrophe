@@ -94,6 +94,7 @@ protected:
 	group_vec_type				m_groups;
 	actor_vec_type				m_tempActors;
 
+	monster_vec_type			m_deadMonsters;
 
 };
 

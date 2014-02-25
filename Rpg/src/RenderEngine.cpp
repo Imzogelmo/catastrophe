@@ -10,7 +10,7 @@
 // GNU General Public License for more details.
 
 #include "RenderEngine.h"
-#include "Map.h"
+#include "TileMap.h"
 
 
 #ifdef _MSC_VER
@@ -26,23 +26,23 @@ RenderEngine::RenderEngine()
 
 
 
-void RenderEngine::DrawMap( const Map* map, const Vector2& pos, const Rect& viewRect )
+void RenderEngine::DrawTileMap( const TileMap* map, const Vector2& pos, const Rect& viewRect )
 {
 	SpriteBatch* spriteBatch = 0; //todo
 
 	const size_t n = map->NumLayers();
 	for( size_t i(0); i < n; ++i )
 	{
-		const MapLayer* layer = map->GetLayer(i);
+		const TileMapLayer* layer = map->GetLayer(i);
 		if( layer->IsVisible() )
 		{
-			DrawMapLayer(spriteBatch, layer, pos, viewRect);
+			DrawTileMapLayer(spriteBatch, layer, pos, viewRect);
 		}
 	}
 }
 
 
-void RenderEngine::DrawMapLayer( SpriteBatch* spriteBatch, const MapLayer* layer, const Vector2& tilePos, const Rect& viewRect )
+void RenderEngine::DrawTileMapLayer( SpriteBatch* spriteBatch, const TileMapLayer* layer, const Vector2& tilePos, const Rect& viewRect )
 {
 	const int TILE_SIZE = 16;//fixme
 	const float TILE_SIZEf = 16.f;//fixme
@@ -54,7 +54,7 @@ void RenderEngine::DrawMapLayer( SpriteBatch* spriteBatch, const MapLayer* layer
 	int y2 = y1 + viewRect.Height() / TILE_SIZE;
 
 	//todo: overworld type wraparound needs a special function...
-	const MapLayer::array_type & array = layer->GetTileArray();
+	const TileMapLayer::array_type & array = layer->GetTileArray();
 	x1 = fc::clamp<int>(x1, 0, (int)array.x());
 	y1 = fc::clamp<int>(y1, 0, (int)array.y());
 	x2 = fc::clamp<int>(x2, 0, (int)array.x());

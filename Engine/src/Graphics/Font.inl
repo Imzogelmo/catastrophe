@@ -26,13 +26,16 @@
 #include "Graphics/TextureLoader.h"
 #include "Util/TexturePacker.h"
 
-#include <ft2build.h>
-#include FT_FREETYPE_H
-#include FT_GLYPH_H
+#if CE_SUPPORT_FREETYPE
+	#include <ft2build.h>
+	#include FT_FREETYPE_H
+	#include FT_GLYPH_H
+#endif
 
 CE_NAMESPACE_BEGIN
 
 
+#if CE_SUPPORT_FREETYPE
 class FreetypeLibrary
 {
 public:
@@ -88,7 +91,7 @@ private:
 };
 
 FreetypeLibrary FreetypeLibrary::m_instance;
-
+#endif
 
 
 Font::Font() :
@@ -110,7 +113,10 @@ Font::Font( const fc::string& filename, int faceSize, int dpi ) :
 
 Font::~Font()
 {
+#if CE_SUPPORT_FREETYPE
 	FreetypeLibrary::GetInstance().ReleaseRef();
+#endif
+
 	Dispose();
 }
 
@@ -123,7 +129,10 @@ void Font::Dispose()
 
 void Font::InternalInitialize()
 {
+#if CE_SUPPORT_FREETYPE
 	FreetypeLibrary::GetInstance().AddRef();
+#endif
+
 	::memset( m_glyphMap, 0, sizeof(int) * 256 );
 }
 
@@ -143,6 +152,7 @@ int Font::LoadFromFile( const fc::string& filename, int faceSize, int dpi )
 		}
 	}
 
+#if CE_SUPPORT_FREETYPE
 	// current limitation
 	if( (size_t)faceSize > MaxGlyphSize )
 		faceSize = MaxGlyphSize;
@@ -353,6 +363,7 @@ int Font::LoadFromFile( const fc::string& filename, int faceSize, int dpi )
 		return -12;
 
 	FT_Done_Face(face);
+#endif
 
 	return 0;
 }
@@ -547,6 +558,10 @@ int Font::InternalLoadBitmapFont( const fc::string& filename, int startCode )
 		}
 	}
 
+	// Fix the space character.
+	//m_glyphs[' '].size.x = float(blockWidth / 2.f);
+	GetGlyph(' ').advance = float((blockWidth / 2.f) + 1);
+	//m_glyphs[' '].advance /= 2.f;
 
 	m_faceSize = fc::max(blockWidth, blockHeight);
 	m_line_height = blockHeight;

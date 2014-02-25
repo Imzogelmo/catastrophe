@@ -22,6 +22,7 @@
 
 #include "Label.h"
 #include "Frame.h"
+#include "TextLine.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -103,14 +104,12 @@ public:
 	virtual void Update();
 	virtual void Render( SpriteBatch* spritebatch );
 
-	void SetFrame( Frame* frame );
-	void SetFont( Font* font );
-	void SetText( const fc::string& text );
-	void SetRowHeight( int height );
-	void SetFastForwardSpeed( int speed );
-	void FastForward();
+	virtual void SetFont( Font* font );
+	virtual void SetText( const fc::string& text );
+	//virtual void SetRowHeight( int height );
+	virtual void SetFastForwardSpeed( int speed );
+	virtual void FastForward();
 
-	Frame* GetFrame() const { return m_frame; }
 	size_t GetNumberOfRows() const;
 	int GetRowHeight() const { return m_rowHeight; }
 	int GetFastForwardSpeed() const { return m_fastForwardSpeed; }
@@ -121,7 +120,6 @@ public:
 	void UpdateText();
 
 protected:
-	Frame*			m_frame;
 	int				m_rowHeight;
 	row_vec_type	m_textRows; 
 

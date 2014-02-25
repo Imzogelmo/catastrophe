@@ -19,10 +19,11 @@
 #pragma once
 
 #include "ParticleSystem.h"
-
+/*
 #include <fc/string.h>
 #include <fc/vector_map.h>
 
+CE_NAMESPACE_BEGIN
 
 
 class ParticleManager
@@ -44,3 +45,8 @@ protected:
 
 };
 
+
+
+CE_NAMESPACE_END
+
+*/

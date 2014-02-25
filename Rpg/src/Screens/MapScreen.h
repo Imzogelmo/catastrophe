@@ -12,7 +12,7 @@
 #pragma once
 
 #include "GameScreen.h"
-#include "Map.h"
+#include "TileMap.h"
 
 
 /*
@@ -31,7 +31,7 @@ public:
 
 
 protected:
-	Map*	m_map;
+	TileMap*	m_map;
 
 };
 

@@ -116,8 +116,12 @@
 				EnableIntrinsicFunctions="true"
 				AdditionalIncludeDirectories="..\Engine\include;..\RpgLibrary\include;src;src\Screens;src\Entity;src\Battle;src\Script"
 				PreprocessorDefinitions="WIN32;NDEBUG;"
+				StringPooling="true"
+				ExceptionHandling="0"
 				RuntimeLibrary="2"
+				BufferSecurityCheck="false"
 				EnableFunctionLevelLinking="true"
+				ProgramDataBaseFileName="$(IntDir)\Rpg.pdb"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -132,7 +136,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ce-core.lib ce-system.lib ce-sound.lib ce-gui.lib rpglib.lib glfw.lib freetype.lib mcpp.lib angelscript.lib glew32s.lib OpenGL32.lib glu32.lib"
+				AdditionalDependencies="ce-core.lib ce-system.lib ce-sound.lib ce-gui.lib rpglib.lib glfw.lib mcpp.lib angelscript.lib glew32s.lib OpenGL32.lib glu32.lib"
 				AdditionalLibraryDirectories="&quot;../Engine/lib&quot;;&quot;..\RpgLibrary\lib&quot;"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"

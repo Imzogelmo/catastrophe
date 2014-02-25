@@ -1,10 +1,19 @@
 
 #pragma once
 
+#define BattleState_None			0
+#define BattleState_AllyAction		1
+#define BattleState_EnemyAction		2
+
+#define BattleState_Victory			11
+#define BattleState_Defeat			12
+#define BattleState_Flee			13
+#define BattleState_Abort			14 // abort battle regardless of condition.
 
 
 class Battle : IGameEntity
 {
+
 	Battle()
 	{
 	}
@@ -22,6 +31,17 @@ class Battle : IGameEntity
 	void Setup()
 	{
 	}
+
+	/*
+	int CheckBattleStatus()
+	{
+		if( party.empty() ) return BattleStatus::Abort;
+		if( enemies.empty() ) return BattleStatus::Abort;
+		if( enemies.dead() ) return BattleStatus::Victory;
+		if( party.dead() ) return BattleStatus::Defeated;
+		return BattleStatus::OK;
+	}
+	*/
 
 
 /*
@@ -61,6 +81,15 @@ class Battle : IGameEntity
 		}
 	}
 	*/
+
+
+};
+
+
+
+class BattleUnit
+{
+
 
 
 };

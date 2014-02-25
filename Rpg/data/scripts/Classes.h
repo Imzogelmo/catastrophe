@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "Character.h"
+#include "PlayerCombatant.h"
 
 
 #define FIGHTER		0
@@ -49,7 +49,7 @@
 
 
 
-class Fighter : Character
+class Fighter : PlayerCombatant
 {
 	Fighter()
 	{
@@ -63,7 +63,7 @@ class Fighter : Character
 }
 
 
-class Thief : Character
+class Thief : PlayerCombatant
 {
 	Thief()
 	{
@@ -77,7 +77,7 @@ class Thief : Character
 }
 
 
-class BlackBelt : Character
+class BlackBelt : PlayerCombatant
 {
 	BlackBelt()
 	{
@@ -91,7 +91,7 @@ class BlackBelt : Character
 }
 
 
-class RedMage : Character
+class RedMage : PlayerCombatant
 {
 	RedMage()
 	{
@@ -105,7 +105,7 @@ class RedMage : Character
 }
 
 
-class WhiteMage : Character
+class WhiteMage : PlayerCombatant
 {
 	WhiteMage()
 	{
@@ -119,7 +119,7 @@ class WhiteMage : Character
 }
 
 
-class BlackMage : Character
+class BlackMage : PlayerCombatant
 {
 	BlackMage()
 	{
@@ -133,7 +133,7 @@ class BlackMage : Character
 }
 
 
-class BlueMage : Character
+class BlueMage : PlayerCombatant
 {
 	BlueMage()
 	{

@@ -15,9 +15,10 @@
 
 
 BattleActionQueue::BattleActionQueue() :
-	m_actions(),
+	m_queuedActions(),
 	m_finishedActions(),
-	m_currentAction(0)
+	m_currentAction(0),
+	m_wait(false)
 {
 }
 
@@ -26,18 +27,26 @@ void BattleActionQueue::AddAction( BattleAction* action )
 	if( !action )
 		return;
 
+	vec_type* p = action->IsReady() ? &m_pendingActions : &m_queuedActions;
+	if( action->HasPriority() )
+	{
+		p->push_front(action);
+	}
+	else
+	{
+		p->push_back(action);
+	}
+
 	action->SetParent(this);
-	size_t index = action->HasPriority() ? (size_t)0 : m_actions.size();
-	m_actions.insert_at(index, action);
 }
 
 
 void BattleActionQueue::RemoveAction( BattleAction* action )
 {
-	vec_type::iterator it = fc::find(m_actions.begin(), m_actions.end(), action);
-	if( it != m_actions.end() )
+	vec_type::iterator it = fc::find(m_queuedActions.begin(), m_queuedActions.end(), action);
+	if( it != m_queuedActions.end() )
 	{
-		m_actions.erase(it);
+		m_queuedActions.erase(it);
 		action->SetParent(0);
 	}
 }
@@ -45,21 +54,21 @@ void BattleActionQueue::RemoveAction( BattleAction* action )
 
 void BattleActionQueue::ClearActions()
 {
-	m_finishedActions.insert( m_finishedActions.end(), m_actions.begin(), m_actions.end() );
-	for( vec_type::iterator it = m_actions.begin(); it != m_actions.end(); ++it )
+	m_finishedActions.insert( m_finishedActions.end(), m_queuedActions.begin(), m_queuedActions.end() );
+	for( vec_type::iterator it = m_queuedActions.begin(); it != m_queuedActions.end(); ++it )
 	{
 		(*it)->Cancel();
 	}
 
-	m_actions.clear();
+	m_queuedActions.clear();
 	m_currentAction->Cancel();
 }
 
 
 void BattleActionQueue::CancelAction( size_t index )
 {
-	if( index < m_actions.size() )
-		m_actions[index]->Cancel();
+	if( index < m_queuedActions.size() )
+		m_queuedActions[index]->Cancel();
 }
 
 
@@ -71,10 +80,10 @@ void BattleActionQueue::CancelAction( BattleAction* action )
 
 void BattleActionQueue::MoveToFront( BattleAction* action )
 {
-	vec_type::iterator it = fc::find(m_actions.begin(), m_actions.end(), action);
-	if( it != m_actions.end() )
+	vec_type::iterator it = fc::find(m_queuedActions.begin(), m_queuedActions.end(), action);
+	if( it != m_queuedActions.end() )
 	{
-		m_actions.erase(it);
+		m_queuedActions.erase(it);
 	}
 	else
 	{
@@ -91,24 +100,24 @@ void BattleActionQueue::MoveToFront( BattleAction* action )
 
 	if( action->HasPriority() )
 	{
-		m_actions.insert_at(0, action);
+		m_queuedActions.insert_at(0, action);
 	}
 	else
 	{
 		// iterate through the queue and find the first valid slot to insert.
-		for( it = m_actions.begin(); it != m_actions.end(); ++it )
+		for( it = m_queuedActions.begin(); it != m_queuedActions.end(); ++it )
 		{
 			if( !(*it)->HasPriority() )
 			{
-				m_actions.insert(it, action);
+				m_queuedActions.insert(it, action);
 				break;
 			}
 		}
 
-		if( it == m_actions.end() )
+		if( it == m_queuedActions.end() )
 		{
 			// 'MoveToFront' just moved it to the end!
-			m_actions.push_back(action);
+			m_queuedActions.push_back(action);
 		}
 	}
 }
@@ -130,14 +139,14 @@ void BattleActionQueue::SetCurrentAction()
 
 	if( !m_currentAction )
 	{
-		if( m_actions.empty() )
+		if( m_queuedActions.empty() )
 			return;
 
-		if( m_actions[0]->IsReady() )
+		if( m_queuedActions[0]->IsReady() )
 		{
-			m_currentAction = m_actions[0];
-			m_actions.erase_at(0);
-			m_currentAction->OnTrigger(); //...something like this.
+			m_currentAction = m_queuedActions[0];
+			m_queuedActions.erase_at(0);
+			//m_currentAction->OnTrigger(); //...something like this.
 		}
 	}
 }
@@ -145,11 +154,11 @@ void BattleActionQueue::SetCurrentAction()
 
 void BattleActionQueue::RemoveCancelledActions()
 {
-	for( vec_type::iterator it = m_actions.begin(); it != m_actions.end(); )
+	for( vec_type::iterator it = m_queuedActions.begin(); it != m_queuedActions.end(); )
 	{
 		if( (*it)->IsCancelled() )
 		{
-			m_actions.erase(it);
+			m_queuedActions.erase(it);
 			m_finishedActions.push_back(*it);
 		}
 		else
@@ -168,9 +177,27 @@ void BattleActionQueue::Update()
 	if( m_currentAction )
 		m_currentAction->Update();
 
-	for( vec_type::iterator it = m_actions.begin(); it != m_actions.end(); )
+	if( !m_wait )
 	{
-		(*it)->Update();
+
+		for( vec_type::iterator it = m_queuedActions.begin(); it != m_queuedActions.end(); )
+		{
+			BattleAction* action = *it;
+			if( action->IsReady() )
+			{
+				m_pendingActions.push_back(action);
+				m_queuedActions.erase(it);
+			}
+			else
+			{
+				++it;
+			}
+		}
+
+		for( vec_type::iterator it = m_pendingActions.begin(); it != m_pendingActions.end(); )
+		{
+		}
 	}
+
 }
 

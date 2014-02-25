@@ -481,6 +481,71 @@ void ScriptEngine::RegisterCombatant()
 
 
 
+namespace script
+{
+	asIScriptObject* GetActionPerformer( BattleAction* action )
+	{
+		if( !action )
+			;
+		//return action->GetPerformer()->GetScriptObject();
+		return 0;
+	}
+
+} //namespace script
+
+
+void ScriptEngine::RegisterBattleAction()
+{
+	int r(0);
+	using namespace script;
+
+	r = engine->RegisterObjectType( "action", 0, asOBJ_REF ); assert( r >= 0 );
+	//r = engine->RegisterObjectBehaviour( name, asBEHAVE_FACTORY, factory_decl.c_str(), asFUNCTION(EntityFactory), asCALL_CDECL ); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour( "action", asBEHAVE_ADDREF, "void f()", asFUNCTION(DummyAddRef), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour( "action", asBEHAVE_RELEASE, "void f()", asFUNCTION(DummyReleaseRef), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
+	//r = engine->RegisterObjectMethod( name, opAssignString.c_str(), asFUNCTION((PointerAssignment<T>)), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
+
+
+	//r = engine->RegisterObjectMethod( "action", "IGameObject @get_combatant()", asFUNCTION(GetActionPerformer), asCALL_CDECL ); assert( r >= 0 );
+	//r = engine->RegisterObjectMethod( "action", "const spriteset& get_spriteset() const", asMETHODPR(Combatant, GetAnimatedSpriteSet, (void) const, const AnimatedSpriteSet&), asCALL_THISCALL ); assert( r >= 0 );
+	//r = engine->RegisterObjectMethod( "action", "actor@ get_actor() const", asMETHODPR(Combatant, GetActor, () const, Actor*), asCALL_THISCALL ); assert( r >= 0 );
+
+}
+
+
+namespace script
+{
+	BattleActionQueue* GetBattleActionQueue( BattleAction* action )
+	{
+		if( !action )
+			;
+		//return action->GetPerformer()->GetScriptObject();
+		return 0;
+	}
+
+} //namespace script
+
+
+void ScriptEngine::RegisterBattleEngine()
+{
+	int r(0);
+	using namespace script;
+
+	r = engine->RegisterObjectType( "battle", 0, asOBJ_REF ); assert( r >= 0 );
+	//r = engine->RegisterObjectBehaviour( name, asBEHAVE_FACTORY, factory_decl.c_str(), asFUNCTION(EntityFactory), asCALL_CDECL ); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour( "battle", asBEHAVE_ADDREF, "void f()", asFUNCTION(DummyAddRef), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour( "battle", asBEHAVE_RELEASE, "void f()", asFUNCTION(DummyReleaseRef), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
+	//r = engine->RegisterObjectMethod( name, opAssignString.c_str(), asFUNCTION((PointerAssignment<T>)), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
+
+
+	//r = engine->RegisterObjectMethod( "battle", "action @get_action()", asMETHOD(BattleActionQueue, GetBattleActionQueue), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
+	//r = engine->RegisterObjectMethod( "battle", "const spriteset& get_spriteset() const", asMETHODPR(BattleEngine, GetBattleActionQueue, (void) const, const AnimatedSpriteSet&), asCALL_THISCALL ); assert( r >= 0 );
+	//r = engine->RegisterObjectMethod( "battle", "actor@ get_actor() const", asMETHODPR(Combatant, GetActor, () const, Actor*), asCALL_THISCALL ); assert( r >= 0 );
+
+}
+
+
+
 
 
 
@@ -492,6 +557,9 @@ void ScriptEngine::RegisterRpgInterface()
 	RegisterActor();
 	RegisterParty();
 	RegisterCombatant();
+
+	RegisterBattleAction();
+	//RegisterBattleEngine();
 }
 
 
