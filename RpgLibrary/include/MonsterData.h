@@ -26,9 +26,10 @@ struct RPG_API MonsterData
 	fc::string		description;
 
 	int				id;
-	int				portrait_id;
-	int				map_spriteset_id;
-	int				battle_spriteset_id;
+	short			portrait_id;
+	short			map_spriteset_id;
+	short			battle_spriteset_id;
+	short			default_background_id;
 
 	int				lv;
 	int				exp;
@@ -40,10 +41,8 @@ struct RPG_API MonsterData
 
 	static void RegisterObject();
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
-	void Serialize( Serializer* f );
-	void Deserialize( Deserializer* f );
+	void SerializeXml( AttributeWriter* f );
+	void DeserializeXml( AttributeReader* f );
 
 };
 

@@ -70,38 +70,36 @@ const ItemDrop& ItemDropSet::operator []( size_t index ) const
 }
 
 
-void ItemDropSet::SerializeXml( XmlWriter* xml )
+void ItemDropSet::SerializeXml( AttributeWriter* f )
 {
-	xml->BeginNode("ItemDropSet");
-	xml->SetUInt("count", m_size);
-	xml->SetBool("multiple", m_allow_multiple_drops);
+	f->BeginNode("ItemDropSet");
+	f->SetUInt("count", m_size);
+	f->SetBool("multiple", m_allow_multiple_drops);
 
 	for( size_t i(0); i < m_size; ++i )
 	{
-		m_item_drops[i].SerializeXml(xml);
+		m_item_drops[i].SerializeXml(f);
 	}
 
-	xml->EndNode();
+	f->EndNode();
 }
 
 
-void ItemDropSet::DeserializeXml( XmlReader* xml )
+void ItemDropSet::DeserializeXml( AttributeReader* f )
 {
-	size_t count = (size_t)fc::clamp<int>( xml->GetInt("count"), 0, MAX_ITEM_DROPS );
-	m_allow_multiple_drops = xml->GetBool("multiple");
+	size_t numDrops = (size_t)fc::clamp<int>( f->GetInt("count"), 0, MAX_ITEM_DROPS );
+	m_allow_multiple_drops = f->GetBool("multiple");
 
-	bool nested = false;
-	for( size_t i(0); i < count; ++i )
+	for( size_t i(0); i < numDrops; ++i )
 	{
-		if( xml->NextChild("ItemDrop") )
+		if( f->NextChild("ItemDrop") )
 		{
-			m_item_drops[i].DeserializeXml(xml);
-			nested = true;
+			m_item_drops[i].DeserializeXml(f);
 		}
 	}
 
-	if( nested )
-		xml->SetToParent();
+	if( f->GetCurrentNodeName() == "ItemDrop" )
+		f->SetToParent();
 }
 
 

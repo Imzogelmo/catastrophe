@@ -9,8 +9,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 #include "Spell.h"
 
 
@@ -19,22 +19,22 @@ Spell::Spell()
 }
 
 
-void Spell::SerializeXml( XmlWriter* xml )
+void Spell::SerializeXml( AttributeWriter* f )
 {
-	xml->SetString("name", name.c_str());
-	xml->SetString("script", script.c_str());
-	xml->SetString("description", description.c_str());
+	f->SetString("name", name.c_str());
+	f->SetString("script", script.c_str());
+	f->SetString("description", description.c_str());
 
-	attributes.SerializeXml(xml);
+	attributes.SerializeXml(f);
 }
 
 
-void Spell::DeserializeXml( XmlReader* xml )
+void Spell::DeserializeXml( AttributeReader* f )
 {
-	name = xml->GetString("name");
-	script = xml->GetString("script");
-	description = xml->GetString("description");
+	name = f->GetString("name");
+	script = f->GetString("script");
+	description = f->GetString("description");
 
-	attributes.DeserializeXml(xml);
+	attributes.DeserializeXml(f);
 }
 

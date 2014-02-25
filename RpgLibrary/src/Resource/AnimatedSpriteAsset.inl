@@ -9,8 +9,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 #include "AnimatedSpriteAsset.h"
 #include "Serialization.h"
 
@@ -45,26 +45,26 @@ void AnimatedSpriteAsset::ReleaseAnimatedSprite()
 }
 
 
-void AnimatedSpriteAsset::SerializeXml( XmlWriter* xml )
+void AnimatedSpriteAsset::SerializeXml( AttributeWriter* f )
 {
-	//xml->BeginNode("AnimatedSprite");
+	//f->BeginNode("AnimatedSprite");
 
-	TextureAsset::SerializeXml(xml);
-	SerializeObject<SpriteBase>("SpriteBase", xml, *this);
-	SerializeObject<SpriteAnimation>("SpriteAnimation", xml, *this);
+	TextureAsset::SerializeXml(f);
+	SerializeObject<SpriteBase>("SpriteBase", f, *this);
+	SerializeObject<SpriteAnimation>("SpriteAnimation", f, *this);
 
-	//xml->EndNode();
+	//f->EndNode();
 }
 
 
-void AnimatedSpriteAsset::DeserializeXml( XmlReader* xml )
+void AnimatedSpriteAsset::DeserializeXml( AttributeReader* f )
 {
-	//if( xml->GetNextNode("AnimatedSprite") )
+	//if( f->GetNextNode("AnimatedSprite") )
 	{
-		TextureAsset::DeserializeXml(xml);
-		DeserializeObject<SpriteBase>("SpriteBase", xml, *this);
-		DeserializeObject<SpriteAnimation>("SpriteAnimation", xml, *this);
-	//	xml->SetToParent();
+		TextureAsset::DeserializeXml(f);
+		DeserializeObject<SpriteBase>("SpriteBase", f, *this);
+		DeserializeObject<SpriteAnimation>("SpriteAnimation", f, *this);
+	//	f->SetToParent();
 	}
 
 }

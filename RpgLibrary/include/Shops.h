@@ -31,8 +31,8 @@ struct RPG_API ShopItem
 		: item_id(itemId), price(price)
 	{}
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
+	void SerializeXml( AttributeWriter* f );
+	void DeserializeXml( AttributeReader* f );
 
 };
 
@@ -55,8 +55,8 @@ struct RPG_API Shop
 	int GetMarkup() const { return markup_percent; }
 	int GetMarkdown() const { return devaluation_percent; }
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
+	void SerializeXml( AttributeWriter* f );
+	void DeserializeXml( AttributeReader* f );
 
 	// all shop strings are initialized to these in the ctor.
 	static fc::string default_greeting_message;

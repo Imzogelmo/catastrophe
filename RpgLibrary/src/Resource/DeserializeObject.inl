@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeReader.h>
 #include <Catastrophe/Math/Point.h>
 #include <Catastrophe/Math/Rect.h>
 #include <Catastrophe/Graphics/SpriteAnimation.h>
@@ -26,77 +26,77 @@
 
 
 template <class T>
-void DeserializeObject( const char* nodeName, XmlReader* xml, T& val )
+void DeserializeObject( const char* nodeName, AttributeReader* f, T& val )
 {
-	if( xml->NextChild(nodeName) )
+	if( f->NextChild(nodeName) )
 	{
-		DeserializeObject<T>(xml, val);
-		xml->SetToParent();
+		DeserializeObject<T>(f, val);
+		f->SetToParent();
 	}
 }
 
 
 template <>
-void DeserializeObject<Point>( XmlReader* xml, Point& val )
+void DeserializeObject<Point>( AttributeReader* f, Point& val )
 {
-	val.x = xml->GetInt("x", 0);
-	val.y = xml->GetInt("y", 0);
+	val.x = f->GetInt("x", 0);
+	val.y = f->GetInt("y", 0);
 }
 
 
 template <>
-void DeserializeObject<Rect>( XmlReader* xml, Rect& val )
+void DeserializeObject<Rect>( AttributeReader* f, Rect& val )
 {
-	val.pos.x = xml->GetInt("x", 0);
-	val.pos.y = xml->GetInt("y", 0);
-	val.size.x = xml->GetInt("w", 0);
-	val.size.y = xml->GetInt("h", 0);
+	val.pos.x = f->GetInt("x", 0);
+	val.pos.y = f->GetInt("y", 0);
+	val.size.x = f->GetInt("w", 0);
+	val.size.y = f->GetInt("h", 0);
 }
 
 
 template <>
-void DeserializeObject<SpriteBase>( XmlReader* xml, SpriteBase& s )
+void DeserializeObject<SpriteBase>( AttributeReader* f, SpriteBase& s )
 {
-	//if( xml->NextChild("SpriteBase") )
+	//if( f->NextChild("SpriteBase") )
 	{
-		s.size.x = (float)xml->GetInt("width");
-		s.size.y = (float)xml->GetInt("height");
-		s.scale.x = xml->GetFloat("scale_x", 1.f);
-		s.scale.y = xml->GetFloat("scale_y", 1.f);
-		s.angle = xml->GetFloat("angle");
-		s.color.packed_value = xml->GetUInt("color", Color::White().packed_value);
-		s.blendmode.value = xml->GetUInt("blendmode", BlendMode::Alpha.value);
+		s.size.x = (float)f->GetInt("width");
+		s.size.y = (float)f->GetInt("height");
+		s.scale.x = f->GetFloat("scale_x", 1.f);
+		s.scale.y = f->GetFloat("scale_y", 1.f);
+		s.angle = f->GetFloat("angle");
+		s.color.packed_value = f->GetUInt("color", Color::White().packed_value);
+		s.blendmode.value = f->GetUInt("blendmode", BlendMode::Alpha.value);
 
-	//	xml->SetToParent();
+	//	f->SetToParent();
 	}
 }
 
 
 template <>
-void DeserializeObject<SpriteAnimation>( XmlReader* xml, SpriteAnimation& a )
+void DeserializeObject<SpriteAnimation>( AttributeReader* f, SpriteAnimation& a )
 {
-	//if( xml->NextChild("SpriteAnimation") )
+	//if( f->NextChild("SpriteAnimation") )
 	{
 		Rect sourceRect = Rect::Zero;
-		DeserializeObject<Rect>(xml, sourceRect);
-		int numFrames = xml->GetInt("frames", 1);
-		int offsetX = xml->GetInt("offset_x");
-		int offsetY = xml->GetInt("offset_y");
-		float animSpeed = xml->GetFloat("speed", 16.f);
-		int flags = xml->GetInt("flags");
+		DeserializeObject<Rect>(f, sourceRect);
+		int numFrames = f->GetInt("frames", 1);
+		int offsetX = f->GetInt("offset_x");
+		int offsetY = f->GetInt("offset_y");
+		float animSpeed = f->GetFloat("speed", 16.f);
+		int flags = f->GetInt("flags");
 
 		a.Create( sourceRect, animSpeed, numFrames, offsetX, offsetY );
-	//	xml->SetToParent();
+	//	f->SetToParent();
 	}
 }
 
 
 template <>
-void DeserializeObject<AnimatedSpriteSet>( XmlReader* xml, AnimatedSpriteSet& s )
+void DeserializeObject<AnimatedSpriteSet>( AttributeReader* f, AnimatedSpriteSet& s )
 {
-	fc::string str = xml->GetString("texture");
-	size_t count = xml->GetUInt("num_animations");
-	DeserializeObject<SpriteBase>(xml, s);
+	fc::string str = f->GetString("texture");
+	size_t count = f->GetUInt("num_animations");
+	DeserializeObject<SpriteBase>(f, s);
 	s.Resize(count);
 
 	Texture* texture = g_textureManager->Load(str);
@@ -105,25 +105,25 @@ void DeserializeObject<AnimatedSpriteSet>( XmlReader* xml, AnimatedSpriteSet& s 
 	bool hasAnim = false;
 	for( size_t i(0); i < count; ++i )
 	{
-		if( xml->NextChild("SpriteAnimation") )
+		if( f->NextChild("SpriteAnimation") )
 		{
-			DeserializeObject<SpriteAnimation>(xml, s[i]);
+			DeserializeObject<SpriteAnimation>(f, s[i]);
 			hasAnim = true;
 		}
 	}
 
 	if( hasAnim )
-		xml->SetToParent();
+		f->SetToParent();
 }
 
 
 /*
-void RpgSerializer::DeserializeSprite( XmlReader* xml, Sprite& s )
+void RpgSerializer::DeserializeSprite( AttributeReader* f, Sprite& s )
 {
 	DeserializeSpriteBase(xml, s);
 
 	Texture* texture = 0;
-	fc::string textureName = xml->GetString("texture");
+	fc::string textureName = f->GetString("texture");
 
 	if( !textureName.empty() )
 	{
@@ -145,26 +145,26 @@ void RpgSerializer::DeserializeSprite( XmlReader* xml, Sprite& s )
 }
 
 
-void RpgSerializer::DeserializeAnimatedSprite( XmlReader* xml, AnimatedSprite& a )
+void RpgSerializer::DeserializeAnimatedSprite( AttributeReader* f, AnimatedSprite& a )
 {
 	DeserializeSpriteBase(xml, a);
 
-	if( xml->NextChild("Animation") )
+	if( f->NextChild("Animation") )
 	{
 		DeserializeAnimation(xml, a);
-		xml->SetToParent();
+		f->SetToParent();
 	}
 }
 
 
-void RpgSerializer::DeserializeAnimationSet( XmlReader* xml, AnimationSet& a )
+void RpgSerializer::DeserializeAnimationSet( AttributeReader* f, AnimationSet& a )
 {
 	DeserializeSpriteBase(xml, a);
-	size_t n = xml->GetUInt("count");
+	size_t n = f->GetUInt("count");
 	a.Reserve(n);
 
 	Animation emptyAnimation;
-	while( xml->NextChild("Animation") )
+	while( f->NextChild("Animation") )
 	{
 		a.AddAnimation(emptyAnimation);
 		DeserializeAnimation(xml, a[a.NumAnimations() - 1]);
@@ -172,11 +172,11 @@ void RpgSerializer::DeserializeAnimationSet( XmlReader* xml, AnimationSet& a )
 }
 
 
-void RpgSerializer::DeserializeAnimation( XmlReader* xml, Animation& a )
+void RpgSerializer::DeserializeAnimation( AttributeReader* f, Animation& a )
 {
-	float speed = xml->GetFloat("speed");
-	bool loop = xml->GetBool("loop");
-	bool paused = xml->GetBool("paused");
+	float speed = f->GetFloat("speed");
+	bool loop = f->GetBool("loop");
+	bool paused = f->GetBool("paused");
 
 	a.SetAnimationSpeed(speed);
 	a.SetLooping(loop);
@@ -186,7 +186,7 @@ void RpgSerializer::DeserializeAnimation( XmlReader* xml, Animation& a )
 	Point offset = Point::Zero;
 
 	Texture* texture = 0;
-	fc::string textureName = xml->GetString("texture");
+	fc::string textureName = f->GetString("texture");
 	if( !textureName.empty() )
 	{
 		ASSERT(g_textureManager != 0);
@@ -211,17 +211,17 @@ void RpgSerializer::DeserializeAnimation( XmlReader* xml, Animation& a )
 	{
 		a.SetTexture(texture);
 
-		if( xml->NextChild("Frame") )
+		if( f->NextChild("Frame") )
 		{
-			int numFrames = xml->GetInt("num_frames");
+			int numFrames = f->GetInt("num_frames");
 			DeserializeRect(xml, sourceRect);
-			offset.x = xml->GetInt("offset_x");
-			offset.y = xml->GetInt("offset_y");
+			offset.x = f->GetInt("offset_x");
+			offset.y = f->GetInt("offset_y");
 			a.SetFrameData( sourceRect, numFrames, offset.x, offset.y );
 		}
 	}
 
-	xml->SetToParent();
+	f->SetToParent();
 }
 */
 
@@ -231,21 +231,21 @@ void RpgSerializer::DeserializeAnimation( XmlReader* xml, Animation& a )
 
 
 template <class T> 
-void DeserializeStringArray( XmlReader* xml, const char* node, T* stringArray, int n )
+void DeserializeStringArray( AttributeReader* f, const char* node, T* stringArray, int n )
 {
-	if( xml->NextChild(node) )
+	if( f->NextChild(node) )
 	{
 		int i = 0;
-		int amount = xml->GetInt("count");
+		int amount = f->GetInt("count");
 		amount = (amount < n) ? amount : n;
 
-		while( i < amount && xml->NextChild("String") )
+		while( i < amount && f->NextChild("String") )
 		{
-			stringArray[i] = xml->GetString("s");
+			stringArray[i] = f->GetString("s");
 			++i;
 		}
 
-		xml->SetToParent();
+		f->SetToParent();
 	}
 }
 

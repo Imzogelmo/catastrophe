@@ -36,8 +36,8 @@ public:
 	void Reset();
 	int GetRefCount() const { return m_refCount; }
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
+	void SerializeXml( AttributeWriter* f );
+	void DeserializeXml( AttributeReader* f );
 
 protected:
 	fc::string			m_textureFilename;

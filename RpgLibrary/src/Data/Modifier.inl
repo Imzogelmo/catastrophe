@@ -9,8 +9,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 #include "Modifier.h"
 
 
@@ -119,20 +119,20 @@ void Modifier::ApplyToAttributes( Attributes& attributes ) const
 }
 
 
-void Modifier::SerializeXml( XmlWriter* xml )
+void Modifier::SerializeXml( AttributeWriter* f )
 {
-	xml->SetInt("value", value);
-	xml->SetShort("index", index);
-	xml->SetByte("target", target);
-	xml->SetByte("type", type);
+	f->SetInt("value", value);
+	f->SetShort("index", index);
+	f->SetByte("target", target);
+	f->SetByte("type", type);
 }
 
 
-void Modifier::DeserializeXml( XmlReader* xml )
+void Modifier::DeserializeXml( AttributeReader* f )
 {
-	value = xml->GetInt("value");
-	index = xml->GetShort("index");
-	target = xml->GetInt("target");
-	type = xml->GetInt("type");
+	value = f->GetInt("value");
+	index = f->GetShort("index");
+	target = f->GetInt("target");
+	type = f->GetInt("type");
 }
 

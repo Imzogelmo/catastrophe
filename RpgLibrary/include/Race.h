@@ -32,10 +32,8 @@ struct RPG_API Race
 
 	static void RegisterObject();
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
-	void Serialize( Serializer* f );
-	void Deserialize( Deserializer* f );
+	void SerializeXml( AttributeWriter* f );
+	void DeserializeXml( AttributeReader* f );
 
 };
 

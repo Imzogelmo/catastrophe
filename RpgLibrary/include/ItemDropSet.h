@@ -28,8 +28,8 @@ public:
 	ItemDrop& operator []( size_t index );
 	const ItemDrop& operator []( size_t index ) const;
 
-	virtual void SerializeXml( XmlWriter* xml );
-	virtual void DeserializeXml( XmlReader* xml );
+	virtual void SerializeXml( AttributeWriter* f );
+	virtual void DeserializeXml( AttributeReader* f );
 
 protected:
 	ItemDrop	m_item_drops[MAX_ITEM_DROPS];

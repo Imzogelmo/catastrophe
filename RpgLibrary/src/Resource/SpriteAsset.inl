@@ -9,8 +9,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 #include "SpriteAsset.h"
 #include "Serialization.h"
 
@@ -45,16 +45,16 @@ void SpriteAsset::ReleaseSprite()
 }
 
 
-void SpriteAsset::SerializeXml( XmlWriter* xml )
+void SpriteAsset::SerializeXml( AttributeWriter* f )
 {
-	TextureAsset::SerializeXml(xml);
-	SerializeObject<SpriteBase>("SpriteBase", xml, *this);
+	TextureAsset::SerializeXml(f);
+	SerializeObject<SpriteBase>("SpriteBase", f, *this);
 }
 
 
-void SpriteAsset::DeserializeXml( XmlReader* xml )
+void SpriteAsset::DeserializeXml( AttributeReader* f )
 {
-	TextureAsset::DeserializeXml(xml);
-	DeserializeObject<SpriteBase>("SpriteBase", xml, *this);
+	TextureAsset::DeserializeXml(f);
+	DeserializeObject<SpriteBase>("SpriteBase", f, *this);
 }
 

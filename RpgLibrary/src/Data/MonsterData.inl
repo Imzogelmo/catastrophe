@@ -10,8 +10,8 @@
 // GNU General Public License for more details.
 
 
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 #include "MonsterData.h"
 #include "Serialization.h"
 #include "AttributeSerializer.h"
@@ -35,6 +35,7 @@ MonsterData::MonsterData() :
 
 void MonsterData::RegisterObject()
 {
+	/*
 	REGISTER_ATTRIBUTE_FACTORY_TYPE(MonsterData);
 	REGISTER_ATTRIBUTE(MonsterData, VAR_TYPE_STRING, "name", name);
 	REGISTER_ATTRIBUTE(MonsterData, VAR_TYPE_STRING, "script", script);
@@ -48,36 +49,53 @@ void MonsterData::RegisterObject()
 	REGISTER_ATTRIBUTE(MonsterData, VAR_TYPE_INT, "map_spriteset_id", map_spriteset_id);
 	REGISTER_ATTRIBUTE(MonsterData, VAR_TYPE_INT, "battle_spriteset_id", battle_spriteset_id);
 	POP_ATTRIBUTE_NODE(MonsterData);
+	*/
 }
 
 
-void MonsterData::SerializeXml( XmlWriter* xml )
+void MonsterData::SerializeXml( AttributeWriter* f )
 {
-	SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+	//SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+	f->SetString("name", name.c_str());
+	f->SetString("script", script.c_str());
+	f->SetString("description", description.c_str());
 
-	attributes.SerializeXml(xml);
-	item_dropset.SerializeXml(xml);
+	f->BeginNode("Data");
+	f->SetInt("lv", lv);
+	f->SetInt("exp", exp);
+	f->SetInt("gold", gold);
+	f->SetInt("portrait_id", portrait_id);
+	f->SetInt("map_spriteset_id", map_spriteset_id);
+	f->SetInt("battle_spriteset_id", battle_spriteset_id);
+	f->SetInt("terrain_id", default_background_id);
+	f->EndNode();
+
+	attributes.SerializeXml(f);
+	item_dropset.SerializeXml(f);
 }
 
 
-void MonsterData::DeserializeXml( XmlReader* xml )
+void MonsterData::DeserializeXml( AttributeReader* f )
 {
-	DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+	//DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+	name = f->GetString("name");
+	script = f->GetString("script");
+	description = f->GetString("description");
 
-	attributes.DeserializeXml(xml);
-	item_dropset.DeserializeXml(xml);
-}
+	if( f->NextChild("Data") )
+	{
+		lv = f->GetInt("lv", lv);
+		exp = f->GetInt("exp", exp);
+		gold = f->GetInt("gold", gold);
+		portrait_id = f->GetInt("portrait_id", portrait_id);
+		map_spriteset_id = f->GetInt("map_spriteset_id", map_spriteset_id);
+		battle_spriteset_id = f->GetInt("battle_spriteset_id", battle_spriteset_id);
+		default_background_id = f->GetInt("terrain_id", default_background_id);
+		f->SetToParent();
+	}
 
-
-void MonsterData::Serialize( Serializer* f )
-{
-	SERIALIZE_OBJECT_ATTRIBUTES(this, f);
-}
-
-
-void MonsterData::Deserialize( Deserializer* f )
-{
-	DESERIALIZE_OBJECT_ATTRIBUTES(this, f);
+	attributes.DeserializeXml(f);
+	item_dropset.DeserializeXml(f);
 }
 
 

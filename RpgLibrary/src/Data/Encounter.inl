@@ -9,8 +9,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 #include "Encounter.h"
 
 
@@ -30,21 +30,21 @@ void EncounterData::Validate()
 }
 
 
-void EncounterData::SerializeXml( XmlWriter* xml )
+void EncounterData::SerializeXml( AttributeWriter* f )
 {
-	xml->BeginNode("Encounter");
-	xml->SetInt("troop_id", troop_id);
-	xml->SetInt("rate", rate);
-	xml->SetInt("max_rate", max_rate);
-	xml->EndNode();
+	f->BeginNode("Encounter");
+	f->SetInt("troop_id", troop_id);
+	f->SetInt("rate", rate);
+	f->SetInt("max_rate", max_rate);
+	f->EndNode();
 }
 
 
-void EncounterData::DeserializeXml( XmlReader* xml )
+void EncounterData::DeserializeXml( AttributeReader* f )
 {
-	troop_id = xml->GetInt("troop_id");
-	rate = xml->GetInt("rate");
-	max_rate = xml->GetInt("max_rate");
+	troop_id = f->GetInt("troop_id");
+	rate = f->GetInt("rate");
+	max_rate = f->GetInt("max_rate");
 }
 
 
@@ -57,41 +57,36 @@ EncounterGroup::EncounterGroup() :
 }
 
 
-void EncounterGroup::SerializeXml( XmlWriter* xml )
+void EncounterGroup::SerializeXml( AttributeWriter* f )
 {
-	xml->BeginNode("Region");
-	xml->SetString("name", name.c_str());
-	xml->SetUInt("num_encounters", encounters.size());
+	f->BeginNode("Region");
+	f->SetString("name", name.c_str());
+	f->SetUInt("num_encounters", encounters.size());
 
 	for( vec_type::iterator it = encounters.begin(); it != encounters.end(); ++it )
 	{
-		it->SerializeXml(xml);
+		it->SerializeXml(f);
 	}
 
-	xml->EndNode();
+	f->EndNode();
 }
 
 
-void EncounterGroup::DeserializeXml( XmlReader* xml )
+void EncounterGroup::DeserializeXml( AttributeReader* f )
 {
-	size_t n = xml->GetUInt("num_encounters");
-	encounters.resize(n);
+	size_t numEncounters = f->GetUInt("num_encounters");
+	encounters.resize(numEncounters);
 
-	bool nested = false;
-	for( size_t i(0); i < encounters.size(); ++i )
+	for( size_t i(0); i < numEncounters; ++i )
 	{
-		if( xml->NextChild("Encounter") )
+		if( f->NextChild("Encounter") )
 		{
-			encounters[i].DeserializeXml(xml);
-			nested = true;
-		}
-		else
-		{
+			encounters[i].DeserializeXml(f);
 		}
 	}
 
-	if( nested )
-		xml->SetToParent();
+	if( f->GetCurrentNodeName() == "Encounter" )
+		f->SetToParent();
 }
 
 

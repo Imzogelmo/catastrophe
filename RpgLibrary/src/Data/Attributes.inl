@@ -10,8 +10,8 @@
 // GNU General Public License for more details.
 
 #include <Catastrophe/IO/File.h>
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 
 #include "Attributes.h"
 #include "AttributeSerializer.h"
@@ -92,38 +92,45 @@ void Attributes::Clamp(const Attributes& min, const Attributes& max)
 
 void Attributes::RegisterObject()
 {
+	/*
 	REGISTER_ATTRIBUTE_FACTORY_TYPE(Attributes);
 	REGISTER_ATTRIBUTE_ARRAY(Attributes, VAR_TYPE_INT_ARRAY, MAX_PARAMS, "MaxParams", max_params);
 	REGISTER_ATTRIBUTE_ARRAY(Attributes, VAR_TYPE_SHORT_ARRAY, MAX_STATS, "Stats", stats);
 	REGISTER_ATTRIBUTE_ARRAY(Attributes, VAR_TYPE_BYTE_ARRAY, MAX_STATUS, "StatusAtk", status_atk);
 	REGISTER_ATTRIBUTE_ARRAY(Attributes, VAR_TYPE_BYTE_ARRAY, MAX_STATUS, "StatusDef", status_def);
+	*/
 }
 
 
-void Attributes::SerializeXml( XmlWriter* xml )
+void Attributes::SerializeXml( AttributeWriter* f )
 {
-	SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+	//SERIALIZE_OBJECT_ATTRIBUTES_XML(this, f);
+
+	f->WriteIntArrayElement("MaxParams", &max_params[0], MAX_PARAMS);
+	f->WriteShortArrayElement("Stats", &stats[0], MAX_STATS);
+	f->WriteByteArrayElement("StatusAtk", (byte*)&status_atk[0], MAX_STATUS);
+	f->WriteByteArrayElement("StatusDef", (byte*)&status_def[0], MAX_STATUS);
 
 	/*
-	xml->BeginNode("MaxParams");
-	xml->WriteBlock(&max_params[0], MAX_PARAMS);
-	xml->EndNode();
+	f->BeginNode("MaxParams");
+	f->WriteBlock(&max_params[0], MAX_PARAMS);
+	f->EndNode();
 
-	xml->BeginNode("Stats");
-	xml->WriteBlock(&stats[0], MAX_STATS);
-	xml->EndNode();
+	f->BeginNode("Stats");
+	f->WriteBlock(&stats[0], MAX_STATS);
+	f->EndNode();
 
-	//xml->BeginNode("ElementalDef");
-	//xml->WriteBlock((ubyte*)&elemental_def[0], MAX_ELEMENTS);
-	//xml->EndNode();
+	//f->BeginNode("ElementalDef");
+	//f->WriteBlock((ubyte*)&elemental_def[0], MAX_ELEMENTS);
+	//f->EndNode();
 
-	xml->BeginNode("StatusAtk");
-	xml->WriteBlock((ubyte*)&status_atk[0], MAX_STATUS);
-	xml->EndNode();
+	f->BeginNode("StatusAtk");
+	f->WriteBlock((ubyte*)&status_atk[0], MAX_STATUS);
+	f->EndNode();
 
-	xml->BeginNode("StatusDef");
-	xml->WriteBlock((ubyte*)&status_def[0], MAX_STATUS);
-	xml->EndNode();
+	f->BeginNode("StatusDef");
+	f->WriteBlock((ubyte*)&status_def[0], MAX_STATUS);
+	f->EndNode();
 	*/
 
 	//flags.SerializeXml(xml);
@@ -131,54 +138,48 @@ void Attributes::SerializeXml( XmlWriter* xml )
 }
 
 
-void Attributes::DeserializeXml( XmlReader* xml )
+void Attributes::DeserializeXml( AttributeReader* f )
 {
-	DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+	//DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+
+	f->ReadIntArrayElement("MaxParams", &max_params[0], MAX_PARAMS);
+	f->ReadShortArrayElement("Stats", &stats[0], MAX_STATS);
+	f->ReadByteArrayElement("StatusAtk", (byte*)&status_atk[0], MAX_STATUS);
+	f->ReadByteArrayElement("StatusDef", (byte*)&status_def[0], MAX_STATUS);
+
 /*
-	if( xml->FirstChild("MaxParams") )
+	if( f->FirstChild("MaxParams") )
 	{
-		xml->ReadBlock(&max_params[0], MAX_PARAMS);
-		xml->SetToParent();
+		f->ReadIntArray(&max_params[0], MAX_PARAMS);
+		f->SetToParent();
 	}
 
-	if( xml->FirstChild("Stats") )
+	if( f->FirstChild("Stats") )
 	{
-		xml->ReadBlock(&stats[0], MAX_STATS);
-		xml->SetToParent();
+		f->ReadBlock(&stats[0], MAX_STATS);
+		f->SetToParent();
 	}
 
-	if( xml->FirstChild("ElementalDef") )
+	if( f->FirstChild("ElementalDef") )
 	{
-		xml->ReadBlock((ubyte*)&elemental_def[0], MAX_ELEMENTS);
-		xml->SetToParent();
+		f->ReadBlock((ubyte*)&elemental_def[0], MAX_ELEMENTS);
+		f->SetToParent();
 	}
 
-	if( xml->FirstChild("StatusAtk") )
+	if( f->FirstChild("StatusAtk") )
 	{
-		xml->ReadBlock((ubyte*)&status_atk[0], MAX_STATUS);
-		xml->SetToParent();
+		f->ReadBlock((ubyte*)&status_atk[0], MAX_STATUS);
+		f->SetToParent();
 	}
 
-	if( xml->FirstChild("StatusDef") )
+	if( f->FirstChild("StatusDef") )
 	{
-		xml->ReadBlock((ubyte*)&status_def[0], MAX_STATUS);
-		xml->SetToParent();
+		f->ReadBlock((ubyte*)&status_def[0], MAX_STATUS);
+		f->SetToParent();
 	}
 */
 	//flags.DeserializeXml(xml);
 
-}
-
-
-void Attributes::Serialize( Serializer* f )
-{
-	SERIALIZE_OBJECT_ATTRIBUTES(this, f);
-}
-
-
-void Attributes::Deserialize( Deserializer* f )
-{
-	DESERIALIZE_OBJECT_ATTRIBUTES(this, f);
 }
 
 

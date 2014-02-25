@@ -33,8 +33,8 @@ public:
 	Shader* LoadShader();
 	void ReleaseShader();
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
+	void SerializeXml( AttributeWriter* f );
+	void DeserializeXml( AttributeReader* f );
 
 protected:
 	fc::string		m_name;

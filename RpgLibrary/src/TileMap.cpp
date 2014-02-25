@@ -19,6 +19,6 @@
 // tile
 #include "Tile.inl"
 #include "Tileset.inl"
-#include "MapLayer.inl"
-#include "Map.inl"
+#include "TileMapLayer.inl"
+#include "TileMap.inl"
 

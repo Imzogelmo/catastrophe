@@ -9,8 +9,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 #include "Item.h"
 #include "AttributeSerializer.h"
 
@@ -31,6 +31,7 @@ Item::Item() :
 
 void Item::RegisterObject()
 {
+	/*
 	REGISTER_ATTRIBUTE_FACTORY_TYPE(Item);
 	REGISTER_ATTRIBUTE(Item, VAR_TYPE_STRING, "name", name);
 	REGISTER_ATTRIBUTE(Item, VAR_TYPE_STRING, "script", script);
@@ -41,30 +42,42 @@ void Item::RegisterObject()
 	REGISTER_ATTRIBUTE(Item, VAR_TYPE_INT, "subtype", subtype);
 	REGISTER_ATTRIBUTE(Item, VAR_TYPE_INT, "price", price);
 	POP_ATTRIBUTE_NODE(Item);
+	*/
 }
 
 
-void Item::SerializeXml( XmlWriter* xml )
+void Item::SerializeXml( AttributeWriter* f )
 {
-	SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+	f->SetString("name", name.c_str());
+	f->SetString("script", script.c_str());
+	f->SetString("description", description.c_str());
+
+	f->BeginNode("Data");
+	f->SetShort("type", type);
+	f->SetShort("subtype", subtype);
+	f->SetInt("price", price);
+	f->EndNode();
+
+	//SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
 }
 
 
-void Item::DeserializeXml( XmlReader* xml )
+void Item::DeserializeXml( AttributeReader* f )
 {
-	DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+	name = f->GetString("name", name);
+	script = f->GetString("script", script);
+	description = f->GetString("description", description);
+
+	if( f->NextChild("Data") )
+	{
+		type = f->GetShort("type");
+		subtype = f->GetShort("subtype");
+		price = f->GetInt("price");
+		f->SetToParent();
+	}
+
+	//DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
 }
 
-
-void Item::Serialize( Serializer* f )
-{
-	SERIALIZE_OBJECT_ATTRIBUTES(this, f);
-}
-
-
-void Item::Deserialize( Deserializer* f )
-{
-	DESERIALIZE_OBJECT_ATTRIBUTES(this, f);
-}
 
 

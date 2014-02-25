@@ -10,8 +10,8 @@
 // GNU General Public License for more details.
 
 
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 #include "BattleCommand.h"
 
 
@@ -24,24 +24,24 @@ BattleCommand::BattleCommand() :
 }
 
 
-void BattleCommand::SerializeXml( XmlWriter* xml )
+void BattleCommand::SerializeXml( AttributeWriter* f )
 {
-	xml->SetString("name", name.c_str());
-	xml->SetString("description", description.c_str());
-	xml->SetInt("id", id);
-	xml->SetInt("type", type);
-	xml->SetInt("flags", flags);
+	f->SetString("name", name.c_str());
+	f->SetString("description", description.c_str());
+	f->SetInt("id", id);
+	f->SetInt("type", type);
+	f->SetInt("flags", flags);
 
 }
 
 
-void BattleCommand::DeserializeXml( XmlReader* xml )
+void BattleCommand::DeserializeXml( AttributeReader* f )
 {
-	name = xml->GetString("name");
-	description = xml->GetString("description");
-	id = xml->GetInt("id");
-	type = xml->GetInt("type");
-	flags = xml->GetInt("flags");
+	name = f->GetString("name");
+	description = f->GetString("description");
+	id = f->GetInt("id");
+	type = f->GetInt("type");
+	flags = f->GetInt("flags");
 
 }
 

@@ -12,8 +12,8 @@
 #pragma once
 
 #include <fc/string.h>
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 
 #include "TextureAsset.h"
 #include "TextureManager.h"
@@ -93,22 +93,22 @@ void TextureAsset::Reset()
 }
 
 
-void TextureAsset::SerializeXml( XmlWriter* xml )
+void TextureAsset::SerializeXml( AttributeWriter* f )
 {
-	xml->BeginNode("Asset");
-	xml->SetString("texture", m_textureFilename.c_str());
-	xml->SetBool("preload", m_preload);
-	xml->EndNode();
+	f->BeginNode("Asset");
+	f->SetString("texture", m_textureFilename.c_str());
+	f->SetBool("preload", m_preload);
+	f->EndNode();
 }
 
 
-void TextureAsset::DeserializeXml( XmlReader* xml )
+void TextureAsset::DeserializeXml( AttributeReader* f )
 {
-	if( xml->NextChild("Asset") )
+	if( f->NextChild("Asset") )
 	{
-		m_textureFilename = xml->GetString("texture");
-		m_preload = xml->GetBool("preload");
-		xml->SetToParent();
+		m_textureFilename = f->GetString("texture");
+		m_preload = f->GetBool("preload");
+		f->SetToParent();
 	}
 
 	Reset();

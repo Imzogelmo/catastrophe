@@ -53,25 +53,25 @@ enum AttributeAccessorVariableType
 
 
 template <class T>
-void SerializeObjectArrayXml( T* obj, const char* node, XmlWriter* xml )
+void SerializeObjectArrayXml( T* obj, const char* node, AttributeWriter* f )
 {
 	size_t n = obj->size();
 	for( size_t i(0); i < n; ++i )
 	{
-		xml->BeginNode(node);
+		f->BeginNode(node);
 		(*obj)[i].SerializeXml(xml);
-		xml->EndNode();
+		f->EndNode();
 	}
 }
 
 
 template <class T>
-void DeserializeObjectArrayXml( T* obj, const char* node, XmlReader* xml )
+void DeserializeObjectArrayXml( T* obj, const char* node, AttributeReader* f )
 {
 	bool nested = false;
 	for( size_t i(0); i < obj->size(); ++i )
 	{
-		if( xml->NextChild(node) )
+		if( f->NextChild(node) )
 		{
 			(*obj)[i].DeserializeXml(xml);
 			nested = true;
@@ -83,48 +83,48 @@ void DeserializeObjectArrayXml( T* obj, const char* node, XmlReader* xml )
 	}
 
 	if( nested )
-		xml->SetToParent();
+		f->SetToParent();
 }
 
 
 
 template <class T>
-void SerializeObjectArraySizeXml( T* obj, const char* node, XmlWriter* xml )
+void SerializeObjectArraySizeXml( T* obj, const char* node, AttributeWriter* f )
 {
-	xml->SetUInt(node, obj->size());
+	f->SetUInt(node, obj->size());
 }
 
 
 template <class T>
-void DeserializeObjectArraySizeXml( T* obj, const char* node, XmlReader* xml )
+void DeserializeObjectArraySizeXml( T* obj, const char* node, AttributeReader* f )
 {
-	size_t n = xml->GetUInt(node);
+	size_t n = f->GetUInt(node);
 	obj->resize(n);
 }
 
 
 struct AttributeAccessorTemplateTypeInfo
 {
-	virtual void OnReadAttributeArrayXml( void* obj, const char* node, XmlReader* xml ) const {}
-	virtual void OnWriteAttributeArrayXml( void* obj, const char* node, XmlWriter* xml ) const {}
-	virtual void OnReadAttributeArraySizeXml( void* obj, const char* node, XmlReader* xml ) const {}
-	virtual void OnWriteAttributeArraySizeXml( void* obj, const char* node, XmlWriter* xml ) const {}
+	virtual void OnReadAttributeArrayXml( void* obj, const char* node, AttributeReader* f ) const {}
+	virtual void OnWriteAttributeArrayXml( void* obj, const char* node, AttributeWriter* f ) const {}
+	virtual void OnReadAttributeArraySizeXml( void* obj, const char* node, AttributeReader* f ) const {}
+	virtual void OnWriteAttributeArraySizeXml( void* obj, const char* node, AttributeWriter* f ) const {}
 };
 
 
 template <class T>
 struct AttributeAccessorTemplateTypeInfoImpl : public AttributeAccessorTemplateTypeInfo
 {
-	virtual void OnReadAttributeArrayXml( void* obj, const char* node, XmlReader* xml ) const {
+	virtual void OnReadAttributeArrayXml( void* obj, const char* node, AttributeReader* f ) const {
 		::DeserializeObjectArrayXml<T>((T*)obj, node, xml);
 	}
-	virtual void OnWriteAttributeArrayXml( void* obj, const char* node, XmlWriter* xml ) const {
+	virtual void OnWriteAttributeArrayXml( void* obj, const char* node, AttributeWriter* f ) const {
 		::SerializeObjectArrayXml<T>((T*)obj, node, xml);
 	}
-	virtual void OnReadAttributeArraySizeXml( void* obj, const char* node, XmlReader* xml ) const {
+	virtual void OnReadAttributeArraySizeXml( void* obj, const char* node, AttributeReader* f ) const {
 		::DeserializeObjectArraySizeXml<T>((T*)obj, node, xml);
 	}
-	virtual void OnWriteAttributeArraySizeXml( void* obj, const char* node, XmlWriter* xml ) const {
+	virtual void OnWriteAttributeArraySizeXml( void* obj, const char* node, AttributeWriter* f ) const {
 		::SerializeObjectArraySizeXml<T>((T*)obj, node, xml);
 	}
 };
@@ -174,14 +174,14 @@ public:
 
 	void RegisterAttributeAccessor( const AttributeAccessorInfo& attrInfo );
 
-	NO_INLINE void SerializeObjectAttributesXml( void* obj, XmlWriter* xml );
-	NO_INLINE void DeserializeObjectAttributesXml( void* obj, XmlReader* xml );
+	NO_INLINE void SerializeObjectAttributesXml( void* obj, AttributeWriter* f );
+	NO_INLINE void DeserializeObjectAttributesXml( void* obj, AttributeReader* f );
 
-	int OnReadAttributeInfoXml( void* obj, XmlReader* xml, const AttributeAccessorInfo& attr );
-	int OnWriteAttributeInfoXml( void* obj, XmlWriter* xml, const AttributeAccessorInfo& attr );
+	int OnReadAttributeInfoXml( void* obj, AttributeReader* f, const AttributeAccessorInfo& attr );
+	int OnWriteAttributeInfoXml( void* obj, AttributeWriter* f, const AttributeAccessorInfo& attr );
 
-	template <class T> static void OnReadAttributeArrayXml( T* obj, XmlReader* xml );
-	template <class T> static void OnWriteAttributeArrayXml( T* obj, XmlWriter* xml );
+	template <class T> static void OnReadAttributeArrayXml( T* obj, AttributeReader* f );
+	template <class T> static void OnWriteAttributeArrayXml( T* obj, AttributeWriter* f );
 
 protected:
 	static int m_typeIdGenerator;
@@ -264,7 +264,7 @@ public:
 	}
 
 	template <class T>
-	void SerializeObjectAttributesXml( T* obj, XmlWriter* xml )
+	void SerializeObjectAttributesXml( T* obj, AttributeWriter* f )
 	{
 		int registeredTypeId = AttributeAccessorObjectTypeInfo<T>::GetTypeId();
 
@@ -274,7 +274,7 @@ public:
 	}
 
 	template <class T>
-	void DeserializeObjectAttributesXml( T* obj, XmlReader* xml )
+	void DeserializeObjectAttributesXml( T* obj, AttributeReader* f )
 	{
 		int registeredTypeId = AttributeAccessorObjectTypeInfo<T>::GetTypeId();
 

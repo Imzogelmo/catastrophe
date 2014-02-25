@@ -44,7 +44,7 @@ struct Modifier
 	Attributes ConvertToAttributes() const;
 	void ApplyToAttributes( Attributes& attributes ) const;
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
+	void SerializeXml( AttributeWriter* f );
+	void DeserializeXml( AttributeReader* f );
 };
 

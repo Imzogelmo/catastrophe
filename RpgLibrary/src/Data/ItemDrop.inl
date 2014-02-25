@@ -12,8 +12,8 @@
 #pragma once
 
 #include <Catastrophe/Math/Math.h>
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 #include <fc/rand.h>
 
 #include "ItemDrop.h"
@@ -91,26 +91,26 @@ void ItemDrop::Validate()
 }
 
 
-void ItemDrop::SerializeXml( XmlWriter* xml )
+void ItemDrop::SerializeXml( AttributeWriter* f )
 {
 	Validate();
-	xml->BeginNode("ItemDrop");
-	xml->SetInt("index", m_itemId);
-	xml->SetInt("rate", m_dropRate);
-	xml->SetInt("max_rate", m_maxRate);
-	xml->SetInt("min", m_min);
-	xml->SetInt("max", m_max);
-	xml->EndNode();
+	f->BeginNode("ItemDrop");
+	f->SetInt("index", m_itemId);
+	f->SetInt("rate", m_dropRate);
+	f->SetInt("max_rate", m_maxRate);
+	f->SetInt("min", m_min);
+	f->SetInt("max", m_max);
+	f->EndNode();
 }
 
 
-void ItemDrop::DeserializeXml( XmlReader* xml )
+void ItemDrop::DeserializeXml( AttributeReader* f )
 {
-	m_itemId = xml->GetInt("index");
-	m_dropRate = xml->GetInt("rate");
-	m_maxRate = xml->GetInt("max_rate");
-	m_min = xml->GetInt("min");
-	m_max = xml->GetInt("max");
+	m_itemId = f->GetInt("index");
+	m_dropRate = f->GetInt("rate");
+	m_maxRate = f->GetInt("max_rate");
+	m_min = f->GetInt("min");
+	m_max = f->GetInt("max");
 }
 
 

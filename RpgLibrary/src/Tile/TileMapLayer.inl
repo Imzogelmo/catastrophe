@@ -10,14 +10,14 @@
 // GNU General Public License for more details.
 
 
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
-#include "MapLayer.h"
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
+#include "TileMapLayer.h"
 #include "Tileset.h"
 #include "TilesetManager.h"
 
 
-MapLayer::MapLayer() :
+TileMapLayer::TileMapLayer() :
 	m_name(),
 	m_tileset(0),
 	m_tiles(),
@@ -28,25 +28,25 @@ MapLayer::MapLayer() :
 }
 
 
-void MapLayer::Clear()
+void TileMapLayer::Clear()
 {
 	m_tiles.fill(LayerTile());
 }
 
 
-void MapLayer::Resize( size_t w, size_t h )
+void TileMapLayer::Resize( size_t w, size_t h )
 {
 	m_tiles.resize(h, w);
 }
 
 
-void MapLayer::SetTileset( Tileset* tileset )
+void TileMapLayer::SetTileset( Tileset* tileset )
 {
 	m_tileset = tileset;
 }
 
 /*
-void MapLayer::Render( SpriteBatch* spriteBatch, const Rect& viewRect, bool wrap )
+void TileMapLayer::Render( SpriteBatch* spriteBatch, const Rect& viewRect, bool wrap )
 {
 	if( !m_tileset )
 		return;
@@ -70,7 +70,7 @@ void MapLayer::Render( SpriteBatch* spriteBatch, const Rect& viewRect, bool wrap
 }
 
 
-void MapLayer::InternalDrawNormal( SpriteBatch* spriteBatch, int x1, int y1, int x2, int y2 )
+void TileMapLayer::InternalDrawNormal( SpriteBatch* spriteBatch, int x1, int y1, int x2, int y2 )
 {
 	const int tileSize = 16;
 	const float tileSizef = 16.f;
@@ -148,7 +148,7 @@ void MapLayer::InternalDrawNormal( SpriteBatch* spriteBatch, int x1, int y1, int
 
 
 
-void MapLayer::InternalDrawWrap( SpriteBatch* spriteBatch, int x1, int y1, int x2, int y2 )
+void TileMapLayer::InternalDrawWrap( SpriteBatch* spriteBatch, int x1, int y1, int x2, int y2 )
 {
 	const int TILE_SIZE = 16;//fixme
 	const float TILE_SIZEf = 16.f;//fixme
@@ -236,25 +236,25 @@ void MapLayer::InternalDrawWrap( SpriteBatch* spriteBatch, int x1, int y1, int x
 }
 */
 
-void MapLayer::SerializeXml( XmlWriter* xml )
+void TileMapLayer::SerializeXml( AttributeWriter* f )
 {
-	xml->SetString("name", m_name.c_str());
-	xml->SetUInt("width", m_tiles.x());
-	xml->SetUInt("height", m_tiles.y());
-	xml->SetUInt("color", m_color.packed_value);
-	xml->SetUInt("blendmode", m_blendmode.value);
+	f->SetString("name", m_name.c_str());
+	f->SetUInt("width", m_tiles.x());
+	f->SetUInt("height", m_tiles.y());
+	f->SetUInt("color", m_color.packed_value);
+	f->SetUInt("blendmode", m_blendmode.value);
 
 	fc::string tilesetFilename = m_tileset ? m_tileset->GetFileName() : "";
 	if( tilesetFilename.empty() )
 	{
-		Log("MapLayer::SerializeXml: tileset filename is empty.");
+		Log("TileMapLayer::SerializeXml: tileset filename is empty.");
 	}
 
-	xml->SetString("tileset", tilesetFilename.c_str());
+	f->SetString("tileset", tilesetFilename.c_str());
 
 	for( array_type::iterator it = m_tiles.begin(); it != m_tiles.end(); ++it )
 	{
-		xml->BeginNode("Tile");
+		f->BeginNode("Tile");
 
 		int id = -1;
 		Tile* p = it->tile;
@@ -263,29 +263,29 @@ void MapLayer::SerializeXml( XmlWriter* xml )
 			id = p->GetIndex();
 		}
 
-		xml->SetInt("id", id);
-		xml->SetInt("flags", it->flags);
-		xml->EndNode();
+		f->SetInt("id", id);
+		f->SetInt("flags", it->flags);
+		f->EndNode();
 	}
 }
 
 
-void MapLayer::DeserializeXml( XmlReader* xml )
+void TileMapLayer::DeserializeXml( AttributeReader* f )
 {
 	Clear();
 
-	m_name = xml->GetString("name");
-	size_t w = xml->GetUInt("width");
-	size_t h = xml->GetUInt("height");
-	m_color.packed_value = xml->GetUInt("color");
-	m_blendmode.value = xml->GetUInt("blendmode");
+	m_name = f->GetString("name");
+	size_t w = f->GetUInt("width");
+	size_t h = f->GetUInt("height");
+	m_color.packed_value = f->GetUInt("color");
+	m_blendmode.value = f->GetUInt("blendmode");
 
 	Resize(w, h);
 
-	fc::string tilsetFilename = xml->GetString("tileset");
+	fc::string tilsetFilename = f->GetString("tileset");
 	if( tilsetFilename.empty() )
 	{
-		Log("MapLayer::DeserializeXml: unknown tileset");
+		Log("TileMapLayer::DeserializeXml: unknown tileset");
 		return;
 	}
 	else
@@ -300,13 +300,13 @@ void MapLayer::DeserializeXml( XmlReader* xml )
 
 	for( array_type::iterator it = m_tiles.begin(); it != m_tiles.end(); ++it )
 	{
-		if( !xml->NextChild("Tile") )
+		if( !f->NextChild("Tile") )
 			break;
 
-		int id = xml->GetInt("id", -1);
+		int id = f->GetInt("id", -1);
 
 		it->tile = m_tileset->GetTile((size_t)id);
-		it->flags = xml->GetInt("flags", 0);
+		it->flags = f->GetInt("flags", 0);
 
 	}
 }

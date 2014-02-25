@@ -55,8 +55,8 @@ public:
 		return (type != TypeConstant && lifetime <= 0);
 	}
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
+	void SerializeXml( AttributeWriter* f );
+	void DeserializeXml( AttributeReader* f );
 
 };
 

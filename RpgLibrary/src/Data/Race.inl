@@ -10,8 +10,8 @@
 // GNU General Public License for more details.
 
 
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 #include "Race.h"
 #include "AttributeSerializer.h"
 
@@ -25,35 +25,30 @@ Race::Race() :
 
 void Race::RegisterObject()
 {
+	/*
 	REGISTER_ATTRIBUTE_FACTORY_TYPE(Race);
 	REGISTER_ATTRIBUTE(Race, VAR_TYPE_STRING, "name", name);
 	REGISTER_ATTRIBUTE(Race, VAR_TYPE_STRING, "description", description);
+	*/
 }
 
 
-void Race::SerializeXml( XmlWriter* xml )
+void Race::SerializeXml( AttributeWriter* f )
 {
-	SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
-	attributes.SerializeXml(xml);
+	f->SetString("name", name.c_str());
+	f->SetString("description", description.c_str());
+
+	attributes.SerializeXml(f);
 }
 
 
-void Race::DeserializeXml( XmlReader* xml )
+void Race::DeserializeXml( AttributeReader* f )
 {
-	DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
-	attributes.DeserializeXml(xml);
+	name = f->GetString("name", name);
+	description = f->GetString("description", description);
+
+	attributes.DeserializeXml(f);
 }
 
-
-void Race::Serialize( Serializer* f )
-{
-	SERIALIZE_OBJECT_ATTRIBUTES(this, f);
-}
-
-
-void Race::Deserialize( Deserializer* f )
-{
-	DESERIALIZE_OBJECT_ATTRIBUTES(this, f);
-}
 
 

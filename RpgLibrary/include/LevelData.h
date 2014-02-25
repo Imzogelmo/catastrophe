@@ -26,8 +26,8 @@ struct RPG_API LevelData
 
 	LevelData() {}
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
+	void SerializeXml( AttributeWriter* f );
+	void DeserializeXml( AttributeReader* f );
 };
 
 
@@ -45,7 +45,7 @@ struct RPG_API LevelInfo
 	{}
 
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
+	void SerializeXml( AttributeWriter* f );
+	void DeserializeXml( AttributeReader* f );
 };
 

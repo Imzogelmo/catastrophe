@@ -9,8 +9,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 #include "Buff.h"
 
 
@@ -18,20 +18,20 @@
 //                 Buff
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-void Buff::SerializeXml( XmlWriter* xml )
+void Buff::SerializeXml( AttributeWriter* f )
 {
-	xml->BeginNode("Attributes");
-	attributes.SerializeXml(xml);
-	xml->EndNode();
+	f->BeginNode("Attributes");
+	attributes.SerializeXml(f);
+	f->EndNode();
 }
 
 
-void Buff::DeserializeXml( XmlReader* xml )
+void Buff::DeserializeXml( AttributeReader* f )
 {
-	if( xml->NextChild("Attributes") )
+	if( f->NextChild("Attributes") )
 	{
-		attributes.DeserializeXml(xml);
-		xml->SetToParent();
+		attributes.DeserializeXml(f);
+		f->SetToParent();
 	}
 }
 
@@ -44,7 +44,7 @@ void Buff::DeserializeXml( XmlReader* xml )
 
 bool BuffList::SerializeXml( const fc::string& filename )
 {
-	XmlWriter xml(filename);
+	AttributeWriter xml(filename);
 	if( !xml.IsOpen() )
 	{
 		Log("Could not open file (%s)", filename.c_str());
@@ -70,7 +70,7 @@ bool BuffList::SerializeXml( const fc::string& filename )
 
 bool BuffList::DeserializeXml( const fc::string& filename )
 {
-	XmlReader xml(filename);
+	AttributeReader xml(filename);
 	if( !xml.IsOpen() )
 	{
 		Log("Could not open file (%s)", filename.c_str());

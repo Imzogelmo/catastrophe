@@ -9,8 +9,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 #include <Catastrophe/Graphics/ShaderObject.h>
 #include <Catastrophe/Graphics/Shader.h>
 #include "ShaderAsset.h"
@@ -70,18 +70,18 @@ void ShaderAsset::ReleaseShader()
 }
 
 
-void ShaderAsset::SerializeXml( XmlWriter* xml )
+void ShaderAsset::SerializeXml( AttributeWriter* f )
 {
-	xml->SetString("name", m_name);
-	xml->SetString("vert", m_vertexFilename);
-	xml->SetString("frag", m_fragmentFilename);
+	f->SetString("name", m_name);
+	f->SetString("vert", m_vertexFilename);
+	f->SetString("frag", m_fragmentFilename);
 }
 
 
-void ShaderAsset::DeserializeXml( XmlReader* xml )
+void ShaderAsset::DeserializeXml( AttributeReader* f )
 {
-	m_name = xml->GetString("name");
-	m_vertexFilename = xml->GetString("vert");
-	m_fragmentFilename = xml->GetString("frag");
+	m_name = f->GetString("name");
+	m_vertexFilename = f->GetString("vert");
+	m_fragmentFilename = f->GetString("frag");
 }
 

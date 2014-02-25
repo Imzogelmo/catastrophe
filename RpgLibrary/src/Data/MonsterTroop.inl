@@ -10,8 +10,8 @@
 // GNU General Public License for more details.
 
 
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 #include "MonsterTroop.h"
 #include "AttributeSerializer.h"
 
@@ -27,10 +27,12 @@ MonsterGroup::MonsterGroup( int monsterIndex, int minNum, int maxNum ) :
 
 void MonsterGroup::RegisterObject()
 {
+	/*
 	REGISTER_ATTRIBUTE_FACTORY_TYPE(MonsterGroup);
 	REGISTER_ATTRIBUTE(MonsterGroup, VAR_TYPE_INT, "index", monster_id);
 	REGISTER_ATTRIBUTE(MonsterGroup, VAR_TYPE_INT, "min", min);
 	REGISTER_ATTRIBUTE(MonsterGroup, VAR_TYPE_INT, "max", max);
+	*/
 }
 
 
@@ -42,28 +44,29 @@ void MonsterGroup::Validate()
 }
 
 
-void MonsterGroup::SerializeXml( XmlWriter* xml )
+void MonsterGroup::SerializeXml( AttributeWriter* f )
 {
-	SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+	//SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+
+	f->BeginNode("Monster");
+	f->SetInt("index", monster_id);
+	f->SetInt("min", min);
+	f->SetInt("max", max);
+	f->EndNode();
+
 }
 
 
-void MonsterGroup::DeserializeXml( XmlReader* xml )
+void MonsterGroup::DeserializeXml( AttributeReader* f )
 {
-	DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+	//DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+
+	monster_id = f->GetInt("index", monster_id);
+	min = f->GetInt("min", min);
+	max = f->GetInt("max", max);
+
 }
 
-
-void MonsterGroup::Serialize( Serializer* f )
-{
-	SERIALIZE_OBJECT_ATTRIBUTES(this, f);
-}
-
-
-void MonsterGroup::Deserialize( File* f )
-{
-	DESERIALIZE_OBJECT_ATTRIBUTES(this, f);
-}
 
 
 
@@ -81,35 +84,54 @@ MonsterTroop::MonsterTroop() :
 
 void MonsterTroop::RegisterObject()
 {
+	/*
 	REGISTER_ATTRIBUTE_FACTORY_TYPE(MonsterTroop);
 	REGISTER_ATTRIBUTE(MonsterTroop, VAR_TYPE_STRING, "name", name);
 	REGISTER_ATTRIBUTE(MonsterTroop, VAR_TYPE_INT, "formation", formation_id);
 	REGISTER_ATTRIBUTE(MonsterTroop, VAR_TYPE_INT, "max", max_monsters);
 	REGISTER_ATTRIBUTE_OBJECT_ARRAY(MonsterTroop, "Monster", "num_groups", vec_type, groups);
+	*/
 }
 
 
-void MonsterTroop::SerializeXml( XmlWriter* xml )
+void MonsterTroop::SerializeXml( AttributeWriter* f )
 {
-	SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+	//SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+
+	f->SetString("name", name);
+	f->SetInt("formation", formation_id);
+	f->SetInt("max", max_monsters);
+	f->SetUInt("num_groups", groups.size());
+
+	for( vec_type::iterator it = groups.begin(); it < groups.end(); ++it )
+	{
+		f->BeginNode("Monster");
+		it->SerializeXml(f);
+		f->EndNode();
+	}
 }
 
 
-void MonsterTroop::DeserializeXml( XmlReader* xml )
+void MonsterTroop::DeserializeXml( AttributeReader* f )
 {
-	DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
-}
+	//DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
 
+	name = f->GetString("name", name);
+	formation_id = f->GetInt("formation", formation_id);
+	max_monsters = f->GetInt("max", max_monsters);
 
-void MonsterTroop::Serialize( Serializer* f )
-{
-	SERIALIZE_OBJECT_ATTRIBUTES(this, f);
-}
+	size_t numGroups = f->GetInt("num_groups");
+	groups.resize(numGroups);
 
+	for( size_t i(0); i < numGroups; ++i )
+	{
+		if( f->NextChild("Monster") )
+			groups[i].DeserializeXml(f);
+	}
 
-void MonsterTroop::Deserialize( File* f )
-{
-	DESERIALIZE_OBJECT_ATTRIBUTES(this, f);
+	if( f->GetCurrentNodeName() == "Monster" )
+		f->SetToParent();
+
 }
 
 

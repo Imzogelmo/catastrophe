@@ -10,8 +10,8 @@
 // GNU General Public License for more details.
 
 
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 #include "Synthesis.h"
 #include "Serialization.h"
 
@@ -23,16 +23,16 @@ Synthesis::Synthesis() :
 }
 
 
-void Synthesis::SerializeXml( XmlWriter* xml )
+void Synthesis::SerializeXml( AttributeWriter* f )
 {
-	xml->SetInt("item_id", item_id);
+	f->SetInt("item_id", item_id);
 
 }
 
 
-void Synthesis::DeserializeXml( XmlReader* xml )
+void Synthesis::DeserializeXml( AttributeReader* f )
 {
-	item_id = xml->GetInt("item_id");
+	item_id = f->GetInt("item_id");
 
 }
 

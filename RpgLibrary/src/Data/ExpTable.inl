@@ -11,8 +11,8 @@
 
 
 #include <fc/math.h>
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 #include "ExpTable.h"
 
 
@@ -72,17 +72,17 @@ void ExpTable::Resize( int maxLv )
 }
 
 
-void ExpTable::SerializeXml( XmlWriter* xml )
+void ExpTable::SerializeXml( AttributeWriter* f )
 {
-	xml->SetUInt("count", table.size());
-	//xml->WriteIntBlock(&table[0], table.size());
+	f->SetUInt("count", table.size());
+	//f->WriteIntBlock(&table[0], table.size());
 }
 
 
-void ExpTable::DeserializeXml( XmlReader* xml )
+void ExpTable::DeserializeXml( AttributeReader* f )
 {
-	size_t n = xml->GetUInt("count");
+	size_t n = f->GetUInt("count");
 	this->Resize((int)n);
-	//xml->ReadIntBlock(&table[0], n);
+	//f->ReadIntBlock(&table[0], n);
 }
 

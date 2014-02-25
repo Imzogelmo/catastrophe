@@ -9,8 +9,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/AttributeWriter.h>
+#include <Catastrophe/IO/AttributeReader.h>
 #include "AttributeSerializer.h"
 
 // static initialization
@@ -27,20 +27,20 @@ void AttributeAccessorObjectTypeBase::RegisterAttributeAccessor( const Attribute
 }
 
 
-void AttributeAccessorObjectTypeBase::SerializeObjectAttributesXml( void* obj, XmlWriter* xml )
+void AttributeAccessorObjectTypeBase::SerializeObjectAttributesXml( void* obj, AttributeWriter* f )
 {
 	for( vec_type::const_iterator it = m_attributes.begin(); it != m_attributes.end(); ++it )
 	{
-		int retVal = OnWriteAttributeInfoXml(obj, xml, *it);
+		int retVal = OnWriteAttributeInfoXml(obj, f, *it);
 	}
 }
 
 
-void AttributeAccessorObjectTypeBase::DeserializeObjectAttributesXml( void* obj, XmlReader* xml )
+void AttributeAccessorObjectTypeBase::DeserializeObjectAttributesXml( void* obj, AttributeReader* f )
 {
 	for( vec_type::const_iterator it = m_attributes.begin(); it != m_attributes.end(); ++it )
 	{
-		int retVal = OnReadAttributeInfoXml(obj, xml, *it);
+		int retVal = OnReadAttributeInfoXml(obj, f, *it);
 
 		// if we have an invalid node error, skip ahead.
 		if( retVal == VAR_TYPE_PUSH_NODE )
@@ -53,7 +53,7 @@ void AttributeAccessorObjectTypeBase::DeserializeObjectAttributesXml( void* obj,
 }
 
 
-int AttributeAccessorObjectTypeBase::OnReadAttributeInfoXml( void* obj, XmlReader* xml, const AttributeAccessorInfo& attr )
+int AttributeAccessorObjectTypeBase::OnReadAttributeInfoXml( void* obj, AttributeReader* f, const AttributeAccessorInfo& attr )
 {
 	// get address of variable
 	void* dest = (void*)(((ubyte*)obj) + attr.offset);
@@ -62,37 +62,37 @@ int AttributeAccessorObjectTypeBase::OnReadAttributeInfoXml( void* obj, XmlReade
 	{
 		case VAR_TYPE_BOOL:
 		{
-			*((bool*)dest) = xml->GetBool(attr.name);
+			*((bool*)dest) = f->GetBool(attr.name);
 			break;
 		}
 		case VAR_TYPE_BYTE:
 		{
-			*((byte*)dest) = xml->GetByte(attr.name);
+			*((byte*)dest) = f->GetByte(attr.name);
 			break;
 		}
 		case VAR_TYPE_SHORT:
 		{
-			*((short*)dest) = xml->GetShort(attr.name);
+			*((short*)dest) = f->GetShort(attr.name);
 			break;
 		}
 		case VAR_TYPE_INT:
 		{
-			*((int*)dest) = xml->GetInt(attr.name);
+			*((int*)dest) = f->GetInt(attr.name);
 			break;
 		}
 		case VAR_TYPE_INT64:
 		{
-			*((int64*)dest) = (int)xml->GetInt(attr.name);
+			*((int64*)dest) = (int)f->GetInt(attr.name);
 			break;
 		}
 		case VAR_TYPE_FLOAT:
 		{
-			*((float*)dest) = xml->GetFloat(attr.name);
+			*((float*)dest) = f->GetFloat(attr.name);
 			break;
 		}
 		case VAR_TYPE_FLOAT64:
 		{
-			*((double*)dest) = (float)xml->GetFloat(attr.name);
+			*((double*)dest) = (float)f->GetFloat(attr.name);
 			break;
 		}
 		case VAR_TYPE_VECTOR2:
@@ -110,7 +110,7 @@ int AttributeAccessorObjectTypeBase::OnReadAttributeInfoXml( void* obj, XmlReade
 		}
 		case VAR_TYPE_STRING:
 		{
-			*((fc::string*)dest) = xml->GetString(attr.name);
+			*((fc::string*)dest) = f->GetString(attr.name);
 			break;
 		}
 		case VAR_TYPE_OBJECT:
@@ -120,48 +120,48 @@ int AttributeAccessorObjectTypeBase::OnReadAttributeInfoXml( void* obj, XmlReade
 		}
 		case VAR_TYPE_BYTE_ARRAY:
 		{
-			//if( xml->FirstChild(attr.name) ) {
-				xml->ReadByteArrayElement(attr.name, (byte*)dest, *((size_t*)&attr.typeInfo));
-			//	xml->SetToParent();
+			//if( f->FirstChild(attr.name) ) {
+				f->ReadByteArrayElement(attr.name, (byte*)dest, *((size_t*)&attr.typeInfo));
+			//	f->SetToParent();
 			//}
 			break;
 		}
 		case VAR_TYPE_SHORT_ARRAY:
 		{
-			xml->ReadShortArrayElement(attr.name, (short*)dest, *((size_t*)&attr.typeInfo));
+			f->ReadShortArrayElement(attr.name, (short*)dest, *((size_t*)&attr.typeInfo));
 			break;
 		}
 		case VAR_TYPE_INT_ARRAY:
 		{
-			xml->ReadIntArrayElement(attr.name, (int*)dest, *((size_t*)&attr.typeInfo));
+			f->ReadIntArrayElement(attr.name, (int*)dest, *((size_t*)&attr.typeInfo));
 			break;
 		}
 		case VAR_TYPE_FLOAT_ARRAY:
 		{
-			xml->ReadFloatArrayElement(attr.name, (float*)dest, *((size_t*)&attr.typeInfo));
+			f->ReadFloatArrayElement(attr.name, (float*)dest, *((size_t*)&attr.typeInfo));
 			break;
 		}
 		case VAR_TYPE_OBJECT_ARRAY:
 		{
 			AttributeAccessorTemplateTypeInfo* typeInfo = (AttributeAccessorTemplateTypeInfo*)&attr.typeInfo;
-			typeInfo->OnReadAttributeArrayXml(dest, attr.name, xml);
+			typeInfo->OnReadAttributeArrayXml(dest, attr.name, f);
 			break;
 		}
 		case VAR_TYPE_OBJECT_ARRAY_SET_SIZE:
 		{
 			AttributeAccessorTemplateTypeInfo* typeInfo = (AttributeAccessorTemplateTypeInfo*)&attr.typeInfo;
-			typeInfo->OnReadAttributeArraySizeXml(dest, attr.name, xml);
+			typeInfo->OnReadAttributeArraySizeXml(dest, attr.name, f);
 			break;
 		}
 		case VAR_TYPE_PUSH_NODE:
 		{
-			if( !xml->NextChild(attr.name) )
+			if( !f->NextChild(attr.name) )
 				return VAR_TYPE_PUSH_NODE;
 			break;
 		}
 		case VAR_TYPE_POP_NODE:
 		{
-			xml->SetToParent();
+			f->SetToParent();
 			break;
 		}
 
@@ -176,7 +176,7 @@ int AttributeAccessorObjectTypeBase::OnReadAttributeInfoXml( void* obj, XmlReade
 }
 
 
-int AttributeAccessorObjectTypeBase::OnWriteAttributeInfoXml( void* obj, XmlWriter* xml, const AttributeAccessorInfo& attr )
+int AttributeAccessorObjectTypeBase::OnWriteAttributeInfoXml( void* obj, AttributeWriter* f, const AttributeAccessorInfo& attr )
 {
 	// address of variable
 	void* dest = (void*)(((ubyte*)obj) + attr.offset);
@@ -185,37 +185,37 @@ int AttributeAccessorObjectTypeBase::OnWriteAttributeInfoXml( void* obj, XmlWrit
 	{
 		case VAR_TYPE_BOOL:
 		{
-			xml->SetBool(attr.name, *((const bool*)dest));
+			f->SetBool(attr.name, *((const bool*)dest));
 			break;
 		}
 		case VAR_TYPE_BYTE:
 		{
-			xml->SetByte(attr.name, *((const byte*)dest));
+			f->SetByte(attr.name, *((const byte*)dest));
 			break;
 		}
 		case VAR_TYPE_SHORT:
 		{
-			xml->SetShort(attr.name, *((const short*)dest));
+			f->SetShort(attr.name, *((const short*)dest));
 			break;
 		}
 		case VAR_TYPE_INT:
 		{
-			xml->SetInt(attr.name, *((const int*)dest));
+			f->SetInt(attr.name, *((const int*)dest));
 			break;
 		}
 		case VAR_TYPE_INT64:
 		{
-			xml->SetInt(attr.name, (int)*((const int64*)dest));
+			f->SetInt(attr.name, (int)*((const int64*)dest));
 			break;
 		}
 		case VAR_TYPE_FLOAT:
 		{
-			xml->SetFloat(attr.name, *((const float*)dest));
+			f->SetFloat(attr.name, *((const float*)dest));
 			break;
 		}
 		case VAR_TYPE_FLOAT64:
 		{
-			xml->SetFloat(attr.name, (float)*((const double*)dest));
+			f->SetFloat(attr.name, (float)*((const double*)dest));
 			break;
 		}
 		case VAR_TYPE_VECTOR2:
@@ -233,7 +233,7 @@ int AttributeAccessorObjectTypeBase::OnWriteAttributeInfoXml( void* obj, XmlWrit
 		}
 		case VAR_TYPE_STRING:
 		{
-			xml->SetString(attr.name, *((const fc::string*)dest));
+			f->SetString(attr.name, *((const fc::string*)dest));
 			break;
 		}
 		case VAR_TYPE_OBJECT:
@@ -243,46 +243,46 @@ int AttributeAccessorObjectTypeBase::OnWriteAttributeInfoXml( void* obj, XmlWrit
 		}
 		case VAR_TYPE_BYTE_ARRAY:
 		{
-			//xml->BeginNode(attr.name);
-			xml->WriteByteArrayElement(attr.name, (byte*)dest, *((size_t*)&attr.typeInfo));
-			//xml->EndNode();
+			//f->BeginNode(attr.name);
+			f->WriteByteArrayElement(attr.name, (byte*)dest, *((size_t*)&attr.typeInfo));
+			//f->EndNode();
 			break;
 		}
 		case VAR_TYPE_SHORT_ARRAY:
 		{
-			xml->WriteShortArrayElement(attr.name, (short*)dest, *((size_t*)&attr.typeInfo));
+			f->WriteShortArrayElement(attr.name, (short*)dest, *((size_t*)&attr.typeInfo));
 			break;
 		}
 		case VAR_TYPE_INT_ARRAY:
 		{
-			xml->WriteIntArrayElement(attr.name, (int*)dest, *((size_t*)&attr.typeInfo));
+			f->WriteIntArrayElement(attr.name, (int*)dest, *((size_t*)&attr.typeInfo));
 			break;
 		}
 		case VAR_TYPE_FLOAT_ARRAY:
 		{
-			xml->WriteFloatArrayElement(attr.name, (float*)dest, *((size_t*)&attr.typeInfo));
+			f->WriteFloatArrayElement(attr.name, (float*)dest, *((size_t*)&attr.typeInfo));
 			break;
 		}
 		case VAR_TYPE_OBJECT_ARRAY:
 		{
 			AttributeAccessorTemplateTypeInfo* typeInfo = (AttributeAccessorTemplateTypeInfo*)&attr.typeInfo;
-			typeInfo->OnWriteAttributeArrayXml(dest, attr.name, xml);
+			typeInfo->OnWriteAttributeArrayXml(dest, attr.name, f);
 			break;
 		}
 		case VAR_TYPE_OBJECT_ARRAY_SET_SIZE:
 		{
 			AttributeAccessorTemplateTypeInfo* typeInfo = (AttributeAccessorTemplateTypeInfo*)&attr.typeInfo;
-			typeInfo->OnWriteAttributeArraySizeXml(dest, attr.name, xml);
+			typeInfo->OnWriteAttributeArraySizeXml(dest, attr.name, f);
 			break;
 		}
 		case VAR_TYPE_PUSH_NODE:
 		{
-			xml->BeginNode(attr.name);
+			f->BeginNode(attr.name);
 			break;
 		}
 		case VAR_TYPE_POP_NODE:
 		{
-			xml->EndNode();
+			f->EndNode();
 			break;
 		}
 

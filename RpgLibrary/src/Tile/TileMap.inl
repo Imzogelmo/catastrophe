@@ -11,11 +11,11 @@
 
 #include <Catastrophe/IO/XmlWriter.h>
 #include <Catastrophe/IO/XmlReader.h>
-#include "Map.h"
+#include "TileMap.h"
 
 
 
-Map::Map() :
+TileMap::TileMap() :
 	m_name(),
 	m_layers(),
 	m_width(0),
@@ -24,7 +24,7 @@ Map::Map() :
 }
 
 
-Map::Map( const fc::string& mapName, size_t numLayers, size_t mapWidth, size_t mapHeight ) :
+TileMap::TileMap( const fc::string& mapName, size_t numLayers, size_t mapWidth, size_t mapHeight ) :
 	m_name(mapName),
 	m_layers(),
 	m_width(0),
@@ -34,13 +34,13 @@ Map::Map( const fc::string& mapName, size_t numLayers, size_t mapWidth, size_t m
 }
 
 
-Map::~Map()
+TileMap::~TileMap()
 {
 	DeleteLayers();
 }
 
 
-void Map::DeleteLayers()
+void TileMap::DeleteLayers()
 {
 	for( vec_type::iterator it = m_layers.begin(); it != m_layers.end(); ++it )
 	{
@@ -51,7 +51,7 @@ void Map::DeleteLayers()
 }
 
 
-void Map::Clear()
+void TileMap::Clear()
 {
 	for( vec_type::iterator it = m_layers.begin(); it != m_layers.end(); ++it )
 	{
@@ -60,7 +60,7 @@ void Map::Clear()
 }
 
 
-void Map::Resize( size_t w, size_t h, size_t numLayers )
+void TileMap::Resize( size_t w, size_t h, size_t numLayers )
 {
 	m_width = w;
 	m_height = h;
@@ -89,17 +89,17 @@ void Map::Resize( size_t w, size_t h, size_t numLayers )
 
 
 
-bool Map::AddLayer( MapLayer* layer )
+bool TileMap::AddLayer( TileMapLayer* layer )
 {
 	if( NumLayers() >= MaxLayers )
 	{
-		Log("Map: Unable to add layer.");
+		Log("TileMap: Unable to add layer.");
 		return false;
 	}
 
 	if( !layer )
 	{
-		layer = new MapLayer();
+		layer = new TileMapLayer();
 	}
 	else
 	{
@@ -108,7 +108,7 @@ bool Map::AddLayer( MapLayer* layer )
 			//if it already exists deep copy it.
 			if( layer == *it )
 			{
-				layer = new MapLayer(*(*it));
+				layer = new TileMapLayer(*(*it));
 				break;
 			}
 		}
@@ -120,7 +120,7 @@ bool Map::AddLayer( MapLayer* layer )
 }
 
 
-void Map::RemoveLayer( size_t index )
+void TileMap::RemoveLayer( size_t index )
 {
 	if( index >= NumLayers() )
 		return;
@@ -131,7 +131,7 @@ void Map::RemoveLayer( size_t index )
 }
 
 
-void Map::SwapLayer( size_t first, size_t second )
+void TileMap::SwapLayer( size_t first, size_t second )
 {
 	if( first == second || first >= NumLayers() || second >= NumLayers() )
 		return;
@@ -140,7 +140,7 @@ void Map::SwapLayer( size_t first, size_t second )
 }
 
 
-MapLayer* Map::GetLayer( size_t index ) const
+TileMapLayer* TileMap::GetLayer( size_t index ) const
 {
 	if( index < m_layers.size() )
 		return m_layers[index];
@@ -149,7 +149,7 @@ MapLayer* Map::GetLayer( size_t index ) const
 }
 
 
-bool Map::SerializeXml( const fc::string& filename )
+bool TileMap::SerializeXml( const fc::string& filename )
 {
 	XmlWriter xml(filename);
 	if( !xml.IsOpen() )
@@ -158,7 +158,7 @@ bool Map::SerializeXml( const fc::string& filename )
 		return false;
 	}
 
-	xml.BeginNode("Map");
+	xml.BeginNode("TileMap");
 	xml.SetString("name", m_name.c_str());
 	xml.SetUInt("num_layers", m_layers.size());
 	xml.SetUInt("width", m_width);
@@ -178,7 +178,7 @@ bool Map::SerializeXml( const fc::string& filename )
 }
 
 
-bool Map::DeserializeXml( const fc::string& filename )
+bool TileMap::DeserializeXml( const fc::string& filename )
 {
 	XmlReader xml(filename);
 	if( !xml.IsOpen() )
@@ -187,7 +187,7 @@ bool Map::DeserializeXml( const fc::string& filename )
 		return false;
 	}
 
-	if( xml.GetCurrentNodeName() == "Map" )
+	if( xml.GetCurrentNodeName() == "TileMap" )
 	{
 		m_name = xml.GetString("name");
 		size_t n = xml.GetUInt("num_layers");

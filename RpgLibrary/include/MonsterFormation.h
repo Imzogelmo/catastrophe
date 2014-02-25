@@ -31,10 +31,8 @@ struct RPG_API MonsterFormationCellData
 
 	static void RegisterObject();
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
-	void Serialize( Serializer* f );
-	void Deserialize( File* f );
+	void SerializeXml( AttributeWriter* f );
+	void DeserializeXml( AttributeReader* f );
 };
 
 
@@ -54,10 +52,8 @@ struct RPG_API MonsterFormation
 
 	static void RegisterObject();
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
-	void Serialize( Serializer* f );
-	void Deserialize( Deserializer* f );
+	void SerializeXml( AttributeWriter* f );
+	void DeserializeXml( AttributeReader* f );
 };
 
 

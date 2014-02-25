@@ -26,8 +26,8 @@ public:
 	bool LoadSprite( Sprite& SpriteRef );
 	void ReleaseSprite();
 
-	void SerializeXml( XmlWriter* xml );
-	void DeserializeXml( XmlReader* xml );
+	void SerializeXml( AttributeWriter* f );
+	void DeserializeXml( AttributeReader* f );
 
 };
 

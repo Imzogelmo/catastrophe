@@ -14,12 +14,12 @@
 #include "ResourceManager.h"
 
 
-class MapManager : public ResourceManagerType<Map>
+class MapManager : public ResourceManagerType<TileMap>
 {
 public:
 	MapManager();
 
-	Map* Load( const fc::string& filename, int* id = 0 );
+	TileMap* Load( const fc::string& filename, int* id = 0 );
 
 protected:
 	void DisposeResource( void* p );
