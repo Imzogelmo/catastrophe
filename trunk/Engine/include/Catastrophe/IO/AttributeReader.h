@@ -46,7 +46,7 @@ public:
 	virtual bool PopNode() { return SetToParent(); }
 	virtual bool PushNode( const char* name ) { return NextChild(name); }
 
-	virtual fc::string GetCurrentNodeName() const = 0;
+	virtual const char* GetCurrentNodeName() const = 0;
 
 	virtual fc::string GetString( const char* name, const fc::string& defaultValue = "" ) const = 0;
 	virtual bool GetBool( const char* name, bool defaultValue = false ) const = 0;

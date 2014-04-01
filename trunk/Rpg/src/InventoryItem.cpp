@@ -25,39 +25,52 @@ InventoryItem::InventoryItem( Item* item, int amount, int maxAmount ) :
 }
 
 
-int InventoryItem::Add( int amount )
+int InventoryItem::AddAmount( int amount )
 {
 	if( amount < 0 )
-		return Remove( fc::abs(amount) );
+		return RemoveAmount( -amount );
 
-	int num_added = amount;
+	int numAdded = amount;
 	if( m_amount + amount > m_maxAmount )
 	{
-		num_added = m_maxAmount - m_amount;
+		numAdded = m_maxAmount - m_amount;
 	}
 
-	m_amount += num_added;
-	return num_added;
+	m_amount += numAdded;
+	return numAdded;
 }
 
 
-int InventoryItem::Remove( int amount )
+int InventoryItem::RemoveAmount( int amount )
 {
 	if( amount < 0 )
-		return Add( fc::abs(amount) );
+		return AddAmount( -amount );
 
-	int num_removed = amount;
+	int numRemoved = amount;
 	if( m_amount - amount < 0 )
 	{
-		num_removed = m_maxAmount - m_amount;
+		numRemoved = m_maxAmount - m_amount;
 	}
 
-	m_amount -= num_removed;
-	return num_removed;
+	m_amount -= numRemoved;
+	return numRemoved;
+}
+
+
+void InventoryItem::Combine( const InventoryItem& inventoryItem )
+{
+	int amountAdded = AddAmount(inventoryItem.m_amount);
+	inventoryItem.RemoveAmount(amountAdded);
 }
 
 
 int InventoryItem::GetItemType() const
+{
+	return m_item ? m_item->type : -1;
+}
+
+
+int InventoryItem::GetItemSubType() const
 {
 	return m_item ? m_item->type : -1;
 }

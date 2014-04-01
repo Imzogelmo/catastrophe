@@ -125,7 +125,8 @@ asIScriptObject* ScriptClass::CreateScriptObject()
 	else
 	{
 		Log("Warning: ScriptClass::CreateScriptObject() : m_factory was null.");
-		m_object = (asIScriptObject*)m_contextPool->GetScriptEngine()->CreateScriptObject(m_objectType->GetTypeId());
+		//m_object = (asIScriptObject*)m_contextPool->GetScriptEngine()->CreateScriptObject(m_objectType->GetTypeId());
+		m_object = (asIScriptObject*)m_contextPool->GetScriptEngine()->CreateScriptObject(m_objectType);
 	}
 
 
@@ -196,7 +197,8 @@ void ScriptClass::DestroyScript()
 		//else
 		{
 			if( m_object )
-				m_contextPool->GetScriptEngine()->ReleaseScriptObject((void*)m_object, m_objectType->GetTypeId());
+				//m_contextPool->GetScriptEngine()->ReleaseScriptObject((void*)m_object, m_objectType->GetTypeId());
+				m_contextPool->GetScriptEngine()->ReleaseScriptObject((void*)m_object, m_objectType);
 		}
 
 		m_ctx->Unprepare();

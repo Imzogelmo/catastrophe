@@ -77,13 +77,13 @@ void ScriptTemplateClass::SetValue( storage_type *ptr, void *value )
 	{
 	//if( m_isMaskObject )
 		//valStruct.valueObj = engine->CreateScriptObjectCopy(value, typeId);
-		m_objType->GetEngine()->AssignScriptObject( ptr->ptr, value, m_subtypeId );
+		m_objType->GetEngine()->AssignScriptObject( ptr->ptr, value, m_objType->GetSubType() );
 	}
 
 	else if( m_isHandle )
 	{
 		*(void**)ptr = *(void**)value;
-		m_objType->GetEngine()->AddRefScriptObject(*(void**)value, m_subtypeId);
+		m_objType->GetEngine()->AddRefScriptObject(*(void**)value, m_objType->GetSubType());
 
 		//void* tmp = *(void**)ptr;
 		//if( *(void**)ptr )
@@ -122,7 +122,7 @@ void ScriptTemplateClass::ConstructObject( storage_type *ptr )
 
 	else if( m_isMaskObject )
 	{
-		ptr->ptr = m_objType->GetEngine()->CreateScriptObject(m_subtypeId);
+		ptr->ptr = m_objType->GetEngine()->CreateScriptObject(m_objType->GetSubType());
 		//ptr->ptr = m_objType->GetEngine()->CreateScriptObjectCopy(value, typeId);
 	}
 }
@@ -132,11 +132,11 @@ void ScriptTemplateClass::DestructObject( storage_type *ptr )
 {
 	if( m_isHandle )
 		//m_objType->GetEngine()->ReleaseScriptObject( *(void**)ptr->ptr, m_subtypeId );
-		m_objType->GetEngine()->ReleaseScriptObject( ptr->ptr, m_subtypeId );
+		m_objType->GetEngine()->ReleaseScriptObject( ptr->ptr, m_objType->GetSubType() );
 
 	else if( m_isMaskObject ) //the same?
 	{
-		m_objType->GetEngine()->ReleaseScriptObject( ptr->ptr, m_subtypeId );
+		m_objType->GetEngine()->ReleaseScriptObject( ptr->ptr, m_objType->GetSubType() );
 	}
 }
 

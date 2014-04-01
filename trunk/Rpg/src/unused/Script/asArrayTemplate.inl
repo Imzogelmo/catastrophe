@@ -249,7 +249,7 @@ void ScriptEngine::RegisterArrayTemplate()
 	r = engine->RegisterObjectBehaviour("array<T>", asBEHAVE_FACTORY, "array<T>@ f(int&in, int, int, int)", asFUNCTIONPR(ScriptArrayFactory, (asIObjectType*, int, int, int), ScriptArrayTemplate*), asCALL_CDECL); assert( r >= 0 );
 
 	// Register the factory that will be used for initialization lists
-	r = engine->RegisterObjectBehaviour("array<T>", asBEHAVE_LIST_FACTORY, "array<T>@ f(int&in, int)", asFUNCTIONPR(ScriptArrayFactory, (asIObjectType*, int), ScriptArrayTemplate*), asCALL_CDECL); assert( r >= 0 );
+	//r = engine->RegisterObjectBehaviour("array<T>", asBEHAVE_LIST_FACTORY, "array<T>@ f(int&in, int)", asFUNCTIONPR(ScriptArrayFactory, (asIObjectType*, int), ScriptArrayTemplate*), asCALL_CDECL); assert( r >= 0 );
 
 	// The memory management methods
 	r = engine->RegisterObjectBehaviour("array<T>", asBEHAVE_ADDREF, "void f()", asMETHOD(ScriptArrayTemplate,AddRef), asCALL_THISCALL); assert( r >= 0 );
