@@ -275,9 +275,57 @@ bool Database::SerializeDataArray( T& arr, ResourceDirectory* resourceDirectory,
 }
 
 
+XmlReader* DeserializeDataArrayBeginImpl
+( ResourceDirectory* resourceDirectory, const fc::string& filename, const char* root, size_t size )
+{
+	fc::string fn = resourceDirectory ? resourceDirectory->GetDataDirectory() : "";
+	fn += filename;
+
+	XmlReader* xml = new XmlReader(fn);
+	if( xml->IsOpen() )
+	{
+		if( xml->GetCurrentNodeName() == root )
+			return xml;
+
+		else
+		{
+			Log("Error parsing (%s). Root item not found", filename.c_str());
+		}
+	}
+
+	// failure.
+	delete xml;
+	return 0;
+}
+
+
+void DeserializeDataArrayEndImpl( XmlReader* xml )
+{
+	if( xml )
+	{
+		xml->Close();
+		delete xml;
+	}
+}
+
+
 template <class T>
 bool Database::DeserializeDataArray( T& arr, ResourceDirectory* resourceDirectory, const fc::string& filename, const char* root, const char* item )
 {
+	XmlReader* xml = DeserializeDataArrayBeginImpl(resourceDirectory, filename, root, arr.size());
+	if( xml )
+	{
+		size_t n = xml->GetUInt("count");
+		arr.resize(n);
+		for( size_t i(0); i < n && xml->NextChild(item); ++i )
+		{
+			arr[i].DeserializeXml(xml);
+		}
+	}
+
+	DeserializeDataArrayEndImpl(xml);
+		
+	/*	
 	fc::string fn = resourceDirectory ? resourceDirectory->GetDataDirectory() : "";
 	fn += filename;
 
@@ -303,6 +351,7 @@ bool Database::DeserializeDataArray( T& arr, ResourceDirectory* resourceDirector
 	}
 
 	xml.Close();
+	*/
 
 	return true;
 }

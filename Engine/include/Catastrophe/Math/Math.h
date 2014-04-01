@@ -96,6 +96,7 @@ namespace Math
 	float Bezier( float p1, float t1, float p2, float t );
 	float Bezier( float p1, float t1, float t2, float p2, float t );
 	float Bezier( float p1, float t1, float t2, float t3, float p2, float t );
+	float Hermite(float value1, float tangent1, float value2, float tangent2, float t);
 	float CatmullRom( float p1, float p2, float p3, float p4, float t );
 	
 	Vector2 Bezier( const Vector2& p1, const Vector2& t1, const Vector2& p2, float t );
@@ -120,6 +121,13 @@ namespace Math
 	inline float ClampDegrees( float degrees )
 	{
 		return fmodf( degrees, 360.f );
+	}
+
+	/* Rotates a point by polar coordinates 'rot' about an origin */
+	inline void RotatePoint( const Vector2& rot, Vector2& point )
+	{
+		point.x = (rot.x * point.x) - (rot.y * point.y);
+		point.y = (rot.y * point.x) + (rot.x * point.y);
 	}
 
 	/* Rotates a point by polar coordinates 'rot' about an origin */

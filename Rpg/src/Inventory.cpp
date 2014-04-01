@@ -14,6 +14,7 @@
 
 #include "Item.h"
 #include "Inventory.h"
+#include "Database.h"
 
 
 Inventory::Inventory() :
@@ -23,21 +24,21 @@ Inventory::Inventory() :
 }
 
 
-void Inventory::Reserve( size_t max_items )
+void Inventory::Reserve( size_t maxItems )
 {
-	m_items.reserve(max_items);
+	m_items.reserve(maxItems);
+}
+
+
+void Inventory::Resize( size_t maxItems )
+{
+	m_items.resize( maxItems, InventoryItem() );
 }
 
 
 void Inventory::Clear()
 {
 	m_items.clear();
-}
-
-
-void Inventory::Add( const InventoryItem& inventoryItem )
-{
-	Add( inventoryItem.GetItem(), inventoryItem.GetAmount() );
 }
 
 
@@ -48,10 +49,23 @@ int Inventory::FindFirstFreeSlot() const
 	for( ; i < size; ++i )
 	{
 		if( m_items[i].IsEmpty() )
-			break;
+			return i;
 	}
 
-	return i;
+	return -1;
+}
+
+
+void Inventory::Add( const InventoryItem& inventoryItem )
+{
+	Add( inventoryItem.GetItem(), inventoryItem.GetAmount() );
+}
+
+
+void Inventory::Add( int id, int count )
+{
+	Item* item = GetDatabase()->GetItem(id);
+	Add( item, count );
 }
 
 
@@ -74,7 +88,33 @@ void Inventory::Add( Item* item, int count )
 	}
 	else if( !IsFull() )
 	{
-		m_items.push_back(item);
+		m_items.push_back(InventoryItem(item, count));
+	}
+}
+
+
+void Inventory::Add( const InventoryItem& inventoryItem )
+{
+	if( inventoryItem.IsEmpty() )
+		return;
+
+	Item* item = inventoryItem.GetItem();
+	size_t index = 0;
+
+	if( Find(item, index) )
+	{
+		if( GetPolicyCanContainDuplicates() )
+		{
+			m_items.push_back(InventoryItem(item, count));
+		}
+		else
+		{
+			m_items[index].Add(count);
+		}
+	}
+	else if( !IsFull() )
+	{
+		m_items.push_back(InventoryItem(item, count));
 	}
 }
 
@@ -88,7 +128,7 @@ void Inventory::Remove( Item* item, int count )
 	if( Find(item, index) )
 	{
 		InventoryItem & i = m_items[index];
-		i.Remove(count);
+		i.RemoveAmount(count);
 		if( i.IsEmpty() )
 		{
 			RemoveFromInventory(index);
@@ -102,9 +142,9 @@ void Remove( int id, int count )
 }
 
 
-void Inventory::RemoveFromInventory( size_t index )
+void Inventory::RemoveFromInventory( int index )
 {
-	if( index >= m_items.size() )
+	if( (size_t)index >= m_items.size() )
 		return;
 
 	if( GetPolicyEraseOnRemove() )
@@ -137,26 +177,38 @@ void Inventory::RemoveFromInventory( Item* item )
 
 void Inventory::Unique()
 {
+	// If we can't have duplicates then there is nothing to do.
+	if( !GetPolicyCanContainDuplicates() )
+		return;
+
 	for( vec_type::iterator it = m_items.begin(); it < m_items.end(); ++it )
 	{
+		if( !it->IsValid() )
+			continue;
+
 		vec_type::iterator next = it + 1;
 		for( ; next != m_items.end(); ++next )
 		{
 			if( it->GetItem() == next->GetItem() )
 			{
-				it->Add( next->GetAmount() );
-				RemoveFromInventory( size_t(next - m_items.begin()) );
-				if( GetPolicyEraseOnRemove() )
+				// Simply combine the two as best as possible.
+				it->Combine(*next);
+
+				// If they were successfully combined then check if we should compact the array.
+				if( next->IsEmpty() && GetPolicyEraseOnRemove() )
+				{
+					RemoveFromInventory( int(next - m_items.begin()) );
 					--next;
+				}
 			}
 		}
 	}
 }
 
 
-void Inventory::Swap( size_t first, size_t second )
+void Inventory::Swap( int first, int second )
 {
-	const size_t size = m_items.size();
+	const int size = (int)m_items.size();
 	if( first < size && second < size )
 	{
 		fc::swap( m_items[first], m_items[second] );
@@ -168,18 +220,19 @@ void Inventory::Splice( Inventory& other )
 {
 	for( vec_type::iterator it = other.m_items.begin(); it != other.m_items.end(); ++it )
 	{
-		Add(*it);
+		if( it->IsValid() )
+			Add(*it);
 	}
 
 	other.Clear();
 }
 
 
-void Inventory::Splice( Inventory& other, size_t index )
+void Inventory::Splice( Inventory& other, int index )
 {
 	if( index < other.Size() )
 	{
-		Add( other.m_items.at(index) );
+		Add( other.m_items[index] );
 		other.RemoveFromInventory(index);
 	}
 }
@@ -187,40 +240,28 @@ void Inventory::Splice( Inventory& other, size_t index )
 
 bool Inventory::Contains( const Item* item ) const
 {
-	if( item )
-	{
-		for( vec_type::const_iterator it = m_items.begin(); it < m_items.end(); ++it )
-		{
-			if( it->GetItem() == item )
-				return true;
-		}
-	}
-
-	return false;
+	return Find(item) != -1;
 }
 
 
-bool Inventory::Find( const Item* item, size_t &item_index ) const
+int Inventory::Find( const Item* item ) const
 {
 	if( item )
 	{
 		for( vec_type::const_iterator it = m_items.begin(); it < m_items.end(); ++it )
 		{
 			if( it->GetItem() == item )
-			{
-				item_index = size_t(it - m_items.begin());
-				return true;
-			}
+				return int(it - m_items.begin());
 		}
 	}
 
-	return false;
+	return -1;
 }
 
 
-Item* Inventory::GetItem( size_t index ) const
+Item* Inventory::GetItem( int index ) const
 {
-	if( index < m_items.size() )
+	if( (size_t)index < m_items.size() )
 		return m_items[index].GetItem();
 
 	return 0;
@@ -249,15 +290,15 @@ void Inventory::Sort( Compare comp )
 }
 
 
-InventoryItem& Inventory::operator []( size_t index )
+InventoryItem& Inventory::operator []( int index )
 {
-	ASSERT(index < m_items.size());
+	ASSERT((size_t)index < m_items.size());
 	return m_items[index];
 }
 
 
-const InventoryItem& Inventory::operator []( size_t index ) const
+const InventoryItem& Inventory::operator []( int index ) const
 {
-	ASSERT(index < m_items.size());
+	ASSERT((size_t)index < m_items.size());
 	return m_items[index];
 }

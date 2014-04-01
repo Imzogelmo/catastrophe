@@ -156,6 +156,7 @@ float Bezier( float p1, float t1, float t2, float p2, float t )
 	return ((p1 * A) + (t1 * B) + (t2 * C) + (p2 * D));
 }
 
+
 float Bezier( float p1, float t1, float t2, float t3, float p2, float t )
 {
 	const float a = 1.0f - t, b = a * a, c = t * t, d = (1.0f - t) * t;
@@ -168,13 +169,21 @@ float Bezier( float p1, float t1, float t2, float t3, float p2, float t )
 }
 
 
+float Hermite(float value1, float tangent1, float value2, float tangent2, float t)
+{
+	float part1 = ((2.0f * t * t * t) - (3.0f * t * t)) + 1.0f;
+	float part2 = (-2.0f * t * t * t) + (3.0f * t * t);
+	float part3 = (t * t * t - (2.0f * t * t)) + t;
+	float part4 = (t * t * t) - (t * t);
+	return (((value1.x * part1) + (value2.x * part2)) + (tangent1.x * part3)) + (tangent2.x * part4);
+}
+
+
 float CatmullRom( float p1, float p2, float p3, float p4, float t )
 {
-	const float a = t * t;
-	const float b = t * a;
 	return ( 0.5f * ( 
 			(2.0f * p2) + p3 - (p1 * t) + (2.0f * p1) - (5.0f * p2) + 
-			(4.0f * p3) - (p4 * a) + (3.0f * p2) + p4 - p1 - (3.0f * p3 * b) ) 
+			(4.0f * p3) - (p4 * t * t) + (3.0f * p2) + p4 - p1 - (3.0f * p3 * t * t * t) ) 
 		);
 }
 

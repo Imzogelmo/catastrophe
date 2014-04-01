@@ -268,7 +268,7 @@ void ScriptEngine::RegisterVectorTemplate()
 	r = engine->RegisterObjectBehaviour("vector<T>", asBEHAVE_FACTORY, "vector<T>@ f(int&in)", asFUNCTIONPR(ScriptVectorFactory, (asIObjectType*), ScriptVectorTemplate*), asCALL_CDECL); assert( r >= 0 );
 
 	// Register the factory that will be used for initialization lists
-	r = engine->RegisterObjectBehaviour("vector<T>", asBEHAVE_LIST_FACTORY, "vector<T>@ f(int&in, int)", asFUNCTIONPR(ScriptVectorFactory, (asIObjectType*, int), ScriptVectorTemplate*), asCALL_CDECL); assert( r >= 0 );
+	//r = engine->RegisterObjectBehaviour("vector<T>", asBEHAVE_LIST_FACTORY, "vector<T>@ f(int&in, int)", asFUNCTIONPR(ScriptVectorFactory, (asIObjectType*, int), ScriptVectorTemplate*), asCALL_CDECL); assert( r >= 0 );
 
 	// The memory management methods
 	r = engine->RegisterObjectBehaviour("vector<T>", asBEHAVE_ADDREF, "void f()", asMETHOD(ScriptVectorTemplate,AddRef), asCALL_THISCALL); assert( r >= 0 );

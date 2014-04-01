@@ -229,6 +229,8 @@ int main(int argc, char* argv[])
 	//const char* ubStr = "C:\\SVN\\EasyRPG\\Player\\src\\platform";
 	//CreateUnityBuildModule( ubStr, "Unity_Build2.cpp", ".cpp" );
 	//CreateTestHeaderCPPFiles( "C:\\C++\\include\\fc", "test" );
+
+	//CreateUnityBuildModule( "C:/SVN/angelscript/sdk/angelscript/source", "Unity_Build2.cpp", ".cpp" );
 	//return 0;
 
 	// enable memory leak checking.
@@ -601,3 +603,30 @@ void CreateTestHeaderCPPFiles( fc::string directory, fc::string outDirectory )
 
 
 ////////////////////////////////////////////////////////////////////////////////////
+#include <fc/dynamic_Array2d.h>
+void UntileCharactersImpl( fc::dynamic_Array2d<Color>& p )
+{
+	fc::dynamic_Array2d<Color> c = p;
+	fc::dynamic_Array2d<Color> t(16, 16);
+	t.
+
+}
+
+
+void UntileCharacters( fc::string directory, fc::string outDirectory )
+{
+	char buf[255];
+	fc::string t, line;
+	FileGetter fg( directory.c_str() );
+
+	while( fg.GetNextFile(buf) != 0 )
+	{
+		t = buf;
+		if( t.size() > 4 && t.substr(t.size() - 4) == ".png" )
+		{
+			Image i(directory + t);
+			UntileCharactersImpl(i.GetPixelArray());
+		}
+	}
+}
+

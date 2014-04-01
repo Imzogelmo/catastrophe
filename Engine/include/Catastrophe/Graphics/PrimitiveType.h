@@ -25,16 +25,13 @@ CE_NAMESPACE_BEGIN
 
 enum PrimitiveType
 {
-	ptPOINTS,
-	ptLINES,
-	ptLINE_LOOP,
-	ptLINE_STRIP,
-	ptTRIANGLES,
-	ptTRIANGLE_STRIP,
-	ptTRIANGLE_FAN,
-	ptQUADS,
-	ptQUAD_STRIP,
-	ptPOLYGON
+	PrimitiveType_Points = 0,
+	PrimitiveType_Lines = 1,
+	PrimitiveType_LineStrip = 3,
+	PrimitiveType_Triangles = 4,
+	PrimitiveType_TriangleStrip = 5,
+	PrimitiveType_TriangleFan = 6,
+	PrimitiveType_Quads = 7
 };
 
 

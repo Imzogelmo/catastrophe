@@ -45,7 +45,7 @@ public:
 	virtual void Close();
 	virtual bool IsOpen() const { return m_document && m_document.GetRoot(); }
 
-	virtual fc::string GetCurrentNodeName() const;
+	virtual const char* GetCurrentNodeName() const;
 
 	virtual bool FirstChild( const char* name = "" );
 	virtual bool NextChild( const char* name = "" );

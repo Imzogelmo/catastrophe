@@ -82,10 +82,10 @@ void XmlReader::Close()
 }
 
 
-fc::string XmlReader::GetCurrentNodeName() const
+const char* XmlReader::GetCurrentNodeName() const
 {
 	CE_ASSERT(m_element);
-	return fc::string(m_element.GetCurrentNodeName());
+	return m_element.GetCurrentNodeName();
 }
 
 

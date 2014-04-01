@@ -29,65 +29,128 @@
 CE_NAMESPACE_BEGIN
 
 
-struct VertexColor
+enum VertexType
 {
-	VertexColor() {}
-	VertexColor( const Vector2 &pos, const Color &color)
-		: pos(pos), color(color) {}
+	VertexFormat_Byte = 1520,
+	VertexFormat_UnsignedByte = 1521,
+	VertexFormat_Short = 1522,
+	VertexFormat_UnsignedShort = 1523,
+	VertexFormat_Int = 1524,
+	VertexFormat_UnsignedInt = 1525,
+	VertexFormat_Float = 1526
+};
 
+
+enum VertexUsage
+{
+	VertexUsage_Position,
+	VertexUsage_TexCoord,
+	VertexUsage_Color,
+	VertexUsage_Normal
+};
+
+
+struct VertexElement
+{
+	int offset;
+	int count;
+	int type;
+	int usage;
+
+	VertexElement() :
+		offset(0),
+		components(0),
+		type(0),
+		usage(0)
+	{
+	}
+
+	VertexElement( int offset, int count, int type, int usage ) :
+		offset(offset),
+		count(count),
+		type(type),
+		usage(usage)
+	{
+	}
+};
+
+
+struct VertexFormat
+{
+	static const int MaxElements = 4;
+
+	//int stride;
+	int numElements;
+	VertexElement elements[MaxElements];
+
+	VertexFormat()
+	{
+		numElements = 0;
+	}
+
+	VertexFormat( const VertexElement* vertexElements, int numElements )
+	{
+		this->numElements = numElements;
+		for( int i(0); i < numElements; ++i )
+			elements[i] = vertexElements;
+	}
+};
+
+
+struct Vertex2D
+{
+	Vector2 pos;
+
+	VertexColor2D() {}
+	VertexColor2D( const Vector2 &pos ) : pos(pos) {}
+};
+
+
+struct VertexColor2D
+{
 	Vector2 pos;
 	Color color;
 
-	static VertexColor Lerp( const VertexColor &a, const VertexColor &b, float t )
-	{
-		return VertexColor(
-			Math::Lerp(a.pos, a.pos, t),
-			Color::Lerp(a.color, b.color, t)
-		);
-	}
+	VertexColor2D() {}
+	VertexColor2D( const Vector2 &pos, const Color &color ) : pos(pos), color(color) {}
 };
 
 
-struct VertexColorTexture
+struct VertexColorTexture2D
 {
-	VertexColorTexture() {}
-	VertexColorTexture( const Vector2 &pos, const Vector2 &uv, const Color &color)	
-		: pos(pos), uv(uv), color(color) {}
-
 	Vector2 pos, uv;
 	Color color;
 
-	static VertexColorTexture Lerp( const VertexColorTexture &a, const VertexColorTexture &b, float t )
-	{
-		return VertexColorTexture(
-			Math::Lerp(a.pos, a.pos, t),
-			Math::Lerp(a.uv, b.uv, t),
-			Color::Lerp(a.color, b.color, t)
-		);
-	}
+	VertexColorTexture2D() {}
+	VertexColorTexture2D( const Vector2 &pos, const Vector2 &uv, const Color &color )
+		: pos(pos), uv(uv), color(color) {}
 };
 
 
-struct Vertex3D
+struct VertexColorTexture3D
+{
+	Vector3 pos;
+	Vector2 uv;
+	Color color;
+
+	VertexColorTexture3D() {}
+	VertexColorTexture3D( const Vector3 &pos, const Vector2 &uv, const Color &color )
+		: pos(pos), uv(uv), color(color) {}
+
+};
+
+
+struct VertexColorNormalTexture3D
 {
 	Vector3 pos;
 	Vector3 normal;
 	Vector2 uv;
 	Color color;
 
-	Vertex3D() {}
-	Vertex3D( const Vector3 &pos, const Vector3 &normal, const Vector2 &uv, const Color &color)
+	VertexColorNormalTexture3D() {}
+	VertexColorNormalTexture3D( const Vector3 &pos, const Vector3 &normal, const Vector2 &uv, const Color &color )
 		: pos(pos), normal(normal), uv(uv), color(color) {}
 
-	static Vertex3D Lerp( const Vertex3D &a, const Vertex3D &b, float t )
-	{
-		return Vertex3D(
-			Math::Lerp(a.pos, a.pos, t),
-			Math::Lerp(a.normal, b.normal, t),
-			Math::Lerp(a.uv, b.uv, t),
-			Color::Lerp(a.color, b.color, t)
-		);
-	}
 };
 
 

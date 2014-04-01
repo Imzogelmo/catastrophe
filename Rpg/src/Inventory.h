@@ -25,41 +25,45 @@ public:
 
 	Inventory();
 
-	void Reserve( size_t max_items );
+	void Reserve( size_t maxItems );
+	void Resize( size_t maxItems );
 	void Clear();
 
 	int FindFirstFreeSlot() const;
 
 	void Add( const InventoryItem& inventoryItem );
 	void Add( Item* item, int count = 1 );
-	//void Add( int id, int count = 1 );
+	void Add( int id, int count = 1 );
+
 	void Remove( Item* item, int count = 1 );
 	void Remove( int id, int count = 1 );
-	void RemoveFromInventory( size_t index );
+	void RemoveFromInventory( int index );
 	void RemoveFromInventory( Item* item );
 
 	void Unique();
 	void Swap( size_t first, size_t second );
+
+	/// Add the contents
 	void Splice( Inventory& other );
-	void Splice( Inventory& other, size_t index );
+	void Splice( Inventory& other, int index );
 
 	bool Contains( const Item* item ) const;
-	bool Find( const Item* item, size_t &item_index ) const;
+	int Find( const Item* item ) const;
 
 	size_t Size() const { return m_items.size(); }
 	bool IsFull() const { return m_items.size() == m_maxSize; }
 
-	Item* GetItem( size_t index ) const;
+	Item* GetItem( int index ) const;
 	Item* GetItem( const fc::string& name ) const;
 
 	template <class Compare>
 	void Sort( Compare comp = Compare() );
 
 
-	InventoryItem& operator []( size_t index );
-	const InventoryItem& operator []( size_t index ) const;
-	InventoryItem& GetInventoryItem( size_t index ) { return operator[](index); }
-	const InventoryItem& GetInventoryItem( size_t index ) const { return operator[](index); }
+	InventoryItem& operator []( int index );
+	const InventoryItem& operator []( int index ) const;
+	InventoryItem& GetInventoryItem( int index ) { return operator[](index); }
+	const InventoryItem& GetInventoryItem( int index ) const { return operator[](index); }
 
 	//internal management policy queries.
 	bool GetPolicyCanContainDuplicates() const { return m_canContainDuplicates; }

@@ -47,3 +47,36 @@ struct RPG_API Skill
 
 };
 
+
+#define MAX_PASSIVE_SKILL_LV		16;
+
+struct RPG_API PassiveSkill
+{
+	fc::static_string<32>	name;
+	fc::string	description;
+
+	int		id;
+	int		type;
+	int		gold;
+	int		cost;
+
+	byte	sp_table[MAX_PASSIVE_SKILL_LV]
+
+	//short	misc[16];
+
+	//under construction...
+	ubyte	usage_flags;
+	ubyte	target_flags;
+	ubyte	affect_flags;
+
+	int		buff_id;
+	int		animation_id;
+	int		sfx;
+
+
+	Skill();
+
+	void SerializeXml( AttributeWriter* f );
+	void DeserializeXml( AttributeReader* f );
+
+};

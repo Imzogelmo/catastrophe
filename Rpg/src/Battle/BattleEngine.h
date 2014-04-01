@@ -81,11 +81,15 @@ public:
 	void Update();
 	void Render();
 
+
+	// Utility functions
+	Combatant* SelectAdjacentCombatant( Combatant* current, bool can )
+
 protected:
 	BattleActionQueue			m_actionQueue;
 	battle_vec_type				m_battles;
 
-	EntitySorter<EntitySortY>	m_sortedEntities;
+	EntitySorter<EntitySortY>	m_sortedEntities; //temporary
 	entity_vec_type				m_entityGarbageBin;
 	entity_vec_type				m_textEntities;
 	entity_vec_type				m_entities;
