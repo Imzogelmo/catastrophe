@@ -663,10 +663,10 @@ void GenCWrappers()
 		"Widget_",
 		" Widget* self");
 	GenCWrapper(
-		"C:/C++/include/fc/dynamic_array2d.h",
-		"array.h",
-		"Array_",
-		" Array* self");
+		"C:/C++/include/fc/vector.h",
+		"vector.h",
+		"Vector_",
+		" Vector* self");
 
 }
 
@@ -770,6 +770,9 @@ void GenCWrapper( fc::string filename, fc::string outFn, const char* prefixStr, 
 		while ( (fp = s.find('\t')) != fc::string::npos )
 			s.replace(fp, 1, " ");
 
+		while ( (fp = s.find("  ")) != fc::string::npos )
+			s.replace(fp, 2, " ");
+
 		fp = 0;
 		while ( (fp = s.find(" =", fp)) != fc::string::npos )
 		{
@@ -826,14 +829,18 @@ void GenCWrapper( fc::string filename, fc::string outFn, const char* prefixStr, 
 		strArray.clear();
 		while( pos2 != fc::string::npos )
 		{
-			pos2 = s.find_first_of(',', pos2 + 1);
+			pos2 = s.find_first_of(",)", pos2 + 1);
 			if( pos2 != fc::string::npos )
 			{
-				size_t pos1 = pos2;
+				size_t pos2a = pos2;
+				while( pos2a > 0 && (s[pos2a] == ')' || s[pos2a] == ' ' || s[pos2a] == ',') )
+					pos2a--;
+
+				size_t pos1 = pos2a;
 				while( pos1 > 0 && s[pos1] != ' ' )
 					pos1--;
 
-				strArray.push_back( s.substr(pos1+1, pos2 - pos1 - 1) );
+				strArray.push_back( s.substr(pos1 + 1, pos2a - pos1) );
 			}
 		}
 
@@ -871,9 +878,12 @@ void GenCWrapper( fc::string filename, fc::string outFn, const char* prefixStr, 
 					{
 						size_t p2 = temp.find_first_of(",)");
 						if( p2 != fc::string::npos )
-							p2++;
+						{
+							if( temp[p2] == ',' || temp[p2] == ' ' )
+								p2++;
 
-						temp.erase(p1, p2 - p1);
+							temp.erase(p1, p2 - p1);
+						}
 					}
 				}
 
