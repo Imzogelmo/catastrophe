@@ -32,7 +32,7 @@ public:
 	int RemoveAmount( int amount = 1 );
 
 	/// Adds an amount to this item equal to the amount of the secondary item.
-	void Combine( const InventoryItem& inventoryItem );
+	void Combine( InventoryItem& inventoryItem );
 
 	/// Get the pointer to the item.
 	Item* GetItem() const { return m_item; }
@@ -47,6 +47,7 @@ public:
 
 	bool IsNull() const { return m_item == 0; } 
 	bool IsEmpty() const { return m_amount == 0; } 
+	bool IsValid() const { return m_item && m_amount > 0; } 
 	void SetEmpty() { m_amount = 0; }
 
 	void SetItem( Item* item );

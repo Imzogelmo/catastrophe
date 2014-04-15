@@ -80,4 +80,8 @@ void Item::DeserializeXml( AttributeReader* f )
 }
 
 
+int Item::GetMemoryUsage() const
+{
+	return (int)description.capacity();
+}
 

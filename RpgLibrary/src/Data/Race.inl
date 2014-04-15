@@ -51,4 +51,10 @@ void Race::DeserializeXml( AttributeReader* f )
 }
 
 
+int Race::GetMemoryUsage() const
+{
+	return (int)(description.capacity());
+}
+
+
 

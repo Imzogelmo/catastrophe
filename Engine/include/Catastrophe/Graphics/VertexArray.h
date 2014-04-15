@@ -24,6 +24,7 @@
 #include "../Math/Rectf.h"
 
 #include "Vertex.h"
+#include "PrimitiveType.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -42,8 +43,8 @@ public:
 			AddVertex(vertex, num_vertices);
 		}
 
-	VertexColor* GetVertexData() { return m_vertices.data(); }
-	const VertexColor* GetVertexData() const { return m_vertices.data(); }
+	T* GetVertexData() { return m_vertices.data(); }
+	const T* GetVertexData() const { return m_vertices.data(); }
 
 	void Clear() { m_vertices.clear(); }
 	void Reserve( size_t reserve ) { m_vertices.reserve( reserve ); }

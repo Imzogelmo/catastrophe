@@ -116,23 +116,24 @@ void Shader::Unbind()
 }
 
 
-int Shader::GetUniformLocation(const fc::string& name)
+int Shader::GetUniformLocation(const char* name)
 {
-	map_type::iterator it = m_uniformLocations.find(name);
+	size_t stringHash = fc::fnv_hash(name);
+	map_type::iterator it = m_uniformLocations.find(stringHash);
 	if( it != m_uniformLocations.end() )
 	{
 		return it->second;
 	}
 
-	int location = glGetUniformLocation( m_programObject, name.c_str() );
+	int location = glGetUniformLocation( m_programObject, name );
 	if( location > 0 )
-		m_uniformLocations[ name ] = location;
+		m_uniformLocations[stringHash] = location;
 
 	return location;
 }
 
 
-bool Shader::GetUniform( const fc::string& name, float* values )
+bool Shader::GetUniform( const char* name, float* values )
 {
 	int location = GetUniformLocation( name );
 	if( location < 0 )
@@ -143,7 +144,7 @@ bool Shader::GetUniform( const fc::string& name, float* values )
 }
 
 
-bool Shader::GetUniform( const fc::string& name, int* values )
+bool Shader::GetUniform( const char* name, int* values )
 {
 	int location = GetUniformLocation( name );
 	if( location < 0 )
@@ -154,7 +155,7 @@ bool Shader::GetUniform( const fc::string& name, int* values )
 }
 
 
-bool Shader::SetUniform( const fc::string& name, float v0 )
+bool Shader::SetUniform( const char* name, float v0 )
 {
 	int location = GetUniformLocation( name );
 	if( location < 0 )
@@ -165,7 +166,7 @@ bool Shader::SetUniform( const fc::string& name, float v0 )
 }
 
 
-bool Shader::SetUniform( const fc::string& name, float v0, float v1 )
+bool Shader::SetUniform( const char* name, float v0, float v1 )
 {
 	int location = GetUniformLocation( name );
 	if( location < 0 )
@@ -176,7 +177,7 @@ bool Shader::SetUniform( const fc::string& name, float v0, float v1 )
 }
 
 
-bool Shader::SetUniform( const fc::string& name, float v0, float v1, float v2 )
+bool Shader::SetUniform( const char* name, float v0, float v1, float v2 )
 {
 	int location = GetUniformLocation( name );
 	if( location < 0 )
@@ -187,7 +188,7 @@ bool Shader::SetUniform( const fc::string& name, float v0, float v1, float v2 )
 }
 
 
-bool Shader::SetUniform( const fc::string& name, float v0, float v1, float v2, float v3 )
+bool Shader::SetUniform( const char* name, float v0, float v1, float v2, float v3 )
 {
 	int location = GetUniformLocation( name );
 	if( location < 0 )
@@ -198,7 +199,7 @@ bool Shader::SetUniform( const fc::string& name, float v0, float v1, float v2, f
 }
 
 
-bool Shader::SetUniform( const fc::string& name, int v0 )
+bool Shader::SetUniform( const char* name, int v0 )
 {
 	int location = GetUniformLocation( name );
 	if( location < 0 )
@@ -209,7 +210,7 @@ bool Shader::SetUniform( const fc::string& name, int v0 )
 }
 
 
-bool Shader::SetUniform( const fc::string& name, int v0, int v1 )
+bool Shader::SetUniform( const char* name, int v0, int v1 )
 {
 	int location = GetUniformLocation( name );
 	if( location < 0 )
@@ -220,7 +221,7 @@ bool Shader::SetUniform( const fc::string& name, int v0, int v1 )
 }
 
 
-bool Shader::SetUniform( const fc::string& name, int v0, int v1, int v2 )
+bool Shader::SetUniform( const char* name, int v0, int v1, int v2 )
 {
 	int location = GetUniformLocation( name );
 	if( location < 0 )
@@ -231,7 +232,7 @@ bool Shader::SetUniform( const fc::string& name, int v0, int v1, int v2 )
 }
 
 
-bool Shader::SetUniform( const fc::string& name, int v0, int v1, int v2, int v3 )
+bool Shader::SetUniform( const char* name, int v0, int v1, int v2, int v3 )
 {
 	int location = GetUniformLocation( name );
 	if( location < 0 )
@@ -242,25 +243,25 @@ bool Shader::SetUniform( const fc::string& name, int v0, int v1, int v2, int v3 
 }
 
 
-bool Shader::SetUniform( const fc::string& name, const Vector2& v )
+bool Shader::SetUniform( const char* name, const Vector2& v )
 {
 	return SetUniform( name, v.x, v.y );
 }
 
 
-bool Shader::SetUniform( const fc::string& name, const Vector3& v )
+bool Shader::SetUniform( const char* name, const Vector3& v )
 {
 	return SetUniform( name, v.x, v.y, v.z );
 }
 
 
-bool Shader::SetUniform( const fc::string& name, const Vector4& v )
+bool Shader::SetUniform( const char* name, const Vector4& v )
 {
 	return SetUniform( name, v.x, v.y, v.z, v.w );
 }
 
 
-bool Shader::SetUniformMatrix( const fc::string& name, const Matrix& matrix )
+bool Shader::SetUniformMatrix( const char* name, const Matrix& matrix )
 {
 	int location = GetUniformLocation( name );
 	if( location < 0 )
@@ -271,7 +272,7 @@ bool Shader::SetUniformMatrix( const fc::string& name, const Matrix& matrix )
 }
 
 
-bool Shader::SetUniformMatrix2fv( const fc::string& name, int count, bool transpose, const float* m )
+bool Shader::SetUniformMatrix2fv( const char* name, int count, bool transpose, const float* m )
 {
 	int location = GetUniformLocation( name );
 	if( location < 0 )
@@ -282,7 +283,7 @@ bool Shader::SetUniformMatrix2fv( const fc::string& name, int count, bool transp
 }
 
 
-bool Shader::SetUniformMatrix3fv( const fc::string& name, int count, bool transpose, const float* m )
+bool Shader::SetUniformMatrix3fv( const char* name, int count, bool transpose, const float* m )
 {
 	int location = GetUniformLocation( name );
 	if( location < 0 )
@@ -293,7 +294,7 @@ bool Shader::SetUniformMatrix3fv( const fc::string& name, int count, bool transp
 }
 
 
-bool Shader::SetUniformMatrix4fv( const fc::string& name, int count, bool transpose, const float* m )
+bool Shader::SetUniformMatrix4fv( const char* name, int count, bool transpose, const float* m )
 {
 	int location = GetUniformLocation( name );
 	if( location < 0 )

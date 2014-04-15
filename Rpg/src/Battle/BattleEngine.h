@@ -83,7 +83,7 @@ public:
 
 
 	// Utility functions
-	Combatant* SelectAdjacentCombatant( Combatant* current, bool can )
+	Combatant* SelectAdjacentCombatant( Combatant* current, bool can );
 
 protected:
 	BattleActionQueue			m_actionQueue;

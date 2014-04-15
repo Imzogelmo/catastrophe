@@ -88,8 +88,7 @@ Vector2 Vector2::Refract( const Vector2& unit, float eta ) const
 Vector2 Vector2::Polar( const Vector2& distance, float theta ) const
 {
 	const Vector2 r = Math::SinCos(theta);
-	return Vector2
-		(
+	return Vector2(
 			x + distance.x * r.x,
 			y + distance.y * r.y
 		);
@@ -98,14 +97,29 @@ Vector2 Vector2::Polar( const Vector2& distance, float theta ) const
 
 Vector2 Vector2::Rotated( float a ) const
 {
-	float s, c;
-	Math::SinCos(a, s, c);
+	Vector2 value = *this;
+	Math::RotatePoint( Math::SinCos(a), value );
+	return value;
+}
 
-	return Vector2
-		(
-			x * c - y * s,
-			x * s + y * c
-		);
+
+Vector2 Vector2::Rotated( float a, const Vector2& origin ) const
+{
+	Vector2 value = *this;
+	Math::RotatePoint( Math::SinCos(a), origin, value );
+	return value;
+}
+
+
+void Vector2::Rotate( float a )
+{
+	Math::RotatePoint( Math::SinCos(a), *this );
+}
+
+
+void Vector2::Rotate( float a, const Vector2& origin )
+{
+	Math::RotatePoint( Math::SinCos(a), origin, *this );
 }
 
 

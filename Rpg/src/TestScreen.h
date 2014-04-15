@@ -22,7 +22,6 @@
 #include <Catastrophe/Math/Matrix.h>
 #include <Catastrophe/Core/StringUtils.h>
 
-#include "Script/ScriptClass.h"
 #include "Item.h"
 #include "Inventory.h"
 

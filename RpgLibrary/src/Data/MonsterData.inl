@@ -99,4 +99,9 @@ void MonsterData::DeserializeXml( AttributeReader* f )
 }
 
 
+int MonsterData::GetMemoryUsage() const
+{
+	return (int)description.capacity();
+}
+
 

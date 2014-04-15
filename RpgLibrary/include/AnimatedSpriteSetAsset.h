@@ -29,6 +29,8 @@ public:
 	void SerializeXml( AttributeWriter* f );
 	void DeserializeXml( AttributeReader* f );
 
+	int GetMemoryUsage() const;
+
 };
 
 

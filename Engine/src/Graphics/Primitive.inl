@@ -105,7 +105,7 @@ void Primitive::RotateScaleVertices( float rotation, const Vector2 &scale, const
 
 void Primitive::AddVertex( const Vector2 &pos, const Color &color )
 {
-	VertexColor & v = *m_vertices.push_back_uninitialized();
+	VertexColor2D & v = *m_vertices.push_back_uninitialized();
 	v.pos = pos;
 	v.color = color;
 }
@@ -113,7 +113,7 @@ void Primitive::AddVertex( const Vector2 &pos, const Color &color )
 
 void Primitive::AddVertex( const Vector2 *pos, const Color *color, int num_vertices )
 {
-	VertexColor * v = m_vertices.push_back_uninitialized( num_vertices );
+	VertexColor2D * v = m_vertices.push_back_uninitialized( num_vertices );
 	for( int i(0); i < num_vertices; ++i )
 	{
 		v[i].pos = pos[i];
@@ -135,12 +135,12 @@ void Primitive::CreateEllipse( const Vector2 &center, const Vector2 &radius, flo
 
 	if( filled )
 	{
-		m_primType = ptTRIANGLE_FAN;
+		m_primType = PrimitiveType_TriangleFan;
 		AddVertex(center, inner);
 	}
 	else
 	{
-		m_primType = ptLINE_STRIP;
+		m_primType = PrimitiveType_LineStrip;
 	}
 
 	float a = 0.f;
@@ -168,11 +168,11 @@ void Primitive::CreateTriangle( const Vector2 &p1, const Vector2 &p2, const Vect
 
 	if( filled )
 	{
-		m_primType = ptTRIANGLES;
+		m_primType = PrimitiveType_Triangles;
 	}
 	else
 	{
-		m_primType = ptLINE_LOOP;
+		m_primType = PrimitiveType_LineStrip;
 	}
 
 	AddVertex(p1, c1);
@@ -188,11 +188,11 @@ void Primitive::CreateRectangle( const Rectf &rect, const Color &bl, const Color
 
 	if( filled )
 	{
-		m_primType = ptQUADS;
+		m_primType = PrimitiveType_Quads;
 	}
 	else
 	{
-		m_primType = ptLINE_LOOP;
+		m_primType = PrimitiveType_LineStrip;
 	}
 
 	AddVertex(rect.BottomLeft(), bl);
@@ -206,8 +206,8 @@ void Primitive::Render( size_t index, size_t n )
 {
 	m_blendmode.Apply();
 
-	glVertexPointer( 2, GL_FLOAT, sizeof(VertexColor), &m_vertices[0].pos );
-	glColorPointer( 4, GL_UNSIGNED_BYTE, sizeof(VertexColor), &m_vertices[0].color );
+	glVertexPointer( 2, GL_FLOAT, sizeof(VertexColor2D), &m_vertices[0].pos );
+	glColorPointer( 4, GL_UNSIGNED_BYTE, sizeof(VertexColor2D), &m_vertices[0].color );
 	glDrawArrays( m_primType, index, n );
 }
 
@@ -257,14 +257,14 @@ void PrimitiveObject::AddVertex( const Vector2* pos, const Color* color, int num
 }
 
 
-void PrimitiveObject::AddVertex( const VertexColor& vertex )
+void PrimitiveObject::AddVertex( const VertexColor2D& vertex )
 {
 	m_isDirty = true;
 	base_type::base_type::AddVertex(vertex);
 }
 
 
-void PrimitiveObject::AddVertex( const VertexColor* vertices, int num_vertices )
+void PrimitiveObject::AddVertex( const VertexColor2D* vertices, int num_vertices )
 {
 	m_isDirty = true;
 	base_type::base_type::AddVertex(vertices, num_vertices);

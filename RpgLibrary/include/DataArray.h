@@ -50,8 +50,21 @@ public:
 		filename = name;
 	}
 
+	int GetMemoryUsage() const
+	{
+		int memoryUsage = 0;
+		for( size_t i(0); i < base_type::size(); ++i )
+			memoryUsage += base_type::operator[](i).GetMemoryUsage();
+
+		memoryUsage += (int)(base_type::size() * sizeof(T));
+		memoryUsage += (int)filename.capacity();
+
+		return memoryUsage;
+	}
+
 	NO_INLINE bool SerializeXml( const fc::string& filename = "" );
 	NO_INLINE bool DeserializeXml( const fc::string& filename = "" );
+
 };
 
 

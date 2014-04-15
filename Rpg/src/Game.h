@@ -21,7 +21,7 @@
 
  //todo remove these and use forward declaration
 #include "ScreenManager.h"
-#include "ScriptEngine.h"
+#include "MonoScriptEngine.h"
 #include "Entity.h"
 
 
@@ -55,7 +55,7 @@ public:
 	void Shutdown();
 
 	GameSettings* GetSettings() { return &m_settings; }
-	ScriptEngine* GetScriptEngine() { return &m_scriptEngine; }
+	MonoScriptEngine* GetScriptEngine() { return &m_scriptEngine; }
 	ScreenManager* GetScreenManager() { return &m_screenManager; }
 
 	SpriteBatch* GetSpriteBatch() { return &m_spriteBatch; }
@@ -69,9 +69,9 @@ protected:
 
 
 protected:
-	GameSettings	m_settings;
-	ScriptEngine	m_scriptEngine;
-	ScreenManager	m_screenManager;
+	GameSettings		m_settings;
+	ScreenManager		m_screenManager;
+	MonoScriptEngine	m_scriptEngine;
 
 
 	SpriteBatch		m_spriteBatch;

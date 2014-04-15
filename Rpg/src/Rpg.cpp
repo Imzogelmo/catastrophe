@@ -223,6 +223,10 @@ void CreateTestHeaderCPPFiles(
 			fc::string directory,
 			fc::string outDirectory );
 
+void GenCWrapper( fc::string filename, fc::string outFn,
+				 const char* prefixStr = "Self_", const char* classPtr = " _Self* self" );
+
+void GenCWrappers();
 
 int main(int argc, char* argv[])
 {
@@ -232,6 +236,9 @@ int main(int argc, char* argv[])
 
 	//CreateUnityBuildModule( "C:/SVN/angelscript/sdk/angelscript/source", "Unity_Build2.cpp", ".cpp" );
 	//return 0;
+
+	GenCWrappers();
+	return 0;
 
 	// enable memory leak checking.
 	static int crtDebugflags = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
@@ -323,11 +330,15 @@ int main(int argc, char* argv[])
 
 	Window* window = CreateWindow();
 
+	//...
+	db->LogMemoryUsage();
+
 
 	//Timer timer;
 	Timer loopTimer;
 
-	window->SetOrthographicProjection(0, 256, 224, 0);
+	//window->SetOrthographicProjection(0, 256, 224, 0);
+	window->SetOrthographicProjection(0, 640, 480, 0);
 	while( !window->RequestClose() )
 	{
 		window->ClearColor(Color::DarkBlue());
@@ -339,8 +350,10 @@ int main(int argc, char* argv[])
 		Input::Update();
 		//Log("update %0.4f", float(timer.Seconds()));
 
+		timer.Reset();
 		game->Update();
 		game->Render();
+		//Log("update/render time %0.4f", float(timer.Seconds() * 1000.0));
 
 		window->SwapBuffers();
 
@@ -367,6 +380,7 @@ int main(int argc, char* argv[])
 	}
 
 
+	game->Shutdown();
 	delete game;
 
 	//todo
@@ -527,6 +541,8 @@ void GenMonTroopForm()
 #include <windows.h>
 #include <fc/string.h>
 
+#pragma warning (disable : 4996)
+
 
 class FileGetter
 {
@@ -603,12 +619,11 @@ void CreateTestHeaderCPPFiles( fc::string directory, fc::string outDirectory )
 
 
 ////////////////////////////////////////////////////////////////////////////////////
-#include <fc/dynamic_Array2d.h>
-void UntileCharactersImpl( fc::dynamic_Array2d<Color>& p )
+#include <fc/dynamic_array2d.h>
+void UntileCharactersImpl( fc::dynamic_array2d<Color>& p )
 {
-	fc::dynamic_Array2d<Color> c = p;
-	fc::dynamic_Array2d<Color> t(16, 16);
-	t.
+	fc::dynamic_array2d<Color> c = p;
+	fc::dynamic_array2d<Color> t(16, 16);
 
 }
 
@@ -629,4 +644,317 @@ void UntileCharacters( fc::string directory, fc::string outDirectory )
 		}
 	}
 }
+
+
+#include <Catastrophe/IO/File.h>
+#include <fc/static_vector.h>
+#include <fc/tokenizer.h>
+
+void GenCWrappers()
+{
+	GenCWrapper(
+		"../Engine/include/Catastrophe/Graphics/SpriteAnimation.h",
+		"spriteAnimation.h",
+		"SpriteAnimation_",
+		" SpriteAnimation* self");
+	GenCWrapper(
+		"../Engine/include/Catastrophe/Gui/Widget.h",
+		"widget.h",
+		"Widget_",
+		" Widget* self");
+	GenCWrapper(
+		"C:/C++/include/fc/dynamic_array2d.h",
+		"array.h",
+		"Array_",
+		" Array* self");
+
+}
+
+void GenCWrapper( fc::string filename, fc::string outFn, const char* prefixStr, const char* classPtr )
+{
+	//const char* classPtr = " _Self* self";
+	//const char* prefixStr = "Self_";
+
+
+	FILE* out = fopen(outFn.c_str(), "wb");
+	File f(filename);
+	fc::string d;
+	fc::string str, e, h, getSet;
+	d.reserve(1024 * 1024);
+	str.reserve(1024 * 1024);
+	e.reserve(4024);
+	h.reserve(4024);
+
+	fc::static_vector<fc::string, 16> strArray;
+
+	int braceCount = 0;
+	while( f.ReadLine(d) || !f.IsEof() )
+	{
+		bool isVoid = false;
+		bool isImplementation = false;
+
+		if( d.empty() )
+			continue;
+		if( d[0] == '{' )
+			continue;
+		if( d.length() <= 1 )
+			continue;
+
+		while( !d.empty() && (d[0] == '\t' || d[0] == ' ') )
+			d.erase(d.begin(), d.begin()+1);
+		if( d.empty() )
+			continue;
+
+		if( d[0] == 'v' && d[1] == 'o' )
+			isVoid = true;
+
+		else if( d[0] == '{' )
+		{
+			braceCount++;
+			continue;
+		}
+
+		if( braceCount > 0 )
+		{
+			if( d[0] == '}' )
+				braceCount--;
+
+			continue;
+		}
+
+		size_t pos = d.find_first_not_of("\n\t ");
+		if( pos == fc::string::npos )
+			continue;
+
+		if( d[pos] == 'c' && d[pos + 1] == 'l' )
+			continue;
+
+		if( d[pos] == 't' && d[pos + 1] == 'y' )
+			continue;
+
+		if( d[pos] == '/' && d[pos + 1] == '/' )
+			continue;
+
+		if( d[pos] == '#' )
+			continue;
+
+		size_t last = d.find_first_of(")", pos);
+		if( last == fc::string::npos )
+			continue;
+
+		++last;
+
+		fc::string s = d.substr( pos, last - pos );
+		if( s.empty() )
+			continue;
+
+		size_t fp = 0;
+		while ( (fp = s.find('&')) != fc::string::npos )
+			s.erase(fp, 1);
+
+		while ( (fp = s.find("const ")) != fc::string::npos )
+			s.erase(fp, 6);
+
+		while ( (fp = s.find(" const")) != fc::string::npos )
+			s.erase(fp, 6);
+
+		while ( (fp = s.find("virtual ")) != fc::string::npos )
+			s.erase(fp, 8);
+
+		while ( (fp = s.find("inline ")) != fc::string::npos )
+			s.erase(fp, 7);
+
+		while ( (fp = s.find("size_t")) != fc::string::npos )
+			s.replace(fp, 6, "int");
+
+		while ( (fp = s.find('\t')) != fc::string::npos )
+			s.replace(fp, 1, " ");
+
+		fp = 0;
+		while ( (fp = s.find(" =", fp)) != fc::string::npos )
+		{
+			size_t fp2 = fp;
+			fc::string token;
+			if( fc::tokenizer::get_token(s, ",)\n", fp2, token) )
+			{
+				if( token.empty() )
+					break;
+
+				if( s[fp2] == ')' )
+					fp2--;
+
+				if( fp2 < s.size() )
+					s.erase(fp, fp2 - fp);
+
+				fp2++;
+			}
+			fp++;
+		}
+
+
+		size_t pos4 = s.find_first_of("(");
+		if( pos4 == fc::string::npos )
+			continue;
+
+		if( pos4 != fc::string::npos )
+		{
+			if( s[pos4 + 1] != ')' )
+				s.insert(pos4 + 1, ",");
+			else
+				s.insert(pos4 + 1, " ");
+
+			s.insert(pos4 + 1, classPtr);
+		}
+
+
+		e += "[MethodImpl(MethodImplOptions.InternalCall)]\nextern ";
+		e += s;
+		e += ";\n\n";
+
+
+		pos = s.find_first_of("(");
+		if( pos == fc::string::npos )
+			continue;
+
+		size_t pos2 = pos;
+		while( pos > 0 && s[pos] != ' ' )
+			pos--;
+
+		++pos;
+		fc::string funcDecl = s.substr(pos, pos2-pos);
+
+		strArray.clear();
+		while( pos2 != fc::string::npos )
+		{
+			pos2 = s.find_first_of(',', pos2 + 1);
+			if( pos2 != fc::string::npos )
+			{
+				size_t pos1 = pos2;
+				while( pos1 > 0 && s[pos1] != ' ' )
+					pos1--;
+
+				strArray.push_back( s.substr(pos1+1, pos2 - pos1 - 1) );
+			}
+		}
+
+
+		if( funcDecl.size() > 3 )
+		{
+			if( funcDecl[0] == 'G' && funcDecl[1] == 'e' && funcDecl[2] == 't' )
+			{
+				fc::string temp( funcDecl.begin() + 3, funcDecl.end() );
+				temp += "\n{\n\tget { return ";
+				temp += funcDecl;
+				temp += "(_ptr); }\n";
+				temp += "\tset { ";
+				temp += "S";
+				temp += funcDecl.begin() + 1;
+				temp += "(_ptr, value); }\n}\n\n";
+
+				getSet += s.substr(0, pos);
+				getSet += temp;
+			}
+			else if( funcDecl[0] == 'S' && funcDecl[1] == 'e' && funcDecl[2] == 't' )
+			{
+			}
+			else
+			{
+				fc::string temp = s;
+				size_t p1 = temp.find_first_of('(');
+				if( p1 != fc::string::npos )
+				{
+					p1++;
+					if( temp[p1] == ' ' )
+						p1++;
+
+					if( temp[p1] != ')' )
+					{
+						size_t p2 = temp.find_first_of(",)");
+						if( p2 != fc::string::npos )
+							p2++;
+
+						temp.erase(p1, p2 - p1);
+					}
+				}
+
+				getSet += temp;
+				getSet += "\n{\n\t";
+				if( !isVoid )
+					getSet += "return ";
+
+				getSet += funcDecl;
+				getSet += "(_ptr";
+				if( strArray.size() > 1 )
+					getSet += ", ";
+
+				for( size_t i(1); i < strArray.size(); ++i )
+				{
+					getSet += strArray[i];
+					if( i + 1 < strArray.size() )
+						getSet += ", ";
+				}
+				getSet += ");\n}\n\n";
+
+			}
+		}
+
+
+		s.insert(pos, prefixStr);
+
+		h += "static ";
+		h += s;
+		h += ";\n";
+
+
+		s += "\n{\n\t";
+		//s += "if( self )\n\t\t";
+		//if( !isVoid )
+		//	s += "return ";
+
+
+		if( isVoid )
+			s += "CSFML_CALL(";
+		else
+			s += "CSFML_CALL_RETURN(";
+
+		s += "self, ";
+		s += funcDecl;
+
+		s += "(";
+		for( size_t i(1); i < strArray.size(); ++i )
+		{
+			s += strArray[i];
+			if( i + 1 < strArray.size() )
+				s += ", ";
+		}
+		s += ")";
+
+		if( !isVoid )
+			s += ", 0";
+
+		s += ");\n";
+
+		//if( !isVoid )
+		//	s += "\n\t return 0;\n";
+
+		s += "}\n\n\n";
+
+		fwrite(s.c_str(), 1, s.size(), out);
+
+	}
+
+	int len = strlen(classPtr);
+	size_t fp = 0;
+	while ( (fp = e.find(classPtr)) != fc::string::npos )
+		e.replace(fp, len, "IntPtr ptr");
+
+
+	fwrite(h.c_str(), 1, h.size(), out);
+	fwrite(getSet.c_str(), 1, getSet.size(), out);
+	fwrite(e.c_str(), 1, e.size(), out);
+
+}
+
+
+
 

@@ -19,6 +19,7 @@
 #pragma once
 
 #include <fc/string.h>
+#include <fc/static_string.h>
 #include <fc/vector_map.h>
 
 #include "../Common.h"
@@ -32,7 +33,7 @@ CE_NAMESPACE_BEGIN
 class CE_API Shader
 {
 public:
-	typedef fc::vector_map<fc::string, glint> map_type;
+	typedef fc::vector_map<size_t, glint> map_type;
 
 	Shader( VertexShader* vertex_shader = 0, FragmentShader* fragment_shader = 0 );
 
@@ -51,26 +52,26 @@ public:
 	bool IsDirty() const { return m_isDirty; }
 
 	const fc::string& GetInfoLog();
-	int GetUniformLocation(const fc::string& name);
+	int GetUniformLocation(const char* name);
 
-	bool GetUniform( const fc::string& name, float* values );
-	bool GetUniform( const fc::string& name, int* values );
+	bool GetUniform( const char* name, float* values );
+	bool GetUniform( const char* name, int* values );
 
-	bool SetUniform( const fc::string& name, float v0 );
-	bool SetUniform( const fc::string& name, float v0, float v1 );
-	bool SetUniform( const fc::string& name, float v0, float v1, float v2 );
-	bool SetUniform( const fc::string& name, float v0, float v1, float v2, float v3 );
-	bool SetUniform( const fc::string& name, int v0 );
-	bool SetUniform( const fc::string& name, int v0, int v1 );
-	bool SetUniform( const fc::string& name, int v0, int v1, int v2 );
-	bool SetUniform( const fc::string& name, int v0, int v1, int v2, int v3 );
-	bool SetUniform( const fc::string& name, const Vector2& v );
-	bool SetUniform( const fc::string& name, const Vector3& v );
-	bool SetUniform( const fc::string& name, const Vector4& v );
-	bool SetUniformMatrix( const fc::string& name, const Matrix& matrix );
-	bool SetUniformMatrix2fv( const fc::string& name, int count, bool transpose, const float* m );
-	bool SetUniformMatrix3fv( const fc::string& name, int count, bool transpose, const float* m );
-	bool SetUniformMatrix4fv( const fc::string& name, int count, bool transpose, const float* m );
+	bool SetUniform( const char* name, float v0 );
+	bool SetUniform( const char* name, float v0, float v1 );
+	bool SetUniform( const char* name, float v0, float v1, float v2 );
+	bool SetUniform( const char* name, float v0, float v1, float v2, float v3 );
+	bool SetUniform( const char* name, int v0 );
+	bool SetUniform( const char* name, int v0, int v1 );
+	bool SetUniform( const char* name, int v0, int v1, int v2 );
+	bool SetUniform( const char* name, int v0, int v1, int v2, int v3 );
+	bool SetUniform( const char* name, const Vector2& v );
+	bool SetUniform( const char* name, const Vector3& v );
+	bool SetUniform( const char* name, const Vector4& v );
+	bool SetUniformMatrix( const char* name, const Matrix& matrix );
+	bool SetUniformMatrix2fv( const char* name, int count, bool transpose, const float* m );
+	bool SetUniformMatrix3fv( const char* name, int count, bool transpose, const float* m );
+	bool SetUniformMatrix4fv( const char* name, int count, bool transpose, const float* m );
 
 	static int GetMaxTextureUnits();
 

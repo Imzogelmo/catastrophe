@@ -84,39 +84,16 @@ class Npc;
 class Player;
 
 
-
 class ConfigSetting;
 class ConfigFile;
 
 
-
-// angelscript forward declarations
-class asIScriptEngine;
-class asIScriptModule;
-class asIScriptContext;
-class asIScriptGeneric;
-class asIScriptObject;
-class asIObjectType;
-class asIScriptFunction;
-class asIBinaryStream;
-class asIJITCompiler;
-struct asSMessageInfo;
-
-
 // script forward declarations
-struct GCStatistics;
-class ScriptGarbage;
-class ContextPool;
-class ScriptObject;
-class ScriptFunction;
-class ScriptEngine;
-class BytecodeInStream;
-class BytecodeOutStream;
+class MonoGC;
+class MonoScriptObject;
+class MonoScriptAssembly;
+class MonoScriptEngine;
 
-class ScriptTemplateClass;
-class ScriptArrayTemplate;
-class ScriptVectorTemplate;
-template<class T> class ScriptArray;
 
 //utility macros (normally only for testing)
 #define foreachv(vec_type, it, container) \
@@ -132,7 +109,7 @@ template<class T> class ScriptArray;
 
 //global functions
 // TODO: implement these proper as more subsystems are functional.
-ScriptEngine* gGetScriptEngine();
+//ScriptEngine* gGetScriptEngine();
 Game* gGetGame();
 Game* GetGame();
 GameData* GetGameData();

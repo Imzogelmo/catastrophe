@@ -16,11 +16,11 @@
 
 
 Game* game = 0;
-ScriptEngine* g_scriptEngine = 0;
+//ScriptEngine* g_scriptEngine = 0;
 BattleEngine* g_battleEngine = 0;
 SpriteBatch* g_tempSpriteBatch = 0;
 
-ScriptEngine* gGetScriptEngine() { return g_scriptEngine; }
+//ScriptEngine* gGetScriptEngine() { return g_scriptEngine; }
 Game* gGetGame() { return game; }
 Game* GetGame() { return game; }
 SpriteBatch* gGetSpriteBatch() { return g_tempSpriteBatch; }
@@ -41,7 +41,7 @@ BattleEngine* GetBattleEngine()
 
 int Game::Initialize()
 {
-	g_scriptEngine = &m_scriptEngine;
+	//g_scriptEngine = &m_scriptEngine;
 	g_tempSpriteBatch = &m_spriteBatch;
 	//gSetActiveDatabase(&m_database);
 
@@ -56,8 +56,13 @@ int Game::Initialize()
 }
 
 
+MonoScriptObject* mso;
+
 void Game::Shutdown()
 {
+	MonoScriptEngine* scriptEngine = GetScriptEngine();
+	scriptEngine->DestroyScriptObject(mso);
+	scriptEngine->Shutdown();
 }
 
 
@@ -69,34 +74,15 @@ void Game::Shutdown()
 
 int Game::InternalInitScriptEngine()
 {
-	ScriptEngine* engine = GetScriptEngine();
-	engine->SetGame(this);
-	engine->Initialize();
-	//engine->SetDefaultEngineProperties();
-	engine->RegisterScriptingInterfaces();
+	MonoScriptEngine* scriptEngine = GetScriptEngine();
+	scriptEngine->SetDefaultEngineProperties();
+	scriptEngine->Initialize();
+	scriptEngine->LoadScriptAssembly("../Tetris/bin/Release/Tetris.exe");
 
-	//return 0;
-
-	//WIP build - this will be removed later
-	Log( "Compiling scripts..." );
-	for( bool exit(false); exit != true; )
-	{
-		if( engine->Compile("data/scripts/FF1.h", fc::vector<fc::string>()) != 0 )
-		{
-			printf("-press [c] to recompile, or any key to exit.");
-			int c = _getch();
-			if( c != int('c') )
-				return -1;
-				//exit = true;
-
-		}
-		else exit = true;
-	}
+//../Framework/bin/Debug
 
 	return 0;
 }
-
-
 
 
 
@@ -106,6 +92,12 @@ void Game::Update()
 	static bool testInit = false;
 	if(!testInit)
 	{
+		GetScriptEngine()->GetScriptAssembly()->CallApplicationMain();
+		mso = m_scriptEngine.CreateScriptObject("TetrisGame", "Tetris");
+		mso->CallDefaultCtor();
+		testInit = true;
+		return;
+
 		// TEST ONLY
 		Battle* b = new Battle();
 	/*	b->CreateFromMonsterTroopId(238);
@@ -129,6 +121,11 @@ void Game::Update()
 		testInit = true;
 	}
 
+	mso->CallUpdateMethod();
+	MonoGC gc;
+	int hs = gc.GetHeapSize();
+	//Log("gc : size [%i]", hs);
+
 	//m_scriptEngine.Update();
 	m_screenManager.Update();
 }
@@ -138,13 +135,14 @@ void Game::Render()
 {
 	m_spriteBatch.Begin();
 
+
 	if(!bgt)
 	{
 		bgt = new Texture();
 		bgt->LoadFromFile("data/textures/backgrounds/14.png");
 	}
 	//m_spriteBatch.DrawTexture(GetDatabase()->character_battle_sprites[0].LoadTexture(), Vector2(30,30));
-	m_spriteBatch.DrawTexture(bgt, Vector2(0,0));
+	//m_spriteBatch.DrawTexture(bgt, Vector2(0,0));
 
 	m_screenManager.Render();
 
@@ -152,6 +150,9 @@ void Game::Render()
 	//m_spriteBatch.Begin();
 	m_spriteBatch.Render();
 	m_spriteBatch.End();
+
+	mso->CallRenderMethod();
+
 }
 
 

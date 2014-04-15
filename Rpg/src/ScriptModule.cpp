@@ -9,19 +9,15 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include "ScriptEntity.h"
+
+#include "Script/MonoUtils.inl"
+#include "Script/MonoGC.inl"
+#include "Script/MonoScriptObject.inl"
+#include "Script/MonoScriptAssembly.inl"
+#include "Script/MonoScriptEngine.inl"
 
 
-ScriptEntity::ScriptEntity( EntityType derivedType ) :
-	Entity(derivedType)
-	//ScriptClass()
-{
-}
-
-
-void ScriptEntity::Update()
-{
-	//ScriptClass::UpdateScript();
-}
-
+// Bindings
+#include "Script/MonoBinding.inl"
+#include "Script/MonoEngineBinding.inl"
 

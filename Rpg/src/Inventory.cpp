@@ -74,8 +74,8 @@ void Inventory::Add( Item* item, int count )
 	if( !item )
 		return;
 
-	size_t index = 0;
-	if( Find(item, index) )
+	int index = Find(item);
+	if( index >= 0 )
 	{
 		if( GetPolicyCanContainDuplicates() )
 		{
@@ -83,33 +83,7 @@ void Inventory::Add( Item* item, int count )
 		}
 		else
 		{
-			m_items[index].Add(count);
-		}
-	}
-	else if( !IsFull() )
-	{
-		m_items.push_back(InventoryItem(item, count));
-	}
-}
-
-
-void Inventory::Add( const InventoryItem& inventoryItem )
-{
-	if( inventoryItem.IsEmpty() )
-		return;
-
-	Item* item = inventoryItem.GetItem();
-	size_t index = 0;
-
-	if( Find(item, index) )
-	{
-		if( GetPolicyCanContainDuplicates() )
-		{
-			m_items.push_back(InventoryItem(item, count));
-		}
-		else
-		{
-			m_items[index].Add(count);
+			m_items[index].AddAmount(count);
 		}
 	}
 	else if( !IsFull() )
@@ -124,8 +98,8 @@ void Inventory::Remove( Item* item, int count )
 	if( !item )
 		return;
 
-	size_t index = 0;
-	if( Find(item, index) )
+	int index = Find(item);
+	if( index >= 0 )
 	{
 		InventoryItem & i = m_items[index];
 		i.RemoveAmount(count);

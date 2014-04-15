@@ -71,6 +71,8 @@ public:
 	inline SpriteAnimation& GetCurrentAnimation() { return operator[](m_currentAnimation); }
 	inline const SpriteAnimation& GetCurrentAnimation() const { return operator[](m_currentAnimation); }
 
+	const vec_type& GetAnimationsVector() const { return m_animations; }
+
 protected:
 	Texture*	m_texture;
 	vec_type	m_animations;

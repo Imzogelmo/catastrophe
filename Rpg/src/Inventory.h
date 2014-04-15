@@ -41,7 +41,7 @@ public:
 	void RemoveFromInventory( Item* item );
 
 	void Unique();
-	void Swap( size_t first, size_t second );
+	void Swap( int first, int second );
 
 	/// Add the contents
 	void Splice( Inventory& other );
@@ -50,7 +50,7 @@ public:
 	bool Contains( const Item* item ) const;
 	int Find( const Item* item ) const;
 
-	size_t Size() const { return m_items.size(); }
+	int Size() const { return (int)m_items.size(); }
 	bool IsFull() const { return m_items.size() == m_maxSize; }
 
 	Item* GetItem( int index ) const;

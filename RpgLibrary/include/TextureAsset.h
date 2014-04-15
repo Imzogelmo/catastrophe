@@ -39,6 +39,8 @@ public:
 	void SerializeXml( AttributeWriter* f );
 	void DeserializeXml( AttributeReader* f );
 
+	int GetMemoryUsage() const;
+
 protected:
 	fc::string			m_textureFilename;
 	int					m_textureResourceId;

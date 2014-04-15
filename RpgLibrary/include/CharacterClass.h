@@ -38,5 +38,7 @@ struct RPG_API CharacterClass
 	void SerializeXml( AttributeWriter* f );
 	void DeserializeXml( AttributeReader* f );
 
+	int GetMemoryUsage() const;
+
 };
 

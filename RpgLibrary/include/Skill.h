@@ -60,7 +60,7 @@ struct RPG_API PassiveSkill
 	int		gold;
 	int		cost;
 
-	byte	sp_table[MAX_PASSIVE_SKILL_LV]
+	//char	sp_table[MAX_PASSIVE_SKILL_LV];
 
 	//short	misc[16];
 
@@ -74,7 +74,7 @@ struct RPG_API PassiveSkill
 	int		sfx;
 
 
-	Skill();
+	PassiveSkill();
 
 	void SerializeXml( AttributeWriter* f );
 	void DeserializeXml( AttributeReader* f );

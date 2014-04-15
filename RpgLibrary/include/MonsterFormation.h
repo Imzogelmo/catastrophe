@@ -54,6 +54,9 @@ struct RPG_API MonsterFormation
 
 	void SerializeXml( AttributeWriter* f );
 	void DeserializeXml( AttributeReader* f );
+
+	int GetMemoryUsage() const;
+
 };
 
 

@@ -46,7 +46,7 @@ public:
 	void SetSourceRect( const Rect& sourceRect );
 	void SetAnimationSpeed( float animationDelay );
 	void SetCurrentFrame( size_t frame );
-	void SetNumberOfFrames( int frames );
+	void SetNumFrames( int frames );
 	void Update();
 
 	//void SetFlipX( bool flip = true );
