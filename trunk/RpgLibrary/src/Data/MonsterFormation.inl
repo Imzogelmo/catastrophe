@@ -100,4 +100,10 @@ void MonsterFormation::DeserializeXml( AttributeReader* f )
 }
 
 
+int MonsterFormation::GetMemoryUsage() const
+{
+	return (int)(formations.size() * sizeof(MonsterFormationCellData));
+}
+
+
 

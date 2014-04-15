@@ -44,8 +44,8 @@ enum VertexType
 enum VertexUsage
 {
 	VertexUsage_Position,
-	VertexUsage_TexCoord,
 	VertexUsage_Color,
+	VertexUsage_TextureCoordinate,
 	VertexUsage_Normal
 };
 
@@ -57,13 +57,7 @@ struct VertexElement
 	int type;
 	int usage;
 
-	VertexElement() :
-		offset(0),
-		components(0),
-		type(0),
-		usage(0)
-	{
-	}
+	VertexElement() : offset(0), count(0), type(0), usage(0) {}
 
 	VertexElement( int offset, int count, int type, int usage ) :
 		offset(offset),
@@ -79,7 +73,7 @@ struct VertexFormat
 {
 	static const int MaxElements = 4;
 
-	//int stride;
+	int stride;
 	int numElements;
 	VertexElement elements[MaxElements];
 
@@ -88,11 +82,12 @@ struct VertexFormat
 		numElements = 0;
 	}
 
-	VertexFormat( const VertexElement* vertexElements, int numElements )
+	VertexFormat( const VertexElement* vertexElements, int numElements, int stride )
 	{
+		this->stride = stride;
 		this->numElements = numElements;
 		for( int i(0); i < numElements; ++i )
-			elements[i] = vertexElements;
+			elements[i] = vertexElements[i];
 	}
 };
 
@@ -101,8 +96,8 @@ struct Vertex2D
 {
 	Vector2 pos;
 
-	VertexColor2D() {}
-	VertexColor2D( const Vector2 &pos ) : pos(pos) {}
+	Vertex2D() {}
+	Vertex2D( const Vector2 &pos ) : pos(pos) {}
 };
 
 
@@ -127,6 +122,27 @@ struct VertexColorTexture2D
 };
 
 
+struct Vertex3D
+{
+	Vector3 pos;
+
+	Vertex3D() {}
+	Vertex3D( const Vector2 &pos ) : pos(pos) {}
+};
+
+
+struct VertexColor3D
+{
+	Vector3 pos;
+	Color color;
+
+	VertexColor3D() {}
+	VertexColor3D( const Vector3 &pos, const Color &color )
+		: pos(pos), color(color) {}
+
+};
+
+
 struct VertexColorTexture3D
 {
 	Vector3 pos;
@@ -136,6 +152,19 @@ struct VertexColorTexture3D
 	VertexColorTexture3D() {}
 	VertexColorTexture3D( const Vector3 &pos, const Vector2 &uv, const Color &color )
 		: pos(pos), uv(uv), color(color) {}
+
+};
+
+
+struct VertexNormalTexture3D
+{
+	Vector3 pos;
+	Vector3 normal;
+	Vector2 uv;
+
+	VertexNormalTexture3D() {}
+	VertexNormalTexture3D( const Vector3 &pos, const Vector3 &normal, const Vector2 &uv )
+		: pos(pos), normal(normal), uv(uv) {}
 
 };
 
@@ -152,6 +181,19 @@ struct VertexColorNormalTexture3D
 		: pos(pos), normal(normal), uv(uv), color(color) {}
 
 };
+
+
+// Vertex
+FC_MAKE_TRAIT(Vertex2D, is_pod);
+FC_MAKE_TRAIT(VertexTexture2D, is_pod);
+FC_MAKE_TRAIT(VertexColor2D, is_pod);
+FC_MAKE_TRAIT(VertexColorTexture2D, is_pod);
+FC_MAKE_TRAIT(Vertex3D, is_pod);
+FC_MAKE_TRAIT(VertexTexture3D, is_pod);
+FC_MAKE_TRAIT(VertexNormalTexture3D, is_pod);
+FC_MAKE_TRAIT(VertexColor3D, is_pod);
+FC_MAKE_TRAIT(VertexColorTexture3D, is_pod);
+FC_MAKE_TRAIT(VertexColorNormalTexture3D, is_pod);
 
 
 CE_NAMESPACE_END

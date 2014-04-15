@@ -96,5 +96,9 @@ void CharacterData::DeserializeXml( AttributeReader* f )
 }
 
 
+int CharacterData::GetMemoryUsage() const
+{
+	return (int)(description.capacity());
+}
 
 

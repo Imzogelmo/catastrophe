@@ -17,7 +17,56 @@
 // THE SOFTWARE.
 
 
+// Math
+#include "Math/BoundingBox.inl"
+#include "Math/Color.inl"
+#include "Math/Colorf.inl"
+#include "Math/Frustum.inl"
+#include "Math/HSLColor.inl"
+#include "Math/HSVColor.inl"
+#include "Math/Math.inl"
+#include "Math/Matrix.inl"
+#include "Math/Quaternion.inl"
+#include "Math/Rect.inl"
+#include "Math/Rectf.inl"
+#include "Math/Vector2.inl"
+#include "Math/Vector3.inl"
+#include "Math/Vector4.inl"
+
+// Graphics
+#include "Graphics/AnimatedSpriteSet.inl"
+#include "Graphics/AnimationFrames.inl"
+#include "Graphics/BlendMode.inl"
+#include "Graphics/FBORenderTarget.inl"
+#include "Graphics/Font.inl"
+#include "Graphics/Image.inl"
+#include "Graphics/PackedSprite.inl"
+#include "Graphics/Primitive.inl"
+#include "Graphics/PrimitiveBatch.inl"
+#include "Graphics/Shader.inl"
+#include "Graphics/ShaderObject.inl"
+#include "Graphics/Sprite.inl"
+#include "Graphics/SpriteAnimation.inl"
+#include "Graphics/SpriteBatch.inl"
+#include "Graphics/Texture.inl"
+#include "Graphics/TextureLoader.inl"
+#include "Graphics/GraphicsDevice.inl"
+
+// IO
+#include "IO/ConfigFile.inl"
+#include "IO/Deserializer.inl"
+#include "IO/File.inl"
+#include "IO/Log.inl"
+#include "IO/Serializer.inl"
+#include "IO/XmlDocument.inl"
+#include "IO/XmlElement.inl"
+#include "IO/XmlReader.inl"
+#include "IO/XmlWriter.inl"
+
+
+#include "Util/TexturePacker.inl"
+
+
+// Core
 #include "Core/StringUtils.inl"
 #include "Core/Timer.inl"
-
-

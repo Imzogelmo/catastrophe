@@ -57,7 +57,7 @@ int InventoryItem::RemoveAmount( int amount )
 }
 
 
-void InventoryItem::Combine( const InventoryItem& inventoryItem )
+void InventoryItem::Combine( InventoryItem& inventoryItem )
 {
 	int amountAdded = AddAmount(inventoryItem.m_amount);
 	inventoryItem.RemoveAmount(amountAdded);

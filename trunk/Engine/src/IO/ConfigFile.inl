@@ -24,13 +24,13 @@
 CE_NAMESPACE_BEGIN
 
 
-void ConfigFile::SetCurrentSection( const fc::string& section )
+void ConfigFile::SetCurrentSection( const char* section )
 {
 	m_currentSection = section;
 }
 
 
-void ConfigFile::SetInt( const fc::string& section, const fc::string& entry, int value )
+void ConfigFile::SetInt( const char* section, const char* entry, int value )
 {
 	ConfigSection* currentSection = AddSection(section);
 	if( currentSection )
@@ -39,18 +39,18 @@ void ConfigFile::SetInt( const fc::string& section, const fc::string& entry, int
 	}
 	else
 	{
-		Log("ConfigFile error on section %s.", section.c_str());
+		Log("ConfigFile error on section %s.", section);
 	}
 }
 
 
-void ConfigFile::SetBool( const fc::string& section, const fc::string& entry, bool value )
+void ConfigFile::SetBool( const char* section, const char* entry, bool value )
 {
 	return SetInt(section, entry, value ? 1 : 0);
 }
 
 
-void ConfigFile::SetFloat( const fc::string& section, const fc::string& entry, float value )
+void ConfigFile::SetFloat( const char* section, const char* entry, float value )
 {
 	ConfigSection* currentSection = AddSection(section);
 	if( currentSection )
@@ -59,12 +59,12 @@ void ConfigFile::SetFloat( const fc::string& section, const fc::string& entry, f
 	}
 	else
 	{
-		Log("ConfigFile error on section %s.", section.c_str());
+		Log("ConfigFile error on section %s.", section);
 	}
 }
 
 
-void ConfigFile::SetString( const fc::string& section, const fc::string& entry, const fc::string& value )
+void ConfigFile::SetString( const char* section, const char* entry, const char* value )
 {
 	ConfigSection* currentSection = AddSection(section);
 	if( currentSection )
@@ -73,36 +73,36 @@ void ConfigFile::SetString( const fc::string& section, const fc::string& entry, 
 	}
 	else
 	{
-		Log("ConfigFile error on section %s.", section.c_str());
+		Log("ConfigFile error on section %s.", section);
 	}
 }
 
 
-void ConfigFile::SetInt( const fc::string& entry, int value )
+void ConfigFile::SetInt( const char* entry, int value )
 {
-	SetInt(m_currentSection, entry, value);
+	SetInt(m_currentSection.c_str(), entry, value);
 }
 
 
-void ConfigFile::SetBool( const fc::string& entry, bool value )
+void ConfigFile::SetBool( const char* entry, bool value )
 {
-	SetBool(m_currentSection, entry, value);
+	SetBool(m_currentSection.c_str(), entry, value);
 }
 
 
-void ConfigFile::SetFloat( const fc::string& entry, float value )
+void ConfigFile::SetFloat( const char* entry, float value )
 {
-	SetFloat(m_currentSection, entry, value);
+	SetFloat(m_currentSection.c_str(), entry, value);
 }
 
 
-void ConfigFile::SetString( const fc::string& entry, const fc::string& value )
+void ConfigFile::SetString( const char* entry, const char* value )
 {
-	SetString(m_currentSection, entry, value);
+	SetString(m_currentSection.c_str(), entry, value);
 }
 
 
-int ConfigFile::GetInt( const fc::string& section, const fc::string& entry, int value )
+int ConfigFile::GetInt( const char* section, const char* entry, int value )
 {
 	int ret = value;
 	ConfigSection* currentSection = Find(section);
@@ -119,13 +119,13 @@ int ConfigFile::GetInt( const fc::string& section, const fc::string& entry, int 
 }
 
 
-bool ConfigFile::GetBool( const fc::string& section, const fc::string& entry, bool value )
+bool ConfigFile::GetBool( const char* section, const char* entry, bool value )
 {
 	return GetInt(section, entry, value ? 1 : 0) == 0 ? false : true;
 }
 
 
-float ConfigFile::GetFloat( const fc::string& section, const fc::string& entry, float value )
+float ConfigFile::GetFloat( const char* section, const char* entry, float value )
 {
 	float ret = value;
 	ConfigSection* currentSection = Find(section);
@@ -142,7 +142,7 @@ float ConfigFile::GetFloat( const fc::string& section, const fc::string& entry, 
 }
 
 
-const fc::string& ConfigFile::GetString( const fc::string& section, const fc::string& entry, const fc::string& value )
+const char* ConfigFile::GetString( const char* section, const char* entry, const char* value )
 {
 	ConfigSection* currentSection = Find(section);
 	if( currentSection )
@@ -150,7 +150,7 @@ const fc::string& ConfigFile::GetString( const fc::string& section, const fc::st
 		ConfigSection::map_type::iterator it = currentSection->configs.find(entry);
 		if( it != currentSection->configs.end() )
 		{
-			return it->second;
+			return it->second.c_str();
 		}
 	}
 
@@ -158,31 +158,31 @@ const fc::string& ConfigFile::GetString( const fc::string& section, const fc::st
 }
 
 
-int ConfigFile::GetInt( const fc::string& entry, int value )
+int ConfigFile::GetInt( const char* entry, int value )
 {
-	return GetInt(m_currentSection, entry, value);
+	return GetInt(m_currentSection.c_str(), entry, value);
 }
 
 
-bool ConfigFile::GetBool( const fc::string& entry, bool value )
+bool ConfigFile::GetBool( const char* entry, bool value )
 {
-	return GetBool(m_currentSection, entry, value);
+	return GetBool(m_currentSection.c_str(), entry, value);
 }
 
 
-float ConfigFile::GetFloat( const fc::string& entry, float value )
+float ConfigFile::GetFloat( const char* entry, float value )
 {
-	return GetFloat(m_currentSection, entry, value);
+	return GetFloat(m_currentSection.c_str(), entry, value);
 }
 
 
-const fc::string& ConfigFile::GetString( const fc::string& entry, const fc::string& value )
+const char* ConfigFile::GetString( const char* entry, const char* value )
 {
-	return GetString(m_currentSection, entry, value);
+	return GetString(m_currentSection.c_str(), entry, value);
 }
 
 
-ConfigSection* ConfigFile::Find( const fc::string& section )
+ConfigSection* ConfigFile::Find( const char* section )
 {
 	ConfigSection* ret = 0;
 	for( vec_type::iterator it = m_configurations.begin(); it != m_configurations.end(); ++it )
@@ -198,7 +198,7 @@ ConfigSection* ConfigFile::Find( const fc::string& section )
 }
 
 
-ConfigSection* ConfigFile::AddSection( const fc::string& section )
+ConfigSection* ConfigFile::AddSection( const char* section )
 {
 	ConfigSection* currentSection = Find(section);
 	if( !currentSection )
@@ -266,23 +266,24 @@ bool ConfigFile::Read()
 		{
 			if( tokenizer.next(key) )
 			{
-				section = AddSection(key);
+				section = AddSection(key.c_str());
 			}
 		}
 
 		if( section )
 		{
-			if( tokenizer.next(key) )
+			if( tokenizer.next(key) && tokenizer.next(value) )
 			{
-				if( tokenizer.next(value) )
-				{
-					section->configs.insert( key, value );
-				}
-				else
-				{
-					Log("ConfigFile error: Invalid identifier or value (%s), token will not be parsed!", key.c_str());
-					continue;
-				}
+				fc::pair<ConfigSection::string_type, ConfigSection::string_type> configValue;
+				configValue.first = key;
+				configValue.second = value;
+
+				section->configs.insert(configValue);
+			}
+			else
+			{
+				Log("ConfigFile error: Invalid identifier or value (%s), token will not be parsed!", key.c_str());
+				continue;
 			}
 		}
 	}
@@ -309,14 +310,14 @@ bool ConfigFile::Write()
 
 		// write an empty line before new sections.
 		file.WriteLine("");
-		line.append('[').append( section.name ).append(']');
+		line.append('[').append( section.name.c_str() ).append(']');
 		file.WriteLine(line);
 
 		ConfigSection::map_type & c = section.configs;
 		for( ConfigSection::map_type::iterator it = c.begin(); it != c.end(); ++it )
 		{
 			line.clear();
-			line.append(it->first).append(" = ").append(it->second);
+			line.append(it->first.c_str()).append(" = ").append(it->second.c_str());
 			file.WriteLine(line);
 		}
 	}
@@ -324,5 +325,7 @@ bool ConfigFile::Write()
 	file.Close();
 	return true;
 }
+
+
 
 CE_NAMESPACE_END

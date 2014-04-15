@@ -114,3 +114,8 @@ void TextureAsset::DeserializeXml( AttributeReader* f )
 	Reset();
 }
 
+
+int TextureAsset::GetMemoryUsage() const
+{
+	return (int)(m_textureFilename.capacity());
+}

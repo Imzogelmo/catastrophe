@@ -60,8 +60,10 @@ struct RPG_API MonsterTroop
 
 	static void RegisterObject();
 
-	NO_INLINE void SerializeXml( AttributeWriter* f );
-	NO_INLINE void DeserializeXml( AttributeReader* f );
+	void SerializeXml( AttributeWriter* f );
+	void DeserializeXml( AttributeReader* f );
+
+	int GetMemoryUsage() const;
 
 };
 

@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\Engine\include;..\RpgLibrary\include;src;src\Screens;src\Entity;src\Battle;src\Script"
-				PreprocessorDefinitions="WIN32;_DEBUG;"
+				PreprocessorDefinitions="WIN32;_DEBUG;MONO_STATIC_BUILD;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -59,9 +59,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ce-core-d.lib ce-system-d.lib ce-gui-d.lib rpglibd.lib glfwd.lib mcppd.lib angelscriptd.lib freetype.lib glew32sd.lib OpenGL32.lib glu32.lib"
-				AdditionalLibraryDirectories="&quot;../Engine/lib&quot;;&quot;..\RpgLibrary\lib&quot;"
-				IgnoreDefaultLibraryNames=""
+				AdditionalDependencies="ce-core-d.lib ce-system-d.lib ce-gui-d.lib libgc.lib eglib.lib libmonoutils.lib libmonoruntime.lib mono-2.0.lib rpglibd.lib glfwd.lib glew32sd.lib OpenGL32.lib glu32.lib ws2_32.lib winmm.lib psapi.lib mswsock.lib version.lib"
+				AdditionalLibraryDirectories="../Engine/lib;..\RpgLibrary\lib;&quot;C:\C++\lib\Mono 3.2.6 2008\Release&quot;"
+				IgnoreDefaultLibraryNames="LIBCMT; LIBCMTD;"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
@@ -115,7 +115,7 @@
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				AdditionalIncludeDirectories="..\Engine\include;..\RpgLibrary\include;src;src\Screens;src\Entity;src\Battle;src\Script"
-				PreprocessorDefinitions="WIN32;NDEBUG;"
+				PreprocessorDefinitions="WIN32;NDEBUG;MONO_STATIC_BUILD;"
 				StringPooling="true"
 				ExceptionHandling="0"
 				RuntimeLibrary="2"
@@ -136,8 +136,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ce-core.lib ce-system.lib ce-sound.lib ce-gui.lib rpglib.lib glfw.lib mcpp.lib angelscript.lib glew32s.lib OpenGL32.lib glu32.lib"
-				AdditionalLibraryDirectories="&quot;../Engine/lib&quot;;&quot;..\RpgLibrary\lib&quot;"
+				AdditionalDependencies="ce-core.lib ce-system.lib ce-sound.lib ce-gui.lib libgc.lib eglib.lib libmonoutils.lib libmonoruntime.lib mono-2.0.lib rpglib.lib glfw.lib glew32s.lib OpenGL32.lib glu32.lib ws2_32.lib winmm.lib psapi.lib mswsock.lib version.lib"
+				AdditionalLibraryDirectories="../Engine/lib;..\RpgLibrary\lib;&quot;C:\C++\lib\Mono 3.2.6 2008\Release&quot;"
+				IgnoreDefaultLibraryNames="LIBCMT; LIBCMTD;"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -302,106 +303,98 @@
 				Name="Script"
 				>
 				<File
-					RelativePath=".\src\Script\Bytecode.inl"
+					RelativePath=".\src\Script\MonoBinding.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Script\ContextPool.inl"
+					RelativePath=".\src\Script\MonoEngineBinding.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Script\ScriptClass.inl"
+					RelativePath=".\src\Script\MonoGC.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Script\ScriptEngine.inl"
+					RelativePath=".\src\Script\MonoRpgBinding.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Script\ScriptGarbage.inl"
+					RelativePath=".\src\Script\MonoScriptAssembly.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Script\ScriptMemory.inl"
+					RelativePath=".\src\Script\MonoScriptEngine.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Script\MonoScriptObject.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Script\MonoUtils.inl"
 					>
 				</File>
 				<Filter
-					Name="Bindings"
+					Name="EngineBindings"
 					>
 					<File
-						RelativePath=".\src\Script\asGameInterface.inl"
+						RelativePath=".\src\Script\EngineBindings\AnimatedSprite.inl"
 						>
 					</File>
 					<File
-						RelativePath=".\src\Script\asGlobalInterface.inl"
+						RelativePath=".\src\Script\EngineBindings\Collision.inl"
 						>
 					</File>
 					<File
-						RelativePath=".\src\Script\asGraphicsInterface.inl"
+						RelativePath=".\src\Script\EngineBindings\Color.inl"
 						>
 					</File>
 					<File
-						RelativePath=".\src\Script\asGuiInterface.inl"
+						RelativePath=".\src\Script\EngineBindings\Input.inl"
 						>
 					</File>
 					<File
-						RelativePath=".\src\Script\asInputInterface.inl"
+						RelativePath=".\src\Script\EngineBindings\Mathf.inl"
 						>
 					</File>
 					<File
-						RelativePath=".\src\Script\asMathInterface.inl"
+						RelativePath=".\src\Script\EngineBindings\Sprite.inl"
 						>
 					</File>
 					<File
-						RelativePath=".\src\Script\asRpgInterface.inl"
+						RelativePath=".\src\Script\EngineBindings\SpriteBatch.inl"
 						>
 					</File>
 					<File
-						RelativePath=".\src\Script\asSoundInterface.inl"
+						RelativePath=".\src\Script\EngineBindings\StaticString.inl"
+						>
+					</File>
+					<File
+						RelativePath=".\src\Script\EngineBindings\Texture.inl"
+						>
+					</File>
+					<File
+						RelativePath=".\src\Script\EngineBindings\Vector2.inl"
+						>
+					</File>
+					<File
+						RelativePath=".\src\Script\EngineBindings\Vector3.inl"
+						>
+					</File>
+					<File
+						RelativePath=".\src\Script\EngineBindings\Vector4.inl"
+						>
+					</File>
+					<File
+						RelativePath=".\src\Script\EngineBindings\VertexArray.inl"
 						>
 					</File>
 				</Filter>
 				<Filter
-					Name="Collections"
+					Name="RpgBindings"
 					>
 					<File
-						RelativePath=".\src\Script\asArray.inl"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\asArrayTemplate.inl"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\asScriptTemplate.inl"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\asString.inl"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\asVector.inl"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\asVectorTemplate.inl"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="Compiler"
-					>
-					<File
-						RelativePath=".\src\Script\Compiler.inl"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\PostProcessor.inl"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\Preprocessor.inl"
+						RelativePath=".\src\Script\RpgBindings\Actor.inl"
 						>
 					</File>
 				</Filter>
@@ -413,23 +406,11 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\src\Actor.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\BuffSet.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\Camera.h"
 				>
 			</File>
 			<File
 				RelativePath=".\src\Common.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Equipment.h"
 				>
 			</File>
 			<File
@@ -441,19 +422,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\Inventory.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\InventoryItem.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\ItemSort.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Party.h"
 				>
 			</File>
 			<File
@@ -464,86 +433,6 @@
 				RelativePath=".\src\SpellBook.h"
 				>
 			</File>
-			<Filter
-				Name="Script"
-				>
-				<File
-					RelativePath=".\src\Script\Bytecode.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Script\ContextPool.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Script\ScriptClass.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Script\ScriptClassDeclarations.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Script\ScriptEngine.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Script\ScriptGarbage.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Script\ScriptMemory.h"
-					>
-				</File>
-				<Filter
-					Name="Collections"
-					>
-					<File
-						RelativePath=".\src\Script\asArray.h"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\asArrayTemplate.h"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\asScriptTemplate.h"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\asVector.h"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\asVectorTemplate.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="Compiler"
-					>
-					<File
-						RelativePath=".\src\Script\Compiler.h"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\PostProcessor.h"
-						>
-					</File>
-					<File
-						RelativePath=".\src\Script\Preprocessor.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="Bindings"
-					>
-					<File
-						RelativePath=".\src\Script\asBindUtil.h"
-						>
-					</File>
-				</Filter>
-			</Filter>
 			<Filter
 				Name="Screens"
 				>
@@ -641,6 +530,70 @@
 				</File>
 				<File
 					RelativePath=".\src\Battle\BattleGroup.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Script"
+				>
+				<File
+					RelativePath=".\src\Script\MonoBinding.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Script\MonoEngineBinding.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Script\MonoGC.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Script\MonoRpgBinding.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Script\MonoScriptAssembly.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Script\MonoScriptEngine.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Script\MonoScriptObject.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Script\MonoUtils.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Rpg"
+				>
+				<File
+					RelativePath=".\src\Actor.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\BuffSet.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Equipment.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Inventory.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\InventoryItem.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Party.h"
 					>
 				</File>
 			</Filter>

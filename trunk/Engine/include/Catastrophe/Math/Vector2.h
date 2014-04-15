@@ -96,13 +96,26 @@ public:
 		return 0.41f * dy + 0.941246f * dx;
 	}
 
-	float Angle() const;
-	float Angle( const Vector2& other ) const;
+	float Angle() const { return atan2f( y, x ); }
+	float Angle( const Vector2& to ) const
+	{
+		return atan2f( to.y - y, to.x - x );
+	}
 
 	Vector3 ToVector3() const;
 	Vector2 Polar( const Vector2& dist, float theta ) const;
-	Vector2 Direction( const Vector2& other ) const;
+
+	Vector2 Direction( const Vector2& other ) const
+	{ 
+		const Vector2 distance = *this - other;
+		return distance / distance.Length();
+	}
+
+
 	Vector2 Rotated( float a ) const;
+	Vector2 Rotated( float a, const Vector2& origin ) const;
+	void Rotate( float a );
+	void Rotate( float a, const Vector2& origin );
 
 	float Min() const { return (x < y ? x : y); }
 	float Max() const { return (x > y ? x : y); }
@@ -113,8 +126,8 @@ public:
 	Vector2 Negate() const { return Vector2( -x, -y ); }
 	Vector2 Perpendicular() const { return Vector2( -y, x ); }
 
-	Vector2 Unit() const { return Normal(); }
-	Vector2 Normal() const
+	Vector2 Unit() const { return Normalized(); }
+	Vector2 Normalized() const
 	{
 		const float length = 1.f / (Length() + 0.0000001f);
 		return Vector2(
@@ -159,27 +172,6 @@ public:
 	Vector2 Transform( const Matrix& mat ) const;
 
 };
-
-
-
-inline float Vector2::Angle() const
-{
-	return atan2f( y, x );
-}
-
-
-inline float Vector2::Angle( const Vector2& target ) const
-{ 
-	//return acosf( ( Dot( other ) / ( Length() * other.Length() )) );
-	return atan2f( target.y - y, target.x - x );
-}
-
-
-inline Vector2 Vector2::Direction( const Vector2& other ) const
-{ 
-	const Vector2 distance = *this - other;
-	return distance / distance.Length();
-}
 
 
 

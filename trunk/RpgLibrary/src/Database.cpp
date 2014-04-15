@@ -284,7 +284,7 @@ XmlReader* DeserializeDataArrayBeginImpl
 	XmlReader* xml = new XmlReader(fn);
 	if( xml->IsOpen() )
 	{
-		if( xml->GetCurrentNodeName() == root )
+		if( strcmp(xml->GetCurrentNodeName(), root) == 0 )
 			return xml;
 
 		else
@@ -416,3 +416,53 @@ bool Database::GenerateHeader( const Array& arr, ResourceDirectory* resourceDire
 	return true;
 }
 
+
+int Database::GetMemoryUsage() const
+{
+	return (int)
+	(
+		sizeof(Database) +
+		items.GetMemoryUsage() +
+		weapons.GetMemoryUsage() +
+		armor.GetMemoryUsage() +
+		accessories.GetMemoryUsage() +
+		monsters.GetMemoryUsage() +
+		monster_troops.GetMemoryUsage() +
+		monster_formations.GetMemoryUsage() +
+		characters.GetMemoryUsage() +
+		character_classes.GetMemoryUsage() +
+		races.GetMemoryUsage() +
+		character_portrait_sprites.GetMemoryUsage() +
+		character_map_sprites.GetMemoryUsage() +
+		character_battle_sprites.GetMemoryUsage() +
+		monster_map_sprites.GetMemoryUsage() +
+		monster_battle_sprites.GetMemoryUsage() +
+		shaders.GetMemoryUsage()
+	);
+
+}
+
+
+void Database::LogMemoryUsage() const
+{
+	LogInfo("[Database memory usage statistics (kilobytes)]");
+	LogInfo("    Database total memory usage [%.2f]", GetMemoryUsage() / 1024.f);
+	LogInfo("    Items       [%.2f]", items.GetMemoryUsage() / 1024.f);
+	LogInfo("    Weapons     [%.2f]", weapons.GetMemoryUsage() / 1024.f);
+	LogInfo("    Armor       [%.2f]", armor.GetMemoryUsage() / 1024.f);
+	LogInfo("    Accessories [%.2f]", accessories.GetMemoryUsage() / 1024.f);
+	LogInfo("    Monsters    [%.2f]", monsters.GetMemoryUsage() / 1024.f);
+	LogInfo("    Troops      [%.2f]", monster_troops.GetMemoryUsage() / 1024.f);
+	LogInfo("    Formations  [%.2f]", monster_formations.GetMemoryUsage() / 1024.f);
+	LogInfo("    Characters  [%.2f]", characters.GetMemoryUsage() / 1024.f);
+	LogInfo("    Classes     [%.2f]", character_classes.GetMemoryUsage() / 1024.f);
+	LogInfo("    Races       [%.2f]", races.GetMemoryUsage() / 1024.f);
+	LogInfo("    Shader data [%.2f]", shaders.GetMemoryUsage() / 1024.f);
+	LogInfo("    Character portrait sprites [%.2f]", character_portrait_sprites.GetMemoryUsage() / 1024.f);
+	LogInfo("    Character map sprites      [%.2f]", character_map_sprites.GetMemoryUsage() / 1024.f);
+	LogInfo("    Character battle sprites   [%.2f]", character_battle_sprites.GetMemoryUsage() / 1024.f);
+	//LogInfo("    Monster portrait sprites   [%.2f]", monster_map_sprites.GetMemoryUsage() / 1024.f);
+	LogInfo("    Monster map sprites        [%.2f]", monster_map_sprites.GetMemoryUsage() / 1024.f);
+	LogInfo("    Monster battle sprites     [%.2f]", monster_battle_sprites.GetMemoryUsage() / 1024.f);
+
+}

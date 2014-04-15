@@ -85,3 +85,9 @@ void ShaderAsset::DeserializeXml( AttributeReader* f )
 	m_fragmentFilename = f->GetString("frag");
 }
 
+
+
+int ShaderAsset::GetMemoryUsage() const
+{
+	return (int)(m_name.capacity() + m_vertexFilename.capacity() + m_fragmentFilename.capacity());
+}

@@ -52,7 +52,7 @@ namespace Math
 		fc::sincos(x, s, c);
 	}
 
-	/* Note* Returns Vector2(cos, sin)! */
+	// Note* Returns Vector2(cos, sin)!
 	inline Vector2 SinCos( float x )
 	{
 		Vector2 sc;

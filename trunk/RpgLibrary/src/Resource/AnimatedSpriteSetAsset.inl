@@ -134,3 +134,10 @@ void AnimatedSpriteSetAsset::DeserializeXml( AttributeReader* f )
 	Reset();
 }
 
+
+int AnimatedSpriteSetAsset::GetMemoryUsage() const
+{
+	return (int)(TextureAsset::GetMemoryUsage() +
+		AnimatedSpriteSet::GetAnimationsVector().capacity() * sizeof(SpriteAnimation));
+}
+

@@ -35,7 +35,7 @@ void Combatant::InitializeFromActor( Actor* actor )
 
 	m_actor = actor;
 	actor->LoadBattleSpriteSet(m_spriteset);
-
+/*
 	// load script data
 	ScriptClassDeclarations scd;
 
@@ -52,6 +52,7 @@ void Combatant::InitializeFromActor( Actor* actor )
 
 	// finaly create the script object which links back to us.
 	ScriptEntity::CreateScriptObject();
+	*/
 }
 
 

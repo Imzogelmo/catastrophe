@@ -160,18 +160,6 @@
 				RelativePath=".\..\..\src\CoreModule.cpp"
 				>
 			</File>
-			<File
-				RelativePath=".\..\..\src\GraphicsModule.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\..\..\src\IOModule.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\..\..\src\MathModule.cpp"
-				>
-			</File>
 			<Filter
 				Name="IO"
 				>
@@ -249,6 +237,10 @@
 				</File>
 				<File
 					RelativePath=".\..\..\src\Graphics\Font.inl"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\Graphics\GraphicsDevice.inl"
 					>
 				</File>
 				<File
@@ -550,6 +542,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\include\Catastrophe\Graphics\GraphicsDevice.h"
+					>
+				</File>
+				<File
 					RelativePath=".\..\..\include\Catastrophe\Graphics\Image.h"
 					>
 				</File>
@@ -571,6 +567,10 @@
 				</File>
 				<File
 					RelativePath=".\..\..\include\Catastrophe\Graphics\PrimitiveType.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Catastrophe\Graphics\RenderState.h"
 					>
 				</File>
 				<File

@@ -100,6 +100,7 @@ public:
 	//music
 	//sfx
 
+
 	/// Initializes the database.
 	void Initialize();
 
@@ -185,6 +186,13 @@ public:
 
 	// Lookup by name
 	inline ShaderAsset*				GetShaderAsset(const fc::string& name) { return GetArrayContentByName<ShaderAsset>(shaders, name); }
+
+	/// Gets the combined memory usage (in bytes) of every object inside the database,
+	/// including the database object itself.
+	int GetMemoryUsage() const;
+
+	/// Logs detailed memory usage information for each object inside the database.
+	void LogMemoryUsage() const;
 
 private:
 	ResourceDirectory*		m_resourceDirectory;

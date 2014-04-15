@@ -44,8 +44,8 @@ public:
 
 	// asset loading
 	//void LoadPortaitSprite( AnimatedSprite& animatedSprite);
-	bool LoadMapSpriteSet( AnimatedSpriteSet& animatedSpriteSetRef);
-	bool LoadBattleSpriteSet( AnimatedSpriteSet& animatedSpriteSetRef);
+	bool LoadMapSpriteSet( AnimatedSpriteSet& animatedSpriteSetRef );
+	bool LoadBattleSpriteSet( AnimatedSpriteSet& animatedSpriteSetRef );
 
 
 	ActorType GetType() const { return m_type; }
@@ -76,6 +76,9 @@ public:
 	int GetStatusAtk( int status ) const;
 	int GetBaseStatusDef( int status ) const;
 	int GetStatusDef( int status ) const;
+
+	int CalculateModifiedMaxParamValue( int param ) const;
+	int CalculateModifiedStatValue( int stat ) const;
 
 
 	void SetParam( int param, int val );

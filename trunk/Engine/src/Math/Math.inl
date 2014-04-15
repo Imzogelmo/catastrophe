@@ -175,7 +175,7 @@ float Hermite(float value1, float tangent1, float value2, float tangent2, float 
 	float part2 = (-2.0f * t * t * t) + (3.0f * t * t);
 	float part3 = (t * t * t - (2.0f * t * t)) + t;
 	float part4 = (t * t * t) - (t * t);
-	return (((value1.x * part1) + (value2.x * part2)) + (tangent1.x * part3)) + (tangent2.x * part4);
+	return (((value1 * part1) + (value2 * part2)) + (tangent1 * part3)) + (tangent2 * part4);
 }
 
 

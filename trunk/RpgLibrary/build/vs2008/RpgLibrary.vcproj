@@ -410,6 +410,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\include\DataArray.h"
+					>
+				</File>
+				<File
 					RelativePath=".\..\..\include\Dice.h"
 					>
 				</File>

@@ -30,15 +30,15 @@
 CE_NAMESPACE_BEGIN
 
 
-class CE_API Primitive : public VertexArray<VertexColor>
+class CE_API Primitive : public VertexArray<VertexColor2D>
 {
 public:
-	typedef VertexArray<VertexColor>		base_type;
+	typedef VertexArray<VertexColor2D>		base_type;
 	typedef base_type::vec_type				vec_type;
 
 	using base_type::AddVertex;
 
-	Primitive( PrimitiveType prim = ptPOINTS, BlendMode blendmode = BlendMode() )
+	Primitive( PrimitiveType prim = PrimitiveType_Points, BlendMode blendmode = BlendMode() )
 		: base_type(), m_blendmode(blendmode), m_primType(prim)
 	{}
 
@@ -94,7 +94,7 @@ public:
 	using base_type::GetBoundingRect;
 	using base_type::Reserve;
 
-	PrimitiveObject( PrimitiveType prim = ptPOINTS, BlendMode blendmode = BlendMode() );
+	PrimitiveObject( PrimitiveType type = PrimitiveType_Points, BlendMode blendmode = BlendMode::Alpha );
 
 	void SetPosition( const Vector2& value ) { m_pos = value; m_isDirty = true; }
 	void SetAngle( float value ) { m_angle = value; m_isDirty = true; }
@@ -106,8 +106,8 @@ public:
 	
 	void AddVertex( const Vector2 &pos, const Color &color );
 	void AddVertex( const Vector2* pos, const Color* color, int num_vertices );
-	void AddVertex( const VertexColor& vertex );
-	void AddVertex( const VertexColor* vertices, int num_vertices );
+	void AddVertex( const VertexColor2D& vertex );
+	void AddVertex( const VertexColor2D* vertices, int num_vertices );
 
 	void CalculateTransformationMatrix();
 	const Matrix& GetTransfomationMatrix();

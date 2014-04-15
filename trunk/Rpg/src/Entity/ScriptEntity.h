@@ -12,10 +12,9 @@
 #pragma once
 
 #include "Entity.h"
-#include "Script/ScriptClass.h"
 
 
-class ScriptEntity : public Entity, public ScriptClass
+class ScriptEntity : public Entity
 {
 public:
 	ScriptEntity( EntityType derivedType = EntityType_ScriptEntity );

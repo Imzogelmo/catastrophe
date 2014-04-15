@@ -135,4 +135,9 @@ void MonsterTroop::DeserializeXml( AttributeReader* f )
 }
 
 
+int MonsterTroop::GetMemoryUsage() const
+{
+	return (int)(groups.has_overflowed() ? groups.capacity() * sizeof(MonsterGroup) : 0);
+}
+
 

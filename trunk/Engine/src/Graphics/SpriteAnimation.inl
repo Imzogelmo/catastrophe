@@ -67,7 +67,7 @@ void SpriteAnimation::SetTexture( Texture* texturePtr )
 }
 
 
-void SpriteAnimation::SetNumberOfFrames( int numFrames )
+void SpriteAnimation::SetNumFrames( int numFrames )
 {
 	m_numFrames = fc::max(numFrames, 1);
 	if( m_currentFrame >= m_numFrames )
@@ -86,7 +86,7 @@ void SpriteAnimation::SetAnimationSpeed( float animationDelay )
 
 void SpriteAnimation::Create( const Rect& sourceRectangle, int numberOfFrames, int frameOffsetX, int frameOffsetY )
 {
-	SetNumberOfFrames(numberOfFrames);
+	SetNumFrames(numberOfFrames);
 	m_frameOffsetX = (frameOffsetX > 0 ? frameOffsetX : sourceRectangle.Width());
 	m_frameOffsetY = (frameOffsetY > 0 ? frameOffsetY : sourceRectangle.Height());
 

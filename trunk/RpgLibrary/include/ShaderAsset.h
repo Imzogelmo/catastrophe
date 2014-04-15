@@ -36,6 +36,8 @@ public:
 	void SerializeXml( AttributeWriter* f );
 	void DeserializeXml( AttributeReader* f );
 
+	int GetMemoryUsage() const;
+
 protected:
 	fc::string		m_name;
 	fc::string		m_vertexFilename;

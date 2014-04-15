@@ -29,7 +29,7 @@
     GLenum glerror = glGetError();	\
     if(glerror != GL_NO_ERROR) {	\
 	LogError("OpenGL error on %s. code: %d, file: %s, line: %d", #x, glerror, __FILE__, __LINE__); \
-	LogError("  %s", glGetErrorString()); \
+	LogError("  %s", gluErrorString(glerror)); \
     }								\
 }
 #else

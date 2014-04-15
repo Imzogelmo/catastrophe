@@ -71,6 +71,8 @@ struct RPG_API Item
 	void SerializeXml( AttributeWriter* f );
 	void DeserializeXml( AttributeReader* f );
 
+	int GetMemoryUsage() const;
+
 protected:
 	static Attributes m_static_attributes;
 

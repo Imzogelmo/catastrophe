@@ -152,45 +152,45 @@ int Actor::GetGold() const
 }
 
 
-void Actor::SetLv( int val )
+void Actor::SetLv( int value )
 {
-	m_lv = val;
+	m_lv = value;
 }
 
 
-void Actor::SetExp( int val )
+void Actor::SetExp( int value )
 {
-	m_exp = fc::clamp(val, 0, MAX_EXP);
+	m_exp = fc::clamp(value, 0, MAX_EXP);
 }
 
 
-void Actor::SetGold( int val )
+void Actor::SetGold( int value )
 {
-	m_gold = fc::clamp(val, 0, MAX_GOLD);
+	m_gold = fc::clamp(value, 0, MAX_GOLD);
 }
 
 
-void Actor::AddExp( int val )
+void Actor::AddExp( int value )
 {
-	SetExp(m_exp + val);
+	SetExp(m_exp + value);
 }
 
 
-void Actor::AddGold( int val )
+void Actor::AddGold( int value )
 {
-	SetGold(m_gold + val);
+	SetGold(m_gold + value);
 }
 
 
-void Actor::RemoveExp( int val )
+void Actor::RemoveExp( int value )
 {
-	SetExp(m_exp - val);
+	SetExp(m_exp - value);
 }
 
 
-void Actor::RemoveGold( int val )
+void Actor::RemoveGold( int value )
 {
-	SetGold(m_gold - val);
+	SetGold(m_gold - value);
 }
 
 
@@ -202,16 +202,10 @@ int Actor::GetParam( int param ) const
 
 int Actor::GetMaxParam( int param ) const
 {
-	// ...todo:
-	if( (unsigned)param >= MAX_PARAMS )
-	{
-		param = 0;
-		LogDebug("Attribute access out of range!");
-	}
+	int value = m_attributes.max_params[param] +
+		CalculateModifiedMaxParamValue(param);
 
-	return m_attributes.max_params[param] +
-		m_equipment.GetCombinedAttributes().max_params[param] +
-		m_buffs.GetCombinedAttributes().max_params[param];
+	return fc::clamp(value, 0, MAX_PARAM_VALUE);
 }
 
 
@@ -229,9 +223,10 @@ int Actor::GetBaseStat( int stat ) const
 
 int Actor::GetStat( int stat ) const
 {
-	return m_attributes.stats[stat] +
-		m_equipment.GetCombinedAttributes().stats[stat] +
-		m_buffs.GetCombinedAttributes().stats[stat];
+	int value = m_attributes.stats[stat] +
+		CalculateModifiedStatValue(stat);
+
+	return fc::clamp(value, 0, MAX_STAT_VALUE);
 }
 
 
@@ -277,40 +272,56 @@ int Actor::GetStatusDef( int status ) const
 }
 
 
-void Actor::SetParam( int param, int val )
+int Actor::CalculateModifiedMaxParamValue( int param ) const
 {
-	m_params[param] = fc::clamp<int>
-		(val, -MAX_PARAM_VALUE, MAX_PARAM_VALUE);
+	return m_equipment.GetCombinedAttributes().max_params[param] +
+		m_buffs.GetCombinedAttributes().max_params[param];
 }
 
 
-void Actor::SetBaseMaxParam( int param, int val )
+int Actor::CalculateModifiedStatValue( int stat ) const
 {
-	m_attributes.SetMaxParam(param, val);
+	return m_equipment.GetCombinedAttributes().stats[stat] +
+		m_buffs.GetCombinedAttributes().stats[stat];
 }
 
 
-void Actor::SetBaseStat( int stat, int val )
+void Actor::SetParam( int param, int value )
 {
-	m_attributes.SetStat(stat, val);
+	m_params[param] = fc::clamp<int>(value, 0, MAX_PARAM_VALUE);
 }
 
 
-void Actor::SetBaseElementalDef( int element, int val )
+void Actor::SetBaseMaxParam( int param, int value )
 {
-	m_attributes.SetElementalDef(element, val);
+	value = fc::clamp(value, 0, MAX_PARAM_VALUE);
+	m_attributes.max_params[param] = value;
+	if( m_params[param] > value )
+		m_params[param] = value;
 }
 
 
-void Actor::SetBaseStatusAtk( int status, int val )
+void Actor::SetBaseStat( int stat, int value )
 {
-	m_attributes.SetStatusAtk(status, val);
+	m_attributes.SetStat(stat, value);
 }
 
 
-void Actor::SetBaseStatusDef( int status, int val )
+void Actor::SetBaseElementalDef( int element, int value )
 {
-	m_attributes.SetStatusDef(status, val);
+	m_attributes.SetElementalDef(element, value);
+}
+
+
+void Actor::SetBaseStatusAtk( int status, int value )
+{
+	m_attributes.SetStatusAtk(status, value);
+}
+
+
+void Actor::SetBaseStatusDef( int status, int value )
+{
+	m_attributes.SetStatusDef(status, value);
 }
 
 

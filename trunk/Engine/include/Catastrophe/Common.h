@@ -131,6 +131,7 @@ class Ray;
 class Frustum;
 
 struct Glyph;
+struct RenderState;
 class Font;
 
 class Image;
@@ -146,6 +147,7 @@ class FragmentShader;
 class Shader;
 class TextureLoader;
 class Viewport;
+class RenderTarget;
 
 class SpriteAnimation;
 class SpriteBase;
@@ -154,9 +156,20 @@ class AnimatedSprite;
 class AnimatedSpriteSet;
 class PackedSprite;
 
-struct VertexColor;
-struct VertexColorTexture;
+// Vertex
+struct Vertex2D;
+struct VertexTexture2D;
+struct VertexColor2D;
+struct VertexColorTexture2D;
 
+struct Vertex3D;
+struct VertexTexture3D;
+struct VertexNormalTexture3D;
+struct VertexColor3D;
+struct VertexColorTexture3D;
+struct VertexColorNormalTexture3D;
+
+// IO
 class Serializer;
 class Deserializer;
 class File;
@@ -178,6 +191,7 @@ class SoundEngine;
 // optimize for use with algorithms and containers
 #include <fc/type_traits.h>
 
+// Math
 FC_MAKE_TRAIT(Vector2, is_pod);
 FC_MAKE_TRAIT(Vector3, is_pod);
 FC_MAKE_TRAIT(Vector4, is_pod);
@@ -193,13 +207,10 @@ FC_MAKE_TRAIT(Line, is_pod);
 FC_MAKE_TRAIT(Ray, is_pod);
 FC_MAKE_TRAIT(Plane, is_pod);
 FC_MAKE_TRAIT(Frustum, is_pod);
-
 FC_MAKE_TRAIT(Color, is_pod);
 FC_MAKE_TRAIT(Colorf, is_pod);
 FC_MAKE_TRAIT(HSVColor, is_pod);
 FC_MAKE_TRAIT(HSLColor, is_pod);
-FC_MAKE_TRAIT(VertexColor, is_pod);
-FC_MAKE_TRAIT(VertexColorTexture, is_pod);
 
 FC_MAKE_TRAIT(Glyph, is_pod);
 FC_MAKE_TRAIT(Sprite, is_pod);

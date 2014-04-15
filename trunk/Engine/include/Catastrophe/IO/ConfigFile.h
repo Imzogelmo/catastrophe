@@ -19,6 +19,7 @@
 #pragma once
 
 #include <fc/string.h>
+#include <fc/static_string.h>
 #include <fc/vector.h>
 #include <fc/vector_map.h>
 #include "../Common.h"
@@ -28,54 +29,58 @@ CE_NAMESPACE_BEGIN
 
 struct ConfigSection
 {
-	typedef fc::vector_map<fc::string, fc::string>	map_type;
+	typedef fc::static_string<32> string_type;
+	typedef fc::vector_map<string_type, string_type> map_type;
 
-	fc::string name;
+	string_type name;
 	map_type configs;
 };
+
+// Declare fast storage type.
+FC_MAKE_TRAIT(ConfigSection::string_type, is_pod);
 
 
 class ConfigFile
 {
 public:
-	typedef fc::vector<ConfigSection>		vec_type;
+	typedef fc::vector<ConfigSection> vec_type;
 
-	ConfigFile( const fc::string& filename )
-		: m_filename(filename)
+	ConfigFile( const char* filename )
+		: m_filename(filename), m_currentSection(), m_configurations()
 	{}
 
 	bool Read();
 	bool Write();
-	void SetCurrentSection( const fc::string& section );
+	void SetCurrentSection( const char* section );
 
-	void SetInt( const fc::string& section, const fc::string& entry, int value );
-	void SetBool( const fc::string& section, const fc::string& entry, bool value );
-	void SetFloat( const fc::string& section, const fc::string& entry, float value );
-	void SetString( const fc::string& section, const fc::string& entry, const fc::string& value );
+	void SetInt( const char* section, const char* entry, int value );
+	void SetBool( const char* section, const char* entry, bool value );
+	void SetFloat( const char* section, const char* entry, float value );
+	void SetString( const char* section, const char* entry, const char* value );
 
-	void SetInt( const fc::string& entry, int value );
-	void SetBool( const fc::string& entry, bool value );
-	void SetFloat( const fc::string& entry, float value );
-	void SetString( const fc::string& entry, const fc::string& value );
+	void SetInt( const char* entry, int value );
+	void SetBool( const char* entry, bool value );
+	void SetFloat( const char* entry, float value );
+	void SetString( const char* entry, const char* value );
 
-	int GetInt( const fc::string& section, const fc::string& entry, int value );
-	bool GetBool( const fc::string& section, const fc::string& entry, bool value );
-	float GetFloat( const fc::string& section, const fc::string& entry, float value );
-	const fc::string& GetString( const fc::string& section, const fc::string& entry, const fc::string& value );
+	int GetInt( const char* section, const char* entry, int value );
+	bool GetBool( const char* section, const char* entry, bool value );
+	float GetFloat( const char* section, const char* entry, float value );
+	const char* GetString( const char* section, const char* entry, const char* value );
 
-	int GetInt( const fc::string& entry, int value );
-	bool GetBool( const fc::string& entry, bool value );
-	float GetFloat( const fc::string& entry, float value );
-	const fc::string& GetString( const fc::string& entry, const fc::string& value );
+	int GetInt( const char* entry, int value );
+	bool GetBool( const char* entry, bool value );
+	float GetFloat( const char* entry, float value );
+	const char* GetString( const char* entry, const char* value );
 
 protected:
 	// these pointers are not long living.
-	ConfigSection* Find( const fc::string& section );
-	ConfigSection* AddSection( const fc::string& section );
+	ConfigSection* Find( const char* section );
+	ConfigSection* AddSection( const char* section );
 
 	fc::string	m_filename;
-	vec_type	m_configurations;
 	fc::string	m_currentSection;
+	vec_type	m_configurations;
 };
 
 

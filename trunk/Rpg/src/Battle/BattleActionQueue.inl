@@ -65,13 +65,6 @@ void BattleActionQueue::ClearActions()
 }
 
 
-void BattleActionQueue::CancelAction( size_t index )
-{
-	if( index < m_queuedActions.size() )
-		m_queuedActions[index]->Cancel();
-}
-
-
 void BattleActionQueue::CancelAction( BattleAction* action )
 {
 	action->Cancel();
