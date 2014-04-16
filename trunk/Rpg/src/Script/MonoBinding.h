@@ -28,3 +28,20 @@ protected:
 
 };
 
+
+
+#define SAFE_CALL(object, function) \
+	if(object){ \
+		object->function; \
+	} else { \
+		Log("SAFE_CALL error: trying to reference a null " #object " pointer!\n"); \
+	}
+
+#define SAFE_CALL_RETURN(object, function, retval) \
+	if(object){ \
+		return object->function; \
+	} else { \
+		Log("SAFE_CALL error: trying to reference a null " #object " pointer!\n"); \
+	} \
+	return retval
+

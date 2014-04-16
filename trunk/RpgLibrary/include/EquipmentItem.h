@@ -24,10 +24,9 @@ struct RPG_API EquipmentItem : public Item
 
 	Attributes	attributes;
 
+	virtual bool HasAttributes() const { return true; }
 	virtual Attributes& GetAttributes() { return attributes; }
 	virtual const Attributes& GetAttributes() const { return attributes; }
-
-	static void RegisterObject();
 
 	void SerializeXml( AttributeWriter* f );
 	void DeserializeXml( AttributeReader* f );

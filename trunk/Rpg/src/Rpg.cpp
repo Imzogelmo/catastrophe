@@ -649,24 +649,30 @@ void UntileCharacters( fc::string directory, fc::string outDirectory )
 #include <Catastrophe/IO/File.h>
 #include <fc/static_vector.h>
 #include <fc/tokenizer.h>
+#include <fc/string.h>
 
 void GenCWrappers()
 {
 	GenCWrapper(
-		"../Engine/include/Catastrophe/Graphics/SpriteAnimation.h",
-		"spriteAnimation.h",
-		"SpriteAnimation_",
-		" SpriteAnimation* self");
+		"../Engine/include/Catastrophe/Graphics/Font.h",
+		"Font.h",
+		"Font_",
+		" Font* self");
+	GenCWrapper(
+		"../Engine/include/Catastrophe/Math/Matrix.h",
+		"Matrix.h",
+		"Matrix_",
+		" Matrix* self");
 	GenCWrapper(
 		"../Engine/include/Catastrophe/Gui/Widget.h",
 		"widget.h",
 		"Widget_",
 		" Widget* self");
-	GenCWrapper(
-		"C:/C++/include/fc/vector.h",
-		"vector.h",
-		"Vector_",
-		" Vector* self");
+	/*GenCWrapper(
+		"C:/C++/include/fc/basic_string.h",
+		"basic_string.h",
+		"basic_string_",
+		" basic_string* self");*/
 
 }
 
@@ -679,11 +685,18 @@ void GenCWrapper( fc::string filename, fc::string outFn, const char* prefixStr, 
 	FILE* out = fopen(outFn.c_str(), "wb");
 	File f(filename);
 	fc::string d;
-	fc::string str, e, h, getSet;
+	fc::string str, e, h, getSet, icall;
 	d.reserve(1024 * 1024);
 	str.reserve(1024 * 1024);
 	e.reserve(4024);
 	h.reserve(4024);
+
+	icall += "\n\nvoid MonoEngineBinding::Bind";
+	icall += prefixStr;
+	icall.pop_back(); //remove '_'
+	icall += "()\n{\n";
+
+	e += "\n#region internal calls\n";
 
 	fc::static_vector<fc::string, 16> strArray;
 
@@ -847,6 +860,8 @@ void GenCWrapper( fc::string filename, fc::string outFn, const char* prefixStr, 
 
 		if( funcDecl.size() > 3 )
 		{
+			getSet += "public ";
+
 			if( funcDecl[0] == 'G' && funcDecl[1] == 'e' && funcDecl[2] == 't' )
 			{
 				fc::string temp( funcDecl.begin() + 3, funcDecl.end() );
@@ -915,6 +930,7 @@ void GenCWrapper( fc::string filename, fc::string outFn, const char* prefixStr, 
 		h += s;
 		h += ";\n";
 
+		s.insert(pos, "MonoEngineBinding::");
 
 		s += "\n{\n\t";
 		//s += "if( self )\n\t\t";
@@ -951,6 +967,11 @@ void GenCWrapper( fc::string filename, fc::string outFn, const char* prefixStr, 
 
 		fwrite(s.c_str(), 1, s.size(), out);
 
+		icall += "\tAddInternalCall(\"";
+		icall += funcDecl;
+		icall += "\", ";
+		icall += prefixStr + funcDecl + ");\n";
+
 	}
 
 	int len = strlen(classPtr);
@@ -958,11 +979,15 @@ void GenCWrapper( fc::string filename, fc::string outFn, const char* prefixStr, 
 	while ( (fp = e.find(classPtr)) != fc::string::npos )
 		e.replace(fp, len, "IntPtr ptr");
 
+	icall += "}\n\n\n";
+	e += "#endregion\n";
 
+	fwrite(icall.c_str(), 1, icall.size(), out);
 	fwrite(h.c_str(), 1, h.size(), out);
 	fwrite(getSet.c_str(), 1, getSet.size(), out);
 	fwrite(e.c_str(), 1, e.size(), out);
 
+	fclose(out);
 }
 
 

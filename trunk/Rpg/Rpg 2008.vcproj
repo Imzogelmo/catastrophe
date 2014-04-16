@@ -59,8 +59,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ce-core-d.lib ce-system-d.lib ce-gui-d.lib libgc.lib eglib.lib libmonoutils.lib libmonoruntime.lib mono-2.0.lib rpglibd.lib glfwd.lib glew32sd.lib OpenGL32.lib glu32.lib ws2_32.lib winmm.lib psapi.lib mswsock.lib version.lib"
-				AdditionalLibraryDirectories="../Engine/lib;..\RpgLibrary\lib;&quot;C:\C++\lib\Mono 3.2.6 2008\Release&quot;"
+				AdditionalDependencies="ce-core-d.lib ce-system-d.lib ce-gui-d.lib mono-2.0.lib rpglibd.lib glfwd.lib glew32sd.lib OpenGL32.lib glu32.lib"
+				AdditionalLibraryDirectories="../Engine/lib;..\RpgLibrary\lib;&quot;C:\C++\lib\Mono 3.2.6 2008\Debug&quot;"
 				IgnoreDefaultLibraryNames="LIBCMT; LIBCMTD;"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
@@ -342,6 +342,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\src\Script\EngineBindings\AnimatedSpriteSet.inl"
+						>
+					</File>
+					<File
 						RelativePath=".\src\Script\EngineBindings\Collision.inl"
 						>
 					</File>
@@ -350,11 +354,19 @@
 						>
 					</File>
 					<File
+						RelativePath=".\src\Script\EngineBindings\Font.inl"
+						>
+					</File>
+					<File
 						RelativePath=".\src\Script\EngineBindings\Input.inl"
 						>
 					</File>
 					<File
 						RelativePath=".\src\Script\EngineBindings\Mathf.inl"
+						>
+					</File>
+					<File
+						RelativePath=".\src\Script\EngineBindings\Matrix4.inl"
 						>
 					</File>
 					<File
@@ -398,6 +410,10 @@
 						>
 					</File>
 				</Filter>
+			</Filter>
+			<Filter
+				Name="Core"
+				>
 			</Filter>
 		</Filter>
 		<Filter
@@ -596,6 +612,10 @@
 					RelativePath=".\src\Party.h"
 					>
 				</File>
+			</Filter>
+			<Filter
+				Name="Core"
+				>
 			</Filter>
 		</Filter>
 		<Filter

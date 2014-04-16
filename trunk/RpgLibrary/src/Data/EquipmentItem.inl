@@ -22,11 +22,6 @@ EquipmentItem::EquipmentItem() :
 }
 
 
-void EquipmentItem::RegisterObject()
-{
-}
-
-
 void EquipmentItem::SerializeXml( AttributeWriter* f )
 {
 	Item::SerializeXml(f);

@@ -20,51 +20,57 @@ Equipment::Equipment()
 }
 
 
-void Equipment::Equip( Item* item, Inventory* source )
+void Equipment::Equip( Item* item, Inventory* sourceInventory )
 {
+	if( !item )
+		return;
+
 	m_items.push_back(item);
 	m_combinedAttributes += item->GetAttributes();
 
-	if(source != 0)
+	if(sourceInventory != 0)
 	{
-		source->Remove( item, 1 );
+		sourceInventory->Remove( item, 1 );
 	}
 }
 
 
-void Equipment::Unequip( const Item* item, Inventory* dest )
+void Equipment::Unequip( Item* item, Inventory* destinationInventory )
 {
-	size_t index = 0;
-	if( Find(item, index) )
+	if( !item )
+		return;
+
+	int index = Find(item);
+	if( index >= 0 )
 	{
-		Unequip(index, dest);
+		Unequip(index, destinationInventory);
 	}
 }
 
 
-void Equipment::Unequip( size_t index, Inventory* dest )
+void Equipment::Unequip( int index, Inventory* destinationInventory )
 {
 	if( index >= m_items.size() )
 		return;
 
 	Item* item = m_items[index];
-	if(dest != 0)
+	if(destinationInventory != 0)
 	{
-		dest->Add( item, 1 );
+		destinationInventory->Add( item, 1 );
 	}
 
 	m_items.erase_at(index);
-	m_combinedAttributes -= item->GetAttributes();
+	RecalculateCombinedAttributes();
 }
 
 
-void Equipment::UnequipAll( Inventory* dest )
+void Equipment::UnequipAll( Inventory* destinationInventory )
 {
-	if(dest != 0)
+	if(destinationInventory != 0)
 	{
 		for( vec_type::iterator it = m_items.begin(); it != m_items.end(); ++it )
 		{
-			dest->Add(*it);
+			destinationInventory->Add(*it);
 		}
 	}
 
@@ -73,39 +79,51 @@ void Equipment::UnequipAll( Inventory* dest )
 }
 
 
-bool Equipment::IsEquipped( const Item* item ) const
+bool Equipment::IsEquipped( Item* item ) const
 {
-	size_t item_index;
-	return Find(item, item_index);
+	return Find(item) >= 0;
 }
 
 
-bool Equipment::Find( const Item* item, size_t &item_index ) const
+int Equipment::Find( Item* item ) const
 {
 	vec_type::const_iterator it = fc::find( m_items.begin(), m_items.end(), item );
 	if( it != m_items.end() )
+		return (int)(it - m_items.begin());
+
+	return -1;
+}
+
+
+bool Equipment::IsItemOfTypeEquipped( int itemType ) const
+{
+	return (GetItemIndexOfTypeEquipped(itemType) != -1);
+}
+
+
+int Equipment::GetItemIndexOfTypeEquipped( int itemType ) const
+{
+	for( vec_type::const_iterator it = m_items.begin(); it != m_items.end(); ++it )
 	{
-		item_index = size_t(it - m_items.begin());
-		return true;
+		if( (*it)->type == itemType )
+			return int(it - m_items.begin());
 	}
 
-	return false;
+	return -1;
 }
 
 
-Item* Equipment::GetItem( size_t index )
+Item* Equipment::GetItemOfTypeEquipped( int itemType ) const
 {
-	if( index < m_items.size() )
-		return m_items[index];
-
-	return 0;
+	int i = GetItemIndexOfTypeEquipped(itemType);
+	return ( i != -1 ? m_items[i] : 0);
 }
 
 
-const Item* Equipment::GetItem( size_t index ) const
+Item* Equipment::GetItem( int index ) const
 {
 	if( index < m_items.size() )
-		return m_items[index];
+		return const_cast<Item*>(m_items[index]);
 
 	return 0;
 }
@@ -116,7 +134,9 @@ void Equipment::RecalculateCombinedAttributes()
 	m_combinedAttributes = Attributes();
 	for( vec_type::iterator it = m_items.begin(); it != m_items.end(); ++it )
 	{
-		m_combinedAttributes += (*it)->GetAttributes();
+		Item* item = *it;
+		if( item && item->HasAttributes() )
+			m_combinedAttributes += item->GetAttributes();
 	}
 }
 

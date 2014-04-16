@@ -63,10 +63,9 @@ struct RPG_API Item
 
 	Item();
 
-	virtual Attributes& GetAttributes() { return m_static_attributes; }
-	virtual const Attributes& GetAttributes() const { return m_static_attributes; }
-
-	static void RegisterObject();
+	virtual bool HasAttributes() const { return false; }
+	virtual Attributes& GetAttributes() { return m_staticAttributes; }
+	virtual const Attributes& GetAttributes() const { return m_staticAttributes; }
 
 	void SerializeXml( AttributeWriter* f );
 	void DeserializeXml( AttributeReader* f );
@@ -74,7 +73,7 @@ struct RPG_API Item
 	int GetMemoryUsage() const;
 
 protected:
-	static Attributes m_static_attributes;
+	static Attributes m_staticAttributes;
 
 };
 

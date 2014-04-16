@@ -157,6 +157,8 @@ void MonoScriptEngine::BindFramework()
 	MonoEngineBinding::BindVector2();
 	MonoEngineBinding::BindCollision();
 	MonoEngineBinding::BindTexture();
+	MonoEngineBinding::BindSprite();
+	//MonoEngineBinding::BindAnimatedSprite();
 	MonoEngineBinding::BindSpriteBatch();
 	MonoEngineBinding::BindVertexArray();
 	MonoEngineBinding::BindInput();
