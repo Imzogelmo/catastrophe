@@ -56,8 +56,8 @@ void RpgLibInit()
 
 	// register all object types (order does not matter).
 	Attributes::RegisterObject();
-	Item::RegisterObject();
-	EquipmentItem::RegisterObject();
+	//Item::RegisterObject();
+	//EquipmentItem::RegisterObject();
 	MonsterData::RegisterObject();
 	MonsterGroup::RegisterObject();
 	MonsterTroop::RegisterObject();

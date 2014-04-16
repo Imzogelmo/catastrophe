@@ -42,6 +42,25 @@ public:
 	static Vector2 Vector2_Rotated( Vector2* self, float angle );
 	static Vector2 Vector2_RotatedOrigin( Vector2* self, float angle, Vector2 origin );
 
+	// Matrix4
+	static float Matrix_Determinant( Matrix* self );
+	static Matrix Matrix_Transpose( Matrix* self );
+	static Matrix Matrix_Inverse( Matrix* self );
+	static float Matrix_GetIndex( Matrix* self, int index );
+	static void Matrix_SetIndex( Matrix* self, int index, float value );
+	static Matrix Matrix_Lerp( Matrix* self, Matrix* a, Matrix* b, float t );
+	static void Matrix_Multiply( Matrix* self, Matrix* a, Matrix* b );
+	static Matrix Matrix_CreateLookAt( Matrix* self, Vector3 camera, Vector3 target, Vector3 up );
+	static Matrix Matrix_CreateOrthographic( Matrix* self, float left, float right, float bottom, float top, float zNear, float zFar );
+	static Matrix Matrix_CreatePerspective( Matrix* self, float fov, float aspect, float up, float zNear, float zFar );
+	static Matrix Matrix_CreateRotation( Matrix* self, Vector3 rotation );
+	static Matrix Matrix_CreateTransformation( Matrix* self, Vector3 pos, float rotation, Vector3 scale, Vector3 origin );
+	static Matrix Matrix_CreateTranslation( Matrix* self, Vector3 pos );
+	static Matrix Matrix_CreateScale( Matrix* self, Vector3 scale );
+	static Matrix Matrix_CreateRotationX( Matrix* self, float radians );
+	static Matrix Matrix_CreateRotationY( Matrix* self, float radians );
+	static Matrix Matrix_CreateRotationZ( Matrix* self, float radians );
+
 	
 	// Collision
 	static float Collision_DistanceToLineSegment2D( Vector2 a, Vector2 b, Vector2 point );
@@ -51,9 +70,9 @@ public:
 	// Input
 	static int Keyboard_GetKeyState( int key );
 	static int Joystick_GetButtonState( int joystickID, int button );
-	static float MonoEngineBinding::Joystick_GetAxis( int joystickID, int axis );
-	static Vector2 MonoEngineBinding::Joystick_GetAnalog( int joystickID, int analog );
-	static int MonoEngineBinding::Joystick_GetDPad( int joystickID );
+	static float Joystick_GetAxis( int joystickID, int axis );
+	static Vector2 Joystick_GetAnalog( int joystickID, int analog );
+	static int Joystick_GetDPad( int joystickID );
 
 	// Texture
 	static Texture* Texture_LoadFromFile( MonoString* str );
@@ -67,10 +86,21 @@ public:
 	static Vector2 Texture_CalculateUV( Texture* texture, Point* point );
 	static Rectf Texture_CalculateUVRect( Texture* texture, Rect* rect );
 
+	// Font
+	static Font* Font_LoadFromFile( MonoString* str );
+	static void Font_Dispose( Font* self );
+	static void Font_SetAdvance( Font* self, int advance );
+	static void Font_SetLineHeight( Font* self, int height );
+	static int Font_GetTextWidth( Font* self, MonoString* str );
+	static Texture* Font_GetTexture( Font* self );
+	static int Font_GetLineHeight( Font* self );
+	static Glyph Font_GetGlyph( Font* self, byte i );
+	static void Font_SetGlyph( Font* self, byte i, Glyph* glyph );
 
 	// Sprite
-	static void Sprite_Create( Sprite* sprite );
+	static Sprite* Sprite_Create();
 	static void Sprite_Dispose( Sprite* sprite );
+	static void Sprite_SetTexture( Sprite* sprite, Texture* texture );
 	static Vector2 Sprite_GetSize( Sprite* sprite );
 	static void Sprite_SetSize( Sprite* sprite, Vector2 value );
 	static Vector2 Sprite_GetScale( Sprite* sprite );
@@ -88,7 +118,7 @@ public:
 
 
 	// AnimatedSprite
-	static void AnimatedSprite_Create( AnimatedSprite* sprite );
+	static AnimatedSprite* AnimatedSprite_Create();
 	static void AnimatedSprite_Dispose( AnimatedSprite* sprite );
 	static void AnimatedSprite_Update( AnimatedSprite* sprite );
 	static Rectf AnimatedSprite_GetUVRect( AnimatedSprite* sprite );
@@ -101,6 +131,25 @@ public:
 	static void AnimatedSprite_SetCurrentFrame( AnimatedSprite* sprite, int value );
 	static float AnimatedSprite_GetAnimationSpeed( AnimatedSprite* sprite );
 	static void AnimatedSprite_SetAnimationSpeed( AnimatedSprite* sprite, float value );
+
+
+	// AnimatedSpriteSet
+	static AnimatedSpriteSet* AnimatedSpriteSet_Create();
+	static void AnimatedSpriteSet_Dispose( AnimatedSpriteSet* animatedSpriteSet );
+	static void AnimatedSpriteSet_AddAnimation( AnimatedSpriteSet* animatedSpriteSet, SpriteAnimation* spriteAnimation );
+	static void AnimatedSpriteSet_InsertAnimation( AnimatedSpriteSet* animatedSpriteSet, SpriteAnimation* spriteAnimation, int index );
+	static void AnimatedSpriteSet_RemoveAnimation( AnimatedSpriteSet* animatedSpriteSet, int index );
+	static void AnimatedSpriteSet_SetTexture( AnimatedSpriteSet* animatedSpriteSet, Texture* texture );
+	static void AnimatedSpriteSet_SetCurrentAnimation( AnimatedSpriteSet* animatedSpriteSet, int index );
+	static void AnimatedSpriteSet_Reserve( AnimatedSpriteSet* animatedSpriteSet, int capacity );
+	static void AnimatedSpriteSet_Resize( AnimatedSpriteSet* animatedSpriteSet, int newSize );
+	static void AnimatedSpriteSet_Update( AnimatedSpriteSet* animatedSpriteSet );
+	static int AnimatedSpriteSet_GetNumAnimations( AnimatedSpriteSet* animatedSpriteSet );
+	static int AnimatedSpriteSet_GetCurrentAnimationIndex( AnimatedSpriteSet* animatedSpriteSet );
+	static Texture* AnimatedSpriteSet_GetTexture( AnimatedSpriteSet* animatedSpriteSet );
+	static SpriteAnimation AnimatedSpriteSet_GetAnimation( AnimatedSpriteSet* animatedSpriteSet, int index );
+	static SpriteAnimation AnimatedSpriteSet_GetCurrentAnimation( AnimatedSpriteSet* animatedSpriteSet );
+	//static vec_type AnimatedSpriteSet_GetAnimations( AnimatedSpriteSet* animatedSpriteSet );
 
 
 	// SpriteBatch
@@ -128,10 +177,13 @@ public:
 
 	static void BindMathf();
 	static void BindVector2();
+	static void BindMatrix4();
 	static void BindCollision();
 	static void BindTexture();
+	static void BindFont();
 	static void BindSprite();
 	static void BindAnimatedSprite();
+	static void BindAnimatedSpriteSet();
 	static void BindSpriteBatch();
 	static void BindVertexArray();
 	static void BindStaticString();

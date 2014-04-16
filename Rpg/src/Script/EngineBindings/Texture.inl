@@ -106,7 +106,7 @@ void MonoEngineBinding::BindTexture()
 {
 	SetNamespace("CatastropheEngine.Graphics.Texture::");
 
-	AddInternalCall("LoadTextureFromFile", Texture_LoadFromFile);
+	AddInternalCall("LoadFromFile", Texture_LoadFromFile);
 	AddInternalCall("Internal_CreateTexture", Texture_Create);
 	AddInternalCall("InternalDisposeTexture", Texture_Dispose);
 	//mono_add_internal_call("Internal_AddRef", Texture_AddRef);

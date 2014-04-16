@@ -18,10 +18,10 @@
 #include "Script/MonoEngineBinding.h"
 
 
-void MonoEngineBinding::AnimatedSprite_Create( AnimatedSprite* sprite )
+AnimatedSprite* MonoEngineBinding::AnimatedSprite_Create()
 {
-	if( !sprite )
-		sprite = new AnimatedSprite();
+	AnimatedSprite* animatedSprite = new AnimatedSprite();
+	return animatedSprite;
 }
 
 

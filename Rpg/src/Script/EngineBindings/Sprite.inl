@@ -22,10 +22,9 @@
 //
 // Non-animated sprite class.
 
-void MonoEngineBinding::Sprite_Create( Sprite* sprite )
+Sprite* MonoEngineBinding::Sprite_Create()
 {
-	if( !sprite )
-		sprite = new Sprite();
+	return new Sprite();
 }
 
 
@@ -36,6 +35,13 @@ void MonoEngineBinding::Sprite_Dispose( Sprite* sprite )
 		delete sprite;
 		sprite = 0;
 	}
+}
+
+
+void MonoEngineBinding::Sprite_SetTexture( Sprite* sprite, Texture* texture )
+{
+	if( sprite && texture )
+		sprite->SetTexture(texture);
 }
 
 
@@ -143,7 +149,24 @@ void MonoEngineBinding::BindSprite()
 	SetNamespace("CatastropheEngine.Graphics.Sprite::");
 	AddInternalCall("CreateSprite", Sprite_Create);
 	AddInternalCall("DisposeSprite", Sprite_Dispose);
+	AddInternalCall("SetTexture", Sprite_SetTexture);
 
+	AddInternalCall("GetSize", Sprite_GetSize);
+	AddInternalCall("SetSize", Sprite_SetSize);
+	AddInternalCall("GetScale", Sprite_GetScale);
+	AddInternalCall("SetScale", Sprite_SetScale);
+	AddInternalCall("GetColor", Sprite_GetColor);
+	AddInternalCall("SetColor", Sprite_SetColor);
+	AddInternalCall("GetBlendMode", Sprite_GetBlendMode);
+	AddInternalCall("SetBlendMode", Sprite_SetBlendMode);
+	AddInternalCall("GetAngle", Sprite_GetAngle);
+	AddInternalCall("SetAngle", Sprite_GetAngle);
+	AddInternalCall("GetUVRect", Sprite_GetUVRect);
+	AddInternalCall("SetUVRect", Sprite_SetUVRect);
+	AddInternalCall("GetSourceRect", Sprite_GetSourceRect);
+	AddInternalCall("SetSourceRect", Sprite_SetSourceRect);
+
+	/*
 	// NativeSpriteMethods
 	SetNamespace("CatastropheEngine.Graphics.NativeSpriteMethods::");
 	AddInternalCall("GetSize", Sprite_GetSize);
@@ -152,13 +175,13 @@ void MonoEngineBinding::BindSprite()
 	AddInternalCall("SetScale", Sprite_SetScale);
 	AddInternalCall("GetColor", Sprite_GetColor);
 	AddInternalCall("SetColor", Sprite_SetColor);
-	AddInternalCall("GetBlendmode", Sprite_GetBlendMode);
-	AddInternalCall("SetBlendmode", Sprite_SetBlendMode);
+	AddInternalCall("GetBlendMode", Sprite_GetBlendMode);
+	AddInternalCall("SetBlendMode", Sprite_SetBlendMode);
 	AddInternalCall("GetAngle", Sprite_GetAngle);
 	AddInternalCall("SetAngle", Sprite_GetAngle);
 	AddInternalCall("GetUVRect", Sprite_GetUVRect);
 	AddInternalCall("SetUVRect", Sprite_SetUVRect);
 	AddInternalCall("GetSourceRect", Sprite_GetSourceRect);
 	AddInternalCall("SetSourceRect", Sprite_SetSourceRect);
-
+	*/
 }

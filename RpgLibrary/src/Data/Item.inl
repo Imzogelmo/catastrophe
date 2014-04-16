@@ -14,7 +14,7 @@
 #include "Item.h"
 #include "AttributeSerializer.h"
 
-Attributes Item::m_static_attributes = Attributes();
+Attributes Item::m_staticAttributes = Attributes();
 
 
 Item::Item() :
@@ -26,23 +26,6 @@ Item::Item() :
 	id(0),
 	price(1)
 {
-}
-
-
-void Item::RegisterObject()
-{
-	/*
-	REGISTER_ATTRIBUTE_FACTORY_TYPE(Item);
-	REGISTER_ATTRIBUTE(Item, VAR_TYPE_STRING, "name", name);
-	REGISTER_ATTRIBUTE(Item, VAR_TYPE_STRING, "script", script);
-	REGISTER_ATTRIBUTE(Item, VAR_TYPE_STRING, "description", description);
-
-	PUSH_ATTRIBUTE_NODE(Item, "Data");
-	REGISTER_ATTRIBUTE(Item, VAR_TYPE_INT, "type", type);
-	REGISTER_ATTRIBUTE(Item, VAR_TYPE_INT, "subtype", subtype);
-	REGISTER_ATTRIBUTE(Item, VAR_TYPE_INT, "price", price);
-	POP_ATTRIBUTE_NODE(Item);
-	*/
 }
 
 

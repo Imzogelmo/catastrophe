@@ -33,7 +33,6 @@ public:
 
 	void Add( const InventoryItem& inventoryItem );
 	void Add( Item* item, int count = 1 );
-	void Add( int id, int count = 1 );
 
 	void Remove( Item* item, int count = 1 );
 	void Remove( int id, int count = 1 );
@@ -43,7 +42,7 @@ public:
 	void Unique();
 	void Swap( int first, int second );
 
-	/// Add the contents
+	/// Add the contents of another Inventory to this one.
 	void Splice( Inventory& other );
 	void Splice( Inventory& other, int index );
 

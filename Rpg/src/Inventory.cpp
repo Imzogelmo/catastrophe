@@ -62,13 +62,6 @@ void Inventory::Add( const InventoryItem& inventoryItem )
 }
 
 
-void Inventory::Add( int id, int count )
-{
-	Item* item = GetDatabase()->GetItem(id);
-	Add( item, count );
-}
-
-
 void Inventory::Add( Item* item, int count )
 {
 	if( !item )
@@ -192,6 +185,9 @@ void Inventory::Swap( int first, int second )
 
 void Inventory::Splice( Inventory& other )
 {
+	if( this == &other )
+		return;
+
 	for( vec_type::iterator it = other.m_items.begin(); it != other.m_items.end(); ++it )
 	{
 		if( it->IsValid() )
@@ -204,6 +200,9 @@ void Inventory::Splice( Inventory& other )
 
 void Inventory::Splice( Inventory& other, int index )
 {
+	if( this == &other )
+		return;
+
 	if( index < other.Size() )
 	{
 		Add( other.m_items[index] );
