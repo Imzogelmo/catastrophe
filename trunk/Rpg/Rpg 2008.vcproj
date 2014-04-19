@@ -401,6 +401,10 @@
 						RelativePath=".\src\Script\EngineBindings\VertexArray.inl"
 						>
 					</File>
+					<Filter
+						Name="UI"
+						>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="RpgBindings"
