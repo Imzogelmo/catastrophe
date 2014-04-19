@@ -31,4 +31,5 @@
 #include "EngineBindings/StaticString.inl"
 #include "EngineBindings/Input.inl"
 
+#include "EngineBindings/UI/UIElement.inl"
 

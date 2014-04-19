@@ -37,8 +37,9 @@ public:
 	GameSettings() {}
 
 
-	int	display_resolution_x;
-	int	display_resolution_y;
+	int	displayResolutionX;
+	int	displayResolutionY;
+	int frameRate;
 
 	float battleSpeed;
 };

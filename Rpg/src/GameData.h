@@ -20,12 +20,12 @@
 #include "Party.h"
 
 
+
 class GameData
 {
 public:
-	// todo: Custom allocators for speed and fragmentation.
 	typedef fc::vector<Actor*>				actor_vec_type;
-	typedef fc::fixed_vector<Party*, 16>	party_vec_type;
+	typedef fc::static_vector<Party*, 16>	party_vec_type;
 
 	GameData();
 	~GameData();

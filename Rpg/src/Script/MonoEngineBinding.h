@@ -15,6 +15,8 @@
 #include "Common.h"
 #include "MonoBinding.h"
 
+class Widget;
+
 
 class MonoEngineBinding : public MonoBinding
 {
@@ -92,6 +94,7 @@ public:
 	static void Font_SetAdvance( Font* self, int advance );
 	static void Font_SetLineHeight( Font* self, int height );
 	static int Font_GetTextWidth( Font* self, MonoString* str );
+	static int Font_GetStaticTextWidth( Font* font, const char* str );
 	static Texture* Font_GetTexture( Font* self );
 	static int Font_GetLineHeight( Font* self );
 	static Glyph Font_GetGlyph( Font* self, byte i );
@@ -174,6 +177,51 @@ public:
 	static MonoString* StaticString_ToString( const char* ptr );
 
 
+	// UI
+	static void Widget_SetPosition( Widget* self, Vector2 position );
+	static void Widget_SetX( Widget* self, float x );
+	static void Widget_SetY( Widget* self, float y );
+	static void Widget_SetSize( Widget* self, Vector2 size );
+	static void Widget_SetWidth( Widget* self, float width );
+	static void Widget_SetHeight( Widget* self, float height );
+	static void Widget_SetDimensions( Widget* self, Rectf rect );
+	static void Widget_SetColor( Widget* self, Color color );
+	static void Widget_SetBlendMode( Widget* self, BlendMode blendMode );
+	static void Widget_SetProperty( Widget* self, int prop, bool enable );
+	static void Widget_AddChild( Widget* self, Widget* element );
+	static void Widget_InsertChild( Widget* self, int index, Widget* element );
+	static void Widget_RemoveChild( Widget* self, Widget* element );
+	static void Widget_RemoveAllChildren( Widget* self );
+	static void Widget_Remove( Widget* self );
+	static void Widget_SetParent( Widget* self, Widget* parent );
+	static float Widget_GetX( Widget* self );
+	static float Widget_GetY( Widget* self );
+	static Vector2 Widget_GetPosition( Widget* self );
+	static Vector2 Widget_GetSize( Widget* self );
+	static float Widget_GetWidth( Widget* self );
+	static float Widget_GetHeight( Widget* self );
+	static Rectf Widget_GetDimensions( Widget* self );
+	static Color Widget_GetColor( Widget* self );
+	static BlendMode Widget_GetBlendMode( Widget* self );
+	static Vector2 Widget_GetScreenPosition( Widget* self );
+	static bool Widget_IsRoot( Widget* self );
+	static bool Widget_GetProperty( Widget* self, int prop );
+	static int Widget_GetNumChildren( Widget* self, bool recurse );
+	static Widget* Widget_GetChild( Widget* self, int index );
+	static bool Widget_HasChild( Widget* self, Widget* element );
+	static MonoArray* Widget_GetChildren( Widget* self );
+	static Widget* Widget_GetParent( Widget* self );
+	static Widget* Widget_GetRoot( Widget* self );
+	static Rectf Widget_GetBoundingRect( Widget* self, bool recurse );
+	static void Widget_AddRef( Widget* self );
+	static void Widget_ReleaseRef( Widget* self );
+
+	// Label
+
+
+	// Frame
+	static void Frame_SetFromSprite( Frame* self, Sprite* sprite );
+
 
 	static void BindMathf();
 	static void BindVector2();
@@ -188,6 +236,8 @@ public:
 	static void BindVertexArray();
 	static void BindStaticString();
 	static void BindInput();
+
+	static void BindWidget();
 
 };
 

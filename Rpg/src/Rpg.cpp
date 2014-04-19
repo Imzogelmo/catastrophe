@@ -654,20 +654,20 @@ void UntileCharacters( fc::string directory, fc::string outDirectory )
 void GenCWrappers()
 {
 	GenCWrapper(
-		"../Engine/include/Catastrophe/Graphics/Font.h",
-		"Font.h",
-		"Font_",
-		" Font* self");
+		"../Engine/include/Catastrophe/Graphics/BackgroundImage.h",
+		"BackgroundImage.h",
+		"BackgroundImage_",
+		" BackgroundImage* self");
 	GenCWrapper(
-		"../Engine/include/Catastrophe/Math/Matrix.h",
-		"Matrix.h",
-		"Matrix_",
-		" Matrix* self");
+		"../Engine/include/Catastrophe/Gui/Label.h",
+		"Label.h",
+		"Label_",
+		" Label* self");
 	GenCWrapper(
-		"../Engine/include/Catastrophe/Gui/Widget.h",
-		"widget.h",
-		"Widget_",
-		" Widget* self");
+		"../Engine/include/Catastrophe/Gui/Icon.h",
+		"Icon.h",
+		"Icon_",
+		" Icon* self");
 	/*GenCWrapper(
 		"C:/C++/include/fc/basic_string.h",
 		"basic_string.h",
@@ -724,7 +724,7 @@ void GenCWrapper( fc::string filename, fc::string outFn, const char* prefixStr, 
 		else if( d[0] == '{' )
 		{
 			braceCount++;
-			continue;
+			//continue;
 		}
 
 		if( braceCount > 0 )
@@ -732,7 +732,7 @@ void GenCWrapper( fc::string filename, fc::string outFn, const char* prefixStr, 
 			if( d[0] == '}' )
 				braceCount--;
 
-			continue;
+			//continue;
 		}
 
 		size_t pos = d.find_first_not_of("\n\t ");
@@ -939,9 +939,9 @@ void GenCWrapper( fc::string filename, fc::string outFn, const char* prefixStr, 
 
 
 		if( isVoid )
-			s += "CSFML_CALL(";
+			s += "SAFE_CALL(";
 		else
-			s += "CSFML_CALL_RETURN(";
+			s += "SAFE_CALL_RETURN(";
 
 		s += "self, ";
 		s += funcDecl;

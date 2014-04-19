@@ -26,16 +26,24 @@ GameData::GameData() :
 
 GameData::~GameData()
 {
+	Clear();
 }
 
 
 void GameData::Clear()
 {
-	//todo: free memory
+	for( it = m_characterActors.begin(); it != m_characterActors.end(); ++it )
+		delete *it;
+
+	for( it = m_monsterActors.begin(); it != m_monsterActors.end(); ++it )
+		delete *it;
+
+	for( it = m_partyList.begin(); it != m_partyList.end(); ++it )
+		delete *it;
+
 	m_partyList.clear();
 	m_characterActors.clear();
 	m_monsterActors.clear();
-
 	m_activeParty = 0;
 }
 
@@ -119,8 +127,12 @@ Actor* GameData::GetMonsterActorById( int id )
 
 int GameData::CreateParty()
 {
+	if( !m_partyList.full() )
+		return -1;
+
 	int id = (int)m_partyList.size();
 	m_partyList.push_back( new Party() );
+
 	return id;
 }
 
@@ -132,7 +144,10 @@ int GameData::RemoveParty( int id )
 
 	if( (size_t)id < m_partyList.size() )
 	{
-		m_partyList.erase_at(id); //todo: free memory
+		Party* partyToRemove = m_partyList[id];
+		delete partyToRemove;
+
+		m_partyList.erase_at(id);
 		if( id <= m_activeParty )
 			m_activeParty--;
 	}
