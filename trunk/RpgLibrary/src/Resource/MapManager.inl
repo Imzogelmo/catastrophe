@@ -27,7 +27,7 @@ void MapManager::DisposeResource( void* p )
 }
 
 
-TileMap* MapManager::Load( const fc::string& filename, int* id  )
+TileMap* MapManager::Load( const String& filename, int* id  )
 {
 	TileMap* map = GetResource(filename, id);
 	if( map )

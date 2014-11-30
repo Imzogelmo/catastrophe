@@ -23,11 +23,14 @@
 #include "ResourceDirectory.inl"
 #include "ResourceManager.inl"
 #include "TextureManager.inl"
+#include "FontManager.inl"
+
 #include "TilesetManager.inl"
 #include "MapManager.inl"
 #include "ShaderObjectManager.inl"
 
 #include "TextureAsset.inl"
+#include "FontAsset.inl"
 #include "SpriteAsset.inl"
 #include "AnimatedSpriteAsset.inl"
 #include "AnimatedSpriteSetAsset.inl"
@@ -40,6 +43,7 @@
 
 ResourceDirectory*		g_resourceDirectory = 0;
 TextureManager*			g_textureManager = 0;
+FontManager*			g_fontManager = 0;
 TilesetManager*			g_tilesetManager = 0;
 MapManager*				g_mapManager = 0;
 ShaderObjectManager*	g_shaderObjectManager = 0;
@@ -50,6 +54,7 @@ void RpgLibInit()
 {
 	g_resourceDirectory = new ResourceDirectory();
 	g_textureManager = new TextureManager();
+	g_fontManager = new FontManager();
 	g_tilesetManager = new TilesetManager();
 	g_mapManager = new MapManager();
 	g_shaderObjectManager = new ShaderObjectManager();
@@ -59,8 +64,8 @@ void RpgLibInit()
 	//Item::RegisterObject();
 	//EquipmentItem::RegisterObject();
 	MonsterData::RegisterObject();
-	MonsterGroup::RegisterObject();
-	MonsterTroop::RegisterObject();
+	//MonsterGroup::RegisterObject();
+	//MonsterTroop::RegisterObject();
 	MonsterFormationCellData::RegisterObject();
 	MonsterFormation::RegisterObject();
 
@@ -73,39 +78,14 @@ void RpgLibInit()
 
 void RpgLibShutdown()
 {
-	delete g_resourceDirectory;
-	delete g_textureManager;
-	delete g_tilesetManager;
-	delete g_mapManager;
-	delete g_shaderObjectManager;
-
-	g_resourceDirectory = 0;
-	g_textureManager = 0;
-	g_tilesetManager = 0;
-	g_mapManager = 0;
-	g_shaderObjectManager = 0;
+	SAFE_DELETE(g_resourceDirectory);
+	SAFE_DELETE(g_textureManager);
+	SAFE_DELETE(g_fontManager);
+	SAFE_DELETE(g_tilesetManager);
+	SAFE_DELETE(g_mapManager);
+	SAFE_DELETE(g_shaderObjectManager);
 
 	ObjectAttributeSerializerFactory::GetInstance()->DeleteFactories();
 }
 
-
-
-
-void _test()
-{
-	Point p;
-	SerializeObject(0,p);
-	SerializeObject("test",0,p);
-
-	DeserializeObject(0,p);
-	DeserializeObject("test",0,p);
-
-	Rect r;
-	SerializeObject(0,r);
-	SerializeObject("test",0,r);
-
-	DeserializeObject(0,r);
-	DeserializeObject("test",0,r);
-
-}
 

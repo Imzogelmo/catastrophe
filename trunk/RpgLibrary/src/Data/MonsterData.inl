@@ -22,13 +22,14 @@ MonsterData::MonsterData() :
 	script(),
 	description(),
 	id(0),
-	portrait_id(0),
-	map_spriteset_id(0),
-	battle_spriteset_id(0),
+	portraitId(0),
+	mapSpritesetId(0),
+	battleSpritesetId(0),
 	lv(1),
 	exp(0),
 	gold(0),
-	attributes()
+	attributes(),
+	factors()
 {
 }
 
@@ -45,15 +46,15 @@ void MonsterData::RegisterObject()
 	REGISTER_ATTRIBUTE(MonsterData, VAR_TYPE_INT, "lv", lv);
 	REGISTER_ATTRIBUTE(MonsterData, VAR_TYPE_INT, "exp", exp);
 	REGISTER_ATTRIBUTE(MonsterData, VAR_TYPE_INT, "gold", gold);
-	REGISTER_ATTRIBUTE(MonsterData, VAR_TYPE_INT, "portrait_id", portrait_id);
-	REGISTER_ATTRIBUTE(MonsterData, VAR_TYPE_INT, "map_spriteset_id", map_spriteset_id);
-	REGISTER_ATTRIBUTE(MonsterData, VAR_TYPE_INT, "battle_spriteset_id", battle_spriteset_id);
+	REGISTER_ATTRIBUTE(MonsterData, VAR_TYPE_INT, "portraitId", portraitId);
+	REGISTER_ATTRIBUTE(MonsterData, VAR_TYPE_INT, "mapSpritesetId", mapSpritesetId);
+	REGISTER_ATTRIBUTE(MonsterData, VAR_TYPE_INT, "battleSpritesetId", battleSpritesetId);
 	POP_ATTRIBUTE_NODE(MonsterData);
 	*/
 }
 
 
-void MonsterData::SerializeXml( AttributeWriter* f )
+void MonsterData::Serialize( AttributeWriter* f )
 {
 	//SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
 	f->SetString("name", name.c_str());
@@ -64,18 +65,19 @@ void MonsterData::SerializeXml( AttributeWriter* f )
 	f->SetInt("lv", lv);
 	f->SetInt("exp", exp);
 	f->SetInt("gold", gold);
-	f->SetInt("portrait_id", portrait_id);
-	f->SetInt("map_spriteset_id", map_spriteset_id);
-	f->SetInt("battle_spriteset_id", battle_spriteset_id);
-	f->SetInt("terrain_id", default_background_id);
+	f->SetUShort("portraitId", portraitId);
+	f->SetUShort("mapSpritesetId", mapSpritesetId);
+	f->SetUShort("battleSpritesetId", battleSpritesetId);
+	f->SetUShort("terrain_id", backgroundId);
 	f->EndNode();
 
-	attributes.SerializeXml(f);
-	item_dropset.SerializeXml(f);
+	attributes.Serialize(f);
+	factors.Serialize(f);
+	itemDropset.Serialize(f);
 }
 
 
-void MonsterData::DeserializeXml( AttributeReader* f )
+void MonsterData::Deserialize( AttributeReader* f )
 {
 	//DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
 	name = f->GetString("name");
@@ -87,15 +89,16 @@ void MonsterData::DeserializeXml( AttributeReader* f )
 		lv = f->GetInt("lv", lv);
 		exp = f->GetInt("exp", exp);
 		gold = f->GetInt("gold", gold);
-		portrait_id = f->GetInt("portrait_id", portrait_id);
-		map_spriteset_id = f->GetInt("map_spriteset_id", map_spriteset_id);
-		battle_spriteset_id = f->GetInt("battle_spriteset_id", battle_spriteset_id);
-		default_background_id = f->GetInt("terrain_id", default_background_id);
+		portraitId = f->GetUShort("portraitId", portraitId);
+		mapSpritesetId = f->GetUShort("mapSpritesetId", mapSpritesetId);
+		battleSpritesetId = f->GetUShort("battleSpritesetId", battleSpritesetId);
+		backgroundId = f->GetUShort("terrain_id", backgroundId);
 		f->SetToParent();
 	}
 
-	attributes.DeserializeXml(f);
-	item_dropset.DeserializeXml(f);
+	attributes.Deserialize(f);
+	factors.Deserialize(f);
+	itemDropset.Deserialize(f);
 }
 
 

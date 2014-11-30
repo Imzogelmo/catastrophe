@@ -40,27 +40,29 @@ void TilesetManager::DisposeResource( void* p )
 			g_textureManager->Unload(texture);
 		}
 
+		LogDebug("Tileset (%s) unloaded", tileset->GetName().c_str());
 		delete tileset;
 	}
 }
 
 
-Tileset* TilesetManager::LoadXml( const fc::string& filename, int* id  )
+Tileset* TilesetManager::LoadXml( const String& filename, int* id  )
 {
 	Tileset* tileset = GetResource(filename, id);
 	if( tileset )
 		return tileset;
 
-	fc::string directory = g_resourceDirectory->GetTilesetDirectory();
+	String directory = g_resourceDirectory->GetTilesetDirectory();
 
 	tileset = new Tileset();
-	if( !tileset->DeserializeXml(directory, filename) )
+	if( !tileset->Deserialize(directory, filename) )
 	{
 		LogError("Failed to load tileset (%s)", (directory, filename).c_str());
 		SAFE_DELETE(tileset);
 	}
 	else
 	{
+		LogDebug("Tileset (%s) successfully loaded", (directory, filename).c_str());
 		AddResource(tileset, filename, id);
 	}
 

@@ -23,25 +23,25 @@ public:
 	ShaderAsset();
 	~ShaderAsset();
 
-	void SetName( const fc::string& name ) { m_name = name; }
-	void SetVertexShaderFilename( const fc::string& filename ) { m_vertexFilename = filename; }
-	void SetFragmentShaderFilename( const fc::string& filename ) { m_fragmentFilename = filename; }
-	const fc::string& GetName() const { return m_name; }
-	const fc::string& GetVertexShaderFilename() const { return m_vertexFilename; }
-	const fc::string& GetFragmentShaderFilename() const { return m_fragmentFilename; }
+	void SetName( const String& name ) { m_name = name; }
+	void SetVertexShaderFilename( const String& filename ) { m_vertexFilename = filename; }
+	void SetFragmentShaderFilename( const String& filename ) { m_fragmentFilename = filename; }
+	const String& GetName() const { return m_name; }
+	const String& GetVertexShaderFilename() const { return m_vertexFilename; }
+	const String& GetFragmentShaderFilename() const { return m_fragmentFilename; }
 
 	Shader* LoadShader();
 	void ReleaseShader();
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 
 	int GetMemoryUsage() const;
 
 protected:
-	fc::string		m_name;
-	fc::string		m_vertexFilename;
-	fc::string		m_fragmentFilename;
+	String		m_name;
+	String		m_vertexFilename;
+	String		m_fragmentFilename;
 
 	Shader*			m_shader;
 };

@@ -20,9 +20,9 @@ public:
 	ShaderObjectManager();
 	~ShaderObjectManager();
 
-	VertexShader* LoadVertexShader( const fc::string& filename, int* id = 0 );
-	FragmentShader* LoadFragmentShader( const fc::string& filename, int* id = 0 );
-	ShaderObject* Load( const fc::string& filename, int type, int* id = 0 );
+	VertexShader* LoadVertexShader( const String& filename, int* id = 0 );
+	FragmentShader* LoadFragmentShader( const String& filename, int* id = 0 );
+	ShaderObject* Load( const String& filename, int type, int* id = 0 );
 
 protected:
 	void DisposeResource( void* p );

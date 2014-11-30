@@ -9,9 +9,11 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
+#include <Catastrophe/Graphics/SpriteBatch.h>
 
 #include <Catastrophe/IO/AttributeWriter.h>
 #include <Catastrophe/IO/AttributeReader.h>
+
 #include "TileMapLayer.h"
 #include "Tileset.h"
 #include "TilesetManager.h"
@@ -23,6 +25,9 @@ TileMapLayer::TileMapLayer() :
 	m_tiles(),
 	m_blendmode(BlendMode::Alpha),
 	m_color(Color::White()),
+	m_offset(Point::Zero),
+	m_parallax(1.f),
+	m_tileSize(DEFAULT_TILE_SIZE),
 	m_visible(true)
 {
 }
@@ -30,11 +35,11 @@ TileMapLayer::TileMapLayer() :
 
 void TileMapLayer::Clear()
 {
-	m_tiles.fill(LayerTile());
+	m_tiles.fill(TileMapLayerCell());
 }
 
 
-void TileMapLayer::Resize( size_t w, size_t h )
+void TileMapLayer::Resize( u32 w, u32 h )
 {
 	m_tiles.resize(h, w);
 }
@@ -45,19 +50,39 @@ void TileMapLayer::SetTileset( Tileset* tileset )
 	m_tileset = tileset;
 }
 
-/*
+
 void TileMapLayer::Render( SpriteBatch* spriteBatch, const Rect& viewRect, bool wrap )
 {
 	if( !m_tileset )
+	{
+		LogDebug("TileMapLayer::Render: TileSet is null!");
 		return;
+	}
 
-	const int tileSize = 16;
+	//s32 x1 = (viewRect.Left() - intTileSize - 1) / intTileSize;
+	//s32 y1 = (viewRect.Top() - intTileSize - 1) / intTileSize;
+	//s32 x2 = (viewRect.Right() + intTileSize - 1) / intTileSize;
+	//s32 y2 = (viewRect.Bottom() + intTileSize - 1) / intTileSize;
 
-	// todo: offset, parallax
-	int x1 = (viewRect.Left() - tileSize - 1) / tileSize;
-	int y1 = (viewRect.Top() - tileSize - 1) / tileSize;
-	int x2 = (viewRect.Right() + tileSize - 1) / tileSize;
-	int y2 = (viewRect.Bottom() + tileSize - 1) / tileSize;
+	//const u32 intTileSize = m_tileset->GetTileSize();
+
+	Rect viewableRect = viewRect;
+
+	// parallax
+	if( m_parallax != 1.f )
+	{
+		f32 parallaxMultiplier = m_parallax;
+		viewableRect.pos.x = fc::iround((f32)viewableRect.pos.x * parallaxMultiplier);
+		viewableRect.pos.y = fc::iround((f32)viewableRect.pos.y * parallaxMultiplier);
+	}
+
+	//offset
+	viewableRect.pos -= m_offset;
+
+	s32 x1 = viewableRect.Left() / m_tileSize;
+	s32 y1 = viewableRect.Top() / m_tileSize;
+	s32 x2 = viewableRect.Right() / m_tileSize;
+	s32 y2 = viewableRect.Bottom() / m_tileSize;
 
 	if( wrap )
 	{
@@ -70,24 +95,24 @@ void TileMapLayer::Render( SpriteBatch* spriteBatch, const Rect& viewRect, bool 
 }
 
 
-void TileMapLayer::InternalDrawNormal( SpriteBatch* spriteBatch, int x1, int y1, int x2, int y2 )
+void TileMapLayer::InternalDrawNormal( SpriteBatch* spriteBatch, s32 x1, s32 y1, s32 x2, s32 y2 )
 {
-	const int tileSize = 16;
-	const float tileSizef = 16.f;
+	const u32 intTileSize = m_tileSize;
+	const float floatTileSize = (float)m_tileSize;
 
 	Point p = Point(x1, y1);
-	Point tp = Point(x1, y1) * tileSize;
-	Vector2 tilePos = Point(x1, y1) * tileSize;
+	Point tp = Point(x1, y1) * intTileSize;
+	//Vector2 tilePos = Point(x1, y1) * intTileSize;
 
 	// clamp indices to valid range.
-	x1 = fc::clamp<int>(x1, 0, (int)m_tiles.x());
-	y1 = fc::clamp<int>(y1, 0, (int)m_tiles.y());
-	x2 = fc::clamp<int>(x2, 0, (int)m_tiles.x());
-	y2 = fc::clamp<int>(y2, 0, (int)m_tiles.y());
+	x1 = fc::clamp<s32>(x1, 0, (s32)m_tiles.x());
+	y1 = fc::clamp<s32>(y1, 0, (s32)m_tiles.y());
+	x2 = fc::clamp<s32>(x2, 0, (s32)m_tiles.x());
+	y2 = fc::clamp<s32>(y2, 0, (s32)m_tiles.y());
 
 	// get the top-leftmost tile position, taking clamping into account.
-	tp.x += (x1 - p.x) * tileSize; 
-	tp.y += (y1 - p.y) * tileSize;
+	tp.x += (x1 - p.x) * intTileSize; 
+	tp.y += (y1 - p.y) * intTileSize;
 	Vector2 tilePos = tp;
 
 	SpriteData sd;
@@ -103,16 +128,16 @@ void TileMapLayer::InternalDrawNormal( SpriteBatch* spriteBatch, int x1, int y1,
 
 	Vector2 pos = tilePos;
 
-	for( int y(y1); y < y2; ++y )
+	for( s32 y(y1); y < y2; ++y )
 	{
-		const size_t last = m_tiles.offset(y, x2);
-		for( size_t first = m_tiles.offset(y, x1); first < last; ++first )
+		const u32 last = m_tiles.offset(y, x2);
+		for( u32 first = m_tiles.offset(y, x1); first < last; ++first )
 		{
 			const Tile* tile = m_tiles[first].tile;
-			const int flags = m_tiles[first].flags;
+			const s32 flags = m_tiles[first].flags;
 			if( tile != 0 )
 			{
-				const Vector2 max = pos + tileSizef;
+				const Vector2 max = pos + floatTileSize;
 				Rectf uv = tile->GetUVRect();
 
 				// flip
@@ -138,25 +163,25 @@ void TileMapLayer::InternalDrawNormal( SpriteBatch* spriteBatch, int x1, int y1,
 				spriteBatch->DrawSpriteData(sd);
 			}
 
-			pos.x += tileSizef;
+			pos.x += floatTileSize;
 		}
 
 		pos.x = tilePos.x;
-		pos.y += tileSizef;
+		pos.y += floatTileSize;
 	}
 }
 
 
 
-void TileMapLayer::InternalDrawWrap( SpriteBatch* spriteBatch, int x1, int y1, int x2, int y2 )
+void TileMapLayer::InternalDrawWrap( SpriteBatch* spriteBatch, s32 x1, s32 y1, s32 x2, s32 y2 )
 {
-	const int TILE_SIZE = 16;//fixme
-	const float TILE_SIZEf = 16.f;//fixme
+	const u32 intTileSize = m_tileSize;
+	const float floatTileSize = (float)m_tileSize;
 
-	Vector2 tilePos = Point(x1, y1) * TILE_SIZE;
+	Vector2 tilePos = Point(x1, y1) * intTileSize;
 
-	const int maxMapTilesX = (int)m_tiles.x();
-	const int maxMapTilesY = (int)m_tiles.y();
+	const s32 maxMapTilesX = (s32)m_tiles.x();
+	const s32 maxMapTilesY = (s32)m_tiles.y();
 
 	// resolve to within positive range [0.. 2x) while keeping a valid rect
 	x1 = (x1 % maxMapTilesX) + maxMapTilesX;
@@ -177,30 +202,30 @@ void TileMapLayer::InternalDrawWrap( SpriteBatch* spriteBatch, int x1, int y1, i
 
 	SpriteData sd;
 	::memset(&sd, 0, sizeof(SpriteData));
-	sd.SetBlendMode(layer->GetBlendMode());
+	sd.SetBlendMode(m_blendmode);
 
-	Color layerColor = layer->GetColor();
+	Color layerColor = GetColor();
 	sd.data[0].color = layerColor;
 	sd.data[1].color = layerColor;
 	sd.data[2].color = layerColor;
 	sd.data[3].color = layerColor;
-	sd.SetTexture(layer->GetTileset()->GetTextureId());
+	sd.SetTexture(GetTileset()->GetTextureId());
 
 	Vector2 pos = tilePos;
 	//Vector2 pos = Vector2(0.f);
 
-	for( int row(y1); row < y2; ++row )
+	for( s32 row(y1); row < y2; ++row )
 	{
-		const int y = row % maxMapTilesY;
-		for( int col(x1); col < x2; ++col )
+		const s32 y = row % maxMapTilesY;
+		for( s32 col(x1); col < x2; ++col )
 		{
-			//const int x = col % maxMapTilesX;
-			const size_t index = array.offset(y, col % maxMapTilesX);
-			const Tile* tile = array[index].tile;
-			const int flags = array[index].flags;
+			//const s32 x = col % maxMapTilesX;
+			const u32 index = m_tiles.offset(y, col % maxMapTilesX);
+			const Tile* tile = m_tiles[index].tile;
+			const s32 flags = m_tiles[index].flags;
 			if( tile != 0 )
 			{
-				const Vector2 max = pos + TILE_SIZEf;
+				const Vector2 max = pos + floatTileSize;
 				//const Rectf & uv = tile->GetUVRect();
 				Rectf uv = tile->GetUVRect();
 
@@ -227,27 +252,28 @@ void TileMapLayer::InternalDrawWrap( SpriteBatch* spriteBatch, int x1, int y1, i
 				spriteBatch->DrawSpriteData(sd);
 			}
 
-			pos.x += TILE_SIZEf;
+			pos.x += floatTileSize;
 		}
 
 		pos.x = tilePos.x;
-		pos.y += TILE_SIZEf;
+		pos.y += floatTileSize;
 	}
 }
-*/
 
-void TileMapLayer::SerializeXml( AttributeWriter* f )
+
+void TileMapLayer::Serialize( AttributeWriter* f )
 {
 	f->SetString("name", m_name.c_str());
 	f->SetUInt("width", m_tiles.x());
 	f->SetUInt("height", m_tiles.y());
 	f->SetUInt("color", m_color.packed_value);
 	f->SetUInt("blendmode", m_blendmode.value);
+	f->SetUInt("tileSize", m_tileSize);
 
-	fc::string tilesetFilename = m_tileset ? m_tileset->GetFileName() : "";
+	String tilesetFilename = m_tileset ? m_tileset->GetFileName() : "";
 	if( tilesetFilename.empty() )
 	{
-		Log("TileMapLayer::SerializeXml: tileset filename is empty.");
+		LogInfo("TileMapLayer::Serialize: tileset filename is empty.");
 	}
 
 	f->SetString("tileset", tilesetFilename.c_str());
@@ -256,7 +282,7 @@ void TileMapLayer::SerializeXml( AttributeWriter* f )
 	{
 		f->BeginNode("Tile");
 
-		int id = -1;
+		s32 id = -1;
 		Tile* p = it->tile;
 		if(p)
 		{
@@ -270,22 +296,23 @@ void TileMapLayer::SerializeXml( AttributeWriter* f )
 }
 
 
-void TileMapLayer::DeserializeXml( AttributeReader* f )
+void TileMapLayer::Deserialize( AttributeReader* f )
 {
 	Clear();
 
 	m_name = f->GetString("name");
-	size_t w = f->GetUInt("width");
-	size_t h = f->GetUInt("height");
-	m_color.packed_value = f->GetUInt("color");
-	m_blendmode.value = f->GetUInt("blendmode");
+	u32 w = f->GetUInt("width");
+	u32 h = f->GetUInt("height");
+	m_color.packed_value = f->GetUInt("color", m_color.packed_value);
+	m_blendmode.value = f->GetUInt("blendmode", m_blendmode.value);
+	m_tileSize = f->GetUInt("tileSize", m_tileSize);
 
 	Resize(w, h);
 
-	fc::string tilsetFilename = f->GetString("tileset");
+	String tilsetFilename = f->GetString("tileset");
 	if( tilsetFilename.empty() )
 	{
-		Log("TileMapLayer::DeserializeXml: unknown tileset");
+		Log("TileMapLayer::Deserialize: unknown tileset");
 		return;
 	}
 	else
@@ -293,7 +320,7 @@ void TileMapLayer::DeserializeXml( AttributeReader* f )
 		m_tileset = g_tilesetManager->LoadXml(tilsetFilename);
 		if( !m_tileset )
 		{
-			Log("Tileset::DeserializeXml: (%s) tileset could not be loaded.", tilsetFilename.c_str());
+			Log("Tileset::Deserialize: (%s) tileset could not be loaded.", tilsetFilename.c_str());
 			return;
 		}
 	}
@@ -303,9 +330,9 @@ void TileMapLayer::DeserializeXml( AttributeReader* f )
 		if( !f->NextChild("Tile") )
 			break;
 
-		int id = f->GetInt("id", -1);
+		s32 id = f->GetInt("id", -1);
 
-		it->tile = m_tileset->GetTile((size_t)id);
+		it->tile = m_tileset->GetTile((u32)id);
 		it->flags = f->GetInt("flags", 0);
 
 	}

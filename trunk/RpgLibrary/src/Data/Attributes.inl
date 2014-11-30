@@ -21,11 +21,11 @@ Attributes Attributes::operator +(const Attributes& rhs) const
 {
 	Attributes ret;
 
-	ret.max_params = max_params + rhs.max_params;
+	ret.maxParams = maxParams + rhs.maxParams;
 	ret.stats = stats + rhs.stats;
-	ret.elemental_def = elemental_def.Add<int>(rhs.elemental_def, -MAX_ELEMENT_VALUE, MAX_ELEMENT_VALUE);
-	ret.status_atk = status_atk.Add<int>(rhs.status_atk, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
-	ret.status_def = status_def.Add<int>(rhs.status_def, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
+	ret.elementalDefense = elementalDefense.Add<int>(rhs.elementalDefense, -MAX_ELEMENT_VALUE, MAX_ELEMENT_VALUE);
+	ret.statusAttack = statusAttack.Add<int>(rhs.statusAttack, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
+	ret.statusDefense = statusDefense.Add<int>(rhs.statusDefense, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
 
 	return ret;
 }
@@ -35,11 +35,11 @@ Attributes Attributes::operator -(const Attributes& rhs) const
 {
 	Attributes ret;
 
-	ret.max_params = max_params - rhs.max_params;
+	ret.maxParams = maxParams - rhs.maxParams;
 	ret.stats = stats - rhs.stats;
-	ret.elemental_def = elemental_def.Subtract<int>(rhs.elemental_def, -MAX_ELEMENT_VALUE, MAX_ELEMENT_VALUE);
-	ret.status_atk = status_atk.Subtract<int>(rhs.status_atk, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
-	ret.status_def = status_def.Subtract<int>(rhs.status_def, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
+	ret.elementalDefense = elementalDefense.Subtract<int>(rhs.elementalDefense, -MAX_ELEMENT_VALUE, MAX_ELEMENT_VALUE);
+	ret.statusAttack = statusAttack.Subtract<int>(rhs.statusAttack, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
+	ret.statusDefense = statusDefense.Subtract<int>(rhs.statusDefense, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
 
 	return ret;
 }
@@ -47,11 +47,11 @@ Attributes Attributes::operator -(const Attributes& rhs) const
 
 Attributes& Attributes::operator +=(const Attributes& rhs)
 {
-	max_params += rhs.max_params;
+	maxParams += rhs.maxParams;
 	stats += rhs.stats;
-	elemental_def.AddAssign<int>(rhs.elemental_def, -MAX_ELEMENT_VALUE, MAX_ELEMENT_VALUE);
-	status_atk.AddAssign<int>(rhs.status_atk, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
-	status_def.AddAssign<int>(rhs.status_def, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
+	elementalDefense.AddAssign<int>(rhs.elementalDefense, -MAX_ELEMENT_VALUE, MAX_ELEMENT_VALUE);
+	statusAttack.AddAssign<int>(rhs.statusAttack, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
+	statusDefense.AddAssign<int>(rhs.statusDefense, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
 
 	flags |= rhs.flags;
 
@@ -61,11 +61,11 @@ Attributes& Attributes::operator +=(const Attributes& rhs)
 
 Attributes& Attributes::operator -=(const Attributes& rhs)
 {
-	max_params -= rhs.max_params;
+	maxParams -= rhs.maxParams;
 	stats -= rhs.stats;
-	elemental_def.SubtractAssign<int>(rhs.elemental_def, -MAX_ELEMENT_VALUE, MAX_ELEMENT_VALUE);
-	status_atk.SubtractAssign<int>(rhs.status_atk, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
-	status_def.SubtractAssign<int>(rhs.status_def, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
+	elementalDefense.SubtractAssign<int>(rhs.elementalDefense, -MAX_ELEMENT_VALUE, MAX_ELEMENT_VALUE);
+	statusAttack.SubtractAssign<int>(rhs.statusAttack, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
+	statusDefense.SubtractAssign<int>(rhs.statusDefense, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
 
 	//flags -= rhs.flags;
 
@@ -78,7 +78,7 @@ void Attributes::ApplyPercentageModifier(const Attributes& modifier)
 {
 	stats.ApplyPercentageModifier(modifier.stats);
 	//elements.ApplyPercentageModifier(modifier.elements);
-	status_atk.ApplyPercentageModifier(modifier.status_atk);
+	statusAttack.ApplyPercentageModifier(modifier.statusAttack);
 }
 
 
@@ -86,7 +86,7 @@ void Attributes::Clamp(const Attributes& min, const Attributes& max)
 {
 	stats.Clamp(min.stats, max.stats);
 	//elements.Clamp(min.elements, max.elements);
-	status_atk.Clamp(min.status_atk, max.status_atk);
+	statusAttack.Clamp(min.statusAttack, max.statusAttack);
 }
 */
 
@@ -94,26 +94,26 @@ void Attributes::RegisterObject()
 {
 	/*
 	REGISTER_ATTRIBUTE_FACTORY_TYPE(Attributes);
-	REGISTER_ATTRIBUTE_ARRAY(Attributes, VAR_TYPE_INT_ARRAY, MAX_PARAMS, "MaxParams", max_params);
+	REGISTER_ATTRIBUTE_ARRAY(Attributes, VAR_TYPE_INT_ARRAY, MAX_PARAMS, "MaxParams", maxParams);
 	REGISTER_ATTRIBUTE_ARRAY(Attributes, VAR_TYPE_SHORT_ARRAY, MAX_STATS, "Stats", stats);
-	REGISTER_ATTRIBUTE_ARRAY(Attributes, VAR_TYPE_BYTE_ARRAY, MAX_STATUS, "StatusAtk", status_atk);
-	REGISTER_ATTRIBUTE_ARRAY(Attributes, VAR_TYPE_BYTE_ARRAY, MAX_STATUS, "StatusDef", status_def);
+	REGISTER_ATTRIBUTE_ARRAY(Attributes, VAR_TYPE_BYTE_ARRAY, MAX_STATUS, "StatusAtk", statusAttack);
+	REGISTER_ATTRIBUTE_ARRAY(Attributes, VAR_TYPE_BYTE_ARRAY, MAX_STATUS, "StatusDef", statusDefense);
 	*/
 }
 
 
-void Attributes::SerializeXml( AttributeWriter* f )
+void Attributes::Serialize( AttributeWriter* f )
 {
 	//SERIALIZE_OBJECT_ATTRIBUTES_XML(this, f);
 
-	f->WriteIntArrayElement("MaxParams", &max_params[0], MAX_PARAMS);
+	f->WriteIntArrayElement("MaxParams", &maxParams[0], MAX_PARAMS);
 	f->WriteShortArrayElement("Stats", &stats[0], MAX_STATS);
-	f->WriteByteArrayElement("StatusAtk", (byte*)&status_atk[0], MAX_STATUS);
-	f->WriteByteArrayElement("StatusDef", (byte*)&status_def[0], MAX_STATUS);
+	f->WriteByteArrayElement("StatusAtk", (u8*)&statusAttack[0], MAX_STATUS);
+	f->WriteByteArrayElement("StatusDef", (u8*)&statusDefense[0], MAX_STATUS);
 
 	/*
 	f->BeginNode("MaxParams");
-	f->WriteBlock(&max_params[0], MAX_PARAMS);
+	f->WriteBlock(&maxParams[0], MAX_PARAMS);
 	f->EndNode();
 
 	f->BeginNode("Stats");
@@ -121,36 +121,36 @@ void Attributes::SerializeXml( AttributeWriter* f )
 	f->EndNode();
 
 	//f->BeginNode("ElementalDef");
-	//f->WriteBlock((ubyte*)&elemental_def[0], MAX_ELEMENTS);
+	//f->WriteBlock((u8*)&elementalDefense[0], MAX_ELEMENTS);
 	//f->EndNode();
 
 	f->BeginNode("StatusAtk");
-	f->WriteBlock((ubyte*)&status_atk[0], MAX_STATUS);
+	f->WriteBlock((u8*)&statusAttack[0], MAX_STATUS);
 	f->EndNode();
 
 	f->BeginNode("StatusDef");
-	f->WriteBlock((ubyte*)&status_def[0], MAX_STATUS);
+	f->WriteBlock((u8*)&statusDefense[0], MAX_STATUS);
 	f->EndNode();
 	*/
 
-	//flags.SerializeXml(xml);
+	//flags.Serialize(xml);
 
 }
 
 
-void Attributes::DeserializeXml( AttributeReader* f )
+void Attributes::Deserialize( AttributeReader* f )
 {
 	//DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
 
-	f->ReadIntArrayElement("MaxParams", &max_params[0], MAX_PARAMS);
+	f->ReadIntArrayElement("MaxParams", &maxParams[0], MAX_PARAMS);
 	f->ReadShortArrayElement("Stats", &stats[0], MAX_STATS);
-	f->ReadByteArrayElement("StatusAtk", (byte*)&status_atk[0], MAX_STATUS);
-	f->ReadByteArrayElement("StatusDef", (byte*)&status_def[0], MAX_STATUS);
+	f->ReadByteArrayElement("StatusAtk", (u8*)&statusAttack[0], MAX_STATUS);
+	f->ReadByteArrayElement("StatusDef", (u8*)&statusDefense[0], MAX_STATUS);
 
 /*
 	if( f->FirstChild("MaxParams") )
 	{
-		f->ReadIntArray(&max_params[0], MAX_PARAMS);
+		f->ReadIntArray(&maxParams[0], MAX_PARAMS);
 		f->SetToParent();
 	}
 
@@ -162,23 +162,23 @@ void Attributes::DeserializeXml( AttributeReader* f )
 
 	if( f->FirstChild("ElementalDef") )
 	{
-		f->ReadBlock((ubyte*)&elemental_def[0], MAX_ELEMENTS);
+		f->ReadBlock((u8*)&elementalDefense[0], MAX_ELEMENTS);
 		f->SetToParent();
 	}
 
 	if( f->FirstChild("StatusAtk") )
 	{
-		f->ReadBlock((ubyte*)&status_atk[0], MAX_STATUS);
+		f->ReadBlock((u8*)&statusAttack[0], MAX_STATUS);
 		f->SetToParent();
 	}
 
 	if( f->FirstChild("StatusDef") )
 	{
-		f->ReadBlock((ubyte*)&status_def[0], MAX_STATUS);
+		f->ReadBlock((u8*)&statusDefense[0], MAX_STATUS);
 		f->SetToParent();
 	}
 */
-	//flags.DeserializeXml(xml);
+	//flags.Deserialize(xml);
 
 }
 

@@ -33,21 +33,21 @@ void Race::RegisterObject()
 }
 
 
-void Race::SerializeXml( AttributeWriter* f )
+void Race::Serialize( AttributeWriter* f )
 {
 	f->SetString("name", name.c_str());
 	f->SetString("description", description.c_str());
 
-	attributes.SerializeXml(f);
+	attributes.Serialize(f);
 }
 
 
-void Race::DeserializeXml( AttributeReader* f )
+void Race::Deserialize( AttributeReader* f )
 {
 	name = f->GetString("name", name);
 	description = f->GetString("description", description);
 
-	attributes.DeserializeXml(f);
+	attributes.Deserialize(f);
 }
 
 

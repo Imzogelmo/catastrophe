@@ -19,17 +19,17 @@
 
 struct RPG_API CharacterData
 {
-	fc::string		name;
-	fc::string		script;
-	fc::string		description;
+	String		name;
+	String		script;
+	String		description;
 
 	int				id;
 	int				race_id;
 	int				class_id;
 
-	int				portrait_id;
-	int				map_spriteset_id;
-	int				battle_spriteset_id;
+	int				portraitId;
+	int				mapSpritesetId;
+	int				battleSpritesetId;
 	int				flags; //todo
 
 	int				lv;
@@ -44,8 +44,8 @@ struct RPG_API CharacterData
 
 	static void RegisterObject();
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 
 	int GetMemoryUsage() const;
 

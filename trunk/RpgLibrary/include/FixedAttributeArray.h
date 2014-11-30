@@ -17,12 +17,12 @@
 #endif
 
 
-template <class T, size_t N>
+template <class T, u32 N>
 struct FixedAttributeArray
 {
 	typedef FixedAttributeArray<T, N> this_type;
 
-	enum : size_t
+	enum : u32
 	{
 		MaxSize = N,
 		MaxAttributes = N
@@ -37,23 +37,23 @@ struct FixedAttributeArray
 
 	void Set(T value)
 	{
-		for( size_t i(0); i < N; ++i )
+		for( u32 i(0); i < N; ++i )
 			attribute[i] = value;
 	}
 
 	void Set(T* values)
 	{
-		for( size_t i(0); i < N; ++i )
+		for( u32 i(0); i < N; ++i )
 			attribute[i] = values[i];
 	}
 
-	T& operator [](size_t i) { return attribute[i]; }
-	const T& operator [](size_t i) const { return attribute[i]; }
+	T& operator [](u32 i) { return attribute[i]; }
+	const T& operator [](u32 i) const { return attribute[i]; }
 
 	this_type operator +(const this_type& rhs) const
 	{
 		this_type ret;
-		for( size_t i(0); i < N; ++i )
+		for( u32 i(0); i < N; ++i )
 			ret.attribute[i] = attribute[i] + rhs.attribute[i];
 
 		return ret;
@@ -62,7 +62,7 @@ struct FixedAttributeArray
 	this_type operator -(const this_type& rhs) const
 	{
 		this_type ret;
-		for( size_t i(0); i < N; ++i )
+		for( u32 i(0); i < N; ++i )
 			ret.attribute[i] = attribute[i] - rhs.attribute[i];
 
 		return ret;
@@ -70,7 +70,7 @@ struct FixedAttributeArray
 
 	this_type& operator +=(const this_type& rhs)
 	{
-		for( size_t i(0); i < N; ++i )
+		for( u32 i(0); i < N; ++i )
 			attribute[i] += rhs.attribute[i];
 
 		return *this;
@@ -78,7 +78,7 @@ struct FixedAttributeArray
 
 	this_type& operator -=(const this_type& rhs)
 	{
-		for( size_t i(0); i < N; ++i )
+		for( u32 i(0); i < N; ++i )
 			attribute[i] -= rhs.attribute[i];
 
 		return *this;
@@ -88,7 +88,7 @@ struct FixedAttributeArray
 	this_type Add(const this_type& rhs, I min, I max) const
 	{
 		this_type ret;
-		for( size_t i(0); i < N; ++i )
+		for( u32 i(0); i < N; ++i )
 		{
 			I val = ((I)attribute[i] + (I)rhs.attribute[i]);
 			if( val < min ) val = min;
@@ -103,7 +103,7 @@ struct FixedAttributeArray
 	this_type Subtract(const this_type& rhs, I min, I max) const
 	{
 		this_type ret;
-		for( size_t i(0); i < N; ++i )
+		for( u32 i(0); i < N; ++i )
 		{
 			I val = ((I)attribute[i] - (I)rhs.attribute[i]);
 			if( val < min ) val = min;
@@ -115,7 +115,7 @@ struct FixedAttributeArray
 	}
 
 	template <class I> inline
-	void AddAssignIndex(size_t i, I value, I min, I max)
+	void AddAssignIndex(u32 i, I value, I min, I max)
 	{
 		I val = ((I)attribute[i] + value);
 		if( val < min ) val = min;
@@ -126,7 +126,7 @@ struct FixedAttributeArray
 	template <class I>
 	this_type& AddAssign(const this_type& rhs, I min, I max)
 	{
-		for( size_t i(0); i < N; ++i )
+		for( u32 i(0); i < N; ++i )
 		{
 			I val = ((I)attribute[i] + (I)rhs.attribute[i]);
 			if( val < min ) val = min;
@@ -140,7 +140,7 @@ struct FixedAttributeArray
 	template <class I>
 	this_type& SubtractAssign(const this_type& rhs, I min, I max)
 	{
-		for( size_t i(0); i < N; ++i )
+		for( u32 i(0); i < N; ++i )
 		{
 			I val = ((I)attribute[i] - (I)rhs.attribute[i]);
 			if( val < min ) val = min;
@@ -152,7 +152,7 @@ struct FixedAttributeArray
 	}
 
 	template <class I> inline
-	void ApplyPercentageModifierToIndex(size_t i, I value, I min, I max)
+	void ApplyPercentageModifierToIndex(u32 i, I value, I min, I max)
 	{
 		if( value != 0 )
 		{
@@ -167,7 +167,7 @@ struct FixedAttributeArray
 	template <class I>
 	this_type& ApplyPercentageModifier(const this_type& rhs, I min, I max)
 	{
-		for( size_t i(0); i < N; ++i )
+		for( u32 i(0); i < N; ++i )
 		{
 			ApplyPercentageModifierToIndex(i, (I)rhs.attribute[i], min, max);
 		}
@@ -183,7 +183,7 @@ struct FixedAttributeArray
 
 	void Clamp(const this_type& min, const this_type& max)
 	{
-		for( size_t i(0); i < N; ++i )
+		for( u32 i(0); i < N; ++i )
 		{
 			if( attribute[i] > max.attribute[i] )
 				attribute[i] = max.attribute[i];
@@ -195,7 +195,7 @@ struct FixedAttributeArray
 
 	void Clamp(T min, T max)
 	{
-		for( size_t i(0); i < N; ++i )
+		for( u32 i(0); i < N; ++i )
 		{
 			if( attribute[i] > max )
 				attribute[i] = max;

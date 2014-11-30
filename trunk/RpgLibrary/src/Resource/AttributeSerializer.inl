@@ -56,7 +56,7 @@ void AttributeAccessorObjectTypeBase::DeserializeObjectAttributesXml( void* obj,
 int AttributeAccessorObjectTypeBase::OnReadAttributeInfoXml( void* obj, AttributeReader* f, const AttributeAccessorInfo& attr )
 {
 	// get address of variable
-	void* dest = (void*)(((ubyte*)obj) + attr.offset);
+	void* dest = (void*)(((u8*)obj) + attr.offset);
 
 	switch( attr.type )
 	{
@@ -67,12 +67,12 @@ int AttributeAccessorObjectTypeBase::OnReadAttributeInfoXml( void* obj, Attribut
 		}
 		case VAR_TYPE_BYTE:
 		{
-			*((byte*)dest) = f->GetByte(attr.name);
+			*((u8*)dest) = f->GetByte(attr.name);
 			break;
 		}
 		case VAR_TYPE_SHORT:
 		{
-			*((short*)dest) = f->GetShort(attr.name);
+			*((s16*)dest) = f->GetShort(attr.name);
 			break;
 		}
 		case VAR_TYPE_INT:
@@ -82,7 +82,7 @@ int AttributeAccessorObjectTypeBase::OnReadAttributeInfoXml( void* obj, Attribut
 		}
 		case VAR_TYPE_INT64:
 		{
-			*((int64*)dest) = (int)f->GetInt(attr.name);
+			*((s64*)dest) = (int)f->GetInt(attr.name);
 			break;
 		}
 		case VAR_TYPE_FLOAT:
@@ -110,7 +110,7 @@ int AttributeAccessorObjectTypeBase::OnReadAttributeInfoXml( void* obj, Attribut
 		}
 		case VAR_TYPE_STRING:
 		{
-			*((fc::string*)dest) = f->GetString(attr.name);
+			*((String*)dest) = f->GetString(attr.name);
 			break;
 		}
 		case VAR_TYPE_OBJECT:
@@ -121,24 +121,24 @@ int AttributeAccessorObjectTypeBase::OnReadAttributeInfoXml( void* obj, Attribut
 		case VAR_TYPE_BYTE_ARRAY:
 		{
 			//if( f->FirstChild(attr.name) ) {
-				f->ReadByteArrayElement(attr.name, (byte*)dest, *((size_t*)&attr.typeInfo));
+				f->ReadByteArrayElement(attr.name, (u8*)dest, *((u32*)&attr.typeInfo));
 			//	f->SetToParent();
 			//}
 			break;
 		}
 		case VAR_TYPE_SHORT_ARRAY:
 		{
-			f->ReadShortArrayElement(attr.name, (short*)dest, *((size_t*)&attr.typeInfo));
+			f->ReadShortArrayElement(attr.name, (s16*)dest, *((u32*)&attr.typeInfo));
 			break;
 		}
 		case VAR_TYPE_INT_ARRAY:
 		{
-			f->ReadIntArrayElement(attr.name, (int*)dest, *((size_t*)&attr.typeInfo));
+			f->ReadIntArrayElement(attr.name, (int*)dest, *((u32*)&attr.typeInfo));
 			break;
 		}
 		case VAR_TYPE_FLOAT_ARRAY:
 		{
-			f->ReadFloatArrayElement(attr.name, (float*)dest, *((size_t*)&attr.typeInfo));
+			f->ReadFloatArrayElement(attr.name, (float*)dest, *((u32*)&attr.typeInfo));
 			break;
 		}
 		case VAR_TYPE_OBJECT_ARRAY:
@@ -179,7 +179,7 @@ int AttributeAccessorObjectTypeBase::OnReadAttributeInfoXml( void* obj, Attribut
 int AttributeAccessorObjectTypeBase::OnWriteAttributeInfoXml( void* obj, AttributeWriter* f, const AttributeAccessorInfo& attr )
 {
 	// address of variable
-	void* dest = (void*)(((ubyte*)obj) + attr.offset);
+	void* dest = (void*)(((u8*)obj) + attr.offset);
 
 	switch( attr.type )
 	{
@@ -190,12 +190,12 @@ int AttributeAccessorObjectTypeBase::OnWriteAttributeInfoXml( void* obj, Attribu
 		}
 		case VAR_TYPE_BYTE:
 		{
-			f->SetByte(attr.name, *((const byte*)dest));
+			f->SetByte(attr.name, *((const u8*)dest));
 			break;
 		}
 		case VAR_TYPE_SHORT:
 		{
-			f->SetShort(attr.name, *((const short*)dest));
+			f->SetShort(attr.name, *((const s16*)dest));
 			break;
 		}
 		case VAR_TYPE_INT:
@@ -205,7 +205,7 @@ int AttributeAccessorObjectTypeBase::OnWriteAttributeInfoXml( void* obj, Attribu
 		}
 		case VAR_TYPE_INT64:
 		{
-			f->SetInt(attr.name, (int)*((const int64*)dest));
+			f->SetInt(attr.name, (int)*((const s64*)dest));
 			break;
 		}
 		case VAR_TYPE_FLOAT:
@@ -233,7 +233,7 @@ int AttributeAccessorObjectTypeBase::OnWriteAttributeInfoXml( void* obj, Attribu
 		}
 		case VAR_TYPE_STRING:
 		{
-			f->SetString(attr.name, *((const fc::string*)dest));
+			f->SetString(attr.name, *((const String*)dest));
 			break;
 		}
 		case VAR_TYPE_OBJECT:
@@ -244,23 +244,23 @@ int AttributeAccessorObjectTypeBase::OnWriteAttributeInfoXml( void* obj, Attribu
 		case VAR_TYPE_BYTE_ARRAY:
 		{
 			//f->BeginNode(attr.name);
-			f->WriteByteArrayElement(attr.name, (byte*)dest, *((size_t*)&attr.typeInfo));
+			f->WriteByteArrayElement(attr.name, (u8*)dest, *((u32*)&attr.typeInfo));
 			//f->EndNode();
 			break;
 		}
 		case VAR_TYPE_SHORT_ARRAY:
 		{
-			f->WriteShortArrayElement(attr.name, (short*)dest, *((size_t*)&attr.typeInfo));
+			f->WriteShortArrayElement(attr.name, (s16*)dest, *((u32*)&attr.typeInfo));
 			break;
 		}
 		case VAR_TYPE_INT_ARRAY:
 		{
-			f->WriteIntArrayElement(attr.name, (int*)dest, *((size_t*)&attr.typeInfo));
+			f->WriteIntArrayElement(attr.name, (int*)dest, *((u32*)&attr.typeInfo));
 			break;
 		}
 		case VAR_TYPE_FLOAT_ARRAY:
 		{
-			f->WriteFloatArrayElement(attr.name, (float*)dest, *((size_t*)&attr.typeInfo));
+			f->WriteFloatArrayElement(attr.name, (float*)dest, *((u32*)&attr.typeInfo));
 			break;
 		}
 		case VAR_TYPE_OBJECT_ARRAY:

@@ -17,16 +17,16 @@
 
 struct BattleCommand
 {
-	fc::string	name;
-	fc::string	description;
+	String	name;
+	String	description;
 	int			id;
 	int			type;
 	int			flags;
 
 	BattleCommand();
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 
 };
 

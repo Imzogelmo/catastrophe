@@ -26,8 +26,8 @@ public:
 	bool LoadAnimatedSpriteSet( AnimatedSpriteSet& animatedSpriteSetRef );
 	void ReleaseAnimatedSpriteSet();
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 
 	int GetMemoryUsage() const;
 

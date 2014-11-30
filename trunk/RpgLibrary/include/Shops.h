@@ -31,8 +31,8 @@ struct RPG_API ShopItem
 		: item_id(itemId), price(price)
 	{}
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 
 };
 
@@ -42,11 +42,11 @@ struct RPG_API Shop
 	typedef fc::vector<ShopItem>	vec_type;
 
 	vec_type		items;
-	fc::string		name;
-	fc::string		greeting;
-	fc::string		transaction;
-	fc::string		buy;
-	fc::string		sell;
+	String		name;
+	String		greeting;
+	String		transaction;
+	String		buy;
+	String		sell;
 	int				markup_percent;
 	int				devaluation_percent;
 
@@ -55,13 +55,13 @@ struct RPG_API Shop
 	int GetMarkup() const { return markup_percent; }
 	int GetMarkdown() const { return devaluation_percent; }
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 
 	// all shop strings are initialized to these in the ctor.
-	static fc::string default_greeting_message;
-	static fc::string default_transaction_message;
-	static fc::string default_buy_message;
-	static fc::string default_sell_message;
+	static String default_greeting_message;
+	static String default_transaction_message;
+	static String default_buy_message;
+	static String default_sell_message;
 };
 

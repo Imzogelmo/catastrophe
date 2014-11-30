@@ -23,29 +23,43 @@ class DataArray : public fc::dynamic_array<T>
 {
 public:
 	typedef fc::dynamic_array<T>	base_type;
+	typedef DataArray<T>			this_type;
 
-	fc::string			filename;
-	const char*			root_name;
-	const char*			item_name;
-	ResourceDirectory*	resource_directory;
+	String				filename;
+	const char*			rootName;
+	const char*			itemName;
+	ResourceDirectory*	resourceDirectory;
 
 	DataArray();
+
+	void InitializeType();
 
 	/// Generate a unique id for each item in array.
 	void GenerateIds();
 
+	void Clear()
+	{
+		base_type::resize(0);
+	}
+
 	void SetResourceDirectory( ResourceDirectory* resourceDirectory )
 	{
-		resource_directory = resourceDirectory;
+		this->resourceDirectory = resourceDirectory;
 	}
 
 	void SetNodeNames( const char* root, const char* item )
 	{
-		root_name = root;
-		item_name = item;
+		rootName = root;
+		itemName = item;
 	}
 
-	void SetFilename( const fc::string& name )
+	void SetDefaultNodeNames()
+	{
+		this_type temp;
+		SetNodeNames(temp.rootName, temp.itemName);
+	}
+
+	void SetFilename( const String& name )
 	{
 		filename = name;
 	}
@@ -53,7 +67,7 @@ public:
 	int GetMemoryUsage() const
 	{
 		int memoryUsage = 0;
-		for( size_t i(0); i < base_type::size(); ++i )
+		for( u32 i(0); i < base_type::size(); ++i )
 			memoryUsage += base_type::operator[](i).GetMemoryUsage();
 
 		memoryUsage += (int)(base_type::size() * sizeof(T));
@@ -62,8 +76,8 @@ public:
 		return memoryUsage;
 	}
 
-	NO_INLINE bool SerializeXml( const fc::string& filename = "" );
-	NO_INLINE bool DeserializeXml( const fc::string& filename = "" );
+	NO_INLINE bool Serialize( const String& filename = "" );
+	NO_INLINE bool Deserialize( const String& filename = "" );
 
 };
 
@@ -78,8 +92,8 @@ public:
 	virtual void GenerateIds() = 0;
 	virtual void SetResourceDirectory( ResourceDirectory* resourceDirectory ) = 0;
 	virtual void SetDefaultNodeNames() = 0;
-	virtual bool SerializeXml( const fc::string& filename = "" ) = 0;
-	virtual bool DeserializeXml( const fc::string& filename = "" ) = 0;
+	virtual bool Serialize( const String& filename = "" ) = 0;
+	virtual bool Deserialize( const String& filename = "" ) = 0;
 };
 
 
@@ -96,11 +110,11 @@ public:
 	void SetDefaultNodeNames()
 	{
 		T temp;
-		p->SetNodeNames(temp.root_name, temp.item_name);
+		p->SetNodeNames(temp.rootName, temp.itemName);
 	}
 
-	bool SerializeXml( const fc::string& filename = "" ) { return p->SerializeXml(filename); }
-	bool DeserializeXml( const fc::string& filename = "" ) { return p->DeserializeXml(filename); }
+	bool Serialize( const String& filename = "" ) { return p->Serialize(filename); }
+	bool Deserialize( const String& filename = "" ) { return p->Deserialize(filename); }
 
 private:
 	T* p;
@@ -110,7 +124,7 @@ private:
 class DatabaseArrayAnyHolder
 {
 public:
-	enum : size_t
+	enum : u32
 	{
 		MaxBufferBytes = 256
 	};
@@ -141,7 +155,7 @@ public:
 private:
 	vec_type		m_bin;
 	buffer_type		m_buffer;
-	size_t			m_offset;
+	u32				m_offset;
 
 };
 

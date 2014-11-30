@@ -14,22 +14,22 @@
 #include <fc/string.h>
 
 #include "RpgCommon.h"
-#include "Attributes.h"
 #include "Item.h"
+#include "Attributes.h"
+
 
 
 struct RPG_API EquipmentItem : public Item
 {
 	EquipmentItem();
 
-	Attributes	attributes;
+	Attributes attributes;
 
 	virtual bool HasAttributes() const { return true; }
-	virtual Attributes& GetAttributes() { return attributes; }
-	virtual const Attributes& GetAttributes() const { return attributes; }
+	virtual Attributes& GetAttributes() const { return const_cast<Attributes&>(attributes); }
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	virtual void Serialize( AttributeWriter* f );
+	virtual void Deserialize( AttributeReader* f );
 
 };
 

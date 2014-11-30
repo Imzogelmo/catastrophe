@@ -11,24 +11,24 @@
 
 #pragma once
 
-#include <fc/fixed_vector.h>
+#include <fc/vector.h>
 
 #include "RpgCommon.h"
 
 
 struct RPG_API EncounterData
 {
-	int	troop_id;
-	int	rate;
-	int	max_rate;
+	u16	troopId;
+	u16	rate;
+	u16	maxRate;
 
-	EncounterData( int monsterPartyIndex = 0, int encounterRate = 0, int maxRate = 100 );
+	EncounterData( u16 monsterTroopIndex = 0, u16 encounterRate = 0, u16 maxRate = 100 );
 
 	//simply to ensure data is sane before saving.
 	void Validate();
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 };
 
 
@@ -38,14 +38,14 @@ struct RPG_API EncounterData
  */
 struct RPG_API EncounterGroup 
 {
-	typedef fc::fixed_vector<EncounterData, 8>	vec_type;
+	typedef fc::vector<EncounterData>	vec_type;
 
-	fc::string	name;
+	String		name;
 	vec_type	encounters;
 
 	EncounterGroup();
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 };
 

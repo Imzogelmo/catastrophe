@@ -49,9 +49,10 @@ class TileProperties;
 class Tileset;
 class TileMap;
 class TileMapLayer;
+struct TileMapLayerCell;
 
 template <class T> struct AttributeArray;
-template <class T, size_t N> struct FixedAttributeArray;
+template <class T, u32 N> struct FixedAttributeArray;
 
 struct Attributes;
 struct AttributeFlags;
@@ -66,15 +67,22 @@ struct CharacterClass;
 struct MonsterData;
 struct MonsterGroup;
 struct MonsterTroop;
+struct MonsterFormation;
 struct Encounter;
+struct EncounterData;
 struct EncounterGroup;
-struct ExpTable;
+struct FactorSet;
+struct ExperienceTable;
 struct ExpCurve;
+
+class ItemDrop;
+class ItemDropSet;
 
 template <class T> class DataArray;
 
 //resource
 class TextureAsset;
+class FontAsset;
 class SpriteAsset;
 class AnimatedSpriteAsset;
 class AnimatedSpriteSetAsset;
@@ -86,6 +94,7 @@ class ResourceDirectory;
 class ResourceCache;
 class ResourceManagerTypeBase;
 class TextureManager;
+class FontManager;
 class TilesetManager;
 class MapManager;
 class ShaderObjectManager;
@@ -94,18 +103,26 @@ class ShaderObjectManager;
 
 class RpgStrings;
 
+#define DEFAULT_TILE_SIZE	16
 
 
+#define MAX_LEVEL		255
 #define MAX_PARAMS		4
 #define MAX_STATS		16
 #define MAX_ELEMENTS	8
 #define MAX_STATUS		32
-#define MAX_MISC		8
+#define MAX_MISC		0
+
+//this must be the sum of all other attribute types
+#define MAX_ATTRIBUTES	60
+
+#define MAX_ITEM_FACTORS	4
 
 #define MAX_CLASS_FLAGS		32
 #define MAX_FAMILY_FLAGS	32
 #define MAX_ITEM_FLAGS		32
 
+#define MAX_SKILL_LV		10
 
 
 
@@ -119,11 +136,12 @@ class RpgStrings;
 #define MAX_ELEMENT_VALUE	100
 #define MAX_STATUS_VALUE	100
 
-
+#define MAX_FACTORSET_SIZE	4
 
 //global
 extern ResourceDirectory*	g_resourceDirectory;
 extern TextureManager*		g_textureManager;
+extern FontManager*			g_fontManager;
 extern TilesetManager*		g_tilesetManager;
 extern MapManager*			g_mapManager;
 extern ShaderObjectManager*	g_shaderObjectManager;

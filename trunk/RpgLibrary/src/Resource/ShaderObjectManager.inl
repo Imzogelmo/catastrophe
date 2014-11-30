@@ -38,19 +38,19 @@ void ShaderObjectManager::DisposeResource( void* p )
 }
 
 
-VertexShader* ShaderObjectManager::LoadVertexShader( const fc::string& filename, int* id )
+VertexShader* ShaderObjectManager::LoadVertexShader( const String& filename, int* id )
 {
 	return (VertexShader*)Load(filename, VertexShaderType, id);
 }
 
 
-FragmentShader* ShaderObjectManager::LoadFragmentShader( const fc::string& filename, int* id )
+FragmentShader* ShaderObjectManager::LoadFragmentShader( const String& filename, int* id )
 {
 	return (FragmentShader*)Load(filename, FragmentShaderType, id);
 }
 
 
-ShaderObject* ShaderObjectManager::Load( const fc::string& filename, int type, int* id  )
+ShaderObject* ShaderObjectManager::Load( const String& filename, int type, int* id  )
 {
 	ShaderObject* shaderObject = GetResource(filename, id);
 	if( shaderObject )
@@ -59,7 +59,7 @@ ShaderObject* ShaderObjectManager::Load( const fc::string& filename, int type, i
 	// else create a new resource.
 	shaderObject = new ShaderObject((ShaderType)type);
 
-	fc::string fn = g_resourceDirectory->GetShaderDirectory();
+	String fn = g_resourceDirectory->GetShaderDirectory();
 	fn += filename;
 	if( !shaderObject->LoadFromFile(fn) )
 	{

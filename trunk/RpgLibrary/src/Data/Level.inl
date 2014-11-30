@@ -18,29 +18,29 @@
 
 
 
-void LevelData::SerializeXml( AttributeWriter* f )
+void LevelData::Serialize( AttributeWriter* f )
 {
-	flags.SerializeXml(f);
+	flags.Serialize(f);
 }
 
 
-void LevelData::DeserializeXml( AttributeReader* f )
+void LevelData::Deserialize( AttributeReader* f )
 {
-	flags.DeserializeXml(f);
+	flags.Deserialize(f);
 }
 
 
 
-void LevelInfo::SerializeXml( AttributeWriter* f )
+void LevelInfo::Serialize( AttributeWriter* f )
 {
 	f->BeginNode("LevelInfo");
 	f->SetUInt("count", levels.size());
 	f->SetInt("exp_table", exp_table_id);
 
-	for( size_t i(0); i < levels.size(); ++i )
+	for( u32 i(0); i < levels.size(); ++i )
 	{
 		f->BeginNode("LevelData");
-		levels[i].SerializeXml(f);
+		levels[i].Serialize(f);
 		f->EndNode();
 	}
 
@@ -48,9 +48,9 @@ void LevelInfo::SerializeXml( AttributeWriter* f )
 }
 
 
-void LevelInfo::DeserializeXml( AttributeReader* f )
+void LevelInfo::Deserialize( AttributeReader* f )
 {
-	size_t n = f->GetUInt("count");
+	u32 n = f->GetUInt("count");
 	exp_table_id = f->GetInt("exp_table");
 	levels.clear();
 	levels.reserve(n);
@@ -58,7 +58,7 @@ void LevelInfo::DeserializeXml( AttributeReader* f )
 	while( f->NextChild("LevelData") )
 	{
 		levels.push_back();
-		levels.back().DeserializeXml(f);
+		levels.back().Deserialize(f);
 		f->SetToParent();
 	}
 }

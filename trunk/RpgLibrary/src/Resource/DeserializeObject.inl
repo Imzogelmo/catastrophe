@@ -26,31 +26,31 @@
 
 
 template <class T>
-void DeserializeObject( const char* nodeName, AttributeReader* f, T& val )
+void DeserializeObject( const char* nodeName, AttributeReader* f, T& value )
 {
 	if( f->NextChild(nodeName) )
 	{
-		DeserializeObject<T>(f, val);
+		DeserializeObject<T>(f, value);
 		f->SetToParent();
 	}
 }
 
 
 template <>
-void DeserializeObject<Point>( AttributeReader* f, Point& val )
+void DeserializeObject<Point>( AttributeReader* f, Point& value )
 {
-	val.x = f->GetInt("x", 0);
-	val.y = f->GetInt("y", 0);
+	value.x = f->GetInt("x", 0);
+	value.y = f->GetInt("y", 0);
 }
 
 
 template <>
-void DeserializeObject<Rect>( AttributeReader* f, Rect& val )
+void DeserializeObject<Rect>( AttributeReader* f, Rect& value )
 {
-	val.pos.x = f->GetInt("x", 0);
-	val.pos.y = f->GetInt("y", 0);
-	val.size.x = f->GetInt("w", 0);
-	val.size.y = f->GetInt("h", 0);
+	value.pos.x = f->GetInt("x", 0);
+	value.pos.y = f->GetInt("y", 0);
+	value.size.x = f->GetInt("w", 0);
+	value.size.y = f->GetInt("h", 0);
 }
 
 
@@ -94,8 +94,8 @@ void DeserializeObject<SpriteAnimation>( AttributeReader* f, SpriteAnimation& a 
 template <>
 void DeserializeObject<AnimatedSpriteSet>( AttributeReader* f, AnimatedSpriteSet& s )
 {
-	fc::string str = f->GetString("texture");
-	size_t count = f->GetUInt("num_animations");
+	String str = f->GetString("texture");
+	u32 count = f->GetUInt("num_animations");
 	DeserializeObject<SpriteBase>(f, s);
 	s.Resize(count);
 
@@ -103,7 +103,7 @@ void DeserializeObject<AnimatedSpriteSet>( AttributeReader* f, AnimatedSpriteSet
 	s.SetTexture(texture);
 
 	bool hasAnim = false;
-	for( size_t i(0); i < count; ++i )
+	for( u32 i(0); i < count; ++i )
 	{
 		if( f->NextChild("SpriteAnimation") )
 		{
@@ -123,7 +123,7 @@ void RpgSerializer::DeserializeSprite( AttributeReader* f, Sprite& s )
 	DeserializeSpriteBase(xml, s);
 
 	Texture* texture = 0;
-	fc::string textureName = f->GetString("texture");
+	String textureName = f->GetString("texture");
 
 	if( !textureName.empty() )
 	{
@@ -160,7 +160,7 @@ void RpgSerializer::DeserializeAnimatedSprite( AttributeReader* f, AnimatedSprit
 void RpgSerializer::DeserializeAnimationSet( AttributeReader* f, AnimationSet& a )
 {
 	DeserializeSpriteBase(xml, a);
-	size_t n = f->GetUInt("count");
+	u32 n = f->GetUInt("count");
 	a.Reserve(n);
 
 	Animation emptyAnimation;
@@ -186,7 +186,7 @@ void RpgSerializer::DeserializeAnimation( AttributeReader* f, Animation& a )
 	Point offset = Point::Zero;
 
 	Texture* texture = 0;
-	fc::string textureName = f->GetString("texture");
+	String textureName = f->GetString("texture");
 	if( !textureName.empty() )
 	{
 		ASSERT(g_textureManager != 0);

@@ -19,10 +19,10 @@
 
 
 
-ItemDropSet::ItemDropSet( bool multiple_drops ) :
-	m_item_drops(),
+ItemDropSet::ItemDropSet( bool multipleDrops ) :
+	m_itemDrops(),
 	m_size(0),
-	m_allow_multiple_drops(multiple_drops)
+	m_allowMultipleDrops(multipleDrops)
 {
 }
 
@@ -31,7 +31,7 @@ void ItemDropSet::Add( const ItemDrop& drop )
 {
 	if( m_size < MAX_ITEM_DROPS )
 	{
-		m_item_drops[m_size] = drop;
+		m_itemDrops[m_size] = drop;
 		m_size++;
 	}
 }
@@ -42,7 +42,7 @@ void ItemDropSet::Remove()
 	if( m_size > 0 )
 	{
 		m_size--;
-		m_item_drops[m_size] = ItemDrop();
+		m_itemDrops[m_size] = ItemDrop();
 	}
 }
 
@@ -50,51 +50,51 @@ void ItemDropSet::Remove()
 void ItemDropSet::Clear()
 {
 	for( int i(m_size); i >= 0; --i )
-		m_item_drops[i] = ItemDrop();
+		m_itemDrops[i] = ItemDrop();
 
 	m_size = 0;
 }
 
 
-ItemDrop& ItemDropSet::operator []( size_t index )
+ItemDrop& ItemDropSet::operator []( u32 index )
 {
 	ASSERT(index < MAX_ITEM_DROPS);
-	return m_item_drops[index];
+	return m_itemDrops[index];
 }
 
 
-const ItemDrop& ItemDropSet::operator []( size_t index ) const
+const ItemDrop& ItemDropSet::operator []( u32 index ) const
 {
 	ASSERT(index < MAX_ITEM_DROPS);
-	return m_item_drops[index];
+	return m_itemDrops[index];
 }
 
 
-void ItemDropSet::SerializeXml( AttributeWriter* f )
+void ItemDropSet::Serialize( AttributeWriter* f )
 {
 	f->BeginNode("ItemDropSet");
 	f->SetUInt("count", m_size);
-	f->SetBool("multiple", m_allow_multiple_drops);
+	f->SetBool("multiple", m_allowMultipleDrops);
 
-	for( size_t i(0); i < m_size; ++i )
+	for( u32 i(0); i < m_size; ++i )
 	{
-		m_item_drops[i].SerializeXml(f);
+		m_itemDrops[i].Serialize(f);
 	}
 
 	f->EndNode();
 }
 
 
-void ItemDropSet::DeserializeXml( AttributeReader* f )
+void ItemDropSet::Deserialize( AttributeReader* f )
 {
-	size_t numDrops = (size_t)fc::clamp<int>( f->GetInt("count"), 0, MAX_ITEM_DROPS );
-	m_allow_multiple_drops = f->GetBool("multiple");
+	u32 numDrops = (u32)fc::clamp<int>( f->GetInt("count"), 0, MAX_ITEM_DROPS );
+	m_allowMultipleDrops = f->GetBool("multiple");
 
-	for( size_t i(0); i < numDrops; ++i )
+	for( u32 i(0); i < numDrops; ++i )
 	{
 		if( f->NextChild("ItemDrop") )
 		{
-			m_item_drops[i].DeserializeXml(f);
+			m_itemDrops[i].Deserialize(f);
 		}
 	}
 

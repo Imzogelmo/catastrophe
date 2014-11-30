@@ -13,7 +13,7 @@
 #pragma once
 
 #include <fc/string.h>
-#include <fc/tiny_string.h>
+#include <fc/static_string.h>
 #include "RpgCommon.h"
 
 
@@ -23,17 +23,20 @@
 class RpgStrings
 {
 public:
-	//attributes
-	fc::tiny_string<32> stats[MAX_STATS];
-	fc::tiny_string<32> elements[MAX_ELEMENTS];
-	fc::tiny_string<32> status[MAX_STATUS];
-	fc::tiny_string<32> class_flags[MAX_CLASS_FLAGS];
-	fc::tiny_string<32> family_flags[MAX_FAMILY_FLAGS];
-	fc::tiny_string<32> item_flags[MAX_ITEM_FLAGS];
 
-	//in-game terms
-	fc::string title;
-	fc::string gold;
+	// Title of the game
+	String title;
+
+	// Attributes
+	StaticString<16> stats[MAX_STATS];
+	StaticString<16> elements[MAX_ELEMENTS];
+	StaticString<16> status[MAX_STATUS];
+	StaticString<16> classFlags[MAX_CLASS_FLAGS];
+	StaticString<16> familyFlags[MAX_FAMILY_FLAGS];
+	StaticString<16> itemFlags[MAX_ITEM_FLAGS];
+
+	// In-game terms
+	StaticString<16> gold;
 
 
 
@@ -44,30 +47,30 @@ public:
 
 	}
 
-	void SerializeXml( AttributeWriter* f )
+	void Serialize( AttributeWriter* f )
 	{
 		f->BeginNode("Strings");
 
 		Util::SerializeStringArray(xml, "Stats", stats, MAX_STATS);
 		Util::SerializeStringArray(xml, "Elements", elements, MAX_ELEMENTS);
 		Util::SerializeStringArray(xml, "Status", status, MAX_STATUS);
-		Util::SerializeStringArray(xml, "ClassFlags", class_flags, MAX_CLASS_FLAGS);
-		Util::SerializeStringArray(xml, "FamilyFlags", family_flags, MAX_FAMILY_FLAGS);
+		Util::SerializeStringArray(xml, "ClassFlags", classFlags, MAX_CLASS_FLAGS);
+		Util::SerializeStringArray(xml, "FamilyFlags", familyFlags, MAX_FAMILY_FLAGS);
 
 		f->SetString("title", title.c_str());
 		f->SetString("gold", gold.c_str());
 		f->EndNode();
 	}
 
-	void DeserializeXml( AttributeReader* f )
+	void Deserialize( AttributeReader* f )
 	{
 		if( f->NextChild("Strings") )
 		{
-			Util::DeserializeStringArray(xml, "Stats", stats, MAX_STATS);
-			Util::DeserializeStringArray(xml, "Elements", elements, MAX_ELEMENTS);
-			Util::DeserializeStringArray(xml, "Status", status, MAX_STATUS);
-			Util::DeserializeStringArray(xml, "ClassFlags", class_flags, MAX_CLASS_FLAGS);
-			Util::DeserializeStringArray(xml, "FamilyFlags", family_flags, MAX_FAMILY_FLAGS);
+			Util::DeserializeStringArray(f, "Stats", stats, MAX_STATS);
+			Util::DeserializeStringArray(f, "Elements", elements, MAX_ELEMENTS);
+			Util::DeserializeStringArray(f, "Status", status, MAX_STATUS);
+			Util::DeserializeStringArray(f, "ClassFlags", classFlags, MAX_CLASS_FLAGS);
+			Util::DeserializeStringArray(f, "FamilyFlags", familyFlags, MAX_FAMILY_FLAGS);
 		}
 
 		title = f->GetString("title");

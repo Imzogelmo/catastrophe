@@ -22,17 +22,17 @@ EquipmentItem::EquipmentItem() :
 }
 
 
-void EquipmentItem::SerializeXml( AttributeWriter* f )
+void EquipmentItem::Serialize( AttributeWriter* f )
 {
-	Item::SerializeXml(f);
-	attributes.SerializeXml(f);
+	Item::Serialize(f);
+	attributes.Serialize(f);
 }
 
 
-void EquipmentItem::DeserializeXml( AttributeReader* f )
+void EquipmentItem::Deserialize( AttributeReader* f )
 {
-	Item::DeserializeXml(f);
-	attributes.DeserializeXml(f);
+	Item::Deserialize(f);
+	attributes.Deserialize(f);
 }
 
 

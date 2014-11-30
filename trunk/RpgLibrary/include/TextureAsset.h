@@ -23,8 +23,8 @@ public:
 	TextureAsset();
 	~TextureAsset();
 
-	void SetFilename( const fc::string& filename ) { m_textureFilename = filename; }
-	const fc::string& GetFilename() const { return m_textureFilename; }
+	void SetFilename( const String& filename ) { m_textureFilename = filename; }
+	const String& GetFilename() const { return m_textureFilename; }
 
 	Texture* LoadTexture();
 	void ReleaseTexture();
@@ -36,13 +36,13 @@ public:
 	void Reset();
 	int GetRefCount() const { return m_refCount; }
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 
 	int GetMemoryUsage() const;
 
 protected:
-	fc::string			m_textureFilename;
+	String			m_textureFilename;
 	int					m_textureResourceId;
 	int					m_refCount;
 	bool				m_preload; //todo

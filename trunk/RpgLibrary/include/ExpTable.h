@@ -21,39 +21,39 @@ struct RPG_API ExpCurve
 	typedef fc::vector<int>		vec_type;
 
 	vec_type	values;
-	int			max_levels;
-	int			start_exp;
-	int			end_exp;
+	int			maxLevels;
+	int			startingExp;
+	int			endingExp;
 
 	ExpCurve( int maxLevels = 50, int startExp = 40, int endExp = 989641 )
-		: values(), max_levels(maxLevels), start_exp(startExp), end_exp(endExp)
+		: values(), maxLevels(maxLevels), startingExp(startExp), endingExp(endExp)
 	{}
 
-	int& operator []( size_t i ) { return values.at(i); }
-	const int& operator []( size_t i ) const { return values.at(i); }
+	int& operator []( u32 i ) { return values.at(i); }
+	const int& operator []( u32 i ) const { return values.at(i); }
 
 	void GenerateCurve();
 
 };
 
 
-struct RPG_API ExpTable
+struct RPG_API ExperienceTable
 {
-	typedef fc::vector<int>		vec_type;
+	// Valid exp table indices start at 1, so
+	// zero is equivilent to lv 0. (0 exp).
+	fc::dynamic_array<int> table;
 
-	// valid exp table indices start at 1.
-	// zero is equivelent to lv 0. (0 exp)
-	vec_type table;
-
-	int& operator []( int lv ) { return table.at(lv); }
-	const int& operator []( int lv ) const { return table.at(lv); }
+	int& operator []( u32 lv ) { return table.at(lv); }
+	const int& operator []( u32 lv ) const { return table.at(lv); }
 
 	int GetExpForLevel( int lv );
 	int GetExpDeltaForLevel( int lv );
-	void Resize( int maxLv );
+	void Resize( u32 maxLv );
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
+
+	int GetMemoryUsage() const;
 
 };
 

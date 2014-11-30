@@ -20,7 +20,7 @@ public:
 	TextureManager();
 	~TextureManager();
 
-	Texture* Load( const fc::string& filename, int* id = 0 );
+	Texture* Load( const String& filename, int* id = 0 );
 
 protected:
 	void DisposeResource( void* p );

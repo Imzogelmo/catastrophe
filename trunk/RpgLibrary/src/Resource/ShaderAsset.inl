@@ -70,7 +70,7 @@ void ShaderAsset::ReleaseShader()
 }
 
 
-void ShaderAsset::SerializeXml( AttributeWriter* f )
+void ShaderAsset::Serialize( AttributeWriter* f )
 {
 	f->SetString("name", m_name);
 	f->SetString("vert", m_vertexFilename);
@@ -78,7 +78,7 @@ void ShaderAsset::SerializeXml( AttributeWriter* f )
 }
 
 
-void ShaderAsset::DeserializeXml( AttributeReader* f )
+void ShaderAsset::Deserialize( AttributeReader* f )
 {
 	m_name = f->GetString("name");
 	m_vertexFilename = f->GetString("vert");

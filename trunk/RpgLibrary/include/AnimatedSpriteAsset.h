@@ -26,8 +26,8 @@ public:
 	bool LoadAnimatedSprite( AnimatedSprite& animatedSpriteRef );
 	void ReleaseAnimatedSprite();
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 
 };
 

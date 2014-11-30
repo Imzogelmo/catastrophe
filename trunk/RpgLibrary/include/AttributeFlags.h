@@ -16,60 +16,61 @@
 
 struct AttributeFlags
 {
-	typedef AttributeFlags this_type;
-
-	enum : size_t
+	enum
 	{
-		MaxInternalFlags = 8 //32 bytes
+		MaxFlags = 5
 	};
 
-	int	element_atk;
-	int	element_absorb;
-	int	element_nullify;
-	int	element_resist;
-	int	element_weak;
-	int	family_flags;
-	int	class_flags;
-	int	misc_flags;
+	int elementAtk;
+	int familyStrong;
+	int familyWeak;
+	int classFlags;
+	int miscFlags;
 
-	//aggregate type
+	AttributeFlags() :
+		elementAtk(0),
+		familyStrong(0),
+		familyWeak(0),
+		classFlags(0),
+		miscFlags(0)
+	{}
 
-	int& operator [](size_t i) { return *((&element_atk) + i); }
-	const int& operator [](size_t i) const { return *((&element_atk) + i); }
+	int& operator [](int i) { return *((&elementAtk) + i); }
+	const int& operator [](int i) const { return *((&elementAtk) + i); }
 
-	this_type& operator |=(const this_type& rhs)
+	AttributeFlags& operator |=(const AttributeFlags& rhs)
 	{
-		for( size_t i(0); i < MaxInternalFlags; ++i )
+		for( int i(0); i < MaxFlags; ++i )
 			operator [](i) |= rhs[i];
 		return *this;
 	}
 
-	this_type& operator &=(const this_type& rhs)
+	AttributeFlags& operator &=(const AttributeFlags& rhs)
 	{
-		for( size_t i(0); i < MaxInternalFlags; ++i )
+		for( int i(0); i < MaxFlags; ++i )
 			operator [](i) &= rhs[i];
 		return *this;
 	}
 
-	this_type& operator ^=(const this_type& rhs)
+	AttributeFlags& operator ^=(const AttributeFlags& rhs)
 	{
-		for( size_t i(0); i < MaxInternalFlags; ++i )
+		for( int i(0); i < MaxFlags; ++i )
 			operator [](i) ^= rhs[i];
 		return *this;
 	}
 
-	this_type& operator +=(const this_type& rhs)
+	AttributeFlags& operator +=(const AttributeFlags& rhs)
 	{
 		// simply or them together.
 		return operator |=(rhs);
 	}
 
-	this_type& operator -=(const this_type& rhs)
+	AttributeFlags& operator -=(const AttributeFlags& rhs)
 	{
 		// special case:
 		// if b[bit] and a[bit] then remove the bit (1 - 1 = 0),
 		// otherwise there's no logical reason to remove a bit from lhs.
-		for( size_t i(0); i < MaxInternalFlags; ++i )
+		for( int i(0); i < MaxFlags; ++i )
 		{
 			int val = operator [](i) & rhs[i];
 			operator [](i) &= ~val;
@@ -78,38 +79,38 @@ struct AttributeFlags
 		return *this;
 	}
 
-	this_type operator |(const this_type& rhs)
+	AttributeFlags operator |(const AttributeFlags& rhs)
 	{
-		return this_type(*this).operator |=(rhs);
+		return AttributeFlags(*this).operator |=(rhs);
 	}
 
-	this_type operator &(const this_type& rhs)
+	AttributeFlags operator &(const AttributeFlags& rhs)
 	{
-		return this_type(*this).operator &=(rhs);
+		return AttributeFlags(*this).operator &=(rhs);
 	}
 
-	this_type operator ^(const this_type& rhs)
+	AttributeFlags operator ^(const AttributeFlags& rhs)
 	{
-		return this_type(*this).operator ^=(rhs);
+		return AttributeFlags(*this).operator ^=(rhs);
 	}
 
-	this_type operator +(const this_type& rhs)
+	AttributeFlags operator +(const AttributeFlags& rhs)
 	{
-		return this_type(*this).operator +=(rhs);
+		return AttributeFlags(*this).operator +=(rhs);
 	}
 
-	this_type operator -(const this_type& rhs)
+	AttributeFlags operator -(const AttributeFlags& rhs)
 	{
-		return this_type(*this).operator -=(rhs);
+		return AttributeFlags(*this).operator -=(rhs);
 	}
 
 	void Reset()
 	{
-		*this = this_type();
+		*this = AttributeFlags();
 	}
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 
 };
 

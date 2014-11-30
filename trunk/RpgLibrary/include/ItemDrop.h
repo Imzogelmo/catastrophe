@@ -40,8 +40,8 @@ public:
 
 	void Validate();
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 
 protected:
 	int		m_itemId;

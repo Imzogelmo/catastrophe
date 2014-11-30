@@ -15,31 +15,49 @@
 
 #include "RpgCommon.h"
 #include "Attributes.h"
+#include "UsageInfo.h"
+
+
+struct SpellLevelData
+{
+	s16 exp;
+	s16 cost;
+	s16 effectivity;
+	SpellUsageInfo usageInfo;
+
+	SpellLevelData()
+	{
+		::memset(this, 0, sizeof(SpellLevelData));
+	}
+};
 
 
 struct RPG_API Spell
 {
-	fc::string	name;
-	fc::string	script;
-	fc::string	description;
-	Attributes	attributes;
-	int			id;
+	StaticString<32>	name;
+	StaticString<32>	script;
+	String				description;
+	Attributes			attributes;
+
+	fc::vector<SpellLevelData> levelData;
+
+	u16			id;
 	int			cost;
 	int			gold;
 	int			flags;
-	int			usage_flags; //maybe combine these?
-	short		misc[16];
-	int			buff_id;
-	int			icon_id;
-	int			animation_id;
-	int			sfx;
+	//s16		misc[16];
+	u16			iconId;
+	u16			animationId;
+	u16			sfx;
 	//Targeting	targeting;
 
 
 	Spell();
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
+
+	int Spell::GetMemoryUsage() const;
 
 };
 

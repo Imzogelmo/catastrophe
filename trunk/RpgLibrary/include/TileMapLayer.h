@@ -13,99 +13,77 @@
 
 #include <fc/string.h>
 #include <fc/dynamic_array2d.h>
+#include <Catastrophe/Math/Point.h>
 #include <Catastrophe/Math/Color.h>
 #include <Catastrophe/Graphics/BlendMode.h>
 
 #include "Tile.h"
+#include "TileMapLayerCell.h"
 
 
-/*
- * @LayerTile
- * represents an instance of a tile as it 
- * exists inside a layer of a map.
- */
-struct LayerTile
-{
-	enum Flags
-	{
-		FlipHorizontal = 1,
-		FlipVertical = 2
-	};
 
-	Tile* tile;
-	int flags;
-
-	LayerTile() : tile(0), flags(0)
-	{}
-
-	inline operator bool() const { return tile != 0; }
-	inline bool Empty() const { return tile == 0; }
-	inline void Clear()
-	{
-		tile = 0;
-		flags = 0;
-	}
-
-	inline int GetFlags() const { return flags; }
-	inline int GetFlip() const { return flags & (FlipVertical | FlipHorizontal); }
-
-};
-
-
-//todo: tile flip/flags
 class RPG_API TileMapLayer
 {
 public:
-	typedef fc::dynamic_array2d<LayerTile> array_type;
+	typedef fc::dynamic_array2d<TileMapLayerCell> array_type;
 
 	TileMapLayer();
 
-	void SetName( const fc::string& name ) { m_name = name; }
+	void SetOffset( const Point& offset ) { m_offset = offset; }
+	void SetName( const String& name ) { m_name = name; }
 	void SetVisible( bool enable = true ) { m_visible = enable; }
 	void SetColor( const Color& color ) { m_color = color; }
 	void SetBlendMode( const BlendMode& blendmode ) { m_blendmode = blendmode; }
 	void SetTileset( Tileset* tileset );
 	
-	void Resize( size_t w, size_t h );
+	void Resize( u32 w, u32 h );
 	void Clear();
 
-	size_t Size() const { return m_tiles.size(); }
-	size_t Width() const { return m_tiles.x(); }
-	size_t Height() const { return m_tiles.y(); }
+	u32 GetSize() const { return m_tiles.size(); }
+	u32 GetWidth() const { return m_tiles.x(); }
+	u32 GetHeight() const { return m_tiles.y(); }
+	Point GetOffset() const { return m_offset; }
+	int GetOffsetX() const { return m_offset.x; }
+	int GetOffsetY() const { return m_offset.y; }
 
 	bool IsVisible() const { return m_visible; }
-
-	Tileset* GetTileset() const { return m_tileset; }
-	const fc::string& GetName() const { return m_name; }
+	const String& GetName() const { return m_name; }
 	const Color& GetColor() const { return m_color; }
 	const BlendMode& GetBlendMode() const { return m_blendmode; }
+	Tileset* GetTileset() const { return m_tileset; }
 	
-	LayerTile& GetLayerTile( size_t index ) { return m_tiles[index]; }
-	LayerTile& GetLayerTile( size_t x, size_t y ) { return m_tiles.at(y, x); }
-	const LayerTile& GetLayerTile( size_t index ) const { return m_tiles[index]; }
-	const LayerTile& GetLayerTile( size_t x, size_t y ) const { return m_tiles.at(y, x); }
+	TileMapLayerCell& GetCell( u32 index ) { return m_tiles[index]; }
+	TileMapLayerCell& GetCell( u32 x, u32 y ) { return m_tiles.at(y, x); }
+	const TileMapLayerCell& GetCell( u32 index ) const { return m_tiles[index]; }
+	const TileMapLayerCell& GetCell( u32 x, u32 y ) const { return m_tiles.at(y, x); }
 
-	Tile* GetTile( size_t index ) const { return m_tiles[index].tile; }
-	Tile* GetTile( size_t x, size_t y ) const { return m_tiles.at(y, x).tile; }
+	Tile* GetTile( u32 index ) const { return m_tiles[index].tile; }
+	Tile* GetTile( u32 x, u32 y ) const { return m_tiles.at(y, x).tile; }
 
 	//remove me.
 	array_type& GetTileArray() { return m_tiles; }
 	const array_type& GetTileArray() const { return m_tiles; }
 
 	void Update();
-	void Render( SpriteBatch* spriteBatch, const Rect& viewRect, bool wrap );
+	void Render( SpriteBatch* spriteBatch, const Rect& viewRect, bool wrap = false );
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 
 protected:
-	fc::string		m_name;
+	void InternalDrawNormal( SpriteBatch* spriteBatch, s32 x1, s32 y1, s32 x2, s32 y2 );
+	void InternalDrawWrap( SpriteBatch* spriteBatch, s32 x1, s32 y1, s32 x2, s32 y2 );
+
+protected:
+	String			m_name;
 	TileMap*		m_parent;
 	Tileset*		m_tileset;
 	array_type		m_tiles;
 	BlendMode		m_blendmode;
 	Color			m_color;
-	//Point			m_offset;
+	Point			m_offset;
+	f32				m_parallax;
+	u32				m_tileSize;
 	bool			m_visible;
 	//bool		m_parallax;
 

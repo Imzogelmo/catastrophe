@@ -19,7 +19,7 @@ class MapManager : public ResourceManagerType<TileMap>
 public:
 	MapManager();
 
-	TileMap* Load( const fc::string& filename, int* id = 0 );
+	TileMap* Load( const String& filename, int* id = 0 );
 
 protected:
 	void DisposeResource( void* p );

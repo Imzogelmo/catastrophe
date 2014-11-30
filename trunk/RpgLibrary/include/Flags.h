@@ -1,11 +1,11 @@
 
 #pragma once
 
-template <size_t N>
+template <u32 N>
 struct Flags
 {
 	typedef Flags<N> this_type;
-	enum : size_t
+	enum : u32
 	{
 		MaxBits = N
 	};

@@ -19,22 +19,27 @@ Spell::Spell()
 }
 
 
-void Spell::SerializeXml( AttributeWriter* f )
+void Spell::Serialize( AttributeWriter* f )
 {
 	f->SetString("name", name.c_str());
 	f->SetString("script", script.c_str());
 	f->SetString("description", description.c_str());
 
-	attributes.SerializeXml(f);
+	attributes.Serialize(f);
 }
 
 
-void Spell::DeserializeXml( AttributeReader* f )
+void Spell::Deserialize( AttributeReader* f )
 {
 	name = f->GetString("name");
 	script = f->GetString("script");
 	description = f->GetString("description");
 
-	attributes.DeserializeXml(f);
+	attributes.Deserialize(f);
 }
 
+
+int Spell::GetMemoryUsage() const
+{
+	return (int)(description.capacity() + levelData.capacity());
+}

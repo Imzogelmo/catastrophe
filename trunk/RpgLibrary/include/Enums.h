@@ -41,12 +41,12 @@ enum Alignment
 
 enum TargetModeFlags  
 {
-	TargetMode_Single = 1,         // Forced single-target to a selectable target
-	TargetMode_Group = 2,          // Forced multi-target to a selectable group
-	TargetMode_SingleOrGroup = 3,  // Single or group, spreadable 
-	TargetMode_Faction = 4,        // Forced multi-target to selectable faction
-	TargetMode_SingleOrFaction = 5 // Single or all of faction, spreadable
-	TargetMode_All = 0xFF          // Forced multi-target to both factions
+	TargetMode_Single = 1,			// Forced single-target to a selectable target
+	TargetMode_Group = 2,			// Forced multi-target to a selectable group
+	TargetMode_SingleOrGroup = 3,	// Single or group, spreadable 
+	TargetMode_Faction = 4,			// Forced multi-target to selectable faction
+	TargetMode_SingleOrFaction = 5,	// Single or all of faction, spreadable
+	TargetMode_All = 0xFF			// Forced multi-target to both factions
 };
 
 
@@ -62,16 +62,18 @@ enum CursorStart
 {
 	Cursor_None,
 	Cursor_Self,
+	Cursor_FirstAlly,
 	Cursor_FirstEnemy,
-	Curosr_FirstAlly
 };
 
 
 enum CursorModeFlags
 {
-	CursorMode_Selectablle = 1,      // Cam be moved off the starting target
-	CursorMode_Spreadable = 2,       // Can be spread optionally
-	CursorMode_FactionRestricted = 4 // Keep cursor within the faction it starts in
+	CursorMode_None = 0	,				// User defined
+	CursorMode_Selectable = 1,			// Cam be moved off the starting target
+	CursorMode_Locked = 2,				// Keep cursor fixed in position.
+	CursorMode_Spreadable = 4,			// Can be spread optionally
+	CursorMode_FactionRestricted = 8	// Keep cursor within the faction it starts in
 };
 
 
@@ -114,7 +116,7 @@ enum TargetInfo
 enum UsageFlags
 {
 	Usage_Camp = 1,
-	Usage_Field = 2 | Usage_Camp,
+	Usage_Field = 2,
 	Usage_Battle = 4,
 	Usage_Any = 0xff
 };
@@ -130,17 +132,59 @@ enum AffectFlags
 
 struct TargetData //saved in items/skills..
 {
-	byte some_flags;
-	byte scope;
-	byte padding[2]; //4 bytes
+	u8 some_flags;
+	u8 scope;
+	u8 padding[2]; //4 bytes
 };
 
 
 struct BattleTargetInfo //used in battle by actions.
 {
 	int target_id;
-	byte info;
+	u8 info;
 
 };
 
+
+enum BattleCondition
+{
+	BattleCondition_None,
+	BattleCondition_FirstStrike,
+	BattleCondition_BackAttack,
+	BattleCondition_Surrounded,
+	BattleCondition_Pincer
+};
+
+
+//------------------------------------------------------------------------------------
+// statistical data
+//------------------------------------------------------------------------------------
+
+enum ModifierType
+{
+	ModifierType_BonusMalus,
+	ModifierType_Multiplier
+};
+
+
+enum ItemFlags
+{
+	ItemFlag_KeyItem = 1,
+	ItemFlag_Eternal = 2,
+	ItemFlag_Equippable = 4,
+	ItemFlag_Cursed = 8,
+	ItemFlag_EquipOnlySpecialAbility = 8
+
+};
+
+
+// Details on how the item can be accessed within the database
+enum ItemCategory
+{
+	ItemCategory_Item,
+	ItemCategory_Weapon,
+	ItemCategory_Armor,
+	ItemCategory_Accessory,
+	ItemCategory_Material
+};
 

@@ -28,7 +28,7 @@ public:
 	ResourceCache* GetResourceCache() { return &m_resourceCache; }
 
 	// destroys or removes a reference to a resource.
-	void Unload( const fc::string& filename );
+	void Unload( const String& filename );
 	void Unload( void* ptr );
 	void Unload( int id );
 
@@ -42,10 +42,10 @@ protected:
 	virtual void DisposeResource( void* p ) = 0;
 
 	void ReleaseResource( Resource* resource );
-	void AddResource( void* p, const fc::string& filename, int* id = 0 );
+	void AddResource( void* p, const String& filename, int* id = 0 );
 
 	// calls to get will increase the resource reference count.
-	void* InternalGetResource( const fc::string& filename, int* id = 0 );
+	void* InternalGetResource( const String& filename, int* id = 0 );
 	void* InternalGetResource( int id );
 
 	ResourceCache	m_resourceCache;
@@ -76,7 +76,7 @@ public:
 	// order to decrease the reference counter.
 	//
 	// example load function usage:
-	// T* Load( const fc::string& filename, int* id = 0 )
+	// T* Load( const String& filename, int* id = 0 )
 	// {
 	//     Resource* resource = GetResource(filename, id);
 	//     if( resource )
@@ -91,7 +91,7 @@ public:
 
 
 	// calls to get will increase the resource reference count.
-	T* GetResource( const fc::string& filename, int* id = 0 ) { return (T*)InternalGetResource(filename, id); }
+	T* GetResource( const String& filename, int* id = 0 ) { return (T*)InternalGetResource(filename, id); }
 	T* GetResource( int id ) { return (T*)InternalGetResource(id); }
 
 protected:

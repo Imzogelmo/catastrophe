@@ -24,7 +24,7 @@ BattleCommand::BattleCommand() :
 }
 
 
-void BattleCommand::SerializeXml( AttributeWriter* f )
+void BattleCommand::Serialize( AttributeWriter* f )
 {
 	f->SetString("name", name.c_str());
 	f->SetString("description", description.c_str());
@@ -35,7 +35,7 @@ void BattleCommand::SerializeXml( AttributeWriter* f )
 }
 
 
-void BattleCommand::DeserializeXml( AttributeReader* f )
+void BattleCommand::Deserialize( AttributeReader* f )
 {
 	name = f->GetString("name");
 	description = f->GetString("description");

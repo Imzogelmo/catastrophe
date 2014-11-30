@@ -25,43 +25,43 @@
 class AttributeStrings
 {
 public:
-	fc::string max_params[MAX_PARAMS];
-	fc::string stats[MAX_STATS];
-	fc::string elements[MAX_ELEMENTS];
-	fc::string status[MAX_STATUS];
-	fc::string misc[MAX_MISC];
+	String maxParams[MAX_PARAMS];
+	String stats[MAX_STATS];
+	String elements[MAX_ELEMENTS];
+	String status[MAX_STATUS];
+	String misc[MAX_MISC];
 
 
 	// index lookup by name
-	bool GetMaxParamIndex( const fc::string& name, size_t& index )
+	bool GetMaxParamIndex( const String& name, u32& index )
 	{
-		return InternalGetIndex(max_params, MAX_PARAMS, name, index);
+		return InternalGetIndex(maxParams, MAX_PARAMS, name, index);
 	}
 
-	bool GetStatIndex( const fc::string& name, size_t& index )
+	bool GetStatIndex( const String& name, u32& index )
 	{
 		return InternalGetIndex(stats, MAX_STATS, name, index);
 	}
 
-	bool GetElementIndex( const fc::string& name, size_t& index )
+	bool GetElementIndex( const String& name, u32& index )
 	{
 		return InternalGetIndex(elements, MAX_ELEMENTS, name, index);
 	}
 
-	bool GetStatusIndex( const fc::string& name, size_t& index )
+	bool GetStatusIndex( const String& name, u32& index )
 	{
 		return InternalGetIndex(status, MAX_STATUS, name, index);
 	}
 
-	bool GetMiscIndex( const fc::string& name, size_t& index )
+	bool GetMiscIndex( const String& name, u32& index )
 	{
 		return InternalGetIndex(misc, MAX_MISC, name, index);
 	}
 
 protected:
-	bool InternalGetIndex( const fc::string* ptr, size_t n, const fc::string& name, size_t& index )
+	bool InternalGetIndex( const String* ptr, u32 n, const String& name, u32& index )
 	{
-		for( size_t i(0); i < n; ++i )
+		for( u32 i(0); i < n; ++i )
 		{
 			if( name == ptr[i] )
 			{

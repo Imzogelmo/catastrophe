@@ -45,17 +45,17 @@ void AnimatedSpriteSetAsset::ReleaseAnimatedSpriteSet()
 }
 
 
-void AnimatedSpriteSetAsset::SerializeXml( AttributeWriter* f )
+void AnimatedSpriteSetAsset::Serialize( AttributeWriter* f )
 {
 	//f->BeginNode("AnimatedSpriteSet");
 
-	size_t count = AnimatedSpriteSet::GetNumAnimations();
+	u32 count = AnimatedSpriteSet::GetNumAnimations();
 	f->SetUInt("num_animations", count);
 
-	TextureAsset::SerializeXml(f);
+	TextureAsset::Serialize(f);
 	SerializeObject<SpriteBase>("SpriteBase", f, *this);
 
-	for( size_t i(0); i < count; ++i )
+	for( u32 i(0); i < count; ++i )
 	{
 		SerializeObject<SpriteAnimation>("SpriteAnimation", f, AnimatedSpriteSet::GetAnimation(i));
 	}
@@ -64,7 +64,7 @@ void AnimatedSpriteSetAsset::SerializeXml( AttributeWriter* f )
 }
 
 /*
-void AnimatedSpriteSetAsset::DeserializeXml( AttributeReader* f )
+void AnimatedSpriteSetAsset::Deserialize( AttributeReader* f )
 {
 	m_preload = true;
 	AnimatedSpriteSet::Resize(1);
@@ -110,16 +110,16 @@ void AnimatedSpriteSetAsset::DeserializeXml( AttributeReader* f )
 }
 */
 
-void AnimatedSpriteSetAsset::DeserializeXml( AttributeReader* f )
+void AnimatedSpriteSetAsset::Deserialize( AttributeReader* f )
 {
-	size_t count = f->GetUInt("num_animations");
+	u32 count = f->GetUInt("num_animations");
 
-	TextureAsset::DeserializeXml(f);
+	TextureAsset::Deserialize(f);
 	DeserializeObject<SpriteBase>("SpriteBase", f, *this);
 	AnimatedSpriteSet::Resize(count);
 
 	bool nested = false;
-	for( size_t i(0); i < count; ++i )
+	for( u32 i(0); i < count; ++i )
 	{
 		if( f->NextChild("SpriteAnimation") )
 		{

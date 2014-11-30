@@ -111,7 +111,7 @@
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				ProgramDataBaseFileName="$(OutDir)\rpglib.pdb"
-				WarningLevel="3"
+				WarningLevel="4"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -184,6 +184,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\Data\DatabaseVariant.inl"
+					>
+				</File>
+				<File
 					RelativePath=".\..\..\src\Data\Dice.inl"
 					>
 				</File>
@@ -200,7 +204,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\..\..\src\Data\ExpTable.inl"
+					RelativePath="..\..\src\Data\ExperienceTable.inl"
 					>
 				</File>
 				<File
@@ -267,6 +271,10 @@
 					RelativePath=".\..\..\src\Data\Synthesis.inl"
 					>
 				</File>
+				<File
+					RelativePath="..\..\src\Data\UsageInfo.inl"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Tile"
@@ -305,6 +313,14 @@
 				</File>
 				<File
 					RelativePath=".\..\..\src\Resource\DeserializeObject.inl"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\Resource\FontAsset.inl"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\Resource\FontManager.inl"
 					>
 				</File>
 				<File
@@ -414,6 +430,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\include\DatabaseVariant.h"
+					>
+				</File>
+				<File
 					RelativePath=".\..\..\include\Dice.h"
 					>
 				</File>
@@ -505,6 +525,10 @@
 					RelativePath=".\..\..\include\Synthesis.h"
 					>
 				</File>
+				<File
+					RelativePath="..\..\include\UsageInfo.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Tile"
@@ -519,6 +543,10 @@
 				</File>
 				<File
 					RelativePath="..\..\include\TileMapLayer.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\TileMapLayerCell.h"
 					>
 				</File>
 				<File
@@ -543,6 +571,14 @@
 				</File>
 				<File
 					RelativePath=".\..\..\include\AttributeSerializer.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\FontAsset.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\FontManager.h"
 					>
 				</File>
 				<File

@@ -14,28 +14,35 @@
 #include "RpgCommon.h"
 
 
+
+enum TileFlags
+{
+	TileFlag_FlipX = 0x0001,
+	TileFlag_FlipY = x0002,
+	TileFlag_Solid = x0004,
+	//Blank			= 0x00000008,
+	TileFlag_ImpassibleNorth = x0010,
+	TileFlag_ImpassibleEast = x0020,
+	TileFlag_ImpassibleSouth = x0040,
+	TileFlag_ImpassibleWest = x0080,
+	//Blank			= 0x00000100,
+	//Blank			= 0x00000200,
+	//Blank			= 0x00000400,
+	//Blank			= 0x00000800,
+	TileFlag_AnimationPingPong = 0x4000,
+	TileFlag_InternalReverseDirection = 0x8000,
+
+};
+
+
 class TileProperties
 {
 public:
 
-	enum TilePropertyFlags
-	{
-		Solid			= 0x00000004,
-		//Blank			= 0x00000008,
-		ImpassibleNorth	= 0x00000010,
-		ImpassibleEast	= 0x00000020,
-		ImpassibleSouth	= 0x00000040,
-		ImpassibleWest	= 0x00000080
-		//Blank			= 0x00000100,
-		//Blank			= 0x00000200,
-		//Blank			= 0x00000400,
-		//Blank			= 0x00000800,
 
-	};
-
-	int		flags;
-	short	encounter;
-	byte	terrain;
+	u16	flags;
+	u16	encounter;
+	u8	terrain;
 
 	TileProperties();
 
@@ -48,7 +55,7 @@ public:
 			flags &= ~(1 << bit);
 	}
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 
 };
