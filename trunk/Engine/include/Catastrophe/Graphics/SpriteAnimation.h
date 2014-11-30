@@ -27,6 +27,15 @@
 CE_NAMESPACE_BEGIN
 
 
+enum AnimationType
+{
+	AnimationType_None,
+	AnimationType_Loop,
+	AnimationType_OneTime,
+	AnimationType_PingPong
+};
+
+
 class CE_API SpriteAnimation
 {
 public:
@@ -45,7 +54,7 @@ public:
 	void SetTexture( Texture* texturePtr );
 	void SetSourceRect( const Rect& sourceRect );
 	void SetAnimationSpeed( float animationDelay );
-	void SetCurrentFrame( size_t frame );
+	void SetCurrentFrame( u32 frame );
 	void SetNumFrames( int frames );
 	void Update();
 
@@ -53,25 +62,27 @@ public:
 	//void SetFlipHorizontal( bool flip = true );
 	//void SetFlipVertical( bool flip = true );
 	void SetPaused( bool pause = true );
-	void SetLooping( bool loop = true );
+	void SetAnimationType( AnimationType animationType );
 	inline void SetFrameOffsetX( int offsetX ) { m_frameOffsetX = offsetX; }
 	inline void SetFrameOffsetY( int offsetY ) { m_frameOffsetY = offsetY; }
 	//inline bool IsFlippedHorizontal() const { return (m_flags & 1) != 0; };
 	//inline bool IsFlippedVertical() const { return (m_flags & 2) != 0; };
 	inline bool IsPaused() const { return (m_flags & 4) != 0; };
-	inline bool IsLooping() const { return (m_flags & 8) == 0; };
 	inline bool IsAnimated() const { return m_numFrames > 1; };
-	bool IsFinished() const;
+	bool IsAnimationFinished() const;
 
+	inline AnimationType GetAnimationType() const { return (AnimationType)m_animationType; };
 	inline int GetFlags() const { return m_flags; }
 	inline int GetFrameOffsetX() const { return m_frameOffsetX; }
 	inline int GetFrameOffsetY() const { return m_frameOffsetY; }
-	inline size_t GetNumFrames() const { return m_numFrames; }
-	inline size_t GetCurrentFrame() const { return m_currentFrame; }
+	inline u32 GetNumFrames() const { return m_numFrames; }
+	inline u32 GetCurrentFrame() const { return m_currentFrame; }
 	inline float GetAnimationSpeed() const { return m_frameSpeed; }
 	inline const Rect& GetSourceRect() const { return m_sourceRect; }
 	inline Texture* GetTexture() const { return m_texture; }
-	gluint GetTextureID() const;
+	float GetAnimationLength() const;
+
+	u32 GetTextureID() const;
 
 	inline Rectf& GetUVRect() { return m_uv; }
 	inline const Rectf& GetUVRect() const { return m_uv; }
@@ -80,13 +91,15 @@ protected:
 	Texture*	m_texture;
 	Rect		m_sourceRect;
 	Rectf		m_uv;
-	size_t		m_currentFrame;
-	size_t		m_numFrames;
+	u32			m_currentFrame;
+	u32			m_numFrames;
 	float		m_frameCounter;
 	float		m_frameSpeed;
 	int			m_frameOffsetX;
 	int			m_frameOffsetY;
-	int			m_flags; //todo
+	u16			m_flags; //todo
+	u8			m_animationType;
+	u8			m_animationDirection;
 
 	/*
 	enum SpriteAnimationFlags

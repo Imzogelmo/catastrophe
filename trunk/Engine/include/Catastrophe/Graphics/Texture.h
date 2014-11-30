@@ -23,6 +23,7 @@
 #include "../Common.h"
 #include "../Math/Rect.h"
 #include "../Math/Vector2.h"
+#include "../Resource/GraphicsResource.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -38,19 +39,20 @@ enum eTextureFilter
 };
 */
 
-class CE_API Texture
+class CE_API Texture : public GraphicsResource
 {
 public:
 	Texture();
-	Texture( const fc::string& filename );
+	Texture( const String& filename );
 	Texture( int w, int h, int format, int filterMode, int wrapMode, const void *const data );
 
 	void Dispose();
 	bool CreateBlank( const Color& backgroundColor, int w, int h );
 	bool CreateFromData( const void* data, int w, int h );
 
-	bool LoadFromFile( const fc::string& filename );
-	bool SaveToFile( const fc::string& filename );
+	bool LoadFromFile( const String& filename );
+	bool LoadFromFile( const String& path, const String& filename );
+	bool SaveToFile( const String& filename );
 
 	void SetWrapMode( int wrapMode );
 	void SetFilterMode( int filterMode );
@@ -62,18 +64,15 @@ public:
 	bool IsValid() const;
 
 	/// Update pixel area. pixels must be large enough for rect.
-	void UpdateTexture( const Rect& subRect, ubyte* pixels );
+	void UpdateTexture( const Rect& subRect, u8* pixels );
 
-	void SetName( const fc::string& name ) { m_name = name; }
-	const fc::string& GetName() const { return m_name; }
-	//void* GetUserData() const { return m_userdata; }
 	int Width() const { return m_width; }
 	int Height() const { return m_height; }
 	float Widthf() const { return m_floatWidth; }
 	float Heightf() const { return m_floatHeight; }
 
 	/// Gets the textures pixel data. ptr must be large enough to hold the data.
-	bool GetPixels( ubyte* ptr ) const;
+	bool GetPixels( u8* ptr ) const;
 
 	/// Gets the OpenGL id of this texture.
 	gluint GetTextureID() const { return m_texture; }
@@ -92,7 +91,6 @@ public:
 	static int GetMaxTextureSize();
 
 protected:
-	fc::string m_name;
 	gluint	m_texture;
 	int		m_width;
 	int		m_height;
@@ -101,7 +99,6 @@ protected:
 	int		m_format;
 	int		m_wrapMode;
 	int		m_filterMode;
-	//void	m_userdata;
 	int		m_internalformat;
 	bool	m_mipmaps;
 };

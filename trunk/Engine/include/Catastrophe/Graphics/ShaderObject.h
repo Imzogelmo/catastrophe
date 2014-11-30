@@ -37,11 +37,11 @@ public:
 	ShaderObject( ShaderType type );
 
 	void Dispose();
-	bool LoadFromFile( const fc::string& filename );
-	bool LoadFromMemory( const fc::string& code );
+	bool LoadFromFile( const String& filename );
+	bool LoadFromMemory( const String& code );
 	bool Compile();
-	const fc::string& GetSource();
-	const fc::string& GetInfoLog();
+	const String& GetSource();
+	const String& GetInfoLog();
 
 	gluint GetObject() const { return m_shader_object; }
 	bool IsCompiled() const { return m_is_compiled; }
@@ -50,9 +50,9 @@ protected:
 	void InternalCreateShaderObject();
 
 	//ShaderType	m_type;
-	fc::string	m_name;
-	fc::string	m_source;
-	fc::string	m_infolog;
+	String	m_name;
+	String	m_source;
+	String	m_infolog;
 	gluint		m_shader_object;
 	ShaderType	m_program_type;
 	bool		m_is_compiled;

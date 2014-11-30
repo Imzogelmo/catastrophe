@@ -23,8 +23,10 @@
 #include "Forward.h"
 #include "../Common.h"
 #include "../Math/Vector2.h"
-#include "../Math/Vector2.h"
+#include "../Math/Rectf.h"
 #include "../Math/Color.h"
+#include "../Graphics/BlendMode.h"
+
 
 CE_NAMESPACE_BEGIN
 
@@ -52,13 +54,15 @@ public:
 	void SetWidth( float width ) { SetSize( Vector2( width, m_size.y ) ); }
 	void SetHeight( float height ) { SetSize( Vector2( m_size.x, height ) ); }
 	void SetDimensions( const Rectf& rect );
+	void SetColor( const Color& color ) { m_color = color; }
+	void SetBlendMode( const BlendMode& blendmode ) { m_blendmode = blendmode; }
 	void SetActive( bool enable );
 	void SetSelected( bool enable );
 	void SetVisible( bool enable );
 	void SetEnabled( bool enable );
 
 	void AddChild( Widget* element );
-	void InsertChild( size_t index, Widget* element );
+	void InsertChild( u32 index, Widget* element );
 	void RemoveChild( Widget* element );
 	void RemoveAllChildren();
 	void Remove();
@@ -66,10 +70,14 @@ public:
 
 	const Vector2& GetPosition() const { return m_pos; }
 	const Vector2& GetSize() const { return m_size; }
+	float GetX() const { return m_pos.x; }
+	float GetY() const { return m_pos.y; }
 	float GetWidth() const { return m_size.x; }
 	float GetHeight() const { return m_size.y; }
 	Rectf GetDimensions() const;
 	Vector2 GetScreenPosition() const;
+	Color GetColor() const { return m_color; }
+	BlendMode GetBlendMode() const { return m_blendmode; }
 
 	bool IsRoot() const;
 	bool IsActive() const { return m_active; }
@@ -78,9 +86,9 @@ public:
 	bool IsLocked() const { return m_locked; }
 	bool IsEnabled() const { return m_enabled; }
 
-	size_t GetNumChildren( bool recurse = false ) const;
-	Widget* GetChild( size_t index ) const;
-	bool HasChild( Widget* element, size_t* index = 0 ) const;
+	u32 GetNumChildren( bool recurse = false ) const;
+	Widget* GetChild( u32 index ) const;
+	bool HasChild( Widget* element, u32* index = 0 ) const;
 
 	const child_vec_type& GetChildren() const { return m_children; }
 	void GetChildren( child_vec_type& dest, bool recurse = false ) const;
@@ -101,6 +109,8 @@ protected:
 
 	Vector2			m_pos;
 	Vector2			m_size;
+	Color			m_color;
+	BlendMode		m_blendmode;
 
 	int				m_ref_count;
 	bool			m_active;

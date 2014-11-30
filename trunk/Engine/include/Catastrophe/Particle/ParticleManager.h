@@ -31,7 +31,7 @@ class ParticleManager
 public:
 	typedef fc::vector_map<fc::string, ParticleSystem*> map_type;
 
-	size_t GetParticleCount();
+	u32 GetParticleCount();
 
 	void AddSystem( ParticleSystem* system );
 	void Update();

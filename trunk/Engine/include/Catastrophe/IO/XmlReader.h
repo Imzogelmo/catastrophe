@@ -38,14 +38,18 @@ public:
 	};
 
 	XmlReader();
-	XmlReader( const fc::string& filename );
+	XmlReader( const String& filename );
 	virtual ~XmlReader();
 
-	virtual bool Open( const fc::string& filename );
+	XmlElement GetElement() const { return m_element; }
+	XmlDocument* GetDocument() { return &m_document; }
+
+	virtual bool Open( const String& filename );
 	virtual void Close();
 	virtual bool IsOpen() const { return m_document && m_document.GetRoot(); }
 
-	virtual const char* GetCurrentNodeName() const;
+	virtual String GetCurrentNodeName() const;
+	virtual const char* GetCurrentNodeNameCStr() const;
 
 	virtual bool FirstChild( const char* name = "" );
 	virtual bool NextChild( const char* name = "" );
@@ -53,12 +57,14 @@ public:
 	virtual bool SetToChild( const char* name );
 
 	virtual bool HasAttribute( const char* name ) const;
-	virtual fc::string GetString( const char* name, const fc::string& defaultValue = "" ) const;
+	virtual const char* GetString( const char* name, const char* defaultValue = 0 ) const;
+	virtual String GetString( const char* name, const String& defaultValue ) const;
 	virtual bool GetBool( const char* name, bool defaultValue = false ) const;
-	virtual byte GetByte( const char* name, byte defaultValue = 0 ) const;
-	virtual short GetShort( const char* name, short defaultValue = 0 ) const;
+	virtual u8 GetByte( const char* name, u8 defaultValue = 0 ) const;
+	virtual s16 GetShort( const char* name, s16 defaultValue = 0 ) const;
+	virtual u16 GetUShort( const char* name, u16 defaultValue = 0 ) const;
 	virtual int GetInt( const char* name, int defaultValue = 0 ) const;
-	virtual size_t GetUInt( const char* name, size_t defaultValue = 0 ) const;
+	virtual u32 GetUInt( const char* name, u32 defaultValue = 0 ) const;
 	virtual float GetFloat( const char* name, float defaultValue = 0.f ) const;
 	virtual Rect GetRect( const char* name, const Rect& defaultValue = Rect::Zero ) const;
 	virtual Rectf GetRectf( const char* name, const Rectf& defaultValue = Rectf::Zero ) const;
@@ -69,12 +75,12 @@ public:
 	virtual Color GetColor( const char* name, const Color& defaultValue = Color::White() ) const;
 	virtual Colorf GetColorf( const char* name, const Colorf& defaultValue = Colorf() ) const;
 
-	virtual fc::string GetStringElement( const char* name, const fc::string& defaultValue = "" ) const;
+	virtual String GetStringElement( const char* name, const String& defaultValue = "" ) const;
 	virtual bool GetBoolElement( const char* name, bool defaultValue = false ) const;
-	virtual byte GetByteElement( const char* name, byte defaultValue = 0 ) const;
-	virtual short GetShortElement( const char* name, short defaultValue = 0 ) const;
+	virtual u8 GetByteElement( const char* name, u8 defaultValue = 0 ) const;
+	virtual s16 GetShortElement( const char* name, s16 defaultValue = 0 ) const;
 	virtual int GetIntElement( const char* name, int defaultValue = 0 ) const;
-	virtual size_t GetUIntElement( const char* name, size_t defaultValue = 0 ) const;
+	virtual u32 GetUIntElement( const char* name, u32 defaultValue = 0 ) const;
 	virtual float GetFloatElement( const char* name, float defaultValue = 0.f ) const;
 	virtual Rect GetRectElement( const char* name, const Rect& defaultValue = Rect::Zero ) const;
 	virtual Rectf GetRectfElement( const char* name, const Rectf& defaultValue = Rectf::Zero ) const;
@@ -85,22 +91,22 @@ public:
 	virtual Color GetColorElement( const char* name, const Color& defaultValue = Color::White() ) const;
 	virtual Colorf GetColorfElement( const char* name, const Colorf& defaultValue = Colorf() ) const;
 
-	virtual bool ReadBoolArray( const char* name, bool* ptr, size_t n ) const;
-	virtual bool ReadByteArray( const char* name, byte* ptr, size_t n ) const;
-	virtual bool ReadShortArray( const char* name, short* ptr, size_t n ) const;
-	virtual bool ReadIntArray( const char* name, int* ptr, size_t n ) const;
-	virtual bool ReadUIntArray( const char* name, size_t* ptr, size_t n ) const;
-	virtual bool ReadFloatArray( const char* name, float* ptr, size_t n ) const;
+	virtual bool ReadBoolArray( const char* name, bool* ptr, u32 n ) const;
+	virtual bool ReadByteArray( const char* name, u8* ptr, u32 n ) const;
+	virtual bool ReadShortArray( const char* name, s16* ptr, u32 n ) const;
+	virtual bool ReadIntArray( const char* name, int* ptr, u32 n ) const;
+	virtual bool ReadUIntArray( const char* name, u32* ptr, u32 n ) const;
+	virtual bool ReadFloatArray( const char* name, float* ptr, u32 n ) const;
 
-	virtual bool ReadBoolArrayElement( const char* name, bool* ptr, size_t n ) const;
-	virtual bool ReadByteArrayElement( const char* name, byte* ptr, size_t n ) const;
-	virtual bool ReadShortArrayElement( const char* name, short* ptr, size_t n ) const;
-	virtual bool ReadIntArrayElement( const char* name, int* ptr, size_t n ) const;
-	virtual bool ReadUIntArrayElement( const char* name, size_t* ptr, size_t n ) const;
-	virtual bool ReadFloatArrayElement( const char* name, float* ptr, size_t n ) const;
+	virtual bool ReadBoolArrayElement( const char* name, bool* ptr, u32 n ) const;
+	virtual bool ReadByteArrayElement( const char* name, u8* ptr, u32 n ) const;
+	virtual bool ReadShortArrayElement( const char* name, s16* ptr, u32 n ) const;
+	virtual bool ReadIntArrayElement( const char* name, int* ptr, u32 n ) const;
+	virtual bool ReadUIntArrayElement( const char* name, u32* ptr, u32 n ) const;
+	virtual bool ReadFloatArrayElement( const char* name, float* ptr, u32 n ) const;
 
 private:
-	fc::string		m_filename;
+	String			m_filename;
 	XmlDocument		m_document;
 	XmlElement		m_element;
 

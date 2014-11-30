@@ -42,25 +42,25 @@ public:
 	BlendMode	blendmode;
 	Rectf		uv;
 	PackedRect	source_rect;
-	short		frame_counter;
-	short		current_frame;
-	short		anim_speed;
-	short		num_frames;
+	s16		frame_counter;
+	s16		current_frame;
+	s16		anim_speed;
+	s16		num_frames;
 
 	PackedSprite();
-	PackedSprite( Texture* texturePtr, const PackedRect& sourceRectangle, int numberOfFrames, short frameDelay );
+	PackedSprite( Texture* texturePtr, const PackedRect& sourceRectangle, int numberOfFrames, s16 frameDelay );
 
-	void Create( Texture* texturePtr, const PackedRect& sourceRectangle, int numberOfFrames, short frameDelay = 128 );
-	void Create( const PackedRect& sourceRectangle, int numberOfFrames, short frameDelay = 128 );
+	void Create( Texture* texturePtr, const PackedRect& sourceRectangle, int numberOfFrames, s16 frameDelay = 128 );
+	void Create( const PackedRect& sourceRectangle, int numberOfFrames, s16 frameDelay = 128 );
 
 	void SetSize( const Vector2& value ) { size = value; }
 	void SetAngle( float value ) { angle = value; }
 	void SetColor( const Color& c ) { color = c; }
 	void SetBlendMode( const BlendMode& value ) { blendmode = value; }
-	void SetAnimationSpeed( short frameDelay );
+	void SetAnimationSpeed( s16 frameDelay );
 	void SetTexture( Texture* texturePtr );
 	void SetSourceRect( const PackedRect& sourceRectangle );
-	void SetCurrentFrame( short index );
+	void SetCurrentFrame( s16 index );
 
 	void Update();
 
@@ -72,14 +72,14 @@ public:
 	float GetAngle() const { return angle; }
 
 	// a few utility functions for dealing with fixed crap.
-	static short SecondsToFixed( float seconds )
+	static s16 SecondsToFixed( float seconds )
 	{
-		return (short)int(seconds * 960.f);
+		return (s16)int(seconds * 960.f);
 	}
 
-	static short FramesToFixed( int frames )
+	static s16 FramesToFixed( int frames )
 	{
-		return (short)(frames * 16);
+		return (s16)(frames * 16);
 	}
 
 };

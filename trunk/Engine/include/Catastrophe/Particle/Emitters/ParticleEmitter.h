@@ -89,10 +89,10 @@ public:
 	virtual bool GetGenerateParticleAngle() const { return m_generateParticleAngle; }
 
 	/// Initializes basic particle values : life, size, and color.
-	virtual void GenerateInitialValues( Particle* particles, size_t count );
+	virtual void GenerateInitialValues( Particle* particles, u32 count );
 
 	/// Emits 'count' particles from this emitter at pos.
-	virtual void Emit( const Vector2& pos, Particle* particles, size_t count );
+	virtual void Emit( const Vector2& pos, Particle* particles, u32 count );
 
 	virtual void Serialize( AttributeWriter* out );
 	virtual void Deserialize( AttributeReader* in );

@@ -40,7 +40,7 @@ public:
 	virtual float GetBoundingRectAngle() const { return m_boundingRectAngle; }
 	virtual bool GetWireFrame() const { return m_wireFrame; }
 
-	virtual void Emit( const Vector2& pos, Particle* p, size_t count );
+	virtual void Emit( const Vector2& pos, Particle* p, u32 count );
 
 	virtual void Serialize( AttributeWriter* out );
 	virtual void Deserialize( AttributeReader* in );

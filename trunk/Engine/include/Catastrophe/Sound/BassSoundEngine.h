@@ -38,7 +38,7 @@ public:
 	{}
 
 	Sound* LoadFromFile( Sound::Type type, const fc::string& filename );
-	Sound* LoadFromData( Sound::Type type, void* data, size_t n_bytes );
+	Sound* LoadFromData( Sound::Type type, void* data, u32 n_bytes );
 	void Initialize();
 	void Shutdown();
 	void StopAll();

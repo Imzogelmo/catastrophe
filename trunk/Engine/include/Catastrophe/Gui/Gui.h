@@ -28,11 +28,20 @@ class Gui
 public:
 	Gui();
 
-	void SetDefaultSkin( const Skin& Skin );
-	const Skin& GetDefaultSkin() const { return m_defaultSkin; }
+	void SetSkin( Skin* Skin );
+	Skin* GetSkin() const { return m_skin; }
+
+	void Update();
+	void Render();
+
+	static void SetDefaultSkin( Skin* skin );
+	static Skin* GetDefaultSkin() { return &m_defaultSkin; }
 
 protected:
-	Skin	m_defaultSkin;
+	Widget*	m_root;
+	Skin*	m_skin;
+
+	static Skin m_defaultSkin;
 
 };
 

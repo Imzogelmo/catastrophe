@@ -81,6 +81,20 @@ public:
 	void SetHeight( float h ) { max.y = min.y + h; }
 	void Scale( const Vector2& scale );
 
+	void FlipX()
+	{
+		float temp = min.x;
+		min.x = max.x;
+		max.x = temp;
+	}
+
+	void FlipY()
+	{
+		float temp = min.y;
+		min.y = max.y;
+		max.y = temp;
+	}
+
 	inline void GetSides( float* ptrTopBotLeftRight ) const
 	{
 		ptrTopBotLeftRight[0] = Top();

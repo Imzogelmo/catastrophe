@@ -25,7 +25,9 @@
 #include "../Math/Vector2.h"
 #include "../Math/Rectf.h"
 #include "../Math/Color.h"
+#include "../Resource/GraphicsResource.h"
 
+#include "TextAlignment.h"
 #include "Texture.h"
 
 CE_NAMESPACE_BEGIN
@@ -33,11 +35,6 @@ CE_NAMESPACE_BEGIN
 
 struct Glyph
 {
-	enum GlyphCharacteristics
-	{
-		MaxSize = 128
-	};
-
 	Glyph() : translation(Vector2::Zero), size(Vector2::Zero), uv(Rectf::Zero), advance(0.f)
 	{}
 
@@ -49,15 +46,7 @@ struct Glyph
 };
 
 
-enum TextAlignment
-{
-	AlignLeft = 0,
-	AlignCenter,
-	AlignRight
-};
-
-
-class CE_API Font
+class CE_API Font : public GraphicsResource
 {
 public:
 	typedef fc::vector<Glyph>	vec_type;
@@ -68,7 +57,7 @@ public:
 		MinTextureSize = 256,
 		MaxTextureSize = 2048,
 		DefaultDpi = 72,
-		MaxGlyphSize = Glyph::MaxSize
+		MaxGlyphSize = 128
 	};
 
 	/*
@@ -80,41 +69,43 @@ public:
 	*/
 
 	Font();
-	Font( const fc::string& filename, int faceSize, int dpi = DefaultDpi );
+	Font( const String& filename, int faceSize, int dpi = DefaultDpi );
 	~Font();
 
-	int LoadFromFile( const fc::string& filename, int faceSize, int dpi = DefaultDpi );
-	//int CreateFromBitmapFontTexture( gluint texture, uint width, uint height );
-	//int CreateFromPixelData( const ubyte* pixels, uint pixelFormat, uint width, uint height );
+	int LoadFromFile( const String& filename );
+	int LoadFromFile( const String& path, const String& filename );
+	int LoadFromFile( const String& filename, int faceSize, int dpi = DefaultDpi );
+	int LoadFromFile( const String& path, const String& filename, int faceSize, int dpi = DefaultDpi );
+	//int CreateFromBitmapFontTexture( gluint texture, u32 width, u32 height );
+	//int CreateFromPixelData( const u8* pixels, u32 pixelFormat, u32 width, u32 height );
 
 	void SetAdvance( int advance );
 	void SetLineHeight( int height );
 	void SetMaxGlyphHeight( float y );
 
-	int GetTextWidth( const fc::string& text ) const;
+	int GetTextWidth( const String& text ) const;
 	int GetTextWidth( const char* first, const char* last ) const;
 
-	Texture* GetTexture() { return &m_texture; }
-	const Texture* GetTexture() const { return &m_texture; }
+	Texture* GetTexture() const { return const_cast<Texture*>(&m_texture); }
 	gluint GetTextureID() const { return m_texture.GetTextureID(); }
 	gluint GetFaceSize() const { return m_faceSize; }
-	int GetLineHeight() const { return m_line_height; }
+	int GetLineHeight() const { return m_lineHeight; }
 
-	Glyph& GetGlyph( ubyte glyph ) { return m_glyphs[ m_glyphMap[glyph] ]; }
-	const Glyph& GetGlyph( ubyte glyph ) const { return m_glyphs[ m_glyphMap[glyph] ]; }
+	Glyph& GetGlyph( u8 glyph ) { return m_glyphs[ m_glyphMap[glyph] ]; }
+	const Glyph& GetGlyph( u8 glyph ) const { return m_glyphs[ m_glyphMap[glyph] ]; }
 
 	void Dispose();
 
 protected:
 	void InternalInitialize();
-	int InternalLoadGenericBitmapFont( const fc::string& filename, int startCode = 32 );
-	int InternalLoadBitmapFont( const fc::string& filename, int startCode = 32 );
+	int InternalLoadGenericBitmapFont( const String& filename, int startCode = 32 );
+	int InternalLoadBitmapFont( const String& filename, int startCode = 32 );
 
 	vec_type	m_glyphs;
 	int			m_glyphMap[256];
 	Texture		m_texture;
 	int			m_faceSize;
-	int			m_line_height;
+	int			m_lineHeight;
 	int			m_maxAdvance;
 
 };

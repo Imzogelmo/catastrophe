@@ -49,7 +49,7 @@ public:
 	virtual bool GetOutwardForce() const { return m_outwardForce; }
 	virtual bool GetInwardForce() const { return m_inwardForce; }
 
-	virtual void Emit( const Vector2& pos, Particle* particles, size_t count );
+	virtual void Emit( const Vector2& pos, Particle* particles, u32 count );
 
 	virtual void Serialize( AttributeWriter* out );
 	virtual void Deserialize( AttributeReader* in );

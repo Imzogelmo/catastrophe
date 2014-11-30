@@ -58,7 +58,8 @@ public:
 	virtual void Render();
 	virtual void Render( SpriteBatch* spriteBatch );
 
-	virtual size_t GetParticleCount() const;
+	virtual u32 GetNumGroups() const { return m_groups.size(); }
+	virtual u32 GetParticleCount() const;
 
 	CE_NO_INLINE virtual bool Serialize( const fc::string& filename );
 	CE_NO_INLINE virtual bool Deserialize( const fc::string& filename );

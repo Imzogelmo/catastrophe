@@ -62,7 +62,7 @@ public:
 		TypeJoystick
 	};
 
-	enum : size_t
+	enum : u32
 	{
 		MaxButtons = 12,
 		MaxDirections = 4,

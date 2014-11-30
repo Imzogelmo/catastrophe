@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "../Util/RefCounted.h"
+#include "../Core/RefCounted.h"
 
 
 class ParticleSystemEntity : public RefCounted

@@ -30,7 +30,7 @@ public:
 	virtual void SetEndColor( const Color& color ) { m_endColor = color; }
 	virtual const Color& GetEndColor() const { return m_endColor; }
 
-	virtual void Update( Particle* particles, size_t count );
+	virtual void Update( Particle* particles, u32 count );
 
 	virtual void Serialize( AttributeWriter* out );
 	virtual void Deserialize( AttributeReader* in );

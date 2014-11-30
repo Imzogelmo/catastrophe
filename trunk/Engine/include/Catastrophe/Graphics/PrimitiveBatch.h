@@ -34,13 +34,13 @@ public:
 	PrimitiveBatch() : m_queue()
 	{}
 
-	void Reserve( size_t reserve );
+	void Reserve( u32 reserve );
 	void Clear();
 
-	size_t Size() const { return m_queue.size(); }
-	size_t Capacity() const { return m_queue.capacity(); }
-	size_t GetPrimCount() const { return m_queue.size(); }
-	size_t GetVertexCount() const;
+	u32 Size() const { return m_queue.size(); }
+	u32 Capacity() const { return m_queue.capacity(); }
+	u32 GetPrimCount() const { return m_queue.size(); }
+	u32 GetVertexCount() const;
 
 	void DrawPrimitive( const Primitive &primitive );
 

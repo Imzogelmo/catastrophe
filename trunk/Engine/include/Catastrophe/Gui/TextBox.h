@@ -110,7 +110,7 @@ public:
 	virtual void SetFastForwardSpeed( int speed );
 	virtual void FastForward();
 
-	size_t GetNumberOfRows() const;
+	u32 GetNumberOfRows() const;
 	int GetRowHeight() const { return m_rowHeight; }
 	int GetFastForwardSpeed() const { return m_fastForwardSpeed; }
 
@@ -126,7 +126,7 @@ protected:
 	int				m_fastForwardSpeed;
 	float			m_textSpeed;
 	float			m_textSpeedCounter;
-	size_t			m_currentChar;
+	u32			m_currentChar;
 
 	bool			m_textDisplayFinished;
 	bool			m_autoUpdateFastForwardSpeed;

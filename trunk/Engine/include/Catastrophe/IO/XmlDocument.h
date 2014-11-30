@@ -32,9 +32,9 @@ public:
 	virtual ~XmlDocument();
 
 	void Reset();
-	bool Load( const fc::string& filename );
-	bool Save( const fc::string& filename );
-	bool Parse( const fc::string& xml );
+	bool Load( const String& filename );
+	bool Save( const String& filename );
+	bool Parse( const String& xml );
 
 	void CreateDeclaration();
 	XmlElement CreateRoot( const char* name );
@@ -48,7 +48,7 @@ private:
 	XmlDocument& operator =( const XmlDocument& );
 
 	XmlDocument_t*	m_document;
-	fc::string		m_buffer;
+	String		m_buffer;
 };
 
 

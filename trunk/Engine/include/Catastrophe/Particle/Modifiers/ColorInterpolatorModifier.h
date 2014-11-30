@@ -32,10 +32,10 @@ class ColorInterpolatorModifier : public ParticleModifier
 public:
 	typedef fc::vector<Colorf> vec_type;
 
-	ColorInterpolatorModifier( size_t maxNumColors = 8 );
+	ColorInterpolatorModifier( u32 maxNumColors = 8 );
 
 	virtual void AddColor( const Colorf& color );
-	virtual void Update( Particle* particles, size_t count );
+	virtual void Update( Particle* particles, u32 count );
 
 	virtual void Serialize( AttributeWriter* out );
 	virtual void Deserialize( AttributeReader* in );

@@ -30,14 +30,14 @@ class CE_API Serializer
 public:
 	virtual ~Serializer() {}
 	
-	virtual size_t Write( const void* data, size_t size ) = 0;
+	virtual u32 Write( const void* data, u32 size ) = 0;
 	
 	bool WriteInt( int value );
-	bool WriteShort( short value );
-	bool WriteByte( signed char value );
-	bool WriteUInt( unsigned int value );
-	bool WriteUShort( unsigned short value );
-	bool WriteUByte( unsigned char value );
+	bool WriteShort( s16 value );
+	bool WriteByte( s8 value );
+	bool WriteUInt( u32 value );
+	bool WriteUShort( u16 value );
+	bool WriteUByte( u8 value );
 	bool WriteBool( bool value );
 	bool WriteFloat( float value );
 
@@ -51,13 +51,13 @@ public:
 	bool WriteColorf( const Colorf& value );
 	bool WriteMatrix( const Matrix& value );
 
-	bool WriteShortArray( const short* ptr, size_t n );
-	bool WriteIntArray( const int* ptr, size_t n );
-	bool WriteFloatArray( const float* ptr, size_t n );
+	bool WriteShortArray( const s16* ptr, u32 n );
+	bool WriteIntArray( const int* ptr, u32 n );
+	bool WriteFloatArray( const float* ptr, u32 n );
 
-	bool WriteString( const fc::string& value );
+	bool WriteString( const String& value );
 	bool WriteString( const char* value );
-	bool WriteLine( const fc::string& value, bool newline = true );
+	bool WriteLine( const String& value, bool newline = true );
 
 };
 
