@@ -11,5 +11,5 @@
 
 #pragma once
 
-#include <Catastrophe/Util/RefCounted.h>
+#include <Catastrophe/Core/RefCounted.h>
 

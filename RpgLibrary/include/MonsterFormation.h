@@ -23,16 +23,16 @@
  */
 struct RPG_API MonsterFormationCellData
 {
-	short	x;
-	short	y;
+	s16	x;
+	s16	y;
 
 	MonsterFormationCellData();
-	MonsterFormationCellData( short x, short y );
+	MonsterFormationCellData( s16 x, s16 y );
 
 	static void RegisterObject();
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 };
 
 
@@ -46,14 +46,14 @@ struct RPG_API MonsterFormation
 	typedef fc::dynamic_array<MonsterFormationCellData> array_type;
 
 	array_type	formations;
-	int			id;
+	u16			id;
 
 	MonsterFormation();
 
 	static void RegisterObject();
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 
 	int GetMemoryUsage() const;
 

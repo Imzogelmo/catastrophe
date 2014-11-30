@@ -35,16 +35,16 @@ struct Modifier
 	};
 
 	int		value;
-	short	index;
-	byte	target;
-	byte	type;
+	s16		index;
+	u8		target;
+	u8		type;
 
 	Modifier();
 
 	Attributes ConvertToAttributes() const;
 	void ApplyToAttributes( Attributes& attributes ) const;
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 };
 

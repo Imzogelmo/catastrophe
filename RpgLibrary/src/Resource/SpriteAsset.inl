@@ -45,16 +45,16 @@ void SpriteAsset::ReleaseSprite()
 }
 
 
-void SpriteAsset::SerializeXml( AttributeWriter* f )
+void SpriteAsset::Serialize( AttributeWriter* f )
 {
-	TextureAsset::SerializeXml(f);
+	TextureAsset::Serialize(f);
 	SerializeObject<SpriteBase>("SpriteBase", f, *this);
 }
 
 
-void SpriteAsset::DeserializeXml( AttributeReader* f )
+void SpriteAsset::Deserialize( AttributeReader* f )
 {
-	TextureAsset::DeserializeXml(f);
+	TextureAsset::Deserialize(f);
 	DeserializeObject<SpriteBase>("SpriteBase", f, *this);
 }
 

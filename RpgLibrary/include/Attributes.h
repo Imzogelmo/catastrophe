@@ -12,26 +12,26 @@
 #pragma once
 
 #include "RpgCommon.h"
-#include "FixedAttributeArray.h"
+#include "FixedAttributeTypeArray.h"
 #include "AttributeFlags.h"
 
 
-typedef FixedAttributeArray<int, MAX_PARAMS>		ParamValueArrayType;
-typedef FixedAttributeArray<short, MAX_STATS>		StatisticsValueArrayType;
-typedef FixedAttributeArray<short, MAX_ELEMENTS>	ElementalArrayType;
-typedef FixedAttributeArray<char, MAX_STATUS>		StatusArrayType;
-//typedef FixedAttributeArray<short, MAX_MISC>		MiscArrayType;
+typedef FixedAttributeTypeArray<s32, MAX_PARAMS>	MaxParamValueArrayType;
+typedef FixedAttributeTypeArray<s16, MAX_STATS>		StatisticsValueArrayType;
+typedef FixedAttributeTypeArray<s16, MAX_ELEMENTS>	ElementalArrayType;
+typedef FixedAttributeTypeArray<s8, MAX_STATUS>		StatusArrayType;
+//typedef FixedAttributeTypeArray<s16, MAX_MISC>	MiscArrayType;
 
 
 struct RPG_API Attributes
 {
 	typedef Attributes			this_type;
 
-	ParamValueArrayType			max_params;
+	MaxParamValueArrayType		maxParams;
 	StatisticsValueArrayType	stats;
-	ElementalArrayType			elemental_def;
-	StatusArrayType				status_atk;
-	StatusArrayType				status_def;
+	ElementalArrayType			elementalDefense;
+	StatusArrayType				statusAttack;
+	StatusArrayType				statusDefense;
 	//MiscArrayType				misc;
 	AttributeFlags				flags;
 
@@ -43,33 +43,33 @@ struct RPG_API Attributes
 	this_type &operator -=(const this_type& rhs);
 
 
-	inline void SetMaxParam( size_t index, int value )
+	inline void SetMaxParam( u32 index, int value )
 	{
-		max_params[index] = fc::clamp<int>
+		maxParams[index] = fc::clamp<int>
 			(value, -MAX_PARAM_VALUE, MAX_PARAM_VALUE);
 	}
 
-	inline void SetStat( size_t index, int value )
+	inline void SetStat( u32 index, s16 value )
 	{
-		stats[index] = (short)fc::clamp<int>
+		stats[index] = (s16)fc::clamp<int>
 			(value, -MAX_STAT_VALUE, MAX_STAT_VALUE);
 	}
 
-	inline void SetElementalDef( size_t index, short value )
+	inline void SetElementalDef( u32 index, s16 value )
 	{
-		elemental_def[index] = (char)fc::clamp<int>
+		elementalDefense[index] = (char)fc::clamp<int>
 			(value, -MAX_ELEMENT_VALUE, MAX_ELEMENT_VALUE);
 	}
 
-	inline void SetStatusAtk( size_t index, int value )
+	inline void SetStatusAtk( u32 index, int value )
 	{
-		status_atk[index] = (char)fc::clamp<int>
+		statusAttack[index] = (char)fc::clamp<int>
 			(value, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
 	}
 
-	inline void SetStatusDef( size_t index, int value )
+	inline void SetStatusDef( u32 index, int value )
 	{
-		status_def[index] = (char)fc::clamp<int>
+		statusDefense[index] = (char)fc::clamp<int>
 			(value, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
 	}
 
@@ -80,8 +80,8 @@ struct RPG_API Attributes
 */
 	static void RegisterObject();
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 
 };
 

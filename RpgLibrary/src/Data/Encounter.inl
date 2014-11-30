@@ -14,37 +14,36 @@
 #include "Encounter.h"
 
 
-EncounterData::EncounterData( int monsterPartyIndex, int encounterRate, int maxRate ) :
-	troop_id(monsterPartyIndex),
+EncounterData::EncounterData( u16 monsterTroopIndex, u16 encounterRate, u16 maxRate ) :
+	troopId(monsterTroopIndex),
 	rate(encounterRate),
-	max_rate(maxRate)
+	maxRate(maxRate)
 {
 }
 
 
 void EncounterData::Validate()
 {
-	if(rate < 0) rate = 0;
-	if(max_rate < 0) max_rate = 0;
-	if(max_rate < rate) max_rate = rate;
+	if(maxRate < rate)
+		maxRate = rate;
 }
 
 
-void EncounterData::SerializeXml( AttributeWriter* f )
+void EncounterData::Serialize( AttributeWriter* f )
 {
 	f->BeginNode("Encounter");
-	f->SetInt("troop_id", troop_id);
-	f->SetInt("rate", rate);
-	f->SetInt("max_rate", max_rate);
+	f->SetUShort("troopId", troopId);
+	f->SetUShort("rate", rate);
+	f->SetUShort("maxRate", maxRate);
 	f->EndNode();
 }
 
 
-void EncounterData::DeserializeXml( AttributeReader* f )
+void EncounterData::Deserialize( AttributeReader* f )
 {
-	troop_id = f->GetInt("troop_id");
-	rate = f->GetInt("rate");
-	max_rate = f->GetInt("max_rate");
+	troopId = f->GetShort("troopId");
+	rate = f->GetUShort("rate");
+	maxRate = f->GetUShort("maxRate");
 }
 
 
@@ -57,7 +56,7 @@ EncounterGroup::EncounterGroup() :
 }
 
 
-void EncounterGroup::SerializeXml( AttributeWriter* f )
+void EncounterGroup::Serialize( AttributeWriter* f )
 {
 	f->BeginNode("Region");
 	f->SetString("name", name.c_str());
@@ -65,23 +64,23 @@ void EncounterGroup::SerializeXml( AttributeWriter* f )
 
 	for( vec_type::iterator it = encounters.begin(); it != encounters.end(); ++it )
 	{
-		it->SerializeXml(f);
+		it->Serialize(f);
 	}
 
 	f->EndNode();
 }
 
 
-void EncounterGroup::DeserializeXml( AttributeReader* f )
+void EncounterGroup::Deserialize( AttributeReader* f )
 {
-	size_t numEncounters = f->GetUInt("num_encounters");
+	u32 numEncounters = f->GetUInt("num_encounters");
 	encounters.resize(numEncounters);
 
-	for( size_t i(0); i < numEncounters; ++i )
+	for( u32 i(0); i < numEncounters; ++i )
 	{
 		if( f->NextChild("Encounter") )
 		{
-			encounters[i].DeserializeXml(f);
+			encounters[i].Deserialize(f);
 		}
 	}
 

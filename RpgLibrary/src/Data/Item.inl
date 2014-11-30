@@ -29,37 +29,39 @@ Item::Item() :
 }
 
 
-void Item::SerializeXml( AttributeWriter* f )
+void Item::Serialize( AttributeWriter* f )
 {
 	f->SetString("name", name.c_str());
 	f->SetString("script", script.c_str());
-	f->SetString("description", description.c_str());
+	f->SetString("description", description);
 
 	f->BeginNode("Data");
 	f->SetShort("type", type);
 	f->SetShort("subtype", subtype);
 	f->SetInt("price", price);
-	f->EndNode();
 
-	//SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
+	factors.Serialize(f);
+
+	f->EndNode();
 }
 
 
-void Item::DeserializeXml( AttributeReader* f )
+void Item::Deserialize( AttributeReader* f )
 {
-	name = f->GetString("name", name);
-	script = f->GetString("script", script);
-	description = f->GetString("description", description);
+	name = f->GetString("name", name.c_str());
+	script = f->GetString("script", script.c_str());
+	description = f->GetString("description", description.c_str());
 
 	if( f->NextChild("Data") )
 	{
 		type = f->GetShort("type");
 		subtype = f->GetShort("subtype");
 		price = f->GetInt("price");
+
+		factors.Deserialize(f);
+
 		f->SetToParent();
 	}
-
-	//DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
 }
 
 

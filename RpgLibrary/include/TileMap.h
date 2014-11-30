@@ -13,55 +13,65 @@
 
 #include "TileMapLayer.h"
 
-#include <fc/fixed_vector.h>
+#include <fc/static_vector.h>
+
+
+struct TileMapInfo
+{
+	u16 music;
+
+
+};
 
 
 class RPG_API TileMap
 {
 public:
-	enum : size_t
+	enum : u32
 	{
 		MaxLayers = 16
 	};
 
-	typedef fc::fixed_vector<TileMapLayer*, MaxLayers>	vec_type;
+	typedef fc::static_vector<TileMapLayer*, MaxLayers>	vec_type;
 
 	TileMap();
-	TileMap( const fc::string& mapName, size_t numLayers, size_t mapWidth, size_t mapHeight );
+	TileMap( const String& mapName, u32 numLayers, u32 mapWidth, u32 mapHeight );
 	~TileMap();
 
 	void DeleteLayers();
 	void Clear();
 
-	size_t Width() const { return m_width; }
-	size_t Height() const { return m_height; }
-	size_t NumLayers() const { return m_layers.size(); }
+	u32 Width() const { return m_width; }
+	u32 Height() const { return m_height; }
+	u32 NumLayers() const { return m_layers.size(); }
 
 	bool AddLayer( TileMapLayer* layer = 0 );
-	void RemoveLayer( size_t index = size_t(-1) );
-	void Resize( size_t w, size_t h, size_t numLayers = size_t(-1) );
-	void SwapLayer( size_t first, size_t second );
+	void RemoveLayer( u32 index = u32(-1) );
+	void Resize( u32 w, u32 h, u32 numLayers = u32(-1) );
+	void SwapLayer( u32 first, u32 second );
 
-	TileMapLayer* GetLayer( size_t index ) const;
+	TileMapLayer* GetLayer( u32 index ) const;
 
-	void SetName( const fc::string& name ) { m_name = name; }
-	void SetFileName( const fc::string& filename ) { m_name = filename; }
-	const fc::string& GetName() const { return m_name; }
-	const fc::string& GetFileName() const { return m_filename; }
+	void SetName( const String& name ) { m_name = name; }
+	void SetFileName( const String& filename ) { m_name = filename; }
 
-
-	void Render( SpriteBatch* spriteBatch, const Rect& viewRect );
+	const String& GetName() const { return m_name; }
+	const String& GetFileName() const { return m_filename; }
 
 
-	NO_INLINE bool SerializeXml( const fc::string& filename );
-	NO_INLINE bool DeserializeXml( const fc::string& filename );
+	void Render( SpriteBatch* spriteBatch, const Rect& viewRect, bool mapWraparound = false );
+
+
+	NO_INLINE bool Serialize( const String& filename );
+	NO_INLINE bool Deserialize( const String& filename );
 
 protected:
-	fc::string		m_name;
-	fc::string		m_filename;
+	String		m_name;
+	String		m_filename;
 	vec_type		m_layers;
-	size_t			m_width;
-	size_t			m_height;
+	u32			m_width;
+	u32			m_height;
+	//u32			m_tileSize;
 
 };
 

@@ -91,24 +91,24 @@ void ItemDrop::Validate()
 }
 
 
-void ItemDrop::SerializeXml( AttributeWriter* f )
+void ItemDrop::Serialize( AttributeWriter* f )
 {
 	Validate();
 	f->BeginNode("ItemDrop");
 	f->SetInt("index", m_itemId);
 	f->SetInt("rate", m_dropRate);
-	f->SetInt("max_rate", m_maxRate);
+	f->SetInt("maxRate", m_maxRate);
 	f->SetInt("min", m_min);
 	f->SetInt("max", m_max);
 	f->EndNode();
 }
 
 
-void ItemDrop::DeserializeXml( AttributeReader* f )
+void ItemDrop::Deserialize( AttributeReader* f )
 {
 	m_itemId = f->GetInt("index");
 	m_dropRate = f->GetInt("rate");
-	m_maxRate = f->GetInt("max_rate");
+	m_maxRate = f->GetInt("maxRate");
 	m_min = f->GetInt("min");
 	m_max = f->GetInt("max");
 }

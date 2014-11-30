@@ -12,65 +12,72 @@
 #pragma once
 
 #include <fc/string.h>
+#include <fc/static_string.h>
 
 #include "RpgCommon.h"
-#include "Attributes.h"
+#include "FactorSet.h"
+#include "UsageInfo.h"
+
 
 /*
 struct ItemType
 {
-	short type; // item, weapon, armor, accessory, etc..
-	short subtype; // knife, katana, etc.. (used in inventory sorting)
+	s16 type; // item, weapon, armor, accessory, etc..
+	s16 subtype; // knife, katana, etc.. (used in inventory sorting)
+};
+
+struct ItemID
+{
+	u16 id;
+	u16 type;
+
+	ItemID() : id(0), type(0) {}
 };
 */
 
+
+struct ItemID
+{
+	/// ID of the item
+	u16 id;
+
+	/// Database category the item belongs to.
+	u16 category;
+
+	ItemID() : id(0), category(0) {}
+};
+
+
 struct RPG_API Item
 {
-	fc::string		name;
-	fc::string		script;
-	fc::string		description;
+	StaticString<32>	name;
+	StaticString<32>	script;
+	String				description;
 
-	enum ItemFlags
-	{
-		Valuable = 0x0001,
-		Consumable = 0x0002,
-		Equippable = 0x0004,
-		Cursed = 0x0008,
-		//...
-		UsableInMenu = 0x0040,
-		UsableInBattle = 0x0080
-
-
-	};
-
-
-	//Attributes	attributes;
-
-	short		type; // item, weapon, armor, accessory, etc..
-	short		subtype; // knife, katana, etc.. (used in inventory sorting)
-
-	int			id;
+	AbilityID	specialAbility;
 	int			price;
-	int			spell_id;
-	int			targeting;
-	int			flags;
-	int			usage_flags; //...
-	//size_t		effect_id;
+	UsageInfo	usageInfo;
 
-	int			sfx;
-	int			icon_id;
-	int			sprite_id;
+	u32			classFlags;
+	u16			id;
+	s16			type;
+	s16			subtype;
+	u16			sfx;
+	u16			iconId;
+	u16			spriteId;
+	u8			itemFlags;
+
+	FactorSet factors;
 
 	Item();
 
 	virtual bool HasAttributes() const { return false; }
-	virtual Attributes& GetAttributes() { return m_staticAttributes; }
-	virtual const Attributes& GetAttributes() const { return m_staticAttributes; }
+	virtual Attributes& GetAttributes() const { return m_staticAttributes; }
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	virtual void Serialize( AttributeWriter* f );
+	virtual void Deserialize( AttributeReader* f );
 
-	int GetMemoryUsage() const;
+	virtual int GetMemoryUsage() const;
 
 protected:
 	static Attributes m_staticAttributes;

@@ -21,17 +21,19 @@ Tileset::Tileset() :
 	m_texture(0),
 	m_name(),
 	m_id(-1),
+	m_tileSize(16),
 	m_tiles(),
 	m_ptr_animated_tiles()
 {
 }
 
 
-Tileset::Tileset( TilesetManager* parent, const fc::string& name ) :
+Tileset::Tileset( TilesetManager* parent, const String& name ) :
 	m_parent(parent),
 	m_texture(0),
 	m_name(name),
 	m_id(-1),
+	m_tileSize(16),
 	m_tiles(),
 	m_ptr_animated_tiles()
 {
@@ -58,7 +60,14 @@ void Tileset::SetTexture( Texture* texture )
 }
 
 
-void Tileset::Resize( size_t w, size_t h )
+void Tileset::SetTileSize( u32 tileSize )
+{
+	if( tileSize != 0 )
+		m_tileSize = tileSize;
+}
+
+
+void Tileset::Resize( u32 w, u32 h )
 {
 	m_tiles.resize(h, w);
 
@@ -103,8 +112,8 @@ void Tileset::ValidateTiles()
 	//since we do no runtime checks on these later 
 	//it's possible to get undefined behavior otherwise.
 
-	size_t size = m_tiles.size();
-	for( size_t i(0); i < size; ++i )
+	u32 size = m_tiles.size();
+	for( u32 i(0); i < size; ++i )
 	{
 		Tile &tile = m_tiles[i];
 		tile.SetTileset(this);
@@ -119,7 +128,7 @@ gluint Tileset::GetTextureId() const
 }
 
 
-Tile* Tileset::GetTile( size_t index )
+Tile* Tileset::GetTile( u32 index )
 {
 	if( index < m_tiles.size() )
 		return &m_tiles[index];
@@ -128,7 +137,7 @@ Tile* Tileset::GetTile( size_t index )
 }
 
 
-Tile* Tileset::GetTile( size_t x, size_t y )
+Tile* Tileset::GetTile( u32 x, u32 y )
 {
 	if( x < m_tiles.x() && y < m_tiles.y() )
 		return &m_tiles(y, x);
@@ -137,47 +146,9 @@ Tile* Tileset::GetTile( size_t x, size_t y )
 }
 
 
-bool Tileset::CreateFromTexture( Texture* texture )
+bool Tileset::Serialize( const String& directory )
 {
-	ASSERT(texture != 0);
-
-	const size_t image_w = texture->Width();
-	const size_t image_h = texture->Height();
-	const size_t tileSize = 16;
-
-	if( image_w < tileSize || image_h < tileSize )
-		return false;
-
-	const size_t tw = image_w / tileSize;
-	const size_t th = image_h / tileSize;
-
-	SetTexture(texture);
-	Resize(tw, th);
-
-	for( size_t y(0); y < th; ++y )
-	{
-		for( size_t x(0); x < tw; ++x )
-		{
-			Tile &t = m_tiles(y, x);
-
-	//		t.SetColor(Color::White());
-	//		t.animation.SetTexture( image->GetTexture() );
-
-			Rect rect(x * tileSize, y * tileSize, tileSize, tileSize);
-
-			t.Create(rect, 1);
-			//t.SetSourceRect(rect);
-			//t.animation.AddFrame( image->GetUVRect(rect) );
-		}
-	}
-
-	return true;
-}
-
-
-bool Tileset::SerializeXml( const fc::string& directory )
-{
-	fc::string filename = directory + m_filename;
+	String filename = directory + m_filename;
 	XmlWriter xml(filename);
 	if( !xml.IsOpen() )
 	{
@@ -185,16 +156,16 @@ bool Tileset::SerializeXml( const fc::string& directory )
 		return false;
 	}
 
-	fc::string textureFilename;
+	String textureFilename;
 	if( !m_texture )
 	{
 		//shouldn't really happen.
-		Log("Tileset::SerializeXml: (%s) texture is null.", filename.c_str());
+		Log("Tileset::Serialize: (%s) texture is null.", filename.c_str());
 	}
 	else
 	{
 		//textureFilename = m_texture->GetFilename(); //todo:
-		textureFilename = m_texture->GetName();
+		textureFilename = m_texture->GetResourceName();
 	}
 
 
@@ -204,10 +175,10 @@ bool Tileset::SerializeXml( const fc::string& directory )
 	xml.SetUInt("width", m_tiles.x());
 	xml.SetUInt("height", m_tiles.y());
 
-	for( size_t i(0); i < m_tiles.size(); ++i )
+	for( u32 i(0); i < m_tiles.size(); ++i )
 	{
 		xml.BeginNode("Tile");
-		m_tiles[i].SerializeXml(&xml);
+		m_tiles[i].Serialize(&xml);
 		xml.EndNode();
 	}
 
@@ -218,14 +189,14 @@ bool Tileset::SerializeXml( const fc::string& directory )
 }
 
 
-bool Tileset::DeserializeXml( const fc::string& directory, const fc::string& filename )
+bool Tileset::Deserialize( const String& directory, const String& filename )
 {
 	Clear();
 
 	//m_name = 
 	m_filename = filename;
 
-	fc::string filepath = directory + filename;
+	String filepath = directory + filename;
 	XmlReader xml(filepath);
 	if( !xml.IsOpen() )
 	{
@@ -235,17 +206,17 @@ bool Tileset::DeserializeXml( const fc::string& directory, const fc::string& fil
 
 	if( xml.GetCurrentNodeName() == "Tileset" )
 	{
-		fc::string textureFilename;
+		String textureFilename;
 
 		m_name = xml.GetString("name");
 		textureFilename = xml.GetString("texture");
-		size_t w = xml.GetUInt("width");
-		size_t h = xml.GetUInt("height");
+		u32 w = xml.GetUInt("width");
+		u32 h = xml.GetUInt("height");
 
 		//we don't handle this in any good way.
 		if( textureFilename.empty() )
 		{
-			Log("Tileset::DeserializeXml: unknown texture");
+			Log("Tileset::Deserialize: unknown texture");
 		}
 		else
 		{
@@ -253,7 +224,7 @@ bool Tileset::DeserializeXml( const fc::string& directory, const fc::string& fil
 			m_texture = g_textureManager->Load(textureFilename);
 			if( !m_texture )
 			{
-				Log("Tileset::DeserializeXml: (%s) texture is null.", filename.c_str());
+				Log("Tileset::Deserialize: (%s) texture is null.", filename.c_str());
 			}
 		}
 
@@ -264,7 +235,7 @@ bool Tileset::DeserializeXml( const fc::string& directory, const fc::string& fil
 		{
 			if( xml.NextChild("Tile") )
 			{
-				it->DeserializeXml(&xml);
+				it->Deserialize(&xml);
 			}
 			else
 			{

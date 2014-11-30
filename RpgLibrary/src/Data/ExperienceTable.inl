@@ -13,18 +13,18 @@
 #include <fc/math.h>
 #include <Catastrophe/IO/AttributeWriter.h>
 #include <Catastrophe/IO/AttributeReader.h>
-#include "ExpTable.h"
+#include "ExperienceTable.h"
 
 
 
 void ExpCurve::GenerateCurve()
 {
-	values.resize( (size_t)max_levels + 1 );
+	values.resize( (u32)maxLevels + 1 );
 	values[0] = 1;
 
-	for( size_t i(1); i < values.size(); i++ )
+	for( u32 i(1); i < values.size(); i++ )
 	{
-		values[i] = values[i - 1] + fc::iround(39.f * powf((float)fc::min<size_t>(i, 29), (float)2));
+		values[i] = values[i - 1] + fc::iround(39.f * powf((float)fc::min<u32>(i, 29), 2.f));
 	}
 
 	int y = 0;
@@ -32,36 +32,34 @@ void ExpCurve::GenerateCurve()
 
 
 
-int ExpTable::GetExpForLevel( int lv )
+int ExperienceTable::GetExpForLevel( int lv )
 {
 	int ret = 0x7fffffff;
-	if( (size_t)lv < table.size() )
+	if( (u32)lv < table.size() )
 		ret = table[lv];
 
 	return ret;
 }
 
 
-int ExpTable::GetExpDeltaForLevel( int lv )
+int ExperienceTable::GetExpDeltaForLevel( int lv )
 {
 	if( lv == 0 )
 		return 0; //special case (0 exp = 0 lv)
 
-	int previous = lv - 1;
-	int ret = 0x7fffffff;
-	if( (size_t)lv < table.size() )
-	{
-		ret = table[lv] - table[previous];
-	}
+	if( (u32)lv < table.size() )
+		return table[lv] - table[lv - 1];
 
-	return ret;
+	return 0x7fffffff;
 }
 
 
-void ExpTable::Resize( int maxLv )
+void ExperienceTable::Resize( u32 maxLv )
 {
-	size_t oldSize = table.size();
-	table.resize(maxLv + 1);
+	u32 oldSize = table.size();
+	u32 newSize = fc::min<u32>(maxLv + 1, MAX_LEVEL);
+
+	table.resize(newSize);
 	if( oldSize < table.size() )
 	{
 		if( oldSize == 0 )
@@ -72,17 +70,23 @@ void ExpTable::Resize( int maxLv )
 }
 
 
-void ExpTable::SerializeXml( AttributeWriter* f )
+void ExperienceTable::Serialize( AttributeWriter* f )
 {
 	f->SetUInt("count", table.size());
-	//f->WriteIntBlock(&table[0], table.size());
+	f->WriteIntArray("array", &table[0], table.size());
 }
 
 
-void ExpTable::DeserializeXml( AttributeReader* f )
+void ExperienceTable::Deserialize( AttributeReader* f )
 {
-	size_t n = f->GetUInt("count");
-	this->Resize((int)n);
-	//f->ReadIntBlock(&table[0], n);
+	u32 n = f->GetUInt("count");
+	Resize(n);
+
+	f->ReadIntArray("array", &table[0], table.size());
 }
 
+
+int ExperienceTable::GetMemoryUsage() const
+{
+	return (int)(table.size() * sizeof(int));
+}

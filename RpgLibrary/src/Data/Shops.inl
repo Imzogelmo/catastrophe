@@ -16,7 +16,7 @@
 
 
 
-void ShopItem::SerializeXml( AttributeWriter* f )
+void ShopItem::Serialize( AttributeWriter* f )
 {
 	f->BeginNode("Item");
 
@@ -27,7 +27,7 @@ void ShopItem::SerializeXml( AttributeWriter* f )
 }
 
 
-void ShopItem::DeserializeXml( AttributeReader* f )
+void ShopItem::Deserialize( AttributeReader* f )
 {
 	item_id = f->GetInt("id");
 	price = f->GetInt("price");
@@ -35,10 +35,10 @@ void ShopItem::DeserializeXml( AttributeReader* f )
 
 
 
-fc::string Shop::default_greeting_message = "Welcome";
-fc::string Shop::default_transaction_message = "Anything else?";
-fc::string Shop::default_buy_message = "Which one?";
-fc::string Shop::default_sell_message = "Sell what?";
+String Shop::default_greeting_message = "Welcome";
+String Shop::default_transaction_message = "Anything else?";
+String Shop::default_buy_message = "Which one?";
+String Shop::default_sell_message = "Sell what?";
 
 Shop::Shop() :
 	items(),
@@ -53,7 +53,7 @@ Shop::Shop() :
 }
 
 
-void Shop::SerializeXml( AttributeWriter* f )
+void Shop::Serialize( AttributeWriter* f )
 {
 	f->BeginNode("Shop");
 
@@ -68,16 +68,16 @@ void Shop::SerializeXml( AttributeWriter* f )
 
 	for( vec_type::iterator it = items.begin(); it < items.end(); ++it )
 	{
-		it->SerializeXml(f);
+		it->Serialize(f);
 	}
 
 	f->EndNode();
 }
 
 
-void Shop::DeserializeXml( AttributeReader* f )
+void Shop::Deserialize( AttributeReader* f )
 {
-	size_t n = f->GetUInt("num_items");
+	u32 n = f->GetUInt("num_items");
 	name = f->GetString("name");
 	greeting = f->GetString("greeting");
 	transaction = f->GetString("transaction");
@@ -90,7 +90,7 @@ void Shop::DeserializeXml( AttributeReader* f )
 	while( f->NextChild("Item") )
 	{
 		items.push_back();
-		items.back().DeserializeXml(f);
+		items.back().Deserialize(f);
 	}
 
 	f->SetToParent();

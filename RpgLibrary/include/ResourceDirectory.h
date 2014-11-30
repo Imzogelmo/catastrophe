@@ -49,22 +49,25 @@ class ResourceDirectory
 public:
 	ResourceDirectory();
 
-	void SetRootDirectory( const fc::string& directory ) { m_root = directory; }
-	const fc::string& GetRootDirectory() const { return m_root; }
+	void SetRootDirectory( const String& directory );
+	const String& GetRootDirectory() const { return m_root; }
 
-	fc::string GetDirectory( BaseDirectoryType type ) const;
-	fc::string GetTextureDirectory() const;
-	fc::string GetFontDirectory() const;
-	fc::string GetShaderDirectory() const;
-	fc::string GetMapDirectory() const;
-	fc::string GetTilesetDirectory() const;
-	fc::string GetDataDirectory() const;
-	fc::string GetScriptDirectory() const;
-	fc::string GetScriptDefineDirectory() const;
+	String GetDirectory( BaseDirectoryType type ) const;
+	String GetTextureDirectory() const;
+	String GetFontDirectory() const;
+	String GetShaderDirectory() const;
+	String GetMapDirectory() const;
+	String GetTilesetDirectory() const;
+	String GetDataDirectory() const;
+	String GetScriptDirectory() const;
+	String GetScriptDefineDirectory() const;
+
+	// Testing only
+	void DebugSetAllBaseDirectoriesToSingleDirectory( const String& directory );
 
 protected:
-	fc::string m_root;
-	fc::string m_baseDirectory[BaseDir_Max];
+	String m_root;
+	String m_baseDirectory[BaseDir_Max];
 
 };
 

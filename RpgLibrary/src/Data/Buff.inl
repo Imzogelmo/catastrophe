@@ -18,19 +18,19 @@
 //                 Buff
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-void Buff::SerializeXml( AttributeWriter* f )
+void Buff::Serialize( AttributeWriter* f )
 {
 	f->BeginNode("Attributes");
-	attributes.SerializeXml(f);
+	attributes.Serialize(f);
 	f->EndNode();
 }
 
 
-void Buff::DeserializeXml( AttributeReader* f )
+void Buff::Deserialize( AttributeReader* f )
 {
 	if( f->NextChild("Attributes") )
 	{
-		attributes.DeserializeXml(f);
+		attributes.Deserialize(f);
 		f->SetToParent();
 	}
 }
@@ -42,7 +42,7 @@ void Buff::DeserializeXml( AttributeReader* f )
 //               BuffList
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-bool BuffList::SerializeXml( const fc::string& filename )
+bool BuffList::Serialize( const String& filename )
 {
 	AttributeWriter xml(filename);
 	if( !xml.IsOpen() )
@@ -54,10 +54,10 @@ bool BuffList::SerializeXml( const fc::string& filename )
 	xml.BeginNode("BuffList");
 	xml.SetUInt("count", m_items.size());
 
-	for( size_t i(0); i < m_items.size(); ++i )
+	for( u32 i(0); i < m_items.size(); ++i )
 	{
 		xml.BeginNode("Buff");
-		m_items[i].SerializeXml(&xml);
+		m_items[i].Serialize(&xml);
 		xml.EndNode();
 	}
 
@@ -68,7 +68,7 @@ bool BuffList::SerializeXml( const fc::string& filename )
 }
 
 
-bool BuffList::DeserializeXml( const fc::string& filename )
+bool BuffList::Deserialize( const String& filename )
 {
 	AttributeReader xml(filename);
 	if( !xml.IsOpen() )
@@ -79,14 +79,14 @@ bool BuffList::DeserializeXml( const fc::string& filename )
 
 	if( xml.GetCurrentNodeName() == "BuffList" )
 	{
-		size_t n = xml.GetUInt("count");
+		u32 n = xml.GetUInt("count");
 		m_items.clear();
 		m_items.reserve(n);
 
 		while( xml.NextChild("Buff") )
 		{
 			m_items.push_back();
-			m_items.back().DeserializeXml(&xml);
+			m_items.back().Deserialize(&xml);
 		}
 	}
 	else

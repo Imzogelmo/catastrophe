@@ -45,11 +45,11 @@ void AnimatedSpriteAsset::ReleaseAnimatedSprite()
 }
 
 
-void AnimatedSpriteAsset::SerializeXml( AttributeWriter* f )
+void AnimatedSpriteAsset::Serialize( AttributeWriter* f )
 {
 	//f->BeginNode("AnimatedSprite");
 
-	TextureAsset::SerializeXml(f);
+	TextureAsset::Serialize(f);
 	SerializeObject<SpriteBase>("SpriteBase", f, *this);
 	SerializeObject<SpriteAnimation>("SpriteAnimation", f, *this);
 
@@ -57,11 +57,11 @@ void AnimatedSpriteAsset::SerializeXml( AttributeWriter* f )
 }
 
 
-void AnimatedSpriteAsset::DeserializeXml( AttributeReader* f )
+void AnimatedSpriteAsset::Deserialize( AttributeReader* f )
 {
 	//if( f->GetNextNode("AnimatedSprite") )
 	{
-		TextureAsset::DeserializeXml(f);
+		TextureAsset::Deserialize(f);
 		DeserializeObject<SpriteBase>("SpriteBase", f, *this);
 		DeserializeObject<SpriteAnimation>("SpriteAnimation", f, *this);
 	//	f->SetToParent();

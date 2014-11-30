@@ -17,10 +17,33 @@
 
 struct Switches
 {
-	typedef fc::static_bit_array<4096>	bit_array_type;
+	enum Properties {
+		MaxBits = 4096,
+		MaxWords = (((MaxBits - 1) / 32) + 1),
+	};
+
+	typedef fc::static_bit_array<MaxBits> bit_array_type;
 	bit_array_type bits;
 
 	Switches();
+
+#ifdef EDITOR
+	String strings[MaxBits];
+
+	void SetString( int bit, const String& value )
+	{
+		if( bit < MaxBits )
+			strings[bit] = value;
+	}
+
+	const String& GetString( int bit )
+	{
+		if( bit < MaxBits )
+			return strings[bit];
+
+		return String();
+	}
+#endif
 
 	void Reset();
 	void FlipBit( int bit );
@@ -28,8 +51,8 @@ struct Switches
 
 	bool GetBit( int bit );
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 
 };
 

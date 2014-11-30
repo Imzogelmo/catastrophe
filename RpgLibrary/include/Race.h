@@ -20,8 +20,8 @@
 
 struct RPG_API Race
 {
-	fc::string		name;
-	fc::string		description;
+	String		name;
+	String		description;
 
 	Attributes		attributes;
 
@@ -32,8 +32,8 @@ struct RPG_API Race
 
 	static void RegisterObject();
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 
 	int GetMemoryUsage() const;
 

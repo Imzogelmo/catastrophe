@@ -18,23 +18,23 @@
 class RPG_API ItemDropSet
 {
 public:
-	ItemDropSet( bool multiple_drops = false );
+	ItemDropSet( bool multipleDrops = false );
 
 	void Add( const ItemDrop& drop );
 	void Remove();
 	void Clear();
-	size_t Size() { return m_size; }
+	u32 Size() { return m_size; }
 
-	ItemDrop& operator []( size_t index );
-	const ItemDrop& operator []( size_t index ) const;
+	ItemDrop& operator []( u32 index );
+	const ItemDrop& operator []( u32 index ) const;
 
-	virtual void SerializeXml( AttributeWriter* f );
-	virtual void DeserializeXml( AttributeReader* f );
+	virtual void Serialize( AttributeWriter* f );
+	virtual void Deserialize( AttributeReader* f );
 
 protected:
-	ItemDrop	m_item_drops[MAX_ITEM_DROPS];
-	size_t		m_size;
-	bool		m_allow_multiple_drops;
+	ItemDrop	m_itemDrops[MAX_ITEM_DROPS];
+	u32			m_size;
+	bool		m_allowMultipleDrops;
 
 };
 

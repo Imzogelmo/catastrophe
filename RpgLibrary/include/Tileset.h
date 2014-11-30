@@ -25,53 +25,54 @@ public:
 	typedef fc::vector<Tile*>			anim_vec_type;
 
 	Tileset();
-	Tileset( TilesetManager* parent, const fc::string& name );
+	Tileset( TilesetManager* parent, const String& name );
 	~Tileset();
 
 	void Clear();
 	void Update();
-	void Resize( size_t w, size_t h );
+	void Resize( u32 w, u32 h );
 
-	void SetName( const fc::string& name ) { m_name = name; }
-	void SetFileName( const fc::string& filename ) { m_filename = filename; }
+	void SetName( const String& name ) { m_name = name; }
+	void SetFileName( const String& filename ) { m_filename = filename; }
 	void SetId( int id ) { m_id = id; }
 	void SetTexture( Texture* texture );
+	void SetTileSize( u32 tileSize );
 
 	bool Empty() const { return m_tiles.empty(); }
-	size_t Size() const { return m_tiles.size(); }
-	size_t Width() const { return m_tiles.x(); }
-	size_t Height() const { return m_tiles.y(); }
+	u32 Size() const { return m_tiles.size(); }
+	u32 Width() const { return m_tiles.x(); }
+	u32 Height() const { return m_tiles.y(); }
 
-	const fc::string& GetName() const { return m_name; }
-	const fc::string& GetFileName() const { return m_filename; }
+	const String& GetName() const { return m_name; }
+	const String& GetFileName() const { return m_filename; }
 	TilesetManager* GetTilesetManager() const { return m_parent; }
 	Texture* GetTexture() const { return m_texture; }
 	gluint GetTextureId() const;
 	int GetId() const { return m_id; }
+	u32 GetTileSize() const { return m_tileSize; }
 
-	Tile* GetTile( size_t index );
-	Tile* GetTile( size_t x, size_t y );
+	Tile* GetTile( u32 index ) const;
+	Tile* GetTile( u32 x, u32 y ) const;
 
 	// fast index operators with no error checking.
-	Tile& operator []( size_t index ) { return m_tiles[index]; }
-	const Tile& operator []( size_t index ) const { return m_tiles[index]; }
-
-	bool CreateFromTexture( Texture* texture );
+	Tile& operator []( u32 index ) { return m_tiles[index]; }
+	const Tile& operator []( u32 index ) const { return m_tiles[index]; }
 
 	// these are usually only called internally.
 	void ReconfigureAnimatedTileList();
 	void ResetAnimations();
 	void ValidateTiles();
 
-	NO_INLINE bool SerializeXml( const fc::string& directory );
-	NO_INLINE bool DeserializeXml( const fc::string& directory, const fc::string& filename );
+	NO_INLINE bool Serialize( const String& directory );
+	NO_INLINE bool Deserialize( const String& directory, const String& filename );
 
 private:
 	TilesetManager*	m_parent;
 	Texture*		m_texture;
-	fc::string		m_name;
-	fc::string		m_filename;
+	String			m_name;
+	String			m_filename;
 	int				m_id;
+	u32				m_tileSize;
 	array_type		m_tiles;
 	anim_vec_type	m_ptr_animated_tiles;
 

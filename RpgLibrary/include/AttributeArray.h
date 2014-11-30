@@ -43,9 +43,9 @@ struct AttributeArray
 		return *this;
 	}
 
-	size_t Size() const { return m_size; }
+	u32 Size() const { return m_size; }
 
-	void Resize( size_t n )
+	void Resize( u32 n )
 	{
 		if( m_size == n )
 			return;
@@ -56,8 +56,8 @@ struct AttributeArray
 			if(attribute)
 			{
 				// copy previous contents
-				size_t minSize = m_size > n ? n : m_size;
-				for( size_t i(0); i < minSize; ++i )
+				u32 minSize = m_size > n ? n : m_size;
+				for( u32 i(0); i < minSize; ++i )
 					ptr[i] = attribute[i];
 
 				delete [] attribute;
@@ -76,23 +76,23 @@ struct AttributeArray
 
 	void Set(T value)
 	{
-		for( size_t i(0); i < m_size; ++i )
+		for( u32 i(0); i < m_size; ++i )
 			attribute[i] = value;
 	}
 
 	void Set(T* values)
 	{
-		for( size_t i(0); i < m_size; ++i )
+		for( u32 i(0); i < m_size; ++i )
 			attribute[i] = values[i];
 	}
 
-	T& operator [](size_t i) { return attribute[i]; }
-	const T& operator [](size_t i) const { return attribute[i]; }
+	T& operator [](u32 i) { return attribute[i]; }
+	const T& operator [](u32 i) const { return attribute[i]; }
 
 	this_type operator +(const this_type& rhs) const
 	{
 		this_type ret;
-		for( size_t i(0); i < m_size; ++i )
+		for( u32 i(0); i < m_size; ++i )
 			ret.attribute[i] = attribute[i] + rhs.attribute[i];
 
 		return ret;
@@ -101,7 +101,7 @@ struct AttributeArray
 	this_type operator -(const this_type& rhs) const
 	{
 		this_type ret;
-		for( size_t i(0); i < m_size; ++i )
+		for( u32 i(0); i < m_size; ++i )
 			ret.attribute[i] = attribute[i] - rhs.attribute[i];
 
 		return ret;
@@ -109,7 +109,7 @@ struct AttributeArray
 
 	this_type& operator +=(const this_type& rhs)
 	{
-		for( size_t i(0); i < m_size; ++i )
+		for( u32 i(0); i < m_size; ++i )
 			attribute[i] += rhs.attribute[i];
 
 		return *this;
@@ -117,7 +117,7 @@ struct AttributeArray
 
 	this_type& operator -=(const this_type& rhs)
 	{
-		for( size_t i(0); i < m_size; ++i )
+		for( u32 i(0); i < m_size; ++i )
 			attribute[i] -= rhs.attribute[i];
 
 		return *this;
@@ -127,7 +127,7 @@ struct AttributeArray
 	this_type Add(const this_type& rhs, I min, I max) const
 	{
 		this_type ret;
-		for( size_t i(0); i < m_size; ++i )
+		for( u32 i(0); i < m_size; ++i )
 		{
 			I val = ((I)attribute[i] + (I)rhs.attribute[i]);
 			if( val < min ) val = min;
@@ -142,7 +142,7 @@ struct AttributeArray
 	this_type Subtract(const this_type& rhs, I min, I max) const
 	{
 		this_type ret;
-		for( size_t i(0); i < m_size; ++i )
+		for( u32 i(0); i < m_size; ++i )
 		{
 			I val = ((I)attribute[i] - (I)rhs.attribute[i]);
 			if( val < min ) val = min;
@@ -154,7 +154,7 @@ struct AttributeArray
 	}
 
 	template <class I> inline
-	void AddAssignIndex(size_t i, I value, I min, I max)
+	void AddAssignIndex(u32 i, I value, I min, I max)
 	{
 		I val = ((I)attribute[i] + value);
 		if( val < min ) val = min;
@@ -165,7 +165,7 @@ struct AttributeArray
 	template <class I>
 	this_type& AddAssign(const this_type& rhs, I min, I max)
 	{
-		for( size_t i(0); i < m_size; ++i )
+		for( u32 i(0); i < m_size; ++i )
 		{
 			I val = ((I)attribute[i] + (I)rhs.attribute[i]);
 			if( val < min ) val = min;
@@ -179,7 +179,7 @@ struct AttributeArray
 	template <class I>
 	this_type& SubtractAssign(const this_type& rhs, I min, I max)
 	{
-		for( size_t i(0); i < m_size; ++i )
+		for( u32 i(0); i < m_size; ++i )
 		{
 			I val = ((I)attribute[i] - (I)rhs.attribute[i]);
 			if( val < min ) val = min;
@@ -191,7 +191,7 @@ struct AttributeArray
 	}
 
 	template <class I> inline
-	void ApplyPercentageModifierToIndex(size_t i, I value, I min, I max)
+	void ApplyPercentageModifierToIndex(u32 i, I value, I min, I max)
 	{
 		if( value != 0 )
 		{
@@ -206,7 +206,7 @@ struct AttributeArray
 	template <class I>
 	this_type& ApplyPercentageModifier(const this_type& rhs, I min, I max)
 	{
-		for( size_t i(0); i < m_size; ++i )
+		for( u32 i(0); i < m_size; ++i )
 		{
 			ApplyPercentageModifierToIndex(i, (I)rhs.attribute[i], min, max);
 		}
@@ -223,7 +223,7 @@ struct AttributeArray
 
 	void Clamp(const this_type& min, const this_type& max)
 	{
-		for( size_t i(0); i < m_size; ++i )
+		for( u32 i(0); i < m_size; ++i )
 		{
 			if( attribute[i] > max.attribute[i] )
 				attribute[i] = max.attribute[i];
@@ -235,7 +235,7 @@ struct AttributeArray
 
 	void Clamp(T min, T max)
 	{
-		for( size_t i(0); i < m_size; ++i )
+		for( u32 i(0); i < m_size; ++i )
 		{
 			if( attribute[i] > max )
 				attribute[i] = max;
@@ -246,6 +246,6 @@ struct AttributeArray
 	}
 
 protected:
-	size_t m_size;
+	u32 m_size;
 };
 

@@ -20,22 +20,28 @@ Skill::Skill()
 }
 
 
-void Skill::SerializeXml( AttributeWriter* f )
+void Skill::Serialize( AttributeWriter* f )
 {
 	f->SetString("name", name.c_str());
 	f->SetString("script", script.c_str());
 	f->SetString("description", description.c_str());
 
-	//attributes.SerializeXml(xml);
+	//attributes.Serialize(xml);
 }
 
 
-void Skill::DeserializeXml( AttributeReader* f )
+void Skill::Deserialize( AttributeReader* f )
 {
 	name = f->GetString("name");
 	script = f->GetString("script");
 	description = f->GetString("description");
 
-	//attributes.DeserializeXml(xml);
+	//attributes.Deserialize(xml);
+}
+
+
+int Skill::GetMemoryUsage() const
+{
+	return (int)(description.capacity() + levelData.capacity());
 }
 

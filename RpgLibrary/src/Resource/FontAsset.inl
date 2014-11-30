@@ -15,98 +15,99 @@
 #include <Catastrophe/IO/AttributeWriter.h>
 #include <Catastrophe/IO/AttributeReader.h>
 
-#include "TextureAsset.h"
+#include "FontAsset.h"
 #include "TextureManager.h"
 
 
+// todo: NOTE* This is just a copy/past of TextureAsset for now.
 
-TextureAsset::TextureAsset() :
+FontAsset::FontAsset() :
 	id(0),
-	m_textureFilename(),
-	m_textureResourceId(-1),
+	m_fontFilename(),
+	m_fontResourceId(-1),
 	m_refCount(0),
 	m_preload(false)
 {
 }
 
 
-TextureAsset::~TextureAsset()
+FontAsset::~FontAsset()
 {
 	if( m_refCount != 0 )
 	{
 		// ref count should be 0.
 		// if not, the program did not interface this class correctly.
-		LogError("TextureAsset Error: File (%s) : Destructor called with ref count (%i)",
-			m_textureFilename.c_str(), m_refCount);
+		LogError("FontAsset Error: File (%s) : Destructor called with ref count (%i)",
+			m_fontFilename.c_str(), m_refCount);
 	}
 }
 
 
-Texture* TextureAsset::LoadTexture()
+Font* FontAsset::LoadFont()
 {
-	Texture* texture = 0;
-	if( m_textureResourceId < 0 )
+	Font* font = 0;
+	if( m_fontResourceId < 0 )
 	{
 		// retrieve by filename
-		texture = g_textureManager->Load(m_textureFilename, &m_textureResourceId);
+		font = g_fontManager->Load(m_fontFilename, &m_fontResourceId);
 	}
 	else
 	{
 		// retrieve by index without increasing count.
-		Resource* resource = g_textureManager->GetResourceCache()->GetResource(m_textureResourceId);
+		Resource* resource = g_fontManager->GetResourceCache()->GetResource(m_fontResourceId);
 		if( resource )
 		{
-			texture = (Texture*)resource->ptr;
+			font = (Font*)resource->ptr;
 		}
 	}
 
-	if( !texture )
+	if( !font )
 	{
 		// wtf error.
-		LogError("TextureAsset::LoadTexture Error: File (%s) : ref count (%i) : null resource!",
-			m_textureFilename.c_str(), m_refCount);
+		LogError("FontAsset::LoadTexture Error: File (%s) : ref count (%i) : null resource!",
+			m_fontFilename.c_str(), m_refCount);
 		m_refCount--;
 	}
 
 	m_refCount++;
-	return texture;
+	return font;
 }
 
 
-void TextureAsset::ReleaseTexture()
+void FontAsset::ReleaseFont()
 {
 	ASSERT(m_refCount > 0);
 
 	m_refCount--;
 	if( m_refCount < 1 )
 	{
-		m_textureResourceId = -1;
-		g_textureManager->Unload(m_textureResourceId);
+		m_fontResourceId = -1;
+		g_fontManager->Unload(m_fontResourceId);
 	}
 }
 
 
-void TextureAsset::Reset()
+void FontAsset::Reset()
 {
 	m_refCount = 0;
-	m_textureResourceId = -1;
+	m_fontResourceId = -1;
 }
 
 
-void TextureAsset::Serialize( AttributeWriter* f )
+void FontAsset::Serialize( AttributeWriter* f )
 {
 	f->BeginNode("Asset");
-	f->SetString("texture", m_textureFilename.c_str());
+	f->SetString("font", m_fontFilename.c_str());
 	f->SetBool("preload", m_preload);
 	f->EndNode();
 }
 
 
-void TextureAsset::Deserialize( AttributeReader* f )
+void FontAsset::Deserialize( AttributeReader* f )
 {
 	if( f->NextChild("Asset") )
 	{
-		m_textureFilename = f->GetString("texture");
+		m_fontFilename = f->GetString("font");
 		m_preload = f->GetBool("preload");
 		f->SetToParent();
 	}
@@ -115,7 +116,7 @@ void TextureAsset::Deserialize( AttributeReader* f )
 }
 
 
-int TextureAsset::GetMemoryUsage() const
+int FontAsset::GetMemoryUsage() const
 {
-	return (int)(m_textureFilename.capacity());
+	return (int)(m_fontFilename.capacity());
 }

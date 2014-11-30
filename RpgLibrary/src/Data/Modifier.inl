@@ -40,7 +40,7 @@ void Modifier::ApplyToAttributes( Attributes& attributes ) const
 			case MaxParam:
 			{
 				if( index < MAX_PARAMS )
-					attributes.max_params.AddAssignIndex<int>
+					attributes.maxParams.AddAssignIndex<int>
 						(index, value, -MAX_PARAM_VALUE, MAX_PARAM_VALUE);
 			}
 			break;
@@ -54,21 +54,21 @@ void Modifier::ApplyToAttributes( Attributes& attributes ) const
 			case ElementalDef:
 			{
 				if( index < MAX_ELEMENTS )
-					attributes.elemental_def.AddAssignIndex<int>
+					attributes.elementalDefense.AddAssignIndex<int>
 						(index, value, -MAX_ELEMENT_VALUE, MAX_ELEMENT_VALUE);
 			}
 			break;
 			case StatusAtk:
 			{
 				if( index < MAX_STATUS )
-					attributes.status_atk.AddAssignIndex<int>
+					attributes.statusAttack.AddAssignIndex<int>
 						(index, value, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
 			}
 			break;
 			case StatusDef:
 			{
 				if( index < MAX_STATUS )
-					attributes.status_atk.AddAssignIndex<int>
+					attributes.statusDefense.AddAssignIndex<int>
 						(index, value, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
 			}
 			break;
@@ -82,35 +82,35 @@ void Modifier::ApplyToAttributes( Attributes& attributes ) const
 			case MaxParam:
 			{
 				if( index < MAX_PARAMS )
-					attributes.max_params.ApplyPercentageModifierToIndex<int>
+					attributes.maxParams.ApplyPercentageModifierToIndex<int>
 						(index, value, -MAX_PARAM_VALUE, MAX_PARAM_VALUE);
 			}
 			break;
 			case Stat:
 			{
 				if( index < MAX_STATS )
-					attributes.max_params.ApplyPercentageModifierToIndex<int>
+					attributes.stats.ApplyPercentageModifierToIndex<int>
 						(index, value, -MAX_STAT_VALUE, MAX_STAT_VALUE);
 			}
 			break;
 			case ElementalDef:
 			{
 				if( index < MAX_ELEMENTS )
-					attributes.elemental_def.ApplyPercentageModifierToIndex<int>
+					attributes.elementalDefense.ApplyPercentageModifierToIndex<int>
 						(index, value, -MAX_ELEMENT_VALUE, MAX_ELEMENT_VALUE);
 			}
 			break;
 			case StatusAtk:
 			{
 				if( index < MAX_STATUS )
-					attributes.max_params.ApplyPercentageModifierToIndex<int>
+					attributes.statusAttack.ApplyPercentageModifierToIndex<int>
 						(index, value, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
 			}
 			break;
 			case StatusDef:
 			{
 				if( index < MAX_STATUS )
-					attributes.max_params.ApplyPercentageModifierToIndex<int>
+					attributes.statusDefense.ApplyPercentageModifierToIndex<int>
 						(index, value, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
 			}
 			break;
@@ -119,7 +119,7 @@ void Modifier::ApplyToAttributes( Attributes& attributes ) const
 }
 
 
-void Modifier::SerializeXml( AttributeWriter* f )
+void Modifier::Serialize( AttributeWriter* f )
 {
 	f->SetInt("value", value);
 	f->SetShort("index", index);
@@ -128,11 +128,11 @@ void Modifier::SerializeXml( AttributeWriter* f )
 }
 
 
-void Modifier::DeserializeXml( AttributeReader* f )
+void Modifier::Deserialize( AttributeReader* f )
 {
 	value = f->GetInt("value");
 	index = f->GetShort("index");
-	target = f->GetInt("target");
-	type = f->GetInt("type");
+	target = f->GetByte("target");
+	type = f->GetByte("type");
 }
 

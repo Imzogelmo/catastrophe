@@ -17,26 +17,40 @@
 #include "Attributes.h"
 
 
+struct LearningData
+{
+	u16	id;
+	u16	level;
+
+	LearningData() : id(0), level(0) {}
+};
+
+
 struct RPG_API CharacterClass
 {
-	fc::string		name;
-	fc::string		script;
-	fc::string		description;
+	StaticString<32>	name;
+	StaticString<32>	script;
+	String				description;
 
 	int				id;
-	int				portrait_id;
-	int				map_spriteset_id;
-	int				battle_spriteset_id;
+	int				portraitId;
+	int				mapSpritesetId;
+	int				battleSpritesetId;
 	int				exp_table_id;
 
 	Attributes		attributes;
+
+	fc::dynamic_array<LearningData>	skills;
+	fc::dynamic_array<LearningData>	passiveSkills;
+	fc::dynamic_array<LearningData>	spells;
+
 
 	CharacterClass();
 
 	static void RegisterObject();
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 
 	int GetMemoryUsage() const;
 

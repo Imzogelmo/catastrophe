@@ -22,9 +22,9 @@ CharacterClass::CharacterClass() :
 	script(),
 	description(),
 	id(0),
-	portrait_id(0),
-	map_spriteset_id(0),
-	battle_spriteset_id(0),
+	portraitId(0),
+	mapSpritesetId(0),
+	battleSpritesetId(0),
 	exp_table_id(0),
 	attributes()
 {
@@ -39,14 +39,14 @@ void CharacterClass::RegisterObject()
 	REGISTER_ATTRIBUTE(CharacterClass, VAR_TYPE_STRING, "description", description);
 
 	PUSH_ATTRIBUTE_NODE(CharacterClass, "Data");
-	REGISTER_ATTRIBUTE(CharacterClass, VAR_TYPE_INT, "portrait_id", portrait_id);
-	REGISTER_ATTRIBUTE(CharacterClass, VAR_TYPE_INT, "map_spriteset_id", map_spriteset_id);
-	REGISTER_ATTRIBUTE(CharacterClass, VAR_TYPE_INT, "battle_spriteset_id", battle_spriteset_id);
+	REGISTER_ATTRIBUTE(CharacterClass, VAR_TYPE_INT, "portraitId", portraitId);
+	REGISTER_ATTRIBUTE(CharacterClass, VAR_TYPE_INT, "mapSpritesetId", mapSpritesetId);
+	REGISTER_ATTRIBUTE(CharacterClass, VAR_TYPE_INT, "battleSpritesetId", battleSpritesetId);
 	POP_ATTRIBUTE_NODE(CharacterClass);
 }
 
 
-void CharacterClass::SerializeXml( AttributeWriter* f )
+void CharacterClass::Serialize( AttributeWriter* f )
 {
 	//SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
 
@@ -55,17 +55,17 @@ void CharacterClass::SerializeXml( AttributeWriter* f )
 	f->SetString("description", description.c_str());
 
 	f->BeginNode("Data");
-	f->SetInt("portrait_id", portrait_id);
-	f->SetInt("map_spriteset_id", portrait_id);
-	f->SetInt("battle_spriteset_id", portrait_id);
+	f->SetInt("portraitId", portraitId);
+	f->SetInt("mapSpritesetId", portraitId);
+	f->SetInt("battleSpritesetId", portraitId);
 	f->EndNode();
 
-	attributes.SerializeXml(f);
+	attributes.Serialize(f);
 
 }
 
 
-void CharacterClass::DeserializeXml( AttributeReader* f )
+void CharacterClass::Deserialize( AttributeReader* f )
 {
 	//DESERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
 
@@ -75,13 +75,13 @@ void CharacterClass::DeserializeXml( AttributeReader* f )
 
 	if( f->NextChild("Data") )
 	{
-		portrait_id = f->GetInt("portrait_id", portrait_id);
-		map_spriteset_id = f->GetInt("map_spriteset_id", map_spriteset_id);
-		battle_spriteset_id = f->GetInt("battle_spriteset_id", battle_spriteset_id);
+		portraitId = f->GetInt("portraitId", portraitId);
+		mapSpritesetId = f->GetInt("mapSpritesetId", mapSpritesetId);
+		battleSpritesetId = f->GetInt("battleSpritesetId", battleSpritesetId);
 		f->SetToParent();
 	}
 
-	attributes.DeserializeXml(f);
+	attributes.Deserialize(f);
 
 }
 

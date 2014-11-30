@@ -12,37 +12,40 @@
 #pragma once
 
 #include <fc/string.h>
+#include <fc/static_string.h>
 
 #include "RpgCommon.h"
 #include "Attributes.h"
 #include "ItemDropSet.h"
+#include "FactorSet.h"
 
 
 
 struct RPG_API MonsterData
 {
-	fc::string		name;
-	fc::string		script;
-	fc::string		description;
+	StaticString<32>	name;
+	StaticString<32>	script;
+	String				description;
 
-	int				id;
-	short			portrait_id;
-	short			map_spriteset_id;
-	short			battle_spriteset_id;
-	short			default_background_id;
+	u16			id;
+	u16			portraitId;
+	u16			mapSpritesetId;
+	u16			battleSpritesetId;
+	u16			backgroundId;
 
 	int				lv;
 	int				exp;
 	int				gold;
 	Attributes		attributes;
-	ItemDropSet		item_dropset;
+	FactorSet		factors;
+	ItemDropSet		itemDropset;
 
 	MonsterData();
 
 	static void RegisterObject();
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 
 	int GetMemoryUsage() const;
 

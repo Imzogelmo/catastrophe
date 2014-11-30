@@ -86,14 +86,14 @@ void SerializeObject<AnimatedSpriteSet>( AttributeWriter* f, const AnimatedSprit
 	//f->BeginNode("AnimatedSpriteSet");
 
 	Texture* texture = s.GetTexture();
-	fc::string texStr = texture ? texture->GetName() : "";
-	size_t count = s.GetNumAnimations();
+	String texStr = texture ? texture->GetResourceName() : "";
+	u32 count = s.GetNumAnimations();
 
 	f->SetString("texture", texStr.c_str());
 	f->SetUInt("num_animations", count);
 	SerializeObject<SpriteBase>("SpriteBase", f, s);
 
-	for( size_t i(0); i < count; ++i )
+	for( u32 i(0); i < count; ++i )
 	{
 		SerializeObject<SpriteAnimation>(f, s.GetAnimation(i));
 	}
@@ -108,7 +108,7 @@ void SerializeObject<Sprite>( AttributeWriter* f, const Sprite& s )
 {
 	SerializeSpriteBase(xml, s);
 
-	fc::string textureName;
+	String textureName;
 	Rect sourceRect = Rect::Zero;
 
 	const Texture* texture = s.GetTexture();
@@ -141,7 +141,7 @@ void RpgSerializer::SerializeAnimationSet( AttributeWriter* f, const AnimationSe
 	SerializeSpriteBase(xml, a);
 	f->SetUInt("count", a.NumAnimations());
 
-	for( size_t i(0); i < a.NumAnimations(); ++i )
+	for( u32 i(0); i < a.NumAnimations(); ++i )
 	{
 		f->BeginNode("Animation");
 		SerializeAnimation(xml, a.GetAnimation(i) );
@@ -152,7 +152,7 @@ void RpgSerializer::SerializeAnimationSet( AttributeWriter* f, const AnimationSe
 
 void RpgSerializer::SerializeAnimation( AttributeWriter* f, const Animation& a )
 {
-	fc::string textureName;
+	String textureName;
 	Rect r1 = Rect::Zero;
 	Rect r2 = Rect::Zero;
 	Point offset = Point::Zero;
@@ -206,4 +206,15 @@ void SerializeStringArray( AttributeWriter* f, const char* node, const T* string
 		f->EndNode();
 	}
 	f->EndNode();
+}
+
+
+//template crap...
+void removeme_()
+{
+	SerializeObject<Point>("", 0, Point());
+	SerializeObject<Rect>("", 0, Rect());
+	DeserializeObject<Point>("", 0, Point());
+	DeserializeObject<Rect>("", 0, Rect());
+
 }

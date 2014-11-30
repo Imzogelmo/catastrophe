@@ -11,7 +11,6 @@
 
 #pragma once
 
-#include <fc/fixed_vector.h>
 #include <Catastrophe/Math/Rect.h>
 #include <Catastrophe/Math/Rectf.h>
 
@@ -33,39 +32,39 @@ public:
 	Tile( Tileset* parent = 0 );
 
 	void SetTileset( Tileset* parent ) { m_parent = parent; } //make protected
-	void SetCurrentFrame( short frame );
-	void SetAnimationSpeed( short frameDelay );
+	void SetCurrentFrame( s16 frame );
+	void SetAnimationSpeed( s16 frameDelay );
 	void SetSourceRect( const Rect& sourceRectangle );
 
 	void Create( const Rect& sourceRectangle, int numberOfFrames = 1 );
 	void Update();
 
 	inline const Rect& GetSourceRect() const { return m_sourceRect; }
-	inline short GetCurrentFrame() const { return frame; }
-	inline short GetAnimationSpeed() const { return anim_speed; }
-	inline short GetFlags() const { return flags; }
-	inline short NumFrames() const { return num_frames; }
-	inline bool IsAnimated() const { return num_frames > 1; }
+	inline s16 GetCurrentFrame() const { return frame; }
+	inline s16 GetAnimationSpeed() const { return animSpeed; }
+	inline s16 GetFlags() const { return flags; }
+	inline s16 NumFrames() const { return numFrames; }
+	inline bool IsAnimated() const { return numFrames > 1; }
 
 	inline Tileset*	GetTileset() const { return m_parent; }
 	inline const Rectf&	GetUVRect() const { return m_uv; }
 
 	Texture* GetParentTexture() const;
 
-	inline void SetIndex( size_t index ) { m_tilesetIndex = index; }
-	inline size_t GetIndex() const { return m_tilesetIndex; }
+	inline void SetIndex( u32 index ) { m_tilesetIndex = index; }
+	inline u32 GetIndex() const { return m_tilesetIndex; }
 
-	NO_INLINE void SerializeXml( AttributeWriter* f );
-	NO_INLINE void DeserializeXml( AttributeReader* f );
+	NO_INLINE void Serialize( AttributeWriter* f );
+	NO_INLINE void Deserialize( AttributeReader* f );
 
 public:
-	short counter;
-	short frame;
-	short anim_speed;
-	short num_frames;
+	s16 counter;
+	s16 frame;
+	s16 animSpeed;
+	s16 numFrames;
 
 	//todo: flags..
-	short flags;
+	s16 flags;
 	//16 bit align....
 
 protected:
@@ -75,10 +74,7 @@ protected:
 	//Vector		m_sCoord;
 	//float		m_tCoord
 	Rectf		m_uv;
-	size_t		m_tilesetIndex;
+	u32			m_tilesetIndex;
 
-private:
-	//This value should never change.
-	static int m_tileSize; //todo: depricated
 };
 

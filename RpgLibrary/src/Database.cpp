@@ -34,12 +34,13 @@
 #include "ItemDrop.inl"
 #include "ItemDropSet.inl"
 #include "Level.inl"
-#include "ExpTable.inl"
+#include "ExperienceTable.inl"
 #include "Shops.inl"
 #include "Enhancement.inl"
 #include "Synthesis.inl"
 #include "Switches.inl"
 
+#include "DatabaseVariant.inl"
 #include "StringAlias.inl"
 
 #include "Database.h"
@@ -68,65 +69,106 @@ void Database::Initialize()
 {
 	m_resourceDirectory = g_resourceDirectory;
 
+	skills.SetResourceDirectory(m_resourceDirectory);
+	passiveSkills.SetResourceDirectory(m_resourceDirectory);
+	spells.SetResourceDirectory(m_resourceDirectory);
+
+	items.SetResourceDirectory(m_resourceDirectory);
+	weapons.SetResourceDirectory(m_resourceDirectory);
+	armor.SetResourceDirectory(m_resourceDirectory);
+	accessories.SetResourceDirectory(m_resourceDirectory);
+
+	monsters.SetResourceDirectory(m_resourceDirectory);
+	monsterTroops.SetResourceDirectory(m_resourceDirectory);
+	monsterFormations.SetResourceDirectory(m_resourceDirectory);
+	characters.SetResourceDirectory(m_resourceDirectory);
+	characterClasses.SetResourceDirectory(m_resourceDirectory);
+	races.SetResourceDirectory(m_resourceDirectory);
+	factors.SetResourceDirectory(m_resourceDirectory);
+	experienceTables.SetResourceDirectory(m_resourceDirectory);
+
+	battleBackgroundSprites.SetResourceDirectory(m_resourceDirectory);
+	miscIconSprites.SetResourceDirectory(m_resourceDirectory);
+	characterPortraitSprites.SetResourceDirectory(m_resourceDirectory);
+	characterMapSprites.SetResourceDirectory(m_resourceDirectory);
+	characterBattleSprites.SetResourceDirectory(m_resourceDirectory);
+	monsterMapSprites.SetResourceDirectory(m_resourceDirectory);
+	monsterBattleSprites.SetResourceDirectory(m_resourceDirectory);
+	shaders.SetResourceDirectory(m_resourceDirectory);
+
+	/*
 	m_arrayAny.Add(items);
 	m_arrayAny.Add(weapons);
 	m_arrayAny.Add(armor);
 	m_arrayAny.Add(accessories);
 
 	m_arrayAny.Add(monsters);
-	m_arrayAny.Add(monster_troops);
-	m_arrayAny.Add(monster_formations);
+	m_arrayAny.Add(monsterTroops);
+	m_arrayAny.Add(monsterFormations);
 	m_arrayAny.Add(characters);
-	m_arrayAny.Add(character_classes);
+	m_arrayAny.Add(characterClasses);
 	m_arrayAny.Add(races);
+	m_arrayAny.Add(factors);
+	m_arrayAny.Add(experienceTables);
 
-	m_arrayAny.Add(character_portrait_sprites);
-	m_arrayAny.Add(character_map_sprites);
-	m_arrayAny.Add(character_battle_sprites);
-	m_arrayAny.Add(monster_map_sprites);
-	m_arrayAny.Add(monster_battle_sprites);
+	m_arrayAny.Add(battleBackgroundSprites);
+	m_arrayAny.Add(miscIconSprites);
+	m_arrayAny.Add(characterPortraitSprites);
+	m_arrayAny.Add(characterMapSprites);
+	m_arrayAny.Add(characterBattleSprites);
+	m_arrayAny.Add(monsterMapSprites);
+	m_arrayAny.Add(monsterBattleSprites);
 	m_arrayAny.Add(shaders);
 
 	DatabaseArrayAnyHolder::vec_type & v = m_arrayAny.GetVector();
-	for( size_t i(0); i < v.size(); ++i )
+	for( u32 i(0); i < v.size(); ++i )
 	{
 		v[i]->SetResourceDirectory(m_resourceDirectory);
-	}
+	}*/
 }
 
 
 void Database::GenerateScriptHeaders()
 {
-	GenerateHeader( items, m_resourceDirectory, "items.h", "ITEM_" );
-	GenerateHeader( weapons, m_resourceDirectory, "weapons.h", "WEAPON_" );
-	GenerateHeader( armor, m_resourceDirectory, "armor.h", "ARMOR_" );
-	GenerateHeader( accessories, m_resourceDirectory, "accessories.h", "ACCESSORY_" );
-	GenerateHeader( monsters, m_resourceDirectory, "monsters.h", "MONSTER_" );
-	GenerateHeader( characters, m_resourceDirectory, "characters.h", "CHARACTER_" );
-	GenerateHeader( character_classes, m_resourceDirectory, "classes.h", "CLASS_" );
-	GenerateHeader( races, m_resourceDirectory, "races.h", "RACE_" );
+	//todo: cs now...
+	GenerateHeader( items, m_resourceDirectory, "Items.cs", "Items" );
+	GenerateHeader( weapons, m_resourceDirectory, "Weapons.cs", "Weapons" );
+	GenerateHeader( armor, m_resourceDirectory, "Armor.cs", "Armor" );
+	GenerateHeader( accessories, m_resourceDirectory, "Accessories.cs", "Accessories" );
+	GenerateHeader( monsters, m_resourceDirectory, "Monsters.cs", "Monsters" );
+	GenerateHeader( characters, m_resourceDirectory, "Characters.cs", "Characters" );
+	GenerateHeader( characterClasses, m_resourceDirectory, "Classes.cs", "CharacterClasses" );
+	GenerateHeader( races, m_resourceDirectory, "Races.cs", "Races" );
 }
 
 
 void Database::SetAllDefaultDataArrayFilenames()
 {
+	skills.SetFilename("Skills.xml");
+	passiveSkills.SetFilename("PassiveSkills.xml");
+	spells.SetFilename("Spells.xml");
+
 	items.SetFilename("items.xml");
 	weapons.SetFilename("weapons.xml");
 	armor.SetFilename("armor.xml");
 	accessories.SetFilename("accessories.xml");
 
 	monsters.SetFilename("monsters.xml");
-	monster_troops.SetFilename("monster_troops.xml");
-	monster_formations.SetFilename("monster_formations.xml");
+	monsterTroops.SetFilename("monster_troops.xml");
+	monsterFormations.SetFilename("monster_formations.xml");
 	characters.SetFilename("characters.xml");
-	character_classes.SetFilename("character_classes.xml");
+	characterClasses.SetFilename("character_classes.xml");
 	races.SetFilename("races.xml");
+	factors.SetFilename("factors.xml");
+	experienceTables.SetFilename("ExperienceTables.xml");
 
-	character_portrait_sprites.SetFilename("character_portrait_sprites.xml");
-	character_map_sprites.SetFilename("character_map_sprites.xml");
-	character_battle_sprites.SetFilename("character_battle_sprites.xml");
-	monster_map_sprites.SetFilename("monster_map_sprites.xml");
-	monster_battle_sprites.SetFilename("monster_battle_sprites.xml");
+	battleBackgroundSprites.SetFilename("BattleBackgroundSprites.xml");
+	miscIconSprites.SetFilename("misc_icon_sprites.xml");
+	characterPortraitSprites.SetFilename("character_portrait_sprites.xml");
+	characterMapSprites.SetFilename("character_map_sprites.xml");
+	characterBattleSprites.SetFilename("character_battle_sprites.xml");
+	monsterMapSprites.SetFilename("monster_map_sprites.xml");
+	monsterBattleSprites.SetFilename("monster_battle_sprites.xml");
 	shaders.SetFilename("shaders.xml");
 
 }
@@ -134,31 +176,115 @@ void Database::SetAllDefaultDataArrayFilenames()
 
 void Database::ClearAll()
 {
+	skills.Clear();
+	passiveSkills.Clear();
+	spells.Clear();
+
+	items.Clear();
+	weapons.Clear();
+	armor.Clear();
+	accessories.Clear();
+
+	monsters.Clear();
+	monsterTroops.Clear();
+	monsterFormations.Clear();
+	characters.Clear();
+	characterClasses.Clear();
+	races.Clear();
+	factors.Clear();
+	experienceTables.Clear();
+
+	battleBackgroundSprites.Clear();
+	miscIconSprites.Clear();
+	characterPortraitSprites.Clear();
+	characterMapSprites.Clear();
+	characterBattleSprites.Clear();
+	monsterMapSprites.Clear();
+	monsterBattleSprites.Clear();
+	shaders.Clear();
+
+	/*
 	DatabaseArrayAnyHolder::vec_type & v = m_arrayAny.GetVector();
-	for( size_t i(0); i < v.size(); ++i )
+	for( u32 i(0); i < v.size(); ++i )
 	{
 		v[i]->Clear();
-	}
+	}*/
 }
 
 
 void Database::SetAllDefaultDataArrayNodeNames()
 {
+	skills.SetDefaultNodeNames();
+	passiveSkills.SetDefaultNodeNames();
+	spells.SetDefaultNodeNames();
+
+	items.SetDefaultNodeNames();
+	weapons.SetDefaultNodeNames();
+	armor.SetDefaultNodeNames();
+	accessories.SetDefaultNodeNames();
+
+	monsters.SetDefaultNodeNames();
+	monsterTroops.SetDefaultNodeNames();
+	monsterFormations.SetDefaultNodeNames();
+	characters.SetDefaultNodeNames();
+	characterClasses.SetDefaultNodeNames();
+	races.SetDefaultNodeNames();
+	factors.SetDefaultNodeNames();
+	experienceTables.SetDefaultNodeNames();
+
+	battleBackgroundSprites.SetDefaultNodeNames();
+	miscIconSprites.SetDefaultNodeNames();
+	characterPortraitSprites.SetDefaultNodeNames();
+	characterMapSprites.SetDefaultNodeNames();
+	characterBattleSprites.SetDefaultNodeNames();
+	monsterMapSprites.SetDefaultNodeNames();
+	monsterBattleSprites.SetDefaultNodeNames();
+	shaders.SetDefaultNodeNames();
+
+	/*
 	DatabaseArrayAnyHolder::vec_type & v = m_arrayAny.GetVector();
-	for( size_t i(0); i < v.size(); ++i )
+	for( u32 i(0); i < v.size(); ++i )
 	{
 		v[i]->SetDefaultNodeNames();
-	}
+	}*/
 }
 
 
 bool Database::SerializeAllDataXml()
 {
+	skills.Serialize();
+	passiveSkills.Serialize();
+	spells.Serialize();
+
+	items.Serialize();
+	weapons.Serialize();
+	armor.Serialize();
+	accessories.Serialize();
+
+	monsters.Serialize();
+	monsterTroops.Serialize();
+	monsterFormations.Serialize();
+	characters.Serialize();
+	characterClasses.Serialize();
+	races.Serialize();
+	factors.Serialize();
+	experienceTables.Serialize();
+
+	battleBackgroundSprites.Serialize();
+	miscIconSprites.Serialize();
+	characterPortraitSprites.Serialize();
+	characterMapSprites.Serialize();
+	characterBattleSprites.Serialize();
+	monsterMapSprites.Serialize();
+	monsterBattleSprites.Serialize();
+	shaders.Serialize();
+
+	/*
 	DatabaseArrayAnyHolder::vec_type & v = m_arrayAny.GetVector();
-	for( size_t i(0); i < v.size(); ++i )
+	for( u32 i(0); i < v.size(); ++i )
 	{
-		v[i]->SerializeXml("");
-	}
+		v[i]->Serialize("");
+	}*/
 
 	return true;
 }
@@ -166,11 +292,39 @@ bool Database::SerializeAllDataXml()
 
 bool Database::DeserializeAllDataXml()
 {
+	skills.Deserialize();
+	passiveSkills.Deserialize();
+	spells.Deserialize();
+
+	items.Deserialize();
+	weapons.Deserialize();
+	armor.Deserialize();
+	accessories.Deserialize();
+
+	monsters.Deserialize();
+	monsterTroops.Deserialize();
+	monsterFormations.Deserialize();
+	characters.Deserialize();
+	characterClasses.Deserialize();
+	races.Deserialize();
+	factors.Deserialize();
+	experienceTables.Deserialize();
+
+	battleBackgroundSprites.Deserialize();
+	miscIconSprites.Deserialize();
+	characterPortraitSprites.Deserialize();
+	characterMapSprites.Deserialize();
+	characterBattleSprites.Deserialize();
+	monsterMapSprites.Deserialize();
+	monsterBattleSprites.Deserialize();
+	shaders.Deserialize();
+
+	/*
 	DatabaseArrayAnyHolder::vec_type & v = m_arrayAny.GetVector();
-	for( size_t i(0); i < v.size(); ++i )
+	for( u32 i(0); i < v.size(); ++i )
 	{
-		v[i]->DeserializeXml("");
-	}
+		v[i]->Deserialize("");
+	}*/
 
 	return true;
 }
@@ -191,8 +345,8 @@ ResourceDirectory* Database::GetResourceDirectory() const
 template <class T>
 void Database::GenerateIds( T& arr )
 {
-	int size = (int)arr.size();
-	for( int i(0); i < size; ++i )
+	u16 size = (u16)arr.size();
+	for( u16 i(0); i < size; ++i )
 	{
 		//id needs to match the indices.
 		arr[i].id = i;
@@ -201,9 +355,9 @@ void Database::GenerateIds( T& arr )
 
 
 XmlWriter* SerializeDataArrayBeginImpl
-( ResourceDirectory* resourceDirectory, const fc::string& filename, const char* root, size_t size )
+( ResourceDirectory* resourceDirectory, const String& filename, const char* root, u32 size )
 {
-	fc::string fn = resourceDirectory ? resourceDirectory->GetDataDirectory() : "";
+	String fn = resourceDirectory ? resourceDirectory->GetDataDirectory() : "";
 	fn += filename;
 
 	XmlWriter* xml = new XmlWriter(fn);
@@ -213,6 +367,7 @@ XmlWriter* SerializeDataArrayBeginImpl
 		return 0;
 	}
 
+	//xml->CreateRoot(root);
 	xml->BeginNode(root);
 	xml->SetInt("ver", 1);
 	xml->SetUInt("count", size);
@@ -233,15 +388,15 @@ void SerializeDataArrayEndImpl( XmlWriter* xml )
 
 
 template <class T>
-bool Database::SerializeDataArray( T& arr, ResourceDirectory* resourceDirectory, const fc::string& filename, const char* root, const char* item )
+bool Database::SerializeDataArray( T& arr, ResourceDirectory* resourceDirectory, const String& filename, const char* root, const char* item )
 {
 	XmlWriter* xml = SerializeDataArrayBeginImpl(resourceDirectory, filename, root, arr.size());
 	if( xml )
 	{
-		for( size_t i(0); i < arr.size(); ++i )
+		for( u32 i(0); i < arr.size(); ++i )
 		{
 			xml->BeginNode(item);
-			arr[i].SerializeXml(xml);
+			arr[i].Serialize(xml);
 			xml->EndNode();
 		}
 	}
@@ -250,7 +405,7 @@ bool Database::SerializeDataArray( T& arr, ResourceDirectory* resourceDirectory,
 	return true;
 
 	/*
-	fc::string fn = resourceDirectory ? resourceDirectory->GetDataDirectory() : "";
+	String fn = resourceDirectory ? resourceDirectory->GetDataDirectory() : "";
 	fn += filename;
 
 	XmlWriter xml(fn);
@@ -260,10 +415,10 @@ bool Database::SerializeDataArray( T& arr, ResourceDirectory* resourceDirectory,
 	xml.BeginNode(root);
 	xml.SetInt("ver", 1);
 	xml.SetUInt("count", arr.size());
-	for( size_t i(0); i < arr.size(); ++i )
+	for( u32 i(0); i < arr.size(); ++i )
 	{
 		xml.BeginNode(item);
-		arr[i].SerializeXml(&xml);
+		arr[i].Serialize(&xml);
 		xml.EndNode();
 	}
 
@@ -276,15 +431,15 @@ bool Database::SerializeDataArray( T& arr, ResourceDirectory* resourceDirectory,
 
 
 XmlReader* DeserializeDataArrayBeginImpl
-( ResourceDirectory* resourceDirectory, const fc::string& filename, const char* root, size_t size )
+( ResourceDirectory* resourceDirectory, const String& filename, const char* root, u32 size )
 {
-	fc::string fn = resourceDirectory ? resourceDirectory->GetDataDirectory() : "";
+	String fn = resourceDirectory ? resourceDirectory->GetDataDirectory() : "";
 	fn += filename;
 
 	XmlReader* xml = new XmlReader(fn);
 	if( xml->IsOpen() )
 	{
-		if( strcmp(xml->GetCurrentNodeName(), root) == 0 )
+		if( strcmp(xml->GetCurrentNodeNameCStr(), root) == 0 )
 			return xml;
 
 		else
@@ -310,23 +465,23 @@ void DeserializeDataArrayEndImpl( XmlReader* xml )
 
 
 template <class T>
-bool Database::DeserializeDataArray( T& arr, ResourceDirectory* resourceDirectory, const fc::string& filename, const char* root, const char* item )
+bool Database::DeserializeDataArray( T& arr, ResourceDirectory* resourceDirectory, const String& filename, const char* root, const char* item )
 {
 	XmlReader* xml = DeserializeDataArrayBeginImpl(resourceDirectory, filename, root, arr.size());
 	if( xml )
 	{
-		size_t n = xml->GetUInt("count");
+		u32 n = xml->GetUInt("count");
 		arr.resize(n);
-		for( size_t i(0); i < n && xml->NextChild(item); ++i )
+		for( u32 i(0); i < n && xml->NextChild(item); ++i )
 		{
-			arr[i].DeserializeXml(xml);
+			arr[i].Deserialize(xml);
 		}
 	}
 
 	DeserializeDataArrayEndImpl(xml);
 		
 	/*	
-	fc::string fn = resourceDirectory ? resourceDirectory->GetDataDirectory() : "";
+	String fn = resourceDirectory ? resourceDirectory->GetDataDirectory() : "";
 	fn += filename;
 
 	XmlReader xml(fn);
@@ -335,12 +490,12 @@ bool Database::DeserializeDataArray( T& arr, ResourceDirectory* resourceDirector
 
 	if( xml.GetCurrentNodeName() == root )
 	{
-		size_t i = 0;
-		size_t n = xml.GetUInt("count");
+		u32 i = 0;
+		u32 n = xml.GetUInt("count");
 		arr.resize(n);
 		while( i < n && xml.NextChild(item) )
 		{
-			arr[i].DeserializeXml(&xml);
+			arr[i].Deserialize(&xml);
 			i++;
 		}
 	}
@@ -361,9 +516,9 @@ bool Database::DeserializeDataArray( T& arr, ResourceDirectory* resourceDirector
 // this whole thing is a WIP.
 //
 template <class Array>
-bool Database::GenerateHeader( const Array& arr, ResourceDirectory* resourceDirectory, const fc::string& filename, const fc::string& prependStr )
+bool Database::GenerateHeader( const Array& arr, ResourceDirectory* resourceDirectory, const String& filename, const String& prependStr )
 {
-	fc::string fn = resourceDirectory ? resourceDirectory->GetScriptDefineDirectory() : "";
+	String fn = resourceDirectory ? resourceDirectory->GetScriptDefineDirectory() : "";
 	fn += filename;
 
 	File f;
@@ -373,15 +528,65 @@ bool Database::GenerateHeader( const Array& arr, ResourceDirectory* resourceDire
 	}
 
 	f.WriteLine("");
-	f.WriteLine("/* !GENERATED FILE - DO NOT HAND EDIT! */");
+	f.WriteLine("// !GENERATED FILE - DO NOT HAND EDIT!");
+	f.WriteLine("namespace Catastrophe.Rpg");
+	f.WriteLine("{");
+	f.WriteLine("\tenum " + prependStr);
+	f.WriteLine("\t{");
+
+	String name;
+
+	u32 i = 0;
+	for( ; i < arr.size(); ++i )
+	{
+		name = "\t\t";
+		name += arr[i].name.c_str();
+
+		// TODO: just remove anything not a valid char
+		name.erase( fc::remove(name.begin(), name.end(), '\''), name.end() );
+		name.erase( fc::remove(name.begin(), name.end(), '\"'), name.end() );
+		name.erase( fc::remove(name.begin(), name.end(), ' '), name.end() );
+
+		//name += " = ";
+		//name.append_int(i);
+		name += ',';
+
+		f.WriteLine(name);
+	}
+
+	// finish by writing the maximum valid indices to this array.
+	f.WriteLine("\tMax");
+	f.WriteLine("}");
+
+	f.WriteLine("");
+	f.Close();
+
+	return true;
+}
+
+/*
+template <class Array>
+bool Database::GenerateHeader( const Array& arr, ResourceDirectory* resourceDirectory, const String& filename, const String& prependStr )
+{
+	String fn = resourceDirectory ? resourceDirectory->GetScriptDefineDirectory() : "";
+	fn += filename;
+
+	File f;
+	if( !f.Open(fn, FileWrite) )
+	{
+		return false;
+	}
+
+	f.WriteLine("");
+	f.WriteLine("// !GENERATED FILE - DO NOT HAND EDIT!");
 	f.WriteLine("");
 	f.WriteLine("#pragma once");
 	f.WriteLine("");
 
-	fc::string str;
-	fc::string name;
+	String str;
+	String name;
 
-	size_t i = 0;
+	u32 i = 0;
 	for( ; i < arr.size(); ++i )
 	{
 		str = "#define " + prependStr;
@@ -415,28 +620,39 @@ bool Database::GenerateHeader( const Array& arr, ResourceDirectory* resourceDire
 
 	return true;
 }
-
+*/
 
 int Database::GetMemoryUsage() const
 {
 	return (int)
 	(
 		sizeof(Database) +
+
+		skills.GetMemoryUsage() +
+		passiveSkills.GetMemoryUsage() +
+		spells.GetMemoryUsage() +
+
 		items.GetMemoryUsage() +
 		weapons.GetMemoryUsage() +
 		armor.GetMemoryUsage() +
 		accessories.GetMemoryUsage() +
+
 		monsters.GetMemoryUsage() +
-		monster_troops.GetMemoryUsage() +
-		monster_formations.GetMemoryUsage() +
+		monsterTroops.GetMemoryUsage() +
+		monsterFormations.GetMemoryUsage() +
 		characters.GetMemoryUsage() +
-		character_classes.GetMemoryUsage() +
+		characterClasses.GetMemoryUsage() +
 		races.GetMemoryUsage() +
-		character_portrait_sprites.GetMemoryUsage() +
-		character_map_sprites.GetMemoryUsage() +
-		character_battle_sprites.GetMemoryUsage() +
-		monster_map_sprites.GetMemoryUsage() +
-		monster_battle_sprites.GetMemoryUsage() +
+		factors.GetMemoryUsage() +
+		experienceTables.GetMemoryUsage() +
+
+		battleBackgroundSprites.GetMemoryUsage() +
+		miscIconSprites.GetMemoryUsage() +
+		characterPortraitSprites.GetMemoryUsage() +
+		characterMapSprites.GetMemoryUsage() +
+		characterBattleSprites.GetMemoryUsage() +
+		monsterMapSprites.GetMemoryUsage() +
+		monsterBattleSprites.GetMemoryUsage() +
 		shaders.GetMemoryUsage()
 	);
 
@@ -446,23 +662,33 @@ int Database::GetMemoryUsage() const
 void Database::LogMemoryUsage() const
 {
 	LogInfo("[Database memory usage statistics (kilobytes)]");
+
 	LogInfo("    Database total memory usage [%.2f]", GetMemoryUsage() / 1024.f);
-	LogInfo("    Items       [%.2f]", items.GetMemoryUsage() / 1024.f);
-	LogInfo("    Weapons     [%.2f]", weapons.GetMemoryUsage() / 1024.f);
-	LogInfo("    Armor       [%.2f]", armor.GetMemoryUsage() / 1024.f);
-	LogInfo("    Accessories [%.2f]", accessories.GetMemoryUsage() / 1024.f);
-	LogInfo("    Monsters    [%.2f]", monsters.GetMemoryUsage() / 1024.f);
-	LogInfo("    Troops      [%.2f]", monster_troops.GetMemoryUsage() / 1024.f);
-	LogInfo("    Formations  [%.2f]", monster_formations.GetMemoryUsage() / 1024.f);
-	LogInfo("    Characters  [%.2f]", characters.GetMemoryUsage() / 1024.f);
-	LogInfo("    Classes     [%.2f]", character_classes.GetMemoryUsage() / 1024.f);
-	LogInfo("    Races       [%.2f]", races.GetMemoryUsage() / 1024.f);
+
+	LogInfo("    Skills         [%.2f]", skills.GetMemoryUsage() / 1024.f);
+	LogInfo("    Passive Skills [%.2f]", passiveSkills.GetMemoryUsage() / 1024.f);
+	LogInfo("    Spells         [%.2f]", spells.GetMemoryUsage() / 1024.f);
+	LogInfo("    Items          [%.2f]", items.GetMemoryUsage() / 1024.f);
+	LogInfo("    Weapons        [%.2f]", weapons.GetMemoryUsage() / 1024.f);
+	LogInfo("    Armor          [%.2f]", armor.GetMemoryUsage() / 1024.f);
+	LogInfo("    Accessories    [%.2f]", accessories.GetMemoryUsage() / 1024.f);
+	LogInfo("    Monsters       [%.2f]", monsters.GetMemoryUsage() / 1024.f);
+	LogInfo("    Troops         [%.2f]", monsterTroops.GetMemoryUsage() / 1024.f);
+	LogInfo("    Formations     [%.2f]", monsterFormations.GetMemoryUsage() / 1024.f);
+	LogInfo("    Characters     [%.2f]", characters.GetMemoryUsage() / 1024.f);
+	LogInfo("    Classes        [%.2f]", characterClasses.GetMemoryUsage() / 1024.f);
+	LogInfo("    Races          [%.2f]", races.GetMemoryUsage() / 1024.f);
+	LogInfo("    Factors        [%.2f]", factors.GetMemoryUsage() / 1024.f);
+	LogInfo("    ExpTables      [%.2f]", experienceTables.GetMemoryUsage() / 1024.f);
+
+	LogInfo("    Battle Background Sprites  [%.2f]", battleBackgroundSprites.GetMemoryUsage() / 1024.f);
+	LogInfo("    Mmisc Icon Sprites         [%.2f]", miscIconSprites.GetMemoryUsage() / 1024.f);
+	LogInfo("    Character portrait sprites [%.2f]", characterPortraitSprites.GetMemoryUsage() / 1024.f);
+	LogInfo("    Character map sprites      [%.2f]", characterMapSprites.GetMemoryUsage() / 1024.f);
+	LogInfo("    Character battle sprites   [%.2f]", characterBattleSprites.GetMemoryUsage() / 1024.f);
+	//LogInfo("    Monster portrait sprites   [%.2f]", monsterPortraitSprites.GetMemoryUsage() / 1024.f);
+	LogInfo("    Monster map sprites        [%.2f]", monsterMapSprites.GetMemoryUsage() / 1024.f);
+	LogInfo("    Monster battle sprites     [%.2f]", monsterBattleSprites.GetMemoryUsage() / 1024.f);
 	LogInfo("    Shader data [%.2f]", shaders.GetMemoryUsage() / 1024.f);
-	LogInfo("    Character portrait sprites [%.2f]", character_portrait_sprites.GetMemoryUsage() / 1024.f);
-	LogInfo("    Character map sprites      [%.2f]", character_map_sprites.GetMemoryUsage() / 1024.f);
-	LogInfo("    Character battle sprites   [%.2f]", character_battle_sprites.GetMemoryUsage() / 1024.f);
-	//LogInfo("    Monster portrait sprites   [%.2f]", monster_map_sprites.GetMemoryUsage() / 1024.f);
-	LogInfo("    Monster map sprites        [%.2f]", monster_map_sprites.GetMemoryUsage() / 1024.f);
-	LogInfo("    Monster battle sprites     [%.2f]", monster_battle_sprites.GetMemoryUsage() / 1024.f);
 
 }

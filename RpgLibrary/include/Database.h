@@ -16,6 +16,7 @@
 #include <fc/string.h>
 
 #include "RpgCommon.h"
+#include "Enums.h"
 #include "Serialization.h"
 
 #include "Attributes.h"
@@ -30,11 +31,12 @@
 #include "MonsterFormation.h"
 #include "Encounter.h"
 #include "Race.h"
+#include "Factor.h"
 #include "CharacterData.h"
 #include "CharacterClass.h"
 #include "ItemDrop.h"
 #include "LevelData.h"
-#include "ExpTable.h"
+#include "ExperienceTable.h"
 #include "Shops.h"
 #include "Enhancement.h"
 #include "Synthesis.h"
@@ -61,11 +63,11 @@ public:
 	Database();
 	~Database();
 
-	/*
+
 	DataArray<Skill>			skills;
+	DataArray<Skill>			passiveSkills;
 	DataArray<Spell>			spells;
-	DataArray<EncounterGroup>	encounters;
-	*/
+	//DataArray<EncounterGroup>	encounters;
 
 	DataArray<Item>				items;
 	DataArray<EquipmentItem>	weapons;
@@ -73,17 +75,23 @@ public:
 	DataArray<EquipmentItem>	accessories;
 
 	DataArray<MonsterData>		monsters;
-	DataArray<MonsterTroop>		monster_troops;
-	DataArray<MonsterFormation>	monster_formations;
+	DataArray<MonsterTroop>		monsterTroops;
+	DataArray<MonsterFormation>	monsterFormations;
 	DataArray<CharacterData>	characters;
-	DataArray<CharacterClass>	character_classes;
+	DataArray<CharacterClass>	characterClasses;
 	DataArray<Race>				races;
+	DataArray<Factor>			factors;
+	DataArray<ExperienceTable>	experienceTables;
 
-	DataArray<SpriteAsset>				character_portrait_sprites;
-	DataArray<AnimatedSpriteSetAsset>	character_map_sprites;
-	DataArray<AnimatedSpriteSetAsset>	character_battle_sprites;
-	DataArray<AnimatedSpriteSetAsset>	monster_map_sprites;
-	DataArray<AnimatedSpriteSetAsset>	monster_battle_sprites;
+
+	//DataArray<SpriteAsset>				characterPortraitSprites;
+	DataArray<SpriteAsset>				battleBackgroundSprites;
+	DataArray<SpriteAsset>				miscIconSprites;
+	DataArray<SpriteAsset>				characterPortraitSprites;
+	DataArray<AnimatedSpriteSetAsset>	characterMapSprites;
+	DataArray<AnimatedSpriteSetAsset>	characterBattleSprites;
+	DataArray<AnimatedSpriteSetAsset>	monsterMapSprites;
+	DataArray<AnimatedSpriteSetAsset>	monsterBattleSprites;
 	DataArray<ShaderAsset>				shaders;
 
 
@@ -131,19 +139,19 @@ public:
 
 	/// Called internally by DataArray. (This also keep the header files clean) ;)
 	template <class T> static bool SerializeDataArray
-		( T& arr, ResourceDirectory* resourceDirectory, const fc::string& filename, const char* root, const char* item );
+		( T& arr, ResourceDirectory* resourceDirectory, const String& filename, const char* root, const char* item );
 
 	template <class T> static bool DeserializeDataArray
-		( T& arr, ResourceDirectory* resourceDirectory, const fc::string& filename, const char* root, const char* item );
+		( T& arr, ResourceDirectory* resourceDirectory, const String& filename, const char* root, const char* item );
 
 	/// *Safe* lookup of data by id. If the id is invalid it will return null.
 	template <class T> static inline T* GetArrayContent( DataArray<T>& arr, int id ) {
-		return (size_t)id < arr.size() ? &arr[id] : (T*)0;
+		return (u32)id < arr.size() ? &arr[id] : (T*)0;
 	}
 
 	/// Linear lookup of data by name. If the name is not found it will return null.
-	template <class T> static inline T* GetArrayContentByName( DataArray<T>& arr, const fc::string& name ) {
-		for( size_t i(0); i < arr.size(); ++i )
+	template <class T> static inline T* GetArrayContentByName( DataArray<T>& arr, const String& name ) {
+		for( u32 i(0); i < arr.size(); ++i )
 			if( arr[i].GetName() == name )
 				return &arr[i];
 
@@ -155,7 +163,7 @@ public:
 
 	/// Generate script header from array. (must contain T(item).name member).
 	template <class Array> bool GenerateHeader
-		( const Array& arr, ResourceDirectory* resourceDirectory, const fc::string& filename, const fc::string& prependStr );
+		( const Array& arr, ResourceDirectory* resourceDirectory, const String& filename, const String& prependStr );
 
 	/*
 	Skill*			GetSkill( int id ) { return GetArrayContent<Skill>(skills, id); }
@@ -164,28 +172,51 @@ public:
 	*/
 
 	// Lookup by id
+	inline Item*				GetItem(ItemID itemId)
+	{
+		const u16 id = itemId.id;
+		switch( itemId.category )
+		{
+			case ItemCategory_Item: return GetArrayContent<Item>(items, id);
+			case ItemCategory_Weapon: return GetArrayContent<EquipmentItem>(weapons, id);
+			case ItemCategory_Armor: return GetArrayContent<EquipmentItem>(armor, id);
+			case ItemCategory_Accessory: return GetArrayContent<EquipmentItem>(accessories, id);
+			break;
+		}
+
+		return (Item*)0;
+	}
+
+
+	inline Skill*				GetSkill(int id) { return GetArrayContent<Skill>(skills, id); }
+	inline Skill*				GetPassiveSkill(int id) { return GetArrayContent<Skill>(passiveSkills, id); }
+	inline Spell*				GetSpell(int id) { return GetArrayContent<Spell>(spells, id); }
+
 	inline Item*				GetItem(int id) { return GetArrayContent<Item>(items, id); }
 	inline Item*				GetWeapon(int id) { return GetArrayContent<EquipmentItem>(weapons, id); }
 	inline Item*				GetArmor(int id) { return GetArrayContent<EquipmentItem>(armor, id); }
 	inline Item*				GetAccessory(int id) { return GetArrayContent<EquipmentItem>(accessories, id); }
 
 	inline MonsterData*			GetMonster(int id) { return GetArrayContent<MonsterData>(monsters, id); }
-	inline MonsterTroop*		GetMonsterTroop(int id) { return GetArrayContent<MonsterTroop>(monster_troops, id); }
-	inline MonsterFormation*	GetMonsterFormation(int id) { return GetArrayContent<MonsterFormation>(monster_formations, id); }
+	inline MonsterTroop*		GetMonsterTroop(int id) { return GetArrayContent<MonsterTroop>(monsterTroops, id); }
+	inline MonsterFormation*	GetMonsterFormation(int id) { return GetArrayContent<MonsterFormation>(monsterFormations, id); }
 
 	inline CharacterData*		GetCharacter(int id) { return GetArrayContent<CharacterData>(characters, id); }
-	inline CharacterClass*		GetCharacterClass(int id) { return GetArrayContent<CharacterClass>(character_classes, id); }
+	inline CharacterClass*		GetCharacterClass(int id) { return GetArrayContent<CharacterClass>(characterClasses, id); }
 	inline Race*				GetRace(int id) { return GetArrayContent<Race>(races, id); }
+	inline ExperienceTable*		GetExperienceTable(int id) { return GetArrayContent<ExperienceTable>(experienceTables, id); }
 
-	inline SpriteAsset*				GetCharacterPortraitSpriteAsset(int id) { return GetArrayContent<SpriteAsset>(character_portrait_sprites, id); }
-	inline AnimatedSpriteSetAsset*	GetCharacterMapSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(character_map_sprites, id); }
-	inline AnimatedSpriteSetAsset*	GetCharacterBattleSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(character_battle_sprites, id); }
-	inline AnimatedSpriteSetAsset*	GetMonsterMapSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(monster_map_sprites, id); }
-	inline AnimatedSpriteSetAsset*	GetMonsterBattleSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(monster_battle_sprites, id); }
+	inline SpriteAsset*				GetBattleBackgroundSpritesAsset(int id) { return GetArrayContent<SpriteAsset>(battleBackgroundSprites, id); }
+	inline SpriteAsset*				GetMiscIconSpriteAsset(int id) { return GetArrayContent<SpriteAsset>(miscIconSprites, id); }
+	inline SpriteAsset*				GetCharacterPortraitSpriteAsset(int id) { return GetArrayContent<SpriteAsset>(characterPortraitSprites, id); }
+	inline AnimatedSpriteSetAsset*	GetCharacterMapSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(characterMapSprites, id); }
+	inline AnimatedSpriteSetAsset*	GetCharacterBattleSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(characterBattleSprites, id); }
+	inline AnimatedSpriteSetAsset*	GetMonsterMapSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(monsterMapSprites, id); }
+	inline AnimatedSpriteSetAsset*	GetMonsterBattleSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(monsterBattleSprites, id); }
 	inline ShaderAsset*				GetShaderAsset(int id) { return GetArrayContent<ShaderAsset>(shaders, id); }
 
 	// Lookup by name
-	inline ShaderAsset*				GetShaderAsset(const fc::string& name) { return GetArrayContentByName<ShaderAsset>(shaders, name); }
+	inline ShaderAsset*				GetShaderAsset(const String& name) { return GetArrayContentByName<ShaderAsset>(shaders, name); }
 
 	/// Gets the combined memory usage (in bytes) of every object inside the database,
 	/// including the database object itself.
@@ -196,30 +227,30 @@ public:
 
 private:
 	ResourceDirectory*		m_resourceDirectory;
-	DatabaseArrayAnyHolder	m_arrayAny;
+	//DatabaseArrayAnyHolder	m_arrayAny;
 
 };
 
 
 
 template <class T>
-bool DataArray<T>::SerializeXml( const fc::string& name ) {
-	ASSERT(root_name != 0);
-	ASSERT(item_name != 0);
+bool DataArray<T>::Serialize( const String& name ) {
+	ASSERT(rootName != 0);
+	ASSERT(itemName != 0);
 	ASSERT(!(name.empty() && filename.empty()));
 
-	bool ret = Database::SerializeDataArray(*this, resource_directory, name.empty() ? filename : name, root_name, item_name);
+	bool ret = Database::SerializeDataArray(*this, resourceDirectory, name.empty() ? filename : name, rootName, itemName);
 	return ret;
 }
 
 
 template <class T>
-bool DataArray<T>::DeserializeXml( const fc::string& name ) {
-	ASSERT(root_name != 0);
-	ASSERT(item_name != 0);
+bool DataArray<T>::Deserialize( const String& name ) {
+	ASSERT(rootName != 0);
+	ASSERT(itemName != 0);
 	ASSERT(!(name.empty() && filename.empty()));
 
-	bool ret = Database::DeserializeDataArray(*this, resource_directory, name.empty() ? filename : name, root_name, item_name);
+	bool ret = Database::DeserializeDataArray(*this, resourceDirectory, name.empty() ? filename : name, rootName, itemName);
 	GenerateIds();
 
 	return ret;
@@ -230,76 +261,36 @@ bool DataArray<T>::DeserializeXml( const fc::string& name ) {
 template <class T> inline
 DataArray<T>::DataArray() : base_type(),
 		filename(),
-		root_name(0),
-		item_name(0),
-		resource_directory(0)
+		rootName(0),
+		itemName(0),
+		resourceDirectory(0)
 {
-}
-
-template <> inline
-DataArray<Item>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
-	SetNodeNames("ItemList", "Item");
-}
-
-template <> inline
-DataArray<EquipmentItem>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
-	SetNodeNames("ItemList", "Item");
-}
-
-template <> inline
-DataArray<MonsterData>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
-	SetNodeNames("MonsterList", "Monster");
-}
-
-template <> inline
-DataArray<MonsterTroop>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
-	SetNodeNames("MonsterTroopList", "Troop");
-}
-
-template <> inline
-DataArray<MonsterFormation>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
-	SetNodeNames("MonsterFormationList", "Formation");
-}
-
-template <> inline
-DataArray<CharacterData>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
-	SetNodeNames("CharacterList", "Character");
-}
-
-template <> inline
-DataArray<CharacterClass>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
-	SetNodeNames("CharacterClassList", "CharacterClass");
-}
-
-template <> inline
-DataArray<Race>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
-	SetNodeNames("RaceList", "Race");
-}
-
-template <> inline
-DataArray<SpriteAsset>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
-	SetNodeNames("SpriteList", "Sprite");
-}
-
-template <> inline
-DataArray<AnimatedSpriteAsset>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
-	SetNodeNames("AnimatedSpriteList", "AnimatedSprite");
-}
-
-template <> inline
-DataArray<AnimatedSpriteSetAsset>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
-	SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet");
-}
-
-template <> inline
-DataArray<ShaderAsset>::DataArray() : base_type(), filename(), root_name(0), item_name(0), resource_directory(0) {
-	SetNodeNames("ShaderList", "Shader");
+	InitializeType();
 }
 
 
+template <class T> inline void DataArray<T>::InitializeType() {}
+template <> inline void DataArray<Skill>::InitializeType() { SetNodeNames("SkillList", "Skill"); }
+template <> inline void DataArray<Spell>::InitializeType() { SetNodeNames("SpellList", "Spell"); }
+template <> inline void DataArray<Item>::InitializeType() { SetNodeNames("ItemList", "Item"); }
+template <> inline void DataArray<EquipmentItem>::InitializeType() { SetNodeNames("ItemList", "Item"); }
+template <> inline void DataArray<MonsterData>::InitializeType() { SetNodeNames("MonsterList", "Monster"); }
+template <> inline void DataArray<MonsterTroop>::InitializeType() { SetNodeNames("MonsterTroopList", "Troop"); }
+template <> inline void DataArray<MonsterFormation>::InitializeType() { SetNodeNames("MonsterFormationList", "Formation"); }
+template <> inline void DataArray<CharacterData>::InitializeType() { SetNodeNames("CharacterList", "Character"); }
+template <> inline void DataArray<CharacterClass>::InitializeType() { SetNodeNames("CharacterClassList", "CharacterClass"); }
+template <> inline void DataArray<Race>::InitializeType() { SetNodeNames("RaceList", "Race"); }
+template <> inline void DataArray<Factor>::InitializeType() { SetNodeNames("FactorList", "Factor"); }
+template <> inline void DataArray<ExperienceTable>::InitializeType() { SetNodeNames("ExpTableList", "ExpTable"); }
+template <> inline void DataArray<SpriteAsset>::InitializeType() { SetNodeNames("SpriteList", "Sprite"); }
+template <> inline void DataArray<AnimatedSpriteAsset>::InitializeType() { SetNodeNames("AnimatedSpriteList", "AnimatedSprite"); }
+template <> inline void DataArray<AnimatedSpriteSetAsset>::InitializeType() { SetNodeNames("AnimatedSpriteSetList", "AnimatedSpriteSet"); }
+template <> inline void DataArray<ShaderAsset>::InitializeType() { SetNodeNames("ShaderList", "Shader"); }
 
-template <class T> inline
-void DataArray<T>::GenerateIds()
+
+
+template <class T>
+inline void DataArray<T>::GenerateIds()
 {
 	Database::GenerateIds(*this);
 }

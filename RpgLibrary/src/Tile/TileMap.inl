@@ -24,7 +24,7 @@ TileMap::TileMap() :
 }
 
 
-TileMap::TileMap( const fc::string& mapName, size_t numLayers, size_t mapWidth, size_t mapHeight ) :
+TileMap::TileMap( const String& mapName, u32 numLayers, u32 mapWidth, u32 mapHeight ) :
 	m_name(mapName),
 	m_layers(),
 	m_width(0),
@@ -60,24 +60,24 @@ void TileMap::Clear()
 }
 
 
-void TileMap::Resize( size_t w, size_t h, size_t numLayers )
+void TileMap::Resize( u32 w, u32 h, u32 numLayers )
 {
 	m_width = w;
 	m_height = h;
 
-	if( numLayers == size_t(-1) )
+	if( numLayers == u32(-1) )
 	{
 		numLayers = m_layers.size();
 	}
 
 	if( numLayers < m_layers.size() )
 	{
-		for( size_t i(numLayers); i < m_layers.size(); ++i )
+		for( u32 i(numLayers); i < m_layers.size(); ++i )
 			RemoveLayer(i);
 	}
 	else if( numLayers > m_layers.size() )
 	{
-		for( size_t i(m_layers.size()); i < numLayers; ++i )
+		for( u32 i(m_layers.size()); i < numLayers; ++i )
 			AddLayer();
 	}
 
@@ -120,7 +120,7 @@ bool TileMap::AddLayer( TileMapLayer* layer )
 }
 
 
-void TileMap::RemoveLayer( size_t index )
+void TileMap::RemoveLayer( u32 index )
 {
 	if( index >= NumLayers() )
 		return;
@@ -131,7 +131,7 @@ void TileMap::RemoveLayer( size_t index )
 }
 
 
-void TileMap::SwapLayer( size_t first, size_t second )
+void TileMap::SwapLayer( u32 first, u32 second )
 {
 	if( first == second || first >= NumLayers() || second >= NumLayers() )
 		return;
@@ -140,7 +140,7 @@ void TileMap::SwapLayer( size_t first, size_t second )
 }
 
 
-TileMapLayer* TileMap::GetLayer( size_t index ) const
+TileMapLayer* TileMap::GetLayer( u32 index ) const
 {
 	if( index < m_layers.size() )
 		return m_layers[index];
@@ -149,7 +149,7 @@ TileMapLayer* TileMap::GetLayer( size_t index ) const
 }
 
 
-bool TileMap::SerializeXml( const fc::string& filename )
+bool TileMap::Serialize( const String& filename )
 {
 	XmlWriter xml(filename);
 	if( !xml.IsOpen() )
@@ -164,10 +164,10 @@ bool TileMap::SerializeXml( const fc::string& filename )
 	xml.SetUInt("width", m_width);
 	xml.SetUInt("height", m_height);
 
-	for( size_t i(0); i < m_layers.size(); ++i )
+	for( u32 i(0); i < m_layers.size(); ++i )
 	{
 		xml.BeginNode("Layer");
-		m_layers[i]->SerializeXml(&xml);
+		m_layers[i]->Serialize(&xml);
 		xml.EndNode();
 	}
 
@@ -178,7 +178,7 @@ bool TileMap::SerializeXml( const fc::string& filename )
 }
 
 
-bool TileMap::DeserializeXml( const fc::string& filename )
+bool TileMap::Deserialize( const String& filename )
 {
 	XmlReader xml(filename);
 	if( !xml.IsOpen() )
@@ -190,19 +190,19 @@ bool TileMap::DeserializeXml( const fc::string& filename )
 	if( xml.GetCurrentNodeName() == "TileMap" )
 	{
 		m_name = xml.GetString("name");
-		size_t n = xml.GetUInt("num_layers");
+		u32 n = xml.GetUInt("num_layers");
 		m_width = xml.GetUInt("width");
 		m_height = xml.GetUInt("height");
 
 		DeleteLayers();
-		m_layers.reserve( fc::clamp<size_t>(n, 0, MaxLayers) );
+		m_layers.reserve( fc::clamp<u32>(n, 0, MaxLayers) );
 
 		while( xml.NextChild("Layer") )
 		{
 			if( AddLayer() )
 			{
 				//only deserialize if the layer was added.
-				m_layers.back()->DeserializeXml(&xml);
+				m_layers.back()->Deserialize(&xml);
 			}
 		}
 	}

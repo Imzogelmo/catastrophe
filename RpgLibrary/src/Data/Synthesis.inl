@@ -23,14 +23,14 @@ Synthesis::Synthesis() :
 }
 
 
-void Synthesis::SerializeXml( AttributeWriter* f )
+void Synthesis::Serialize( AttributeWriter* f )
 {
 	f->SetInt("item_id", item_id);
 
 }
 
 
-void Synthesis::DeserializeXml( AttributeReader* f )
+void Synthesis::Deserialize( AttributeReader* f )
 {
 	item_id = f->GetInt("item_id");
 

@@ -55,11 +55,11 @@ enum AttributeAccessorVariableType
 template <class T>
 void SerializeObjectArrayXml( T* obj, const char* node, AttributeWriter* f )
 {
-	size_t n = obj->size();
-	for( size_t i(0); i < n; ++i )
+	u32 n = obj->size();
+	for( u32 i(0); i < n; ++i )
 	{
 		f->BeginNode(node);
-		(*obj)[i].SerializeXml(xml);
+		(*obj)[i].Serialize(xml);
 		f->EndNode();
 	}
 }
@@ -69,11 +69,11 @@ template <class T>
 void DeserializeObjectArrayXml( T* obj, const char* node, AttributeReader* f )
 {
 	bool nested = false;
-	for( size_t i(0); i < obj->size(); ++i )
+	for( u32 i(0); i < obj->size(); ++i )
 	{
 		if( f->NextChild(node) )
 		{
-			(*obj)[i].DeserializeXml(xml);
+			(*obj)[i].Deserialize(xml);
 			nested = true;
 		}
 		else
@@ -98,7 +98,7 @@ void SerializeObjectArraySizeXml( T* obj, const char* node, AttributeWriter* f )
 template <class T>
 void DeserializeObjectArraySizeXml( T* obj, const char* node, AttributeReader* f )
 {
-	size_t n = f->GetUInt(node);
+	u32 n = f->GetUInt(node);
 	obj->resize(n);
 }
 
@@ -146,11 +146,11 @@ public:
 	{
 	}
 
-	AttributeAccessorInfo( AttributeAccessorVariableType type, size_t arraySize, const char* name, int offset )
+	AttributeAccessorInfo( AttributeAccessorVariableType type, u32 arraySize, const char* name, int offset )
 		: typeInfo(), type(type), name(name), offset(offset)
 	{
 		// store pod-type array sizes in typeInfo.
-		*((size_t*)&typeInfo) = arraySize;
+		*((u32*)&typeInfo) = arraySize;
 	}
 
 	template <class T>
@@ -216,7 +216,7 @@ public:
 class ObjectAttributeSerializerFactory
 {
 public:
-	enum : size_t
+	enum : u32
 	{
 		MaxBufferBytes = 512
 	};
@@ -242,7 +242,7 @@ public:
 		int registeredTypeId = AttributeAccessorObjectTypeInfo<T>::GetTypeId();
 
 		// assert validation
-		ASSERT((size_t)registeredTypeId < m_factories.size());
+		ASSERT((u32)registeredTypeId < m_factories.size());
 		m_instance.m_factories[registeredTypeId]->RegisterAttributeAccessor(attrInfo);
 	}
 
@@ -250,10 +250,10 @@ public:
 	void RegisterFactoryType( const char* className )
 	{
 		int registeredTypeId = AttributeAccessorObjectTypeInfo<T>::GetTypeId();
-		ASSERT((size_t)registeredTypeId <= m_factories.size());
+		ASSERT((u32)registeredTypeId <= m_factories.size());
 
 		// only register a new factory if typeId is a valid type.
-		if( (size_t)registeredTypeId == m_factories.size() )
+		if( (u32)registeredTypeId == m_factories.size() )
 		{
 			ASSERT(m_offset <= MaxBufferBytes - sizeof(AttributeAccessorObjectTypeInfo<T>));
 
@@ -269,7 +269,7 @@ public:
 		int registeredTypeId = AttributeAccessorObjectTypeInfo<T>::GetTypeId();
 
 		// verify type has been registered.
-		ASSERT((size_t)registeredTypeId < m_factories.size());
+		ASSERT((u32)registeredTypeId < m_factories.size());
 		m_instance.m_factories[registeredTypeId]->SerializeObjectAttributesXml(obj, xml);
 	}
 
@@ -279,7 +279,7 @@ public:
 		int registeredTypeId = AttributeAccessorObjectTypeInfo<T>::GetTypeId();
 
 		// verify type has been registered.
-		ASSERT((size_t)registeredTypeId < m_factories.size());
+		ASSERT((u32)registeredTypeId < m_factories.size());
 		m_instance.m_factories[registeredTypeId]->DeserializeObjectAttributesXml(obj, xml);
 	}
 
@@ -296,7 +296,7 @@ private:
 
 	vec_type		m_factories;
 	buffer_type		m_buffer;
-	size_t			m_offset;
+	u32			m_offset;
 
 };
 

@@ -17,24 +17,27 @@
 
 
 
-template <class T> void SerializeObject( AttributeWriter* f, const T& val );
-template <class T> void SerializeObject( const char* nodeName, AttributeWriter* f, const T& val );
+template <class T> void SerializeObject( AttributeWriter* f, const T& value );
+template <class T> void SerializeObject( const char* nodeName, AttributeWriter* f, const T& value );
 template <class T> void SerializeStringArray( AttributeWriter* f, const char* node, const T* stringArray, int n );
 
 // template specializations
-template <> void SerializeObject<SpriteBase>( AttributeWriter* f, const SpriteBase& val );
-template <> void SerializeObject<SpriteAnimation>( AttributeWriter* f, const SpriteAnimation& val );
+template <> void SerializeObject<SpriteBase>( AttributeWriter* f, const SpriteBase& value );
+template <> void SerializeObject<SpriteAnimation>( AttributeWriter* f, const SpriteAnimation& value );
+template <> void SerializeObject<Point>( AttributeWriter* f, const Point& value );
+template <> void SerializeObject<Rect>( AttributeWriter* f, const Rect& value );
 
 
 
 
-template <class T> void DeserializeObject( AttributeReader* f, T& val );
-template <class T> void DeserializeObject( const char* nodeName, AttributeReader* f, T& val );
+template <class T> void DeserializeObject( AttributeReader* f, T& value );
+template <class T> void DeserializeObject( const char* nodeName, AttributeReader* f, T& value );
 template <class T> void DeserializeStringArray( AttributeReader* f, const char* node, T* stringArray, int n );
 
 
 // template specializations
-template <> void DeserializeObject<SpriteBase>( AttributeReader* f, SpriteBase& val );
-template <> void DeserializeObject<SpriteAnimation>( AttributeReader* f, SpriteAnimation& val );
-
+template <> void DeserializeObject<SpriteBase>( AttributeReader* f, SpriteBase& value );
+template <> void DeserializeObject<SpriteAnimation>( AttributeReader* f, SpriteAnimation& value );
+template <> void DeserializeObject<Point>( AttributeReader* f, Point& value );
+template <> void DeserializeObject<Rect>( AttributeReader* f, Rect& value );
 

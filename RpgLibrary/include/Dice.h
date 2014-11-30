@@ -47,15 +47,15 @@ public:
 
 	DiceBag();
 
-	size_t NumDice() const { return m_dice.size(); }
+	u32 NumDice() const { return m_dice.size(); }
 	int GetLastRoll() const { return m_lastRoll; }
 
 	int Roll();
 	void Add( const Die& die );
-	void Remove( size_t index );
+	void Remove( u32 index );
 
-	Die& GetDie( size_t index ) { return m_dice.at(index); }
-	const Die& GetDie( size_t index ) const { return m_dice[index]; }
+	Die& GetDie( u32 index ) { return m_dice.at(index); }
+	const Die& GetDie( u32 index ) const { return m_dice[index]; }
 
 protected:
 	vec_type	m_dice;

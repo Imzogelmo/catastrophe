@@ -24,7 +24,7 @@ MonsterFormationCellData::MonsterFormationCellData() :
 }
 
 
-MonsterFormationCellData::MonsterFormationCellData( short x, short y ) :
+MonsterFormationCellData::MonsterFormationCellData( s16 x, s16 y ) :
 	x(x),
 	y(y)
 {
@@ -39,14 +39,14 @@ void MonsterFormationCellData::RegisterObject()
 }
 
 
-void MonsterFormationCellData::SerializeXml( AttributeWriter* f )
+void MonsterFormationCellData::Serialize( AttributeWriter* f )
 {
 	f->SetShort("x", x);
 	f->SetShort("y", y);
 }
 
 
-void MonsterFormationCellData::DeserializeXml( AttributeReader* f )
+void MonsterFormationCellData::Deserialize( AttributeReader* f )
 {
 	x = f->GetShort("x", x);
 	y = f->GetShort("y", y);
@@ -72,27 +72,27 @@ void MonsterFormation::RegisterObject()
 }
 
 
-void MonsterFormation::SerializeXml( AttributeWriter* f )
+void MonsterFormation::Serialize( AttributeWriter* f )
 {
 	f->SetUInt( "max", formations.size() );
 	for( array_type::iterator it = formations.begin(); it < formations.end(); ++it )
 	{
 		f->BeginNode("Cell");
-		it->SerializeXml(f);
+		it->Serialize(f);
 		f->EndNode();
 	}
 }
 
 
-void MonsterFormation::DeserializeXml( AttributeReader* f )
+void MonsterFormation::Deserialize( AttributeReader* f )
 {
-	size_t numFormations = f->GetInt("max");
+	u32 numFormations = f->GetInt("max");
 	formations.resize(numFormations);
 
-	for( size_t i(0); i < numFormations; ++i )
+	for( u32 i(0); i < numFormations; ++i )
 	{
 		if( f->NextChild("Cell") )
-			formations[i].DeserializeXml(f);
+			formations[i].Deserialize(f);
 	}
 
 	if( f->GetCurrentNodeName() == "Cell" )

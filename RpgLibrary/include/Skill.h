@@ -12,38 +12,63 @@
 #pragma once
 
 #include <fc/string.h>
+#include <fc/static_string.h>
 
 #include "RpgCommon.h"
 #include "Attributes.h"
+#include "UsageInfo.h"
+#include "Ability.h"
 
 
-struct RPG_API Skill
+// *SkillLevelData*
+// Represents 
+struct SkillLevelData
 {
-	fc::string	name;
-	fc::string	script;
-	fc::string	description;
+	s16 exp;
+	s16 cost;
+	s16 effectivity;
+	AbilityId		unlockAbility;
+	SkillUsageInfo	usageInfo;
+
+	SkillLevelData()
+	{
+		::memset(this, 0, sizeof(SkillLevelData));
+	}
+};
+
+
+struct RPG_API Skill : public Ability
+{
+
+	StaticString<32>	name;
+	StaticString<32>	script;
+	String				description;
+
 	//Attributes	attributes;
-	int		id;
+	u16		id;
 	int		type;
 	int		gold;
 	int		cost;
 
-	//short	misc[16];
+	//SkillLevelData levelData[MAX_SKILL_LV]; //should be dynamic
+	fc::vector<SkillLevelData> levelData;
 
-	//under construction...
-	ubyte	usage_flags;
-	ubyte	target_flags;
-	ubyte	affect_flags;
+	//s16	misc[16];
+	//u8 level;
 
-	int		buff_id;
-	int		animation_id;
-	int		sfx;
 
+	u16		buff_id;
+	u16		animationId;
+	u16		sfx;
+
+	//Attributes	attributes;
 
 	Skill();
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
+
+	int GetMemoryUsage() const;
 
 };
 
@@ -52,8 +77,8 @@ struct RPG_API Skill
 
 struct RPG_API PassiveSkill
 {
-	fc::static_string<32>	name;
-	fc::string	description;
+	StaticString<32>	name;
+	String	description;
 
 	int		id;
 	int		type;
@@ -62,21 +87,21 @@ struct RPG_API PassiveSkill
 
 	//char	sp_table[MAX_PASSIVE_SKILL_LV];
 
-	//short	misc[16];
+	//s16	misc[16];
 
 	//under construction...
-	ubyte	usage_flags;
-	ubyte	target_flags;
-	ubyte	affect_flags;
+	u8	usage_flags;
+	u8	target_flags;
+	u8	affect_flags;
 
 	int		buff_id;
-	int		animation_id;
-	int		sfx;
+	int		animationId;
+	u16		sfx;
 
 
 	PassiveSkill();
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 
 };

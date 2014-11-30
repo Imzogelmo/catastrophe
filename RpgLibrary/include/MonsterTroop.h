@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <fc/fixed_vector.h>
+#include <fc/static_vector.h>
 #include <fc/string.h>
 
 #include "RpgCommon.h"
@@ -24,19 +24,16 @@
  */
 struct RPG_API MonsterGroup
 {
-	int		monster_id;
-	int		min;
-	int		max;
+	u16	monsterId;
+	u8	min;
+	u8	max;
 
-	MonsterGroup(int monsterIndex = 0, int minNum = 1, int maxNum = 1);
+	MonsterGroup();
+	MonsterGroup(u16 monsterId, u8 minNum, u8 maxNum);
 
-	//simply to ensure data is sane before saving.
 	void Validate();
-
-	static void RegisterObject();
-
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 
 };
 
@@ -48,9 +45,9 @@ struct RPG_API MonsterGroup
  */
 struct RPG_API MonsterTroop
 {
-	typedef fc::fixed_vector<MonsterGroup, 4> vec_type;
+	typedef fc::static_vector<MonsterGroup, 8> vec_type;
 
-	fc::string	name; //this is editor only....
+	String	name; //this is editor only....
 	vec_type	groups;
 	int			id;
 	int			formation_id;
@@ -58,10 +55,8 @@ struct RPG_API MonsterTroop
 
 	MonsterTroop();
 
-	static void RegisterObject();
-
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 
 	int GetMemoryUsage() const;
 

@@ -96,7 +96,7 @@ void DiceBag::Add( const Die& die )
 }
 
 
-void DiceBag::Remove( size_t index )
+void DiceBag::Remove( u32 index )
 {
 	if(index < m_dice.size() )
 		m_dice.erase_at(index);

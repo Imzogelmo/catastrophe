@@ -32,10 +32,10 @@ void ResourceCache::SetManager( ResourceManagerTypeBase* p )
 }
 
 
-void ResourceCache::SetResourceUsage( size_t maxCapacity )
+void ResourceCache::SetResourceUsage( u32 maxCapacity )
 {
 	m_resources.reserve(maxCapacity);
-	m_free_store.reserve(maxCapacity);
+	m_freeStore.reserve(maxCapacity);
 }
 
 
@@ -47,7 +47,7 @@ void ResourceCache::DeleteResources()
 	}
 
 	m_resources.clear();
-	m_free_store.clear();
+	m_freeStore.clear();
 }
 
 
@@ -60,13 +60,13 @@ void ResourceCache::DeleteResource( Resource* resource )
 		{
 			m_parent->DisposeResource(resource->ptr);
 			*resource = Resource();
-			m_free_store.push_back( size_t(resource - m_resources.begin()) );
+			m_freeStore.push_back( u32(resource - m_resources.begin()) );
 		}
 	}
 }
 
 
-Resource* ResourceCache::GetResource( const fc::string& name )
+Resource* ResourceCache::GetResource( const String& name )
 {
 	if( name.empty() )
 		return 0;
@@ -107,7 +107,7 @@ Resource* ResourceCache::GetResource( const void* ptr )
 Resource* ResourceCache::GetResource( int id )
 {
 	Resource* res = 0;
-	if( (size_t)id < m_resources.size() )
+	if( (u32)id < m_resources.size() )
 	{
 		res = &m_resources[id];
 		if( !res->ptr )
@@ -121,11 +121,11 @@ Resource* ResourceCache::GetResource( int id )
 int ResourceCache::AddResource( const Resource& resource )
 {
 	int id = -1;
-	if( !m_free_store.empty() )
+	if( !m_freeStore.empty() )
 	{
-		id = (int)m_free_store.back();
-		m_resources[ m_free_store.back() ] = resource;
-		m_free_store.pop_back();
+		id = (int)m_freeStore.back();
+		m_resources[ m_freeStore.back() ] = resource;
+		m_freeStore.pop_back();
 	}
 	else
 	{

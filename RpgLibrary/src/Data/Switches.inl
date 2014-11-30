@@ -52,19 +52,19 @@ bool Switches::GetBit( int bit )
 }
 
 
-void Switches::SerializeXml( AttributeWriter* f )
+void Switches::Serialize( AttributeWriter* f )
 {
 	f->BeginNode("Switches");
-	//f->WriteIntBlock((int*)bits.data(), bit_array_type::NWords);
+	f->WriteIntArrayElement("Bits", (int*)bits.data(), bit_array_type::NWords);
 	f->EndNode();
 }
 
 
-void Switches::DeserializeXml( AttributeReader* f )
+void Switches::Deserialize( AttributeReader* f )
 {
-	if( f->FirstChild("MaxParams") )
+	if( f->FirstChild("Switches") )
 	{
-		//f->ReadIntBlock((int*)bits.data(), bit_array_type::NWords);
+		f->ReadIntArrayElement("Bits", (int*)bits.data(), bit_array_type::NWords);
 		f->SetToParent();
 	}
 }

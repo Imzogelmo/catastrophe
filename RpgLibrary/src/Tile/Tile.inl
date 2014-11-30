@@ -19,13 +19,12 @@
 #include "Tileset.h"
 
 
-int Tile::m_tileSize = 16;
-
 
 Tile::Tile( Tileset* parent ) :
 	counter(0),
 	frame(0),
-	anim_speed(128),
+	animSpeed(128),
+	numFrames(1),
 	flags(0),
 	m_parent(parent),
 	m_sourceRect(Rect::Zero),
@@ -42,7 +41,7 @@ Texture* Tile::GetParentTexture() const
 
 void Tile::Create( const Rect& sourceRectangle, int numberOfFrames )
 {
-	num_frames = (short)(numberOfFrames > 0 ? numberOfFrames : 1);
+	numFrames = (s16)(numberOfFrames > 0 ? numberOfFrames : 1);
 	SetSourceRect(sourceRectangle);
 }
 
@@ -53,7 +52,7 @@ void Tile::SetSourceRect( const Rect& sourceRectangle )
 	Texture* texture = GetParentTexture();
 	if( texture )
 	{
-		float h = (float)texture->Height();
+		float h = texture->Heightf();
 		m_uv.min.y = (float)sourceRectangle.Top() / h;
 		m_uv.max.y = (float)sourceRectangle.Bottom() / h;
 
@@ -77,9 +76,9 @@ void Tile::SetSourceRect( const Rect& sourceRectangle )
 }
 
 
-void Tile::SetCurrentFrame( short index )
+void Tile::SetCurrentFrame( s16 index )
 {
-	if( index < num_frames )
+	if( index < numFrames )
 	{
 		frame = index;
 
@@ -96,7 +95,7 @@ void Tile::SetCurrentFrame( short index )
 
 			int h = m_sourceRect.Height();
 			int y = m_sourceRect.pos.y + (h * yOffset);
-			float texHeightf = (float)texture->Height();
+			float texHeightf = texture->Heightf();
 			m_uv.min.y = y / texHeightf;
 			m_uv.max.y = (y + h) / texHeightf;
 
@@ -114,25 +113,67 @@ void Tile::SetCurrentFrame( short index )
 }
 
 
-void Tile::SetAnimationSpeed( short frameDelay )
+void Tile::SetAnimationSpeed( s16 frameDelay )
 {
-	anim_speed = fc::clamp<short>(frameDelay, 16, 32767);
+	animSpeed = fc::clamp<s16>(frameDelay, 16, 32767);
 }
 
 
 void Tile::Update()
 {
-	// animation speed is fixed point 16 : 1. this means
+	// Animation speed is fixed point 16 : 1. this means
 	// that one second (60 frames) is equal to 960 fixed point.
-	// therefore the longest animation delay we can have is
+	// Therefore, the longest animation delay we can have is
 	// 34 seconds (2167 - 16 = 2151 frames).
+
+	/*
 	counter += 16;
-	if( counter >= anim_speed )
+	if( counter >= animSpeed )
 	{
-		counter -= anim_speed;
-		if( ++frame >= num_frames )
+		counter -= animSpeed;
+		if( ++frame >= numFrames )
+			frame -= numFrames;
+
+		SetCurrentFrame(frame);
+	}
+	*/
+
+	counter += 16;
+	if( counter >= animSpeed )
+	{
+		counter -= animSpeed;
+
+		// Animation Loop
+		if( (flags & TileFlag_AnimationPingPong) == 0 )
+			frame = (frame + 1) % numFrames;
+
+		// Animation PingPong
+		else if( numFrames > 1 )
 		{
-			frame -= num_frames;
+			// Backwards
+			if( (flags & TileFlag_InternalReverseDirection) != 0 )
+			{
+				if( frame == 0 )
+				{
+					++frame;
+					flags ^= TileFlag_InternalReverseDirection;
+				}
+				else
+					--frame;
+			}
+
+			// Forwards
+			else
+			{
+				if( frame == numFrames - 1 )
+				{
+					--frame;
+					flags ^= TileFlag_InternalReverseDirection;
+				}
+				else
+					++frame;
+
+			}
 		}
 
 		SetCurrentFrame(frame);
@@ -140,13 +181,13 @@ void Tile::Update()
 }
 
 
-void Tile::SerializeXml( AttributeWriter* f )
+void Tile::Serialize( AttributeWriter* f )
 {
 	//set it just in case.
 	f->SetUInt("id", m_tilesetIndex);
 
-	f->SetUInt("num_frames", num_frames);
-	f->SetShort("speed", anim_speed);
+	f->SetUInt("numFrames", numFrames);
+	f->SetShort("speed", animSpeed);
 	f->SetShort("flags", flags);
 
 	//Todo: fix this
@@ -154,15 +195,15 @@ void Tile::SerializeXml( AttributeWriter* f )
 }
 
 
-void Tile::DeserializeXml( AttributeReader* f )
+void Tile::Deserialize( AttributeReader* f )
 {
-	num_frames = f->GetShort("num_frames", 1);
-	anim_speed = f->GetShort("speed", 16);
+	numFrames = f->GetShort("numFrames", 1);
+	animSpeed = f->GetShort("speed", 16);
 	flags = f->GetShort("flags", 0);
 
 	DeserializeObject<Rect>("SouceRect", f, m_sourceRect);
 
 	//todo: should have tileset create..?
-	Create(m_sourceRect, num_frames);
+	Create(m_sourceRect, numFrames);
 }
 

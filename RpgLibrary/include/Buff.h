@@ -30,7 +30,7 @@ public:
 
 	BuffType type;
 	Attributes attributes;
-	fc::string name;
+	String name;
 	int id;
 	int	lifetime;
 	int stack_count; //the number of times this buff can stack.
@@ -55,8 +55,8 @@ public:
 		return (type != TypeConstant && lifetime <= 0);
 	}
 
-	void SerializeXml( AttributeWriter* f );
-	void DeserializeXml( AttributeReader* f );
+	void Serialize( AttributeWriter* f );
+	void Deserialize( AttributeReader* f );
 
 };
 
