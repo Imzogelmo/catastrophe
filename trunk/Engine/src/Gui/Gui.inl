@@ -21,15 +21,18 @@
 CE_NAMESPACE_BEGIN
 
 
+Skin Gui::m_defaultSkin;
+
+
 Gui::Gui() :
-	m_defaultSkin()
+	m_skin(0)
 {
 }
 
 
-void Gui::SetDefaultSkin( const Skin& skin )
+void Gui::SetDefaultSkin( Skin* skin )
 {
-	m_defaultSkin = skin;
+	m_defaultSkin = *skin;
 }
 
 

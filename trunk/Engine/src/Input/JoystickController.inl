@@ -54,7 +54,7 @@ JoystickController::JoystickController() :
 
 bool JoystickController::IsDown( int key ) const
 {
-	if( (size_t)key < MaxButtons )
+	if( (u32)key < MaxButtons )
 		return m_joystick->Button( m_button_map[key] );
 
 	return false;
@@ -63,7 +63,7 @@ bool JoystickController::IsDown( int key ) const
 
 bool JoystickController::IsPressed( int key ) const
 {
-	if( (size_t)key < MaxButtons )
+	if( (u32)key < MaxButtons )
 		return InternalIsPressed( m_joystick->ButtonFrames( m_button_map[key] ) );
 
 	return false;
@@ -72,7 +72,7 @@ bool JoystickController::IsPressed( int key ) const
 
 bool JoystickController::IsReleased( int key ) const
 {
-	if( (size_t)key < MaxButtons )
+	if( (u32)key < MaxButtons )
 		return m_joystick->Released( m_button_map[key] );
 
 	return false;
@@ -81,7 +81,7 @@ bool JoystickController::IsReleased( int key ) const
 
 bool JoystickController::IsDPadDown( int dir ) const
 {
-	if( (size_t)dir < MaxDirections )
+	if( (u32)dir < MaxDirections )
 		return m_directions[ m_direction_map[dir] ] > 0;
 
 	return false;
@@ -90,7 +90,7 @@ bool JoystickController::IsDPadDown( int dir ) const
 
 bool JoystickController::IsDPadPressed( int dir ) const
 {
-	if( (size_t)dir < MaxDirections )
+	if( (u32)dir < MaxDirections )
 		return InternalIsPressed( m_directions[ m_direction_map[dir] ] );
 
 	return false;
@@ -105,7 +105,7 @@ bool JoystickController::IsDPadReleased( int dir ) const
 
 int JoystickController::Button( int key ) const
 {
-	if( (size_t)key < MaxButtons )
+	if( (u32)key < MaxButtons )
 		return m_joystick->Button( m_button_map[key] );
 
 	return 0;
@@ -114,7 +114,7 @@ int JoystickController::Button( int key ) const
 
 int JoystickController::DPad( int dir ) const
 {
-	if( (size_t)dir < MaxDirections )
+	if( (u32)dir < MaxDirections )
 		return m_directions[ m_direction_map[dir] ];
 
 	return 0;
@@ -145,7 +145,7 @@ void JoystickController::SetJoystick( int id )
 
 void JoystickController::SetButtonMapping( int key, int value )
 {
-	if( (size_t)key < MaxButtons )
+	if( (u32)key < MaxButtons )
 	{
 		if( value < MaxButtons )
 			m_button_map[key] =  value;
@@ -155,7 +155,7 @@ void JoystickController::SetButtonMapping( int key, int value )
 
 void JoystickController::SetDirMapping( int dir, int value )
 {
-	if( (size_t)dir < MaxDirections )
+	if( (u32)dir < MaxDirections )
 	{
 		if( value < MaxDirections )
 			m_direction_map[dir] =  value;

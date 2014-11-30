@@ -44,7 +44,7 @@ XmlDocument::~XmlDocument()
 }
 
 
-bool XmlDocument::Load( const fc::string& filename )
+bool XmlDocument::Load( const String& filename )
 {
 	Reset();
 
@@ -53,7 +53,7 @@ bool XmlDocument::Load( const fc::string& filename )
 		return false;
 
 	//allocate buffer and terminate string.
-	size_t size = f.Size();
+	u32 size = f.Size();
 	m_buffer.resize(size + 1, 0);
 
 	//read file into memory and close.
@@ -70,9 +70,9 @@ bool XmlDocument::Load( const fc::string& filename )
 }
 
 
-bool XmlDocument::Save( const fc::string& filename )
+bool XmlDocument::Save( const String& filename )
 {
-	fc::string xmlString;
+	String xmlString;
 	xmlString.reserve(RAPIDXML_STATIC_POOL_SIZE * 4);
 
 	xml_doc_has_parse_error = false;

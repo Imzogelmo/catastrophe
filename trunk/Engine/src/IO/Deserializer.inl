@@ -30,41 +30,41 @@ int Deserializer::ReadInt()
 }
 
 
-short Deserializer::ReadShort()
+s16 Deserializer::ReadShort()
 {
-	short ret = 0;
+	s16 ret = 0;
 	Read(&ret, sizeof(ret));
 	return ret;
 }
 
 
-char Deserializer::ReadByte()
+char Deserializer::ReadChar()
 {
-	signed char ret = 0;
+	s8 ret = 0;
 	Read(&ret, sizeof(ret));
 	return ret;
 }
 
 
-unsigned int Deserializer::ReadUInt()
+u32 Deserializer::ReadUInt()
 {
-	unsigned int ret = 0;
+	u32 ret = 0;
 	Read(&ret, sizeof(ret));
 	return ret;
 }
 
 
-unsigned short Deserializer::ReadUShort()
+u16 Deserializer::ReadUShort()
 {
-	unsigned short ret = 0;
+	u16 ret = 0;
 	Read(&ret, sizeof(ret));
 	return ret;
 }
 
 
-unsigned char Deserializer::ReadUByte()
+u8 Deserializer::ReadUByte()
 {
-	unsigned char ret = 0;
+	u8 ret = 0;
 	Read(&ret, sizeof(ret));
 	return ret;
 }
@@ -90,31 +90,31 @@ bool Deserializer::ReadInt( int& value )
 }
 
 
-bool Deserializer::ReadShort( short& value )
+bool Deserializer::ReadShort( s16& value )
 {
 	return Read(&value, sizeof(value)) == sizeof(value);
 }
 
 
-bool Deserializer::ReadByte( char& value )
+bool Deserializer::ReadChar( char& value )
 {
 	return Read(&value, sizeof(value)) == sizeof(value);
 }
 
 
-bool Deserializer::ReadUInt( unsigned int& value )
+bool Deserializer::ReadUInt( u32& value )
 {
 	return Read(&value, sizeof(value)) == sizeof(value);
 }
 
 
-bool Deserializer::ReadUShort( unsigned short& value )
+bool Deserializer::ReadUShort( u16& value )
 {
 	return Read(&value, sizeof(value)) == sizeof(value);
 }
 
 
-bool Deserializer::ReadUByte( unsigned char& value )
+bool Deserializer::ReadUByte( u8& value )
 {
 	return Read(&value, sizeof(value)) == sizeof(value);
 }
@@ -186,19 +186,19 @@ bool Deserializer::ReadMatrix( Matrix& value )
 }
 
 
-bool Deserializer::ReadString( fc::string& value )
+bool Deserializer::ReadString( String& value )
 {
-	size_t size;
+	u32 size;
 	if( !ReadUInt(size) )
 		return false;
 
 	value.clear();
 	value.reserve(size);
 
-	for( size_t i(0); i < size; ++i )
+	for( u32 i(0); i < size; ++i )
 	{
 		char c;
-		if( !ReadByte(c) )
+		if( !ReadChar(c) )
 			return false;
 
 		value += c;
@@ -208,19 +208,19 @@ bool Deserializer::ReadString( fc::string& value )
 }
 
 
-bool Deserializer::ReadLine( fc::string& value )
+bool Deserializer::ReadLine( String& value )
 {
 	value.clear();
 	while( !IsEof() )
 	{
-		char c = ReadByte();
+		char c = ReadChar();
 		if( c == 10)
 			break;
 		if( c == 13)
 		{
 			if( !IsEof() )
 			{
-				char next = ReadByte();
+				char next = ReadChar();
 				if (next != 10)
 					Seek(Position() - 1);
 			}
@@ -234,38 +234,38 @@ bool Deserializer::ReadLine( fc::string& value )
 }
 
 
-bool Deserializer::ReadShortArray( short* ptr, size_t n )
+bool Deserializer::ReadShortArray( s16* ptr, u32 n )
 {
-	const size_t n_bytes = sizeof(short) * n;
+	const u32 n_bytes = sizeof(s16) * n;
 	return Read(ptr, n_bytes) == n_bytes;
 }
 
 
-bool Deserializer::ReadIntArray( int* ptr, size_t n )
+bool Deserializer::ReadIntArray( int* ptr, u32 n )
 {
-	const size_t n_bytes = sizeof(int) * n;
+	const u32 n_bytes = sizeof(int) * n;
 	return Read(ptr, n_bytes) == n_bytes;
 }
 
 
-bool Deserializer::ReadFloatArray( float* ptr, size_t n )
+bool Deserializer::ReadFloatArray( float* ptr, u32 n )
 {
-	const size_t n_bytes = sizeof(float) * n;
+	const u32 n_bytes = sizeof(float) * n;
 	return Read(ptr, n_bytes) == n_bytes;
 }
 
 
-fc::string Deserializer::ReadString()
+String Deserializer::ReadString()
 {
-	fc::string ret;
+	String ret;
 	ReadString(ret);
 	return ret;
 }
 
 
-fc::string Deserializer::ReadLine()
+String Deserializer::ReadLine()
 {
-	fc::string ret;
+	String ret;
 	ReadLine(ret);
 	return ret;
 }
@@ -273,11 +273,11 @@ fc::string Deserializer::ReadLine()
 /*
 // operator >> overloads
 Deserializer& Deserializer::operator >>( int& value ) { ReadInt(value); return *this; }
-Deserializer& Deserializer::operator >>( short& value ) { ReadShort(value); return *this; }
-Deserializer& Deserializer::operator >>( char& value ) { ReadByte(value); return *this; }
-Deserializer& Deserializer::operator >>( unsigned int& value ) { ReadUInt(value); return *this; }
-Deserializer& Deserializer::operator >>( unsigned short& value ) { ReadUShort(value); return *this; }
-Deserializer& Deserializer::operator >>( unsigned char& value ) { ReadUByte(value); return *this; }
+Deserializer& Deserializer::operator >>( s16& value ) { ReadShort(value); return *this; }
+Deserializer& Deserializer::operator >>( char& value ) { ReadChar(value); return *this; }
+Deserializer& Deserializer::operator >>( u32& value ) { ReadUInt(value); return *this; }
+Deserializer& Deserializer::operator >>( u16& value ) { ReadUShort(value); return *this; }
+Deserializer& Deserializer::operator >>( u8& value ) { ReadUByte(value); return *this; }
 Deserializer& Deserializer::operator >>( bool& value ) { ReadBool(value); return *this; }
 Deserializer& Deserializer::operator >>( float& value ) { ReadFloat(value); return *this; }
 
@@ -291,7 +291,7 @@ Deserializer& Deserializer::operator >>( Color& value ) { ReadColor(value); retu
 Deserializer& Deserializer::operator >>( Colorf& value ) { ReadColorf(value); return *this; }
 Deserializer& Deserializer::operator >>( Matrix& value ) { ReadMatrix(value); return *this; }
 
-Deserializer& Deserializer::operator >>( fc::string& value ) { ReadString(value); return *this; }
+Deserializer& Deserializer::operator >>( String& value ) { ReadString(value); return *this; }
 */
 
 

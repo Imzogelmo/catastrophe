@@ -39,7 +39,7 @@ Logger::Logger() :
 {
 }
 
-Logger::Logger( const fc::string& outfilename, bool create_debug_console, bool auto_append_new_line )
+Logger::Logger( const String& outfilename, bool create_debug_console, bool auto_append_new_line )
 {
 	Open(outfilename, create_debug_console, auto_append_new_line);
 }
@@ -62,7 +62,7 @@ Logger& Logger::GetInstance()
 }
 
 
-bool Logger::Open( const fc::string& outfilename, bool create_debug_console, bool auto_append_new_line )
+bool Logger::Open( const String& outfilename, bool create_debug_console, bool auto_append_new_line )
 {
 	if( m_file.IsOpen() )
 	{
@@ -82,15 +82,15 @@ bool Logger::Open( const fc::string& outfilename, bool create_debug_console, boo
 }
 
 
-void Logger::Write( const fc::string& message )
+void Logger::Write( const String& message )
 {
-	fc::string str( message );
+	String str( message );
 	Logger::GetInstance().AppendNewLine( str );
 	Logger::GetInstance().FlushString( str );
 }
 
 
-void Logger::AppendNewLine( fc::string& str )
+void Logger::AppendNewLine( String& str )
 {
 	if( m_append_new_line && !str.empty() )
 	{
@@ -100,7 +100,7 @@ void Logger::AppendNewLine( fc::string& str )
 }
 
 
-void Logger::FlushString( const fc::string& str )
+void Logger::FlushString( const String& str )
 {
 	if( m_file.IsOpen() )
 	{
@@ -128,7 +128,7 @@ FC_NO_INLINE void __Internal_Log_Write( const char* format, ... )
 }
 
 
-FC_NO_INLINE void __Internal_Log_Write( const fc::string& message )
+FC_NO_INLINE void __Internal_Log_Write( const String& message )
 {
 	Logger::GetInstance().Write( message );
 }

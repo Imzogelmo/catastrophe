@@ -79,7 +79,7 @@ void MenuElement::AddItem( Widget* item )
 }
 
 
-void MenuElement::InsertItem( size_t index, Widget* item )
+void MenuElement::InsertItem( u32 index, Widget* item )
 {
 	m_itemContent.InsertChild(index, item);
 }
@@ -91,7 +91,7 @@ void MenuElement::RemoveItem( Widget* item )
 }
 
 /*
-void MenuElement::RemoveItem( size_t index )
+void MenuElement::RemoveItem( u32 index )
 {
 	m_itemContent.RemoveChild( GetItem(index) );
 }
@@ -127,13 +127,13 @@ int MenuElement::GetSelection() const
 }
 
 
-size_t MenuElement::GetNumItems() const
+u32 MenuElement::GetNumItems() const
 {
 	return m_itemContent.GetNumChildren();
 }
 
 
-Widget* MenuElement::GetItem( size_t index )
+Widget* MenuElement::GetItem( u32 index )
 {
 	return m_itemContent.GetChild(index);
 }
@@ -141,11 +141,11 @@ Widget* MenuElement::GetItem( size_t index )
 
 Widget* MenuElement::GetSelectedItem()
 {
-	return GetItem( (size_t)m_selectedItem );
+	return GetItem( (u32)m_selectedItem );
 }
 
 
-bool MenuElement::IsSelected( size_t index ) const
+bool MenuElement::IsSelected( u32 index ) const
 {
 	return m_selectedItem == index;
 }

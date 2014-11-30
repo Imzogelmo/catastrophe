@@ -40,7 +40,7 @@ File::File() :
 }
 
 
-File::File(const fc::string& fileName, FileMode mode) :
+File::File(const String& fileName, FileMode mode) :
 	m_mode(FileRead),
 	m_handle(0),
 	m_position(0),
@@ -57,7 +57,7 @@ File::~File()
 }
 
 
-bool File::Open(const fc::string& fileName, FileMode mode)
+bool File::Open(const String& fileName, FileMode mode)
 {
 	Close();
 
@@ -83,7 +83,7 @@ bool File::Open(const fc::string& fileName, FileMode mode)
 }
 
 
-size_t File::Read(void* dest, size_t size)
+u32 File::Read(void* dest, u32 size)
 {
 	CE_ASSERT(m_mode != FileWrite);
 	CE_ASSERT(size != 0);
@@ -97,7 +97,7 @@ size_t File::Read(void* dest, size_t size)
 		return 0;
 	}
 
-	size_t ret = fread(dest, size, 1, (FILE*)m_handle);
+	u32 ret = fread(dest, size, 1, (FILE*)m_handle);
 	if(ret != 1)
 	{
 		fseek((FILE*)m_handle, m_position + m_offset, SEEK_SET);
@@ -110,7 +110,7 @@ size_t File::Read(void* dest, size_t size)
 }
 
 
-size_t File::Seek(size_t position)
+u32 File::Seek(u32 position)
 {
 	if (m_mode == FileRead && position > m_size)
 		position = m_size;
@@ -127,7 +127,7 @@ size_t File::Seek(size_t position)
 }
 
 
-size_t File::Write(const void* data, size_t size)
+u32 File::Write(const void* data, u32 size)
 {
 	CE_ASSERT(m_mode != FileRead);
 	if(size == 0)
@@ -174,11 +174,11 @@ void File::Flush()
 }
 
 
-fc::string File::GetNativePath(const fc::string& path)
+String File::GetNativePath(const String& path)
 {
 #ifdef _WIN32
-	fc::string ret(path);
-	for( fc::string::iterator it = ret.begin(); it != ret.end(); ++it )
+	String ret(path);
+	for( String::iterator it = ret.begin(); it != ret.end(); ++it )
 		if(*it == '/')
 			*it = '\\';
 	return ret;

@@ -55,7 +55,7 @@ void RectEmitter::SetWireFrame( bool enable )
 }
 
 
-void RectEmitter::Emit( const Vector2& pos, Particle* particles, size_t count )
+void RectEmitter::Emit( const Vector2& pos, Particle* particles, u32 count )
 {
 	// This will initialize all basic particle values except emitter-specific values.
 	GenerateInitialValues(particles, count);

@@ -102,7 +102,7 @@ Font::Font() :
 }
 
 
-Font::Font( const fc::string& filename, int faceSize, int dpi ) :
+Font::Font( const String& filename, int faceSize, int dpi ) :
 	m_texture(),
 	m_faceSize(0)
 {
@@ -138,23 +138,43 @@ void Font::InternalInitialize()
 
 
 
-int Font::LoadFromFile( const fc::string& filename, int faceSize, int dpi )
+int Font::LoadFromFile( const String& filename )
+{
+	return LoadFromFile("", filename, 16);
+}
+
+
+int Font::LoadFromFile( const String& path, const String& filename )
+{
+	return LoadFromFile(path, filename, 16);
+}
+
+
+int Font::LoadFromFile( const String& filename, int faceSize, int dpi )
+{
+	return LoadFromFile("", filename, faceSize, dpi);
+}
+
+
+int Font::LoadFromFile( const String& path, const String& filename, int faceSize, int dpi )
 {
 	if( filename.empty() )
 		return 1;
 
+	SetResourceName(filename);
+
 	if( filename.size() > 3 )
 	{
-		fc::string fileExtension = filename.substr(filename.size() - 3, 3);
+		String fileExtension = filename.substr(filename.size() - 3, 3);
 		if( fileExtension == "bmp" || fileExtension == "png" || fileExtension == "tga" )
 		{
-			return InternalLoadBitmapFont(filename);
+			return InternalLoadBitmapFont(path + filename);
 		}
 	}
 
 #if CE_SUPPORT_FREETYPE
 	// current limitation
-	if( (size_t)faceSize > MaxGlyphSize )
+	if( (u32)faceSize > MaxGlyphSize )
 		faceSize = MaxGlyphSize;
 
 	FT_Error error = 0;
@@ -288,11 +308,11 @@ int Font::LoadFromFile( const fc::string& filename, int faceSize, int dpi )
 			glyphPixels.fill( Color::White(0) );
 			for( int y(0); y < size.y; ++y )
 			{
-				ubyte* bitmapPixels = slot->bitmap.buffer + slot->bitmap.pitch * y;
+				u8* bitmapPixels = slot->bitmap.buffer + slot->bitmap.pitch * y;
 				for( int x(0); x < size.x; ++x )
 				{
 					//only set the alpha channel.
-					size_t i = glyphPixels.offset(y, x);
+					u32 i = glyphPixels.offset(y, x);
 
 					//Log("gray = %i", (int)bitmapPixels[x]);
 					glyphPixels[i].a = bitmapPixels[x];
@@ -326,11 +346,11 @@ int Font::LoadFromFile( const fc::string& filename, int faceSize, int dpi )
 
 	m_faceSize = faceSize;
 	m_maxAdvance = maxGlyphTranslationY;
-	m_line_height = face->size->metrics.height >> 6;
-	//m_line_height = (face->size->metrics.height + 63) >> 6;
-	if( m_line_height != maxGlyphHeight )
+	m_lineHeight = face->size->metrics.height >> 6;
+	//m_lineHeight = (face->size->metrics.height + 63) >> 6;
+	if( m_lineHeight != maxGlyphHeight )
 	{
-		m_line_height = maxGlyphHeight;
+		m_lineHeight = maxGlyphHeight;
 	}
 
 	// we can now try to compress the texture size further.
@@ -369,7 +389,7 @@ int Font::LoadFromFile( const fc::string& filename, int faceSize, int dpi )
 }
 
 
-int Font::InternalLoadGenericBitmapFont( const fc::string& filename, int startCode )
+int Font::InternalLoadGenericBitmapFont( const String& filename, int startCode )
 {
 	// generic bitmap fonts contain no font metrics and
 	// are basically a bunch of rectangles inside a bitmap.
@@ -388,6 +408,7 @@ int Font::InternalLoadGenericBitmapFont( const fc::string& filename, int startCo
 		m_glyphMap[i] = i - startCode;
 
 	m_glyphs.resize(numGlyphs);
+
 	for( int i(0); i < numGlyphs; ++i )
 	{
 		m_glyphMap[i + 32] = i;
@@ -410,13 +431,13 @@ int Font::InternalLoadGenericBitmapFont( const fc::string& filename, int startCo
 
 	m_faceSize = glyphSize;
 	m_maxAdvance = glyphSize;
-	m_line_height = glyphSize;
+	m_lineHeight = glyphSize;
 
 	return 0;
 }
 
 
-int Font::InternalLoadBitmapFont( const fc::string& filename, int startCode )
+int Font::InternalLoadBitmapFont( const String& filename, int startCode )
 {
 	CE_ASSERT(startCode > 0 && startCode < 128);
 
@@ -424,7 +445,7 @@ int Font::InternalLoadBitmapFont( const fc::string& filename, int startCode )
 	// top, bottom, left, right. advance is calculated by (right - left + 1).
 
 	Point textureSize;
-	uchar* ptr = TextureLoader::LoadFromFile(filename, textureSize);
+	u8* ptr = TextureLoader::LoadFromFile(filename, textureSize);
 	if( !ptr )
 	{
 		return -1;
@@ -432,9 +453,9 @@ int Font::InternalLoadBitmapFont( const fc::string& filename, int startCode )
 
 	// copy ptr to pixel array
 	fc::dynamic_array2d<Color> pixels(textureSize.y, textureSize.x);
-	for( size_t i(0); i < pixels.size(); ++i )
+	for( u32 i(0); i < pixels.size(); ++i )
 	{
-		size_t offset = i * 4;
+		u32 offset = i * 4;
 		pixels[i].r = ptr[offset];
 		pixels[i].g = ptr[offset + 1];
 		pixels[i].b = ptr[offset + 2];
@@ -449,7 +470,7 @@ int Font::InternalLoadBitmapFont( const fc::string& filename, int startCode )
 	// mask top-left pixel color
 	Color colorToMask = pixels.front();
 	Color maskColor(colorToMask.r, colorToMask.b, colorToMask.g, 0);
-	for( size_t i(0); i < pixels.size(); ++i )
+	for( u32 i(0); i < pixels.size(); ++i )
 	{
 		if( pixels[i] == colorToMask )
 			pixels[i] = maskColor;
@@ -564,7 +585,7 @@ int Font::InternalLoadBitmapFont( const fc::string& filename, int startCode )
 	//m_glyphs[' '].advance /= 2.f;
 
 	m_faceSize = fc::max(blockWidth, blockHeight);
-	m_line_height = blockHeight;
+	m_lineHeight = blockHeight;
 
 	// create the texture.
 	//m_texture.SetFilterMode( 0x2601 );
@@ -601,19 +622,19 @@ void Font::SetMaxGlyphHeight( float y )
 
 void Font::SetLineHeight( int height )
 {
-	m_line_height = height;
+	m_lineHeight = height;
 }
 
 
-int Font::GetTextWidth( const fc::string& text ) const
+int Font::GetTextWidth( const String& text ) const
 {
 	float width(0.f);
-	for( fc::string::const_iterator it = text.begin(); it != text.end(); ++it )
+	for( String::const_iterator it = text.begin(); it != text.end(); ++it )
 	{
 		if(*it == '\n')
 			break;
 
-		width += GetGlyph((ubyte)*it).advance;
+		width += GetGlyph((u8)*it).advance;
 	}
 
 	return fc::iround(width);

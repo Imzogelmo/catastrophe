@@ -33,6 +33,8 @@ Widget::Widget( Vector2 pos, Vector2 size ) :
 	m_parent(0),
 	m_pos(pos),
 	m_size(size),
+	m_color(Color::White()),
+	m_blendmode(BlendMode::Alpha),
 	m_ref_count(1),
 	m_active(true),
 	m_selected(false),
@@ -133,7 +135,7 @@ void Widget::AddChild( Widget* element )
 }
 
 
-void Widget::InsertChild( size_t index, Widget* element )
+void Widget::InsertChild( u32 index, Widget* element )
 {
 	if( index > m_children.size() )
 		index = m_children.size();
@@ -200,14 +202,14 @@ void Widget::SetParent( Widget* parent )
 }
 
 
-bool Widget::HasChild( Widget* element, size_t* index ) const
+bool Widget::HasChild( Widget* element, u32* index ) const
 {
 	for( child_vec_type::const_iterator it = m_children.begin(); it != m_children.end(); ++it )
 	{
 		if( element = *it )
 		{
 			if( index )
-				*index = (size_t)(it - m_children.begin());
+				*index = (u32)(it - m_children.begin());
 
 			return true;
 		}
@@ -239,9 +241,9 @@ void Widget::GetChildren( child_vec_type& dest, bool recurse ) const
 }
 
 
-size_t Widget::GetNumChildren( bool recurse ) const
+u32 Widget::GetNumChildren( bool recurse ) const
 {
-	size_t size = m_children.size();
+	u32 size = m_children.size();
 	if( recurse )
 	{
 		for( child_vec_type::const_iterator it = m_children.begin(); it != m_children.end(); ++it )
@@ -252,7 +254,7 @@ size_t Widget::GetNumChildren( bool recurse ) const
 }
 
 
-Widget* Widget::GetChild( size_t index ) const
+Widget* Widget::GetChild( u32 index ) const
 {
 	if( index < m_children.size() )
 		return m_children[index];

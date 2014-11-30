@@ -42,10 +42,10 @@ Point::Point( const Vector2& v ) :
 
 Rect::Rect( const Rectf& r )
 {
-	pos.x = (int)r.min.x;
-	pos.y = (int)r.min.y;
-	size.x = (int)(r.Width());
-	size.y = (int)(r.Height());
+	pos.x = fc::iround(r.min.x);
+	pos.y = fc::iround(r.min.y);
+	size.x = fc::iround(r.Width());
+	size.y = fc::iround(r.Height());
 }
 
 

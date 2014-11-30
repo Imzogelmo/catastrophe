@@ -30,7 +30,7 @@ ColorModifier::ColorModifier( const Color& endColor ) :
 }
 
 
-void ColorModifier::Update( Particle* particles, size_t count )
+void ColorModifier::Update( Particle* particles, u32 count )
 {
 	Color endColor = m_endColor;
 

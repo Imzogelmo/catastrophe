@@ -34,7 +34,7 @@ PackedSprite::PackedSprite() :
 }
 
 
-PackedSprite::PackedSprite( Texture* texturePtr, const PackedRect& sourceRectangle, int numberOfFrames, short frameDelay )
+PackedSprite::PackedSprite( Texture* texturePtr, const PackedRect& sourceRectangle, int numberOfFrames, s16 frameDelay )
 {
 	angle = 0.f,
 	color = Color::White();
@@ -52,9 +52,9 @@ gluint PackedSprite::GetTextureID() const
 }
 
 
-void PackedSprite::SetAnimationSpeed( short frameDelay )
+void PackedSprite::SetAnimationSpeed( s16 frameDelay )
 {
-	anim_speed = fc::clamp<short>(frameDelay, 16, 32736);
+	anim_speed = fc::clamp<s16>(frameDelay, 16, 32736);
 }
 
 
@@ -111,7 +111,7 @@ void PackedSprite::Update()
 }
 
 
-void PackedSprite::SetCurrentFrame( short index )
+void PackedSprite::SetCurrentFrame( s16 index )
 {
 	// texture must be assigned first.
 	CE_ASSERT(texture != 0);
@@ -143,16 +143,16 @@ void PackedSprite::SetCurrentFrame( short index )
 }
 
 
-void PackedSprite::Create( Texture* texturePtr, const PackedRect& sourceRectangle, int numberOfFrames, short frameDelay )
+void PackedSprite::Create( Texture* texturePtr, const PackedRect& sourceRectangle, int numberOfFrames, s16 frameDelay )
 {
 	SetTexture(texturePtr);
 	Create(sourceRectangle, numberOfFrames, frameDelay);
 }
 
 
-void PackedSprite::Create( const PackedRect& sourceRectangle, int numberOfFrames, short frameDelay )
+void PackedSprite::Create( const PackedRect& sourceRectangle, int numberOfFrames, s16 frameDelay )
 {
-	num_frames = (short)(numberOfFrames > 0 ? numberOfFrames : 1);
+	num_frames = (s16)(numberOfFrames > 0 ? numberOfFrames : 1);
 
 	SetAnimationSpeed(frameDelay);
 	SetSourceRect(sourceRectangle);

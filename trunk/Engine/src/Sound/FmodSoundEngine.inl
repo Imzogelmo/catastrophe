@@ -106,7 +106,7 @@ Sound* FmodSoundEngine::LoadFromFile( Sound::Type type, const fc::string& filena
 }
 
 
-Sound* FmodSoundEngine::LoadFromData( Sound::Type type, void* data, size_t n_bytes )
+Sound* FmodSoundEngine::LoadFromData( Sound::Type type, void* data, u32 n_bytes )
 {
 	return 0; //todo
 }

@@ -23,7 +23,7 @@
 
 
 
-ColorInterpolatorModifier::ColorInterpolatorModifier( size_t maxNumColors ) :
+ColorInterpolatorModifier::ColorInterpolatorModifier( u32 maxNumColors ) :
 	ParticleModifier(),
 	m_colors()
 {
@@ -37,7 +37,7 @@ void ColorInterpolatorModifier::AddColor( const Colorf& color )
 }
 
 
-void ColorInterpolatorModifier::Update( Particle* particles, size_t count )
+void ColorInterpolatorModifier::Update( Particle* particles, u32 count )
 {
 	const int size = (int)m_colors.size();
 	if( size < 2 )
@@ -62,7 +62,7 @@ void ColorInterpolatorModifier::Update( Particle* particles, size_t count )
 
 		float m;
 		float remainder = modf( age * numColors, &m );
-		size_t index = fc::clamp<size_t>( (size_t)m, 0, size - 2 );
+		u32 index = fc::clamp<u32>( (u32)m, 0, size - 2 );
 
 		p->color = Colorf::Lerp( m_colors[index], m_colors[index + 1], remainder );
 	}
@@ -73,9 +73,9 @@ void ColorInterpolatorModifier::Serialize( AttributeWriter* out )
 {
 	out->BeginNode("ColorInterpolatorModifier");
 
-	size_t count = m_colors.size();
+	u32 count = m_colors.size();
 	out->SetUInt("count", count);
-	for( size_t i(0); i < count; ++i )
+	for( u32 i(0); i < count; ++i )
 		out->SetColorElement("Color", m_colors[i].ToColor());
 
 	out->EndNode();
@@ -87,9 +87,9 @@ void ColorInterpolatorModifier::Deserialize( AttributeReader* in )
 	if( in->GetCurrentNodeName() != "ColorInterpolatorModifier" )
 		return;
 
-	size_t count = in->GetUInt("count");
+	u32 count = in->GetUInt("count");
 	m_colors.resize(count);
-	for( size_t i(0); i < count; ++i )
+	for( u32 i(0); i < count; ++i )
 		m_colors[i] = in->GetColorElement("Color");
 
 }

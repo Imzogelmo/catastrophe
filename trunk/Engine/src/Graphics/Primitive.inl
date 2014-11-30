@@ -131,7 +131,7 @@ void Primitive::CreateCircle( const Vector2 &center, float radius, const Color &
 void Primitive::CreateEllipse( const Vector2 &center, const Vector2 &radius, float angle, const Color &inner, const Color &outer, bool filled, int detail )
 {
 	Clear();
-	m_vertices.reserve( (size_t)(detail + 2) );
+	m_vertices.reserve( (u32)(detail + 2) );
 
 	if( filled )
 	{
@@ -164,7 +164,7 @@ void Primitive::CreateEllipse( const Vector2 &center, const Vector2 &radius, flo
 void Primitive::CreateTriangle( const Vector2 &p1, const Vector2 &p2, const Vector2 &p3, const Color &c1, const Color &c2, const Color &c3, bool filled )
 {
 	Clear();
-	m_vertices.reserve(size_t(3));
+	m_vertices.reserve(u32(3));
 
 	if( filled )
 	{
@@ -184,7 +184,7 @@ void Primitive::CreateTriangle( const Vector2 &p1, const Vector2 &p2, const Vect
 void Primitive::CreateRectangle( const Rectf &rect, const Color &bl, const Color &tl, const Color &tr, const Color &br, bool filled )
 {
 	Clear();
-	m_vertices.reserve(size_t(4));
+	m_vertices.reserve(u32(4));
 
 	if( filled )
 	{
@@ -202,7 +202,7 @@ void Primitive::CreateRectangle( const Rectf &rect, const Color &bl, const Color
 }
 
 
-void Primitive::Render( size_t index, size_t n )
+void Primitive::Render( u32 index, u32 n )
 {
 	m_blendmode.Apply();
 

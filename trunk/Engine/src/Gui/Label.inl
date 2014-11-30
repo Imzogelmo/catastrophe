@@ -29,8 +29,8 @@ Label::Label( const fc::string& text, Font* font, TextAlignment alignment ) :
 	m_font(font),
 	m_text(text),
 	m_textAlignment(alignment),
-	m_color(Color::White()),
-	m_disabledColor(Color::Gray())
+	m_disabledColor(Color::DarkGray()),
+	m_isHighlighted(false)
 {
 }
 
@@ -60,6 +60,12 @@ void Label::SetFont( Font* font )
 }
 
 
+void Label::SetText( const char* text )
+{
+	m_text = text;
+}
+
+
 void Label::SetText( const fc::string& text )
 {
 	m_text = text;
@@ -82,9 +88,16 @@ float Label::GetTextAlignmentOffset() const
 }
 
 
+float Label::GetTextWidth() const
+{
+	return m_font ? m_font->GetTextWidth(m_text) : 0.f;
+}
+
+
 Color Label::GetCurrentTextColor() const
 {
-	return IsEnabled() ? m_color : m_disabledColor;
+	return IsEnabled() ? //fixme
+		(m_isHighlighted ? m_highlightedColor : m_color) : m_disabledColor;
 }
 
 

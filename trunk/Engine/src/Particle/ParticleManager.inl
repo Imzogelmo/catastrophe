@@ -42,9 +42,9 @@ void ParticleManager::AddSystem( ParticleSystem* system )
 }
 
 
-size_t ParticleManager::GetParticleCount()
+u32 ParticleManager::GetParticleCount()
 {
-	size_t count = 0;
+	u32 count = 0;
 	for( map_type::iterator it = m_systems.begin(); it != m_systems.end(); ++it )
 	{
 		count += it->second->GetParticleCount();
