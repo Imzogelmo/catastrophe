@@ -23,7 +23,7 @@
 CE_NAMESPACE_BEGIN
 
 
-void PrimitiveBatch::Reserve( size_t reserve )
+void PrimitiveBatch::Reserve( u32 reserve )
 {
 	m_queue.reserve( reserve );
 }
@@ -98,9 +98,9 @@ void PrimitiveBatch::End()
 }
 
 
-size_t PrimitiveBatch::GetVertexCount() const
+u32 PrimitiveBatch::GetVertexCount() const
 {
-	size_t count(0);
+	u32 count(0);
 	for( vec_type::const_iterator it = m_queue.begin(); it != m_queue.end(); ++it )
 		count += it->Size();
 

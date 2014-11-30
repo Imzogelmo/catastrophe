@@ -99,6 +99,26 @@ bool Colorf::Equals( const Colorf &c, float epsilon ) const
 }
 
 
+Colorf Colorf::operator * ( const Colorf &c ) const
+{
+	return Colorf(
+		(r * c.r) / 2.f,
+		(g * c.g) / 2.f,
+		(b * c.b) / 2.f,
+		(a * c.a) / 2.f );
+}
+
+
+Colorf& Colorf::operator *= ( const Colorf &c )
+{
+	r = (r * c.r) / 2.f;
+	g = (g * c.g) / 2.f;
+	b = (b * c.b) / 2.f;
+	a = (a * c.a) / 2.f;
+	return *this;
+}
+
+
 float Colorf::Intensity() const
 {
 	return Vector3(r, g, b).Dot( Vector3(0.3333333f) );

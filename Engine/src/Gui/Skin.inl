@@ -22,10 +22,17 @@ CE_NAMESPACE_BEGIN
 
 
 Skin::Skin() :
+	m_texture(0),
 	m_font(0),
 	m_frame(0),
 	m_backgroundImage(0)
 {
+}
+
+
+void Skin::SetTexture( Texture* texture )
+{
+	m_texture = texture;
 }
 
 

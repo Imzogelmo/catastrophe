@@ -25,9 +25,7 @@ CE_NAMESPACE_BEGIN
 
 
 Frame::Frame() : Widget(),
-	m_texture(0),
-	m_blendmode(BlendMode::Alpha),
-	m_color(Color::White())
+	m_texture(0)
 {
 	m_backgroundImage = 0;
 	m_tiled = false;

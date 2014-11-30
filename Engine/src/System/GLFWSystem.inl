@@ -324,7 +324,7 @@ void Joystick::Update()
 	m_analog[0].y = -m_analog[0].y;
 	//m_analog[1].y = -m_analog[1].y;
 
-	uchar b[MaxButtons];
+	u8 b[MaxButtons];
 	glfwGetJoystickButtons( GetJoystickNumber(), b, MaxButtons );
 
 	for( uint i(0); i < MaxButtons; ++i )

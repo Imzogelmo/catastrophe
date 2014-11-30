@@ -49,9 +49,9 @@ void ParticleSystem::DestroyGroups()
 }
 
 
-size_t ParticleSystem::GetParticleCount() const
+u32 ParticleSystem::GetParticleCount() const
 {
-	size_t count(0);
+	u32 count(0);
 	for( group_vec_type::const_iterator it = m_groups.begin(); it != m_groups.end(); ++it )
 	{
 		count += (*it)->GetParticleCount();

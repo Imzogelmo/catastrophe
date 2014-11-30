@@ -37,10 +37,10 @@ Input::Input() :
 }
 
 
-void Input::SetMaxJoystickUsage( size_t numJoysticks )
+void Input::SetMaxJoystickUsage( u32 numJoysticks )
 {
 	m_instance.m_maxJoystickUsage =
-		Math::Clamp<size_t>(numJoysticks, 0, (size_t)MaxJoysticks);
+		Math::Clamp<u32>(numJoysticks, 0, (u32)MaxJoysticks);
 }
 
 
@@ -49,7 +49,7 @@ void Input::Update()
 	//update keyboard for key events.
 	m_instance.m_keyboard.Update();
 
-	for( size_t i(0); i < m_instance.m_maxJoystickUsage; ++i )
+	for( u32 i(0); i < m_instance.m_maxJoystickUsage; ++i )
 	{
 		m_instance.m_joysticks[i].Update();
 	}

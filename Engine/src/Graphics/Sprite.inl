@@ -82,6 +82,13 @@ Sprite::Sprite( const AnimatedSprite& sprite )
 	*this = sprite;
 }
 
+/*
+Sprite::~Sprite()
+{
+	if(m_texture)
+		m_texture->ReleaseRef();
+}
+*/
 
 Sprite& Sprite::operator =( const AnimatedSprite& sprite )
 {
@@ -90,9 +97,9 @@ Sprite& Sprite::operator =( const AnimatedSprite& sprite )
 	color		= sprite.color;
 	blendmode	= sprite.blendmode;
 	angle		= sprite.angle;
-
-	m_texture	= sprite.GetTexture();
 	m_uv		= sprite.GetUVRect();
+
+	SetTexture(sprite.GetTexture());
 
 	return *this;
 }
@@ -124,16 +131,20 @@ void Sprite::Create( Texture* texture, const Rectf& uv )
 
 void Sprite::SetTexture( Texture* texture )
 {
+	if(m_texture)
+		m_texture->ReleaseRef();
+
 	m_texture = texture;
+
+	if(texture)
+		texture->AddRef();
 }
 
 
 void Sprite::SetSourceRect( const Rect& sourceRect )
 {
 	if( m_texture )
-	{
 		m_uv = m_texture->GetUVRect(sourceRect);
-	}
 }
 
 

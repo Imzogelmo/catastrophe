@@ -45,14 +45,21 @@ AnimatedSpriteSet::AnimatedSpriteSet(
 {
 }
 
+/*
+AnimatedSpriteSet::~AnimatedSpriteSet()
+{
+	if(m_texture)
+		m_texture->ReleaseRef();
+}
+*/
 
-void AnimatedSpriteSet::Reserve( size_t capacity )
+void AnimatedSpriteSet::Reserve( u32 capacity )
 {
 	m_animations.reserve(capacity);
 }
 
 
-void AnimatedSpriteSet::Resize( size_t newSize )
+void AnimatedSpriteSet::Resize( u32 newSize )
 {
 	m_animations.resize(newSize);
 	SetCurrentAnimation(m_currentAnimation);
@@ -61,7 +68,14 @@ void AnimatedSpriteSet::Resize( size_t newSize )
 
 void AnimatedSpriteSet::SetTexture( Texture* texture )
 {
+	if(m_texture)
+		m_texture->ReleaseRef();
+
 	m_texture = texture;
+
+	if(texture)
+		texture->AddRef();
+
 	for( vec_type::iterator it = m_animations.begin(); it != m_animations.end(); ++it )
 	{
 		it->SetTexture(m_texture);
@@ -69,9 +83,9 @@ void AnimatedSpriteSet::SetTexture( Texture* texture )
 }
 
 
-void AnimatedSpriteSet::SetCurrentAnimation( size_t index )
+void AnimatedSpriteSet::SetCurrentAnimation( u32 index )
 {
-	size_t size = m_animations.size();
+	u32 size = m_animations.size();
 	if( index < size )
 	{
 		m_currentAnimation = index;
@@ -103,7 +117,7 @@ void AnimatedSpriteSet::AddAnimation( const SpriteAnimation& anim )
 }
 
 
-void AnimatedSpriteSet::InsertAnimation( const SpriteAnimation& anim, size_t index )
+void AnimatedSpriteSet::InsertAnimation( const SpriteAnimation& anim, u32 index )
 {
 	if( index > m_animations.size() )
 		index = m_animations.size();
@@ -117,7 +131,7 @@ void AnimatedSpriteSet::InsertAnimation( const SpriteAnimation& anim, size_t ind
 }
 
 
-void AnimatedSpriteSet::RemoveAnimation( size_t index )
+void AnimatedSpriteSet::RemoveAnimation( u32 index )
 {
 	if( index < m_animations.size() )
 	{

@@ -34,8 +34,8 @@ bool ToBool( const char* s, bool defaultValue )
 {
 	if( s )
 	{
-		size_t length = strlen(s);
-		for( size_t i(0); i < length; ++i )
+		u32 length = strlen(s);
+		for( u32 i(0); i < length; ++i )
 		{
 			char c = fc::to_lower(s[i]);
 			if( c == 't' || c == '1' )
@@ -53,15 +53,15 @@ bool ToBool( const char* s, bool defaultValue )
 }
 
 
-byte ToByte( const char* s, byte defaultValue )
+u8 ToByte( const char* s, u8 defaultValue )
 {
-	return (byte)ToInt(s, (char**)0, (int)defaultValue);
+	return (u8)ToInt(s, (char**)0, (int)defaultValue);
 }
 
 
-short ToShort( const char* s, short defaultValue )
+s16 ToShort( const char* s, s16 defaultValue )
 {
-	return (short)ToInt(s, (char**)0, (int)defaultValue);
+	return (s16)ToInt(s, (char**)0, (int)defaultValue);
 }
 
 
@@ -71,7 +71,7 @@ int ToInt( const char* s, int defaultValue )
 }
 
 
-size_t ToUInt( const char* s, size_t defaultValue )
+u32 ToUInt( const char* s, u32 defaultValue )
 {
 	return ToInt(s, (char**)0, defaultValue);
 }
@@ -115,10 +115,10 @@ Color ToColor( const char* s, const Color& defaultValue )
 	if( s )
 	{
 		char* ptr = (char*)s;
-		c.r = (ubyte)ToInt(ptr, &ptr, (int)defaultValue.r);
-		c.g = (ubyte)ToInt(ptr, &ptr, (int)defaultValue.g);
-		c.b = (ubyte)ToInt(ptr, &ptr, (int)defaultValue.b);
-		c.a = (ubyte)ToInt(ptr, &ptr, (int)defaultValue.a);
+		c.r = (u8)ToInt(ptr, &ptr, (int)defaultValue.r);
+		c.g = (u8)ToInt(ptr, &ptr, (int)defaultValue.g);
+		c.b = (u8)ToInt(ptr, &ptr, (int)defaultValue.b);
+		c.a = (u8)ToInt(ptr, &ptr, (int)defaultValue.a);
 	}
 
 	return c;
@@ -263,118 +263,118 @@ Matrix ToMatrix( const char* s, const Matrix& defaultValue )
 
 
 
-fc::string ToString( bool value )
+String ToString( bool value )
 {
 	return fc::to_string<bool>(value);
 }
 
 
-fc::string ToString( char value )
+String ToString( char value )
 {
 	return fc::to_string<char>(value);
 }
 
 
-fc::string ToString( short value )
+String ToString( s16 value )
 {
-	return fc::to_string<short>(value);
+	return fc::to_string<s16>(value);
 }
 
 
-fc::string ToString( int value )
+String ToString( int value )
 {
 	return fc::to_string<int>(value);
 }
 
 
-fc::string ToString( size_t value )
+String ToString( u32 value )
 {
-	return fc::to_string<size_t>(value);
+	return fc::to_string<u32>(value);
 }
 
 
-fc::string ToString( float value )
+String ToString( float value )
 {
 	return fc::to_string<float>(value);
 }
 
 
-fc::string ToString( const Point& value )
+String ToString( const Point& value )
 {
 	char buf[32];
 	sprintf(buf, "%i %i", value.x, value.y);
-	return fc::string(buf);
+	return String(buf);
 }
 
 
-fc::string ToString( const Rect& value )
+String ToString( const Rect& value )
 {
 	char buf[64];
 	sprintf(buf, "%i %i %i %i", value.pos.x, value.pos.y, value.size.x, value.size.y);
-	return fc::string(buf);
+	return String(buf);
 }
 
 
-fc::string ToString( const Rectf& value )
+String ToString( const Rectf& value )
 {
 	char buf[64];
 	sprintf(buf, "%f %f %f %f", value.min.x, value.min.y, value.max.x, value.max.y);
-	return fc::string(buf);
+	return String(buf);
 }
 
 
-fc::string ToString( const Color& value )
+String ToString( const Color& value )
 {
 	char buf[32];
 	int c[4] = { value.r, value.g, value.b, value.a };
 	sprintf(buf, "%i %i %i %i", c[0], c[1], c[2], c[3]);
-	return fc::string(buf);
+	return String(buf);
 }
 
 
-fc::string ToString( const Colorf& value )
+String ToString( const Colorf& value )
 {
 	char buf[64];
 	sprintf(buf, "%f %f %f %f", value.r, value.g, value.b, value.a);
-	return fc::string(buf);
+	return String(buf);
 }
 
 
-fc::string ToString( const Vector2& value )
+String ToString( const Vector2& value )
 {
 	char buf[32];
 	sprintf(buf, "%f %f", value.x, value.y);
-	return fc::string(buf);
+	return String(buf);
 }
 
 
-fc::string ToString( const Vector3& value )
+String ToString( const Vector3& value )
 {
 	char buf[64];
 	sprintf(buf, "%f %f %f", value.x, value.y, value.z);
-	return fc::string(buf);
+	return String(buf);
 }
 
 
-fc::string ToString( const Vector4& value )
+String ToString( const Vector4& value )
 {
 	char buf[64];
 	sprintf(buf, "%f %f %f %f", value.x, value.y, value.z, value.w);
-	return fc::string(buf);
+	return String(buf);
 }
 
 
-fc::string ToString( const Quaternion& value )
+String ToString( const Quaternion& value )
 {
 	char buf[64];
 	sprintf(buf, "%f %f %f %f", value.x, value.y, value.z, value.w);
-	return fc::string(buf);
+	return String(buf);
 }
 
 
-fc::string ToString( const Matrix& value )
+String ToString( const Matrix& value )
 {
-	fc::string ret;
+	String ret;
 	char buf[256];
 	for( int i(0); i < 16; ++i )
 	{

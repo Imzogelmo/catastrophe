@@ -44,7 +44,7 @@ XmlElement::XmlElement( XmlNode_t* element ) :
 }
 
 
-bool XmlElement::BeginNode( const fc::string& name )
+bool XmlElement::BeginNode( const String& name )
 {
 	return BeginNode(name.c_str());
 }
@@ -89,7 +89,7 @@ bool XmlElement::SetToChild( const char* name )
 }
 
 
-XmlElement XmlElement::CreateChild( const fc::string& name )
+XmlElement XmlElement::CreateChild( const String& name )
 {
 	return CreateChild(name.c_str());
 }
@@ -127,7 +127,7 @@ XmlElement XmlElement::GetParent()
 }
 
 
-XmlElement XmlElement::FirstChild( const fc::string& name ) const
+XmlElement XmlElement::FirstChild( const String& name ) const
 {
 	return FirstChild(name.c_str());
 }
@@ -145,7 +145,7 @@ XmlElement XmlElement::FirstChild( const char* name ) const
 }
 
 
-XmlElement XmlElement::LastChild( const fc::string& name ) const
+XmlElement XmlElement::LastChild( const String& name ) const
 {
 	return LastChild(name.c_str());
 }
@@ -163,7 +163,7 @@ XmlElement XmlElement::LastChild( const char* name ) const
 }
 
 
-XmlElement XmlElement::NextSibling( const fc::string& name ) const
+XmlElement XmlElement::NextSibling( const String& name ) const
 {
 	return NextSibling(name.c_str());
 }
@@ -216,9 +216,14 @@ void XmlElement::RemoveAttribute( const char* name )
 }
 
 
-const char* XmlElement::GetCurrentNodeName() const
+String XmlElement::GetCurrentNodeName() const
 {
-	CE_ASSERT(m_element);
+	return m_element ? m_element->name() : "";
+}
+
+
+const char* XmlElement::GetCurrentNodeNameCStr() const
+{
 	return m_element ? m_element->name() : 0;
 }
 
@@ -258,7 +263,7 @@ bool XmlElement::SetAttribute( const char* name, const char* value )
 }
 
 
-bool XmlElement::SetString( const char* name, const fc::string& value )
+bool XmlElement::SetString( const char* name, const String& value )
 {
 	return SetAttribute(name, value.c_str());
 }
@@ -270,13 +275,13 @@ bool XmlElement::SetBool( const char* name, bool value )
 }
 
 
-bool XmlElement::SetByte( const char* name, byte value )
+bool XmlElement::SetByte( const char* name, u8 value )
 {
 	return SetInt(name, (int)value);
 }
 
 
-bool XmlElement::SetShort( const char* name, short value )
+bool XmlElement::SetShort( const char* name, s16 value )
 {
 	return SetInt(name, (int)value);
 }
@@ -288,7 +293,7 @@ bool XmlElement::SetInt( const char* name, int value )
 }
 
 
-bool XmlElement::SetUInt( const char* name, size_t value )
+bool XmlElement::SetUInt( const char* name, u32 value )
 {
 	return SetAttribute(name, fc::to_string(value).c_str());
 }
@@ -366,7 +371,7 @@ bool XmlElement::SetByteElement( const char* name, char value )
 }
 
 
-bool XmlElement::SetShortElement( const char* name, short value )
+bool XmlElement::SetShortElement( const char* name, s16 value )
 {
 	return SetTextElement(name, ToString(value).c_str());
 }
@@ -378,7 +383,7 @@ bool XmlElement::SetIntElement( const char* name, int value )
 }
 
 
-bool XmlElement::SetUIntElement( const char* name, size_t value )
+bool XmlElement::SetUIntElement( const char* name, u32 value )
 {
 	return SetTextElement(name, ToString(value).c_str());
 }
@@ -438,7 +443,7 @@ bool XmlElement::SetColorfElement( const char* name, const Colorf& value )
 }
 
 
-bool XmlElement::WriteText( const fc::string& s )
+bool XmlElement::WriteText( const String& s )
 {
 	return WriteText(s.c_str());
 }
@@ -463,68 +468,78 @@ bool XmlElement::WriteText( const char* s )
 }
 
 
-bool XmlElement::WriteByteArray( const char* name, const byte* ptr, size_t n )
+bool XmlElement::WriteByteArray( const char* name, const u8* ptr, u32 n )
 {
-	return WriteArray(name, ptr, sizeof(byte), n, true);
+	return WriteArray(name, ptr, sizeof(u8), n, true);
 }
 
 
-bool XmlElement::WriteShortArray( const char* name, const short* ptr, size_t n )
+bool XmlElement::WriteShortArray( const char* name, const s16* ptr, u32 n )
 {
-	return WriteArray(name, ptr, sizeof(short), n, true);
+	return WriteArray(name, ptr, sizeof(s16), n, true);
 }
 
 
-bool XmlElement::WriteIntArray( const char* name, const int* ptr, size_t n )
+bool XmlElement::WriteIntArray( const char* name, const int* ptr, u32 n )
 {
 	return WriteArray(name, ptr, sizeof(int), n, true);
 }
 
 
-bool XmlElement::WriteFloatArray( const char* name, const float* ptr, size_t n )
+bool XmlElement::WriteFloatArray( const char* name, const float* ptr, u32 n )
 {
 	return WriteArray(name, ptr, sizeof(float), n, false);
 }
 
 
-bool XmlElement::WriteArray( const char* name, const void* ptr, size_t strideInBytes, size_t n, bool isIntegral )
+bool XmlElement::WriteArray( const char* name, const void* ptr, u32 strideInBytes, u32 n, bool isIntegral )
 {
-	fc::string formatedString;
+	String formatedString;
 	PrintArray(ptr, formatedString, strideInBytes, n, isIntegral);
 	return SetAttribute(name, formatedString.c_str());
 }
 
 
-void XmlElement::PrintArray( const void* ptr, fc::string& str, size_t strideInBytes, size_t n, bool isIntegral )
+void XmlElement::PrintArray( const void* ptr, String& str, u32 strideInBytes, u32 n, bool isIntegral )
 {
 	str.reserve(n * 4); //best guess
 
 	char buf[64];
-	for( size_t i(0); i < n; ++i )
+	for( u32 i(0); i < n; ++i )
 	{
-		size_t byteOffset = i * strideInBytes;
+		u32 byteOffset = i * strideInBytes;
 
 		if( isIntegral )
 		{
-			int val = int(*((char*)ptr + byteOffset));
-			sprintf(buf, "%i", val);
+			int value = 0;
+			if( strideInBytes == sizeof(char) )
+				value = *(char*)((char*)ptr + byteOffset);
+
+			else if( strideInBytes == sizeof(s16) )
+				value = *(s16*)((char*)ptr + byteOffset);
+
+			else if( strideInBytes == sizeof(int) )
+				value = *(int*)((char*)ptr + byteOffset);
+
+			fc::to_string(value, buf);
 		}
 		else
 		{
-			float val = float(*((char*)ptr + byteOffset));
-			sprintf(buf, "%f", val);
+			float value = *(float*)((char*)ptr + byteOffset);
+			fc::to_string(value, buf);
+			//sprintf(buf, "%f", value);
 		}
 
 		str.append(buf).append(',');
 	}
 
 	//remove the trailing ',' character.
-	if( !str.empty() )
+	if( !str.empty() && str.back() == ',' )
 		str.pop_back();
 }
 
 
-bool XmlElement::WriteTextElement( const char* name, const fc::string& text )
+bool XmlElement::WriteTextElement( const char* name, const String& text )
 {
 	return WriteTextElement(name, text.c_str());
 }
@@ -536,33 +551,33 @@ bool XmlElement::WriteTextElement( const char* name, const char* text )
 }
 
 
-bool XmlElement::WriteByteArrayElement( const char* name, const byte* ptr, size_t n )
+bool XmlElement::WriteByteArrayElement( const char* name, const u8* ptr, u32 n )
 {
-	return WriteArrayElement(name, ptr, sizeof(byte), n, true);
+	return WriteArrayElement(name, ptr, sizeof(u8), n, true);
 }
 
 
-bool XmlElement::WriteShortArrayElement( const char* name, const short* ptr, size_t n )
+bool XmlElement::WriteShortArrayElement( const char* name, const s16* ptr, u32 n )
 {
-	return WriteArrayElement(name, ptr, sizeof(short), n, true);
+	return WriteArrayElement(name, ptr, sizeof(s16), n, true);
 }
 
 
-bool XmlElement::WriteIntArrayElement( const char* name, const int* ptr, size_t n )
+bool XmlElement::WriteIntArrayElement( const char* name, const int* ptr, u32 n )
 {
 	return WriteArrayElement(name, ptr, sizeof(int), n, true);
 }
 
 
-bool XmlElement::WriteFloatArrayElement( const char* name, const float* ptr, size_t n )
+bool XmlElement::WriteFloatArrayElement( const char* name, const float* ptr, u32 n )
 {
 	return WriteArrayElement(name, ptr, sizeof(float), n, false);
 }
 
 
-bool XmlElement::WriteArrayElement( const char* name, const void* ptr, size_t strideInBytes, size_t n, bool isIntegral )
+bool XmlElement::WriteArrayElement( const char* name, const void* ptr, u32 strideInBytes, u32 n, bool isIntegral )
 {
-	fc::string formatedString;
+	String formatedString;
 	PrintArray(ptr, formatedString, strideInBytes, n, isIntegral);
 	return WriteTextElement(name, formatedString.c_str());
 }
@@ -579,7 +594,7 @@ const char* XmlElement::GetText() const
 }
 
 
-bool XmlElement::GetAttribute( const char* name, fc::string& value ) const
+bool XmlElement::GetAttribute( const char* name, String& value ) const
 {
 	const char* s = GetAttribute(name);
 	if( s )
@@ -603,9 +618,10 @@ const char* XmlElement::GetAttribute( const char* name ) const
 }
 
 
-fc::string XmlElement::GetString( const char* name ) const
+const char* XmlElement::GetString( const char* name, const char* defaultValue ) const
 {
-	return fc::string(GetAttribute(name));
+	const char* str = GetAttribute(name);
+	return str ? str : defaultValue;
 }
 
 
@@ -615,15 +631,21 @@ bool XmlElement::GetBool( const char* name, bool defaultValue ) const
 }
 
 
-byte XmlElement::GetByte( const char* name, byte defaultValue ) const
+u8 XmlElement::GetByte( const char* name, u8 defaultValue ) const
 {
-	return (byte)GetInt(name, (int)defaultValue);
+	return (u8)GetInt(name, (int)defaultValue);
 }
 
 
-short XmlElement::GetShort( const char* name, short defaultValue ) const
+s16 XmlElement::GetShort( const char* name, s16 defaultValue ) const
 {
-	return (short)GetInt(name, (int)defaultValue);
+	return (s16)GetInt(name, (int)defaultValue);
+}
+
+
+u16 XmlElement::GetUShort( const char* name, u16 defaultValue ) const
+{
+	return (u16)GetInt(name, (int)defaultValue);
 }
 
 
@@ -633,9 +655,9 @@ int XmlElement::GetInt( const char* name, int defaultValue ) const
 }
 
 
-size_t XmlElement::GetUInt( const char* name, size_t defaultValue ) const
+u32 XmlElement::GetUInt( const char* name, u32 defaultValue ) const
 {
-	return (size_t)GetInt(name, (int)defaultValue);
+	return (u32)GetInt(name, (int)defaultValue);
 }
 
 
@@ -706,14 +728,14 @@ bool XmlElement::GetBoolElement( const char* name, bool defaultValue ) const
 }
 
 
-byte XmlElement::GetByteElement( const char* name, byte defaultValue ) const
+u8 XmlElement::GetByteElement( const char* name, u8 defaultValue ) const
 {
 	const char* s = FirstChild(name).GetText();
 	return ToByte(s, defaultValue);
 }
 
 
-short XmlElement::GetShortElement( const char* name, short defaultValue ) const
+s16 XmlElement::GetShortElement( const char* name, s16 defaultValue ) const
 {
 	const char* s = FirstChild(name).GetText();
 	return ToShort(s, defaultValue);
@@ -727,7 +749,7 @@ int XmlElement::GetIntElement( const char* name, int defaultValue ) const
 }
 
 
-size_t XmlElement::GetUIntElement( const char* name, size_t defaultValue ) const
+u32 XmlElement::GetUIntElement( const char* name, u32 defaultValue ) const
 {
 	const char* s = FirstChild(name).GetText();
 	return ToUInt(s, defaultValue);
@@ -797,47 +819,47 @@ Colorf XmlElement::GetColorfElement( const char* name, const Colorf& defaultValu
 }
 
 
-bool XmlElement::ReadByteArray( const char* name, ubyte* ptr, size_t n ) const
+bool XmlElement::ReadByteArray( const char* name, u8* ptr, u32 n ) const
 {
-	return ReadArray(name, ptr, sizeof(ubyte), n, true);
+	return ReadArray(name, ptr, sizeof(u8), n, true);
 }
 
 
-bool XmlElement::ReadShortArray( const char* name, short* ptr, size_t n ) const
+bool XmlElement::ReadShortArray( const char* name, s16* ptr, u32 n ) const
 {
-	return ReadArray(name, ptr, sizeof(short), n, true);
+	return ReadArray(name, ptr, sizeof(s16), n, true);
 }
 
 
-bool XmlElement::ReadIntArray( const char* name, int* ptr, size_t n ) const
+bool XmlElement::ReadIntArray( const char* name, int* ptr, u32 n ) const
 {
 	return ReadArray(name, ptr, sizeof(int), n, true);
 }
 
 
-bool XmlElement::ReadFloatArray( const char* name, float* ptr, size_t n ) const
+bool XmlElement::ReadFloatArray( const char* name, float* ptr, u32 n ) const
 {
 	return ReadArray(name, ptr, sizeof(float), n, false);
 }
 
 
-bool XmlElement::ReadArray( const char* name, void* ptr, size_t strideInBytes, size_t n, bool isIntegral ) const
+bool XmlElement::ReadArray( const char* name, void* ptr, u32 strideInBytes, u32 n, bool isIntegral ) const
 {
-	fc::string str = GetAttribute(name);
+	String str = GetAttribute(name);
 	return ParseArray(ptr, str, strideInBytes, n, isIntegral);
 }
 
 
-bool XmlElement::ParseArray( void* ptr, const fc::string& str, size_t strideInBytes, size_t n, bool isIntegral )
+bool XmlElement::ParseArray( void* ptr, const String& str, u32 strideInBytes, u32 n, bool isIntegral )
 {
 	if( str.empty() )
 		return false;
 
-	size_t index = 0;
-	fc::string token;
-	fc::string delimiters = ", \n\t()\"";
+	u32 index = 0;
+	String token;
+	String delimiters = ", \n\t()\"";
 
-	for( size_t i(0); i < n; ++i )
+	for( u32 i(0); i < n; ++i )
 	{
 		int byteOffset = i * strideInBytes;
 		if( fc::tokenizer::get_token(str, delimiters, index, token) )
@@ -847,14 +869,14 @@ bool XmlElement::ParseArray( void* ptr, const fc::string& str, size_t strideInBy
 				if( strideInBytes == sizeof(char) )
 					*((char*)ptr + byteOffset) = (char)token.to_int();
 
-				else if( strideInBytes == sizeof(short) )
-					*((short*)((char*)ptr + byteOffset)) = (short)token.to_int();
+				else if( strideInBytes == sizeof(s16) )
+					*((s16*)((char*)ptr + byteOffset)) = (s16)token.to_int();
 	
 				else if( strideInBytes == sizeof(int) )
 					*((int*)((char*)ptr + byteOffset)) = (int)token.to_int();
 
-				else if( strideInBytes == sizeof(int64) )
-					*((int64*)((char*)ptr + byteOffset)) = (int64)token.to_int();
+				else if( strideInBytes == sizeof(s64) )
+					*((s64*)((char*)ptr + byteOffset)) = (s64)token.to_int();
 
 				else
 				{
@@ -881,33 +903,33 @@ bool XmlElement::ParseArray( void* ptr, const fc::string& str, size_t strideInBy
 }
 
 
-bool XmlElement::ReadByteArrayElement( const char* name, byte* ptr, size_t n ) const
+bool XmlElement::ReadByteArrayElement( const char* name, u8* ptr, u32 n ) const
 {
-	return ReadArrayElement(name, ptr, sizeof(byte), n, true);
+	return ReadArrayElement(name, ptr, sizeof(u8), n, true);
 }
 
 
-bool XmlElement::ReadShortArrayElement( const char* name, short* ptr, size_t n ) const
+bool XmlElement::ReadShortArrayElement( const char* name, s16* ptr, u32 n ) const
 {
-	return ReadArrayElement(name, ptr, sizeof(short), n, true);
+	return ReadArrayElement(name, ptr, sizeof(s16), n, true);
 }
 
 
-bool XmlElement::ReadIntArrayElement( const char* name, int* ptr, size_t n ) const
+bool XmlElement::ReadIntArrayElement( const char* name, int* ptr, u32 n ) const
 {
 	return ReadArrayElement(name, ptr, sizeof(int), n, true);
 }
 
 
-bool XmlElement::ReadFloatArrayElement( const char* name, float* ptr, size_t n ) const
+bool XmlElement::ReadFloatArrayElement( const char* name, float* ptr, u32 n ) const
 {
 	return ReadArrayElement(name, ptr, sizeof(float), n, false);
 }
 
 
-bool XmlElement::ReadArrayElement( const char* name, void* ptr, size_t strideInBytes, size_t n, bool isIntegral ) const
+bool XmlElement::ReadArrayElement( const char* name, void* ptr, u32 strideInBytes, u32 n, bool isIntegral ) const
 {
-	fc::string str = GetTextElement(name);
+	String str = GetTextElement(name);
 	return ParseArray(ptr, str, strideInBytes, n, isIntegral);
 }
 

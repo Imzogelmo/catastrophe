@@ -34,13 +34,13 @@
 #endif
 
 
-uchar* TextureLoader::LoadFromFile( const fc::string& filename, Point& size, TextureFormat format )
+u8* TextureLoader::LoadFromFile( const String& filename, Point& size, TextureFormat format )
 {
 	if(format != tfRgba)
 		return 0;
 
 	int width, height, channels;
-	uchar* ptr = stbi_load( filename.c_str(), &width, &height, &channels, STBI_rgb_alpha );
+	u8* ptr = stbi_load( filename.c_str(), &width, &height, &channels, STBI_rgb_alpha );
 	if(!ptr)
 	{
 		Log("Error loading file (%s), %s.", filename.c_str(), stbi_failure_reason() );
@@ -52,13 +52,13 @@ uchar* TextureLoader::LoadFromFile( const fc::string& filename, Point& size, Tex
 }
 
 
-uchar* TextureLoader::LoadFromMemory( const void* data, size_t sizeBytes, Point& size, TextureFormat format )
+u8* TextureLoader::LoadFromMemory( const void* data, u32 sizeBytes, Point& size, TextureFormat format )
 {
 	if(format != tfRgba)
 		return 0;
 
 	int width, height, channels;
-	uchar* ptr = stbi_load_from_memory( (uchar*)data, (int)sizeBytes, &width, &height, &channels, STBI_rgb_alpha );
+	u8* ptr = stbi_load_from_memory( (u8*)data, (int)sizeBytes, &width, &height, &channels, STBI_rgb_alpha );
 	if(!ptr)
 	{
 		//Log( "Failed to load image from memory: " + GetErrorMsg() );
@@ -70,7 +70,7 @@ uchar* TextureLoader::LoadFromMemory( const void* data, size_t sizeBytes, Point&
 }
 
 
-bool TextureLoader::SaveToFile( const fc::string& filename, const void* data, int w, int h, TextureFormat tFormat, ImageFileFormat fFormat )
+bool TextureLoader::SaveToFile( const String& filename, const void* data, int w, int h, TextureFormat tFormat, ImageFileFormat fFormat )
 {
 	bool ret(false);
 
@@ -91,10 +91,10 @@ bool TextureLoader::SaveToFile( const fc::string& filename, const void* data, in
 }
 
 
-bool TextureLoader::SaveToFile( const fc::string& filename, const Texture& texture, ImageFileFormat fFormat )
+bool TextureLoader::SaveToFile( const String& filename, const Texture& texture, ImageFileFormat fFormat )
 {
 	bool ret = false;
-	ubyte* p = new ubyte[ texture.Width() * texture.Height() * 4 ];
+	u8* p = new u8[ texture.Width() * texture.Height() * 4 ];
 	if( texture.GetPixels(p) )
 	{
 		ret = SaveToFile(filename, p, texture.Width(), texture.Height(), tfRgba, fFormat);
@@ -105,7 +105,7 @@ bool TextureLoader::SaveToFile( const fc::string& filename, const Texture& textu
 }
 
 
-bool TextureLoader::SaveToFile( const fc::string& filename, const Image& image, ImageFileFormat fFormat )
+bool TextureLoader::SaveToFile( const String& filename, const Image& image, ImageFileFormat fFormat )
 {
 	if( image.GetPixelArray().empty() )
 		return false;
@@ -115,13 +115,13 @@ bool TextureLoader::SaveToFile( const fc::string& filename, const Image& image, 
 
 
 
-void TextureLoader::FreePtr( ubyte* ptr )
+void TextureLoader::FreePtr( u8* ptr )
 {
 	stbi_image_free(ptr);
 }
 
 
-fc::string TextureLoader::GetErrorMsg()
+String TextureLoader::GetErrorMsg()
 {
 	return stbi_failure_reason();
 }

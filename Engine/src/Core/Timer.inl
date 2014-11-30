@@ -21,14 +21,14 @@
 #include "timer_lib/timer.c"
 
 
-bool Timer::m_timer_init = false;
+bool Timer::m_timerInit = false;
 
 
 Timer::Timer()
 {
-	if( !m_timer_init )
+	if( !m_timerInit )
 	{
-		m_timer_init = true;
+		m_timerInit = true;
 		timer_lib_initialize();
 	}
 
@@ -41,13 +41,13 @@ Timer::~Timer()
 }
 
 
-uint64 Timer::Frequency()
+u64 Timer::Frequency()
 {
 	return m_time.freq;
 }
 
 
-uint64 Timer::TicksPerSecond()
+u64 Timer::TicksPerSecond()
 {
 	return m_time.freq;
 }
@@ -59,49 +59,49 @@ void Timer::Reset()
 }
 
 
-uint64 Timer::ElapsedTicks()
+u64 Timer::ElapsedTicks()
 {
 	return timer_elapsed_ticks( (timer*)&m_time, 0 );
 }
 
 
-uint64 Timer::ElapsedMinutes()
+u64 Timer::ElapsedMinutes()
 {
 	return (ElapsedTicks() / TicksPerSecond()) / 60;
 }
 
 
-uint64 Timer::ElapsedSeconds()
+u64 Timer::ElapsedSeconds()
 {
 	return ElapsedTicks() / TicksPerSecond();
 }
 
 
-uint64 Timer::ElapsedMilliseconds()
+u64 Timer::ElapsedMilliseconds()
 {
-	return ((uint64)1000 * ElapsedTicks()) / TicksPerSecond();
+	return ((u64)1000 * ElapsedTicks()) / TicksPerSecond();
 }
 
 
-uint64 Timer::ElapsedMicroseconds()
+u64 Timer::ElapsedMicroseconds()
 {
-	return ((uint64)1000000 * ElapsedTicks()) / TicksPerSecond();
+	return ((u64)1000000 * ElapsedTicks()) / TicksPerSecond();
 }
 
 
-double Timer::MilliSeconds()
+f64 Timer::MilliSeconds()
 {
 	return Seconds() * 1000.0;
 }
 
 
-double Timer::Seconds()
+f64 Timer::Seconds()
 {
 	return timer_elapsed( (timer*)&m_time, 0 );
 }
 
 
-double Timer::Minutes()
+f64 Timer::Minutes()
 {
 	return Seconds() / 60.0;
 }

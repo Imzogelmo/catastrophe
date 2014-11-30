@@ -32,7 +32,8 @@ SpriteAnimation::SpriteAnimation() :
 	m_frameSpeed(16.f),
 	m_frameOffsetX(0),
 	m_frameOffsetY(0),
-	m_flags(0)
+	m_flags(0),
+	m_animationType(0)
 {
 }
 
@@ -53,10 +54,23 @@ SpriteAnimation::SpriteAnimation( Texture* texturePtr, const Rect& sourceRect, i
 }
 
 
+/*
+SpriteAnimation::~SpriteAnimation()
+{
+	if(m_texture)
+		m_texture->ReleaseRef();
+}
+*/
+
 void SpriteAnimation::SetTexture( Texture* texturePtr )
 {
 	if( texturePtr && m_texture != texturePtr )
 	{
+		texturePtr->AddRef();
+
+		if(m_texture)
+			m_texture->ReleaseRef();
+
 		m_texture = texturePtr;
 
 		// recompute out uv coords.
@@ -70,10 +84,9 @@ void SpriteAnimation::SetTexture( Texture* texturePtr )
 void SpriteAnimation::SetNumFrames( int numFrames )
 {
 	m_numFrames = fc::max(numFrames, 1);
+
 	if( m_currentFrame >= m_numFrames )
-	{
 		m_currentFrame = 0;
-	}
 }
 
 
@@ -145,7 +158,7 @@ void SpriteAnimation::SetSourceRect( const Rect& sourceRectangle )
 }
 
 
-void SpriteAnimation::SetCurrentFrame( size_t index )
+void SpriteAnimation::SetCurrentFrame( u32 index )
 {
 	if( index < m_numFrames )
 	{
@@ -162,7 +175,7 @@ void SpriteAnimation::SetCurrentFrame( size_t index )
 			{
 				x %= m_texture->Width();
 				int y = m_sourceRect.pos.y + (m_frameOffsetY * yOffset);
-				float texHeightf = (float)m_texture->Height();
+				float texHeightf = m_texture->Heightf();
 
 				m_uv.min.y = y / texHeightf;
 				m_uv.max.y = (y + m_frameOffsetY) / texHeightf;
@@ -171,7 +184,7 @@ void SpriteAnimation::SetCurrentFrame( size_t index )
 					fc::swap(m_uv.min.y, m_uv.max.y);
 			}
 
-			float texWidthf = (float)m_texture->Width();
+			float texWidthf = m_texture->Widthf();
 			m_uv.min.x = x / texWidthf;
 			m_uv.max.x = (x + m_frameOffsetX) / texWidthf;
 
@@ -186,16 +199,53 @@ void SpriteAnimation::Update()
 {
 	if( m_numFrames > 1 && !IsPaused() )
 	{
-		m_frameCounter += 16;
+		m_frameCounter += 16.f;
 		if( m_frameCounter >= m_frameSpeed )
 		{
 			m_frameCounter -= m_frameSpeed;
-			if( ++m_currentFrame >= m_numFrames )
+
+			// Loop animation
+			if( m_animationType == AnimationType_Loop )
+				m_currentFrame = (m_currentFrame + 1) % m_numFrames;
+
+			// One time animation
+			else if( m_animationType == AnimationType_OneTime )
 			{
-				m_currentFrame -= m_numFrames;
+				if( m_currentFrame == m_numFrames - 1 )
+					return;
+
+				++m_currentFrame;
 			}
 
-			// update our texture coords
+			// Ping-pong animation
+			else // AnimationType_PingPong
+			{
+				// Backwards
+				if( (m_flags & 0x80) != 0 )
+				{
+					if( m_currentFrame == 0 )
+					{
+						++m_currentFrame;
+						m_flags ^= 0x80;
+					}
+					else
+						--m_currentFrame;
+				}
+
+				// Forwards
+				else
+				{
+					if( m_currentFrame == m_numFrames - 1 )
+					{
+						--m_currentFrame;
+						m_flags |= 0x80;
+					}
+					else
+						++m_currentFrame;
+
+				}
+			}
+
 			SetCurrentFrame(m_currentFrame);
 		}
 	}
@@ -209,27 +259,33 @@ void SpriteAnimation::SetPaused( bool pause )
 }
 
 
-void SpriteAnimation::SetLooping( bool loop )
+void SpriteAnimation::SetAnimationType( AnimationType animationType )
 {
-	// loop when no bit is set.
-	if( loop ) m_flags &= ~8;
-	else m_flags |= 8;
+	m_animationType = (u8)animationType;
 }
 
 
-bool SpriteAnimation::IsFinished() const
+bool SpriteAnimation::IsAnimationFinished() const
 {
-	//todo:
-	return m_currentFrame == (m_numFrames - 1) && m_frameCounter > m_frameSpeed;
+	return (m_animationType == AnimationType_OneTime &&
+		m_currentFrame == (m_numFrames - 1) &&
+		m_frameCounter >= m_frameSpeed);
 }
 
 
-gluint SpriteAnimation::GetTextureID() const
+u32 SpriteAnimation::GetTextureID() const
 {
 	return m_texture ? m_texture->GetTextureID() : 0;
 }
 
 
+float SpriteAnimation::GetAnimationLength() const
+{
+	if( m_animationType != (u8)AnimationType_PingPong )
+		return (m_frameSpeed * (f32)m_numFrames);
+
+	return (m_frameSpeed * (f32)((m_numFrames * 2) - 1);
+}
 
 
 

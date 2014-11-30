@@ -45,7 +45,7 @@ Texture::Texture() :
 }
 
 
-Texture::Texture( const fc::string& filename ) :
+Texture::Texture( const String& filename ) :
 	m_texture		(0),
 	m_width			(0),
 	m_height		(0),
@@ -97,12 +97,20 @@ void Texture::Bind() const
 }
 
 
-bool Texture::LoadFromFile( const fc::string& filename )
+bool Texture::LoadFromFile( const String& filename )
+{
+	return LoadFromFile("", filename);
+}
+
+
+bool Texture::LoadFromFile( const String& path, const String& filename )
 {
 	Point size;
-	uchar* ptr = TextureLoader::LoadFromFile(filename, size);
+	u8* ptr = TextureLoader::LoadFromFile(path + filename, size);
 	if(!ptr)
 		return false;
+
+	SetResourceName(filename);
 
 	bool ret = CreateFromData(ptr, size.x, size.y);
 	TextureLoader::FreePtr(ptr);
@@ -110,7 +118,8 @@ bool Texture::LoadFromFile( const fc::string& filename )
 }
 
 
-bool Texture::SaveToFile( const fc::string& filename )
+
+bool Texture::SaveToFile( const String& filename )
 {
 	return TextureLoader::SaveToFile(filename, *this);
 }
@@ -191,14 +200,14 @@ void Texture::SetFilterMode( int filterMode )
 }
 
 
-void Texture::UpdateTexture( const Rect& r, ubyte* pixels )
+void Texture::UpdateTexture( const Rect& r, u8* pixels )
 {
 	Bind();
 	glTexSubImage2D( GL_TEXTURE_2D, 0, r.pos.x, r.pos.y, r.Width(), r.Height(), GL_RGBA, GL_UNSIGNED_BYTE, pixels );
 }
 
 
-bool Texture::GetPixels( ubyte* ptr ) const
+bool Texture::GetPixels( u8* ptr ) const
 {
 	if( !IsValid() )
 		return false;

@@ -167,12 +167,12 @@ bool SFMLWindow::HasFocus() const
 bool SFMLWindow::Open(int w, int h, bool fullscreen, bool resizable,
 	int depth_buffer_bits, int stencil_bits, int multisample_level)
 {
-	size_t screenWidth		= (size_t)w;
-	size_t screenHeight		= (size_t)h;
-	size_t depthBits		= (size_t)depth_buffer_bits;
-	size_t stencilBits		= (size_t)stencil_bits;
-	size_t antialiasLevel	= (size_t)multisample_level;
-	size_t windowStyle		= fullscreen ? sf::Style::Fullscreen : sf::Style::Default;
+	u32 screenWidth		= (u32)w;
+	u32 screenHeight		= (u32)h;
+	u32 depthBits		= (u32)depth_buffer_bits;
+	u32 stencilBits		= (u32)stencil_bits;
+	u32 antialiasLevel	= (u32)multisample_level;
+	u32 windowStyle		= fullscreen ? sf::Style::Fullscreen : sf::Style::Default;
 
 	if( !m_window )
 	{

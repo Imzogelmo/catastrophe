@@ -54,12 +54,12 @@ void ParticleGroup::Dispose()
 		m_emitter = 0;
 	}
 
-	for( size_t i(0); i < m_modifiers.size(); ++i )
+	for( u32 i(0); i < m_modifiers.size(); ++i )
 	{
 		m_modifiers[i]->ReleaseRef();
 	}
 
-	for( size_t i(0); i < m_destructors.size(); ++i )
+	for( u32 i(0); i < m_destructors.size(); ++i )
 	{
 		m_destructors[i]->ReleaseRef();
 	}
@@ -69,26 +69,26 @@ void ParticleGroup::Dispose()
 }
 
 
-void ParticleGroup::SetParticleCapacity( size_t cap )
+void ParticleGroup::SetParticleCapacity( u32 cap )
 {
 	m_capacity = cap;
 	m_particles.set_capacity(cap);
 }
 
 
-void ParticleGroup::SetMinEmissionCount( size_t minEmission )
+void ParticleGroup::SetMinEmissionCount( u32 minEmission )
 {
 	m_minTriggerAmount = minEmission;
 }
 
 
-void ParticleGroup::SetMaxEmissionCount( size_t maxEmission )
+void ParticleGroup::SetMaxEmissionCount( u32 maxEmission )
 {
 	m_maxTriggerAmount = maxEmission;
 }
 
 
-void ParticleGroup::SetEmissionCount( size_t minEmission, size_t maxEmission )
+void ParticleGroup::SetEmissionCount( u32 minEmission, u32 maxEmission )
 {
 	if( maxEmission < minEmission )
 		fc::swap( minEmission, maxEmission );
@@ -98,7 +98,7 @@ void ParticleGroup::SetEmissionCount( size_t minEmission, size_t maxEmission )
 }
 
 
-size_t ParticleGroup::GetParticleCount() const
+u32 ParticleGroup::GetParticleCount() const
 {
 	return m_particles.size();
 }
@@ -167,11 +167,11 @@ void ParticleGroup::SetParticleEmitter( ParticleEmitter* emitter )
 
 void ParticleGroup::Emit( const Vector2& pos )
 {
-	Emit(pos, (size_t)fc::rand(m_minTriggerAmount, m_maxTriggerAmount));
+	Emit(pos, (u32)fc::rand(m_minTriggerAmount, m_maxTriggerAmount));
 }
 
 
-void ParticleGroup::Emit( const Vector2& pos, size_t emitCount )
+void ParticleGroup::Emit( const Vector2& pos, u32 emitCount )
 {
 	CE_ASSERT(m_emitter != 0);
 
@@ -190,8 +190,8 @@ void ParticleGroup::Update()
 	if( !IsEnabled() )
 		return;
 
-	size_t particleCount = m_particles.size();
-	for( size_t i(0); i < particleCount; ++i )
+	u32 particleCount = m_particles.size();
+	for( u32 i(0); i < particleCount; ++i )
 	{
 		Particle& p = m_particles[i];
 
@@ -212,9 +212,9 @@ void ParticleGroup::Update()
 	RemoveDeadParticles();
 
 	particleCount = m_particles.size();
-	size_t modifierCount = m_modifiers.size();
+	u32 modifierCount = m_modifiers.size();
 
-	for( size_t n (0); n < modifierCount; ++n )
+	for( u32 n (0); n < modifierCount; ++n )
 	{
 		m_modifiers[n]->Update( m_particles.begin(), particleCount );
 	}	
@@ -232,14 +232,14 @@ void ParticleGroup::RemoveDeadParticles()
 {
 	particle_vec_type::cell_type & deadParticlePool = m_particles.get_cells();
 
-	size_t particleCount = m_particles.size();
-	size_t deadCount = deadParticlePool.size();
+	u32 particleCount = m_particles.size();
+	u32 deadCount = deadParticlePool.size();
 
 	if( !m_destructors.empty() && deadCount > 0 )
 	{
-		for( size_t i(0); i < deadCount; ++i )
+		for( u32 i(0); i < deadCount; ++i )
 		{
-			for( size_t j(0); j < m_destructors.size(); ++j )
+			for( u32 j(0); j < m_destructors.size(); ++j )
 			{
 				m_destructors[j]->OnDestroy( &m_particles[ deadParticlePool[i] ] );
 			}
@@ -254,7 +254,7 @@ void ParticleGroup::RemoveDeadParticles()
 	else
 	{
 		// even faster method - simply fill gaps using particles from the back.
-		for( size_t i(0); i < deadCount; ++i )
+		for( u32 i(0); i < deadCount; ++i )
 		{
 			m_particles[ deadParticlePool[i] ] = m_particles[--particleCount];
 		}
@@ -302,7 +302,7 @@ void ParticleGroup::Serialize( AttributeWriter* out )
 	out->EndNode();
 
 	out->BeginNode("ParticleModifiers");
-	for( size_t i(0); i < m_modifiers.size(); ++i )
+	for( u32 i(0); i < m_modifiers.size(); ++i )
 	{
 		//out->BeginNode(m_modifiers[i]->GetTypeName());
 		m_modifiers[i]->Serialize(out);
@@ -311,7 +311,7 @@ void ParticleGroup::Serialize( AttributeWriter* out )
 	out->EndNode();
 
 	out->BeginNode("ParticleDestructors");
-	for( size_t i(0); i < m_destructors.size(); ++i )
+	for( u32 i(0); i < m_destructors.size(); ++i )
 	{
 		m_destructors[i]->Serialize(out);
 	}

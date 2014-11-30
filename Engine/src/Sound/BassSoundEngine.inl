@@ -55,7 +55,7 @@ Sound* BassSoundEngine::LoadFromFile( Sound::Type type, const fc::string& filena
 }
 
 
-Sound* BassSoundEngine::LoadFromData( Sound::Type type, void* data, size_t n_bytes )
+Sound* BassSoundEngine::LoadFromData( Sound::Type type, void* data, u32 n_bytes )
 {
 	return false;
 }

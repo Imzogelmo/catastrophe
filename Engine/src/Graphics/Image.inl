@@ -38,7 +38,7 @@ Image::Image() :
 }
 
 
-Image::Image( const fc::string& filename ) :
+Image::Image( const String& filename ) :
 	Texture(), m_pixels()
 {
 	LoadFromFile(filename);
@@ -74,17 +74,17 @@ bool Image::CreateFromData( const void* data, int w, int h )
 	bool success = Texture::CreateFromData(data, w, h);
 	if( success )
 	{
-		InternalPackPixels(w, h, (ubyte*)data);
+		InternalPackPixels(w, h, (u8*)data);
 	}
 
 	return success;
 }
 
 
-bool Image::LoadFromFile( const fc::string& filename )
+bool Image::LoadFromFile( const String& filename )
 {
 	Point size;
-	uchar* ptr = TextureLoader::LoadFromFile(filename, size);
+	u8* ptr = TextureLoader::LoadFromFile(filename, size);
 	if(!ptr)
 		return false;
 
@@ -94,7 +94,7 @@ bool Image::LoadFromFile( const fc::string& filename )
 }
 
 
-bool Image::SaveToFile( const fc::string& filename )
+bool Image::SaveToFile( const String& filename )
 {
 	return TextureLoader::SaveToFile(filename, *this);
 }
@@ -106,13 +106,13 @@ void Image::CopyPixelArray( array_type& outPixelData )
 }
 
 
-Color Image::GetPixel( size_t x, size_t y ) const
+Color Image::GetPixel( u32 x, u32 y ) const
 {
 	return m_pixels.at( y, x );
 }
 
 
-void Image::SetPixel( size_t x, size_t y, const Color& pixel )
+void Image::SetPixel( u32 x, u32 y, const Color& pixel )
 {
 	m_pixels.at( y, x ) = pixel;
 }
@@ -131,13 +131,13 @@ void Image::MaskColor( const Color& mask )
 
 void Image::MaskColorRegion( const Rect& r, const Color& mask )
 {
-	const size_t x1		= (size_t)r.Left();
-	const size_t x2		= (size_t)r.Right();
-	const size_t y		= (size_t)r.Top();
-	const size_t height	= (size_t)r.Height();
+	const u32 x1		= (u32)r.Left();
+	const u32 x2		= (u32)r.Right();
+	const u32 y		= (u32)r.Top();
+	const u32 height	= (u32)r.Height();
 	const Color colorMask( mask.r, mask.g, mask.b, 0 );
 
-	for( size_t i(0); i < height; ++i )
+	for( u32 i(0); i < height; ++i )
 	{
 		array_type::iterator first = m_pixels.iterator_at(y + i, x1);
 		array_type::iterator last = m_pixels.iterator_at(y + i, x2);
@@ -171,13 +171,13 @@ void Image::AdjustAlpha( int alpha )
 }
 
 
-void Image::AdjustColor( size_t colorIndex, int shift )
+void Image::AdjustColor( u32 colorIndex, int shift )
 {
 	AdjustColorRegion( colorIndex, shift, Rect(0, 0, Width(), Height()) );
 }
 
 
-void Image::AdjustColorRegion( size_t colorIndex, int shift, const Rect& r )
+void Image::AdjustColorRegion( u32 colorIndex, int shift, const Rect& r )
 {
 	const int x1	= r.Left();
 	const int y1	= r.Top();
@@ -188,18 +188,18 @@ void Image::AdjustColorRegion( size_t colorIndex, int shift, const Rect& r )
 		for( int j(x1); j < x2; ++j )
 		{
 			Color& p = m_pixels( i, j );
-			p[ colorIndex ] = (ubyte)Math::Clamp<int>( p[ colorIndex ] + shift, 0, 255 );
+			p[ colorIndex ] = (u8)Math::Clamp<int>( p[ colorIndex ] + shift, 0, 255 );
 		}
 }
 
 
-void Image::SwapColor( size_t firstColorIndex, size_t secondColorIndex )
+void Image::SwapColor( u32 firstColorIndex, u32 secondColorIndex )
 {
 	SwapColorRegion( firstColorIndex, secondColorIndex, Rect(0, 0, Width(), Height()) );
 }
 
 
-void Image::SwapColorRegion( size_t firstColorIndex, size_t secondColorIndex, const Rect& r )
+void Image::SwapColorRegion( u32 firstColorIndex, u32 secondColorIndex, const Rect& r )
 {
 	const int x1 = r.Left();
 	const int y1 = r.Top();
@@ -232,11 +232,11 @@ void Image::UpdateRegion( const Rect& r )
 	//check if we only need to update a portion of the texture
 	if( r != thisRect )
 	{
-		m_pixels.copy_region( (uint)r.pos.x, (uint)r.pos.y, (uint)r.Width(), (uint)r.Height(), temp );
+		m_pixels.copy_region( (u32)r.pos.x, (u32)r.pos.y, (u32)r.Width(), (u32)r.Height(), temp );
 		ptr = temp.data();
 	}
 
-	Texture::UpdateTexture(r, (ubyte*)ptr);
+	Texture::UpdateTexture(r, (u8*)ptr);
 }
 
 
@@ -248,7 +248,7 @@ void Image::SetPixelArray( const array_type& pixelData )
 }
 
 
-void Image::InternalPackPixels( int width, int height, const ubyte *const data )
+void Image::InternalPackPixels( int width, int height, const u8 *const data )
 {
 	m_pixels.resize( height, width );
 

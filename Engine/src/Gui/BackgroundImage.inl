@@ -77,6 +77,16 @@ void BackgroundImage::Render( SpriteBatch* spritebatch )
 	colors[2] = m_cornerColors[2];
 	colors[3] = m_cornerColors[3];
 
+	// if the sprite is tinted we scale the corner colors appropriately.
+	if( m_sprite.color.packed_value != 0xffffffff )
+	{
+		u8 alpha = m_sprite.color.a;
+		colors[0].CombineAlpha(alpha);
+		colors[1].CombineAlpha(alpha);
+		colors[2].CombineAlpha(alpha);
+		colors[3].CombineAlpha(alpha);
+	}
+
 	spritebatch->DrawRotatedScaled(
 		m_sprite.GetTextureID(),
 		m_sprite.angle,

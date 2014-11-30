@@ -52,7 +52,7 @@ KeyboardController::KeyboardController()
 
 bool KeyboardController::IsDown( int key ) const
 {
-	if( (size_t)key < MaxButtons )
+	if( (u32)key < MaxButtons )
 		return m_keyboard->IsKeyDown( m_button_map[key] );
 
 	return false;
@@ -67,7 +67,7 @@ bool KeyboardController::IsPressed( int key ) const
 
 bool KeyboardController::IsReleased( int key ) const
 {
-	if( (size_t)key < MaxButtons )
+	if( (u32)key < MaxButtons )
 		return m_keyboard->IsKeyReleased( m_button_map[key] );
 
 	return false;
@@ -76,7 +76,7 @@ bool KeyboardController::IsReleased( int key ) const
 
 bool KeyboardController::IsDPadDown( int dir ) const
 {
-	if( (size_t)dir < MaxDirections )
+	if( (u32)dir < MaxDirections )
 		return m_keyboard->IsKeyDown( m_direction_map[dir] );
 
 	return false;
@@ -91,7 +91,7 @@ bool KeyboardController::IsDPadPressed( int dir ) const
 
 bool KeyboardController::IsDPadReleased( int dir ) const
 {
-	if( (size_t)dir < MaxDirections )
+	if( (u32)dir < MaxDirections )
 		return m_keyboard->IsKeyReleased( m_direction_map[dir] );
 
 	return false;
@@ -100,7 +100,7 @@ bool KeyboardController::IsDPadReleased( int dir ) const
 
 int KeyboardController::Button( int key ) const
 {
-	if( (size_t)key < MaxButtons )
+	if( (u32)key < MaxButtons )
 		return m_keyboard->KeyFrames( m_button_map[key] );
 
 	return 0;
@@ -109,7 +109,7 @@ int KeyboardController::Button( int key ) const
 
 int KeyboardController::DPad( int dir ) const
 {
-	if( (size_t)dir < MaxDirections )
+	if( (u32)dir < MaxDirections )
 		return m_keyboard->KeyFrames( m_direction_map[dir] );
 
 	return 0;
@@ -118,7 +118,7 @@ int KeyboardController::DPad( int dir ) const
 
 void KeyboardController::SetButtonMapping( int key, int value )
 {
-	if( (size_t)key < MaxButtons )
+	if( (u32)key < MaxButtons )
 	{
 		if( value < MAX_KEYS )
 			m_button_map[key] =  value;
@@ -128,7 +128,7 @@ void KeyboardController::SetButtonMapping( int key, int value )
 
 void KeyboardController::SetDirMapping( int dir, int value )
 {
-	if( (size_t)dir < MaxDirections )
+	if( (u32)dir < MaxDirections )
 	{
 		if( value < MAX_KEYS )
 			m_direction_map[dir] =  value;
@@ -138,7 +138,7 @@ void KeyboardController::SetDirMapping( int dir, int value )
 
 bool KeyboardController::InternalIsPressed( int mapped_key ) const
 {
-	if( (size_t)mapped_key < MaxButtons )
+	if( (u32)mapped_key < MaxButtons )
 	{
 		if( m_use_key_repeat )
 		{

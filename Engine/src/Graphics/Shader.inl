@@ -118,7 +118,7 @@ void Shader::Unbind()
 
 int Shader::GetUniformLocation(const char* name)
 {
-	size_t stringHash = fc::fnv_hash(name);
+	u32 stringHash = fc::fnv_hash(name);
 	map_type::iterator it = m_uniformLocations.find(stringHash);
 	if( it != m_uniformLocations.end() )
 	{
@@ -338,7 +338,7 @@ bool Shader::Link()
 }
 
 
-const fc::string& Shader::GetInfoLog()
+const String& Shader::GetInfoLog()
 {
 	int infolog_length(0);
 	int length(0);

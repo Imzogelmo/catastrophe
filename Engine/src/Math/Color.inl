@@ -55,15 +55,26 @@ Color& Color::operator = ( const HSLColor &c )
 }
 
 
-Color Color::Lerp( const Color& c1, const Color& c2, float t)
+Color Color::operator *( const Color &c ) const
+{
+	return Color(
+		(u8)(((int)r * c.r) / 255),
+		(u8)(((int)g * c.g) / 255),
+		(u8)(((int)b * c.b) / 255),
+		(u8)(((int)a * c.a) / 255) );
+	//return Color( (r + c.r) / 2, (g + c.g) / 2, (b + c.b) / 2, (a + c.a) / 2 );
+}
+
+
+Color Color::Lerp( const Color& c1, const Color& c2, float t )
 {
 	int x = int(t * 256.f);
 	return Color
 	(
-		ubyte((c1.r * (255 - x) + c2.r * x) / 255),
-		ubyte((c1.g * (255 - x) + c2.g * x) / 255),
-		ubyte((c1.b * (255 - x) + c2.b * x) / 255),
-		ubyte((c1.a * (255 - x) + c2.a * x) / 255)
+		u8((c1.r * (255 - x) + c2.r * x) / 255),
+		u8((c1.g * (255 - x) + c2.g * x) / 255),
+		u8((c1.b * (255 - x) + c2.b * x) / 255),
+		u8((c1.a * (255 - x) + c2.a * x) / 255)
 	);
 }
 

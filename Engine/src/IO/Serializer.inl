@@ -22,45 +22,6 @@
 CE_NAMESPACE_BEGIN
 
 
-/*
-#ifdef BIG_ENDIAN
-template <class T, size_t N> inline
-void __Internal_ByteSwap(T& value)
-{
-}
-
-template <class T> inline
-void __Internal_ByteSwap<T, 1>(T& value)
-{
-}
-
-template <class T> inline
-void __Internal_ByteSwap<T, 2>(T& value)
-{
-	value = (((value >> 8) & 0xff) | ((value & 0xff) << 8));
-}
-
-template <class T> inline
-void __Internal_ByteSwap<T, 4>(T& value)
-{
-	value = ((val & 0xff000000) >> 24) | (val & 0x00ff0000) >>  8) |
-			(val & 0x0000ff00) <<  8) | (val & 0x000000ff) << 24));
-}
-
-template <> inline void __Internal_ByteSwap<float, 4>(T& value)
-{
-	__Internal_ByteSwap<int, 4>(*reinterpret_cast<int*>(&value));
-}
-
-template <class T> inline
-void __Internal_ByteSwap_Dispatch(T& value)
-{
-	__Internal_ByteSwap<T, sizeof(T)>(value);
-}
-
-#define BYTE_SWAP(x) __Internal_ByteSwap(x)
-*/
-
 
 bool Serializer::WriteInt(int value)
 {
@@ -68,31 +29,31 @@ bool Serializer::WriteInt(int value)
 }
 
 
-bool Serializer::WriteShort(short value)
+bool Serializer::WriteShort(s16 value)
 {
 	return Write(&value, sizeof(value)) == sizeof(value);
 }
 
 
-bool Serializer::WriteByte(signed char value)
+bool Serializer::WriteByte(s8 value)
 {
 	return Write(&value, sizeof(value)) == sizeof(value);
 }
 
 
-bool Serializer::WriteUInt(unsigned int value)
+bool Serializer::WriteUInt(u32 value)
 {
 	return Write(&value, sizeof(value)) == sizeof(value);
 }
 
 
-bool Serializer::WriteUShort(unsigned short value)
+bool Serializer::WriteUShort(u16 value)
 {
 	return Write(&value, sizeof(value)) == sizeof(value);
 }
 
 
-bool Serializer::WriteUByte(unsigned char value)
+bool Serializer::WriteUByte(u8 value)
 {
 	return Write(&value, sizeof(value)) == sizeof(value);
 }
@@ -164,30 +125,30 @@ bool Serializer::WriteMatrix(const Matrix& value)
 }
 
 
-bool Serializer::WriteShortArray(const short* ptr, size_t n)
+bool Serializer::WriteShortArray(const s16* ptr, u32 n)
 {
-	const size_t n_bytes = sizeof(short) * n;
+	const u32 n_bytes = sizeof(s16) * n;
 	return Write(ptr, n_bytes) == n_bytes;
 }
 
 
-bool Serializer::WriteIntArray(const int* ptr, size_t n)
+bool Serializer::WriteIntArray(const int* ptr, u32 n)
 {
-	const size_t n_bytes = sizeof(int) * n;
+	const u32 n_bytes = sizeof(int) * n;
 	return Write(ptr, n_bytes) == n_bytes;
 }
 
 
-bool Serializer::WriteFloatArray(const float* ptr, size_t n)
+bool Serializer::WriteFloatArray(const float* ptr, u32 n)
 {
-	const size_t n_bytes = sizeof(float) * n;
+	const u32 n_bytes = sizeof(float) * n;
 	return Write(ptr, n_bytes) == n_bytes;
 }
 
 
-bool Serializer::WriteString(const fc::string& value)
+bool Serializer::WriteString(const String& value)
 {
-	size_t length = value.length();
+	u32 length = value.length();
 	if( Write(&length, sizeof length) != sizeof length )
 		return false;
 
@@ -197,7 +158,7 @@ bool Serializer::WriteString(const fc::string& value)
 
 bool Serializer::WriteString(const char* value)
 {
-	size_t length = strlen(value);
+	u32 length = strlen(value);
 	if( Write(&length, sizeof length) != sizeof length )
 		return false;
 
@@ -205,10 +166,10 @@ bool Serializer::WriteString(const char* value)
 }
 
 
-bool Serializer::WriteLine(const fc::string& value, bool newline)
+bool Serializer::WriteLine(const String& value, bool newline)
 {
 	bool success = true;
-	success = Write(value.c_str(), value.length()) == value.length();
+	success = WriteUInt(value.length()) && Write(value.c_str(), value.length()) == value.length();
 	if(newline && success)
 	{
 		success = WriteUByte(13) && WriteUByte(10);
@@ -220,11 +181,11 @@ bool Serializer::WriteLine(const fc::string& value, bool newline)
 /*
 // operator << overloads
 Serializer& Serializer::operator <<(int value) { bool success = WriteInt(value); CE_ASSERT(success); return *this; }
-Serializer& Serializer::operator <<(short value) { bool success = WriteShort(value); CE_ASSERT(success); return *this; }
+Serializer& Serializer::operator <<(s16 value) { bool success = WriteShort(value); CE_ASSERT(success); return *this; }
 Serializer& Serializer::operator <<(char value) { bool success = WriteByte(value); CE_ASSERT(success); return *this; }
-Serializer& Serializer::operator <<(unsigned int value) { bool success = WriteUInt(value); CE_ASSERT(success); return *this; }
-Serializer& Serializer::operator <<(unsigned short value) { bool success = WriteUShort(value); CE_ASSERT(success); return *this; }
-Serializer& Serializer::operator <<(unsigned char value) { bool success = WriteUByte(value); CE_ASSERT(success); return *this; }
+Serializer& Serializer::operator <<(u32 value) { bool success = WriteUInt(value); CE_ASSERT(success); return *this; }
+Serializer& Serializer::operator <<(u16 value) { bool success = WriteUShort(value); CE_ASSERT(success); return *this; }
+Serializer& Serializer::operator <<(u8 value) { bool success = WriteUByte(value); CE_ASSERT(success); return *this; }
 Serializer& Serializer::operator <<(bool value) { bool success = WriteBool(value); CE_ASSERT(success); return *this; }
 Serializer& Serializer::operator <<(float value) { bool success = WriteFloat(value); CE_ASSERT(success); return *this; }
 
@@ -238,7 +199,7 @@ Serializer& Serializer::operator <<(const Color& value) { bool success = WriteCo
 Serializer& Serializer::operator <<(const Colorf& value) { bool success = WriteColorf(value); CE_ASSERT(success); return *this; }
 Serializer& Serializer::operator <<(const Matrix& value) { bool success = WriteMatrix(value); CE_ASSERT(success); return *this; }
 
-Serializer& Serializer::operator <<(const fc::string& value) { bool success = WriteString(value); CE_ASSERT(success); return *this; }
+Serializer& Serializer::operator <<(const String& value) { bool success = WriteString(value); CE_ASSERT(success); return *this; }
 Serializer& Serializer::operator <<(const char* value) { bool success = WriteString(value); CE_ASSERT(success); return *this; }
 */
 

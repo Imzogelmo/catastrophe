@@ -35,13 +35,13 @@ TextBox::TextBox( const fc::string& text, Font* font, TextAlignment alignment, i
 
 void TextBox::SetFastForwardSpeed( int speed )
 {
-	m_fastForwardSpeed = (size_t)speed;
+	m_fastForwardSpeed = (u32)speed;
 }
 
 
 void TextBox::FastForward()
 {
-	m_currentChar += (size_t)m_fastForwardSpeed;
+	m_currentChar += (u32)m_fastForwardSpeed;
 	if( m_currentChar >= m_text.size() )
 	{
 		m_currentChar = m_text.size();
@@ -100,8 +100,8 @@ void TextBox::Render( SpriteBatch* spritebatch )
 		Vector2 pos = GetScreenPosition();
 		pos.x += (float)GetTextAlignmentOffset();
 
-		size_t size = m_textRows.size();
-		for( size_t i(0); i < size; ++i )
+		u32 size = m_textRows.size();
+		for( u32 i(0); i < size; ++i )
 		{
 			if( (int)m_currentChar < m_textRows[i].x )
 				break;

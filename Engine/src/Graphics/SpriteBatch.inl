@@ -28,13 +28,13 @@
 CE_NAMESPACE_BEGIN
 
 
-SpriteBatch::SpriteBatch( size_t reserve ) :
+SpriteBatch::SpriteBatch( u32 reserve ) :
 	m_queue(),
 	m_current_blendmode(BlendMode::Alpha),
 	m_clip_rect(Rect::Zero),
 	m_sortmode(Deferred),
 	m_attached_shader(0),
-	m_max_batch_usage(size_t(-1)),
+	m_max_batch_usage(u32(-1)),
 	m_enable_clipping(true),
 	m_enable_sorting(true),
 	m_enable_shader(true)
@@ -47,7 +47,7 @@ SpriteBatch::~SpriteBatch()
 {}
 
 
-void SpriteBatch::Reserve( size_t reserve )
+void SpriteBatch::Reserve( u32 reserve )
 {
 	m_queue.reserve( reserve );
 }
@@ -71,13 +71,30 @@ void SpriteBatch::End()
 		m_attached_shader->Unbind();
 }
 
-void SpriteBatch::SetMaxHardwareBatchSize( size_t maxHardwareBatch )
+void SpriteBatch::SetMaxHardwareBatchSize( u32 maxHardwareBatch )
 {
 	if(maxHardwareBatch < 512)
 		maxHardwareBatch = 512;
 
 	m_max_batch_usage = maxHardwareBatch;
 }
+
+
+void SpriteBatch::PushClipRect( const Rect& clipRect )
+{
+}
+
+
+void SpriteBatch::PopClipRect()
+{
+}
+
+
+void SpriteBatch::Flush()
+{
+}
+
+
 
 // Sprite rendering
 void SpriteBatch::Draw( gluint texture, const Rectf& vertices, const Rectf& uv, const Color& c, int depth )
@@ -117,44 +134,44 @@ void SpriteBatch::DrawRotatedScaled( gluint texture, float rotation, const Vecto
 
 
 // Quad batch rendering
-void SpriteBatch::Draw( gluint texture, const Vector2* vtx, const Vector2* uv, const Color* c, size_t numQuads, int depth )
+void SpriteBatch::Draw( gluint texture, const Vector2* vtx, const Vector2* uv, const Color* c, u32 numQuads, int depth )
 {
 	InternalQueueSprite( texture, 0.f, 1.f, 0.f, vtx, uv, c, numQuads, depth );
 }
 
-void SpriteBatch::DrawRotated( gluint texture, float rotation, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, size_t numQuads, int depth )
+void SpriteBatch::DrawRotated( gluint texture, float rotation, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, u32 numQuads, int depth )
 {
 	InternalQueueSprite( texture, rotation, 1.f, origin, vtx, uv, c, numQuads, depth );
 }
 
-void SpriteBatch::DrawScaled( gluint texture, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, size_t numQuads, int depth )
+void SpriteBatch::DrawScaled( gluint texture, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, u32 numQuads, int depth )
 {
 	InternalQueueSprite( texture, 0.f, scale, origin, vtx, uv, c, numQuads, depth );
 }
 
-void SpriteBatch::DrawRotatedScaled( gluint texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, size_t numQuads, int depth )
+void SpriteBatch::DrawRotatedScaled( gluint texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, u32 numQuads, int depth )
 {
 	InternalQueueSprite( texture, rotation, scale, origin, vtx, uv, c, numQuads, depth );
 }
 
 
 // Quad indices batch rendering
-void SpriteBatch::Draw( gluint texture, const Vector2* vtx, const Vector2* uv, const Color* c, const ushort *quadsIndices, size_t numQuads, int depth )
+void SpriteBatch::Draw( gluint texture, const Vector2* vtx, const Vector2* uv, const Color* c, const u16 *quadsIndices, u32 numQuads, int depth )
 {
 	InternalQueueSprite( texture, 0.f, 1.f, 0.f, vtx, uv, c, quadsIndices, numQuads, depth );
 }
 
-void SpriteBatch::DrawRotated( gluint texture, float rotation, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, const ushort *quadsIndices, size_t numQuads, int depth )
+void SpriteBatch::DrawRotated( gluint texture, float rotation, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, const u16 *quadsIndices, u32 numQuads, int depth )
 {
 	InternalQueueSprite( texture, rotation, 1.f, origin, vtx, uv, c, quadsIndices, numQuads, depth );
 }
 
-void SpriteBatch::DrawScaled( gluint texture, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, const ushort *quadsIndices, size_t numQuads, int depth )
+void SpriteBatch::DrawScaled( gluint texture, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, const u16 *quadsIndices, u32 numQuads, int depth )
 {
 	InternalQueueSprite( texture, 0.f, scale, origin, vtx, uv, c, quadsIndices, numQuads, depth );
 }
 
-void SpriteBatch::DrawRotatedScaled( gluint texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, const ushort *quadsIndices, size_t numQuads, int depth )
+void SpriteBatch::DrawRotatedScaled( gluint texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, const u16 *quadsIndices, u32 numQuads, int depth )
 {
 	InternalQueueSprite( texture, rotation, scale, origin, vtx, uv, c, quadsIndices, numQuads, depth );
 }
@@ -177,13 +194,19 @@ void SpriteBatch::DrawSprite( const Sprite& sprite, const Vector2& pos )
 
 void SpriteBatch::DrawAnimatedSprite( const AnimatedSprite& sprite, const Vector2& pos )
 {
+	Rectf uv = sprite.GetUVRect();
+	if( sprite.GetFlipX() )
+		uv.FlipX();
+	if( sprite.GetFlipY() )
+		uv.FlipY();
+
 	InternalQueueSprite(
 		sprite.GetTextureID(),
 		sprite.angle,
 		sprite.scale,
 		pos + (sprite.size * 0.5f),
 		Rectf(pos, pos + sprite.size),
-		sprite.GetUVRect(),
+		uv,
 		sprite.color,
 		0
 		);
@@ -237,17 +260,17 @@ void SpriteBatch::DrawSpriteData( const SpriteData& data, float rotation, const 
 
 
 // Text rendering
-void SpriteBatch::DrawString( Font* font, const fc::string& text, const Vector2& pos, const Color& c, TextAlignment alignment, int face_size, int depth )
+void SpriteBatch::DrawString( Font* font, const String& text, const Vector2& pos, const Color& c, TextAlignment alignment, int face_size, int depth )
 {
 	InternalQueueString( font, text.begin(), text.end(),  Vector2::One, pos, c, alignment, face_size, depth );
 }
 
-void SpriteBatch::DrawString( Font* font, const fc::string& text, size_t textPos, size_t amount, const Vector2& pos, const Color& c, TextAlignment alignment, int face_size, int depth )
+void SpriteBatch::DrawString( Font* font, const String& text, u32 textPos, u32 amount, const Vector2& pos, const Color& c, TextAlignment alignment, int face_size, int depth )
 {
 	InternalQueueString( font, text.begin() + textPos, text.begin() + textPos + amount, Vector2::One, pos, c, alignment, face_size, depth );
 }
 
-void SpriteBatch::DrawString( Font* font, const fc::string& text, const Vector2& scale, const Vector2& pos, const Color& c, TextAlignment alignment, int face_size, int depth )
+void SpriteBatch::DrawString( Font* font, const String& text, const Vector2& scale, const Vector2& pos, const Color& c, TextAlignment alignment, int face_size, int depth )
 {
 	InternalQueueString( font, text.begin(), text.end(), scale, pos, c, alignment, face_size, depth );
 }
@@ -275,7 +298,7 @@ void SpriteBatch::InternalQueueString
 	//Vector2 origin = pos;
 	Vector2 s =  (float)face_size / (float)font->GetFaceSize();
 
-	//for( fc::string::const_iterator it = text.begin(); it != text.end(); ++it )
+	//for( String::const_iterator it = text.begin(); it != text.end(); ++it )
 	for( ; first != last; ++first )
 	{
 		const Glyph* glyph = &font->GetGlyph(*first);
@@ -311,7 +334,7 @@ void SpriteBatch::InternalQueueSprite
 	uv.GetCorners( t );
 
 	SpriteData & s = *m_queue.push_back_uninitialized();
-	for( size_t i(0); i < 4; ++i )
+	for( u32 i(0); i < 4; ++i )
 	{
 		s.data[i].pos = v[i];
 		s.data[i].uv = t[i];
@@ -327,15 +350,15 @@ void SpriteBatch::InternalQueueSprite
 
 
 void SpriteBatch::InternalQueueSprite
-( gluint texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, size_t numQuads, int depth )
+( gluint texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, u32 numQuads, int depth )
 {
 	SpriteData * s = m_queue.push_back_uninitialized( numQuads );
 
-	for( size_t i(0); i < numQuads; ++i )
+	for( u32 i(0); i < numQuads; ++i )
 	{
-		for( size_t j(0); j < 4; ++j )
+		for( u32 j(0); j < 4; ++j )
 		{
-			const size_t index = i * 4 + j;
+			const u32 index = i * 4 + j;
 			s[i].data[j].pos = vtx[ index ];
 			s[i].data[j].uv = uv[ index ];
 			s[i].data[j].color = c[ index ];
@@ -349,21 +372,21 @@ void SpriteBatch::InternalQueueSprite
 
 	if( scale != Vector2::One && rotation != 0.f )
 	{
-		for( size_t i(0); i < numQuads; ++i )
+		for( u32 i(0); i < numQuads; ++i )
 			TransformSprite( rotation, scale, origin, s[i] );
 	}
 }
 
 
 void SpriteBatch::InternalQueueSprite
-( gluint texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, const ushort *quadsIndices, size_t numQuads, int depth )
+( gluint texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, const u16 *quadsIndices, u32 numQuads, int depth )
 {
 	SpriteData * s = m_queue.push_back_uninitialized( numQuads );
 
-	size_t element(0);
-	for( size_t i(0); i < numQuads; ++i )
+	u32 element(0);
+	for( u32 i(0); i < numQuads; ++i )
 	{
-		for( size_t j(0); j < 4; ++j )
+		for( u32 j(0); j < 4; ++j )
 		{
 			s[i].data[j].pos = vtx[ quadsIndices[element] ];
 			s[i].data[j].uv = uv[ quadsIndices[element] ];
@@ -379,7 +402,7 @@ void SpriteBatch::InternalQueueSprite
 
 	if( scale != Vector2::One && rotation != 0.f )
 	{
-		for( size_t i(0); i < numQuads; ++i )
+		for( u32 i(0); i < numQuads; ++i )
 			TransformSprite( rotation, scale, origin, s[i] );
 	}
 }
@@ -436,19 +459,19 @@ void SpriteBatch::Render()
 	glTexCoordPointer( 2, GL_FLOAT, sizeof(VertexTextureSpriteData2D), &m_queue[0].data[0].uv );
 	glColorPointer( 4, GL_UNSIGNED_BYTE, sizeof(VertexTextureSpriteData2D), &m_queue[0].data[0].color );
 
-	size_t	first	= 0,
+	u32	first	= 0,
 			last	= 0,
 			size	= m_queue.size();
 
-	size_t n_batched = 0;
+	u32 n_batched = 0;
 	gluint current_texture = m_queue[0].GetTexture();
-	size_t current_blender = m_queue[0].GetBlendMode();
+	u32 current_blender = m_queue[0].GetBlendMode();
 
 	for( ; last < size; ++last )
 	{
 		const SpriteData& spriteData = m_queue[last];
 		const gluint next_texture = spriteData.GetTexture();
-		const size_t next_blender = spriteData.GetBlendMode();
+		const u32 next_blender = spriteData.GetBlendMode();
 
 		++n_batched; //todo: optimize this via a prefetch flush (begin, end = m_max_batch_usage)
 		if( current_texture != next_texture || current_blender != next_blender || n_batched > m_max_batch_usage )
@@ -470,7 +493,7 @@ void SpriteBatch::Render()
 }
 
 
-void SpriteBatch::InternalFlush( gluint texture, size_t blendmodevalue, size_t first, size_t count )
+void SpriteBatch::InternalFlush( gluint texture, u32 blendmodevalue, u32 first, u32 count )
 {
 	if(count == 0)
 		return;

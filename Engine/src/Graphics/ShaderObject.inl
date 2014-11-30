@@ -66,7 +66,7 @@ void ShaderObject::Dispose()
 }
 
 
-bool ShaderObject::LoadFromMemory( const fc::string& code )
+bool ShaderObject::LoadFromMemory( const String& code )
 {
 	Dispose();
 	m_source = code;
@@ -75,7 +75,7 @@ bool ShaderObject::LoadFromMemory( const fc::string& code )
 }
 
 
-bool ShaderObject::LoadFromFile( const fc::string& filename )
+bool ShaderObject::LoadFromFile( const String& filename )
 {
 	Dispose();
 
@@ -86,7 +86,7 @@ bool ShaderObject::LoadFromFile( const fc::string& filename )
 		return false;
 	}
 
-	size_t size = f.Size();
+	u32 size = f.Size();
 	m_source.resize(size);
 	if( f.Read(&m_source[0], size) != size )
 	{
@@ -121,7 +121,7 @@ bool ShaderObject::Compile()
 }
 
 
-const fc::string& ShaderObject::GetInfoLog()
+const String& ShaderObject::GetInfoLog()
 {
 	int infolog_length(0);
 	int length(0);
@@ -138,7 +138,7 @@ const fc::string& ShaderObject::GetInfoLog()
 }
 
 
-const fc::string& ShaderObject::GetSource()
+const String& ShaderObject::GetSource()
 {
 	return m_source;
 }

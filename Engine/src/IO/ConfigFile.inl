@@ -32,7 +32,7 @@ void ConfigFile::SetCurrentSection( const char* section )
 
 void ConfigFile::SetInt( const char* section, const char* entry, int value )
 {
-	ConfigSection* currentSection = AddSection(section);
+	ConfigFileSection* currentSection = AddSection(section);
 	if( currentSection )
 	{
 		currentSection->configs[entry] = fc::to_string(value);
@@ -52,7 +52,7 @@ void ConfigFile::SetBool( const char* section, const char* entry, bool value )
 
 void ConfigFile::SetFloat( const char* section, const char* entry, float value )
 {
-	ConfigSection* currentSection = AddSection(section);
+	ConfigFileSection* currentSection = AddSection(section);
 	if( currentSection )
 	{
 		currentSection->configs[entry] = fc::to_string(value);
@@ -66,7 +66,7 @@ void ConfigFile::SetFloat( const char* section, const char* entry, float value )
 
 void ConfigFile::SetString( const char* section, const char* entry, const char* value )
 {
-	ConfigSection* currentSection = AddSection(section);
+	ConfigFileSection* currentSection = AddSection(section);
 	if( currentSection )
 	{
 		currentSection->configs[entry] = value;
@@ -105,10 +105,10 @@ void ConfigFile::SetString( const char* entry, const char* value )
 int ConfigFile::GetInt( const char* section, const char* entry, int value )
 {
 	int ret = value;
-	ConfigSection* currentSection = Find(section);
+	ConfigFileSection* currentSection = Find(section);
 	if( currentSection )
 	{
-		ConfigSection::map_type::iterator it = currentSection->configs.find(entry);
+		ConfigFileSection::map_type::iterator it = currentSection->configs.find(entry);
 		if( it != currentSection->configs.end() )
 		{
 			ret = it->second.to_int();
@@ -128,10 +128,10 @@ bool ConfigFile::GetBool( const char* section, const char* entry, bool value )
 float ConfigFile::GetFloat( const char* section, const char* entry, float value )
 {
 	float ret = value;
-	ConfigSection* currentSection = Find(section);
+	ConfigFileSection* currentSection = Find(section);
 	if( currentSection )
 	{
-		ConfigSection::map_type::iterator it = currentSection->configs.find(entry);
+		ConfigFileSection::map_type::iterator it = currentSection->configs.find(entry);
 		if( it != currentSection->configs.end() )
 		{
 			ret = it->second.to_float();
@@ -144,10 +144,10 @@ float ConfigFile::GetFloat( const char* section, const char* entry, float value 
 
 const char* ConfigFile::GetString( const char* section, const char* entry, const char* value )
 {
-	ConfigSection* currentSection = Find(section);
+	ConfigFileSection* currentSection = Find(section);
 	if( currentSection )
 	{
-		ConfigSection::map_type::iterator it = currentSection->configs.find(entry);
+		ConfigFileSection::map_type::iterator it = currentSection->configs.find(entry);
 		if( it != currentSection->configs.end() )
 		{
 			return it->second.c_str();
@@ -182,9 +182,9 @@ const char* ConfigFile::GetString( const char* entry, const char* value )
 }
 
 
-ConfigSection* ConfigFile::Find( const char* section )
+ConfigFileSection* ConfigFile::Find( const char* section )
 {
-	ConfigSection* ret = 0;
+	ConfigFileSection* ret = 0;
 	for( vec_type::iterator it = m_configurations.begin(); it != m_configurations.end(); ++it )
 	{
 		if( it->name == section )
@@ -198,9 +198,9 @@ ConfigSection* ConfigFile::Find( const char* section )
 }
 
 
-ConfigSection* ConfigFile::AddSection( const char* section )
+ConfigFileSection* ConfigFile::AddSection( const char* section )
 {
-	ConfigSection* currentSection = Find(section);
+	ConfigFileSection* currentSection = Find(section);
 	if( !currentSection )
 	{
 		m_configurations.push_back();
@@ -222,24 +222,24 @@ bool ConfigFile::Read()
 		return false;
 	}
 
-	fc::string key;
-	fc::string value;
-	fc::string line;
-	fc::string data;
+	String key;
+	String value;
+	String line;
+	String data;
 	fc::tokenizer tokenizer;
 	tokenizer.set_delimiters( " \t\n\r=[]" );
-	size_t size = file.Size();
-	size_t index = 0;
+	u32 size = file.Size();
+	u32 index = 0;
 
 	data.resize(size);
 	file.Read( &data[0], file.Size() );
-	ConfigSection* section = 0;
+	ConfigFileSection* section = 0;
 
 	while( index < size )
 	{
 		if( !fc::tokenizer::get_token(data, "\n", index, line) )
 		{
-			index += fc::max((size_t)1, line.size());
+			index += fc::max((u32)1, line.size());
 		}
 
 		if( line.empty() )
@@ -274,7 +274,7 @@ bool ConfigFile::Read()
 		{
 			if( tokenizer.next(key) && tokenizer.next(value) )
 			{
-				fc::pair<ConfigSection::string_type, ConfigSection::string_type> configValue;
+				fc::pair<ConfigFileSection::string_type, ConfigFileSection::string_type> configValue;
 				configValue.first = key;
 				configValue.second = value;
 
@@ -302,19 +302,19 @@ bool ConfigFile::Write()
 		return false;
 	}
 
-	fc::string line;
-	for( size_t i(0); i < m_configurations.size(); ++i )
+	String line;
+	for( u32 i(0); i < m_configurations.size(); ++i )
 	{
 		line.clear();
-		ConfigSection & section = m_configurations[i];
+		ConfigFileSection & section = m_configurations[i];
 
 		// write an empty line before new sections.
 		file.WriteLine("");
 		line.append('[').append( section.name.c_str() ).append(']');
 		file.WriteLine(line);
 
-		ConfigSection::map_type & c = section.configs;
-		for( ConfigSection::map_type::iterator it = c.begin(); it != c.end(); ++it )
+		ConfigFileSection::map_type & c = section.configs;
+		for( ConfigFileSection::map_type::iterator it = c.begin(); it != c.end(); ++it )
 		{
 			line.clear();
 			line.append(it->first.c_str()).append(" = ").append(it->second.c_str());

@@ -213,7 +213,7 @@ void ParticleEmitter::SetGenerateParticleAngle( bool enable )
 }
 
 
-void ParticleEmitter::GenerateInitialValues( Particle* particles, size_t count )
+void ParticleEmitter::GenerateInitialValues( Particle* particles, u32 count )
 {
 	Particle* end = particles + count;
 	for( Particle* p = particles; p != end; ++p )
@@ -266,10 +266,10 @@ void ParticleEmitter::GenerateInitialValues( Particle* particles, size_t count )
 		if( m_hasColorVariation )
 		{
 			p->color = Color(
-				(ubyte)fc::rand(m_minColor.r, m_maxColor.r),
-				(ubyte)fc::rand(m_minColor.g, m_maxColor.g),
-				(ubyte)fc::rand(m_minColor.b, m_maxColor.b),
-				(ubyte)fc::rand(m_minColor.a, m_maxColor.a)
+				(u8)fc::rand(m_minColor.r, m_maxColor.r),
+				(u8)fc::rand(m_minColor.g, m_maxColor.g),
+				(u8)fc::rand(m_minColor.b, m_maxColor.b),
+				(u8)fc::rand(m_minColor.a, m_maxColor.a)
 			);
 		}
 		else
@@ -282,7 +282,7 @@ void ParticleEmitter::GenerateInitialValues( Particle* particles, size_t count )
 }
 
 
-void ParticleEmitter::Emit( const Vector2& pos, Particle* particles, size_t count )
+void ParticleEmitter::Emit( const Vector2& pos, Particle* particles, u32 count )
 {
 	// This will initialize all basic particle values except emitter-specific values.
 	GenerateInitialValues(particles, count);

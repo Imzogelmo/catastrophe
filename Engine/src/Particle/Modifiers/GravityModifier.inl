@@ -30,7 +30,7 @@ GravityModifier::GravityModifier( const Vector2& gravity ) :
 }
 
 
-void GravityModifier::Update( Particle* particles, size_t count )
+void GravityModifier::Update( Particle* particles, u32 count )
 {
 	Particle* end = particles + count;
 	for( Particle* p = particles; p != end; ++p )

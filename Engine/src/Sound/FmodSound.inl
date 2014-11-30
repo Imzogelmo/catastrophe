@@ -234,7 +234,7 @@ int FmodSound::GetPosition() const
 	int pos = 0;
 	if(m_channel)
 	{
-		FMOD_RESULT result = m_channel->getPosition( (size_t*)&pos, FMOD_TIMEUNIT_MS );
+		FMOD_RESULT result = m_channel->getPosition( (u32*)&pos, FMOD_TIMEUNIT_MS );
 		FMOD_ERRCHECK(result);
 	}
 	return pos;
@@ -246,7 +246,7 @@ int FmodSound::GetLength() const
 	int length = 0;
 	if(m_sound)
 	{
-		FMOD_RESULT result = m_sound->getLength( (size_t*)&length, FMOD_TIMEUNIT_MS );
+		FMOD_RESULT result = m_sound->getLength( (u32*)&length, FMOD_TIMEUNIT_MS );
 		FMOD_ERRCHECK(result);
 	}
 	return length;
