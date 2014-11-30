@@ -19,24 +19,39 @@
 #pragma once
 
 
-typedef signed char			sbyte;
+//depricated
+typedef char				sbyte;
 typedef unsigned char		byte;
-typedef unsigned char		ubyte;
-typedef unsigned char		uchar;
-typedef unsigned short		ushort;
 typedef unsigned long		ulong;
 typedef unsigned int		uint;
 typedef unsigned int		gluint;
 typedef unsigned int		glenum;
 typedef int					glint;
 
-#ifdef _MSC_VER
-typedef unsigned __int64	uint64;
-typedef __int64				int64;
+#if defined(_MSC_VER)
+	typedef __int8				s8;
+	typedef __int16				s16;
+	typedef __int32				s32;
+	typedef __int64				s64;
+	typedef unsigned __int8		u8;
+	typedef unsigned __int16	u16;
+	typedef unsigned __int32	u32;
+	typedef unsigned __int64	u64;
+	typedef float				f32;
+	typedef double				f64;
 #else
-typedef unsigned long long	uint64;
-typedef long long			int64;
+	typedef char				s8;
+	typedef short				s16;
+	typedef int					s32;
+	typedef long long			s64;
+	typedef unsigned char		u8;
+	typedef unsigned short		u16;
+	typedef unsigned int		u32;
+	typedef unsigned long long	u64;
+	typedef float				f32;
+	typedef double				f64;
 #endif
+
 
 //CE_API 
 #if defined CE_EXPORT
@@ -78,6 +93,7 @@ typedef long long			int64;
 
 //include this for common macros
 #include <fc/common.h>
+#include <fc/forward.h>
 
 #define CE_FORCE_INLINE FC_FORCE_INLINE
 #define CE_NO_INLINE	FC_NO_INLINE
@@ -90,10 +106,24 @@ typedef long long			int64;
 #define LogWarning	__Internal_Log_Write
 
 #ifdef CE_DEBUG
-#define LogDebug	__Internal_Log_Write
+	#define LogDebug	__Internal_Log_Write
 #else
-#define LogDebug(x)
+	#define LogDebug(x)
+
+	/* disable "too many actual parameters for macro" */
+	#ifdef _MSC_VER
+		#pragma warning ( disable : 4002 )
+	#endif
 #endif
+
+//typedef String				String;
+typedef fc::basic_string<char>	String;
+
+//todo: use c++11 template typedef support instead.
+//typedef template<u32 N> using StaticString = fc::static_string<N>
+#define StaticString	fc::static_string
+#define Array			fc::dynamic_array
+#define StaticArray		fc::static_array
 
 
 CE_NAMESPACE_BEGIN
@@ -213,11 +243,7 @@ FC_MAKE_TRAIT(HSVColor, is_pod);
 FC_MAKE_TRAIT(HSLColor, is_pod);
 
 FC_MAKE_TRAIT(Glyph, is_pod);
-FC_MAKE_TRAIT(Sprite, is_pod);
 FC_MAKE_TRAIT(SpriteBase, is_pod);
-FC_MAKE_TRAIT(AnimatedSprite, is_pod);
-FC_MAKE_TRAIT(SpriteAnimation, is_pod);
-FC_MAKE_TRAIT(PackedSprite, is_pod);
 
 
 // rapidxml forward declared types
@@ -229,6 +255,25 @@ namespace rapidxml
 
 typedef rapidxml::xml_document<char> XmlDocument_t;
 typedef rapidxml::xml_node<char> XmlNode_t;
+
+
+#ifndef CE_NO_INTRUSIVE_PTRS
+
+	#include <fc/intrusive_ptr.h>
+
+	typedef fc::intrusive_ptr<Texture>	TexturePtr;
+	typedef fc::intrusive_ptr<Font>		FontPtr;
+
+#else
+	typedef Texture*		TexturePtr;
+	typedef Font*			FontPtr;
+
+	// safe to memcopy raw pointer types
+	FC_MAKE_TRAIT(Sprite, is_pod);
+	FC_MAKE_TRAIT(AnimatedSprite, is_pod);
+	FC_MAKE_TRAIT(SpriteAnimation, is_pod);
+	FC_MAKE_TRAIT(PackedSprite, is_pod);
+#endif
 
 
 CE_NAMESPACE_END

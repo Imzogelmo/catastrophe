@@ -183,6 +183,14 @@ struct VertexColorNormalTexture3D
 };
 
 
+
+struct Quad2D
+{
+	VertexColorTexture2D vertices[4];
+};
+
+
+
 // Vertex
 FC_MAKE_TRAIT(Vertex2D, is_pod);
 FC_MAKE_TRAIT(VertexTexture2D, is_pod);
@@ -194,6 +202,7 @@ FC_MAKE_TRAIT(VertexNormalTexture3D, is_pod);
 FC_MAKE_TRAIT(VertexColor3D, is_pod);
 FC_MAKE_TRAIT(VertexColorTexture3D, is_pod);
 FC_MAKE_TRAIT(VertexColorNormalTexture3D, is_pod);
+FC_MAKE_TRAIT(Quad2D, is_pod);
 
 
 CE_NAMESPACE_END

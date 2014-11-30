@@ -29,6 +29,14 @@
 CE_NAMESPACE_BEGIN
 
 
+enum SpriteAnimationType
+{
+	SpriteAnimationType_Loop,
+	SpriteAnimationType_OneTime,
+	SpriteAnimationType_PingPong
+};
+
+
 class SpriteBase
 {
 public:
@@ -37,6 +45,9 @@ public:
 	Color		color;
 	BlendMode	blendmode;
 	float		angle;
+	//u16			animationType;
+	bool		flipX;
+	bool		flipY;
 
 	SpriteBase();
 	SpriteBase( const Vector2& size,
@@ -52,6 +63,8 @@ public:
 	inline void SetBlendMode( const BlendMode& value ) { blendmode = value; }
 	inline void SetScale( const Vector2& value ) { scale = value; }
 	inline void SetAngle( float value ) { angle = value; }
+	inline void SetFlipX( bool value ) { flipX = value; }
+	inline void SetFlipY( bool value ) { flipY = value; }
 
 	// get methods
 	inline float Width() const { return size.x; }
@@ -61,6 +74,8 @@ public:
 	inline const Color& GetColor() const { return color; }
 	inline const BlendMode& GetBlendMode() const { return blendmode; }
 	inline float GetAngle() const { return angle; }
+	inline bool GetFlipX() const { return flipX; }
+	inline bool GetFlipY() const { return flipY; }
 
 };
 

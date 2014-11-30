@@ -32,16 +32,16 @@ class CE_API PackedPoint
 {
 public:
 	union {
-		struct { short x, y; };
+		struct { s16 x, y; };
 		int value;
 	};
 
 	PackedPoint() {}
-	PackedPoint( short x, short y )		: x(x), y(y) {}
-	PackedPoint( const Point &p )		: x((short)p.x), y((short)p.y) {}
+	PackedPoint( s16 x, s16 y )		: x(x), y(y) {}
+	PackedPoint( const Point &p )		: x((s16)p.x), y((s16)p.y) {}
 
-	short		&operator [] ( const short i ) { return *( &x + i ); }
-	const short	&operator [] ( const short i ) const { return *( &x + i ); }
+	s16		&operator [] ( const s16 i ) { return *( &x + i ); }
+	const s16	&operator [] ( const s16 i ) const { return *( &x + i ); }
 
 	PackedPoint operator - () const { return Negate(); }
 	PackedPoint operator + () const { return Abs(); }
@@ -55,24 +55,24 @@ public:
 	PackedPoint operator / ( const PackedPoint &p )	const { return PackedPoint ( x / p.x, y / p.y ); }
 	PackedPoint operator + ( const PackedPoint &p )	const { return PackedPoint ( x + p.x, y + p.y ); }
 	PackedPoint operator - ( const PackedPoint &p )	const { return PackedPoint ( x - p.x, y - p.y ); }
-	PackedPoint operator * ( short val ) const { return PackedPoint ( x * val, y * val ); }
-	PackedPoint operator / ( short val ) const { return PackedPoint ( x / val, y / val ); }
-	PackedPoint operator + ( short val ) const { return PackedPoint ( x + val, y + val ); }
-	PackedPoint operator - ( short val ) const { return PackedPoint ( x - val, y - val ); }
+	PackedPoint operator * ( s16 val ) const { return PackedPoint ( x * val, y * val ); }
+	PackedPoint operator / ( s16 val ) const { return PackedPoint ( x / val, y / val ); }
+	PackedPoint operator + ( s16 val ) const { return PackedPoint ( x + val, y + val ); }
+	PackedPoint operator - ( s16 val ) const { return PackedPoint ( x - val, y - val ); }
 
-	inline friend PackedPoint operator * ( short val, const PackedPoint &p ) { return PackedPoint( val * p.x, val * p.y ); }
-	inline friend PackedPoint operator / ( short val, const PackedPoint &p ) { return PackedPoint( val / p.x, val / p.y ); }
-	inline friend PackedPoint operator + ( short val, const PackedPoint &p ) { return PackedPoint( val + p.x, val + p.y ); }
-	inline friend PackedPoint operator - ( short val, const PackedPoint &p ) { return PackedPoint( val - p.x, val - p.y ); }
+	inline friend PackedPoint operator * ( s16 val, const PackedPoint &p ) { return PackedPoint( val * p.x, val * p.y ); }
+	inline friend PackedPoint operator / ( s16 val, const PackedPoint &p ) { return PackedPoint( val / p.x, val / p.y ); }
+	inline friend PackedPoint operator + ( s16 val, const PackedPoint &p ) { return PackedPoint( val + p.x, val + p.y ); }
+	inline friend PackedPoint operator - ( s16 val, const PackedPoint &p ) { return PackedPoint( val - p.x, val - p.y ); }
 
 	PackedPoint &operator *= ( const PackedPoint &p ) { x *= p.x; y *= p.y; return *this; }
 	PackedPoint &operator /= ( const PackedPoint &p ) { x /= p.x; y /= p.y; return *this; }
 	PackedPoint &operator += ( const PackedPoint &p ) { x += p.x; y += p.y; return *this; }
 	PackedPoint &operator -= ( const PackedPoint &p ) { x -= p.x; y -= p.y; return *this; }
-	PackedPoint &operator *= ( short val ) { x *= val; y *= val; return *this; }
-	PackedPoint &operator /= ( short val ) { x /= val; y /= val; return *this; }
-	PackedPoint &operator += ( short val ) { x += val; y += val; return *this; }
-	PackedPoint &operator -= ( short val ) { x -= val; y -= val; return *this; }
+	PackedPoint &operator *= ( s16 val ) { x *= val; y *= val; return *this; }
+	PackedPoint &operator /= ( s16 val ) { x /= val; y /= val; return *this; }
+	PackedPoint &operator += ( s16 val ) { x += val; y += val; return *this; }
+	PackedPoint &operator -= ( s16 val ) { x -= val; y -= val; return *this; }
 
 	bool operator == ( const PackedPoint &p ) const { return (value == p.value); }
 	bool operator != ( const PackedPoint &p ) const { return !(*this == p); }

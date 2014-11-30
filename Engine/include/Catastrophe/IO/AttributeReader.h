@@ -46,14 +46,17 @@ public:
 	virtual bool PopNode() { return SetToParent(); }
 	virtual bool PushNode( const char* name ) { return NextChild(name); }
 
-	virtual const char* GetCurrentNodeName() const = 0;
+	virtual String GetCurrentNodeName() const = 0;
+	virtual const char* GetCurrentNodeNameCStr() const = 0;
 
-	virtual fc::string GetString( const char* name, const fc::string& defaultValue = "" ) const = 0;
+	virtual const char* GetString( const char* name, const char* defaultValue = 0 ) const = 0;
+	virtual String GetString( const char* name, const String& defaultValue ) const = 0;
 	virtual bool GetBool( const char* name, bool defaultValue = false ) const = 0;
-	virtual byte GetByte( const char* name, byte defaultValue = 0 ) const = 0;
-	virtual short GetShort( const char* name, short defaultValue = 0 ) const = 0;
+	virtual u8 GetByte( const char* name, u8 defaultValue = 0 ) const = 0;
+	virtual s16 GetShort( const char* name, s16 defaultValue = 0 ) const = 0;
+	virtual u16 GetUShort( const char* name, u16 defaultValue = 0 ) const;
 	virtual int GetInt( const char* name, int defaultValue = 0 ) const = 0;
-	virtual size_t GetUInt( const char* name, size_t defaultValue = 0 ) const = 0;
+	virtual u32 GetUInt( const char* name, u32 defaultValue = 0 ) const = 0;
 	virtual float GetFloat( const char* name, float defaultValue = 0.f ) const = 0;
 	virtual Rect GetRect( const char* name, const Rect& defaultValue = Rect::Zero ) const = 0;
 	virtual Rectf GetRectf( const char* name, const Rectf& defaultValue = Rectf::Zero ) const = 0;
@@ -65,10 +68,10 @@ public:
 	virtual Colorf GetColorf( const char* name, const Colorf& defaultValue = Colorf() ) const = 0;
 
 	virtual bool GetBoolElement( const char* name, bool defaultValue = false ) const = 0;
-	virtual byte GetByteElement( const char* name, byte defaultValue = 0 ) const = 0;
-	virtual short GetShortElement( const char* name, short defaultValue = 0 ) const = 0;
+	virtual u8 GetByteElement( const char* name, u8 defaultValue = 0 ) const = 0;
+	virtual s16 GetShortElement( const char* name, s16 defaultValue = 0 ) const = 0;
 	virtual int GetIntElement( const char* name, int defaultValue = 0 ) const = 0;
-	virtual size_t GetUIntElement( const char* name, size_t defaultValue = 0 ) const = 0;
+	virtual u32 GetUIntElement( const char* name, u32 defaultValue = 0 ) const = 0;
 	virtual float GetFloatElement( const char* name, float defaultValue = 0.f ) const = 0;
 	virtual Rect GetRectElement( const char* name, const Rect& defaultValue = Rect::Zero ) const = 0;
 	virtual Rectf GetRectfElement( const char* name, const Rectf& defaultValue = Rectf::Zero ) const = 0;
@@ -79,19 +82,19 @@ public:
 	virtual Color GetColorElement( const char* name, const Color& defaultValue = Color::White() ) const = 0;
 	virtual Colorf GetColorfElement( const char* name, const Colorf& defaultValue = Colorf() ) const = 0;
 
-	virtual bool ReadBoolArray( const char* name, bool* ptr, size_t n ) const = 0;
-	virtual bool ReadByteArray( const char* name, byte* ptr, size_t n ) const = 0;
-	virtual bool ReadShortArray( const char* name, short* ptr, size_t n ) const = 0;
-	virtual bool ReadIntArray( const char* name, int* ptr, size_t n ) const = 0;
-	virtual bool ReadUIntArray( const char* name, size_t* ptr, size_t n ) const = 0;
-	virtual bool ReadFloatArray( const char* name, float* ptr, size_t n ) const = 0;
+	virtual bool ReadBoolArray( const char* name, bool* ptr, u32 n ) const = 0;
+	virtual bool ReadByteArray( const char* name, u8* ptr, u32 n ) const = 0;
+	virtual bool ReadShortArray( const char* name, s16* ptr, u32 n ) const = 0;
+	virtual bool ReadIntArray( const char* name, int* ptr, u32 n ) const = 0;
+	virtual bool ReadUIntArray( const char* name, u32* ptr, u32 n ) const = 0;
+	virtual bool ReadFloatArray( const char* name, float* ptr, u32 n ) const = 0;
 
-	virtual bool ReadBoolArrayElement( const char* name, bool* ptr, size_t n ) const = 0;
-	virtual bool ReadByteArrayElement( const char* name, byte* ptr, size_t n ) const = 0;
-	virtual bool ReadShortArrayElement( const char* name, short* ptr, size_t n ) const = 0;
-	virtual bool ReadIntArrayElement( const char* name, int* ptr, size_t n ) const = 0;
-	virtual bool ReadUIntArrayElement( const char* name, size_t* ptr, size_t n ) const = 0;
-	virtual bool ReadFloatArrayElement( const char* name, float* ptr, size_t n ) const = 0;
+	virtual bool ReadBoolArrayElement( const char* name, bool* ptr, u32 n ) const = 0;
+	virtual bool ReadByteArrayElement( const char* name, u8* ptr, u32 n ) const = 0;
+	virtual bool ReadShortArrayElement( const char* name, s16* ptr, u32 n ) const = 0;
+	virtual bool ReadIntArrayElement( const char* name, int* ptr, u32 n ) const = 0;
+	virtual bool ReadUIntArrayElement( const char* name, u32* ptr, u32 n ) const = 0;
+	virtual bool ReadFloatArrayElement( const char* name, float* ptr, u32 n ) const = 0;
 
 };
 

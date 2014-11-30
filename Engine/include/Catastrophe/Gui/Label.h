@@ -32,26 +32,31 @@ public:
 	void Render( SpriteBatch* spritebatch );
 
 	void SetFont( Font* font );
+	void SetText( const char* text );
 	void SetText( const fc::string& text );
 	void SetTextAlignment( TextAlignment alignment ) { m_textAlignment = alignment; }
-	void SetColor( const Color& color ) { m_color = color; }
-	void SetDisabledColor( const Color& color ) { m_disabledColor = color; }
+	void SetHighlightedColor( const Color& color ) { m_disabledColor = color; }
+	void SetDisabledColor( const Color& color ) { m_highlightedColor = color; }
+	void SetHighlighted( bool enable = true ) { m_isHighlighted = enable; }
 
-	const Font* GetFont() const { return m_font; }
+	Font* GetFont() const { return m_font; }
 	const fc::string& GetText() const { return m_text; }
 	TextAlignment GetTextAlignment() const { return m_textAlignment; }
-	const Color& GetColor() const { return m_color; }
+	const Color& GetHighlightedColor() const { return m_disabledColor; }
 	const Color& GetDisabledColor() const { return m_disabledColor; }
+	bool IsHighlighted() const { return m_isHighlighted; }
 
 	float GetTextAlignmentOffset() const;
+	float GetTextWidth() const;
 	Color GetCurrentTextColor() const;
 
 protected:
 	Font*			m_font;
 	fc::string		m_text;
 	TextAlignment	m_textAlignment;
-	Color			m_color;
+	Color			m_highlightedColor;
 	Color			m_disabledColor;
+	bool			m_isHighlighted;
 
 };
 

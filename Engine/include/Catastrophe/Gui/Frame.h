@@ -49,18 +49,12 @@ public:
 	void SetFromSprite( const Sprite& sprite );
 	void SetFromSprite( const AnimatedSprite& sprite );
 	void SetPatchData( Texture* texture, const Vector2& spriteSize, const Rectf& uv );
-	void SetBlendMode( const BlendMode& value ) { m_blendmode = value; }
 
-	const Color& GetColor() const { return m_color; }
-	const BlendMode& GetBlendMode() const { return m_blendmode; }
 	BackgroundImage* GetBackgroundImage() const { return m_backgroundImage; }
-
 	void Render( SpriteBatch* spriteBatch );
 
 protected:
 	Texture*			m_texture;
-	BlendMode			m_blendmode;
-	Color				m_color;
 	Patch				m_corners[4];
 	Patch				m_sides[4];
 	BackgroundImage*	m_backgroundImage;

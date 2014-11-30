@@ -27,7 +27,7 @@
 CE_NAMESPACE_BEGIN
 
 
-struct ConfigSection
+struct ConfigFileSection
 {
 	typedef fc::static_string<32> string_type;
 	typedef fc::vector_map<string_type, string_type> map_type;
@@ -37,13 +37,13 @@ struct ConfigSection
 };
 
 // Declare fast storage type.
-FC_MAKE_TRAIT(ConfigSection::string_type, is_pod);
+FC_MAKE_TRAIT(ConfigFileSection::string_type, is_pod);
 
 
 class ConfigFile
 {
 public:
-	typedef fc::vector<ConfigSection> vec_type;
+	typedef fc::vector<ConfigFileSection> vec_type;
 
 	ConfigFile( const char* filename )
 		: m_filename(filename), m_currentSection(), m_configurations()
@@ -75,11 +75,11 @@ public:
 
 protected:
 	// these pointers are not long living.
-	ConfigSection* Find( const char* section );
-	ConfigSection* AddSection( const char* section );
+	ConfigFileSection* Find( const char* section );
+	ConfigFileSection* AddSection( const char* section );
 
-	fc::string	m_filename;
-	fc::string	m_currentSection;
+	String	m_filename;
+	String	m_currentSection;
 	vec_type	m_configurations;
 };
 

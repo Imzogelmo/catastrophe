@@ -18,34 +18,18 @@
 
 #pragma once
 
-#include "Forward.h"
+#include "../Common.h"
 
 CE_NAMESPACE_BEGIN
 
 
-class Skin
+enum TextAlignment
 {
-public:
-	Skin();
-
-	void SetTexture( Texture* texture );
-	void SetFont( Font* font );
-	void SetFrame( Frame* frame );
-	void SetBackgroundImage( BackgroundImage* backgroundImage );
-
-	Texture* GetTexture() const { return m_texture; }
-	Font* GetFont() const { return m_font; }
-	Frame* GetFrame() const { return m_frame; }
-	BackgroundImage* GetBackgroundImage() const { return m_backgroundImage; }
-
-protected:
-	Texture*			m_texture;
-	Font*				m_font;
-	Frame*				m_frame;
-	BackgroundImage*	m_backgroundImage;
-
+	AlignLeft,
+	AlignCenter,
+	AlignRight
 };
 
 
-
 CE_NAMESPACE_END
+

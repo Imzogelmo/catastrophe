@@ -32,7 +32,7 @@ public:
 	{}
 
 	virtual Sound* LoadFromFile( Sound::Type type, const fc::string& filename ) = 0;
-	virtual Sound* LoadFromData( Sound::Type type, void* data, size_t n_bytes ) = 0;
+	virtual Sound* LoadFromData( Sound::Type type, void* data, u32 n_bytes ) = 0;
 	virtual void Initialize() = 0;
 	virtual void Shutdown() = 0;
 	virtual void StopAll() = 0;

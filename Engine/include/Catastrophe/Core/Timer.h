@@ -22,39 +22,40 @@
 
 /**
  * High performance timer class.
- * -uses timer_lib under the hood for portability.
+ * Uses timer_lib under the hood for portability.
  */
 class CE_API Timer
 {
 public:
 	struct Time
 	{
-		uint64 clock;
-		uint64 ref;
-		uint64 freq;
-		double oofreq;
+		u64 clock;
+		u64 ref;
+		u64 freq;
+		f64 oofreq;
 	};
 
 	Timer();
 	~Timer();
 
 	void Reset();
-	uint64 Frequency();
-	uint64 TicksPerSecond();
 
-	uint64 ElapsedTicks();
-	uint64 ElapsedMinutes();
-	uint64 ElapsedSeconds();
-	uint64 ElapsedMilliseconds();
-	uint64 ElapsedMicroseconds();
+	u64 Frequency();
+	u64 TicksPerSecond();
 
-	double MilliSeconds();
-	double Seconds();
-	double Minutes();
+	u64 ElapsedTicks();
+	u64 ElapsedMinutes();
+	u64 ElapsedSeconds();
+	u64 ElapsedMilliseconds();
+	u64 ElapsedMicroseconds();
+
+	f64 MilliSeconds();
+	f64 Seconds();
+	f64 Minutes();
 
 protected:
 	Time		m_time;
-	static bool m_timer_init;
+	static bool m_timerInit;
 };
 
 

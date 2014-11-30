@@ -55,7 +55,7 @@ protected:
 	bool InternalIsPressed( int mapped_key ) const;
 
 	Joystick*	m_joystick;
-	size_t		m_joystick_id;
+	u32		m_joystick_id;
 	int			m_directions[MaxDirections];
 
 };

@@ -31,6 +31,10 @@
 #include "SpriteSort.h"
 #include "Shader.h"
 #include "Font.h"
+#include "Vertex.h"
+#include "RenderState.h"
+#include "ClipStack.h"
+
 
 CE_NAMESPACE_BEGIN
 
@@ -54,7 +58,7 @@ struct VertexTextureSpriteData2D
 	union
 	{
 		gluint	texture;
-		size_t	blendmode;
+		u32	blendmode;
 		int		depth;
 		float	y_pos;
 	};
@@ -74,7 +78,7 @@ struct SpriteData
 	inline void SetYPosition( float pos ) { data[3].y_pos = pos; }
 
 	inline gluint GetTexture() const { return data[0].texture; }
-	inline size_t GetBlendMode() const { return data[1].blendmode; }
+	inline u32 GetBlendMode() const { return data[1].blendmode; }
 	inline int GetDepth() const { return data[2].depth; }
 	inline float GetYPosition() const { return data[3].y_pos; }
 };
@@ -88,17 +92,20 @@ public:
 	typedef fc::vector<SpriteData>	vec_type;
 	//typedef fc::vector<Rect>		clip_vec_type;
 
-	 SpriteBatch( size_t reserve = 256 );
+	 SpriteBatch( u32 reserve = 256 );
 	~SpriteBatch();
 
-	void Reserve( size_t reserve );
+	void Reserve( u32 reserve );
 	void Clear();
 
 	void SetBlendMode( const BlendMode& blendmode = BlendMode() ) { m_current_blendmode = blendmode; }
-	void SetClippingRect( const Rect& rect ) { m_clip_rect = rect; }
+
+	void PushClipRect( const Rect& clipRect );
+	void PopClipRect();
+
 	void SetSortMode( SpriteSortMode mode = Deferred ) { m_sortmode = mode; }
 	void SetShader( Shader* shader = 0 ) { m_attached_shader = shader; }
-	void SetMaxHardwareBatchSize( size_t maxHardwareBatch = size_t(-1) );
+	void SetMaxHardwareBatchSize( u32 maxHardwareBatch = u32(-1) );
 
 	void EnableClipping( bool enable = true ) { m_enable_clipping = enable; }
 	void EnableSorting( bool enable = true ) { m_enable_sorting = enable; }
@@ -111,14 +118,14 @@ public:
 	BlendMode GetCurrentBlendMode() const { return m_current_blendmode; }
 	Rect GetClippingRect() const { return m_clip_rect; }
 	SpriteSortMode GetSortMode() const { return m_sortmode; }
-	size_t GetMaxHardwareBatchSize() const { return m_max_batch_usage; }
+	u32 GetMaxHardwareBatchSize() const { return m_max_batch_usage; }
 
 	Shader* GetShader() { return m_attached_shader; }
 	const Shader* GetShader() const { return m_attached_shader; }
 
-	size_t GetSpriteCount() const { return m_queue.size(); }
-	size_t GetVertexCount() const { return m_queue.size() * 4; }
-	size_t GetCapacity() const { return m_queue.capacity(); }
+	u32 GetSpriteCount() const { return m_queue.size(); }
+	u32 GetVertexCount() const { return m_queue.size() * 4; }
+	u32 GetCapacity() const { return m_queue.capacity(); }
 
 	//sort usually never needs to be called by the user.
 	void Sort();
@@ -135,19 +142,19 @@ public:
 	void DrawRotatedScaled( gluint texture, float rotation, const Vector2& scale, const Rectf& vertices, const Rectf& uv, const Color& c = Color::White(), int depth = 0 );
 	void DrawRotatedScaled( gluint texture, float rotation, const Vector2& scale, const Vector2& origin, const Rectf& vertices, const Rectf& uv, const Color& c = Color::White(), int depth = 0 );
 
-	void Draw( gluint texture, const Vector2* vtx, const Vector2* uv, const Color* c, size_t numQuads, int depth = 0 );
-	void DrawRotated( gluint texture, float rotation, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, size_t numQuads, int depth = 0 );
-	void DrawScaled( gluint texture, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, size_t numQuads, int depth = 0 );
-	void DrawRotatedScaled( gluint texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, size_t numQuads, int depth = 0 );
+	void Draw( gluint texture, const Vector2* vtx, const Vector2* uv, const Color* c, u32 numQuads, int depth = 0 );
+	void DrawRotated( gluint texture, float rotation, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, u32 numQuads, int depth = 0 );
+	void DrawScaled( gluint texture, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, u32 numQuads, int depth = 0 );
+	void DrawRotatedScaled( gluint texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, u32 numQuads, int depth = 0 );
 
-	void Draw( gluint texture, const Vector2* vtx, const Vector2* uv, const Color* c, const ushort *quadsIndices, size_t numQuads, int depth = 0 );
-	void DrawRotated( gluint texture, float rotation, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, const ushort *quadsIndices, size_t numQuads, int depth = 0 );
-	void DrawScaled( gluint texture, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, const ushort *quadsIndices, size_t numQuads, int depth = 0 );
-	void DrawRotatedScaled( gluint texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, const ushort *quadsIndices, size_t numQuads, int depth = 0 );
+	void Draw( gluint texture, const Vector2* vtx, const Vector2* uv, const Color* c, const u16 *quadsIndices, u32 numQuads, int depth = 0 );
+	void DrawRotated( gluint texture, float rotation, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, const u16 *quadsIndices, u32 numQuads, int depth = 0 );
+	void DrawScaled( gluint texture, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, const u16 *quadsIndices, u32 numQuads, int depth = 0 );
+	void DrawRotatedScaled( gluint texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, const u16 *quadsIndices, u32 numQuads, int depth = 0 );
 
-	void DrawString( Font* font, const fc::string& text, const Vector2& pos, const Color& c = Color::White(), TextAlignment alignment = AlignLeft, int face_size = Font::DefaultFaceSize, int depth = 0 );
-	void DrawString( Font* font, const fc::string& text, size_t textPos, size_t amount, const Vector2& pos, const Color& c = Color::White(), TextAlignment alignment = AlignLeft, int face_size = Font::DefaultFaceSize, int depth = 0 );
-	void DrawString( Font* font, const fc::string& text, const Vector2& scale, const Vector2& pos, const Color& c = Color::White(), TextAlignment alignment = AlignLeft, int face_size = Font::DefaultFaceSize, int depth = 0 );
+	void DrawString( Font* font, const String& text, const Vector2& pos, const Color& c = Color::White(), TextAlignment alignment = AlignLeft, int face_size = Font::DefaultFaceSize, int depth = 0 );
+	void DrawString( Font* font, const String& text, u32 textPos, u32 amount, const Vector2& pos, const Color& c = Color::White(), TextAlignment alignment = AlignLeft, int face_size = Font::DefaultFaceSize, int depth = 0 );
+	void DrawString( Font* font, const String& text, const Vector2& scale, const Vector2& pos, const Color& c = Color::White(), TextAlignment alignment = AlignLeft, int face_size = Font::DefaultFaceSize, int depth = 0 );
 
 	void DrawSprite( const Sprite& sprite, const Vector2& pos );
 	void DrawAnimatedSprite( const AnimatedSprite& sprite, const Vector2& pos );
@@ -160,24 +167,26 @@ public:
 	void Render();
 	void Render( const Matrix& transformation );
 	void End();
+	void Flush();
 
 	void TransformSprite( float rotation, const Vector2& scale, const Vector2& origin, SpriteData& s );
 
 private:
 	void InternalQueueSprite( gluint texture, float rotation, const Vector2& scale, const Vector2& origin, const Rectf& vertices, const Rectf& uv, const Color& c, int depth );
-	void InternalQueueSprite( gluint texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, size_t numQuads, int depth );
-	void InternalQueueSprite( gluint texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, const ushort *quadsIndices, size_t numQuads, int depth );
+	void InternalQueueSprite( gluint texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, u32 numQuads, int depth );
+	void InternalQueueSprite( gluint texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, const u16 *quadsIndices, u32 numQuads, int depth );
 	void InternalQueueString( Font* font, const char* first, const char* last, const Vector2& scale, Vector2 pos, const Color& c, TextAlignment alignment, int face_size, int depth );
 
-	void InternalFlush( gluint texture, size_t blendmodevalue, size_t first, size_t count );
+	void InternalFlush( gluint texture, u32 blendmodevalue, u32 first, u32 count );
 
 	vec_type		m_queue;
+	ClipStack		m_clipStack;
 	//clip_vec_type	m_clip_stack;
 	BlendMode		m_current_blendmode;
 	Rect			m_clip_rect;
 	SpriteSortMode	m_sortmode;
 	Shader*			m_attached_shader;
-	size_t			m_max_batch_usage;
+	u32			m_max_batch_usage;
 	bool			m_enable_clipping;
 	bool			m_enable_sorting;
 	bool			m_enable_shader;

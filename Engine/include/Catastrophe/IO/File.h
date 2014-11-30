@@ -40,36 +40,36 @@ class CE_API File : public Deserializer, public Serializer
 {
 public:
 	File();
-	File( const fc::string& fileName, FileMode mode = FileRead );
+	File( const String& fileName, FileMode mode = FileRead );
 	virtual ~File();
 
-	virtual size_t Read( void* dest, size_t size );
-	virtual size_t Write( const void* data, size_t size );
-	virtual size_t Seek( size_t position );
+	virtual u32 Read( void* dest, u32 size );
+	virtual u32 Write( const void* data, u32 size );
+	virtual u32 Seek( u32 position );
 
-	virtual bool Open( const fc::string& filename, FileMode mode = FileRead );
+	virtual bool Open( const String& filename, FileMode mode = FileRead );
 	virtual void Close();
 	virtual void Flush();
 
-	const fc::string& GetFileName() const { return m_filename; }
+	const String& GetFileName() const { return m_filename; }
 	
 	FileMode GetMode() const { return m_mode; }
 	bool IsOpen() const { return m_handle != 0; }
 	void* GetHandle() const { return m_handle; }
-	size_t Size() const { return m_size; }
-	size_t Position() const { return m_position; }
+	u32 Size() const { return m_size; }
+	u32 Position() const { return m_position; }
 	bool IsEof() const { return m_position >= m_size; }
 	bool Eof() const { return IsEof(); }
 
-	fc::string GetNativePath( const fc::string& path );
+	String GetNativePath( const String& path );
 
 protected:
 	FileMode	m_mode;
 	void*		m_handle;
-	size_t		m_position;
-	size_t		m_size;
-	size_t		m_offset; //for packfiles
-	fc::string	m_filename;
+	u32		m_position;
+	u32		m_size;
+	u32		m_offset; //for packfiles
+	String	m_filename;
 
 };
 

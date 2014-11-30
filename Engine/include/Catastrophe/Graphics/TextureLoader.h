@@ -46,15 +46,15 @@ class CE_API TextureLoader
 public:
 	//TextureLoader& GetInstance();
 
-	static uchar* LoadFromFile( const fc::string& filename, Point& size, TextureFormat format = tfRgba );
-	static uchar* LoadFromMemory( const void* data, size_t sizeBytes, Point& size, TextureFormat format = tfRgba );
+	static u8* LoadFromFile( const String& filename, Point& size, TextureFormat format = tfRgba );
+	static u8* LoadFromMemory( const void* data, u32 sizeBytes, Point& size, TextureFormat format = tfRgba );
 
-	static bool SaveToFile( const fc::string& filename, const void* data, int w, int h, TextureFormat tFormat = tfRgba, ImageFileFormat fFormat = Png );
-	static bool SaveToFile( const fc::string& filename, const Texture& texture, ImageFileFormat fFormat = Png );
-	static bool SaveToFile( const fc::string& filename, const Image& image, ImageFileFormat fFormat = Png );
+	static bool SaveToFile( const String& filename, const void* data, int w, int h, TextureFormat tFormat = tfRgba, ImageFileFormat fFormat = Png );
+	static bool SaveToFile( const String& filename, const Texture& texture, ImageFileFormat fFormat = Png );
+	static bool SaveToFile( const String& filename, const Image& image, ImageFileFormat fFormat = Png );
 
-	static void FreePtr( ubyte* ptr );
-	static fc::string GetErrorMsg();
+	static void FreePtr( u8* ptr );
+	static String GetErrorMsg();
 
 };
 

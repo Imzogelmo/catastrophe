@@ -34,27 +34,27 @@ public:
 	typedef fc::dynamic_array2d<Color> array_type;
 
 	Image();
-	Image( const fc::string& filename );
+	Image( const String& filename );
 	Image( int w, int h, int filterMode, int wrapMode, const void *const data );
 	~Image();
 
 	void Dispose();
 	bool CreateFromData( const void* data, int w, int h );
-	bool LoadFromFile( const fc::string& filename );
-	bool SaveToFile( const fc::string& filename );
+	bool LoadFromFile( const String& filename );
+	bool SaveToFile( const String& filename );
 
 	void SetPixelArray( const array_type& pixelData );
 	void CopyPixelArray( array_type& outPixelData );
 
-	bool GetPixels( ubyte* ) const;
+	bool GetPixels( u8* ) const;
 	array_type& GetPixelArray() { return m_pixels; }
 	const array_type& GetPixelArray() const { return m_pixels; }
 	const Color* GetPixelData() const { return m_pixels.data(); }
 
-	size_t Size() const { return m_pixels.size(); }
-	Color GetPixel( size_t x, size_t y ) const;
+	u32 Size() const { return m_pixels.size(); }
+	Color GetPixel( u32 x, u32 y ) const;
 
-	void SetPixel( size_t x, size_t y, const Color& pixel );
+	void SetPixel( u32 x, u32 y, const Color& pixel );
 	void MaskColor( const Color& mask );
 	void MaskColorRegion( const Rect& subrect, const Color& mask );
 
@@ -62,16 +62,16 @@ public:
 	void AdjustBlue( int green );
 	void AdjustGreen( int blue );
 	void AdjustAlpha( int alpha );
-	void AdjustColor( size_t colorIndex, int shift );
-	void AdjustColorRegion( size_t colorIndex, int shift, const Rect& subrect );
-	void SwapColor( size_t firstColorIndex, size_t secondColorIndex );
-	void SwapColorRegion( size_t firstColorIndex, size_t secondColorIndex, const Rect& subrect );
+	void AdjustColor( u32 colorIndex, int shift );
+	void AdjustColorRegion( u32 colorIndex, int shift, const Rect& subrect );
+	void SwapColor( u32 firstColorIndex, u32 secondColorIndex );
+	void SwapColorRegion( u32 firstColorIndex, u32 secondColorIndex, const Rect& subrect );
 
 	void Update();
 	void UpdateRegion( const Rect& subrect );
 
 protected:
-	void InternalPackPixels( int width, int height, const ubyte *const data );
+	void InternalPackPixels( int width, int height, const u8 *const data );
 
 	array_type	m_pixels;
 

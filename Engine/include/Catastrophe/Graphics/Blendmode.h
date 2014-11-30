@@ -33,10 +33,10 @@ class CE_API BlendMode
 public:
 
 	BlendMode() : src(0x0302), dst(0x0303) {}
-	BlendMode( uint val ) : value(val) {}
-	BlendMode( ushort sFactor, ushort dFactor ) : src(sFactor), dst(dFactor) {}
+	BlendMode( u32 val ) : value(val) {}
+	BlendMode( u16 sFactor, u16 dFactor ) : src(sFactor), dst(dFactor) {}
 
-	BlendMode &operator = ( uint val ) { value = val; return *this; }
+	BlendMode &operator = ( u32 val ) { value = val; return *this; }
 
 	bool operator == ( const BlendMode &b ) const { return (value == b.value); }
 	bool operator != ( const BlendMode &b ) const { return (value != b.value); }
@@ -49,7 +49,7 @@ public:
 	static BlendMode InverseAlpha;
 
 	void Apply() const;
-	BlendMode &Separate( ushort sFactor, ushort dFactor )
+	BlendMode &Separate( u16 sFactor, u16 dFactor )
 	{
 		src = sFactor, dst = dFactor;
 		return *this;
@@ -58,8 +58,8 @@ public:
 	#pragma pack(push, 1)
 	union
 	{
-		struct { ushort src, dst; };
-		uint value;
+		struct { u16 src, dst; };
+		u32 value;
 	};
 	#pragma pack(pop)
 };

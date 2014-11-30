@@ -33,7 +33,7 @@ CE_NAMESPACE_BEGIN
 class CE_API Shader
 {
 public:
-	typedef fc::vector_map<size_t, glint> map_type;
+	typedef fc::vector_map<u32, glint> map_type;
 
 	Shader( VertexShader* vertex_shader = 0, FragmentShader* fragment_shader = 0 );
 
@@ -51,7 +51,7 @@ public:
 	bool IsLinked() const { return m_isLinked; }
 	bool IsDirty() const { return m_isDirty; }
 
-	const fc::string& GetInfoLog();
+	const String& GetInfoLog();
 	int GetUniformLocation(const char* name);
 
 	bool GetUniform( const char* name, float* values );
@@ -81,7 +81,7 @@ protected:
 	VertexShader*	m_vertexShader;
 	FragmentShader*	m_fragmentShader;
 	gluint			m_programObject;
-	fc::string		m_infolog;
+	String		m_infolog;
 	map_type		m_uniformLocations;
 	bool			m_vertexShaderAttached;
 	bool			m_fragmentShaderAttached;

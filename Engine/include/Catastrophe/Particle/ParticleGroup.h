@@ -51,23 +51,23 @@ public:
 	virtual ~ParticleGroup();
 
 	virtual void Dispose();
-	virtual size_t GetParticleCount() const;
+	virtual u32 GetParticleCount() const;
 
 	virtual void SetParticleEmitter( ParticleEmitter* emitter );
 	virtual void SetEnabled( bool enabled ) { m_enabled = enabled; }
 	virtual void SetVisible( bool visible ) { m_visible = visible; }
-	virtual void SetParticleCapacity( size_t cap );
-	virtual void SetMinEmissionCount( size_t minEmission );
-	virtual void SetMaxEmissionCount( size_t maxEmission );
-	virtual void SetEmissionCount( size_t minEmission, size_t maxEmission );
+	virtual void SetParticleCapacity( u32 cap );
+	virtual void SetMinEmissionCount( u32 minEmission );
+	virtual void SetMaxEmissionCount( u32 maxEmission );
+	virtual void SetEmissionCount( u32 minEmission, u32 maxEmission );
 	virtual void SetSprite( const AnimatedSprite& sprite ) { m_sprite = sprite; }
 
 	virtual ParticleEmitter* GetParticleEmitter() const { return m_emitter; }
 	virtual bool IsEnabled() const { return m_enabled; }
 	virtual bool IsVisible() const { return m_visible; }
-	virtual size_t GetParticleCapacity() const { return m_particles.capacity(); }
-	virtual size_t GetMinEmissionCount() const { return m_minTriggerAmount; }
-	virtual size_t GetMaxEmissionCount() const { return m_maxTriggerAmount; }
+	virtual u32 GetParticleCapacity() const { return m_particles.capacity(); }
+	virtual u32 GetMinEmissionCount() const { return m_minTriggerAmount; }
+	virtual u32 GetMaxEmissionCount() const { return m_maxTriggerAmount; }
 	virtual Texture* GetTexture() const { return 0; }
 
 	virtual void AddParticleModifier( ParticleModifier* modifier );
@@ -76,7 +76,7 @@ public:
 	virtual void RemoveParticleDestructor( ParticleDestructor* destructor );
 
 	virtual void Emit( const Vector2& pos );
-	virtual void Emit( const Vector2& pos, size_t numParticles );
+	virtual void Emit( const Vector2& pos, u32 numParticles );
 
 	virtual void Update();
 	virtual void Render( SpriteBatch* spriteBatch );
@@ -111,7 +111,7 @@ protected:
 	int				m_minTriggerAmount;
 	int				m_maxTriggerAmount;
 
-	size_t			m_capacity;
+	u32			m_capacity;
 	bool			m_enabled;
 	bool			m_visible;
 	bool			m_keepParticleOrder;

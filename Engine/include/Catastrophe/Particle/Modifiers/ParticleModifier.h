@@ -31,7 +31,7 @@ public:
 	virtual ~ParticleModifier()
 	{}
 
-	virtual void Update( Particle* particles, size_t count ) = 0;
+	virtual void Update( Particle* particles, u32 count ) = 0;
 
 	virtual void Serialize( AttributeWriter* out ) = 0;
 	virtual void Deserialize( AttributeReader* in ) = 0;

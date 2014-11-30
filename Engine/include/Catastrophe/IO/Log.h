@@ -23,27 +23,27 @@
 CE_NAMESPACE_BEGIN
 
 extern void __Internal_Log_Write( const char* format, ... );
-extern void __Internal_Log_Write( const fc::string& message );
+extern void __Internal_Log_Write( const String& message );
 
 
 class CE_API Logger
 {
 public:
 	Logger();
-	Logger( const fc::string& filename, bool create_debug_console = true, bool auto_append_new_line = true );
+	Logger( const String& filename, bool create_debug_console = true, bool auto_append_new_line = true );
 	~Logger();
 
 	static Logger& GetInstance();
-	bool Open( const fc::string& filename, bool create_debug_console = true, bool auto_append_new_line = true );
+	bool Open( const String& filename, bool create_debug_console = true, bool auto_append_new_line = true );
 	void Close();
 
-	void Write( const fc::string& message );
-	void AppendNewLine( fc::string& str );
+	void Write( const String& message );
+	void AppendNewLine( String& str );
 
 	File* GetFile() { return &m_file; }
 
 private:
-	void FlushString( const fc::string& str );
+	void FlushString( const String& str );
 
 	File			m_file;
 	bool			m_console;

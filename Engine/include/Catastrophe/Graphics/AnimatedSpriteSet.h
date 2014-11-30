@@ -48,26 +48,26 @@ public:
 	void AddAnimation( const Rect& sourceRect, float animationDelay, int numberOfFrames = 1, int frameOffsetX = 0, int frameOffsetY = 0 );
 	void AddAnimation( const Rect& sourceRect, int numberOfFrames = 1, int frameOffsetX = 0, int frameOffsetY = 0 );
 	void AddAnimation( const SpriteAnimation& anim );
-	void InsertAnimation( const SpriteAnimation& anim, size_t index );
-	void RemoveAnimation( size_t index );
+	void InsertAnimation( const SpriteAnimation& anim, u32 index );
+	void RemoveAnimation( u32 index );
 
 	void SetTexture( Texture* texture );
-	void SetCurrentAnimation( size_t index );
-	void Reserve( size_t capacity );
-	void Resize( size_t newSize );
+	void SetCurrentAnimation( u32 index );
+	void Reserve( u32 capacity );
+	void Resize( u32 newSize );
 	void Update();
 
 	inline bool Empty() const { return m_animations.empty(); }
-	inline size_t GetNumAnimations() const { return m_animations.size(); }
-	inline size_t GetCurrentAnimationIndex() const { return m_currentAnimation; }
+	inline u32 GetNumAnimations() const { return m_animations.size(); }
+	inline u32 GetCurrentAnimationIndex() const { return m_currentAnimation; }
 	inline Texture* GetTexture() const { return m_texture; }
 	gluint GetTextureID() const;
 
 	// sprite animation index methods
-	inline SpriteAnimation& operator []( size_t index ) { return m_animations.at(index); }
-	inline const SpriteAnimation& operator []( size_t index ) const { return m_animations.at(index); }
-	inline SpriteAnimation& GetAnimation( size_t index ) { return operator[](index); }
-	inline const SpriteAnimation& GetAnimation( size_t index ) const { return operator[](index); }
+	inline SpriteAnimation& operator []( u32 index ) { return m_animations.at(index); }
+	inline const SpriteAnimation& operator []( u32 index ) const { return m_animations.at(index); }
+	inline SpriteAnimation& GetAnimation( u32 index ) { return operator[](index); }
+	inline const SpriteAnimation& GetAnimation( u32 index ) const { return operator[](index); }
 	inline SpriteAnimation& GetCurrentAnimation() { return operator[](m_currentAnimation); }
 	inline const SpriteAnimation& GetCurrentAnimation() const { return operator[](m_currentAnimation); }
 
@@ -76,7 +76,7 @@ public:
 protected:
 	Texture*	m_texture;
 	vec_type	m_animations;
-	size_t		m_currentAnimation;
+	u32		m_currentAnimation;
 
 };
 

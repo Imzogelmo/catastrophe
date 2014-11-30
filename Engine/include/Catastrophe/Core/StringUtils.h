@@ -37,10 +37,10 @@ CE_NAMESPACE_BEGIN
 
 // string to value type overloads
 bool ToBool( const char* s, bool defaultValue = false );
-byte ToByte( const char* s, byte defaultValue = 0 );
-short ToShort( const char* s, short defaultValue = 0 );
+u8 ToByte( const char* s, u8 defaultValue = 0 );
+s16 ToShort( const char* s, s16 defaultValue = 0 );
 int ToInt( const char* s, int defaultValue = 0 );
-size_t ToUInt( const char* s, size_t defaultValue = 0 );
+u32 ToUInt( const char* s, u32 defaultValue = 0 );
 float ToFloat( const char* s, float defaultValue = 0.f );
 int ToInt( const char* source, char** dest, int defaultValue = 0 );
 float ToFloat( const char* source, char** dest, float defaultValue = 0.f );
@@ -57,22 +57,22 @@ Matrix ToMatrix( const char* s, const Matrix& defaultValue = Matrix::Identity );
 
 
 // math types to string overloads
-fc::string ToString( bool value );
-fc::string ToString( char value );
-fc::string ToString( short value );
-fc::string ToString( int value );
-fc::string ToString( size_t value );
-fc::string ToString( float value );
-fc::string ToString( const Point& value );
-fc::string ToString( const Rect& value );
-fc::string ToString( const Rectf& value );
-fc::string ToString( const Color& value );
-fc::string ToString( const Colorf& value );
-fc::string ToString( const Vector2& value );
-fc::string ToString( const Vector3& value );
-fc::string ToString( const Vector4& value );
-fc::string ToString( const Quaternion& value );
-fc::string ToString( const Matrix& value );
+String ToString( bool value );
+String ToString( char value );
+String ToString( s16 value );
+String ToString( int value );
+String ToString( u32 value );
+String ToString( float value );
+String ToString( const Point& value );
+String ToString( const Rect& value );
+String ToString( const Rectf& value );
+String ToString( const Color& value );
+String ToString( const Colorf& value );
+String ToString( const Vector2& value );
+String ToString( const Vector3& value );
+String ToString( const Vector4& value );
+String ToString( const Quaternion& value );
+String ToString( const Matrix& value );
 
 
 

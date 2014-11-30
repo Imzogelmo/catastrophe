@@ -47,21 +47,21 @@ public:
 	const T* GetVertexData() const { return m_vertices.data(); }
 
 	void Clear() { m_vertices.clear(); }
-	void Reserve( size_t reserve ) { m_vertices.reserve( reserve ); }
+	void Reserve( u32 reserve ) { m_vertices.reserve( reserve ); }
 
 	bool Empty() const		{ return m_vertices.empty(); }
-	size_t Size() const		{ return m_vertices.size(); }
-	size_t Capacity() const	{ return m_vertices.capacity(); }
-	size_t GetVertexCount() const { return m_vertices.size(); }
+	u32 Size() const		{ return m_vertices.size(); }
+	u32 Capacity() const	{ return m_vertices.capacity(); }
+	u32 GetVertexCount() const { return m_vertices.size(); }
 
 	this_type& operator += ( const this_type& v ) { return Append(v); }
 	this_type& Append( const this_type& v )
 	{
 		if( !v.Empty() )
 		{
-			const size_t vSize = v.Size();
+			const u32 vSize = v.Size();
 			T* ptr = m_vertices.push_back_uninitialized(vSize);
-			for( size_t i(0); i < vSize; ++i )
+			for( u32 i(0); i < vSize; ++i )
 			{
 				*ptr++ = v.m_vertices[i];
 			}
@@ -77,7 +77,7 @@ public:
 
 	void AddVertex( const T* vertex, int num_vertices )
 	{
-		T * v = m_vertices.push_back_uninitialized( (size_t)num_vertices );
+		T * v = m_vertices.push_back_uninitialized( (u32)num_vertices );
 		for( int i(0); i < num_vertices; ++i )
 		{
 			v[i] = vertex[i];

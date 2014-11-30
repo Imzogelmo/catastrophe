@@ -30,27 +30,27 @@ class CE_API Deserializer
 public:
 	virtual ~Deserializer() {}
 	
-	virtual size_t Read( void* dest, size_t size ) = 0;
-	virtual size_t Seek( size_t position ) = 0;
+	virtual u32 Read( void* dest, u32 size ) = 0;
+	virtual u32 Seek( u32 position ) = 0;
 	virtual bool IsEof() const = 0;
-	virtual size_t Position() const = 0;
+	virtual u32 Position() const = 0;
 
 	//Unsafe overloads, for convenience.
 	int ReadInt();
-	short ReadShort();
-	char ReadByte();
-	unsigned int ReadUInt();
-	unsigned short ReadUShort();
-	unsigned char ReadUByte();
+	s16 ReadShort();
+	char ReadChar();
+	u32 ReadUInt();
+	u16 ReadUShort();
+	u8 ReadUByte();
 	bool ReadBool();
 	float ReadFloat();
 
 	bool ReadInt( int& value );
-	bool ReadShort( short& value );
-	bool ReadByte( char& value );
-	bool ReadUInt( unsigned int& value );
-	bool ReadUShort( unsigned short& value );
-	bool ReadUByte( unsigned char& value );
+	bool ReadShort( s16& value );
+	bool ReadChar( char& value );
+	bool ReadUInt( u32& value );
+	bool ReadUShort( u16& value );
+	bool ReadUByte( u8& value );
 	bool ReadBool( bool& value );
 	bool ReadFloat( float& value );
 
@@ -64,15 +64,15 @@ public:
 	bool ReadColorf( Colorf& value );
 	bool ReadMatrix( Matrix& value );
 
-	bool ReadString( fc::string& value );
-	bool ReadLine( fc::string& value );
+	bool ReadString( String& value );
+	bool ReadLine( String& value );
 
-	bool ReadShortArray( short* ptr, size_t n );
-	bool ReadIntArray( int* ptr, size_t n );
-	bool ReadFloatArray( float* ptr, size_t n );
+	bool ReadShortArray( s16* ptr, u32 n );
+	bool ReadIntArray( int* ptr, u32 n );
+	bool ReadFloatArray( float* ptr, u32 n );
 
-	fc::string ReadString();
-	fc::string ReadLine();
+	String ReadString();
+	String ReadLine();
 
 };
 

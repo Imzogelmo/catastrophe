@@ -51,7 +51,7 @@ public:
 	BlendMode GetBlendMode() const { return m_blendmode; }
 	PrimitiveType GetPrimitiveType() const { return m_primType; }
 	Vector2 GetCenter() const;
-	Vector2 GetCenter( size_t start, size_t n ) const;
+	Vector2 GetCenter( u32 start, u32 n ) const;
 	Rectf GetBoundingRect() const;
 
 	void RotateVertices( float rotation, const Vector2 &origin );
@@ -67,7 +67,7 @@ public:
 	void CreateRectangle( const Rectf &rect, const Color &bl, const Color &tl, const Color &tr, const Color &br, bool filled = true );
 
 	void Render();
-	void Render( size_t index, size_t n );
+	void Render( u32 index, u32 n );
 	void Render( const Matrix& transformation );
 
 protected:

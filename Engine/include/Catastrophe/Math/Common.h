@@ -126,14 +126,14 @@ namespace Math
 		return (Abs(x - y) < epsilon);
 	}
 
-	inline bool IsPowerOfTwo( size_t x )
+	inline bool IsPowerOfTwo( u32 x )
 	{
 		return !((x-1) & x);
 	}
 
-	inline size_t NextPowerOfTwo( size_t x )
+	inline u32 NextPowerOfTwo( u32 x )
 	{
-		size_t y(1);
+		u32 y(1);
 		while( y < x ) y <<= 1;
 		return y;
 	}

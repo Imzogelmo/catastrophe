@@ -38,11 +38,11 @@ public:
 	Input();
 
 	static Input* GetInstance() { return &m_instance; }
-	static void SetMaxJoystickUsage( size_t numJoysticks );
+	static void SetMaxJoystickUsage( u32 numJoysticks );
 
 	static Keyboard* GetKeyboard() { return &m_instance.m_keyboard; }
 	static Mouse* GetMouse() { return &m_instance.m_mouse; }
-	static Joystick* GetJoystick(size_t index)
+	static Joystick* GetJoystick(u32 index)
 	{
 		CE_ASSERT(index < MaxJoysticks);
 		return &m_instance.m_joysticks[index];
@@ -54,7 +54,7 @@ private:
 	Joystick		m_joysticks[MaxJoysticks];
 	Keyboard		m_keyboard;
 	Mouse			m_mouse;
-	size_t			m_maxJoystickUsage;
+	u32			m_maxJoystickUsage;
 
 	static Input	m_instance;
 };

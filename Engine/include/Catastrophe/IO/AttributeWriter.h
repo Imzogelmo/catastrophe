@@ -34,13 +34,13 @@ public:
 	virtual bool EndNode( const char* name = "" ) = 0;
 
 	virtual bool SetString( const char* name, const char* value ) = 0;
-	virtual bool SetString( const char* name, const fc::string& value ) = 0;
+	virtual bool SetString( const char* name, const String& value ) = 0;
 	virtual bool SetBool( const char* name, bool value ) = 0;
-	virtual bool SetByte( const char* name, byte value ) = 0;
-	virtual bool SetShort( const char* name, short value ) = 0;
-	virtual bool SetUShort( const char* name, ushort value ) = 0;
+	virtual bool SetByte( const char* name, u8 value ) = 0;
+	virtual bool SetShort( const char* name, s16 value ) = 0;
+	virtual bool SetUShort( const char* name, u16 value ) = 0;
 	virtual bool SetInt( const char* name, int value ) = 0;
-	virtual bool SetUInt( const char* name, size_t value ) = 0;
+	virtual bool SetUInt( const char* name, u32 value ) = 0;
 	virtual bool SetFloat( const char* name, float value ) = 0;
 	virtual bool SetRect( const char* name, const Rect& value ) = 0;
 	virtual bool SetRectf( const char* name, const Rectf& value ) = 0;
@@ -52,13 +52,13 @@ public:
 	virtual bool SetColorf( const char* name, const Colorf& value ) = 0;
 
 	virtual bool SetBoolElement( const char* name, bool value ) = 0;
-	virtual bool SetByteElement( const char* name, byte value ) = 0;
-	virtual bool SetShortElement( const char* name, short value ) = 0;
-	virtual bool SetUShortElement( const char* name, ushort value ) = 0;
+	virtual bool SetByteElement( const char* name, u8 value ) = 0;
+	virtual bool SetShortElement( const char* name, s16 value ) = 0;
+	virtual bool SetUShortElement( const char* name, u16 value ) = 0;
 	virtual bool SetIntElement( const char* name, int value ) = 0;
-	virtual bool SetUIntElement( const char* name, size_t value ) = 0;
+	virtual bool SetUIntElement( const char* name, u32 value ) = 0;
 	virtual bool SetFloatElement( const char* name, float value ) = 0;
-	virtual bool SetStringElement( const char* name, const fc::string& value ) = 0;
+	virtual bool SetStringElement( const char* name, const String& value ) = 0;
 	virtual bool SetRectElement( const char* name, const Rect& value ) = 0;
 	virtual bool SetRectfElement( const char* name, const Rectf& value ) = 0;
 	virtual bool SetPointElement( const char* name, const Point& value ) = 0;
@@ -68,17 +68,17 @@ public:
 	virtual bool SetColorElement( const char* name, const Color& value ) = 0;
 	virtual bool SetColorfElement( const char* name, const Colorf& value ) = 0;
 
-	virtual bool WriteBoolArray( const char* name, const bool* ptr, size_t n ) = 0;
-	virtual bool WriteByteArray( const char* name, const byte* ptr, size_t n ) = 0;
-	virtual bool WriteShortArray( const char* name, const short* ptr, size_t n ) = 0;
-	virtual bool WriteIntArray( const char* name, const int* ptr, size_t n ) = 0;
-	virtual bool WriteFloatArray( const char* name, const float* ptr, size_t n ) = 0;
+	virtual bool WriteBoolArray( const char* name, const bool* ptr, u32 n ) = 0;
+	virtual bool WriteByteArray( const char* name, const u8* ptr, u32 n ) = 0;
+	virtual bool WriteShortArray( const char* name, const s16* ptr, u32 n ) = 0;
+	virtual bool WriteIntArray( const char* name, const int* ptr, u32 n ) = 0;
+	virtual bool WriteFloatArray( const char* name, const float* ptr, u32 n ) = 0;
 
-	virtual bool WriteBoolArrayElement( const char* name, const bool* ptr, size_t n ) = 0;
-	virtual bool WriteByteArrayElement( const char* name, const byte* ptr, size_t n ) = 0;
-	virtual bool WriteShortArrayElement( const char* name, const short* ptr, size_t n ) = 0;
-	virtual bool WriteIntArrayElement( const char* name, const int* ptr, size_t n ) = 0;
-	virtual bool WriteFloatArrayElement( const char* name, const float* ptr, size_t n ) = 0;
+	virtual bool WriteBoolArrayElement( const char* name, const bool* ptr, u32 n ) = 0;
+	virtual bool WriteByteArrayElement( const char* name, const u8* ptr, u32 n ) = 0;
+	virtual bool WriteShortArrayElement( const char* name, const s16* ptr, u32 n ) = 0;
+	virtual bool WriteIntArrayElement( const char* name, const int* ptr, u32 n ) = 0;
+	virtual bool WriteFloatArrayElement( const char* name, const float* ptr, u32 n ) = 0;
 
 };
 

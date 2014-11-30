@@ -49,9 +49,11 @@ public:
 
 	Colorf operator - () const { return Colorf( 1.f - r, 1.f - g, 1.f - b, a ); }
 	Colorf operator + () const { return Colorf( +r, +g, +b, +a ); }
+	Colorf operator * ( const Colorf &c ) const;
 
 	Colorf &operator += ( const Colorf &c ) { r += c.r; g += c.g; b += c.b; a += c.a; return *this; }
 	Colorf &operator -= ( const Colorf &c ) { r -= c.r; g -= c.g; b -= c.b; a -= c.a; return *this; }
+	Colorf &operator *= ( const Colorf &c );
 
 	bool operator == ( const Colorf &c ) const { return (r == c.r && g == c.g && b == c.b && a == c.a); }
 	bool operator != ( const Colorf &c ) const { return !(*this == c); }
@@ -128,6 +130,15 @@ public:
 
 	static Colorf Black( float alpha = 1.f ) { return Colorf( 0.f, 0.f, 0.f, alpha); }
 	static Colorf White( float alpha = 1.f ) { return Colorf( 1.f, 1.f, 1.f, alpha); }
+	static Colorf Red( float alpha = 1.f ) { return Colorf( 1.f, 0.f, 0.f, alpha); }
+	static Colorf Green( float alpha = 1.f ) { return Colorf( 0.f, 1.f, 0.f, alpha); }
+	static Colorf Blue( float alpha = 1.f ) { return Colorf( 0.f, 0.f, 1.f, alpha); }
+	static Colorf Magenta( float alpha = 1.f ) { return Colorf( 1.f, 0.f, 1.f, alpha); }
+	static Colorf Teal( float alpha = 1.f ) { return Colorf( 0.f, 0.5f, 0.5f, alpha); }
+	static Colorf Purple( float alpha = 1.f ) { return Colorf( 0.5f, 0.f, 0.5f, alpha); }
+	static Colorf Gray( float alpha = 1.f ) { return Colorf( 0.5f, 0.5f, 0.5f, alpha); }
+	static Colorf Cyan( float alpha = 1.f ) { return Colorf( 0.f, 1.f, 1.f, alpha); }
+	static Colorf Aqua( float alpha = 1.f ) { return Colorf( 0.f, 1.f, 1.f, alpha); }
 
 };
 
