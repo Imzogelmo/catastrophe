@@ -42,8 +42,8 @@ protected:
 
 	MonoDomain*			m_domain;
 	MonoAssembly*		m_assembly;
-	fc::string			m_name;
-	fc::string			m_defaultNamespace;
+	String				m_name;
+	String				m_defaultNamespace;
 	ClassInfoMapType	m_classInfoTable;
 
 };
