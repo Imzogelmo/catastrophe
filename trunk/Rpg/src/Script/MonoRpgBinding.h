@@ -40,7 +40,28 @@ public:
 
 
 
+	// Equipment
+	static Equipment* Equipment_Create();
+	static void Equipment_Destroy( Equipment* equipment );
+	static void Equipment_Resize( Equipment* equipment, u32 maxSlots );
+	static u32 Equipment_GetNumSlots( Equipment* equipment );
+	static u32 Equipment_GetMaxSlots( Equipment* equipment );
+	static void Equipment_Equip( Equipment* equipment, int slot, Item* item );
+	static void Equipment_Unequip( Equipment* equipment, int slot );
+	static void Equipment_UnequipAll( Equipment* equipment );
+	static void Equipment_TransferToInventory( Equipment* equipment, int slot, Inventory* destinationInventory );
+	static void Equipment_TransferAllToInventory( Equipment* equipment, Inventory* destinationInventory );
+	static void Equipment_ReplaceSlot( Equipment* equipment, int slot, Item* item, Inventory* destinationInventory );
+	static bool Equipment_Contains( Equipment* equipment, Item* item );
+	static int Equipment_Find( Equipment* equipment, Item* item );
+	static Item* Equipment_GetSlot( Equipment* equipment, int slot );
+	static void Equipment_RecalculateCombinedAttributes( Equipment* equipment );
+	static Attributes Equipment_GetCombinedAttributes( Equipment* equipment );
+
+
+
 	static void BindActor();
+	static void BindEquipment();
 
 };
 

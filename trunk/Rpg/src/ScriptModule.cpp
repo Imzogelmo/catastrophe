@@ -20,4 +20,5 @@
 // Bindings
 #include "Script/MonoBinding.inl"
 #include "Script/MonoEngineBinding.inl"
+#include "Script/MonoRpgBinding.inl"
 

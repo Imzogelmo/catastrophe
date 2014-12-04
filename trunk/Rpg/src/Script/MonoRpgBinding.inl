@@ -14,7 +14,8 @@
 #include "MonoRpgBinding.h"
 
 // Bindings
-#include "RpgBindings/Actor.inl"
+//#include "RpgBindings/Actor.inl"
+#include "RpgBindings/Equipment.inl"
 
 
 
