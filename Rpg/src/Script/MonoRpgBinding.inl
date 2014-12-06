@@ -16,6 +16,7 @@
 // Bindings
 //#include "RpgBindings/Actor.inl"
 #include "RpgBindings/Equipment.inl"
+#include "RpgBindings/Party.inl"
 
 
 

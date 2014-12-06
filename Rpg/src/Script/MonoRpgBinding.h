@@ -39,6 +39,11 @@ public:
 	static void Actor_SetDerivedStat( Actor* actor, int stat, int value );
 
 
+	// InventorySlot
+	static u8 InventorySlot_AddAmount( InventorySlot* self, u8 amount );
+	static u8 InventorySlot_RemoveAmount( InventorySlot* self, u8 amount );
+	static void InventorySlot_Combine( InventorySlot* self, InventorySlot* inventorySlot );
+
 
 	// Equipment
 	static Equipment* Equipment_Create();
@@ -59,9 +64,29 @@ public:
 	static Attributes Equipment_GetCombinedAttributes( Equipment* equipment );
 
 
+	// Party
+	static bool Party_AddMember( Party* party, Actor* actor );
+	static bool Party_InsertMemberInSlot( Party* party, int slot, Actor* actor );
+	static void Party_RemoveMember( Party* party, Actor* actor );
+	static void Party_RemoveMemberInSlot( Party* party, int slot );
+	static void Party_RemoveAllMembers( Party* party );
+	static int Party_GetFirstEmptySlot( Party* party, int startSlot );
+	static bool Party_Contains( Party* party, Actor* actor );
+	static Actor* Party_GetMemberInSlot( Party* party, int slot );
+	static void Party_SetMemberInSlot( Party* party, int slot, Actor* actor );
+	static u32 Party_GetPartySize( Party* party );
+	static u32 Party_GetMaxPartySize( Party* party );
+	static int Party_GetGold( Party* party );
+	static void Party_SetGold( Party* party, int val );
+	static void Party_SwapMembers( Party* party, u32 firstSlot, u32 secondSlot );
+	static void Party_SetMaxPartySize( Party* party, u32 size );
+	static int Party_GetAverageExperienceLevel( Party* party );
+	static Inventory* Party_GetInventory( Party* party );
+
 
 	static void BindActor();
 	static void BindEquipment();
+	static void BindParty();
 
 };
 
