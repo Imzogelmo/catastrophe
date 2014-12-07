@@ -15,27 +15,29 @@
 
 
 
-u8 MonoEngineBinding::InventorySlot_AddAmount(InventorySlot* self, u8 amount )
+u8 MonoRpgBinding::InventorySlot_AddAmount(InventorySlot* self, u8 amount )
 {
 	SAFE_CALL_RETURN(self, AddAmount(amount), 0);
 }
 
 
-u8 MonoEngineBinding::InventorySlot_RemoveAmount(InventorySlot* self, u8 amount )
+u8 MonoRpgBinding::InventorySlot_RemoveAmount(InventorySlot* self, u8 amount )
 {
 	SAFE_CALL_RETURN(self, RemoveAmount(amount), 0);
 }
 
 
-void MonoEngineBinding::InventorySlot_Combine(InventorySlot* self, InventorySlot* inventorySlot )
+void MonoRpgBinding::InventorySlot_Combine(InventorySlot* self, InventorySlot* inventorySlot )
 {
 	SAFE_CALL(self, Combine(*inventorySlot));
 }
 
 
 
-void MonoEngineBinding::BindInventorySlot()
+void MonoRpgBinding::BindInventorySlot()
 {
+	SetNamespace("CatastropheEngine.Rpg.InventorySlot::");
+
 	AddInternalCall("AddAmount", InventorySlot_AddAmount);
 	AddInternalCall("RemoveAmount", InventorySlot_RemoveAmount);
 	AddInternalCall("Combine", InventorySlot_Combine);

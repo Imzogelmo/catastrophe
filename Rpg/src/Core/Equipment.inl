@@ -25,7 +25,7 @@ Equipment::Equipment() :
 void Equipment::Resize( u32 maxSlots )
 {
 	maxSlots = fc::min(maxSlots, GetMaxSlots());
-	m_items.resize(maxSlots, 0);
+	m_items.resize(maxSlots, null);
 }
 
 
@@ -39,7 +39,7 @@ void Equipment::Equip( int slot, Item* item )
 void Equipment::Unequip( int slot )
 {
 	if( (u32)slot < m_items.size() )
-		m_items[slot] = 0;
+		m_items[slot] = null;
 }
 
 
@@ -54,7 +54,7 @@ void Equipment::TransferToInventory( int slot, Inventory* destinationInventory )
 
 void Equipment::UnequipAll()
 {
-	m_items.fill(0);
+	m_items.fill(null);
 }
 
 
@@ -64,8 +64,7 @@ void Equipment::TransferAllToInventory( Inventory* destinationInventory )
 		for( array_type::iterator it = m_items.begin(); it != m_items.end(); ++it )
 			destinationInventory->Add(*it);
 
-	RemoveAll();
-
+	UnequipAll();
 }
 
 
@@ -102,13 +101,13 @@ Item* Equipment::GetSlot( int slot ) const
 	if( (u32)slot < m_items.size() )
 		return const_cast<Item*>(m_items[slot]);
 
-	return 0;
+	return null;
 }
 
 
 void Equipment::RecalculateCombinedAttributes()
 {
-	m_combinedAttributes.ZeroMemory();
+	m_combinedAttributes = Attributes();
 
 	for( array_type::iterator it = m_items.begin(); it != m_items.end(); ++it )
 	{

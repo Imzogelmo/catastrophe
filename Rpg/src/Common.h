@@ -52,9 +52,11 @@ USING_NAMESPACE_CE
 class Battle;
 class BattleAction;
 class BattleActionQueue;
+class BattleFaction;
 class BattleEngine;
 
 
+class InventorySlot;
 class InventoryItem;
 class Inventory;
 class Equipment;

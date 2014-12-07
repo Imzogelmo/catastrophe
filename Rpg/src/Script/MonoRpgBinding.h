@@ -45,6 +45,36 @@ public:
 	static void InventorySlot_Combine( InventorySlot* self, InventorySlot* inventorySlot );
 
 
+	// Inventory
+	static void Inventory_SetCapacity( Inventory* inventory, u32 maxItems );
+	static u32 Inventory_GetCapacity( Inventory* inventory );
+	static void Inventory_Clear( Inventory* inventory );
+	static int Inventory_FindFirstFreeSlot( Inventory* inventory, int startSlot );
+	static int Inventory_FindFirstUsedSlot( Inventory* inventory, int startSlot );
+	static void Inventory_AddSlot( Inventory* inventory, InventorySlot inventorySlot );
+	static void Inventory_AddItem( Inventory* inventory, Item* item, u8 amount );
+	static void Inventory_RemoveItem( Inventory* inventory, Item* item, u8 amount );
+	static void Inventory_RemoveSlot( Inventory* inventory, int slot );
+	static u8 Inventory_AddItemsToSlot( Inventory* inventory, int slot, u8 amount );
+	static u8 Inventory_RemoveItemsFromSlot( Inventory* inventory, int slot, u8 amount );
+	static void Inventory_Compress( Inventory* inventory );
+	static void Inventory_SwapSlots( Inventory* inventory, int firstSlot, int secondSlot );
+	static void Inventory_Splice( Inventory* inventory, Inventory other );
+	static void Inventory_SpliceSlot( Inventory* inventory, Inventory other, int index );
+	static bool Inventory_Contains( Inventory* inventory, Item* item );
+	static int Inventory_FindFirstOf( Inventory* inventory, Item* item, int startSlot );
+	static int Inventory_FindLastOf( Inventory* inventory, Item* item );
+	static u32 Inventory_Size( Inventory* inventory );
+	static bool Inventory_IsEmpty( Inventory* inventory );
+	static bool Inventory_IsFull( Inventory* inventory );
+	static InventorySlot Inventory_GetSlot( Inventory* inventory, int slot );
+	static void Inventory_SetSlot( Inventory* inventory, int slot, InventorySlot inventorySlot );
+	static bool Inventory_GetAllowDuplicateItems( Inventory* inventory );
+	static void Inventory_SetAllowDuplicateItems( Inventory* inventory, bool value );
+	static bool Inventory_GetIsFixedSize( Inventory* inventory );
+	static void Inventory_SetIsFixedSize( Inventory* inventory, bool value );
+
+
 	// Equipment
 	static Equipment* Equipment_Create();
 	static void Equipment_Destroy( Equipment* equipment );
@@ -85,6 +115,8 @@ public:
 
 
 	static void BindActor();
+	static void BindInventorySlot();
+	static void BindInventory();
 	static void BindEquipment();
 	static void BindParty();
 
