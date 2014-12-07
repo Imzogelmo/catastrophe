@@ -119,6 +119,8 @@ Inventory* MonoRpgBinding::Party_GetInventory( Party* party )
 
 void MonoRpgBinding::BindParty()
 {
+	SetNamespace("CatastropheEngine.Rpg.Party::");
+
 	//AddInternalCall("Create", Party_Create);
 	AddInternalCall("AddMember", Party_AddMember);
 	AddInternalCall("InsertMemberInSlot", Party_InsertMemberInSlot);

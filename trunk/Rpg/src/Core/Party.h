@@ -15,7 +15,7 @@
 #include <fc/string.h>
 
 #include "Common.h"
-#include "../Inventory.h"
+#include "Inventory.h"
 
 
 class Party
@@ -42,6 +42,8 @@ public:
 
 	/// Returns the index of the first unused slot, or -1 if none exist.
 	int GetFirstEmptySlot( int startSlot = 0 ) const;
+
+	/// Returns the index of the first unused slot between start/end, or -1 if none exist.
 	int GetFirstEmptySlot( int startSlot, int endSlot ) const;
 
 	/// Returns true if actor is a member of this party.

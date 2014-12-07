@@ -110,6 +110,8 @@ Attributes MonoRpgBinding::Equipment_GetCombinedAttributes( Equipment* equipment
 
 void MonoRpgBinding::BindEquipment()
 {
+	SetNamespace("CatastropheEngine.Rpg.Equipment::");
+
 	AddInternalCall("Create", Equipment_Create);
 	AddInternalCall("Resize", Equipment_Resize);
 	AddInternalCall("GetNumSlots", Equipment_GetNumSlots);
