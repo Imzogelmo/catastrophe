@@ -11,46 +11,100 @@
 
 #pragma once
 
-#include <fc/vector.h>
-#include <Catastrophe/Math/Vector2.h>
+#include <fc/static_vector.h>
 
 #include "Common.h"
-
-#define MAX_BATTLE_GROUP_SIZE	16
-#define MAX_BATTLE_GROUPS		16
+#include "Combatant.h"
 
 
-struct BattleGroupEntityData
+
+// BattleGroup
+//
+// The main purpose of this class is to encapsulate Combatants
+// in a simple way, provide easy and straight-forward algorithms for managing them,
+// and to eliminate code duplication for differing factions.
+
+class BattleGroup
 {
-	int		id;
-	int		flags;
-	Vector2	pos;
+public:
+	typedef fc::static_vector<Combatant*, MAX_BATTLEGROUP_SIZE> vec_type;
 
-	BattleGroupEntityData( int id = 0, const Vector2& pos = Vector2::Zero) :
-		id(id), pos(pos)
-	{}
+	BattleGroup();
 
-};
+	/// Adds a combatant to this group.
+	void AddCombatant( Combatant* combatant );
 
+	/// Inserts a combatant into this group at position.
+	void InsertCombatant( Combatant* combatant, u32 position );
 
-struct BattleGroupData
-{
-	typedef fc::fixed_vector<BattleGroupEntityData, MAX_BATTLE_GROUP_SIZE>	vec_type;
+	/// Removes a combatant in this group.
+	void RemoveCombatant( Combatant* combatant );
+
+	/// Removes all incapacitated combatantants from this group.
+	void RemoveIncapacitatedCombatants();
+
+	/// Removes a combatants from this group.
+	void RemoveAllCombatants();
+
+	/// Returns true if all Combatants are incapacitated.
+	bool IsDefeated() const;
+
+	/// Returns true if one of this groups combatants is actor.
+	bool ContainsActor( Actor* actor ) const;
+
+	/// Returns true if this group contains combatant.
+	bool ContainsCombatant( Combatant* combatant ) const;
+
+	/// Gets all active combatants in this group.
+	void GetActiveCombatants( vec_type& outActiveCombatants ) const;
 	
-	vec_type	battlers;
+	/// Gets all incapacitated combatants in this group.
+	void GetIncapacitatedCombatants( vec_type& outIncapacitatedCombatants ) const;
 
-	/// Initialize from MonsterGroup. Returns the number of added monsters.
-	int CreateFromMonsterGroup( const MonsterGroup& monsterGroup );
+	/// Gets the number of active combatants this group contains.
+	u32 GetNumActiveCombatants() const;
 
-	/// Add a MonsterGroup to this group. Returns the number of added monsters.
-	int AddMonsterGroup( const MonsterGroup& monsterGroup );
+	/// Gets the number of incapacitated combatants this group contains.
+	u32 GetNumIncapacitatedCombatants() const;
 
-	void ForceAddSingleMonsterFromGroup( const MonsterGroup& monsterGroup );
-	void AddBattler( const BattleGroupEntityData& data );
-	void AddBattler( int id, const Vector2& pos = Vector2::Zero );
-	void RemoveBattler( int id );
+	/// Gets the number of combatants this group contains.
+	u32 GetNumCombatants() const;
 
-	int GetBattlerCount() const { return (int)battlers.size(); }
+	/// Selects a combatant at random from all active combatants in this group.
+	Combatant* SelectRandomActiveCombatant() const;
+
+	/// Selects a combatant at random from all incapacitated combatants in this group.
+	Combatant* SelectRandomIncapacitatedCombatant() const;
+
+	/// Selects a combatant at random from this group.
+	Combatant* SelectRandomCombatant() const;
+
+	/// Gets the combined exp value of all combatants in this group.
+	int GetCombinedExp() const;
+
+	/// Gets the combined gold amount of all combatants in this group.
+	int GetCombinedGold() const;
+
+	void Update();
+	void Render();
+
+	BattleFaction* GetBattleFaction() const { return m_battleFaction; }
+	void SetBattleFaction( BattleFaction* battleFaction );
+
+	/// Gets the combatant at index.
+	Combatant* GetCombatant( u32 index ) const
+	{
+		return const_cast<Combatant*>(
+			index < m_combatants.size() ? m_combatants[index] : 0);
+	}
+
+	vec_type& GetCombatants() { return m_combatants; }
+	const vec_type& GetCombatants() const { return m_combatants; }
+
+protected:
+	vec_type		m_combatants;
+	BattleFaction*	m_battleFaction;
+	//u32			m_groupId;
 
 };
 
