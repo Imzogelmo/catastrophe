@@ -18,8 +18,10 @@
 #include "BattleActionQueue.inl"
 #include "Battle.inl"
 #include "BattleGroup.inl"
+#include "BattleFaction.inl"
 #include "BattleEvent.inl"
 #include "BattleEngine.inl"
+#include "CombatantGroup.inl" //fixme
 
 
 

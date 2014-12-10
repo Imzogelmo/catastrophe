@@ -114,11 +114,42 @@ public:
 	static Inventory* Party_GetInventory( Party* party );
 
 
+	// BattleGroup
+	static void BattleGroup_InsertCombatant( BattleGroup* battleGroup, Combatant* combatant, u32 position );
+	static bool BattleGroup_ContainsCombatant( BattleGroup* battleGroup, Combatant* combatant );
+	static MonoObject* BattleGroup_GetCombatant( BattleGroup* battleGroup, int index );
+
+	static MonoArray* BattleGroup_CallFuncRetArrayParam0( BattleGroup* battleGroup, int functionType );
+	static MonoObject* BattleGroup_CallFuncRetCombatantParam0( BattleGroup* battleGroup, int functionType );
+	static int BattleGroup_CallFuncRetIntParam0( BattleGroup* battleGroup, int functionType );
+	static bool BattleGroup_CallFuncRetBoolParam0( BattleGroup* battleGroup, int functionType );
+	static void BattleGroup_CallFuncRetVoidParam0( BattleGroup* battleGroup, int functionType );
+	static void BattleGroup_CallFuncRetVoidParam1( BattleGroup* battleGroup, int functionType, void* param );
+
+
+	// BattleFaction
+	static BattleGroup* BattleFaction_CreateBattleGroup( BattleFaction* battleFaction );
+	static void BattleFaction_RemoveBattleGroup( BattleFaction* battleFaction, BattleGroup* battleGroup );
+	static bool BattleFaction_ContainsCombatant( BattleFaction* battleFaction, Combatant* combatant );
+	static BattleGroup* BattleFaction_GetBattleGroup( BattleFaction* battleFaction, u32 groupNumber );
+	static MonoObject* BattleFaction_GetClosestCombatantTo( BattleFaction* battleFaction, Combatant* combatant );
+	static MonoObject* BattleFaction_GetClosestCombatantInDirection( BattleFaction* battleFaction, Combatant* combatant, int direction );
+
+	static MonoArray* BattleFaction_CallFuncRetArrayParam0( BattleFaction* battleFaction, int functionType );
+	static MonoObject* BattleFaction_CallFuncRetCombatantParam0( BattleFaction* battleFaction, int functionType );
+	static int BattleFaction_CallFuncRetIntParam0( BattleFaction* battleFaction, int functionType );
+	static bool BattleFaction_CallFuncRetBoolParam0( BattleFaction* battleFaction, int functionType );
+	static void BattleFaction_CallFuncRetVoidParam0( BattleFaction* battleFaction, int functionType );
+	static void BattleFaction_CallFuncRetVoidParam1( BattleFaction* battleFaction, int functionType, void* param );
+
+
 	static void BindActor();
 	static void BindInventorySlot();
 	static void BindInventory();
 	static void BindEquipment();
 	static void BindParty();
+	static void BindBattleGroup();
+	static void BindBattleFaction();
 
 };
 

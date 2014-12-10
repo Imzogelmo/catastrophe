@@ -41,20 +41,11 @@ void BattleFaction::RemoveBattleGroup( BattleGroup* battleGroup )
 		BattleGroup* group = *it;
 		if( group == battleGroup )
 		{
-			//TODO: This is depricated:
+			// If the group wasn't already moved, set it's faction to null.
+			BattleFaction* faction = group->GetBattleFaction();
+			if( faction == this )
+				group->SetBattleFaction(null);
 
-			// set the next groups groupId accordingly
-			for( vec_type::iterator next = it + 1; next != m_groups.end(); )
-			{
-				BattleGroup::vec_type& v = group->GetCombatants();
-				for( BattleGroup::vec_type::iterator c = v.begin(); c != v.end(); ++c )
-				{
-					int currentGroup = (*c)->GetBattleGroup();
-					(*c)->SetBattleGroup(currentGroup - 1);
-				}
-			}
-
-			group->SetBattleFaction(null);
 			m_groups.erase(it);
 
 			break;
@@ -81,9 +72,9 @@ void BattleFaction::RemoveCombatant( Combatant* combatant )
 {
 	if( combatant != null )
 	{
-		int battleGroup = combatant->GetBattleGroup();
-		if( (u32)battleGroup < m_groups.size() )
-			m_groups[battleGroup]->RemoveCombatant(combatant);
+		BattleGroup* battleGroup = combatant->GetBattleGroup();
+		if( battleGroup != null && ContainsCombatant(combatant) )
+			battleGroup->RemoveCombatant(combatant);
 	}
 }
 
