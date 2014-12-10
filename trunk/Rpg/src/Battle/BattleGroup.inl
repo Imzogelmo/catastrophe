@@ -12,6 +12,7 @@
 #include <fc/rand.h>
 
 #include "BattleGroup.h"
+#include "BattleFaction.h"
 
 
 BattleGroup::BattleGroup() :

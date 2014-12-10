@@ -39,7 +39,7 @@ public:
 	/// Removes all empty battle group from this faction.
 	void RemoveEmptyBattleGroups();
 
-	/// Removes a combatant in this faction.
+	/// Removes a combatant if it exists inside a group in this faction.
 	void RemoveCombatant( Combatant* combatant );
 
 	/// Removes all incapacitated combatantants from all groups in this faction.

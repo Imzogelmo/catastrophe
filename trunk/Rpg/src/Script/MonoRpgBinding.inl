@@ -19,6 +19,8 @@
 #include "RpgBindings/Inventory.inl"
 #include "RpgBindings/Equipment.inl"
 #include "RpgBindings/Party.inl"
+#include "RpgBindings/BattleGroup.inl"
+#include "RpgBindings/BattleFaction.inl"
 
 
 
