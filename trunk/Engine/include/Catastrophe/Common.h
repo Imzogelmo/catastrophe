@@ -53,6 +53,13 @@ typedef int					glint;
 #endif
 
 
+#if _MSC_VER >= 1600
+	#define null nullptr
+#else
+	#define null 0
+#endif
+
+
 //CE_API 
 #if defined CE_EXPORT
 	#define CE_API __declspec(dllexport)
@@ -122,8 +129,8 @@ typedef fc::basic_string<char>	String;
 //todo: use c++11 template typedef support instead.
 //typedef template<u32 N> using StaticString = fc::static_string<N>
 #define StaticString	fc::static_string
-#define Array			fc::dynamic_array
-#define StaticArray		fc::static_array
+//#define Array			fc::dynamic_array
+//#define StaticArray		fc::static_array
 
 
 CE_NAMESPACE_BEGIN
@@ -203,6 +210,8 @@ struct VertexColorNormalTexture3D;
 class Serializer;
 class Deserializer;
 class File;
+class FileBuffer;
+class CompressedFile;
 class ConfigFile;
 class PackFile;
 class VectorBuffer;

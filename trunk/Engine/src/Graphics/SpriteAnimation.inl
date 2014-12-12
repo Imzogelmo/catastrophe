@@ -284,7 +284,7 @@ float SpriteAnimation::GetAnimationLength() const
 	if( m_animationType != (u8)AnimationType_PingPong )
 		return (m_frameSpeed * (f32)m_numFrames);
 
-	return (m_frameSpeed * (f32)((m_numFrames * 2) - 1);
+	return (m_frameSpeed * (f32)((m_numFrames * 2) - 1));
 }
 
 

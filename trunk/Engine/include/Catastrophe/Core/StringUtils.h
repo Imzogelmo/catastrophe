@@ -75,6 +75,9 @@ String ToString( const Quaternion& value );
 String ToString( const Matrix& value );
 
 
+String GetNativePath( const String& path );
+
+
 
 CE_NAMESPACE_END
 

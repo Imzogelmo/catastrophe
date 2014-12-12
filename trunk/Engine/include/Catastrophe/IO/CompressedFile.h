@@ -18,58 +18,38 @@
 
 #pragma once
 
-#include "Deserializer.h"
-#include "Serializer.h"
+#include <fc/vector.h>
+
+#include "File.h"
+#include "FileBuffer.h"
 
 CE_NAMESPACE_BEGIN
 
 
-enum FileMode
-{
-	FileRead = 0,
-	FileReadText,
-	FileWrite,
-	FileWriteText,
-	FileReadWrite,
-	FileReadBinary = FileRead,
-	FileWriteBinary = FileWrite
-};
+// TODO: CompressedFile should inherit from FileBuffer, not file...
 
-
-class CE_API File : public Deserializer, public Serializer
+class CompressedFile : public File
 {
 public:
-	File();
-	File( const String& fileName, FileMode mode = FileRead );
-	virtual ~File();
+	CompressedFile();
+	CompressedFile( const String& filename, FileMode mode = FileRead );
+	virtual ~CompressedFile();
 
 	virtual u32 Read( void* dest, u32 size );
 	virtual u32 Write( const void* data, u32 size );
-	virtual u32 Seek( u32 position );
+	//virtual u32 Seek( u32 position );
 
 	virtual bool Open( const String& filename, FileMode mode = FileRead );
 	virtual void Close();
-	virtual void Flush();
 
-	const String& GetFileName() const { return m_filename; }
-	
-	FileMode GetMode() const { return m_mode; }
-	bool IsOpen() const { return m_handle != 0; }
-	void* GetHandle() const { return m_handle; }
-	virtual u32 Size() const { return m_size; }
-	virtual u32 Position() const { return m_position; }
-	bool IsEof() const { return m_position >= m_size; }
-	bool Eof() const { return IsEof(); }
+	virtual u32 Size() const { return m_buffer.Size(); }
+	virtual u32 Position() const { return m_buffer.Position(); }
 
 protected:
-	FileMode	m_mode;
-	void*		m_handle;
-	u32			m_position;
-	u32			m_size;
-	u32			m_offset; //for packfiles
-	String		m_filename;
+	FileBuffer m_buffer;
 
 };
+
 
 
 CE_NAMESPACE_END

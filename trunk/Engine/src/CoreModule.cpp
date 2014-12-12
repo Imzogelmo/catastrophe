@@ -56,12 +56,15 @@
 #include "IO/ConfigFile.inl"
 #include "IO/Deserializer.inl"
 #include "IO/File.inl"
+#include "IO/FileBuffer.inl"
 #include "IO/Log.inl"
 #include "IO/Serializer.inl"
 #include "IO/XmlDocument.inl"
 #include "IO/XmlElement.inl"
 #include "IO/XmlReader.inl"
 #include "IO/XmlWriter.inl"
+#include "IO/LZ4.inl"
+#include "IO/CompressedFile.inl"
 
 
 #include "Util/TexturePacker.inl"

@@ -169,7 +169,7 @@ bool Serializer::WriteString(const char* value)
 bool Serializer::WriteLine(const String& value, bool newline)
 {
 	bool success = true;
-	success = WriteUInt(value.length()) && Write(value.c_str(), value.length()) == value.length();
+	success = Write(value.c_str(), value.length()) == value.length();
 	if(newline && success)
 	{
 		success = WriteUByte(13) && WriteUByte(10);
