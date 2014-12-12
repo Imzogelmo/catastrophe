@@ -41,7 +41,7 @@ public:
 	char ReadChar();
 	u32 ReadUInt();
 	u16 ReadUShort();
-	u8 ReadUByte();
+	u8 ReadByte();
 	bool ReadBool();
 	float ReadFloat();
 
@@ -50,7 +50,7 @@ public:
 	bool ReadChar( char& value );
 	bool ReadUInt( u32& value );
 	bool ReadUShort( u16& value );
-	bool ReadUByte( u8& value );
+	bool ReadByte( u8& value );
 	bool ReadBool( bool& value );
 	bool ReadFloat( float& value );
 

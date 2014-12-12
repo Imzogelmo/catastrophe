@@ -18,58 +18,26 @@
 
 #pragma once
 
-#include "Deserializer.h"
-#include "Serializer.h"
+#include "../Common.h"
 
 CE_NAMESPACE_BEGIN
 
 
-enum FileMode
-{
-	FileRead = 0,
-	FileReadText,
-	FileWrite,
-	FileWriteText,
-	FileReadWrite,
-	FileReadBinary = FileRead,
-	FileWriteBinary = FileWrite
-};
 
-
-class CE_API File : public Deserializer, public Serializer
+class CE_API LZ4
 {
 public:
-	File();
-	File( const String& fileName, FileMode mode = FileRead );
-	virtual ~File();
 
-	virtual u32 Read( void* dest, u32 size );
-	virtual u32 Write( const void* data, u32 size );
-	virtual u32 Seek( u32 position );
-
-	virtual bool Open( const String& filename, FileMode mode = FileRead );
-	virtual void Close();
-	virtual void Flush();
-
-	const String& GetFileName() const { return m_filename; }
-	
-	FileMode GetMode() const { return m_mode; }
-	bool IsOpen() const { return m_handle != 0; }
-	void* GetHandle() const { return m_handle; }
-	virtual u32 Size() const { return m_size; }
-	virtual u32 Position() const { return m_position; }
-	bool IsEof() const { return m_position >= m_size; }
-	bool Eof() const { return IsEof(); }
-
-protected:
-	FileMode	m_mode;
-	void*		m_handle;
-	u32			m_position;
-	u32			m_size;
-	u32			m_offset; //for packfiles
-	String		m_filename;
+	static u32 GetCompressionBounds(u32 inputSize);
+	static u32 CompressData(void* dest, const void* source, u32 sourceSize);
+	static u32 DecompressData(void* dest, const void* source, u32 destSize);
+	//static bool Compress( Serializer& dest, Deserializer& src );
+	//static bool Decompress( Serializer& dest, Deserializer& src );
 
 };
+
+
 
 
 CE_NAMESPACE_END
+

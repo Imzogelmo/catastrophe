@@ -116,11 +116,14 @@ bool XmlReader::NextChild( const char* name )
 {
 	// FIXME: !!!
 	XmlElement element = m_element.FirstChild(name);
-	if( !element )
+	if( element == null )
+		// Try and get the sibling... (intended?)
 		element = m_element.NextSibling(name);
 
-	m_element = element;
-	return m_element;
+	if( element != null )
+		m_element = element;
+
+	return element;
 	//return m_element.SetToChild(name);
 }
 

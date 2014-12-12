@@ -386,6 +386,19 @@ String ToString( const Matrix& value )
 }
 
 
+String GetNativePath( const String& path )
+{
+#ifdef _WIN32
+	String ret(path);
+	for( String::iterator it = ret.begin(); it != ret.end(); ++it )
+		if(*it == '/')
+			*it = '\\';
+	return ret;
+#else
+    return path;
+#endif
+}
+
 
 
 #ifdef _MSC_VER

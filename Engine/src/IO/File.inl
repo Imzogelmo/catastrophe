@@ -19,6 +19,7 @@
 #include "Common.h"
 #include "IO/File.h"
 #include "IO/Log.h"
+#include "Core/StringUtils.h"
 
 #include <cstdio>
 
@@ -91,14 +92,14 @@ u32 File::Read(void* dest, u32 size)
 	if(size == 0 || size + m_position > m_size) //fixme:
 		return 0;
 
-	if(!m_handle)
+	if( !m_handle )
 	{
 		Log("Error: File not open");
 		return 0;
 	}
 
 	u32 ret = fread(dest, size, 1, (FILE*)m_handle);
-	if(ret != 1)
+	if( ret != 1 )
 	{
 		fseek((FILE*)m_handle, m_position + m_offset, SEEK_SET);
 		Log("Error reading from file " + GetFileName());
@@ -112,10 +113,10 @@ u32 File::Read(void* dest, u32 size)
 
 u32 File::Seek(u32 position)
 {
-	if (m_mode == FileRead && position > m_size)
+	if( m_mode == FileRead && position > m_size )
 		position = m_size;
 
-	if (!m_handle)
+	if( !m_handle )
 	{
 		Log("Error: File not open");
 		return 0;
@@ -133,7 +134,7 @@ u32 File::Write(const void* data, u32 size)
 	if(size == 0)
 		return 0;
 
-	if(!m_handle)
+	if( m_handle == null )
 	{
 		Log("Error: File not open");
 		return 0;
@@ -173,19 +174,6 @@ void File::Flush()
 		fflush((FILE*)m_handle);
 }
 
-
-String File::GetNativePath(const String& path)
-{
-#ifdef _WIN32
-	String ret(path);
-	for( String::iterator it = ret.begin(); it != ret.end(); ++it )
-		if(*it == '/')
-			*it = '\\';
-	return ret;
-#else
-    return path;
-#endif
-}
 
 
 #ifdef _MSC_VER

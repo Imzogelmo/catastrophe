@@ -76,7 +76,7 @@ public:
 protected:
 	Texture*	m_texture;
 	vec_type	m_animations;
-	u32		m_currentAnimation;
+	u32			m_currentAnimation;
 
 };
 

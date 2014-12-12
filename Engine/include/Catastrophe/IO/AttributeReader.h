@@ -54,7 +54,7 @@ public:
 	virtual bool GetBool( const char* name, bool defaultValue = false ) const = 0;
 	virtual u8 GetByte( const char* name, u8 defaultValue = 0 ) const = 0;
 	virtual s16 GetShort( const char* name, s16 defaultValue = 0 ) const = 0;
-	virtual u16 GetUShort( const char* name, u16 defaultValue = 0 ) const;
+	virtual u16 GetUShort( const char* name, u16 defaultValue = 0 ) const = 0;
 	virtual int GetInt( const char* name, int defaultValue = 0 ) const = 0;
 	virtual u32 GetUInt( const char* name, u32 defaultValue = 0 ) const = 0;
 	virtual float GetFloat( const char* name, float defaultValue = 0.f ) const = 0;

@@ -62,7 +62,7 @@ u16 Deserializer::ReadUShort()
 }
 
 
-u8 Deserializer::ReadUByte()
+u8 Deserializer::ReadByte()
 {
 	u8 ret = 0;
 	Read(&ret, sizeof(ret));
@@ -72,7 +72,7 @@ u8 Deserializer::ReadUByte()
 
 bool Deserializer::ReadBool()
 {
-	return (ReadUByte() == 0 ? false : true);
+	return (ReadByte() == 0 ? false : true);
 }
 
 
@@ -114,7 +114,7 @@ bool Deserializer::ReadUShort( u16& value )
 }
 
 
-bool Deserializer::ReadUByte( u8& value )
+bool Deserializer::ReadByte( u8& value )
 {
 	return Read(&value, sizeof(value)) == sizeof(value);
 }
@@ -277,7 +277,7 @@ Deserializer& Deserializer::operator >>( s16& value ) { ReadShort(value); return
 Deserializer& Deserializer::operator >>( char& value ) { ReadChar(value); return *this; }
 Deserializer& Deserializer::operator >>( u32& value ) { ReadUInt(value); return *this; }
 Deserializer& Deserializer::operator >>( u16& value ) { ReadUShort(value); return *this; }
-Deserializer& Deserializer::operator >>( u8& value ) { ReadUByte(value); return *this; }
+Deserializer& Deserializer::operator >>( u8& value ) { ReadByte(value); return *this; }
 Deserializer& Deserializer::operator >>( bool& value ) { ReadBool(value); return *this; }
 Deserializer& Deserializer::operator >>( float& value ) { ReadFloat(value); return *this; }
 
