@@ -16,31 +16,35 @@
 
 enum BaseDirectoryType
 {
-	BaseDir_Textures,
-	BaseDir_Fonts,
-	BaseDir_Shaders,
-	BaseDir_Bgm,
-	BaseDir_Sfx,
-	BaseDir_Maps,
-	BaseDir_Tilesets,
-	BaseDir_Data,
-	BaseDir_Scripts,
-	BaseDir_ScriptDefs,
-	BaseDir_Max
+	BaseDirectoryType_Textures,
+	BaseDirectoryType_Tiles,
+	BaseDirectoryType_Backgrounds,
+	BaseDirectoryType_Fonts,
+	BaseDirectoryType_Shaders,
+	BaseDirectoryType_Bgm,
+	BaseDirectoryType_Sfx,
+	BaseDirectoryType_Maps,
+	BaseDirectoryType_Tilesets,
+	BaseDirectoryType_Database,
+	BaseDirectoryType_Scripts,
+	BaseDirectoryType_ScriptDefs,
+	BaseDirectoryType_Max
 };
 
-static const char* default_base_directories[BaseDir_Max] =
+static const char* defaultBaseDirectoryStrings[BaseDirectoryType_Max] =
 {
-	"textures/",
-	"fonts/",
-	"shaders/",
-	"bgm/",
-	"sfx/",
-	"maps/",
-	"tilesets/",
-	"data/",
-	"scripts/",
-	"scripts/defs/"
+	"Textures/",
+	"Tiles/",
+	"Backgrounds/",
+	"Fonts/",
+	"Shaders/",
+	"Bgm/",
+	"Sfx/",
+	"Maps/",
+	"Tilesets/",
+	"Data/",
+	"Scripts/",
+	"Scripts/defs/"
 };
 
 
@@ -49,11 +53,14 @@ class ResourceDirectory
 public:
 	ResourceDirectory();
 
+	void SetDirectory( BaseDirectoryType type, const String& directory );
 	void SetRootDirectory( const String& directory );
-	const String& GetRootDirectory() const { return m_root; }
 
+	String GetRootDirectory() const { return m_root; }
 	String GetDirectory( BaseDirectoryType type ) const;
 	String GetTextureDirectory() const;
+	String GetTileDirectory() const;
+	String GetBackgroundDirectory() const;
 	String GetFontDirectory() const;
 	String GetShaderDirectory() const;
 	String GetMapDirectory() const;
@@ -62,12 +69,12 @@ public:
 	String GetScriptDirectory() const;
 	String GetScriptDefineDirectory() const;
 
-	// Testing only
+	// Debugging
 	void DebugSetAllBaseDirectoriesToSingleDirectory( const String& directory );
 
 protected:
 	String m_root;
-	String m_baseDirectory[BaseDir_Max];
+	String m_baseDirectory[BaseDirectoryType_Max];
 
 };
 

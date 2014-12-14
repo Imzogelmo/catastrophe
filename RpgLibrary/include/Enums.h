@@ -12,7 +12,7 @@
 #pragma once
 
 
-enum Gender
+enum Gender : u8
 {
 	Sex_Male,
 	Sex_Female,
@@ -20,7 +20,7 @@ enum Gender
 };
 
 
-enum Handedness
+enum Handedness : u8
 {
 	Handed_Right = 1,
 	Handed_Left = 2,
@@ -28,7 +28,7 @@ enum Handedness
 };
 
 
-enum Alignment
+enum Alignment : u8
 {
 	Alignment_Good,
 	Alignment_Neutral,
@@ -39,18 +39,19 @@ enum Alignment
 // properties of potiential attack before it is input
 //------------------------------------------------------------------------------------
 
-enum TargetModeFlags  
+enum TargetMode : u8  
 {
 	TargetMode_Single = 1,			// Forced single-target to a selectable target
 	TargetMode_Group = 2,			// Forced multi-target to a selectable group
 	TargetMode_SingleOrGroup = 3,	// Single or group, spreadable 
 	TargetMode_Faction = 4,			// Forced multi-target to selectable faction
 	TargetMode_SingleOrFaction = 5,	// Single or all of faction, spreadable
-	TargetMode_All = 0xFF			// Forced multi-target to both factions
+	TargetMode_GroupOrFaction = 6,	// Group or all of faction, spreadable
+	TargetMode_All = 0x0f			// Forced multi-target to both factions
 };
 
 
-enum Confirmation  
+enum Confirmation : u8
 {
 	Confirm_Manual,
 	Confirm_Auto,
@@ -58,16 +59,16 @@ enum Confirmation
 };
 
 
-enum CursorStart
+enum CursorStart : u8
 {
-	Cursor_None,
-	Cursor_Self,
-	Cursor_FirstAlly,
-	Cursor_FirstEnemy,
+	CursorStart_None,
+	CursorStart_Self,
+	CursorStart_FirstAlly,
+	CursorStart_FirstEnemy
 };
 
 
-enum CursorModeFlags
+enum CursorModeFlags : u8
 {
 	CursorMode_None = 0	,				// User defined
 	CursorMode_Selectable = 1,			// Cam be moved off the starting target
@@ -81,14 +82,14 @@ enum CursorModeFlags
 // properties of attack after it is input
 //------------------------------------------------------------------------------------
 
-enum Faction
+enum Faction : u8
 {
 	Faction_Ally,
 	Faction_Enemy
 };
 
 
-enum TargetScope 
+enum TargetScope : u8
 {
 	Scope_Single,
 	Scope_Group,
@@ -97,15 +98,15 @@ enum TargetScope
 };
 
 
-enum TargetInfo 
+enum TargetInfo : u8
 {
 	Target_None, 
 	Target_Enemy,
 	Target_EnemyGroup,
-	Target_AllEnemies,
+	Target_EnemyFaction,
 	Target_Ally,
 	Target_AllyGroup,
-	Target_AllAllies, 
+	Target_AllyFactioon, 
 	Target_All
 };
 
@@ -113,12 +114,13 @@ enum TargetInfo
 
 //------------------------------------------------------------------------------------
 
-enum UsageFlags
+enum UsageFlags : u8
 {
-	Usage_Camp = 1,
-	Usage_Field = 2,
-	Usage_Battle = 4,
-	Usage_Any = 0xff
+	UsageFlag_Camp = 1,
+	UsageFlag_Field = 2,
+	UsageFlag_Battle = 4,
+	UsageFlag_Other = 8,
+	UsageFlag_Any = 0x0f
 };
 
 
@@ -160,7 +162,7 @@ enum BattleCondition
 // statistical data
 //------------------------------------------------------------------------------------
 
-enum ModifierType
+enum ModifierType : u8
 {
 	ModifierType_BonusMalus,
 	ModifierType_Multiplier
@@ -170,16 +172,16 @@ enum ModifierType
 enum ItemFlags
 {
 	ItemFlag_KeyItem = 1,
-	ItemFlag_Eternal = 2,
+	ItemFlag_Consumable = 2,
 	ItemFlag_Equippable = 4,
 	ItemFlag_Cursed = 8,
-	ItemFlag_EquipOnlySpecialAbility = 8
+	ItemFlag_EquipOnlySpecialAbility = 0x10
 
 };
 
 
 // Details on how the item can be accessed within the database
-enum ItemCategory
+enum ItemCategory : u8
 {
 	ItemCategory_Item,
 	ItemCategory_Weapon,

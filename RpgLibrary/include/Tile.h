@@ -11,10 +11,11 @@
 
 #pragma once
 
-#include <Catastrophe/Math/Rect.h>
+#include <Catastrophe/Math/PackedRect.h>
 #include <Catastrophe/Math/Rectf.h>
 
 #include "RpgCommon.h"
+#include "TileProperties.h"
 
 
 /*
@@ -29,47 +30,49 @@ public:
 		FlipVertical	= 2
 	};
 
-	Tile( Tileset* parent = 0 );
+	Tile( Tileset* parent = null );
 
-	void SetTileset( Tileset* parent ) { m_parent = parent; } //make protected
-	void SetCurrentFrame( s16 frame );
-	void SetAnimationSpeed( s16 frameDelay );
-	void SetSourceRect( const Rect& sourceRectangle );
+	void SetTileset( Tileset* parent ) { m_parent = parent; }
+	void SetCurrentFrame( u16 frame );
+	void SetAnimationSpeed( u16 frameDelay );
+	void SetSourceRect( const PackedRect& sourceRectangle );
 
-	void Create( const Rect& sourceRectangle, int numberOfFrames = 1 );
+	void Create( const PackedRect& sourceRectangle, int numberOfFrames = 1 );
 	void Update();
 
-	inline const Rect& GetSourceRect() const { return m_sourceRect; }
-	inline s16 GetCurrentFrame() const { return frame; }
-	inline s16 GetAnimationSpeed() const { return animSpeed; }
-	inline s16 GetFlags() const { return flags; }
-	inline s16 NumFrames() const { return numFrames; }
-	inline bool IsAnimated() const { return numFrames > 1; }
+	const PackedRect& GetSourceRect() const { return m_sourceRect; }
+	const Rectf& GetUVRect() const { return m_uv; }
 
-	inline Tileset*	GetTileset() const { return m_parent; }
-	inline const Rectf&	GetUVRect() const { return m_uv; }
+	u16 GetCurrentFrame() const { return frame; }
+	u16 GetAnimationSpeed() const { return animSpeed; }
+	u16 GetFlags() const { return flags; }
+	u16 NumFrames() const { return numFrames; }
+	bool IsAnimated() const { return numFrames > 1; }
 
+	Tileset* GetTileset() const { return m_parent; }
 	Texture* GetParentTexture() const;
 
-	inline void SetIndex( u32 index ) { m_tilesetIndex = index; }
-	inline u32 GetIndex() const { return m_tilesetIndex; }
+	void SetIndex( u32 index ) { m_tilesetIndex = index; }
+	u32 GetIndex() const { return m_tilesetIndex; }
 
 	NO_INLINE void Serialize( AttributeWriter* f );
+	void Serialize( Serializer* f );
 	NO_INLINE void Deserialize( AttributeReader* f );
+	void Deserialize( Deserializer* f );
 
 public:
-	s16 counter;
-	s16 frame;
-	s16 animSpeed;
-	s16 numFrames;
+	u16 counter;
+	u16 frame;
+	u16 animSpeed;
+	u16 numFrames;
 
 	//todo: flags..
-	s16 flags;
+	u16 flags;
 	//16 bit align....
 
 protected:
 	Tileset*	m_parent;
-	Rect		m_sourceRect; // w,h are always tilesize?!
+	PackedRect	m_sourceRect; // w,h are always tilesize?!
 	//PackedRect	m_sourceRect;
 	//Vector		m_sCoord;
 	//float		m_tCoord

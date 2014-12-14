@@ -25,7 +25,7 @@ public:
 	//we don't need a template type for simple pointers.
 	typedef void* pointer;
 
-	pointer			ptr;
+	pointer		ptr;
 	String		name;
 
 	Resource( pointer p = 0, const String& filename = "" )
@@ -39,7 +39,7 @@ class RPG_API ResourceCache
 {
 public:
 	typedef	fc::vector<Resource>	vec_type;
-	typedef	fc::vector<u32>		store_type;
+	typedef	fc::vector<u32>			store_type;
 
 	ResourceCache();
 	~ResourceCache();

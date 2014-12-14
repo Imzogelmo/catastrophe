@@ -12,7 +12,6 @@
 #include <Catastrophe/IO/AttributeWriter.h>
 #include <Catastrophe/IO/AttributeReader.h>
 #include "Item.h"
-#include "AttributeSerializer.h"
 
 Attributes Item::m_staticAttributes = Attributes();
 

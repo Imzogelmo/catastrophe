@@ -14,7 +14,6 @@
 #include <Catastrophe/IO/AttributeReader.h>
 
 #include "Attributes.h"
-#include "AttributeSerializer.h"
 
 
 Attributes Attributes::operator +(const Attributes& rhs) const

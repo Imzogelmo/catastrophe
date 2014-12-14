@@ -15,8 +15,9 @@
 #include <fc/static_string.h>
 
 #include "RpgCommon.h"
-#include "FactorSet.h"
 #include "UsageInfo.h"
+#include "Ability.h"
+#include "Factor.h"
 
 
 /*
@@ -54,7 +55,7 @@ struct RPG_API Item
 	StaticString<32>	script;
 	String				description;
 
-	AbilityID	specialAbility;
+	AbilityId	specialAbility;
 	int			price;
 	UsageInfo	usageInfo;
 
@@ -67,7 +68,9 @@ struct RPG_API Item
 	u16			spriteId;
 	u8			itemFlags;
 
-	FactorSet factors;
+	
+	//FactorSet factors;
+	FixedFactorList factors;
 
 	Item();
 

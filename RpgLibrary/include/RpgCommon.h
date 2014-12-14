@@ -71,7 +71,6 @@ struct MonsterFormation;
 struct Encounter;
 struct EncounterData;
 struct EncounterGroup;
-struct FactorSet;
 struct ExperienceTable;
 struct ExpCurve;
 
@@ -96,7 +95,7 @@ class ResourceManagerTypeBase;
 class TextureManager;
 class FontManager;
 class TilesetManager;
-class MapManager;
+class TileMapManager;
 class ShaderObjectManager;
 
 
@@ -138,13 +137,28 @@ class RpgStrings;
 
 #define MAX_FACTORSET_SIZE	4
 
+#define MAX_PARTY_SIZE		16
+
+
+// rpg engine defines
+#define MAX_BATTLEGROUP_SIZE		32
+#define MAX_BATTLEFACTION_GROUPS	16
+
+
 //global
 extern ResourceDirectory*	g_resourceDirectory;
 extern TextureManager*		g_textureManager;
 extern FontManager*			g_fontManager;
 extern TilesetManager*		g_tilesetManager;
-extern MapManager*			g_mapManager;
+extern TileMapManager*		g_tileMapManager;
 extern ShaderObjectManager*	g_shaderObjectManager;
+
+extern ResourceDirectory*	GetResourceDirectory();
+extern TextureManager*		GetTextureManager();
+extern FontManager*			GetFontManager();
+extern TilesetManager*		GetTilesetManager();
+extern TileMapManager*		GetTileMapManager();
+extern ShaderObjectManager*	GetShaderObjectManager();
 
 
 void RpgLibInit();

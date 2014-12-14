@@ -14,7 +14,6 @@
 #include <Catastrophe/IO/AttributeReader.h>
 #include "MonsterData.h"
 #include "Serialization.h"
-#include "AttributeSerializer.h"
 
 
 MonsterData::MonsterData() :

@@ -20,7 +20,8 @@ public:
 	TilesetManager();
 	~TilesetManager();
 
-	Tileset* LoadXml( const String& filename, int* id = 0 );
+	Tileset* Load( const String& path, const String& filename, int* id = 0 );
+	Tileset* Load( const String& filename, int* id = 0 );
 
 protected:
 	void DisposeResource( void* p );

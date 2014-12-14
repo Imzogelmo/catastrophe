@@ -14,10 +14,10 @@
 
 ResourceDirectory::ResourceDirectory()
 {
-	m_root = "data/";
+	m_root = "Assets/";
 
-	for( int i(0); i < BaseDir_Max; ++i )
-		m_baseDirectory[i] = default_base_directories[i];
+	for( int i(0); i < BaseDirectoryType_Max; ++i )
+		m_baseDirectory[i] = defaultBaseDirectoryStrings[i];
 }
 
 
@@ -33,61 +33,73 @@ void ResourceDirectory::SetRootDirectory( const String& directory )
 
 String ResourceDirectory::GetDirectory( BaseDirectoryType type ) const
 {
-	ASSERT(type < BaseDir_Max);
+	ASSERT(type < BaseDirectoryType_Max);
 	return m_root + m_baseDirectory[type];
 }
 
 
 String ResourceDirectory::GetTextureDirectory() const
 {
-	return GetDirectory(BaseDir_Textures);
+	return GetDirectory(BaseDirectoryType_Textures);
+}
+
+
+String ResourceDirectory::GetTileDirectory() const
+{
+	return GetDirectory(BaseDirectoryType_Tiles);
+}
+
+
+String ResourceDirectory::GetBackgroundDirectory() const
+{
+	return GetDirectory(BaseDirectoryType_Backgrounds);
 }
 
 
 String ResourceDirectory::GetFontDirectory() const
 {
-	return GetDirectory(BaseDir_Fonts);
+	return GetDirectory(BaseDirectoryType_Fonts);
 }
 
 
 String ResourceDirectory::GetShaderDirectory() const
 {
-	return GetDirectory(BaseDir_Shaders);
+	return GetDirectory(BaseDirectoryType_Shaders);
 }
 
 
 String ResourceDirectory::GetMapDirectory() const
 {
-	return GetDirectory(BaseDir_Maps);
+	return GetDirectory(BaseDirectoryType_Maps);
 }
 
 
 String ResourceDirectory::GetTilesetDirectory() const
 {
-	return GetDirectory(BaseDir_Tilesets);
+	return GetDirectory(BaseDirectoryType_Tilesets);
 }
 
 
 String ResourceDirectory::GetDataDirectory() const
 {
-	return GetDirectory(BaseDir_Data);
+	return GetDirectory(BaseDirectoryType_Database);
 }
 
 
 String ResourceDirectory::GetScriptDirectory() const
 {
-	return GetDirectory(BaseDir_Scripts);
+	return GetDirectory(BaseDirectoryType_Scripts);
 }
 
 
 String ResourceDirectory::GetScriptDefineDirectory() const
 {
-	return GetDirectory(BaseDir_ScriptDefs);
+	return GetDirectory(BaseDirectoryType_ScriptDefs);
 }
 
 
 void ResourceDirectory::DebugSetAllBaseDirectoriesToSingleDirectory( const String& directory )
 {
-	for( int i(0); i < BaseDir_Max; ++i )
+	for( int i(0); i < BaseDirectoryType_Max; ++i )
 		m_baseDirectory[i] = directory;
 }

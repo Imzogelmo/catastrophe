@@ -33,6 +33,7 @@ CharacterClass::CharacterClass() :
 
 void CharacterClass::RegisterObject()
 {
+	/*
 	REGISTER_ATTRIBUTE_FACTORY_TYPE(CharacterClass);
 	REGISTER_ATTRIBUTE(CharacterClass, VAR_TYPE_STRING, "name", name);
 	REGISTER_ATTRIBUTE(CharacterClass, VAR_TYPE_STRING, "script", script);
@@ -43,6 +44,7 @@ void CharacterClass::RegisterObject()
 	REGISTER_ATTRIBUTE(CharacterClass, VAR_TYPE_INT, "mapSpritesetId", mapSpritesetId);
 	REGISTER_ATTRIBUTE(CharacterClass, VAR_TYPE_INT, "battleSpritesetId", battleSpritesetId);
 	POP_ATTRIBUTE_NODE(CharacterClass);
+	*/
 }
 
 

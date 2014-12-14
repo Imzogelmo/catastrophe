@@ -26,7 +26,7 @@
 #include "FontManager.inl"
 
 #include "TilesetManager.inl"
-#include "MapManager.inl"
+#include "TileMapManager.inl"
 #include "ShaderObjectManager.inl"
 
 #include "TextureAsset.inl"
@@ -38,16 +38,21 @@
 
 #include "SerializeObject.inl"
 #include "DeserializeObject.inl"
-#include "AttributeSerializer.inl"
 
 
 ResourceDirectory*		g_resourceDirectory = 0;
 TextureManager*			g_textureManager = 0;
 FontManager*			g_fontManager = 0;
 TilesetManager*			g_tilesetManager = 0;
-MapManager*				g_mapManager = 0;
+TileMapManager*			g_tileMapManager = 0;
 ShaderObjectManager*	g_shaderObjectManager = 0;
 
+extern ResourceDirectory*	GetResourceDirectory() { return g_resourceDirectory; }
+extern TextureManager*		GetTextureManager() { return g_textureManager; }
+extern FontManager*			GetFontManager() { return g_fontManager; }
+extern TilesetManager*		GetTilesetManager() { return g_tilesetManager; }
+extern TileMapManager*		GetTileMapManager() { return g_tileMapManager; }
+extern ShaderObjectManager*	GetShaderObjectManager() { return g_shaderObjectManager; }
 
 
 void RpgLibInit()
@@ -56,7 +61,7 @@ void RpgLibInit()
 	g_textureManager = new TextureManager();
 	g_fontManager = new FontManager();
 	g_tilesetManager = new TilesetManager();
-	g_mapManager = new MapManager();
+	g_tileMapManager = new TileMapManager();
 	g_shaderObjectManager = new ShaderObjectManager();
 
 	// register all object types (order does not matter).
@@ -82,10 +87,10 @@ void RpgLibShutdown()
 	SAFE_DELETE(g_textureManager);
 	SAFE_DELETE(g_fontManager);
 	SAFE_DELETE(g_tilesetManager);
-	SAFE_DELETE(g_mapManager);
+	SAFE_DELETE(g_tileMapManager);
 	SAFE_DELETE(g_shaderObjectManager);
 
-	ObjectAttributeSerializerFactory::GetInstance()->DeleteFactories();
+	//ObjectAttributeSerializerFactory::GetInstance()->DeleteFactories();
 }
 
 

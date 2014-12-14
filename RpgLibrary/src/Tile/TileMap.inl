@@ -11,6 +11,9 @@
 
 #include <Catastrophe/IO/XmlWriter.h>
 #include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/File.h>
+#include <Catastrophe/IO/FileBuffer.h>
+#include <Catastrophe/IO/LZ4.h>
 #include "TileMap.h"
 
 
@@ -149,6 +152,16 @@ TileMapLayer* TileMap::GetLayer( u32 index ) const
 }
 
 
+void TileMap::Render( SpriteBatch* spriteBatch, const Rect& viewRect, bool mapWraparound )
+{
+	for( vec_type::iterator it = m_layers.begin(); it != m_layers.end(); ++it )
+	{
+		if( (*it)->IsVisible() )
+			(*it)->Render(spriteBatch, viewRect, mapWraparound);
+	}
+}
+
+/*
 bool TileMap::Serialize( const String& filename )
 {
 	XmlWriter xml(filename);
@@ -176,9 +189,46 @@ bool TileMap::Serialize( const String& filename )
 
 	return true;
 }
+*/
+
+bool TileMap::Save( const String& path )
+{
+	// We write directly to memory so we can compress the data
+	// with our own custom header.
+	FileBuffer fileBuffer;
+
+	File f(path + m_filename, FileWrite);
+	if( !f.IsOpen() )
+	{
+		Log("Could not open file (%s)", (path + m_filename).c_str());
+		return false;
+	}
+
+	fileBuffer.WriteInt(0); //reserved for future use
+	fileBuffer.WriteInt(0); //reserved for future use
+
+	fileBuffer.WriteString(m_name);
+	fileBuffer.WriteUInt(m_layers.size());
+	fileBuffer.WriteUInt(m_width);
+	fileBuffer.WriteUInt(m_height);
+
+	for( u32 i(0); i < m_layers.size(); ++i )
+		m_layers[i]->Serialize(&fileBuffer);
+
+	u8* p = new u8[ fileBuffer.Size() ];
+	u32 compressedSize = LZ4::CompressData(p, fileBuffer.GetData(), fileBuffer.Size()); 
+
+	f.WriteInt(fileBuffer.Size());
+	f.WriteInt(compressedSize);
+	f.Write(p, compressedSize);
+	f.Close();
+
+	return true;
+}
 
 
-bool TileMap::Deserialize( const String& filename )
+
+bool TileMap::Load( const String& path, const String& filename )
 {
 	XmlReader xml(filename);
 	if( !xml.IsOpen() )

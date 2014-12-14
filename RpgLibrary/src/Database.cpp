@@ -15,6 +15,7 @@
 // these are not actually 'inlined'.
 
 // data
+#include "UsageInfo.inl"
 #include "Attributes.inl"
 #include "AttributeFlags.inl"
 #include "Modifier.inl"
@@ -22,6 +23,7 @@
 #include "Item.inl"
 #include "EquipmentItem.inl"
 #include "Buff.inl"
+#include "Ability.inl"
 #include "Skill.inl"
 #include "Spell.inl"
 #include "MonsterData.inl"
@@ -29,6 +31,7 @@
 #include "MonsterFormation.inl"
 #include "Encounter.inl"
 #include "Race.inl"
+#include "Factor.inl"
 #include "CharacterData.inl"
 #include "CharacterClass.inl"
 #include "ItemDrop.inl"
