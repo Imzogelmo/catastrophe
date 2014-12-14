@@ -62,13 +62,13 @@ public:
 	void Render( SpriteBatch* spriteBatch, const Rect& viewRect, bool mapWraparound = false );
 
 
-	NO_INLINE bool Serialize( const String& filename );
-	NO_INLINE bool Deserialize( const String& filename );
+	NO_INLINE bool Save( const String& path = "" );
+	NO_INLINE bool Load( const String& path, const String& filename );
 
 protected:
 	String		m_name;
 	String		m_filename;
-	vec_type		m_layers;
+	vec_type	m_layers;
 	u32			m_width;
 	u32			m_height;
 	//u32			m_tileSize;

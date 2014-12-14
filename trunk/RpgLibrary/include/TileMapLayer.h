@@ -29,6 +29,7 @@ public:
 
 	TileMapLayer();
 
+	void SetTileSize( u32 tileSize ) { m_tileSize = tileSize; }
 	void SetOffset( const Point& offset ) { m_offset = offset; }
 	void SetName( const String& name ) { m_name = name; }
 	void SetVisible( bool enable = true ) { m_visible = enable; }
@@ -39,6 +40,7 @@ public:
 	void Resize( u32 w, u32 h );
 	void Clear();
 
+	u32 GetTileSize() const { return m_tileSize; }
 	u32 GetSize() const { return m_tiles.size(); }
 	u32 GetWidth() const { return m_tiles.x(); }
 	u32 GetHeight() const { return m_tiles.y(); }
@@ -68,7 +70,9 @@ public:
 	void Render( SpriteBatch* spriteBatch, const Rect& viewRect, bool wrap = false );
 
 	void Serialize( AttributeWriter* f );
+	void Serialize( Serializer* f );
 	void Deserialize( AttributeReader* f );
+	void Deserialize( Deserializer* f );
 
 protected:
 	void InternalDrawNormal( SpriteBatch* spriteBatch, s32 x1, s32 y1, s32 x2, s32 y2 );

@@ -13,7 +13,6 @@
 #include <Catastrophe/IO/AttributeWriter.h>
 #include <Catastrophe/IO/AttributeReader.h>
 #include "MonsterFormation.h"
-#include "AttributeSerializer.h"
 
 
 

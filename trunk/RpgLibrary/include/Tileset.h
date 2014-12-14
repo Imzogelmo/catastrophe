@@ -25,7 +25,6 @@ public:
 	typedef fc::vector<Tile*>			anim_vec_type;
 
 	Tileset();
-	Tileset( TilesetManager* parent, const String& name );
 	~Tileset();
 
 	void Clear();
@@ -34,7 +33,6 @@ public:
 
 	void SetName( const String& name ) { m_name = name; }
 	void SetFileName( const String& filename ) { m_filename = filename; }
-	void SetId( int id ) { m_id = id; }
 	void SetTexture( Texture* texture );
 	void SetTileSize( u32 tileSize );
 
@@ -45,10 +43,8 @@ public:
 
 	const String& GetName() const { return m_name; }
 	const String& GetFileName() const { return m_filename; }
-	TilesetManager* GetTilesetManager() const { return m_parent; }
 	Texture* GetTexture() const { return m_texture; }
-	gluint GetTextureId() const;
-	int GetId() const { return m_id; }
+	u32 GetTextureId() const;
 	u32 GetTileSize() const { return m_tileSize; }
 
 	Tile* GetTile( u32 index ) const;
@@ -63,15 +59,13 @@ public:
 	void ResetAnimations();
 	void ValidateTiles();
 
-	NO_INLINE bool Serialize( const String& directory );
-	NO_INLINE bool Deserialize( const String& directory, const String& filename );
+	NO_INLINE bool Save( const String& directory );
+	NO_INLINE bool Load( const String& directory, const String& filename );
 
-private:
-	TilesetManager*	m_parent;
+protected:
 	Texture*		m_texture;
 	String			m_name;
 	String			m_filename;
-	int				m_id;
 	u32				m_tileSize;
 	array_type		m_tiles;
 	anim_vec_type	m_ptr_animated_tiles;

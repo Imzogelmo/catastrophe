@@ -111,7 +111,7 @@
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				ProgramDataBaseFileName="$(OutDir)\rpglib.pdb"
-				WarningLevel="4"
+				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -324,10 +324,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\..\..\src\Resource\MapManager.inl"
-					>
-				</File>
-				<File
 					RelativePath=".\..\..\src\Resource\Resource.inl"
 					>
 				</File>
@@ -361,6 +357,10 @@
 				</File>
 				<File
 					RelativePath=".\..\..\src\Resource\TextureManager.inl"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\Resource\TileMapManager.inl"
 					>
 				</File>
 				<File
@@ -409,6 +409,10 @@
 			<Filter
 				Name="Data"
 				>
+				<File
+					RelativePath="..\..\include\Ability.h"
+					>
+				</File>
 				<File
 					RelativePath=".\..\..\include\BattleCommand.h"
 					>
@@ -582,10 +586,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\..\..\include\MapManager.h"
-					>
-				</File>
-				<File
 					RelativePath=".\..\..\include\Resource.h"
 					>
 				</File>
@@ -619,6 +619,10 @@
 				</File>
 				<File
 					RelativePath=".\..\..\include\TextureManager.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\TileMapManager.h"
 					>
 				</File>
 				<File

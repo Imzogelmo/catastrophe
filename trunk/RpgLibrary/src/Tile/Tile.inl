@@ -13,6 +13,8 @@
 #include <Catastrophe/Graphics/Texture.h>
 #include <Catastrophe/IO/AttributeWriter.h>
 #include <Catastrophe/IO/AttributeReader.h>
+#include <Catastrophe/IO/Serializer.h>
+#include <Catastrophe/IO/Deserializer.h>
 
 #include "Serialization.h"
 #include "Tile.h"
@@ -27,9 +29,12 @@ Tile::Tile( Tileset* parent ) :
 	numFrames(1),
 	flags(0),
 	m_parent(parent),
-	m_sourceRect(Rect::Zero),
+	m_sourceRect(PackedRect::Zero),
 	m_uv(Rectf::Zero)
 {
+	//::memset(this, 0, sizeof(Tile));
+	numFrames = 1;
+	animSpeed = 128;
 }
 
 
@@ -39,14 +44,14 @@ Texture* Tile::GetParentTexture() const
 }
 
 
-void Tile::Create( const Rect& sourceRectangle, int numberOfFrames )
+void Tile::Create( const PackedRect& sourceRectangle, int numberOfFrames )
 {
 	numFrames = (s16)(numberOfFrames > 0 ? numberOfFrames : 1);
 	SetSourceRect(sourceRectangle);
 }
 
 
-void Tile::SetSourceRect( const Rect& sourceRectangle )
+void Tile::SetSourceRect( const PackedRect& sourceRectangle )
 {
 	m_sourceRect = sourceRectangle;
 	Texture* texture = GetParentTexture();
@@ -76,7 +81,7 @@ void Tile::SetSourceRect( const Rect& sourceRectangle )
 }
 
 
-void Tile::SetCurrentFrame( s16 index )
+void Tile::SetCurrentFrame( u16 index )
 {
 	if( index < numFrames )
 	{
@@ -113,9 +118,9 @@ void Tile::SetCurrentFrame( s16 index )
 }
 
 
-void Tile::SetAnimationSpeed( s16 frameDelay )
+void Tile::SetAnimationSpeed( u16 frameDelay )
 {
-	animSpeed = fc::clamp<s16>(frameDelay, 16, 32767);
+	animSpeed = fc::clamp<u16>(frameDelay, 16, 32767);
 }
 
 
@@ -191,7 +196,17 @@ void Tile::Serialize( AttributeWriter* f )
 	f->SetShort("flags", flags);
 
 	//Todo: fix this
-	SerializeObject<Rect>("SouceRect", f, m_sourceRect);
+	//SerializeObject<Rect>("SouceRect", f, Rect(m_sourceRect));
+	f->SetRect("SouceRect", Rect(m_sourceRect));
+}
+
+
+void Tile::Serialize( Serializer* f )
+{
+	f->WriteUShort(numFrames);
+	f->WriteUShort(animSpeed);
+	f->WriteUShort(flags);
+	f->WritePackedRect(m_sourceRect);
 }
 
 
@@ -201,9 +216,21 @@ void Tile::Deserialize( AttributeReader* f )
 	animSpeed = f->GetShort("speed", 16);
 	flags = f->GetShort("flags", 0);
 
-	DeserializeObject<Rect>("SouceRect", f, m_sourceRect);
+	m_sourceRect = f->GetRect("SouceRect");
+	//DeserializeObject<Rect>("SouceRect", f, m_sourceRect);
 
 	//todo: should have tileset create..?
 	Create(m_sourceRect, numFrames);
+}
+
+
+void Tile::Deserialize( Deserializer* f )
+{
+	f->ReadUShort(numFrames);
+	f->ReadUShort(animSpeed);
+	f->ReadUShort(flags);
+	f->ReadPackedRect(m_sourceRect);
+
+	Create(m_sourceRect, (int)numFrames);
 }
 

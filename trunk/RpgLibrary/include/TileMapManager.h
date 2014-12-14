@@ -9,37 +9,21 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include "MapManager.h"
-#include "TileMap.h"
+#pragma once
+
+#include "ResourceManager.h"
 
 
-
-MapManager::MapManager()
+class TileMapManager : public ResourceManagerType<TileMap>
 {
-	m_resourceCache.SetManager(this);
-	m_resourceCache.SetResourceUsage(4);
-}
+public:
+	TileMapManager();
+	~TileMapManager();
 
+	TileMap* Load( const String& filename, int* id = 0 );
 
-void MapManager::DisposeResource( void* p )
-{
-	delete p;
-}
+protected:
+	void DisposeResource( void* p );
 
-
-TileMap* MapManager::Load( const String& filename, int* id  )
-{
-	TileMap* map = GetResource(filename, id);
-	if( map )
-		return map;
-
-	//todo
-	map = new TileMap();
-
-	return map;
-}
-
-
-
-
+};
 

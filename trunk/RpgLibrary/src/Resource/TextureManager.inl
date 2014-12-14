@@ -38,7 +38,7 @@ void TextureManager::DisposeResource( void* p )
 }
 
 
-Texture* TextureManager::Load( const String& filename, int* id  )
+Texture* TextureManager::Load( const String& path, const String& filename, int* id  )
 {
 	Texture* texture = GetResource(filename, id);
 	if( texture )
@@ -47,7 +47,6 @@ Texture* TextureManager::Load( const String& filename, int* id  )
 	// else create a new resource.
 	texture = new Texture();
 
-	String path = g_resourceDirectory->GetTextureDirectory();
 	if( !texture->LoadFromFile(path, filename) )
 	{
 		LogError("Failed to load texture (%s)", (path + filename).c_str());
@@ -62,6 +61,23 @@ Texture* TextureManager::Load( const String& filename, int* id  )
 	return texture;
 }
 
+
+Texture* TextureManager::Load( const String& filename, int* id  )
+{
+	return Load(GetResourceDirectory()->GetTextureDirectory(), filename, id);
+}
+
+
+Texture* TextureManager::LoadTiles( const String& filename, int* id )
+{
+	return Load(GetResourceDirectory()->GetTileDirectory(), filename, id);
+}
+
+
+Texture* TextureManager::LoadBackground( const String& filename, int* id )
+{
+	return Load(GetResourceDirectory()->GetBackgroundDirectory(), filename, id);
+}
 
 
 

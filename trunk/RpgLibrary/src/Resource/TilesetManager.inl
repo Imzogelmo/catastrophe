@@ -36,9 +36,7 @@ void TilesetManager::DisposeResource( void* p )
 	{
 		Texture* texture = tileset->GetTexture();
 		if( texture )
-		{
-			g_textureManager->Unload(texture);
-		}
+			GetTextureManager()->Unload(texture);
 
 		LogDebug("Tileset (%s) unloaded", tileset->GetName().c_str());
 		delete tileset;
@@ -46,29 +44,32 @@ void TilesetManager::DisposeResource( void* p )
 }
 
 
-Tileset* TilesetManager::LoadXml( const String& filename, int* id  )
+Tileset* TilesetManager::Load( const String& path, const String& filename, int* id  )
 {
 	Tileset* tileset = GetResource(filename, id);
 	if( tileset )
 		return tileset;
 
-	String directory = g_resourceDirectory->GetTilesetDirectory();
-
 	tileset = new Tileset();
-	if( !tileset->Deserialize(directory, filename) )
+	if( !tileset->Load(path, filename) )
 	{
-		LogError("Failed to load tileset (%s)", (directory, filename).c_str());
+		LogError("Failed to load tileset (%s)", (path + filename).c_str());
 		SAFE_DELETE(tileset);
 	}
 	else
 	{
-		LogDebug("Tileset (%s) successfully loaded", (directory, filename).c_str());
+		LogDebug("Tileset (%s) successfully loaded", (path + filename).c_str());
 		AddResource(tileset, filename, id);
 	}
 
 	return tileset;
 }
 
+
+Tileset* TilesetManager::Load( const String& filename, int* id  )
+{
+	return Load(GetResourceDirectory()->GetTilesetDirectory(), filename, id);
+}
 
 
 

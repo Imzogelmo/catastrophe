@@ -11,28 +11,19 @@
 
 #include <Catastrophe/IO/XmlWriter.h>
 #include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/IO/Serializer.h>
+#include <Catastrophe/IO/Deserializer.h>
+#include <Catastrophe/IO/FileBuffer.h>
+#include <Catastrophe/IO/CompressedFile.h>
+
 #include "Tileset.h"
 #include "TextureManager.h"
 
 
 
 Tileset::Tileset() :
-	m_parent(0),
 	m_texture(0),
 	m_name(),
-	m_id(-1),
-	m_tileSize(16),
-	m_tiles(),
-	m_ptr_animated_tiles()
-{
-}
-
-
-Tileset::Tileset( TilesetManager* parent, const String& name ) :
-	m_parent(parent),
-	m_texture(0),
-	m_name(name),
-	m_id(-1),
 	m_tileSize(16),
 	m_tiles(),
 	m_ptr_animated_tiles()
@@ -122,30 +113,30 @@ void Tileset::ValidateTiles()
 }
 
 
-gluint Tileset::GetTextureId() const
+u32 Tileset::GetTextureId() const
 {
 	return m_texture ? m_texture->GetTextureID() : 0;
 }
 
 
-Tile* Tileset::GetTile( u32 index )
+Tile* Tileset::GetTile( u32 index ) const
 {
 	if( index < m_tiles.size() )
-		return &m_tiles[index];
+		return const_cast<Tile*>(&m_tiles[index]);
 
 	return 0;
 }
 
 
-Tile* Tileset::GetTile( u32 x, u32 y )
+Tile* Tileset::GetTile( u32 x, u32 y ) const
 {
 	if( x < m_tiles.x() && y < m_tiles.y() )
-		return &m_tiles(y, x);
+		return const_cast<Tile*>(&m_tiles(y, x));
 
 	return 0;
 }
 
-
+/*
 bool Tileset::Serialize( const String& directory )
 {
 	String filename = directory + m_filename;
@@ -187,8 +178,112 @@ bool Tileset::Serialize( const String& directory )
 
 	return true;
 }
+*/
+
+bool Tileset::Save( const String& directory )
+{
+	if( m_filename.empty() )
+	{
+		LogError("Cannot save tileset without a valid filename.");
+		return false;
+	}
+
+	String filename = directory + m_filename;
+
+	FileBuffer f;
+	f.Reserve(m_tiles.size() * sizeof(Tile));
+
+	CompressedFile compressedFile(filename, FileWrite);
+	if( !compressedFile.IsOpen() )
+		return false;
+
+	String textureFilename;
+	if( !m_texture )
+	{
+		//shouldn't really happen.
+		Log("Tileset::Serialize: (%s) texture is null.", filename.c_str());
+	}
+	else
+	{
+		//textureFilename = m_texture->GetFilename(); //todo:
+		textureFilename = m_texture->GetResourceName();
+	}
+
+	f.WriteInt(0); //reserved for future use
+	f.WriteInt(0); //reserved for future use
+
+	f.WriteString(m_name);
+	f.WriteString(textureFilename);
+	f.WriteUShort((u16)m_tileSize);
+	f.WriteUShort((u16)m_tiles.x());
+	f.WriteUShort((u16)m_tiles.y());
+
+	for( u32 i(0); i < m_tiles.size(); ++i )
+	{
+		m_tiles[i].Serialize(&f);
+	}
+
+	compressedFile.Write(f.GetData(), f.Size());
+	compressedFile.Close();
+
+	return true;
+}
 
 
+bool Tileset::Load( const String& directory, const String& filename )
+{
+	Clear();
+
+	CompressedFile f(directory + filename, FileRead);
+	if( !f.IsOpen() )
+		return false;
+
+	m_filename = filename;
+
+	String textureFilename;
+	u16 w = 0;
+	u16 h = 0;
+	u16 tileSize = 16;
+
+	f.ReadInt(); //reserved for future use
+	f.ReadInt(); //reserved for future use
+
+	f.ReadString(m_name);
+	f.ReadString(textureFilename);
+	f.ReadUShort(tileSize);
+	f.ReadUShort(w);
+	f.ReadUShort(h);
+
+	m_tileSize = tileSize;
+	m_texture = GetTextureManager()->LoadTiles(textureFilename); //fixme:
+
+	// TODO: find a better way to validate filename or path errors...
+	// (Theres no issues as long as everything is nice and neatly stored in the root directory though)
+	if( m_texture == null )
+		GetTextureManager()->Load("", textureFilename);
+
+	if( m_texture == null )
+	{
+		// There's nothing we can do here; just log it.
+		Log("Tileset (%s), could not load texture (%s).", filename.c_str(), textureFilename.c_str());
+	}
+
+	m_tiles.resize(h, w);
+	ValidateTiles();
+
+	for( array_type::iterator it = m_tiles.begin(); it != m_tiles.end(); ++it )
+	{
+		it->Deserialize(&f);
+	}
+
+	//ValidateTiles();
+	ReconfigureAnimatedTileList();
+	ResetAnimations();
+
+	return true;
+}
+
+/*
 bool Tileset::Deserialize( const String& directory, const String& filename )
 {
 	Clear();
@@ -257,4 +352,4 @@ bool Tileset::Deserialize( const String& directory, const String& filename )
 
 	return true;
 }
-
+*/

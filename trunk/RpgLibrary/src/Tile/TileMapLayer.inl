@@ -13,6 +13,8 @@
 
 #include <Catastrophe/IO/AttributeWriter.h>
 #include <Catastrophe/IO/AttributeReader.h>
+#include <Catastrophe/IO/File.h>
+#include <Catastrophe/IO/FileBuffer.h>
 
 #include "TileMapLayer.h"
 #include "Tileset.h"
@@ -42,6 +44,7 @@ void TileMapLayer::Clear()
 void TileMapLayer::Resize( u32 w, u32 h )
 {
 	m_tiles.resize(h, w);
+	Clear(); //todo: BUG. this needs to be fixed.
 }
 
 
@@ -296,6 +299,84 @@ void TileMapLayer::Serialize( AttributeWriter* f )
 }
 
 
+void TileMapLayer::Serialize( Serializer* f )
+{
+	// Assert failure on corrupted data or uninitialized memory
+	CE_ASSERT(m_name.size() < 256);
+	CE_ASSERT(m_tiles.x() < 65535);
+	CE_ASSERT(m_tiles.y() < 65535);
+	CE_ASSERT(m_tileSize < 65535);
+
+	f->WriteInt(0); //reserved for future use
+	f->WriteInt(0); //reserved for future use
+
+	f->WriteString(m_name);
+	f->WriteUShort((u16)m_tiles.x());
+	f->WriteUShort((u16)m_tiles.y());
+	f->WriteUInt(m_color.packed_value);
+	f->WriteUInt(m_blendmode.value);
+	f->WriteUShort((u16)m_tileSize);
+
+	f->WriteUShort(0); //reserved for future use
+
+	String tilesetFilename = m_tileset ? m_tileset->GetFileName() : "";
+	if( tilesetFilename.empty() )
+		LogInfo("TileMapLayer::Serialize: tileset filename is empty.");
+
+	f->WriteString(tilesetFilename);
+
+	for( array_type::iterator it = m_tiles.begin(); it != m_tiles.end(); ++it )
+	{
+		Tile* p = it->tile;
+		f->WriteShort((s16)(p != null ? p->GetIndex() : -1));
+		f->WriteUByte((u8)it->flags);
+	}
+}
+
+
+void TileMapLayer::Deserialize( Deserializer* f )
+{
+	Clear();
+
+	f->ReadString(m_name);
+	u32 w = (u32)f->ReadUShort();
+	u32 h = (u32)f->ReadUShort();
+
+	f->ReadColor(m_color);
+	f->ReadUInt(m_blendmode.value);
+	m_tileSize = f->ReadUShort();
+
+	Resize(w, h);
+
+	String tilsetFilename = f->ReadString();
+	if( tilsetFilename.empty() )
+	{
+		Log("TileMapLayer::Deserialize: unknown tileset");
+		return;
+	}
+	else
+	{
+		m_tileset = GetTilesetManager()->Load(tilsetFilename);
+		if( !m_tileset )
+		{
+			Log("Tileset::Deserialize: (%s) tileset could not be loaded.", tilsetFilename.c_str());
+			return;
+		}
+	}
+
+	for( array_type::iterator it = m_tiles.begin(); it != m_tiles.end(); ++it )
+	{
+		s16 id = -1;
+
+		f->ReadShort(id);
+		if( id != -1 )
+			it->tile = m_tileset->GetTile((u32)id);
+
+		f->ReadByte(it->flags);
+	}
+}
+
+
 void TileMapLayer::Deserialize( AttributeReader* f )
 {
 	Clear();
@@ -317,7 +398,7 @@ void TileMapLayer::Deserialize( AttributeReader* f )
 	}
 	else
 	{
-		m_tileset = g_tilesetManager->LoadXml(tilsetFilename);
+		m_tileset = GetTilesetManager()->Load(tilsetFilename);
 		if( !m_tileset )
 		{
 			Log("Tileset::Deserialize: (%s) tileset could not be loaded.", tilsetFilename.c_str());

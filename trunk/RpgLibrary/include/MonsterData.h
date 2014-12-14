@@ -17,7 +17,7 @@
 #include "RpgCommon.h"
 #include "Attributes.h"
 #include "ItemDropSet.h"
-#include "FactorSet.h"
+#include "Factor.h"
 
 
 
@@ -37,7 +37,8 @@ struct RPG_API MonsterData
 	int				exp;
 	int				gold;
 	Attributes		attributes;
-	FactorSet		factors;
+	//FactorSet		factors;
+	FixedFactorList	factors;
 	ItemDropSet		itemDropset;
 
 	MonsterData();
