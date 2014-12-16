@@ -34,6 +34,7 @@ public:
 	virtual u32 Seek( u32 position ) = 0;
 	virtual bool IsEof() const = 0;
 	virtual u32 Position() const = 0;
+	virtual u32 Size() const = 0;
 
 	//Unsafe overloads, for convenience.
 	int ReadInt();
@@ -54,6 +55,8 @@ public:
 	bool ReadBool( bool& value );
 	bool ReadFloat( float& value );
 
+	bool ReadPackedPoint( PackedPoint& value );
+	bool ReadPackedRect( PackedRect& value );
 	bool ReadPoint( Point& value );
 	bool ReadRect( Rect& value );
 	bool ReadVector2( Vector2& value );
@@ -73,6 +76,7 @@ public:
 
 	String ReadString();
 	String ReadLine();
+	String ReadFileID( u32 length );
 
 };
 

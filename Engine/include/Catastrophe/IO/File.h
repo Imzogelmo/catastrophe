@@ -46,6 +46,8 @@ public:
 	virtual u32 Read( void* dest, u32 size );
 	virtual u32 Write( const void* data, u32 size );
 	virtual u32 Seek( u32 position );
+	virtual u32 Size() const { return m_size; }
+	virtual u32 Position() const { return m_position; }
 
 	virtual bool Open( const String& filename, FileMode mode = FileRead );
 	virtual void Close();
@@ -56,8 +58,6 @@ public:
 	FileMode GetMode() const { return m_mode; }
 	bool IsOpen() const { return m_handle != 0; }
 	void* GetHandle() const { return m_handle; }
-	virtual u32 Size() const { return m_size; }
-	virtual u32 Position() const { return m_position; }
 	bool IsEof() const { return m_position >= m_size; }
 	bool Eof() const { return IsEof(); }
 

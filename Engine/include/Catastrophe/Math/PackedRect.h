@@ -33,9 +33,10 @@ public:
 	PackedRect() {}
 	PackedRect( const PackedPoint& pos, const PackedPoint& size ) : pos(pos), size(size) {}
 	PackedRect( s16 x, s16 y, s16 width, s16 height ) : pos(x,y), size(width,height) {}
+	PackedRect( const Rect& rect );
 
-	PackedPoint			&operator [] ( int i )			{ return *( &pos + i ); }
-	const PackedPoint	&operator [] ( int i ) const	{ return *( &pos + i ); }
+	s16			&operator [] ( int i )			{ return *( &pos.x + i ); }
+	const s16	&operator [] ( int i ) const	{ return *( &pos.x + i ); }
 
 	bool operator == ( const PackedRect &r ) const { return ( pos == r.pos && size == r.size ); }
 	bool operator != ( const PackedRect &r ) const { return ( pos != r.pos || size != r.size ); }
@@ -49,9 +50,9 @@ public:
 	PackedRect operator + ( const PackedRect &r )	const { return PackedRect ( pos + r.pos, size + r.size ); }
 	PackedRect operator - ( const PackedRect &r )	const { return PackedRect ( pos - r.pos, size - r.size ); }
 
-	inline s16 Left()		const { return pos.x; }
+	inline s16 Left()	const { return pos.x; }
 	inline s16 Right()	const { return pos.x + size.x; }
-	inline s16 Top()		const { return pos.y; }
+	inline s16 Top()	const { return pos.y; }
 	inline s16 Bottom()	const { return pos.y + size.y; }
 
 	PackedPoint TopLeft()		const { return pos; }
@@ -67,9 +68,9 @@ public:
 	void Set( const PackedPoint& Pos, const PackedPoint& Size ) { pos = Pos; size = Size; }
 	void Set( s16 x, s16 y, s16 w, s16 h ) { pos.x = x; pos.y = y; size.x = w; size.y = h; }
 
-	s16 Width()	const { return size.x; }
-	s16 Height()	const { return size.y; }
-	s16 Area()	const { return size.x * size.y;	}
+	s16 Width() const { return size.x; }
+	s16 Height() const { return size.y; }
+	s16 Area() const { return size.x * size.y;	}
 
 	bool Empty() const { return size.IsZero(); }
 
@@ -110,6 +111,7 @@ public:
 	}
 
 	static PackedRect Zero;
+	static PackedRect One;
 
 };
 

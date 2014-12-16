@@ -132,6 +132,18 @@ bool Deserializer::ReadFloat( float& value )
 }
 
 
+bool Deserializer::ReadPackedPoint( PackedPoint& value )
+{
+	return (ReadShort(value.x) && ReadShort(value.y));
+}
+
+
+bool Deserializer::ReadPackedRect( PackedRect& value )
+{
+	return (ReadPackedPoint(value.pos) && ReadPackedPoint(value.size));
+}
+
+
 bool Deserializer::ReadPoint( Point& value )
 {
 	return (ReadInt(value.x) && ReadInt(value.y));
@@ -269,6 +281,16 @@ String Deserializer::ReadLine()
 	ReadLine(ret);
 	return ret;
 }
+
+
+String Deserializer::ReadFileID( u32 length )
+{
+	String id(length, ' ');
+	Read(id.data(), length);
+
+	return id;
+}
+
 
 /*
 // operator >> overloads

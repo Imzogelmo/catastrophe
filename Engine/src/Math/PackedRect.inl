@@ -16,62 +16,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-
-#include "Math/PackedPoint.h"
 #include "Math/PackedRect.h"
-#include "Math/Point.h"
 #include "Math/Rect.h"
-#include "Math/Vector2.h"
-#include "Math/Rectf.h"
+
 
 CE_NAMESPACE_BEGIN
 
-Point Point::Zero = Point(0, 0);
-Rect Rect::Zero = Rect(0, 0, 0, 0);
-Rect Rect::One = Rect(0, 0, 1, 1);
+PackedRect PackedRect::Zero = PackedRect(0, 0, 0, 0);
+PackedRect PackedRect::One = PackedRect(0, 0, 1, 1);
 
 
-Point::Point( const Vector2& v ) :
-	x((int)v.x), y((int)v.y)
+PackedRect::PackedRect( const Rect& rect )
 {
+	pos.x = (s16)rect.pos.x;
+	pos.y = (s16)rect.pos.y;
+	size.x = (s16)rect.size.x;
+	size.y = (s16)rect.size.y;
 }
 
 
-Rect::Rect( const PackedRect& r )
-{
-	pos.x = (int)r.pos.x;
-	pos.y = (int)r.pos.y;
-	size.x = (int)r.Width();
-	size.y = (int)r.Height();
-}
-
-
-Rect::Rect( const Rectf& r )
-{
-	pos.x = fc::iround(r.min.x);
-	pos.y = fc::iround(r.min.y);
-	size.x = fc::iround(r.Width());
-	size.y = fc::iround(r.Height());
-}
-
-
-void Rect::Merge( const Rect& r )
-{
-	if(r.pos.x < pos.x) pos.x = r.pos.x;
-	if(r.pos.y < pos.y) pos.y = r.pos.y;
-
-	int xoff = r.Right() - Right();
-	int yoff = r.Bottom() - Bottom();
-	if( xoff > 0 ) size.x += xoff;
-	if( yoff > 0 ) size.y += xoff;
-
-}
-
-
-Rectf Rect::ToRectf() const
-{
-	return Rectf( (float)pos.x, (float)pos.y, (float)(pos.x + size.x), (float)(pos.y + size.y) );
-}
 
 
 

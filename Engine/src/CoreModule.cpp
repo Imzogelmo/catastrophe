@@ -32,6 +32,7 @@
 #include "Math/Vector2.inl"
 #include "Math/Vector3.inl"
 #include "Math/Vector4.inl"
+#include "Math/PackedRect.inl"
 
 // Graphics
 #include "Graphics/AnimatedSpriteSet.inl"
@@ -63,7 +64,7 @@
 #include "IO/XmlElement.inl"
 #include "IO/XmlReader.inl"
 #include "IO/XmlWriter.inl"
-#include "IO/LZ4.inl"
+#include "IO/Compression.inl"
 #include "IO/CompressedFile.inl"
 
 

@@ -76,6 +76,8 @@ String ToString( const Matrix& value );
 
 
 String GetNativePath( const String& path );
+String MakePath( const String& path );
+void StripExtension( String& filename );
 
 
 

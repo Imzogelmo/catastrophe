@@ -41,6 +41,8 @@ public:
 	bool WriteBool( bool value );
 	bool WriteFloat( float value );
 
+	bool WritePackedRect( const PackedRect& value );
+	bool WritePackedPoint( const PackedPoint& value );
 	bool WriteRect( const Rect& value );
 	bool WriteRectf( const Rectf& value );
 	bool WritePoint( const Point& value );
@@ -58,6 +60,7 @@ public:
 	bool WriteString( const String& value );
 	bool WriteString( const char* value );
 	bool WriteLine( const String& value, bool newline = true );
+	bool WriteFileID( const char* id, u32 length );
 
 };
 

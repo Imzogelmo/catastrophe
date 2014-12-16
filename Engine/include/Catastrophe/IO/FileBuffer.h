@@ -18,26 +18,46 @@
 
 #pragma once
 
-#include "../Common.h"
+#include <fc/vector.h>
+
+#include "Serializer.h"
+#include "Deserializer.h"
 
 CE_NAMESPACE_BEGIN
 
-
-
-class CE_API LZ4
+/* @FileBuffer
+ * File class that writes to an internal buffer.
+ *
+ */
+class FileBuffer : public Deserializer, public Serializer
 {
 public:
+	typedef fc::vector<u8> vec_type;
 
-	static u32 GetCompressionBounds(u32 inputSize);
-	static u32 CompressData(void* dest, const void* source, u32 sourceSize);
-	static u32 DecompressData(void* dest, const void* source, u32 destSize);
-	//static bool Compress( Serializer& dest, Deserializer& src );
-	//static bool Decompress( Serializer& dest, Deserializer& src );
+	FileBuffer();
+	FileBuffer( const void* data, u32 size );
+
+	virtual u32 Read( void* dest, u32 size );
+	virtual u32 Write( const void* data, u32 size );
+	virtual u32 Seek( u32 position );
+
+	virtual void SetData( const void* data, u32 size );
+	virtual void Clear();
+	virtual void Reserve( u32 capacity );
+	virtual void Resize( u32 size );
+	virtual bool IsEof() const { return m_position >= m_buffer.size(); }
+	virtual u32 Size() const { return m_buffer.size(); }
+	virtual u32 Position() const { return m_position; }
+
+	const void* GetData() const { return (void*)(m_buffer.empty() ? null : &m_buffer[0]); }
+	void* GetData() { return (void*)(m_buffer.empty() ? null : &m_buffer[0]); }
+	
+protected:
+	vec_type	m_buffer;
+	u32			m_position;
 
 };
 
 
 
-
 CE_NAMESPACE_END
-

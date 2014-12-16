@@ -18,40 +18,18 @@
 
 #pragma once
 
-#include "lz4/lz4.c"
-#include "lz4/lz4hc.c"
-
-#include "IO/LZ4.h"
-#include "IO/File.h"
-#include "IO/Log.h"
+#include "../Common.h"
 
 CE_NAMESPACE_BEGIN
 
 
-u32 LZ4::GetCompressionBounds( u32 inputSize )
-{
-	return (u32)LZ4_compressBound(inputSize);
-}
-
-
-u32 LZ4::CompressData( void* dest, const void* source, u32 sourceSize )
-{
-	CE_ASSERT(dest);
-	CE_ASSERT(source);
-	CE_ASSERT(sourceSize);
-
-	return (u32)LZ4_compressHC((const char*)source, (char*)dest, (int)sourceSize);
-}
-
-
-u32 LZ4::DecompressData( void* dest, const void* source, u32 destSize )
-{
-	CE_ASSERT(dest);
-	CE_ASSERT(source);
-	CE_ASSERT(destSize);
-
-	return (u32)LZ4_decompress_fast( (const char*)source, (char*)dest, (int)destSize );
-}
+u32 GetCompressionBounds( u32 inputSize );
+u32 CompressData( void* dest, const void* source, u32 sourceSize );
+u32 DecompressData( void* dest, const void* source, u32 destSize );
+bool CompressFile( Serializer* dest, Deserializer* source );
+bool DecompressFile( Serializer* dest, Deserializer* source );
+bool CompressFromFileBuffer( Serializer* dest, FileBuffer* fileBuffer );
+bool DecompressToFileBuffer( FileBuffer* fileBuffer, Deserializer* source );
 
 
 CE_NAMESPACE_END

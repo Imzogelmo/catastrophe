@@ -168,6 +168,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\IO\Compression.inl"
+					>
+				</File>
+				<File
 					RelativePath=".\..\..\src\IO\ConfigFile.inl"
 					>
 				</File>
@@ -185,10 +189,6 @@
 				</File>
 				<File
 					RelativePath=".\..\..\src\IO\Log.inl"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\IO\LZ4.inl"
 					>
 				</File>
 				<File
@@ -498,6 +498,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\include\Catastrophe\IO\Compression.h"
+					>
+				</File>
+				<File
 					RelativePath=".\..\..\include\Catastrophe\IO\ConfigFile.h"
 					>
 				</File>
@@ -515,10 +519,6 @@
 				</File>
 				<File
 					RelativePath=".\..\..\include\Catastrophe\IO\Log.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\include\Catastrophe\IO\LZ4.h"
 					>
 				</File>
 				<File
