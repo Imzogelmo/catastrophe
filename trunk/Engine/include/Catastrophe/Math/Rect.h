@@ -34,6 +34,7 @@ public:
 	Rect() {}
 	Rect( const Point& pos, const Point& size )	: pos(pos), size(size) {}
 	Rect( int x, int y, int width, int height )	: pos(x,y), size(width,height) {}
+	Rect( const PackedRect& r );
 	Rect( const Rectf& r );
 
 	Point		&operator [] ( const int i )		{ return *( &pos + i ); }
@@ -95,6 +96,8 @@ public:
 	Rectf ToRectf() const; //todo...
 
 	static Rect Zero;
+	static Rect One;
+
 };
 
 

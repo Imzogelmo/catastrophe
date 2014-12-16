@@ -71,6 +71,18 @@ bool Serializer::WriteFloat(float value)
 }
 
 
+bool Serializer::WritePackedRect( const PackedRect& value )
+{
+	return WritePackedPoint(value.pos) && WritePackedPoint(value.size);
+}
+
+
+bool Serializer::WritePackedPoint( const PackedPoint& value )
+{
+	return WriteShort(value.x) && WriteShort(value.y);
+}
+
+
 bool Serializer::WritePoint(const Point& value)
 {
 	return WriteInt(value.x) && WriteInt(value.y);
@@ -177,6 +189,13 @@ bool Serializer::WriteLine(const String& value, bool newline)
 
 	return success;
 }
+
+
+bool Serializer::WriteFileID( const char* id, u32 length )
+{
+	return Write(id, length) == length;
+}
+
 
 /*
 // operator << overloads

@@ -37,8 +37,8 @@ public:
 	};
 
 	PackedPoint() {}
-	PackedPoint( s16 x, s16 y )		: x(x), y(y) {}
-	PackedPoint( const Point &p )		: x((s16)p.x), y((s16)p.y) {}
+	PackedPoint( s16 x, s16 y ) : x(x), y(y) {}
+	PackedPoint( const Point &p ) : x((s16)p.x), y((s16)p.y) {}
 
 	s16		&operator [] ( const s16 i ) { return *( &x + i ); }
 	const s16	&operator [] ( const s16 i ) const { return *( &x + i ); }

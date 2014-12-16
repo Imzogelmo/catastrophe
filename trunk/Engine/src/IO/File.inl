@@ -41,7 +41,7 @@ File::File() :
 }
 
 
-File::File(const String& fileName, FileMode mode) :
+File::File( const String& fileName, FileMode mode ) :
 	m_mode(FileRead),
 	m_handle(0),
 	m_position(0),
@@ -58,7 +58,7 @@ File::~File()
 }
 
 
-bool File::Open(const String& fileName, FileMode mode)
+bool File::Open( const String& fileName, FileMode mode )
 {
 	Close();
 
@@ -84,17 +84,18 @@ bool File::Open(const String& fileName, FileMode mode)
 }
 
 
-u32 File::Read(void* dest, u32 size)
+u32 File::Read( void* dest, u32 size )
 {
 	CE_ASSERT(m_mode != FileWrite);
+	CE_ASSERT(dest != null);
 	CE_ASSERT(size != 0);
-	CE_ASSERT(size + m_position <= m_size);
-	if(size == 0 || size + m_position > m_size) //fixme:
-		return 0;
+
+	if( size + m_position > m_size )
+		size = m_size - m_position;
 
 	if( !m_handle )
 	{
-		Log("Error: File not open");
+		Log("File::Read Error: File not open");
 		return 0;
 	}
 
@@ -111,7 +112,7 @@ u32 File::Read(void* dest, u32 size)
 }
 
 
-u32 File::Seek(u32 position)
+u32 File::Seek( u32 position )
 {
 	if( m_mode == FileRead && position > m_size )
 		position = m_size;
@@ -128,28 +129,29 @@ u32 File::Seek(u32 position)
 }
 
 
-u32 File::Write(const void* data, u32 size)
+u32 File::Write( const void* data, u32 size )
 {
 	CE_ASSERT(m_mode != FileRead);
-	if(size == 0)
-		return 0;
 
-	if( m_handle == null )
+	if( size > 0 )
 	{
-		Log("Error: File not open");
-		return 0;
-	}
+		if( m_handle == null )
+		{
+			Log("Error: File not open");
+			return 0;
+		}
 
-	if(fwrite(data, size, 1, (FILE*)m_handle) != 1)
-	{
-		fseek((FILE*)m_handle, m_position + m_offset, SEEK_SET);
-		Log("Error writing to file " + GetFileName());
-		return 0;
-	}
+		if(fwrite(data, size, 1, (FILE*)m_handle) != 1)
+		{
+			fseek((FILE*)m_handle, m_position + m_offset, SEEK_SET);
+			Log("Error writing to file " + GetFileName());
+			return 0;
+		}
 
-	m_position += size;
-	if (m_position > m_size)
-		m_size = m_position;
+		m_position += size;
+		if (m_position > m_size)
+			m_size = m_position;
+	}
 
 	return size;
 }

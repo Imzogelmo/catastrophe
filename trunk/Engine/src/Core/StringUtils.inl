@@ -400,6 +400,27 @@ String GetNativePath( const String& path )
 }
 
 
+String MakePath( const String& path )
+{
+	String ret(path);
+	if( !ret.empty() && (ret.back() != '/' && ret.back() != '\\') )
+		ret.push_back('/');
+
+	return ret;
+}
+
+
+void StripExtension( String& filename )
+{
+	if( filename.size() < 3 )
+		return;
+
+	u32 i = filename.find_last_of('.');
+	if( i != String::npos )
+		filename.erase(i, String::npos);
+}
+
+
 
 #ifdef _MSC_VER
 	#pragma warning ( pop )

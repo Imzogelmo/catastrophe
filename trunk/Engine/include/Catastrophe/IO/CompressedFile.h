@@ -26,27 +26,21 @@
 CE_NAMESPACE_BEGIN
 
 
-// TODO: CompressedFile should inherit from FileBuffer, not file...
-
-class CompressedFile : public File
+class CompressedFile : public FileBuffer
 {
 public:
 	CompressedFile();
 	CompressedFile( const String& filename, FileMode mode = FileRead );
 	virtual ~CompressedFile();
 
-	virtual u32 Read( void* dest, u32 size );
-	virtual u32 Write( const void* data, u32 size );
-	//virtual u32 Seek( u32 position );
-
 	virtual bool Open( const String& filename, FileMode mode = FileRead );
 	virtual void Close();
+	virtual void Flush() {}
 
-	virtual u32 Size() const { return m_buffer.Size(); }
-	virtual u32 Position() const { return m_buffer.Position(); }
+	bool IsOpen() const;
 
 protected:
-	FileBuffer m_buffer;
+	File m_file;
 
 };
 
