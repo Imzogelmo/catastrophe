@@ -33,6 +33,7 @@
 #include "Math/Vector3.inl"
 #include "Math/Vector4.inl"
 #include "Math/PackedRect.inl"
+#include "Math/Easing.inl"
 
 // Graphics
 #include "Graphics/AnimatedSpriteSet.inl"

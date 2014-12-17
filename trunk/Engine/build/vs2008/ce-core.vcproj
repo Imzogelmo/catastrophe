@@ -316,6 +316,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\Math\Easing.inl"
+					>
+				</File>
+				<File
 					RelativePath=".\..\..\src\Math\Frustum.inl"
 					>
 				</File>
@@ -411,6 +415,10 @@
 				</File>
 				<File
 					RelativePath=".\..\..\include\Catastrophe\Math\Common.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Catastrophe\Math\Easing.h"
 					>
 				</File>
 				<File

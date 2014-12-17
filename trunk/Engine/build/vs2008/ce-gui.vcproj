@@ -159,14 +159,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\Catastrophe\Gui\Forward.h"
-				>
-			</File>
-			<File
-				RelativePath=".\..\..\include\Catastrophe\Gui\Frame.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\include\Catastrophe\Gui\Gui.h"
 				>
 			</File>
