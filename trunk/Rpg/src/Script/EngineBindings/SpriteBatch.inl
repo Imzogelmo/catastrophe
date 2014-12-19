@@ -27,7 +27,7 @@ void MonoEngineBinding::SpriteBatch_Destroy( SpriteBatch* spriteBatch )
 }
 
 
-void MonoEngineBinding::SpriteBatch_Draw( SpriteBatch* spriteBatch, gluint texture, Rectf* vertices, Rectf* uv, Color color)
+void MonoEngineBinding::SpriteBatch_Draw( SpriteBatch* spriteBatch, u32 texture, Rectf* vertices, Rectf* uv, Color color)
 {
 	spriteBatch->Draw(
 		texture,
@@ -38,7 +38,7 @@ void MonoEngineBinding::SpriteBatch_Draw( SpriteBatch* spriteBatch, gluint textu
 }
 
 
-void MonoEngineBinding::SpriteBatch_DrawRotated( SpriteBatch* spriteBatch, gluint texture, float rotation, Vector2* origin, Rectf* vertices, Rectf* uv, Color color)
+void MonoEngineBinding::SpriteBatch_DrawRotated( SpriteBatch* spriteBatch, u32 texture, float rotation, Vector2* origin, Rectf* vertices, Rectf* uv, Color color)
 {
 	spriteBatch->DrawRotated(
 		texture,
@@ -51,7 +51,7 @@ void MonoEngineBinding::SpriteBatch_DrawRotated( SpriteBatch* spriteBatch, gluin
 }
 
 
-void MonoEngineBinding::SpriteBatch_DrawScaled( SpriteBatch* spriteBatch, gluint texture, Vector2* scale, Vector2* origin, Rectf* vertices, Rectf* uv, Color color)
+void MonoEngineBinding::SpriteBatch_DrawScaled( SpriteBatch* spriteBatch, u32 texture, Vector2* scale, Vector2* origin, Rectf* vertices, Rectf* uv, Color color)
 {
 	spriteBatch->DrawScaled(
 		texture,
@@ -64,7 +64,7 @@ void MonoEngineBinding::SpriteBatch_DrawScaled( SpriteBatch* spriteBatch, gluint
 }
 
 
-void MonoEngineBinding::SpriteBatch_DrawRotatedScaled( SpriteBatch* spriteBatch, gluint texture, float rotation, Vector2* scale, Vector2* origin, Rectf* vertices, Rectf* uv, Color color)
+void MonoEngineBinding::SpriteBatch_DrawRotatedScaled( SpriteBatch* spriteBatch, u32 texture, float rotation, Vector2* scale, Vector2* origin, Rectf* vertices, Rectf* uv, Color color)
 {
 	spriteBatch->DrawRotatedScaled(
 		texture,
@@ -78,17 +78,17 @@ void MonoEngineBinding::SpriteBatch_DrawRotatedScaled( SpriteBatch* spriteBatch,
 }
 
 
-void MonoEngineBinding::SpriteBatch_DrawSprite( SpriteBatch* spriteBatch, Sprite* sprite, Vector2* pos )
+void MonoEngineBinding::SpriteBatch_DrawSprite( SpriteBatch* spriteBatch, Sprite* sprite, Vector2* position )
 {
 	if( sprite )
-		spriteBatch->DrawSprite(*sprite, *pos);
+		spriteBatch->DrawSprite(*sprite, *position);
 }
 
 
-void MonoEngineBinding::SpriteBatch_DrawAnimatedSprite( SpriteBatch* spriteBatch, AnimatedSprite* sprite, Vector2* pos )
+void MonoEngineBinding::SpriteBatch_DrawAnimatedSprite( SpriteBatch* spriteBatch, AnimatedSprite* sprite, Vector2* position )
 {
 	if( sprite )
-		spriteBatch->DrawAnimatedSprite(*sprite, *pos);
+		spriteBatch->DrawAnimatedSprite(*sprite, *position);
 }
 
 

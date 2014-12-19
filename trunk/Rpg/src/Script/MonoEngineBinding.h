@@ -12,10 +12,11 @@
 #pragma once
 
 #include <Catastrophe/Common.h>
+#include <Catastrophe/Graphics/TextAlignment.h>
+#include <Catastrophe/Gui/Widget.h>
+
 #include "Common.h"
 #include "MonoBinding.h"
-
-class Widget;
 
 
 class MonoEngineBinding : public MonoBinding
@@ -56,8 +57,8 @@ public:
 	static Matrix Matrix_CreateOrthographic( Matrix* self, float left, float right, float bottom, float top, float zNear, float zFar );
 	static Matrix Matrix_CreatePerspective( Matrix* self, float fov, float aspect, float up, float zNear, float zFar );
 	static Matrix Matrix_CreateRotation( Matrix* self, Vector3 rotation );
-	static Matrix Matrix_CreateTransformation( Matrix* self, Vector3 pos, float rotation, Vector3 scale, Vector3 origin );
-	static Matrix Matrix_CreateTranslation( Matrix* self, Vector3 pos );
+	static Matrix Matrix_CreateTransformation( Matrix* self, Vector3 position, float rotation, Vector3 scale, Vector3 origin );
+	static Matrix Matrix_CreateTranslation( Matrix* self, Vector3 position );
 	static Matrix Matrix_CreateScale( Matrix* self, Vector3 scale );
 	static Matrix Matrix_CreateRotationX( Matrix* self, float radians );
 	static Matrix Matrix_CreateRotationY( Matrix* self, float radians );
@@ -158,12 +159,12 @@ public:
 	// SpriteBatch
 	static SpriteBatch* SpriteBatch_Create();
 	static void SpriteBatch_Destroy( SpriteBatch* spriteBatch );
-	static void SpriteBatch_Draw( SpriteBatch* spriteBatch, gluint texture, Rectf* vertices, Rectf* uv, Color color);
-	static void SpriteBatch_DrawRotated( SpriteBatch* spriteBatch, gluint texture, float rotation, Vector2* origin, Rectf* vertices, Rectf* uv, Color color);
-	static void SpriteBatch_DrawScaled( SpriteBatch* spriteBatch, gluint texture, Vector2* scale, Vector2* origin, Rectf* vertices, Rectf* uv, Color color);
-	static void SpriteBatch_DrawRotatedScaled( SpriteBatch* spriteBatch, gluint texture, float rotation, Vector2* scale, Vector2* origin, Rectf* vertices, Rectf* uv, Color color);
-	static void SpriteBatch_DrawSprite( SpriteBatch* spriteBatch, Sprite* sprite, Vector2* pos );
-	static void SpriteBatch_DrawAnimatedSprite( SpriteBatch* spriteBatch, AnimatedSprite* sprite, Vector2* pos );
+	static void SpriteBatch_Draw( SpriteBatch* spriteBatch, u32 texture, Rectf* vertices, Rectf* uv, Color color);
+	static void SpriteBatch_DrawRotated( SpriteBatch* spriteBatch, u32 texture, float rotation, Vector2* origin, Rectf* vertices, Rectf* uv, Color color);
+	static void SpriteBatch_DrawScaled( SpriteBatch* spriteBatch, u32 texture, Vector2* scale, Vector2* origin, Rectf* vertices, Rectf* uv, Color color);
+	static void SpriteBatch_DrawRotatedScaled( SpriteBatch* spriteBatch, u32 texture, float rotation, Vector2* scale, Vector2* origin, Rectf* vertices, Rectf* uv, Color color);
+	static void SpriteBatch_DrawSprite( SpriteBatch* spriteBatch, Sprite* sprite, Vector2* position );
+	static void SpriteBatch_DrawAnimatedSprite( SpriteBatch* spriteBatch, AnimatedSprite* sprite, Vector2* position );
 	static void SpriteBatch_Begin( SpriteBatch* spriteBatch );
 	static void SpriteBatch_End( SpriteBatch* spriteBatch );
 	static void SpriteBatch_Render( SpriteBatch* spriteBatch );
@@ -178,12 +179,11 @@ public:
 
 
 	// UI
+	static Widget* Widget_CreateType( Widget* self, Vector2* position, Vector2* size );
 	static void Widget_SetPosition( Widget* self, Vector2 position );
-	static void Widget_SetX( Widget* self, float x );
-	static void Widget_SetY( Widget* self, float y );
+	static void Widget_SetFloatValue( Widget* self, float value, int type );
+	static float Widget_GetFloatValue( Widget* self, int type );
 	static void Widget_SetSize( Widget* self, Vector2 size );
-	static void Widget_SetWidth( Widget* self, float width );
-	static void Widget_SetHeight( Widget* self, float height );
 	static void Widget_SetDimensions( Widget* self, Rectf rect );
 	static void Widget_SetColor( Widget* self, Color color );
 	static void Widget_SetBlendMode( Widget* self, BlendMode blendMode );
@@ -194,12 +194,8 @@ public:
 	static void Widget_RemoveAllChildren( Widget* self );
 	static void Widget_Remove( Widget* self );
 	static void Widget_SetParent( Widget* self, Widget* parent );
-	static float Widget_GetX( Widget* self );
-	static float Widget_GetY( Widget* self );
 	static Vector2 Widget_GetPosition( Widget* self );
 	static Vector2 Widget_GetSize( Widget* self );
-	static float Widget_GetWidth( Widget* self );
-	static float Widget_GetHeight( Widget* self );
 	static Rectf Widget_GetDimensions( Widget* self );
 	static Color Widget_GetColor( Widget* self );
 	static BlendMode Widget_GetBlendMode( Widget* self );
@@ -217,16 +213,31 @@ public:
 	static void Widget_ReleaseRef( Widget* self );
 
 	// Label
-
+	static void Label_SetFont( Label* self, Font* font );
+	static void Label_SetText( Label* self, const char* text );
+	static void Label_SetTextAlignment( Label* self, TextAlignment alignment );
+	static void Label_SetColor( Label* self, Color color );
+	static void Label_SetHighlightedColor( Label* self, Color color );
+	static void Label_SetDisabledColor( Label* self, Color color );
+	static Font* Label_GetFont( Label* self );
+	static const char* Label_GetText( Label* self );
+	static TextAlignment Label_GetTextAlignment( Label* self );
+	static Color Label_GetColor( Label* self );
+	static Color Label_GetHighlightedColor( Label* self );
+	static Color Label_GetDisabledColor( Label* self );
+	static float Label_GetTextWidth( Label* self );
 
 	// Frame
 	static void Frame_SetFromSprite( Frame* self, Sprite* sprite );
 
 
+	// Math
 	static void BindMathf();
 	static void BindVector2();
 	static void BindMatrix4();
 	static void BindCollision();
+
+	// Graphics
 	static void BindTexture();
 	static void BindFont();
 	static void BindSprite();
@@ -234,10 +245,14 @@ public:
 	static void BindAnimatedSpriteSet();
 	static void BindSpriteBatch();
 	static void BindVertexArray();
+
 	static void BindStaticString();
 	static void BindInput();
 
+	// UI
 	static void BindWidget();
+	static void BindLabel();
+	static void BindFrame();
 
 };
 

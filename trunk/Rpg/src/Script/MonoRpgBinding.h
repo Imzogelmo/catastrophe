@@ -20,7 +20,25 @@ class MonoRpgBinding : public MonoBinding
 {
 public:
 
+	// Database
+	static Item* Database_GetItem( int id );
+	static MonsterData* Database_GetMonster( int id );
+	static MonsterTroop* Database_GetMonsterTroop( int id );
+	static u32 Database_GetCount( int type );
+
+	// Item
+	static const char* Item_GetName( Item* item );
+	static const char* Item_GetScript( Item* item );
+	static const char* Item_GetDescription( Item* item );
+	static void Item_SetName( Item* item, const char* str );
+	static void Item_SetScript( Item* item, const char* str );
+	static void Item_SetDescription( Item* item, const char* str );
+	static int Item_GetIntValue( Item* item, int type );
+	static void Item_SetIntValue( Item* item, int type, int value );
+
 	// Actor
+	static const char* Actor_GetName( Actor* actor );
+	static void Actor_SetName( Actor* actor, const char* name );
 	static int Actor_GetParam( Actor* actor, int param );
 	static int Actor_GetMaxParam( Actor* actor, int param );
 	static int Actor_GetUnmodifiedMaxParam( Actor* actor, int param );
@@ -143,6 +161,11 @@ public:
 	static void BattleFaction_CallFuncRetVoidParam1( BattleFaction* battleFaction, int functionType, void* param );
 
 
+	// Database
+	static void BindItem();
+	static void BindDatabase();
+
+	// Rpg
 	static void BindActor();
 	static void BindInventorySlot();
 	static void BindInventory();
