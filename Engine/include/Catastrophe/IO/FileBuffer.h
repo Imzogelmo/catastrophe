@@ -18,10 +18,10 @@
 
 #pragma once
 
-#include <fc/vector.h>
-
 #include "Serializer.h"
 #include "Deserializer.h"
+
+#include <fc/vector.h>
 
 CE_NAMESPACE_BEGIN
 

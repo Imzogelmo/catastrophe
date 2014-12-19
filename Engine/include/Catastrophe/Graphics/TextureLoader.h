@@ -18,10 +18,10 @@
 
 #pragma once
 
-#include <fc/string.h>
-
 #include "../Common.h"
 #include "Texture.h"
+
+#include <fc/string.h>
 
 
 enum TextureFormat

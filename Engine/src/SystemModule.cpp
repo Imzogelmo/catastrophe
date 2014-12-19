@@ -16,6 +16,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#ifdef _MSC_VER
+	#pragma warning ( push )
+	#pragma warning ( disable : 4275 ) // vc++ header warning
+#endif
 
 // Input
 #include "Input/Controller.inl"
@@ -40,3 +44,7 @@
 #include "System/SDLSystem.inl"
 #endif
 
+
+#ifdef _MSC_VER
+	#pragma warning ( pop )
+#endif

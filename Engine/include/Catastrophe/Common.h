@@ -19,14 +19,25 @@
 #pragma once
 
 
-//depricated
+#if defined (DEBUG) || defined (_DEBUG)
+	#define CE_DEBUG 1
+#endif
+
+// disable all the extraneous bullshit
+#if defined(_MSC_VER)
+	#define _HAS_ITERATOR_DEBUGGING 0
+	#if !CE_DEBUG
+		#define _HAS_EXCEPTIONS 0
+		#define _SECURE_SCL 0
+	#endif
+	//#define _STATIC_CPPLIB
+#endif
+
+// depricated
 typedef char				sbyte;
 typedef unsigned char		byte;
 typedef unsigned long		ulong;
 typedef unsigned int		uint;
-typedef unsigned int		gluint;
-typedef unsigned int		glenum;
-typedef int					glint;
 
 #if defined(_MSC_VER)
 	typedef __int8				s8;
@@ -85,11 +96,6 @@ typedef int					glint;
 #define CE_ZERO		0
 #define CE_SUCCESS	0
 #define CE_ERROR	-1
-
-
-#if defined (DEBUG) || defined (_DEBUG)
-	#define CE_DEBUG 1
-#endif
 
 #ifdef CE_DEBUG
 	#define CE_ASSERT(x)	assert(x)

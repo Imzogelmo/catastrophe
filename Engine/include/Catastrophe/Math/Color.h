@@ -34,10 +34,10 @@ CE_NAMESPACE_BEGIN
 class CE_API Color
 {
 public:
-	Color()												: packed_value(0xff000000) {}
-	Color( u8 gray, u8 alpha )					{ packed_value = _Pack( gray, gray, gray, alpha ); }
-	Color( u8 r, u8 g, u8 b, u8 a = 255 )	{ packed_value = _Pack( r, g, b, a ); }
-	Color( const Colorf &c )							{ packed_value = _Pack( c ); }
+	Color() : packed_value(0xff000000) {}
+	Color( u8 gray, u8 alpha ) { packed_value = _Pack( gray, gray, gray, alpha ); }
+	Color( u8 r, u8 g, u8 b, u8 a = 255 ) { packed_value = _Pack( r, g, b, a ); }
+	Color( const Colorf &c ) { packed_value = _Pack( c ); }
 	Color( const HSVColor &c );
 	Color( const HSLColor &c );
 

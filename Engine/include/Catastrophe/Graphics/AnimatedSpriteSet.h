@@ -18,8 +18,6 @@
 
 #pragma once
 
-#include <fc/fixed_vector.h>
-
 #include "../Common.h"
 #include "../Math/Vector2.h"
 #include "../Math/Color.h"
@@ -28,6 +26,8 @@
 
 #include "Sprite.h"
 #include "SpriteAnimation.h"
+
+#include <fc/vector.h>
 
 CE_NAMESPACE_BEGIN
 
@@ -61,7 +61,7 @@ public:
 	inline u32 GetNumAnimations() const { return m_animations.size(); }
 	inline u32 GetCurrentAnimationIndex() const { return m_currentAnimation; }
 	inline Texture* GetTexture() const { return m_texture; }
-	gluint GetTextureID() const;
+	u32 GetTextureID() const;
 
 	// sprite animation index methods
 	inline SpriteAnimation& operator []( u32 index ) { return m_animations.at(index); }

@@ -18,23 +18,31 @@
 
 #pragma once
 
-#include <fc/vector.h>
-
-#include "Forward.h"
 #include "../Common.h"
 #include "../Math/Vector2.h"
 #include "../Math/Rectf.h"
 #include "../Math/Color.h"
 #include "../Graphics/BlendMode.h"
 
+#include <fc/vector.h>
 
 CE_NAMESPACE_BEGIN
+
+// forward declarations
+class Gui;
+class Skin;
+class Widget;
+class Label;
+class Icon;
+class AnimatedIcon;
+class BackgroundImage;
+class Frame;
 
 
 class CE_API Widget
 {
 public:
-	typedef fc::vector<Widget*>		child_vec_type;
+	typedef fc::vector<Widget*> child_vec_type;
 
 	Widget( const Vector2 pos = Vector2::Zero, Vector2 size = Vector2::Zero );
 
@@ -47,8 +55,8 @@ public:
 
 	void SetPosition( const Vector2& position );
 	void SetPosition( float x, float y ) { SetPosition( Vector2(x, y) ); }
-	void SetX( float x ) { SetPosition( Vector2( x, m_pos.y ) ); }
-	void SetY( float y ) { SetPosition( Vector2( m_pos.x, y ) ); }
+	void SetX( float x ) { SetPosition( Vector2( x, m_position.y ) ); }
+	void SetY( float y ) { SetPosition( Vector2( m_position.x, y ) ); }
 	void SetSize( const Vector2& size );
 	void SetSize( float width, float height ) { SetSize( Vector2(width, height) ); }
 	void SetWidth( float width ) { SetSize( Vector2( width, m_size.y ) ); }
@@ -68,10 +76,10 @@ public:
 	void Remove();
 	void SetParent( Widget* parent );
 
-	const Vector2& GetPosition() const { return m_pos; }
+	const Vector2& GetPosition() const { return m_position; }
 	const Vector2& GetSize() const { return m_size; }
-	float GetX() const { return m_pos.x; }
-	float GetY() const { return m_pos.y; }
+	float GetX() const { return m_position.x; }
+	float GetY() const { return m_position.y; }
 	float GetWidth() const { return m_size.x; }
 	float GetHeight() const { return m_size.y; }
 	Rectf GetDimensions() const;
@@ -100,24 +108,38 @@ public:
 	template <class Compare>
 	void SortChildren( Compare comp );
 
-	void AddRef() { ++m_ref_count; }
-	void ReleaseRef() { --m_ref_count; }
+	void AddRef() { ++m_refCount; }
+	void ReleaseRef() { --m_refCount; }
 
 protected:
 	Widget*			m_parent;
 	child_vec_type	m_children;
 
-	Vector2			m_pos;
+	Vector2			m_position;
 	Vector2			m_size;
 	Color			m_color;
 	BlendMode		m_blendmode;
 
-	int				m_ref_count;
-	bool			m_active;
-	bool			m_selected;
-	bool			m_visible;
-	bool			m_enabled;
-	bool			m_locked;
+	int				m_refCount;
+
+	#pragma pack(push, 1)
+	union {
+		struct {
+			bool m_active : 1;
+			bool m_selected : 1;
+			bool m_visible : 1;
+			bool m_enabled : 1;
+			bool m_locked : 1;
+		};
+		u32 m_flags;
+	};
+	#pragma pack(pop)
+
+	//bool			m_active;
+	//bool			m_selected;
+	//bool			m_visible;
+	//bool			m_enabled;
+	//bool			m_locked;
 
 };
 

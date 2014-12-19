@@ -41,7 +41,7 @@ protected:
 	bool InternalGenerateFramebufferObject();
 
 	Texture*	m_texturePtr;
-	gluint		m_fbo;
+	u32			m_fbo;
 };
 
 

@@ -18,11 +18,11 @@
 
 #pragma once
 
-#include <fc/string.h>
-
 #include "AttributeWriter.h"
 #include "XmlElement.h"
 #include "XmlDocument.h"
+
+#include <fc/string.h>
 
 CE_NAMESPACE_BEGIN
 

@@ -18,8 +18,6 @@
 
 #pragma once
 
-#include <fc/string.h>
-
 #include "../Common.h"
 #include "../Math/Point.h"
 #include "../Math/Rect.h"
@@ -31,6 +29,8 @@
 #include "../Math/Colorf.h"
 #include "../Math/Quaternion.h"
 #include "../Math/Matrix.h"
+
+#include <fc/string.h>
 
 CE_NAMESPACE_BEGIN
 

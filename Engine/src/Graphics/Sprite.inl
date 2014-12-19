@@ -148,7 +148,7 @@ void Sprite::SetSourceRect( const Rect& sourceRect )
 }
 
 
-gluint Sprite::GetTextureID() const
+u32 Sprite::GetTextureID() const
 {
 	return m_texture ? m_texture->GetTextureID() : 0;
 }

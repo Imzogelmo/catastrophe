@@ -30,26 +30,23 @@ public:
 
 	enum Corners
 	{
-		TOP_LEFT,
-		BOTTOM_LEFT,
-		BOTTOM_RIGHT,
-		TOP_RIGHT,
-		MAX_CORNERS
+		Corner_TopLeft,
+		Corner_BottomLeft,
+		Corner_BottomRight,
+		Corner_TopRight,
+		Corner_MaxCorners
 	};
 
 	BackgroundImage();
 
 	void SetCornerColor( int corner, const Color& color );
-	//void SetBlendMode( const BlendMode& value ) { m_blendmode = value; }
-
 	Color GetCornerColor( int corner ) const;
-	//const BlendMode& GetBlendMode() const { return m_blendmode; }
 
 	virtual void Update();
 	virtual void Render( SpriteBatch* spritebatch );
 
 protected:
-	Color	m_cornerColors[MAX_CORNERS];
+	Color	m_cornerColors[Corner_MaxCorners];
 
 };
 

@@ -18,11 +18,12 @@
 
 #pragma once
 
-#include <fc/string.h>
-
 #include "../Common.h"
 
+#include <fc/string.h>
+
 CE_NAMESPACE_BEGIN
+
 
 enum ShaderType
 {
@@ -43,7 +44,7 @@ public:
 	const String& GetSource();
 	const String& GetInfoLog();
 
-	gluint GetObject() const { return m_shader_object; }
+	u32 GetObject() const { return m_shader_object; }
 	bool IsCompiled() const { return m_is_compiled; }
 
 protected:
@@ -53,7 +54,7 @@ protected:
 	String	m_name;
 	String	m_source;
 	String	m_infolog;
-	gluint		m_shader_object;
+	u32		m_shader_object;
 	ShaderType	m_program_type;
 	bool		m_is_compiled;
 };

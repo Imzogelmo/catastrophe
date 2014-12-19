@@ -18,7 +18,6 @@
 
 #pragma once
 
-
 #include "Gui/Widget.h"
 #include "Gui/AnimatedIcon.h"
 #include "Gui/BackgroundImage.h"

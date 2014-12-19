@@ -327,7 +327,7 @@ bool Shader::Link()
 		m_fragmentShaderAttached = true;
 	}
 
-	glint status(0);
+	int status(0);
 	glLinkProgram( m_programObject );
 	glGetProgramiv( m_programObject, GL_LINK_STATUS, &status );
 

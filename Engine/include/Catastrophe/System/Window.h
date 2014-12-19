@@ -18,13 +18,13 @@
 
 #pragma once
 
-#include <fc/string.h>
-
 #include "../Common.h"
 #include "../Math/Point.h"
 #include "../Math/Rect.h"
 #include "../Math/Color.h"
 #include "../Math/Colorf.h"
+
+#include <fc/string.h>
 
 CE_NAMESPACE_BEGIN
 

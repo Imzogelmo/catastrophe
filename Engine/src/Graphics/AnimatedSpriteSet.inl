@@ -154,7 +154,7 @@ void AnimatedSpriteSet::Update()
 }
 
 
-gluint AnimatedSpriteSet::GetTextureID() const
+u32 AnimatedSpriteSet::GetTextureID() const
 {
 	return m_texture ? m_texture->GetTextureID() : 0;
 }

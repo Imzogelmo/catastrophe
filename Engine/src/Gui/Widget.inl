@@ -30,12 +30,12 @@ CE_NAMESPACE_BEGIN
 
 
 Widget::Widget( Vector2 pos, Vector2 size ) :
-	m_parent(0),
-	m_pos(pos),
+	m_parent(null),
+	m_position(pos),
 	m_size(size),
 	m_color(Color::White()),
 	m_blendmode(BlendMode::Alpha),
-	m_ref_count(1),
+	m_refCount(1),
 	m_active(true),
 	m_selected(false),
 	m_visible(true),
@@ -88,7 +88,7 @@ void Widget::RenderChildren( SpriteBatch* spritebatch )
 
 void Widget::SetPosition( const Vector2& position )
 {
-	m_pos = position;
+	m_position = position;
 }
 
 
@@ -265,7 +265,7 @@ Widget* Widget::GetChild( u32 index ) const
 
 Vector2 Widget::GetScreenPosition() const
 {
-	Vector2 screenPosition = m_pos;
+	Vector2 screenPosition = m_position;
 	if( m_parent )
 	{
 		screenPosition += m_parent->GetScreenPosition();
@@ -277,7 +277,7 @@ Vector2 Widget::GetScreenPosition() const
 
 Rectf Widget::GetDimensions() const
 {
-	return Rectf(m_pos, m_pos + m_size);
+	return Rectf(m_position, m_position + m_size);
 }
 
 

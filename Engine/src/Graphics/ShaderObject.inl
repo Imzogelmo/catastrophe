@@ -107,7 +107,7 @@ bool ShaderObject::Compile()
 	glShaderSource( m_shader_object, 1, &source, &length );
 	glCompileShader( m_shader_object );
 
-	glint status(0);
+	int status(0);
 	glGetShaderiv( m_shader_object, GL_COMPILE_STATUS, &status );
 
 	m_is_compiled = (status == GL_TRUE ? true : false);

@@ -18,10 +18,10 @@
 
 #pragma once
 
-#include <fc/vector.h>
-
 #include "File.h"
 #include "FileBuffer.h"
+
+#include <fc/vector.h>
 
 CE_NAMESPACE_BEGIN
 

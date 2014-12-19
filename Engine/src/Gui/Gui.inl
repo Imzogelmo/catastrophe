@@ -36,6 +36,18 @@ void Gui::SetDefaultSkin( Skin* skin )
 }
 
 
+void Gui::Update()
+{
+	if( m_root != null )
+		m_root->Update();
+}
+
+
+void Gui::Render()
+{
+	if( m_root != null )
+		m_root->Render(null);
+}
 
 
 CE_NAMESPACE_END

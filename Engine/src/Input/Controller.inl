@@ -16,8 +16,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include <cstring>
+#include "Common.h"
 #include "Input/Controller.h"
+
+#include <cstring>
 
 
 Controller::Controller() :

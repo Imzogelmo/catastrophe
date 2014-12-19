@@ -267,7 +267,7 @@ void ParticleGroup::RemoveDeadParticles()
 
 void ParticleGroup::Render( SpriteBatch* spriteBatch )
 {
-	gluint textureID = m_sprite.GetTextureID();
+	u32 textureID = m_sprite.GetTextureID();
 	Rectf uv = m_sprite.GetUVRect();
 
 	spriteBatch->SetBlendMode(m_sprite.GetBlendMode());

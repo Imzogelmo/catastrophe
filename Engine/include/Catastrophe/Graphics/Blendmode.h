@@ -49,6 +49,7 @@ public:
 	static BlendMode InverseAlpha;
 
 	void Apply() const;
+
 	BlendMode &Separate( u16 sFactor, u16 dFactor )
 	{
 		src = sFactor, dst = dFactor;

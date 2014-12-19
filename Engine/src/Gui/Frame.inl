@@ -121,7 +121,7 @@ void Frame::Render( SpriteBatch* spriteBatch )
 
 	if( m_texture )
 	{
-		gluint textureID = m_texture->GetTextureID();
+		u32 textureID = m_texture->GetTextureID();
 
 		Rectf vtx;
 		vtx.min.x = min.x;

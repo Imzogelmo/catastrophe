@@ -20,50 +20,51 @@
 
 #include "Common.h"
 
+CE_NAMESPACE_BEGIN
 
 
+enum EasingEquation
+{
+	EasingEquation_Linear,
+	EasingEquation_QuadraticEaseOut,
+	EasingEquation_QuadraticEaseIn,
+	EasingEquation_QuadraticEaseInOut,
+	EasingEquation_ExponentialEaseOut,
+	EasingEquation_ExponentialEaseIn,
+	EasingEquation_ExponentialEaseInOut,
+	EasingEquation_CubicEaseOut,
+	EasingEquation_CubicEaseIn,
+	EasingEquation_CubicEaseInOut,
+	EasingEquation_QuarticEaseOut,
+	EasingEquation_QuarticEaseIn,
+	EasingEquation_QuarticEaseInOut,
+	EasingEquation_QuinticEaseOut,
+	EasingEquation_QuinticEaseIn,
+	EasingEquation_QuinticEaseInOut,
+	EasingEquation_CircularEaseOut,
+	EasingEquation_CircularEaseIn,
+	EasingEquation_CircularEaseInOut,
+	EasingEquation_SinusoidalEaseOut,
+	EasingEquation_SinusoidalEaseIn,
+	EasingEquation_SinusoidalEaseInOut,
+	EasingEquation_ElasticEaseOut,
+	EasingEquation_ElasticEaseIn,
+	EasingEquation_ElasticEaseInOut,
+	EasingEquation_BounceEaseOut,
+	EasingEquation_BounceEaseIn,
+	EasingEquation_BounceEaseInOut,
+	EasingEquation_BackEaseOut,
+	EasingEquation_BackEaseIn,
+	EasingEquation_BackEaseInOut
+};
+
+
+typedef float (*EasingFunctionPtr)(float, float, float, float);
+
+EasingFunctionPtr GetFunction( EasingEquation equation );
 
 namespace Easing
 {
-	enum EasingEquation
-	{
-		EasingEquation_Linear,
-		EasingEquation_QuadraticEaseOut,
-		EasingEquation_QuadraticEaseIn,
-		EasingEquation_QuadraticEaseInOut,
-		EasingEquation_ExponentialEaseOut,
-		EasingEquation_ExponentialEaseIn,
-		EasingEquation_ExponentialEaseInOut,
-		EasingEquation_CubicEaseOut,
-		EasingEquation_CubicEaseIn,
-		EasingEquation_CubicEaseInOut,
-		EasingEquation_QuarticEaseOut,
-		EasingEquation_QuarticEaseIn,
-		EasingEquation_QuarticEaseInOut,
-		EasingEquation_QuinticEaseOut,
-		EasingEquation_QuinticEaseIn,
-		EasingEquation_QuinticEaseInOut,
-		EasingEquation_CircularEaseOut,
-		EasingEquation_CircularEaseIn,
-		EasingEquation_CircularEaseInOut,
-		EasingEquation_SinusoidalEaseOut,
-		EasingEquation_SinusoidalEaseIn,
-		EasingEquation_SinusoidalEaseInOut,
-		EasingEquation_ElasticEaseOut,
-		EasingEquation_ElasticEaseIn,
-		EasingEquation_ElasticEaseInOut,
-		EasingEquation_BounceEaseOut,
-		EasingEquation_BounceEaseIn,
-		EasingEquation_BounceEaseInOut,
-		EasingEquation_BackEaseOut,
-		EasingEquation_BackEaseIn,
-		EasingEquation_BackEaseInOut
-	};
-
-	typedef float (*EasingFunctionPtr)(float, float, float, float);
-
-	EasingFunctionPtr GetFunction( EasingEquation equation );
-
 	// t - current timestep
 	// b - beginning value
 	// c - value to move by
@@ -104,3 +105,4 @@ namespace Easing
 }
 
 
+CE_NAMESPACE_END

@@ -18,10 +18,6 @@
 
 #pragma once
 
-#include <fc/dynamic_array2d.h>
-#include <fc/vector.h>
-#include <fc/string.h>
-
 #include "../Math/Vector2.h"
 #include "../Math/Rectf.h"
 #include "../Math/Color.h"
@@ -29,6 +25,10 @@
 
 #include "TextAlignment.h"
 #include "Texture.h"
+
+#include <fc/dynamic_array2d.h>
+#include <fc/vector.h>
+#include <fc/string.h>
 
 CE_NAMESPACE_BEGIN
 
@@ -76,7 +76,7 @@ public:
 	int LoadFromFile( const String& path, const String& filename );
 	int LoadFromFile( const String& filename, int faceSize, int dpi = DefaultDpi );
 	int LoadFromFile( const String& path, const String& filename, int faceSize, int dpi = DefaultDpi );
-	//int CreateFromBitmapFontTexture( gluint texture, u32 width, u32 height );
+	//int CreateFromBitmapFontTexture( u32 texture, u32 width, u32 height );
 	//int CreateFromPixelData( const u8* pixels, u32 pixelFormat, u32 width, u32 height );
 
 	void SetAdvance( int advance );
@@ -87,8 +87,8 @@ public:
 	int GetTextWidth( const char* first, const char* last ) const;
 
 	Texture* GetTexture() const { return const_cast<Texture*>(&m_texture); }
-	gluint GetTextureID() const { return m_texture.GetTextureID(); }
-	gluint GetFaceSize() const { return m_faceSize; }
+	u32 GetTextureID() const { return m_texture.GetTextureID(); }
+	u32 GetFaceSize() const { return m_faceSize; }
 	int GetLineHeight() const { return m_lineHeight; }
 
 	Glyph& GetGlyph( u8 glyph ) { return m_glyphs[ m_glyphMap[glyph] ]; }

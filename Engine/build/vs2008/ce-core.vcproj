@@ -43,8 +43,10 @@
 				AdditionalIncludeDirectories="&quot;.\..\..\include\Catastrophe&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
+				ExceptionHandling="1"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
+				BufferSecurityCheck="false"
 				ProgramDataBaseFileName="$(OutDir)\$(ProjectName)-d.pdb"
 				WarningLevel="4"
 				DebugInformationFormat="4"
@@ -111,6 +113,7 @@
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				StringPooling="true"
 				MinimalRebuild="true"
+				ExceptionHandling="0"
 				RuntimeLibrary="2"
 				BufferSecurityCheck="false"
 				EnableFunctionLevelLinking="true"
@@ -555,10 +558,6 @@
 				>
 				<File
 					RelativePath=".\..\..\include\Catastrophe\Graphics\AnimatedSpriteSet.h"
-					>
-				</File>
-				<File
-					RelativePath=".\..\..\include\Catastrophe\Graphics\AnimationFrames.h"
 					>
 				</File>
 				<File

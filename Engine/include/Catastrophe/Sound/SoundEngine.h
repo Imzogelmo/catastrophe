@@ -18,8 +18,9 @@
 
 #pragma once
 
-#include <fc/string.h>
 #include "Sound.h"
+
+#include <fc/string.h>
 
 CE_NAMESPACE_BEGIN
 

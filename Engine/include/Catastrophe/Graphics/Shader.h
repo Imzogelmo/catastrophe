@@ -18,14 +18,14 @@
 
 #pragma once
 
-#include <fc/string.h>
-#include <fc/static_string.h>
-#include <fc/vector_map.h>
-
 #include "../Common.h"
 #include "../Math/Common.h"
 
 #include "ShaderObject.h"
+
+#include <fc/string.h>
+#include <fc/static_string.h>
+#include <fc/vector_map.h>
 
 CE_NAMESPACE_BEGIN
 
@@ -33,7 +33,7 @@ CE_NAMESPACE_BEGIN
 class CE_API Shader
 {
 public:
-	typedef fc::vector_map<u32, glint> map_type;
+	typedef fc::vector_map<u32, int> map_type;
 
 	Shader( VertexShader* vertex_shader = 0, FragmentShader* fragment_shader = 0 );
 
@@ -80,8 +80,8 @@ protected:
 
 	VertexShader*	m_vertexShader;
 	FragmentShader*	m_fragmentShader;
-	gluint			m_programObject;
-	String		m_infolog;
+	u32				m_programObject;
+	String			m_infolog;
 	map_type		m_uniformLocations;
 	bool			m_vertexShaderAttached;
 	bool			m_fragmentShaderAttached;

@@ -42,10 +42,10 @@ public:
 	BlendMode	blendmode;
 	Rectf		uv;
 	PackedRect	source_rect;
-	s16		frame_counter;
-	s16		current_frame;
-	s16		anim_speed;
-	s16		num_frames;
+	s16			frame_counter;
+	s16			current_frame;
+	s16			anim_speed;
+	s16			num_frames;
 
 	PackedSprite();
 	PackedSprite( Texture* texturePtr, const PackedRect& sourceRectangle, int numberOfFrames, s16 frameDelay );
@@ -65,7 +65,7 @@ public:
 	void Update();
 
 	Texture* GetTexture() const { return texture; }
-	gluint GetTextureID() const;
+	u32 GetTextureID() const;
 	const Vector2& GetSize() const { return size; }
 	const Color& GetColor() const { return color; }
 	const BlendMode& GetBlendMode() const { return blendmode; }
