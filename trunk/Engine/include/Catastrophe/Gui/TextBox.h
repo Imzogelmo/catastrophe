@@ -18,11 +18,11 @@
 
 #pragma once
 
-#include <fc/fixed_vector.h>
-
 #include "Label.h"
 #include "Frame.h"
 #include "TextLine.h"
+
+#include <fc/fixed_vector.h>
 
 CE_NAMESPACE_BEGIN
 

@@ -37,6 +37,13 @@ public:
 	static void SetDefaultSkin( Skin* skin );
 	static Skin* GetDefaultSkin() { return &m_defaultSkin; }
 
+	template <class T>
+	T* CreateWidget()
+	{
+		T* element = new T();
+		return element;
+	}
+
 protected:
 	Widget*	m_root;
 	Skin*	m_skin;

@@ -18,12 +18,12 @@
 
 #pragma once
 
-#include <fc/string.h>
-
 #include "../Common.h"
 #include "../Math/Rect.h"
 #include "../Math/Vector2.h"
 #include "../Resource/GraphicsResource.h"
+
+#include <fc/string.h>
 
 CE_NAMESPACE_BEGIN
 
@@ -75,7 +75,7 @@ public:
 	bool GetPixels( u8* ptr ) const;
 
 	/// Gets the OpenGL id of this texture.
-	gluint GetTextureID() const { return m_texture; }
+	u32 GetTextureID() const { return m_texture; }
 
 	/// Gets the normalized uv coords from a point on the texture.
 	Vector2 GetUV( const Point& pos ) const;
@@ -91,7 +91,7 @@ public:
 	static int GetMaxTextureSize();
 
 protected:
-	gluint	m_texture;
+	u32	m_texture;
 	int		m_width;
 	int		m_height;
 	float	m_floatWidth;

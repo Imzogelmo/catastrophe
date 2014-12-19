@@ -18,6 +18,8 @@
 
 #pragma once
 
+#include "../Common.h"
+
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <GL/gl.h>

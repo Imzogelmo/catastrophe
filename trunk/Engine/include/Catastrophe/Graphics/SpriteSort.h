@@ -18,6 +18,8 @@
 
 #pragma once
 
+#include "../Common.h"
+
 #include <fc/sort.h>
 
 CE_NAMESPACE_BEGIN

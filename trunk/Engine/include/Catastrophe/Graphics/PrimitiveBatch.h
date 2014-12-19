@@ -18,10 +18,10 @@
 
 #pragma once
 
-#include <fc/vector.h>
-
 #include "../Common.h"
 #include "Primitive.h"
+
+#include <fc/vector.h>
 
 CE_NAMESPACE_BEGIN
 

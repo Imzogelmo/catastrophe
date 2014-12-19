@@ -18,11 +18,12 @@
 
 #pragma once
 
+#include "../Common.h"
+
 #include <fc/string.h>
 #include <fc/static_string.h>
 #include <fc/vector.h>
 #include <fc/vector_map.h>
-#include "../Common.h"
 
 CE_NAMESPACE_BEGIN
 

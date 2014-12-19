@@ -103,7 +103,7 @@ public:
 
 	inline const Rectf& GetUVRect() const { return m_uv; }
 	inline Texture* GetTexture() const { return m_texture; }
-	gluint GetTextureID() const;
+	u32 GetTextureID() const;
 
 protected:
 	Texture*	m_texture;

@@ -22,10 +22,10 @@ CE_NAMESPACE_BEGIN
 
 
 Skin::Skin() :
-	m_texture(0),
-	m_font(0),
-	m_frame(0),
-	m_backgroundImage(0)
+	m_texture(null),
+	m_font(null),
+	m_frame(null),
+	m_backgroundImage(null)
 {
 }
 

@@ -18,13 +18,13 @@
 
 #pragma once
 
-#include <fc/type_traits.h>
-
 #include "../Common.h"
 #include "../Math/Vector2.h"
 #include "../Math/Vector3.h"
 #include "../Math/Color.h"
 #include "../Math/Math.h"
+
+#include <fc/type_traits.h>
 
 CE_NAMESPACE_BEGIN
 

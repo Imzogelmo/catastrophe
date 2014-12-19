@@ -26,21 +26,21 @@ CE_NAMESPACE_BEGIN
 BackgroundImage::BackgroundImage() :
 	Icon()
 {
-	for( int i(0); i < MAX_CORNERS; ++i )
+	for( int i(0); i < Corner_MaxCorners; ++i )
 		m_cornerColors[i] = Color::White();
 }
 
 
 void BackgroundImage::SetCornerColor( int corner, const Color& color )
 {
-	if( corner < MAX_CORNERS )
+	if( corner < Corner_MaxCorners )
 		m_cornerColors[corner] = color;
 }
 
 
 Color BackgroundImage::GetCornerColor( int corner ) const
 {
-	if( corner < MAX_CORNERS )
+	if( corner < Corner_MaxCorners )
 		return m_cornerColors[corner];
 
 	return Color::White();
@@ -56,7 +56,7 @@ void BackgroundImage::Update()
 
 void BackgroundImage::Render( SpriteBatch* spritebatch )
 {
-	if( !m_sprite.GetTexture() )
+	if( m_sprite.GetTexture() == null )
 		return;
 
 	Vector2 minPos = GetScreenPosition();

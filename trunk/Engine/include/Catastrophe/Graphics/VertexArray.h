@@ -18,13 +18,13 @@
 
 #pragma once
 
-#include <fc/vector.h>
-
 #include "../Common.h"
 #include "../Math/Rectf.h"
 
 #include "Vertex.h"
 #include "PrimitiveType.h"
+
+#include <fc/vector.h>
 
 CE_NAMESPACE_BEGIN
 

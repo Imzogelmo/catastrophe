@@ -18,9 +18,9 @@
 
 #pragma once
 
-#include <fc/string.h>
-
 #include "../Common.h"
+
+#include <fc/string.h>
 
 CE_NAMESPACE_BEGIN
 

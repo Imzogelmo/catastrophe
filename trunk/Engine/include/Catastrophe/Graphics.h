@@ -18,7 +18,6 @@
 
 #pragma once
 
-
 #include "Common.h"
 #include "Graphics/Sprite.h"
 #include "Graphics/SpriteAnimation.h"

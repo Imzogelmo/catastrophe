@@ -46,7 +46,7 @@ PackedSprite::PackedSprite( Texture* texturePtr, const PackedRect& sourceRectang
 }
 
 
-gluint PackedSprite::GetTextureID() const
+u32 PackedSprite::GetTextureID() const
 {
 	return texture ? texture->GetTextureID() : 0;
 }
