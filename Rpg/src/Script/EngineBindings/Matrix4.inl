@@ -82,15 +82,15 @@ Matrix MonoEngineBinding::Matrix_CreateRotation( Matrix* matrix, Vector3 rotatio
 }
 
 
-Matrix MonoEngineBinding::Matrix_CreateTransformation( Matrix* matrix, Vector3 pos, float rotation, Vector3 scale, Vector3 origin )
+Matrix MonoEngineBinding::Matrix_CreateTransformation( Matrix* matrix, Vector3 position, float rotation, Vector3 scale, Vector3 origin )
 {
-	return matrix->CreateTransformation(pos, rotation, scale, origin);
+	return matrix->CreateTransformation(position, rotation, scale, origin);
 }
 
 
-Matrix MonoEngineBinding::Matrix_CreateTranslation( Matrix* matrix, Vector3 pos )
+Matrix MonoEngineBinding::Matrix_CreateTranslation( Matrix* matrix, Vector3 position )
 {
-	return matrix->CreateTranslation(pos);
+	return matrix->CreateTranslation(position);
 }
 
 

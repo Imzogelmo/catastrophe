@@ -14,6 +14,18 @@
 
 
 
+const char* MonoRpgBinding::Actor_GetName( Actor* actor )
+{
+	SAFE_CALL_RETURN(actor, GetName(), "");
+}
+
+
+void MonoRpgBinding::Actor_SetName( Actor* actor, const char* name )
+{
+	SAFE_CALL(actor, SetName(name ? name : ""));
+}
+
+
 int MonoRpgBinding::Actor_GetParam( Actor* actor, int param )
 {
 	if( actor )
@@ -87,28 +99,28 @@ int MonoRpgBinding::Actor_CalculateModifiedDerivedStatValue( Actor* actor, int s
 void MonoRpgBinding::Actor_SetParam( Actor* actor, int param, int value )
 {
 	if( actor )
-		return actor->SetParam(param, int value);
+		return actor->SetParam(param, value);
 }
 
 
 void MonoRpgBinding::Actor_SetMaxParam( Actor* actor, int param, int value )
 {
 	if( actor )
-		return actor->SetMaxParam(param, int value);
+		return actor->SetMaxParam(param, value);
 }
 
 
 void MonoRpgBinding::Actor_SetBaseStat( Actor* actor, int stat, int value )
 {
 	if( actor )
-		return actor->GetStat(stat, int value);
+		return actor->GetStat(stat, value);
 }
 
 
 void MonoRpgBinding::Actor_SetDerivedStat( Actor* actor, int stat, int value )
 {
 	if( actor )
-		return actor->GetStat(stat, int value);
+		return actor->GetStat(stat, value);
 }
 
 
@@ -118,6 +130,8 @@ void MonoRpgBinding::BindActor()
 	SetNamespace("CatastropheEngine.Rpg.ActorBase::");
 
 	// Getters
+	AddInternalCall("GetName", Actor_GetName);
+	AddInternalCall("SetName", Actor_SetName);
 	AddInternalCall("GetParameter", Actor_GetParam);
 	AddInternalCall("GetMaxParameter", Actor_GetMaxParam);
 	AddInternalCall("GetUnmodifiedMaxParameter", Actor_GetUnmodifiedMaxParam);

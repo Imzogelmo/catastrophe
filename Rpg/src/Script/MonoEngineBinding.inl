@@ -32,4 +32,6 @@
 #include "EngineBindings/Input.inl"
 
 #include "EngineBindings/UI/UIElement.inl"
+#include "EngineBindings/UI/Label.inl"
+#include "EngineBindings/UI/Frame.inl"
 

@@ -1,3 +1,13 @@
+// catastrophe rpg engine
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
 
 #pragma once
 
@@ -21,6 +31,8 @@ struct MonoScriptClassInfo
 	UnmanagedThunkType0 ctorMethod;
 	UnmanagedThunkType0 updateMethod;
 	UnmanagedThunkType0 renderMethod;
+	//UnmanagedThunkType0 onCreateMethod;
+	//UnmanagedThunkType0 onDestroyMethod;
 
 };
 
@@ -42,20 +54,20 @@ public:
 	MonoScriptObject( MonoObject* object, MonoScriptClassInfo& classInfo );
 	~MonoScriptObject();
 
-	MonoObject* CallObjectMethod( const char* decl, void** params = 0 );
-	MonoObject* CallObjectVirtualMethod( const char* decl, void** params = 0 );
+	MonoObject* CallObjectMethod( const char* decl, void** params = null );
+	MonoObject* CallObjectVirtualMethod( const char* decl, void** params = null );
 
 	void CallDefaultCtor();
 	void CallUpdateMethod();
 	void CallRenderMethod();
 
-	MonoObject* GetMonoObjectPtr() { return m_object; }
+	MonoObject* GetMonoObjectPtr() const { return m_object; }
+	MonoScriptClassInfo* GetClassInfo() const { return const_cast<MonoScriptClassInfo*>(&m_classInfo); }
 
 protected:
-	MonoObject*	m_object;
-	uint32_t	m_gcHandle;
-
-	MonoScriptClassInfo m_classInfo;
+	MonoObject*			m_object;
+	u32					m_gcHandle;
+	MonoScriptClassInfo	m_classInfo;
 
 	//const char* m_name;
 	//const char* m_namespace;

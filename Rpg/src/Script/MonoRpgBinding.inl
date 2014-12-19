@@ -22,6 +22,9 @@
 #include "RpgBindings/BattleGroup.inl"
 #include "RpgBindings/BattleFaction.inl"
 
+#include "RpgBindings/Database/Database.inl"
+#include "RpgBindings/Database/Item.inl"
+
 
 
 

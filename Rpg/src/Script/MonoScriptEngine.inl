@@ -152,15 +152,41 @@ void MonoScriptEngine::DestroyScriptObject( MonoScriptObject* object )
 
 void MonoScriptEngine::BindFramework()
 {
-	MonoEngineBinding::BindStaticString();
+	// Math
 	MonoEngineBinding::BindMathf();
 	MonoEngineBinding::BindVector2();
+	MonoEngineBinding::BindMatrix4();
 	MonoEngineBinding::BindCollision();
+
+	// Graphics
 	MonoEngineBinding::BindTexture();
+	MonoEngineBinding::BindFont();
 	MonoEngineBinding::BindSprite();
-	//MonoEngineBinding::BindAnimatedSprite();
+	MonoEngineBinding::BindAnimatedSprite();
+	MonoEngineBinding::BindAnimatedSpriteSet();
 	MonoEngineBinding::BindSpriteBatch();
 	MonoEngineBinding::BindVertexArray();
+
+	MonoEngineBinding::BindStaticString();
 	MonoEngineBinding::BindInput();
+
+	// UI
+	MonoEngineBinding::BindWidget();
+	MonoEngineBinding::BindLabel();
+	MonoEngineBinding::BindFrame();
+
+	// Database
+	MonoRpgBinding::BindItem();
+	MonoRpgBinding::BindDatabase();
+
+	// Rpg
+	MonoRpgBinding::BindActor();
+	MonoRpgBinding::BindInventorySlot();
+	MonoRpgBinding::BindInventory();
+	MonoRpgBinding::BindEquipment();
+	MonoRpgBinding::BindParty();
+	MonoRpgBinding::BindBattleGroup();
+	MonoRpgBinding::BindBattleFaction();
+
 
 }
