@@ -80,6 +80,46 @@ struct SpriteData
 	inline u32 GetBlendMode() const { return data[1].blendmode; }
 	inline int GetDepth() const { return data[2].depth; }
 	inline float GetYPosition() const { return data[3].y_pos; }
+
+	FC_FORCE_INLINE
+	void SetVertexUVData( const Vector2& minPosition, const Vector2& maxPosition, const Rectf& uv)
+	{
+		data[0].pos = minPosition;
+		data[0].uv = uv.min;
+		data[1].pos.x = minPosition.x;
+		data[1].pos.y = maxPosition.y;
+		data[1].uv.x = uv.min.x;
+		data[1].uv.y = uv.max.y;
+		data[2].pos = maxPosition;
+		data[2].uv = uv.max;
+		data[3].pos.x = maxPosition.x;
+		data[3].pos.y = minPosition.y;
+		data[3].uv.x = uv.max.x;
+		data[3].uv.y = uv.min.y;
+	}
+
+	FC_FORCE_INLINE
+	void SetVertexData( const Rectf& vertices )
+	{
+		data[0].pos = vertices.min;
+		data[1].pos.x = vertices.min.x;
+		data[1].pos.y = vertices.max.y;
+		data[2].pos = vertices.max;
+		data[3].pos.x = vertices.max.x;
+		data[3].pos.y = vertices.min.y;
+	}
+
+	FC_FORCE_INLINE
+	void SetUVData( const Rectf& uv)
+	{
+		data[0].uv = uv.min;
+		data[1].uv.x = uv.min.x;
+		data[1].uv.y = uv.max.y;
+		data[2].uv = uv.max;
+		data[3].uv.x = uv.max.x;
+		data[3].uv.y = uv.min.y;
+	}
+
 };
 
 FC_MAKE_TRAIT(SpriteData, is_pod);

@@ -77,7 +77,13 @@ String ToString( const Matrix& value );
 
 String GetNativePath( const String& path );
 String MakePath( const String& path );
-void StripExtension( String& filename );
+String StripExtension( const String& filename );
+
+/*
+const char* StripLeadingWhiteSpace( const char* first, const char* last );
+const char* StripTrailingWhiteSpace( const char* first, const char* last );
+bool GetToken( const String& str, StringRef& token, u32& index, const string_type& delimiters = " \t\r" );
+*/
 
 
 

@@ -410,15 +410,59 @@ String MakePath( const String& path )
 }
 
 
-void StripExtension( String& filename )
+String StripExtension( const String& filename )
 {
-	if( filename.size() < 3 )
-		return;
-
-	u32 i = filename.find_last_of('.');
-	if( i != String::npos )
-		filename.erase(i, String::npos);
+	if( filename.size() > 3 )
+	{
+		u32 i = filename.find_last_of('.');
+		if( i != String::npos )
+			return filename.substr(0, i);
+	}
+	return filename;
 }
+
+
+/*
+const char* StripLeadingWhiteSpace( const char* first, const char* last )
+{
+	while( first != last && (first == ' ' || first == '\t') )
+		++first;
+
+	return first;
+}
+
+
+const char* StripTrailingWhiteSpace( const char* first, const char* last )
+{
+	while( first != last-- && (last == ' ' || last == '\t') )
+		;
+
+	return last;
+}
+
+
+bool GetToken( const String& str, StringRef& token, u32& index, const string_type& delimiters )
+{
+	u32 begin_index;
+	u32 end_index;
+
+	begin_index = str.find_first_not_of( delimiters, index );
+
+	if( begin_index == string_type::npos ) 
+		return false;
+
+	end_index = str.find_first_of( delimiters, begin_index + 1 );
+	if( end_index == string_type::npos )
+		end_index = str.size();
+
+	ASSERT(end_index >= begin_index);
+
+	index = end_index;
+	token.assign( &str[ begin_index ], end_index - begin_index );
+
+	return true;
+}
+*/
 
 
 

@@ -34,6 +34,7 @@
 #include "Math/Vector4.inl"
 #include "Math/PackedRect.inl"
 #include "Math/Easing.inl"
+#include "Math/Tween.inl"
 
 // Graphics
 #include "Graphics/AnimatedSpriteSet.inl"
