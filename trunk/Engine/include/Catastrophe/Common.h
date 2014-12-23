@@ -130,7 +130,8 @@ typedef unsigned int		uint;
 #endif
 
 //typedef String				String;
-typedef fc::basic_string<char>	String;
+typedef fc::basic_string<char>		String;
+typedef fc::basic_string_ref<char>	StringRef;
 
 //todo: use c++11 template typedef support instead.
 //typedef template<u32 N> using StaticString = fc::static_string<N>

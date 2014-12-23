@@ -355,6 +355,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\Math\Tween.inl"
+					>
+				</File>
+				<File
 					RelativePath=".\..\..\src\Math\Vector2.inl"
 					>
 				</File>
@@ -478,6 +482,10 @@
 				</File>
 				<File
 					RelativePath=".\..\..\include\Catastrophe\Math\Rectf.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Catastrophe\Math\Tween.h"
 					>
 				</File>
 				<File
