@@ -18,68 +18,59 @@
 
 #pragma once
 
-#include "Label.h"
-#include "TextBoxBase.h"
+#include "Widget.h"
+#include "StyledText.h"
 
 CE_NAMESPACE_BEGIN
 
 
-struct CE_API TextPage
-{
-	typedef fc::vector<String> StringVector;
 
-	StringVector lines;
-
-	StringVector& GetLines() { return lines; }
-	const StringVector& GetLines() const { return lines; }
-
-	TextPage();
-
-	void AddNewLine( const String& str );
-	void Render( Font* font, SpriteBatch* spriteBatch, const Vector2& position, Color color, u32 numCharsToDraw );
-
-	u32 GetNumTextLines() const { return lines.size(); }
-	u32 Length() const;
-
-};
-
-
-class CE_API TextBox : public TextBoxBase
+class CE_API TextBoxBase : public Widget
 {
 public:
-	typedef fc::vector<TextPage*> vec_type;
+	TextBoxBase();
 
-	TextBox();
-	
 	virtual void SetFont( Font* font );
 	virtual void SetText( const char* text );
 	virtual void SetText( const String& text );
 
+	void SetTextSpeed( float textSpeed );
+	void SetFastForwardSpeed( u32 fastForwardSpeed );
+	void SetIsTextInstantaneous( bool value ) { m_isTextInstantaneous = value; }
+
+	/// Fast forward the current character position by an amount set to the fastForwardSpeed.
+	void FastForward();
+
+	u32 GetPageLength() const { return m_pageLength; }
+	u32 GetFastForwardSpeed() const { return m_fastForwardSpeed; }
+	float GetTextSpeed() const { return m_textSpeed; }
+
+	Font* GetFont() const { return m_font; }
+	const String& GetText() const { return m_text; }
+	
+	bool IsTextInstantaneous() const { return m_isTextInstantaneous; }
+	bool IsTextDisplayFinished() const { return m_textDisplayFinished; }
+
 	virtual void Update();
-	virtual void Render( SpriteBatch* spriteBatch );
-	virtual void IncrementPage();
-
-	TextPage* AddNewPage();
-	TextPage* GetPage( u32 pageNumber );
-	TextPage* GetCurrentPage();
-
-	void ClearPages();
-	void SetCurrentPage( u32 pageNumber );
-	u32 GetNumPages() const;
-
-	bool IsTextDisplayFinished();
-	bool IsPagesFinished();
+	virtual void Render( SpriteBatch* spritebatch );
 
 protected:
-	virtual void UpdateText();
-	bool GetNextToken( const String& str, String& token, u32& index, const String& delimiters = " \t\r" );
+	void SetPageLength( u32 value ) { m_pageLength = value; }
 
-	vec_type	m_pages;
-	u32			m_currentPageNumber;
+	Font*	m_font;
+	String	m_text;
+
+	u32		m_pageLength;
+	u32		m_currentChar;
+	u32		m_fastForwardSpeed;
+
+	float	m_textSpeed;
+	float	m_textSpeedCounter;
+
+	bool	m_textDisplayFinished;
+	bool	m_isTextInstantaneous;
 
 };
-
-
 
 
 CE_NAMESPACE_END

@@ -174,6 +174,10 @@ class Plane;
 class Ray;
 class Frustum;
 
+struct TweenValue;
+class Tween;
+class TweenGroup;
+
 struct Glyph;
 struct RenderState;
 class Font;
@@ -221,7 +225,6 @@ class FileBuffer;
 class CompressedFile;
 class ConfigFile;
 class PackFile;
-class VectorBuffer;
 class XmlReader;
 class XmlWriter;
 class XmlElement;
@@ -253,10 +256,12 @@ FC_MAKE_TRAIT(Line, is_pod);
 FC_MAKE_TRAIT(Ray, is_pod);
 FC_MAKE_TRAIT(Plane, is_pod);
 FC_MAKE_TRAIT(Frustum, is_pod);
+FC_MAKE_TRAIT(BoundingBox, is_pod);
 FC_MAKE_TRAIT(Color, is_pod);
 FC_MAKE_TRAIT(Colorf, is_pod);
 FC_MAKE_TRAIT(HSVColor, is_pod);
 FC_MAKE_TRAIT(HSLColor, is_pod);
+FC_MAKE_TRAIT(TweenValue, is_pod);
 
 FC_MAKE_TRAIT(Glyph, is_pod);
 FC_MAKE_TRAIT(SpriteBase, is_pod);

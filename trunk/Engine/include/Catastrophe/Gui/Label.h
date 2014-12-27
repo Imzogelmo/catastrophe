@@ -27,20 +27,20 @@ CE_NAMESPACE_BEGIN
 class CE_API Label : public Widget
 {
 public:
-	Label( const fc::string& text = "", Font* font = 0, TextAlignment alignment = AlignLeft );
+	Label( const String& text = "", Font* font = 0, TextAlignment alignment = AlignLeft );
 
 	void Render( SpriteBatch* spritebatch );
 
 	void SetFont( Font* font );
 	void SetText( const char* text );
-	void SetText( const fc::string& text );
+	void SetText( const String& text );
 	void SetTextAlignment( TextAlignment alignment ) { m_textAlignment = alignment; }
 	void SetHighlightedColor( const Color& color ) { m_disabledColor = color; }
 	void SetDisabledColor( const Color& color ) { m_highlightedColor = color; }
 	void SetHighlighted( bool enable = true ) { m_isHighlighted = enable; }
 
 	Font* GetFont() const { return m_font; }
-	const fc::string& GetText() const { return m_text; }
+	const String& GetText() const { return m_text; }
 	TextAlignment GetTextAlignment() const { return m_textAlignment; }
 	const Color& GetHighlightedColor() const { return m_disabledColor; }
 	const Color& GetDisabledColor() const { return m_disabledColor; }
@@ -52,7 +52,7 @@ public:
 
 protected:
 	Font*			m_font;
-	fc::string		m_text;
+	String			m_text;
 	TextAlignment	m_textAlignment;
 	Color			m_highlightedColor;
 	Color			m_disabledColor;
