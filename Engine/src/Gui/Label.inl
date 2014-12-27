@@ -24,7 +24,7 @@
 CE_NAMESPACE_BEGIN
 
 
-Label::Label( const fc::string& text, Font* font, TextAlignment alignment ) :
+Label::Label( const String& text, Font* font, TextAlignment alignment ) :
 	Widget(),
 	m_font(font),
 	m_text(text),
@@ -66,7 +66,7 @@ void Label::SetText( const char* text )
 }
 
 
-void Label::SetText( const fc::string& text )
+void Label::SetText( const String& text )
 {
 	m_text = text;
 }

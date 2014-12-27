@@ -628,16 +628,7 @@ void Font::SetLineHeight( int height )
 
 int Font::GetTextWidth( const String& text ) const
 {
-	float width(0.f);
-	for( String::const_iterator it = text.begin(); it != text.end(); ++it )
-	{
-		if(*it == '\n')
-			break;
-
-		width += GetGlyph((u8)*it).advance;
-	}
-
-	return fc::iround(width);
+	return GetTextWidth(text.begin(), text.end());
 }
 
 

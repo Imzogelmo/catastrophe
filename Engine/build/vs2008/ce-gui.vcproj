@@ -184,7 +184,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\include\Catastrophe\Gui\StyledText.h"
+				>
+			</File>
+			<File
 				RelativePath=".\..\..\include\Catastrophe\Gui\TextBox.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\Catastrophe\Gui\TextBoxBase.h"
 				>
 			</File>
 			<File
@@ -246,6 +254,10 @@
 				</File>
 				<File
 					RelativePath=".\..\..\src\Gui\TextBox.inl"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\Gui\TextBoxBase.inl"
 					>
 				</File>
 				<File

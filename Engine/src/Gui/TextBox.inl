@@ -19,120 +19,102 @@
 #pragma once
 
 #include "Gui/TextBox.h"
+#include "Graphics/Font.h"
 #include "Graphics/SpriteBatch.h"
 
 CE_NAMESPACE_BEGIN
 
 
-TextBox::TextBox( const fc::string& text, Font* font, TextAlignment alignment, int rowHeight ) :
-	Label(text, font, alignment),
-	m_rowHeight(rowHeight),
-	m_fastForwardSpeed(4),
-	m_textSpeed(3.f)
+// TextPage
+
+TextPage::TextPage() :
+	lines()
 {
+	lines.reserve(4);
 }
 
 
-void TextBox::SetFastForwardSpeed( int speed )
+void TextPage::AddNewLine( const String& str )
 {
-	m_fastForwardSpeed = (u32)speed;
+	lines.push_back(str);
 }
 
 
-void TextBox::FastForward()
+void TextPage::Render( Font* font, SpriteBatch* spriteBatch, const Vector2& position, Color color, u32 numCharsToDraw )
 {
-	m_currentChar += (u32)m_fastForwardSpeed;
-	if( m_currentChar >= m_text.size() )
-	{
-		m_currentChar = m_text.size();
-		m_textDisplayFinished = true;
-	}
-}
-
-
-bool TextBox::IsTextInstantaneous() const
-{
-	return Math::EpsilonCompare(m_textSpeed, 0.f, 0.001f);
-}
-
-
-void TextBox::Update()
-{
-	if( !IsActive() )
+	CE_ASSERT(spriteBatch);
+	if( font == null || numCharsToDraw == 0 )
 		return;
 
-	if( m_currentChar < m_text.size() )
+	SpriteData sd;
+	::memset(&sd, 0, sizeof(SpriteData));
+
+	sd.SetBlendMode(BlendMode::Alpha);
+	sd.SetTexture(font->GetTextureID());
+	sd.data[0].color = color;
+	sd.data[1].color = color;
+	sd.data[2].color = color;
+	sd.data[3].color = color;
+
+	Vector2 currentPosition = position;
+	u32 charsRendered = numCharsToDraw;
+
+	for( StringVector::const_iterator line = lines.begin(); line != lines.end(); ++line )
 	{
-		if( IsTextInstantaneous() )
+		//const String& str = *line;
+		for( String::const_iterator it = line->begin(); it != line->end(); ++it )
 		{
-			m_currentChar = m_text.size();
-			m_textDisplayFinished = true;
-		}
-		else
-		{
-			++m_textSpeedCounter;
-			while( m_textSpeedCounter > m_textSpeed )
+			const char c = *it;
+			const Glyph& glyph = font->GetGlyph(c);
+
+			// don't render any whitespace.
+			if( c != ' ' )
 			{
-				m_textSpeedCounter -= m_textSpeed;
-				++m_currentChar;
+				const Vector2 minPosition = currentPosition + glyph.translation;
+				const Vector2 maxPosition = minPosition + glyph.size;
+				const Rectf uv = glyph.uv;
+
+				sd.SetVertexUVData(minPosition, maxPosition, uv);
+				spriteBatch->DrawSpriteData(sd);
 			}
+
+			currentPosition.x += glyph.advance;
+
+			// if we've already rendered the specified amount of characters we're done.
+			if( --charsRendered == 0 )
+				return;
 		}
 
-		m_currentChar = fc::min( m_currentChar, m_text.size() );
+		// reset position and add line height to the current position.
+		currentPosition.x = position.x;
+		currentPosition.y += font->GetLineHeight();
 	}
-	else
-	{
-		m_currentChar = 0; //test
-		m_textDisplayFinished = true;
-	}
-
-	Widget::Update();
 }
 
 
-void TextBox::Render( SpriteBatch* spritebatch )
+u32 TextPage::Length() const
 {
-	if( !IsVisible() )
-		return;
+	u32 length = 0;
+	for( StringVector::const_iterator it = lines.begin(); it != lines.end(); ++it )
+		length += it->length();
 
-	if( m_font || !m_text.empty() )
-	{
-		Vector2 pos = GetScreenPosition();
-		pos.x += (float)GetTextAlignmentOffset();
+	return length;
+}
 
-		u32 size = m_textRows.size();
-		for( u32 i(0); i < size; ++i )
-		{
-			if( (int)m_currentChar < m_textRows[i].x )
-				break;
 
-			int amount = abs(m_textRows[i].y - m_textRows[i].x);
-			if( (int)m_currentChar < m_textRows[i].x + amount )
-				amount -= m_textRows[i].x + amount - m_currentChar;
+// TextBox
 
-			spritebatch->DrawString( m_font,
-				m_text,
-				//m_text.begin() + m_textRows[i].x,
-				//m_text.begin() + m_textRows[i].y,
-				m_textRows[i].x,
-				amount,
-				pos,
-				m_color,
-				m_textAlignment
-			);
-
-			pos.y += m_font->GetLineHeight();
-
-		}
-	}
-
-	Widget::Render(spritebatch);
+TextBox::TextBox() :
+	TextBoxBase(),
+	m_pages(),
+	m_currentPageNumber(0)
+{
 }
 
 
 void TextBox::SetFont( Font* font )
 {
-	if(font)
+	if( font != null )
 	{
 		m_font = font;
 		UpdateText();
@@ -140,194 +122,253 @@ void TextBox::SetFont( Font* font )
 }
 
 
-void TextBox::SetText( const fc::string& text )
+void TextBox::SetText( const String& text )
 {
-	m_text = text;
-	m_currentChar = 0;
-	m_textSpeedCounter = 0.f;
+	SetText(text.c_str());
+}
+
+
+void TextBox::SetText( const char* text )
+{
+	TextBoxBase::SetText(text);
 	UpdateText();
 }
 
 
+void TextBox::Update()
+{
+	TextBoxBase::Update();
+}
+
+
+void TextBox::Render( SpriteBatch* spriteBatch )
+{
+	TextPage* currentTextPage = GetCurrentPage();
+	if( currentTextPage != null )
+	{
+		u32 numCharsToDraw = m_currentChar;
+		Color color = GetColor();
+		Vector2 screenPosition = GetScreenPosition();
+
+		currentTextPage->Render(m_font, spriteBatch, screenPosition, color, numCharsToDraw);
+	}
+
+	Widget::Render(spriteBatch);
+}
+
+
+void TextBox::IncrementPage()
+{
+	if( !m_pages.empty() && m_currentPageNumber < m_pages.size() - 1 )
+		m_currentPageNumber++;
+}
+
+
 void TextBox::UpdateText()
 {
-	// Here we have to generate all our line information for the
-	// current text. By caching this data we can speed up font rendering.
-	m_textRows.clear();
+	if( m_font == null )
+		return;
 
-	float textWidth = 0.f;
-	float textWidthBeforeCurrentWord = 0.f;
+	ClearPages();
 
-	int rowStartIndex = 0;
-	int lastWordStartIndex = 0;
-	int currentWordSize = 0;
-	int numWordsInRow = 0;
-	int textSize = (int)m_text.size();
+	TextPage* currentPage = AddNewPage();
+	String currentWord;
+	String currentLine;
+	currentWord.reserve(64);
+	currentLine.reserve(128);
 
-	for( int i(0); i < textSize; ++i )
+	u32 spaceWidth = (u32)m_font->GetGlyph(' ').advance;
+	u32 maxLineWidth = (u32)(fc::max<int>((int)GetWidth(), 64));
+	u32 maxNumLines = (u32)(fc::max<int>((int)GetHeight(), 32) / m_font->GetLineHeight());
+	u32 currentLineWidth = 0;
+	u32 currentIndex = 0;
+	u32 currentPageLength = 0;
+
+	while( GetNextToken(m_text, currentWord, currentIndex, " \t\r") )
 	{
-		const char c = m_text[i];
-		const Glyph & glyph = m_font->GetGlyph(c);
-
-		if( c == '\n' || i == textSize - 1 )
+		u32 wordWidth = (u32)m_font->GetTextWidth(currentWord);
+		if( (currentLineWidth + wordWidth) > maxLineWidth )
 		{
-			int index = i;
-			if( i == textSize - 1 )
-				index++;
+			// out of room, start a new line
+			currentPage->AddNewLine(currentLine);
+			currentLineWidth = 0;
+			currentLine.clear();
 
-			m_textRows.push_back( Point(rowStartIndex, index) );
-
-			rowStartIndex = i + 1;
-			while( rowStartIndex < textSize && m_text[ rowStartIndex ] == ' ' )
-				++rowStartIndex;
-
-			currentWordSize = 0;
-			numWordsInRow = 0;
-			textWidth = 0;
-			continue;
-		}
-		else if( c == ' ' )
-		{
-			if( currentWordSize > 0 )
-			{
-				numWordsInRow++;
-				currentWordSize = 0;
-			}
-		}
-		else
-		{
-			if( currentWordSize == 0 )
-			{
-				lastWordStartIndex = i;
-				textWidthBeforeCurrentWord = textWidth;
-			}
-
-			currentWordSize++;
+			// add a new page if the next line won't fit inside the textbox.
+			if( currentPage->GetNumTextLines() >= maxNumLines )
+				currentPage = AddNewPage();
 		}
 
-		textWidth += glyph.advance;
-		if( textWidth > GetWidth() )
+		currentLine += currentWord;
+		currentLine += ' ';
+		currentLineWidth += (wordWidth + spaceWidth);
+
+		if( currentWord[0] == '\n' )
 		{
-			if( numWordsInRow == 0 )
-			{
-				//width is not enough - barf on it.
-				//w = textWidth;
-			}
-			else
-			{
-				//rewind to start of last word, removing the trailing space if needed.
-				if( lastWordStartIndex > 0 && m_text[ lastWordStartIndex - 1 ] == ' ' )
-					--lastWordStartIndex;
-
-				//m_textRows.push_back( Point(rowStartIndex, lastWordStartIndex) );
-
-				//rowStartIndex = lastWordStartIndex;
-
-
-				m_textRows.push_back( Point(rowStartIndex, lastWordStartIndex) );
-
-				rowStartIndex = lastWordStartIndex;
-				//don't start a new row with a leftover space from the last row.
-				while( rowStartIndex < textSize && m_text[ rowStartIndex ] == ' ' )
-					++rowStartIndex;
-
-				textWidth = textWidth - textWidthBeforeCurrentWord;
-
-			}
 		}
+
+	}
+
+	// add the remainder to the final text line
+	if( !currentLine.empty() )
+		currentPage->AddNewLine(currentLine);
+
+	SetCurrentPage(0);
+}
+
+
+TextPage* TextBox::AddNewPage()
+{
+	TextPage* page = new TextPage();
+	m_pages.push_back(page);
+	page->lines.reserve(8); //fixme
+	return page;
+}
+
+
+TextPage* TextBox::GetPage( u32 pageNumber )
+{
+	return (pageNumber < m_pages.size() ? m_pages[pageNumber] : null);
+}
+
+
+TextPage* TextBox::GetCurrentPage()
+{
+	return (m_currentPageNumber < m_pages.size() ? m_pages[m_currentPageNumber] : null);
+}
+
+
+void TextBox::ClearPages()
+{
+	for( vec_type::iterator it = m_pages.begin(); it != m_pages.end(); ++it )
+		delete *it;
+
+	m_pages.clear();
+}
+
+
+void TextBox::SetCurrentPage( u32 pageNumber )
+{
+	if( pageNumber < m_pages.size() )
+	{
+		m_currentPageNumber = pageNumber;
+		SetPageLength(GetCurrentPage() ? GetCurrentPage()->Length() : 0);
 	}
 }
+
+
+u32 TextBox::GetNumPages() const
+{
+	return m_pages.size();
+}
+
+
+bool TextBox::IsTextDisplayFinished()
+{
+	return m_textDisplayFinished;
+}
+
+
+bool TextBox::IsPagesFinished()
+{
+	return (m_textDisplayFinished && m_currentPageNumber == m_pages.size() - 1);
+}
+
+
+bool TextBox::GetNextToken( const String& str, String& token, u32& index, const String& delimiters )
+{
+	u32 beginIndex;
+	u32 endIndex;
+
+	beginIndex = str.find_first_not_of( delimiters, index );
+
+	if( beginIndex == String::npos ) 
+		return false;
+
+	endIndex = str.find_first_of( delimiters, beginIndex + 1 );
+	if( endIndex == String::npos )
+		endIndex = str.size();
+
+	CE_ASSERT(endIndex >= beginIndex);
+
+	index = endIndex;
+	token.assign( &str[ beginIndex ], endIndex - beginIndex );
+
+	return true;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*
-void TextBox::UpdateText()
+void AddSpace( u32& index )
 {
-	//Here we have to generate all our row information for the
-	//current text. By caching this data we can speed up font rendering.
-	m_textRows.clear();
+	if( m_text[index] == ' ' )
+}
 
-	float textWidth = 0.f;
-	float textWidthBeforeCurrentWord = 0.f;
+void AddWord( const StringRef& str, u32& index )
+{
+	float lineWidth = 0.f;
+	if( fc::is_whitespace(token[index]) )
+		lineWidth += m_font->GetGlyph(' ').advance;
 
-	int rowStartIndex = 0;
-	int lastWordStartIndex = 0;
-	int currentWordSize = 0;
-	int numWordsInRow = 0;
-	int textSize = (int)m_text.size();
+	return lineWidth;
+}
 
-	for( int i(0); i < textSize; ++i )
+const char* TextBox::AddNewWord( const char* first, const char* last, StyledTextLineRef& currentLine )
+{
+	// Start a new line
+	first = StripLeadingWhiteSpace(first, last);
+	if( first != last )
 	{
-		const char c = m_text[i];
-		const Glyph & glyph = m_font->GetGlyph(c);
-
-		if( c == '\n' || i == textSize - 1 )
+		for( float lineWidth = 0.f; lineWidth < maxLineWidth; ++lineWidth )
 		{
-			int index = i;
-			if( i == textSize - 1 )
-				index++;
+			const char c = *first;
+			const Glyph& glyph = m_font->GetGlyph(c);
 
-			m_textRows.push_back( Point(rowStartIndex, index) );
-			
-			rowStartIndex = i + 1;
-			while( rowStartIndex < textSize && m_text[ rowStartIndex ] == ' ' )
-				++rowStartIndex;
-
-			currentWordSize = 0;
-			numWordsInRow = 0;
-			textWidth = 0;
-			continue;
-		}
-		else if( c == ' ' )
-		{
-			if( currentWordSize > 0 )
-			{
-				numWordsInRow++;
-				currentWordSize = 0;
-			}
-		}
-		else
-		{
-			if( currentWordSize == 0 )
-			{
-				lastWordStartIndex = i;
-				textWidthBeforeCurrentWord = textWidth;
-			}
-
-			currentWordSize++;
-		}
-
-		textWidth += glyph.advance;
-		if( textWidth > GetWidth() )
-		{
-			if( numWordsInRow == 0 )
-			{
-				//width is not enough - barf on it.
-				//w = textWidth;
-			}
-			else
-			{
-				//rewind to start of last word, removing the trailing space if needed.
-				if( lastWordStartIndex > 0 && m_text[ lastWordStartIndex - 1 ] == ' ' )
-					--lastWordStartIndex;
-
-				//m_textRows.push_back( Point(rowStartIndex, lastWordStartIndex) );
-
-				//rowStartIndex = lastWordStartIndex;
-
-			
-				m_textRows.push_back( Point(rowStartIndex, lastWordStartIndex) );
-
-				rowStartIndex = lastWordStartIndex;
-				//don't start a new row with a leftover space from the last row.
-				while( rowStartIndex < textSize && m_text[ rowStartIndex ] == ' ' )
-					++rowStartIndex;
-
-				textWidth = textWidth - textWidthBeforeCurrentWord;
-
-			}
+			if( c == '\n' )
+				return first;
+		
+			lineWidth += glyph.advance;
 		}
 	}
 }
+
+const char* TextBox::StripLeadingWhiteSpace( const char* first, const char* last )
+{
+	while( first != last && (first == ' ' || first == '\t') )
+		++first;
+
+	return first;
+}
+
+
+const char* TextBox::StripTrailingWhiteSpace( const char* first, const char* last )
+{
+	while( first != last-- && (last == ' ' || last == '\t') )
+		;
+
+	return last;
+}
+
 */
 
 
