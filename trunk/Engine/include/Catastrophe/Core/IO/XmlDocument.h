@@ -1,5 +1,5 @@
 // Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
+// of this software and associated documentation files ( the "Software" ), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
@@ -18,54 +18,36 @@
 
 #pragma once
 
-#include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/IO/XmlElement.h"
+#include "Catastrophe/Core/Containers/String.h"
 
 CE_NAMESPACE_BEGIN
 
 
-namespace TimeStamp
-{
-	/// Gets the current timestamp in clock ticks.
-	u64 CE_API GetCurrent();
-};
-
-
-/**
- * High performance timer class.
- * Uses timer_lib under the hood for portability.
- */
-class CE_API Timer
+class CE_API XmlDocument
 {
 public:
-	struct Time
-	{
-		u64 clock;
-		u64 ref;
-		u64 freq;
-		f64 oofreq;
-	};
-
-	Timer();
-	~Timer();
+	XmlDocument();
+	virtual ~XmlDocument();
 
 	void Reset();
+	bool Load( const String& filename );
+	bool Save( const String& filename );
+	bool Parse( const String& xml );
 
-	u64 Frequency();
-	u64 TicksPerSecond();
+	void CreateDeclaration();
+	XmlElement CreateRoot( const char* name );
+	XmlElement GetRoot() const;
+	XmlDocument_t* GetDocumentPtr() const { return m_document; }
 
-	u64 ElapsedTicks();
-	u64 ElapsedMinutes();
-	u64 ElapsedSeconds();
-	u64 ElapsedMilliseconds();
-	u64 ElapsedMicroseconds();
+	operator bool () const { return m_document != 0; }
 
-	f64 MilliSeconds();
-	f64 Seconds();
-	f64 Minutes();
+private:
+	XmlDocument( const XmlDocument& );
+	XmlDocument& operator =( const XmlDocument& );
 
-protected:
-	Time		m_time;
-	static bool m_timerInit;
+	XmlDocument_t*	m_document;
+	String		m_buffer;
 };
 
 

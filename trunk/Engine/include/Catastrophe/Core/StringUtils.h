@@ -18,19 +18,20 @@
 
 #pragma once
 
-#include "../Common.h"
-#include "../Math/Point.h"
-#include "../Math/Rect.h"
-#include "../Math/Rectf.h"
-#include "../Math/Vector2.h"
-#include "../Math/Vector3.h"
-#include "../Math/Vector4.h"
-#include "../Math/Color.h"
-#include "../Math/Colorf.h"
-#include "../Math/Quaternion.h"
-#include "../Math/Matrix.h"
+#include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/PlatformString.h"
+#include "Catastrophe/Core/Containers/String.h"
+#include "Catastrophe/Core/Math/Point.h"
+#include "Catastrophe/Core/Math/Rect.h"
+#include "Catastrophe/Core/Math/Rectf.h"
+#include "Catastrophe/Core/Math/Vector2.h"
+#include "Catastrophe/Core/Math/Vector3.h"
+#include "Catastrophe/Core/Math/Vector4.h"
+#include "Catastrophe/Core/Math/Color.h"
+#include "Catastrophe/Core/Math/Colorf.h"
+#include "Catastrophe/Core/Math/Quaternion.h"
+#include "Catastrophe/Core/Math/Matrix.h"
 
-#include <fc/string.h>
 
 CE_NAMESPACE_BEGIN
 
@@ -73,17 +74,6 @@ String ToString( const Vector3& value );
 String ToString( const Vector4& value );
 String ToString( const Quaternion& value );
 String ToString( const Matrix& value );
-
-
-String GetNativePath( const String& path );
-String MakePath( const String& path );
-String StripExtension( const String& filename );
-
-/*
-const char* StripLeadingWhiteSpace( const char* first, const char* last );
-const char* StripTrailingWhiteSpace( const char* first, const char* last );
-bool GetToken( const String& str, StringRef& token, u32& index, const string_type& delimiters = " \t\r" );
-*/
 
 
 

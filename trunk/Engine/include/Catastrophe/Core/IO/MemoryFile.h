@@ -18,55 +18,46 @@
 
 #pragma once
 
-#include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/IO/Serializer.h"
+#include "Catastrophe/Core/IO/Deserializer.h"
+#include "Catastrophe/Core/Containers/Vector.h"
 
 CE_NAMESPACE_BEGIN
 
 
-namespace TimeStamp
-{
-	/// Gets the current timestamp in clock ticks.
-	u64 CE_API GetCurrent();
-};
-
-
-/**
- * High performance timer class.
- * Uses timer_lib under the hood for portability.
- */
-class CE_API Timer
+/// @MemoryFile
+/// File class with interface that writes to an internal memory buffer
+/// instead of to disk.
+///
+class MemoryFile : public Deserializer, public Serializer
 {
 public:
-	struct Time
-	{
-		u64 clock;
-		u64 ref;
-		u64 freq;
-		f64 oofreq;
-	};
+	typedef Vector<u8> VectorType;
 
-	Timer();
-	~Timer();
+	MemoryFile();
+	MemoryFile( const void* data, u32 size );
 
-	void Reset();
+	virtual u32 Read( void* dest, u32 size );
+	virtual u32 Write( const void* data, u32 size );
+	virtual u32 Seek( u32 position );
 
-	u64 Frequency();
-	u64 TicksPerSecond();
+	virtual void SetData( const void* data, u32 size );
+	virtual void Clear();
+	virtual void Reserve( u32 capacity );
+	virtual void Resize( u32 size );
+	virtual bool IsEof() const { return m_position >= m_buffer.Size(); }
+	virtual u32 Size() const { return m_buffer.Size(); }
+	virtual u32 Position() const { return m_position; }
 
-	u64 ElapsedTicks();
-	u64 ElapsedMinutes();
-	u64 ElapsedSeconds();
-	u64 ElapsedMilliseconds();
-	u64 ElapsedMicroseconds();
-
-	f64 MilliSeconds();
-	f64 Seconds();
-	f64 Minutes();
-
+	const void* GetData() const { return (void*)(m_buffer.Empty() ? null : &m_buffer[0]); }
+	void* GetData() { return (void*)(m_buffer.Empty() ? null : &m_buffer[0]); }
+	
 protected:
-	Time		m_time;
-	static bool m_timerInit;
+	VectorType	m_buffer;
+	u32			m_position;
+
 };
+
 
 
 CE_NAMESPACE_END

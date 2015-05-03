@@ -19,54 +19,71 @@
 #pragma once
 
 #include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/Math/Vector4.h"
+#include "Catastrophe/Core/Math/Rectf.h"
 
 CE_NAMESPACE_BEGIN
 
 
-namespace TimeStamp
-{
-	/// Gets the current timestamp in clock ticks.
-	u64 CE_API GetCurrent();
-};
-
-
-/**
- * High performance timer class.
- * Uses timer_lib under the hood for portability.
- */
-class CE_API Timer
+class CE_API Line
 {
 public:
-	struct Time
+	Vector2 p1, p2;
+
+	Circle() {}
+	Circle( const Vector2& p1, const Vector2& p2 ) : p1(p1), p2(p2) {}
+
+	bool operator == ( const Line &l ) const { return p1 == l.p1 && p2 == l.p2; }
+	bool operator != ( const Line &l ) const { return !(*this == l); }
+	bool Equals( const Line &l, float epsilon = Math::Epsilon ) const
 	{
-		u64 clock;
-		u64 ref;
-		u64 freq;
-		f64 oofreq;
-	};
+		return (p1.Equals(l.p1) && p2.Equals(l.p2));
+	}
 
-	Timer();
-	~Timer();
+	void Set( float x1, float y1, float x2, float y2 )
+	{
+		p1.x = x1;
+		p1.y = y1;
+		p2.x = x2;
+		p2.y = y2;
+	}
 
-	void Reset();
+	void Set( const Vector2& point1, const Vector2& point2 )
+	{
+		p1 = point1;
+		p2 = point2;
+	}
 
-	u64 Frequency();
-	u64 TicksPerSecond();
+	float Length() const
+	{
+		return p1.Distance(p2);
+	}
 
-	u64 ElapsedTicks();
-	u64 ElapsedMinutes();
-	u64 ElapsedSeconds();
-	u64 ElapsedMilliseconds();
-	u64 ElapsedMicroseconds();
+	void Translate( const Vector2& translation )
+	{
+		p1 += translation;
+		p2 += translation;
+	}
 
-	f64 MilliSeconds();
-	f64 Seconds();
-	f64 Minutes();
+	Rectf GetBoundingRect() const
+	{
+		return Rectf(
+			Math::Min(p1.x, p2.x),
+			Math::Min(p1.y, p2.y),
+			Math::Max(p1.x, p2.x),
+			Math::Max(p1.x, p2.x)
+			);
+	}
 
-protected:
-	Time		m_time;
-	static bool m_timerInit;
+	bool Intersects( const Line& l ) const
+	{
+		return false;
+	}
+
 };
 
 
 CE_NAMESPACE_END
+
+
+
