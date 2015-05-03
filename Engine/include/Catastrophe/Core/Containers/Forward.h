@@ -31,8 +31,8 @@ class String;
 template <u32 N> class StaticString;
 
 // array
-template <class T> struct Array;
-template <class T> struct Array2D;
+template <class T> class Array;
+template <class T> class Array2D;
 template <class T, u32 N> struct StaticArray;
 template <class T, u32 Y, u32 X> struct StaticArray2D;
 

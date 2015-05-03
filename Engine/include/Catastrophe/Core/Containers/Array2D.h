@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "Array.h"
+#include "Catastrophe/Core/Containers/Array.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -37,7 +37,7 @@ class Array2D : public Array<T>
 {
 public:
 	typedef Array<T>								BaseType;
-	typedef typename BaseType::ValueType			ValueType;
+	typedef typename BaseType::ElementType			ElementType;
 	typedef typename BaseType::Iterator				Iterator;
 	typedef typename BaseType::ConstIterator		ConstIterator;
 

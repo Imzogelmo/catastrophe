@@ -19,54 +19,73 @@
 #pragma once
 
 #include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/Math/Vector3.h"
+#include "Catastrophe/Core/Math/BoundingBox.h"
+#include "Catastrophe/Core/Math/Sphere.h"
+#include "Catastrophe/Core/Math/Plane.h"
+#include "Catastrophe/Core/Math/Ray.h"
+#include "Catastrophe/Core/Math/Rectf.h"
+#include "Catastrophe/Core/Math/Matrix.h"
+
+#ifdef _MSC_VER
+	#pragma warning ( push )
+	#pragma warning ( disable : 4201 ) //nameless struct/union
+#endif
 
 CE_NAMESPACE_BEGIN
 
 
-namespace TimeStamp
-{
-	/// Gets the current timestamp in clock ticks.
-	u64 CE_API GetCurrent();
-};
-
-
-/**
- * High performance timer class.
- * Uses timer_lib under the hood for portability.
- */
-class CE_API Timer
+class CE_API Frustum
 {
 public:
-	struct Time
+	enum FrustumPlane
 	{
-		u64 clock;
-		u64 ref;
-		u64 freq;
-		f64 oofreq;
+		PLANE_LEFT,
+		PLANE_RIGHT,
+		PLANE_TOP,
+		PLANE_BOTTOM,
+		PLANE_NEAR,
+		PLANE_FAR,
+		MAX_PLANES
 	};
 
-	Timer();
-	~Timer();
+	union {
+		struct {
+			Plane left;
+			Plane right;
+			Plane top;
+			Plane bottom;
+			Plane near;
+			Plane far;
+		};
 
-	void Reset();
+		struct { Plane planes[MAX_PLANES]; };
+	};
 
-	u64 Frequency();
-	u64 TicksPerSecond();
+	Frustum() {}
+	Frustum( const Matrix& view );
 
-	u64 ElapsedTicks();
-	u64 ElapsedMinutes();
-	u64 ElapsedSeconds();
-	u64 ElapsedMilliseconds();
-	u64 ElapsedMicroseconds();
+	bool Equals( const Frustum &f, float epsilon = Math::Epsilon ) const;
 
-	f64 MilliSeconds();
-	f64 Seconds();
-	f64 Minutes();
+	float Distance( const Vector3& point ) const;
+	bool Intersects( const BoundingBox& box ) const;
+	bool Intersects(const Sphere& sphere) const;
 
-protected:
-	Time		m_time;
-	static bool m_timerInit;
+	void NormalizePlanes();
+	void Define( const Matrix& view );
+
+	BoundingBox GetBoundingBox() const
+	{
+		BoundingBox box = BoundingBox::Zero; //todo
+		return box;
+	}
+
 };
 
 
 CE_NAMESPACE_END
+
+#ifdef _MSC_VER
+	#pragma warning ( pop )
+#endif
+

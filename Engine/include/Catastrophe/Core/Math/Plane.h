@@ -19,54 +19,60 @@
 #pragma once
 
 #include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/Math/Vector3.h"
 
 CE_NAMESPACE_BEGIN
 
 
-namespace TimeStamp
-{
-	/// Gets the current timestamp in clock ticks.
-	u64 CE_API GetCurrent();
-};
-
-
-/**
- * High performance timer class.
- * Uses timer_lib under the hood for portability.
- */
-class CE_API Timer
+class CE_API Plane
 {
 public:
-	struct Time
+	Vector3 normal;
+	float d;
+
+	Plane() {}
+	Plane( const Vector3& normal, float d ) : normal(normal), d(d) {}
+	Plane( const Vector3& v0, const Vector3& v1, const Vector3& v2 )
 	{
-		u64 clock;
-		u64 ref;
-		u64 freq;
-		f64 oofreq;
-	};
+		normal = ((v1 - v0).Cross(v2 - v0)).Normal();
+		d = normal.Dot(v0);
+	}
 
-	Timer();
-	~Timer();
+	bool operator == ( const Plane &p ) const { return normal == p.normal && d == p.d; }
+	bool operator != ( const Plane &p ) const { return !(*this == p); }
+	bool Equals( const Plane &p, float epsilon = Math::Epsilon ) const
+	{
+		return (normal.Equals(p.normal) && Math::EpsilonCompare(d, p.d, epsilon));
+	}
 
-	void Reset();
+	void Normalize()
+	{
+		float length = normal.Length();
+		if( length != 0.f )
+		{
+			const float inv = 1.f / length;
+			normal *= inv;
+		}
+	}
 
-	u64 Frequency();
-	u64 TicksPerSecond();
+	float Distance( const Vector3& point ) const
+	{
+		return normal.Dot(point) - d;
+	}
+ 
+	float Dot( const Vector3& v )
+	{
+		return normal.Dot(v) + d;
+	}
 
-	u64 ElapsedTicks();
-	u64 ElapsedMinutes();
-	u64 ElapsedSeconds();
-	u64 ElapsedMilliseconds();
-	u64 ElapsedMicroseconds();
+	Vector3 AbsNormal() const
+	{
+		return normal.Abs();
+	}
 
-	f64 MilliSeconds();
-	f64 Seconds();
-	f64 Minutes();
-
-protected:
-	Time		m_time;
-	static bool m_timerInit;
 };
 
 
 CE_NAMESPACE_END
+
+

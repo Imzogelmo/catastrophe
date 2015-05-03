@@ -18,55 +18,41 @@
 
 #pragma once
 
-#include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/IO/File.h"
 
 CE_NAMESPACE_BEGIN
 
-
-namespace TimeStamp
-{
-	/// Gets the current timestamp in clock ticks.
-	u64 CE_API GetCurrent();
-};
+extern void __Internal_Log_Write( const char* format, ... );
+extern void __Internal_Log_Write( const String& message );
 
 
-/**
- * High performance timer class.
- * Uses timer_lib under the hood for portability.
- */
-class CE_API Timer
+class CE_API Logger
 {
 public:
-	struct Time
-	{
-		u64 clock;
-		u64 ref;
-		u64 freq;
-		f64 oofreq;
-	};
+	Logger();
+	Logger( const String& filename, bool create_debug_console = true, bool auto_append_new_line = true );
+	~Logger();
 
-	Timer();
-	~Timer();
+	static Logger& GetInstance();
+	bool Open( const String& filename, bool create_debug_console = true, bool auto_append_new_line = true );
+	void Close();
 
-	void Reset();
+	void Write( const String& message );
+	void AppendNewLine( String& str );
 
-	u64 Frequency();
-	u64 TicksPerSecond();
+	File* GetFile() { return &m_file; }
 
-	u64 ElapsedTicks();
-	u64 ElapsedMinutes();
-	u64 ElapsedSeconds();
-	u64 ElapsedMilliseconds();
-	u64 ElapsedMicroseconds();
+private:
+	void FlushString( const String& str );
 
-	f64 MilliSeconds();
-	f64 Seconds();
-	f64 Minutes();
-
-protected:
-	Time		m_time;
-	static bool m_timerInit;
+	File			m_file;
+	bool			m_console;
+	bool			m_append_new_line;
+	static Logger	m_instance;
+	bool			m_hasTimestamp;
 };
+
 
 
 CE_NAMESPACE_END
+

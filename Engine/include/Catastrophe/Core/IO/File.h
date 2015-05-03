@@ -18,54 +18,55 @@
 
 #pragma once
 
-#include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/IO/Deserializer.h"
+#include "Catastrophe/Core/IO/Serializer.h"
 
 CE_NAMESPACE_BEGIN
 
 
-namespace TimeStamp
+enum FileMode
 {
-	/// Gets the current timestamp in clock ticks.
-	u64 CE_API GetCurrent();
+	FileRead,
+	FileReadText,
+	FileWrite,
+	FileWriteText,
+	FileReadWrite
 };
 
 
-/**
- * High performance timer class.
- * Uses timer_lib under the hood for portability.
- */
-class CE_API Timer
+class CE_API File : public Deserializer, public Serializer
 {
 public:
-	struct Time
-	{
-		u64 clock;
-		u64 ref;
-		u64 freq;
-		f64 oofreq;
-	};
+	File();
+	File( const String& fileName, FileMode mode = FileRead );
+	virtual ~File();
 
-	Timer();
-	~Timer();
+	virtual u32 Read( void* dest, u32 size );
+	virtual u32 Write( const void* data, u32 size );
+	virtual u32 Seek( u32 position );
+	virtual u32 Size() const { return m_size; }
+	virtual u32 Position() const { return m_position; }
 
-	void Reset();
+	virtual bool Open( const String& filename, FileMode mode = FileRead );
+	virtual void Close();
+	virtual void Flush();
 
-	u64 Frequency();
-	u64 TicksPerSecond();
-
-	u64 ElapsedTicks();
-	u64 ElapsedMinutes();
-	u64 ElapsedSeconds();
-	u64 ElapsedMilliseconds();
-	u64 ElapsedMicroseconds();
-
-	f64 MilliSeconds();
-	f64 Seconds();
-	f64 Minutes();
+	const String& GetFileName() const { return m_filename; }
+	
+	FileMode GetMode() const { return m_mode; }
+	bool IsOpen() const { return m_handle != 0; }
+	void* GetHandle() const { return m_handle; }
+	bool IsEof() const { return m_position >= m_size; }
+	bool Eof() const { return IsEof(); }
 
 protected:
-	Time		m_time;
-	static bool m_timerInit;
+	FileMode	m_mode;
+	void*		m_handle;
+	u32			m_position;
+	u32			m_size;
+	u32			m_offset; //for packfiles
+	String		m_filename;
+
 };
 
 

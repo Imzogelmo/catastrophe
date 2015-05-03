@@ -23,50 +23,14 @@
 CE_NAMESPACE_BEGIN
 
 
-namespace TimeStamp
-{
-	/// Gets the current timestamp in clock ticks.
-	u64 CE_API GetCurrent();
-};
-
-
-/**
- * High performance timer class.
- * Uses timer_lib under the hood for portability.
- */
-class CE_API Timer
-{
-public:
-	struct Time
-	{
-		u64 clock;
-		u64 ref;
-		u64 freq;
-		f64 oofreq;
-	};
-
-	Timer();
-	~Timer();
-
-	void Reset();
-
-	u64 Frequency();
-	u64 TicksPerSecond();
-
-	u64 ElapsedTicks();
-	u64 ElapsedMinutes();
-	u64 ElapsedSeconds();
-	u64 ElapsedMilliseconds();
-	u64 ElapsedMicroseconds();
-
-	f64 MilliSeconds();
-	f64 Seconds();
-	f64 Minutes();
-
-protected:
-	Time		m_time;
-	static bool m_timerInit;
-};
+u32 GetCompressionBounds( u32 inputSize );
+u32 CompressData( void* dest, const void* source, u32 sourceSize );
+u32 DecompressData( void* dest, const void* source, u32 destSize );
+bool CompressFile( Serializer* dest, Deserializer* source );
+bool DecompressFile( Serializer* dest, Deserializer* source );
+bool CompressFromMemoryFile( Serializer* dest, MemoryFile* fileBuffer );
+bool DecompressToMemoryFile( MemoryFile* fileBuffer, Deserializer* source );
 
 
 CE_NAMESPACE_END
+

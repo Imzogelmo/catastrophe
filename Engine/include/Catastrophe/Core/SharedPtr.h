@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "../Common.h"
+#include "Catastrophe/Core/Common.h"
 #include "RefCounted.h"
 
 #define CE_PTR_ASSERT CE_ASSERT
@@ -117,7 +117,7 @@ public:
 
 	void Swap( this_type & p )
 	{
-		fc::swap(_ptr, p._ptr);
+		Swap(_ptr, p._ptr);
 	}
 
 protected:
