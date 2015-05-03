@@ -16,10 +16,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include <fc/string.h>
-#include <fc/string_utils.h>
-
-#include "Core/StringUtils.h"
+#include "Catastrophe/Core/Containers/String.h"
+#include "Catastrophe/Core/StringUtils.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -30,14 +28,14 @@ CE_NAMESPACE_BEGIN
 #endif
 
 
-bool ToBool( const char* s, bool defaultValue )
+bool ToBool( const char* str, bool defaultValue )
 {
-	if( s )
+	if( str )
 	{
-		u32 length = strlen(s);
+		u32 length = strlen(str);
 		for( u32 i(0); i < length; ++i )
 		{
-			char c = fc::to_lower(s[i]);
+			char c = ToLower(str[i]);
 			if( c == 't' || c == '1' )
 				return true;
 
@@ -53,33 +51,33 @@ bool ToBool( const char* s, bool defaultValue )
 }
 
 
-u8 ToByte( const char* s, u8 defaultValue )
+u8 ToByte( const char* str, u8 defaultValue )
 {
-	return (u8)ToInt(s, (char**)0, (int)defaultValue);
+	return (u8)ToInt(str, (char**)0, (int)defaultValue);
 }
 
 
-s16 ToShort( const char* s, s16 defaultValue )
+s16 ToShort( const char* str, s16 defaultValue )
 {
-	return (s16)ToInt(s, (char**)0, (int)defaultValue);
+	return (s16)ToInt(str, (char**)0, (int)defaultValue);
 }
 
 
-int ToInt( const char* s, int defaultValue )
+int ToInt( const char* str, int defaultValue )
 {
-	return ToInt(s, (char**)0, defaultValue);
+	return ToInt(str, (char**)0, defaultValue);
 }
 
 
-u32 ToUInt( const char* s, u32 defaultValue )
+u32 ToUInt( const char* str, u32 defaultValue )
 {
-	return ToInt(s, (char**)0, defaultValue);
+	return ToInt(str, (char**)0, defaultValue);
 }
 
 
-float ToFloat( const char* s, float defaultValue )
+float ToFloat( const char* str, float defaultValue )
 {
-	return ToFloat(s, (char**)0, defaultValue);
+	return ToFloat(str, (char**)0, defaultValue);
 }
 
 
@@ -92,7 +90,7 @@ int ToInt( const char* source, char** dest, int defaultValue )
 	while( *source == ' ' || *source == '\t' || *source == ',' )
 		++source;
 
-	return fc::to_int(source, dest, defaultValue);
+	return Strtoi(source, dest, defaultValue);
 }
 
 
@@ -105,16 +103,16 @@ float ToFloat( const char* source, char** dest, float defaultValue )
 	while( *source == ' ' || *source == '\t' || *source == ',' )
 		++source;
 
-	return fc::to_float(source, dest, defaultValue);
+	return Strtof(source, dest, defaultValue);
 }
 
 
-Color ToColor( const char* s, const Color& defaultValue )
+Color ToColor( const char* str, const Color& defaultValue )
 {
 	Color c = defaultValue;
-	if( s )
+	if( str )
 	{
-		char* ptr = (char*)s;
+		char* ptr = (char*)str;
 		c.r = (u8)ToInt(ptr, &ptr, (int)defaultValue.r);
 		c.g = (u8)ToInt(ptr, &ptr, (int)defaultValue.g);
 		c.b = (u8)ToInt(ptr, &ptr, (int)defaultValue.b);
@@ -125,12 +123,12 @@ Color ToColor( const char* s, const Color& defaultValue )
 }
 
 
-Colorf ToColorf( const char* s, const Colorf& defaultValue )
+Colorf ToColorf( const char* str, const Colorf& defaultValue )
 {
 	Colorf c = defaultValue;
-	if( s )
+	if( str )
 	{
-		char* ptr = (char*)s;
+		char* ptr = (char*)str;
 		c.r = ToFloat(ptr, &ptr, defaultValue.r);
 		c.g = ToFloat(ptr, &ptr, defaultValue.g);
 		c.b = ToFloat(ptr, &ptr, defaultValue.b);
@@ -141,12 +139,12 @@ Colorf ToColorf( const char* s, const Colorf& defaultValue )
 }
 
 
-Point ToPoint( const char* s, const Point& defaultValue )
+Point ToPoint( const char* str, const Point& defaultValue )
 {
 	Point p = defaultValue;
-	if( s )
+	if( str )
 	{
-		char* ptr = (char*)s;
+		char* ptr = (char*)str;
 		p.x = ToInt(ptr, &ptr, defaultValue.x);
 		p.y = ToInt(ptr, &ptr, defaultValue.y);
 	}
@@ -155,14 +153,14 @@ Point ToPoint( const char* s, const Point& defaultValue )
 }
 
 
-Rect ToRect( const char* s, const Rect& defaultValue )
+Rect ToRect( const char* str, const Rect& defaultValue )
 {
 	Rect r = defaultValue;
-	if( s )
+	if( str )
 	{
-		char* ptr = (char*)s;
-		r.pos.x = ToInt(ptr, &ptr, defaultValue.pos.x);
-		r.pos.y = ToInt(ptr, &ptr, defaultValue.pos.y);
+		char* ptr = (char*)str;
+		r.position.x = ToInt(ptr, &ptr, defaultValue.position.x);
+		r.position.y = ToInt(ptr, &ptr, defaultValue.position.y);
 		r.size.x = ToInt(ptr, &ptr, defaultValue.size.x);
 		r.size.y = ToInt(ptr, &ptr, defaultValue.size.y);
 	}
@@ -171,12 +169,12 @@ Rect ToRect( const char* s, const Rect& defaultValue )
 }
 
 
-Rectf ToRectf( const char* s, const Rectf& defaultValue )
+Rectf ToRectf( const char* str, const Rectf& defaultValue )
 {
 	Rectf r = defaultValue;
-	if( s )
+	if( str )
 	{
-		char* ptr = (char*)s;
+		char* ptr = (char*)str;
 		r.min.x = ToFloat(ptr, &ptr, defaultValue.min.x);
 		r.min.y = ToFloat(ptr, &ptr, defaultValue.min.y);
 		r.max.x = ToFloat(ptr, &ptr, defaultValue.max.x);
@@ -187,12 +185,12 @@ Rectf ToRectf( const char* s, const Rectf& defaultValue )
 }
 
 
-Vector2 ToVector2( const char* s, const Vector2& defaultValue )
+Vector2 ToVector2( const char* str, const Vector2& defaultValue )
 {
 	Vector2 v = defaultValue;
-	if( s )
+	if( str )
 	{
-		char* ptr = (char*)s;
+		char* ptr = (char*)str;
 		v.x = ToFloat(ptr, &ptr, defaultValue.x);
 		v.y = ToFloat(ptr, &ptr, defaultValue.y);
 	}
@@ -201,12 +199,12 @@ Vector2 ToVector2( const char* s, const Vector2& defaultValue )
 }
 
 
-Vector3 ToVector3( const char* s, const Vector3& defaultValue )
+Vector3 ToVector3( const char* str, const Vector3& defaultValue )
 {
 	Vector3 v = defaultValue;
-	if( s )
+	if( str )
 	{
-		char* ptr = (char*)s;
+		char* ptr = (char*)str;
 		v.x = ToFloat(ptr, &ptr, defaultValue.x);
 		v.y = ToFloat(ptr, &ptr, defaultValue.y);
 		v.z = ToFloat(ptr, &ptr, defaultValue.z);
@@ -216,12 +214,12 @@ Vector3 ToVector3( const char* s, const Vector3& defaultValue )
 }
 
 
-Vector4 ToVector4( const char* s, const Vector4& defaultValue )
+Vector4 ToVector4( const char* str, const Vector4& defaultValue )
 {
 	Vector4 v = defaultValue;
-	if( s )
+	if( str )
 	{
-		char* ptr = (char*)s;
+		char* ptr = (char*)str;
 		v.x = ToFloat(ptr, &ptr, defaultValue.x);
 		v.y = ToFloat(ptr, &ptr, defaultValue.y);
 		v.z = ToFloat(ptr, &ptr, defaultValue.z);
@@ -232,12 +230,12 @@ Vector4 ToVector4( const char* s, const Vector4& defaultValue )
 }
 
 
-Quaternion ToQuaternion( const char* s, const Quaternion& defaultValue )
+Quaternion ToQuaternion( const char* str, const Quaternion& defaultValue )
 {
 	Quaternion q = defaultValue;
-	if( s )
+	if( str )
 	{
-		char* ptr = (char*)s;
+		char* ptr = (char*)str;
 		q.x = ToFloat(ptr, &ptr, defaultValue.x);
 		q.y = ToFloat(ptr, &ptr, defaultValue.y);
 		q.z = ToFloat(ptr, &ptr, defaultValue.z);
@@ -248,12 +246,12 @@ Quaternion ToQuaternion( const char* s, const Quaternion& defaultValue )
 }
 
 
-Matrix ToMatrix( const char* s, const Matrix& defaultValue )
+Matrix ToMatrix( const char* str, const Matrix& defaultValue )
 {
 	Matrix m = defaultValue;
-	if( s )
+	if( str )
 	{
-		char* ptr = (char*)s;
+		char* ptr = (char*)str;
 		for( int i(0); i < 16; ++i )
 			m[i] = ToFloat(ptr, &ptr, defaultValue[i]);
 	}
@@ -262,40 +260,54 @@ Matrix ToMatrix( const char* s, const Matrix& defaultValue )
 }
 
 
-
 String ToString( bool value )
 {
-	return fc::to_string<bool>(value);
+	return value ? String("true") : String("false");
 }
 
 
 String ToString( char value )
 {
-	return fc::to_string<char>(value);
+	char buf[16];
+	u32 stringLength = Itoa((int)value, buf);
+
+	return String(buf, stringLength);
 }
 
 
 String ToString( s16 value )
 {
-	return fc::to_string<s16>(value);
+	char buf[16];
+	u32 stringLength = Itoa((int)value, buf);
+
+	return String(buf, stringLength);
 }
 
 
 String ToString( int value )
 {
-	return fc::to_string<int>(value);
+	char buf[16];
+	u32 stringLength = Itoa(value, buf);
+
+	return String(buf, stringLength);
 }
 
 
 String ToString( u32 value )
 {
-	return fc::to_string<u32>(value);
+	char buf[16];
+	u32 stringLength = Itoa(value, buf);
+
+	return String(buf, stringLength);
 }
 
 
 String ToString( float value )
 {
-	return fc::to_string<float>(value);
+	char buf[16];
+	u32 stringLength = Ftoa(value, buf);
+
+	return String(buf, stringLength);
 }
 
 
@@ -310,7 +322,7 @@ String ToString( const Point& value )
 String ToString( const Rect& value )
 {
 	char buf[64];
-	sprintf(buf, "%i %i %i %i", value.pos.x, value.pos.y, value.size.x, value.size.y);
+	sprintf(buf, "%i %i %i %i", value.position.x, value.position.y, value.size.x, value.size.y);
 	return String(buf);
 }
 
@@ -384,85 +396,6 @@ String ToString( const Matrix& value )
 
 	return ret;
 }
-
-
-String GetNativePath( const String& path )
-{
-#ifdef _WIN32
-	String ret(path);
-	for( String::iterator it = ret.begin(); it != ret.end(); ++it )
-		if(*it == '/')
-			*it = '\\';
-	return ret;
-#else
-    return path;
-#endif
-}
-
-
-String MakePath( const String& path )
-{
-	String ret(path);
-	if( !ret.empty() && (ret.back() != '/' && ret.back() != '\\') )
-		ret.push_back('/');
-
-	return ret;
-}
-
-
-String StripExtension( const String& filename )
-{
-	if( filename.size() > 3 )
-	{
-		u32 i = filename.find_last_of('.');
-		if( i != String::npos )
-			return filename.substr(0, i);
-	}
-	return filename;
-}
-
-
-/*
-const char* StripLeadingWhiteSpace( const char* first, const char* last )
-{
-	while( first != last && (first == ' ' || first == '\t') )
-		++first;
-
-	return first;
-}
-
-
-const char* StripTrailingWhiteSpace( const char* first, const char* last )
-{
-	while( first != last-- && (last == ' ' || last == '\t') )
-		;
-
-	return last;
-}
-
-
-bool GetToken( const String& str, StringRef& token, u32& index, const string_type& delimiters )
-{
-	u32 begin_index;
-	u32 end_index;
-
-	begin_index = str.find_first_not_of( delimiters, index );
-
-	if( begin_index == string_type::npos ) 
-		return false;
-
-	end_index = str.find_first_of( delimiters, begin_index + 1 );
-	if( end_index == string_type::npos )
-		end_index = str.size();
-
-	ASSERT(end_index >= begin_index);
-
-	index = end_index;
-	token.assign( &str[ begin_index ], end_index - begin_index );
-
-	return true;
-}
-*/
 
 
 
