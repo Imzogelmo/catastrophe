@@ -16,13 +16,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include <fc/algorithm.h>
 
-#include "Math/Rect.h"
-#include "Math/Rectf.h"
-#include "Math/Color.h"
-#include "Math/Colorf.h"
-#include "Math/Math.h"
+#include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/Math/Rect.h"
+#include "Catastrophe/Core/Math/Rectf.h"
+#include "Catastrophe/Core/Math/Color.h"
+#include "Catastrophe/Core/Math/Colorf.h"
+#include "Catastrophe/Core/Math/MathUtil.h"
+#include "Catastrophe/Core/Algorithm/Copy.h"
 
 #include "Graphics/OpenGL.h"
 #include "Graphics/Image.h"
@@ -63,7 +64,7 @@ Image::~Image()
 void Image::Dispose()
 {
 	Texture::Dispose();
-	m_pixels.resize(0, 0);
+	m_pixels.Resize(0, 0);
 }
 
 
@@ -125,7 +126,7 @@ void Image::MaskColor( const Color& mask )
 			mask.r, mask.g, mask.b, 0
 		);
 
-	fc::replace( m_pixels.begin(), m_pixels.end(), mask, colorMask );
+	Algorithm::Replace( m_pixels.begin(), m_pixels.end(), mask, colorMask );
 }
 
 
@@ -139,10 +140,10 @@ void Image::MaskColorRegion( const Rect& r, const Color& mask )
 
 	for( u32 i(0); i < height; ++i )
 	{
-		array_type::iterator first = m_pixels.iterator_at(y + i, x1);
-		array_type::iterator last = m_pixels.iterator_at(y + i, x2);
+		Color* first = m_pixels.IteratorOffset(y + i, x1);
+		Color* last = m_pixels.IteratorOffset(y + i, x2);
 
-		fc::replace( first, last, mask, colorMask );
+		Algorithm::Replace( first, last, mask, colorMask );
 	}
 }
 
@@ -232,7 +233,7 @@ void Image::UpdateRegion( const Rect& r )
 	//check if we only need to update a portion of the texture
 	if( r != thisRect )
 	{
-		m_pixels.copy_region( (u32)r.pos.x, (u32)r.pos.y, (u32)r.Width(), (u32)r.Height(), temp );
+		m_pixels.CopyRegion( (u32)r.position.x, (u32)r.position.y, (u32)r.Width(), (u32)r.Height(), temp );
 		ptr = temp.data();
 	}
 
@@ -250,7 +251,7 @@ void Image::SetPixelArray( const array_type& pixelData )
 
 void Image::InternalPackPixels( int width, int height, const u8 *const data )
 {
-	m_pixels.resize( height, width );
+	m_pixels.Resize( height, width );
 
 	if(data)
 	{

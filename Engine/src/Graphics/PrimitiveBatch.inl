@@ -16,7 +16,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "Math/Matrix.h"
+#include "Catastrophe/Core/Math/Matrix.h"
 #include "Graphics/PrimitiveBatch.h"
 #include "Graphics/OpenGL.h"
 
@@ -25,16 +25,16 @@ CE_NAMESPACE_BEGIN
 
 void PrimitiveBatch::Reserve( u32 reserve )
 {
-	m_queue.reserve( reserve );
+	m_queue.Reserve( reserve );
 }
 
 
 void PrimitiveBatch::Clear()
 {
-	for( vec_type::iterator it = m_queue.begin(); it != m_queue.end(); ++it )
+	for( vec_type::Iterator it = m_queue.begin(); it != m_queue.end(); ++it )
 		it->Clear();
 
-	m_queue.clear();
+	m_queue.Clear();
 }
 
 
@@ -47,7 +47,7 @@ void PrimitiveBatch::Begin()
 void PrimitiveBatch::DrawPrimitive( const Primitive &primitive )
 {
 	//TODO: need to cache the memory used to prevent deallocations.
-	if( !m_queue.empty() )
+	if( !m_queue.Empty() )
 	{
 		Primitive &p = m_queue.back();
 
@@ -67,17 +67,17 @@ void PrimitiveBatch::DrawPrimitive( const Primitive &primitive )
 		}
 	}
 
-	m_queue.push_back(primitive);
+	m_queue.Add(primitive);
 }
 
 
 void PrimitiveBatch::Render()	
 {
-	if( m_queue.empty() )
+	if( m_queue.Empty() )
 		return;
 
 	glDisable( GL_TEXTURE_2D );
-	for( vec_type::iterator it = m_queue.begin(); it != m_queue.end(); ++it )
+	for( vec_type::Iterator it = m_queue.begin(); it != m_queue.end(); ++it )
 		it->Render();
 }
 
@@ -101,7 +101,7 @@ void PrimitiveBatch::End()
 u32 PrimitiveBatch::GetVertexCount() const
 {
 	u32 count(0);
-	for( vec_type::const_iterator it = m_queue.begin(); it != m_queue.end(); ++it )
+	for( vec_type::ConstIterator it = m_queue.begin(); it != m_queue.end(); ++it )
 		count += it->Size();
 
 	return count;

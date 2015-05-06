@@ -55,13 +55,13 @@ AnimatedSpriteSet::~AnimatedSpriteSet()
 
 void AnimatedSpriteSet::Reserve( u32 capacity )
 {
-	m_animations.reserve(capacity);
+	m_animations.Reserve(capacity);
 }
 
 
 void AnimatedSpriteSet::Resize( u32 newSize )
 {
-	m_animations.resize(newSize);
+	m_animations.Resize(newSize);
 	SetCurrentAnimation(m_currentAnimation);
 }
 
@@ -76,7 +76,7 @@ void AnimatedSpriteSet::SetTexture( Texture* texture )
 	if(texture)
 		texture->AddRef();
 
-	for( vec_type::iterator it = m_animations.begin(); it != m_animations.end(); ++it )
+	for( vec_type::Iterator it = m_animations.begin(); it != m_animations.end(); ++it )
 	{
 		it->SetTexture(m_texture);
 	}
@@ -85,7 +85,7 @@ void AnimatedSpriteSet::SetTexture( Texture* texture )
 
 void AnimatedSpriteSet::SetCurrentAnimation( u32 index )
 {
-	u32 size = m_animations.size();
+	u32 size = m_animations.Size();
 	if( index < size )
 	{
 		m_currentAnimation = index;
@@ -113,16 +113,16 @@ void AnimatedSpriteSet::AddAnimation( const Rect& sourceRect, int numberOfFrames
 
 void AnimatedSpriteSet::AddAnimation( const SpriteAnimation& anim )
 {
-	m_animations.push_back(anim);
+	m_animations.Add(anim);
 }
 
 
 void AnimatedSpriteSet::InsertAnimation( const SpriteAnimation& anim, u32 index )
 {
-	if( index > m_animations.size() )
-		index = m_animations.size();
+	if( index > m_animations.Size() )
+		index = m_animations.Size();
 
-	m_animations.insert_at(index, anim);
+	m_animations.InsertAt(index, anim);
 
 	if( m_currentAnimation >= index )
 	{
@@ -133,9 +133,9 @@ void AnimatedSpriteSet::InsertAnimation( const SpriteAnimation& anim, u32 index 
 
 void AnimatedSpriteSet::RemoveAnimation( u32 index )
 {
-	if( index < m_animations.size() )
+	if( index < m_animations.Size() )
 	{
-		m_animations.erase_at(index);
+		m_animations.EraseAt(index);
 
 		if( m_currentAnimation >= index && m_currentAnimation > 0 )
 		{
@@ -147,7 +147,7 @@ void AnimatedSpriteSet::RemoveAnimation( u32 index )
 
 void AnimatedSpriteSet::Update()
 {
-	if( m_animations.empty() )
+	if( m_animations.Empty() )
 		return;
 
 	GetCurrentAnimation().Update();

@@ -16,12 +16,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include <fc/string.h>
-#include <fc/dynamic_array2d.h>
-#include <fc/math.h>
-
-#include "Math/Rect.h"
-#include "Math/Color.h"
+#include "Catastrophe/Core/Containers/String.h"
+#include "Catastrophe/Core/Containers/Array2D.h"
+#include "Catastrophe/Core/Math/Rect.h"
+#include "Catastrophe/Core/Math/Color.h"
 
 #include "Graphics/Texture.h"
 #include "Graphics/TextureLoader.h"
@@ -127,7 +125,7 @@ bool Texture::SaveToFile( const String& filename )
 
 bool Texture::CreateBlank( const Color& backgroundColor, int w, int h )
 {
-	fc::dynamic_array2d<Color> p(h, w, backgroundColor);
+	Array2D<Color> p(h, w, backgroundColor);
 	return CreateFromData( (void*)p.data(), w, h );
 }
 
@@ -137,8 +135,8 @@ bool Texture::CreateFromData( const void* data, int w, int h )
 	CE_ASSERT(w > 0 && h > 0);
 
 	int maxTextureSize = GetMaxTextureSize();
-	w = fc::min(w, maxTextureSize);
-	h = fc::min(h, maxTextureSize);
+	w = Math::Min(w, maxTextureSize);
+	h = Math::Min(h, maxTextureSize);
 
 	m_width = w;
 	m_height = h;
@@ -203,7 +201,7 @@ void Texture::SetFilterMode( int filterMode )
 void Texture::UpdateTexture( const Rect& r, u8* pixels )
 {
 	Bind();
-	glTexSubImage2D( GL_TEXTURE_2D, 0, r.pos.x, r.pos.y, r.Width(), r.Height(), GL_RGBA, GL_UNSIGNED_BYTE, pixels );
+	glTexSubImage2D( GL_TEXTURE_2D, 0, r.position.x, r.position.y, r.Width(), r.Height(), GL_RGBA, GL_UNSIGNED_BYTE, pixels );
 }
 
 
@@ -247,10 +245,10 @@ Rectf Texture::GetUVRect( const Rect& sourceRect ) const
 
 Rect Texture::GetSourceRect( const Rectf& uv ) const
 {
-	int min_x = fc::iround(m_floatWidth * uv.Left());
-	int min_y = fc::iround(m_floatHeight * uv.Top());
-	int max_x = fc::iround(m_floatWidth * uv.Right());
-	int max_y = fc::iround(m_floatHeight * uv.Bottom());
+	int min_x = Math::Round(m_floatWidth * uv.Left());
+	int min_y = Math::Round(m_floatHeight * uv.Top());
+	int max_x = Math::Round(m_floatWidth * uv.Right());
+	int max_y = Math::Round(m_floatHeight * uv.Bottom());
 
 	return Rect(
 		min_x,

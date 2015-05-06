@@ -16,9 +16,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "Math/Matrix.h"
-#include "Math/Rectf.h"
-#include "Math/Math.h"
+#include "Catastrophe/Core/Math/Matrix.h"
+#include "Catastrophe/Core/Math/Rectf.h"
+#include "Catastrophe/Core/PlatformMath.h"
+#include "Catastrophe/Core/Math/MathUtil.h"
 
 #include "Graphics/SpriteBatch.h"
 #include "Graphics/Sprite.h"
@@ -28,59 +29,66 @@
 CE_NAMESPACE_BEGIN
 
 
-SpriteBatch::SpriteBatch( u32 reserve ) :
+
+SpriteBatch::SpriteBatch(u32 initialCapacity) :
+	m_currentOffset(0),
+	m_currentRenderState(),
+	m_renderStates(),
 	m_queue(),
-	m_current_blendmode(BlendMode::Alpha),
-	m_clip_rect(Rect::Zero),
-	m_sortmode(Deferred),
-	m_attached_shader(0),
-	m_max_batch_usage(u32(-1)),
-	m_enable_clipping(true),
-	m_enable_sorting(true),
-	m_enable_shader(true)
+	m_clipStack()
 {
-	Reserve(reserve);
+	m_currentRenderState.SetToDefaultValues();
+	Reserve(initialCapacity);
 }
 
 
 SpriteBatch::~SpriteBatch()
-{}
-
-
-void SpriteBatch::Reserve( u32 reserve )
 {
-	m_queue.reserve( reserve );
 }
 
 
-void SpriteBatch::Clear()
+void SpriteBatch::SetBlendMode(const BlendMode& blendmode)
 {
-	m_queue.reset();
+	CheckRenderState(blendmode);
+}
+
+
+void SpriteBatch::SetTextureID(u32 textureID)
+{
+	CheckRenderState(textureID);
+}
+
+
+void SpriteBatch::SetCapacity(u32 capacity)
+{
+	// If we're losing memory we have to flush to prevent possible buffer overflow.
+	if(capacity >= m_queue.Size())
+		Flush();
+
+	m_queue.SetCapacity(capacity);
+}
+
+
+void SpriteBatch::Reserve(u32 reserve )
+{
+	m_queue.Reserve(reserve);
 }
 
 
 void SpriteBatch::Begin()
 {
-	Clear();
+	m_queue.Clear();
 }
 
 
 void SpriteBatch::End()
 {
-	if(m_attached_shader)
-		m_attached_shader->Unbind();
-}
-
-void SpriteBatch::SetMaxHardwareBatchSize( u32 maxHardwareBatch )
-{
-	if(maxHardwareBatch < 512)
-		maxHardwareBatch = 512;
-
-	m_max_batch_usage = maxHardwareBatch;
+	//if(m_shader)
+	//	m_shader->Unbind();
 }
 
 
-void SpriteBatch::PushClipRect( const Rect& clipRect )
+void SpriteBatch::PushClipRect(const Rect& clipRect )
 {
 }
 
@@ -92,426 +100,419 @@ void SpriteBatch::PopClipRect()
 
 void SpriteBatch::Flush()
 {
+	InternalFlush();
 }
 
 
-
-// Sprite rendering
-void SpriteBatch::Draw( u32 texture, const Rectf& vertices, const Rectf& uv, const Color& c, int depth )
+void SpriteBatch::Draw(u32 textureID, const Vector2& position, const Vector2& size, const Rectf& uv, const Color& color)
 {
-	InternalQueueSprite( texture, 0.f, 1.f, 0.f, vertices, uv, c, depth );
-}
-
-void SpriteBatch::DrawRotated( u32 texture, float rotation, const Rectf& vertices, const Rectf& uv, const Color& c, int depth )
-{
-	InternalQueueSprite( texture, rotation, 1.f, vertices.Center(), vertices, uv, c, depth );
-}
-
-void SpriteBatch::DrawRotated( u32 texture, float rotation, const Vector2& origin, const Rectf& vertices, const Rectf& uv, const Color& c, int depth )
-{
-	InternalQueueSprite( texture, rotation, 1.f, origin, vertices, uv, c, depth );
-}
-
-void SpriteBatch::DrawScaled( u32 texture, const Vector2& scale, const Rectf& vertices, const Rectf& uv, const Color& c, int depth )
-{
-	InternalQueueSprite( texture, 0.f, scale, vertices.Center(), vertices, uv, c, depth );
-}
-
-void SpriteBatch::DrawScaled( u32 texture, const Vector2& scale, const Vector2& origin, const Rectf& vertices, const Rectf& uv, const Color& c, int depth )
-{
-	InternalQueueSprite( texture, 0.f, scale, origin, vertices, uv, c, depth );
-}
-
-void SpriteBatch::DrawRotatedScaled( u32 texture, float rotation, const Vector2& scale, const Rectf& vertices, const Rectf& uv, const Color& c, int depth )
-{
-	InternalQueueSprite( texture, rotation, scale, vertices.Center(), vertices, uv, c, depth );
-}
-
-void SpriteBatch::DrawRotatedScaled( u32 texture, float rotation, const Vector2& scale, const Vector2& origin, const Rectf& vertices, const Rectf& uv, const Color& c, int depth )
-{
-	InternalQueueSprite( texture, rotation, scale, origin, vertices, uv, c, depth );
+	InternalDraw(textureID, Rectf(position, position + size), uv, color);
 }
 
 
-// Quad batch rendering
-void SpriteBatch::Draw( u32 texture, const Vector2* vtx, const Vector2* uv, const Color* c, u32 numQuads, int depth )
+void SpriteBatch::Draw(u32 textureID, const Rectf& vertices, const Rectf& uv, const Color& color)
 {
-	InternalQueueSprite( texture, 0.f, 1.f, 0.f, vtx, uv, c, numQuads, depth );
-}
-
-void SpriteBatch::DrawRotated( u32 texture, float rotation, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, u32 numQuads, int depth )
-{
-	InternalQueueSprite( texture, rotation, 1.f, origin, vtx, uv, c, numQuads, depth );
-}
-
-void SpriteBatch::DrawScaled( u32 texture, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, u32 numQuads, int depth )
-{
-	InternalQueueSprite( texture, 0.f, scale, origin, vtx, uv, c, numQuads, depth );
-}
-
-void SpriteBatch::DrawRotatedScaled( u32 texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, u32 numQuads, int depth )
-{
-	InternalQueueSprite( texture, rotation, scale, origin, vtx, uv, c, numQuads, depth );
+	InternalDraw(textureID, vertices, uv, color);
 }
 
 
-// Quad indices batch rendering
-void SpriteBatch::Draw( u32 texture, const Vector2* vtx, const Vector2* uv, const Color* c, const u16 *quadsIndices, u32 numQuads, int depth )
+void SpriteBatch::DrawRotated(u32 textureID, float rotation, const Rectf& vertices, const Rectf& uv, const Color& color)
 {
-	InternalQueueSprite( texture, 0.f, 1.f, 0.f, vtx, uv, c, quadsIndices, numQuads, depth );
-}
-
-void SpriteBatch::DrawRotated( u32 texture, float rotation, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, const u16 *quadsIndices, u32 numQuads, int depth )
-{
-	InternalQueueSprite( texture, rotation, 1.f, origin, vtx, uv, c, quadsIndices, numQuads, depth );
-}
-
-void SpriteBatch::DrawScaled( u32 texture, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, const u16 *quadsIndices, u32 numQuads, int depth )
-{
-	InternalQueueSprite( texture, 0.f, scale, origin, vtx, uv, c, quadsIndices, numQuads, depth );
-}
-
-void SpriteBatch::DrawRotatedScaled( u32 texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, const u16 *quadsIndices, u32 numQuads, int depth )
-{
-	InternalQueueSprite( texture, rotation, scale, origin, vtx, uv, c, quadsIndices, numQuads, depth );
+	InternalDrawTransformed(textureID, rotation, 1.f, vertices.Center(), vertices, uv, color);
 }
 
 
-void SpriteBatch::DrawSprite( const Sprite& sprite, const Vector2& pos )
+void SpriteBatch::DrawRotated(u32 textureID, float rotation, const Vector2& origin, const Rectf& vertices, const Rectf& uv, const Color& color)
 {
-	InternalQueueSprite(
-		sprite.GetTextureID(),
-		sprite.angle,
-		sprite.scale,
-		pos + (sprite.size * 0.5f),
-		Rectf(pos, pos + sprite.size),
-		sprite.GetUVRect(),
-		sprite.color,
-		0
+	InternalDrawTransformed(textureID, rotation, 1.f, origin, vertices, uv, color);
+}
+
+
+void SpriteBatch::DrawScaled(u32 textureID, const Vector2& scale, const Rectf& vertices, const Rectf& uv, const Color& color)
+{
+	InternalDrawTransformed(textureID, 0.f, scale, vertices.Center(), vertices, uv, color);
+}
+
+
+void SpriteBatch::DrawScaled(u32 textureID, const Vector2& scale, const Vector2& origin, const Rectf& vertices, const Rectf& uv, const Color& color)
+{
+	InternalDrawTransformed(textureID, 0.f, scale, origin, vertices, uv, color);
+}
+
+
+void SpriteBatch::DrawRotatedScaled(u32 textureID, float rotation, const Vector2& scale, const Rectf& vertices, const Rectf& uv, const Color& color)
+{
+	InternalDrawTransformed(textureID, rotation, scale, vertices.Center(), vertices, uv, color);
+}
+
+
+void SpriteBatch::DrawRotatedScaled(u32 textureID, float rotation, const Vector2& scale, const Vector2& origin, const Rectf& vertices, const Rectf& uv, const Color& color)
+{
+	InternalDrawTransformed(textureID, rotation, scale, origin, vertices, uv, color);
+}
+
+
+void SpriteBatch::DrawSprite(const Sprite& sprite, const Vector2& position )
+{
+	if(sprite.GetTexture() != null)
+	{
+		CheckRenderState(sprite.GetBlendMode());
+
+		const Vector2 halfSize = sprite.size * 0.5f;
+		InternalDrawTransformed(
+			sprite.GetTextureID(),
+			sprite.angle,
+			sprite.scale,
+			position,
+			Rectf(position - halfSize, position + halfSize),
+			sprite.GetUVRect(),
+			sprite.color
 		);
+	}
 }
 
 
-void SpriteBatch::DrawAnimatedSprite( const AnimatedSprite& sprite, const Vector2& pos )
+void SpriteBatch::DrawAnimatedSprite(const AnimatedSprite& sprite, const Vector2& position )
 {
-	Rectf uv = sprite.GetUVRect();
-	if( sprite.GetFlipX() )
-		uv.FlipX();
-	if( sprite.GetFlipY() )
-		uv.FlipY();
+	if(sprite.GetTexture() != null)
+	{
+		Rectf uv = sprite.GetUVRect();
+		if(sprite.GetFlipX() )
+			uv.FlipX();
+		if(sprite.GetFlipY() )
+			uv.FlipY();
 
-	InternalQueueSprite(
-		sprite.GetTextureID(),
-		sprite.angle,
-		sprite.scale,
-		pos + (sprite.size * 0.5f),
-		Rectf(pos, pos + sprite.size),
-		uv,
-		sprite.color,
-		0
+		CheckRenderState(sprite.GetBlendMode());
+
+		const Vector2 halfSize = sprite.size * 0.5f;
+		InternalDrawTransformed(
+			sprite.GetTextureID(),
+			sprite.angle,
+			sprite.scale,
+			position,
+			Rectf(position - halfSize, position + halfSize),
+			uv,
+			sprite.color
 		);
+	}
 }
 
 
-void SpriteBatch::DrawAnimatedSpriteSet( const AnimatedSpriteSet& spriteset, const Vector2& pos )
+void SpriteBatch::DrawAnimatedSpriteSet(const AnimatedSpriteSet& spriteset, const Vector2& position )
 {
-	if( spriteset.Empty() )
+	if(spriteset.Empty() || spriteset.GetTexture() == null)
 		return;
 
-	InternalQueueSprite(
+	CheckRenderState(spriteset.GetBlendMode());
+
+	const Vector2 halfSize = spriteset.size * 0.5f;
+	InternalDrawTransformed(
 		spriteset.GetTextureID(),
 		spriteset.angle,
 		spriteset.scale,
-		pos + (spriteset.size * 0.5f),
-		Rectf(pos, pos + spriteset.size),
+		position,
+		Rectf(position - halfSize, position + halfSize),
 		spriteset.GetCurrentAnimation().GetUVRect(),
-		spriteset.color,
-		0
-		);
+		spriteset.color
+	);
 }
 
 
-void SpriteBatch::DrawTexture( const Texture* texture, const Vector2& pos )
+void SpriteBatch::DrawQuad(const Quad2D& quad)
 {
-	DrawTexture( texture, pos, Vector2((float)texture->Width(), (float)texture->Height()) );
+	*m_queue.AddUninitialized() = quad;
 }
 
 
-void SpriteBatch::DrawTexture( const Texture* texture, const Vector2& pos, const Vector2& size )
+void SpriteBatch::DrawQuad(u32 textureID, const Quad2D& quad)
 {
-	InternalQueueSprite( texture->GetTextureID(), 0.f, 1.f, 0.f, 
-		Rectf(pos.x, pos.y, pos.x + size.x, pos.y + size.y), Rectf::One, Color::White(), 0 );
+	CheckRenderState(textureID);
+
+	*m_queue.AddUninitialized() = quad;
 }
 
 
-void SpriteBatch::DrawSpriteData( const SpriteData& data )
+void SpriteBatch::DrawQuads(u32 textureID, const Quad2D* quads, u32 numQuads)
 {
-	*m_queue.push_back_uninitialized() = data;
+	CheckRenderState(textureID);
+
+	// Fastest method; binary copy of raw, uninitialized memory.
+	Quad2D* p = m_queue.AddUninitialized(numQuads);
+	Memory::Memcpy(p, quads, numQuads * sizeof(Quad2D));
 }
 
 
-void SpriteBatch::DrawSpriteData( const SpriteData& data, float rotation, const Vector2& scale, const Vector2& origin )
+void SpriteBatch::DrawVertices(const VertexColorTexture2D& tl, const VertexColorTexture2D& bl,
+							   const VertexColorTexture2D& br, const VertexColorTexture2D& tr)
 {
-	SpriteData& s = *m_queue.push_back_uninitialized();
-	s = data;
-	TransformSprite( rotation, scale, origin, s );
+	Quad2D* quad = m_queue.AddUninitialized();
+	quad->vertices[0] = tl;
+	quad->vertices[1] = bl;
+	quad->vertices[2] = br;
+	quad->vertices[3] = tr;
 }
 
+
+void SpriteBatch::DrawVertices(u32 textureID, const VertexColorTexture2D& tl, const VertexColorTexture2D& bl,
+							   const VertexColorTexture2D& br, const VertexColorTexture2D& tr)
+{
+	CheckRenderState(textureID);
+
+	Quad2D* quad = m_queue.AddUninitialized();
+	quad->vertices[0] = tl;
+	quad->vertices[1] = bl;
+	quad->vertices[2] = br;
+	quad->vertices[3] = tr;
+}
+
+
+void SpriteBatch::DrawTiled(u32 textureID, const Vector2& position, const Vector2& size, const Vector2& tileSize, const Rectf& uv, const Color& color )
+{
+	CheckRenderState(textureID);
+
+	Quad2D currentQuad;
+	currentQuad.SetUVData(uv);
+	currentQuad.SetColorData(color);
+
+	float maxTileWidth = tileSize.x;
+	float maxTileHeight = tileSize.y;
+	float width = size.x;
+	float height = size.y;
+
+	for(float y = 0.f; y < height; y += maxTileHeight)
+	{
+		float tileHeight = Math::Min(height - y, maxTileHeight);
+
+		if(Math::EpsilonCompare(y, height) )
+			break;
+
+		for(float x = 0.f; x < width; x += maxTileWidth)
+		{
+			if(Math::EpsilonCompare(x, width) )
+				break;
+
+			float tileWidth = Math::Min(width - x, maxTileWidth);
+			float positionX = position.x + x;
+			float positionY = position.y + y;
+
+			currentQuad.SetVertexData(positionX, positionY, positionX + tileWidth, positionY + tileHeight);
+			Quad2D* p = m_queue.AddUninitialized();
+			*p = currentQuad;
+
+			// If rendering a partial tile then we have to clamp the uv.
+			if(!Math::EpsilonCompare(tileWidth, maxTileWidth) || !Math::EpsilonCompare(tileHeight, maxTileHeight) )
+			{
+				Vector2 d = Vector2(tileWidth / maxTileWidth ,tileHeight / maxTileHeight);
+				Rectf clampedUV = Rectf(uv.min, uv.max * d);
+				p->SetUVData(clampedUV);
+			}
+		}
+	}
+}
 
 
 // Text rendering
-void SpriteBatch::DrawString( Font* font, const String& text, const Vector2& pos, const Color& c, TextAlignment alignment, int face_size, int depth )
-{
-	InternalQueueString( font, text.begin(), text.end(),  Vector2::One, pos, c, alignment, face_size, depth );
-}
 
-void SpriteBatch::DrawString( Font* font, const String& text, u32 textPos, u32 amount, const Vector2& pos, const Color& c, TextAlignment alignment, int face_size, int depth )
+void SpriteBatch::DrawString( Font* font, const String& text, const Vector2& position, const Color& color, TextAlignment alignment )
 {
-	InternalQueueString( font, text.begin() + textPos, text.begin() + textPos + amount, Vector2::One, pos, c, alignment, face_size, depth );
-}
-
-void SpriteBatch::DrawString( Font* font, const String& text, const Vector2& scale, const Vector2& pos, const Color& c, TextAlignment alignment, int face_size, int depth )
-{
-	InternalQueueString( font, text.begin(), text.end(), scale, pos, c, alignment, face_size, depth );
+	DrawString( font, text.begin(), text.end(), position, color, alignment );
 }
 
 
-void SpriteBatch::InternalQueueString
-( Font* font, const char* first, const char* last, const Vector2& scale, Vector2 pos, const Color& c, TextAlignment alignment, int face_size, int depth )
+void SpriteBatch::DrawString( Font* font, const String& text, u32 textPos, u32 amount, const Vector2& position, const Color& color, TextAlignment alignment )
+{
+	DrawString( font, text.begin() + textPos, text.begin() + textPos + amount, position, color, alignment );
+}
+
+
+void SpriteBatch::DrawString( Font* font, const char* first, const char* last, Vector2 position, const Color& color, TextAlignment alignment )
 {
 	CE_ASSERT(first <= last);
 
-	if( face_size == -1 )
-		face_size = font->GetFaceSize();
-
-	Vector2 originalPos = pos;
+	Vector2 originalPos = position;
 
 	if(alignment == AlignCenter)
 	{
-		pos.x += (float)(font->GetTextWidth(first, last) / 2.f) * scale.x;
+		position.x += (float)(font->GetTextWidth(first, last) / 2.f);
 	}
 	else if(alignment == AlignRight)
 	{
-		pos.x -= (float)font->GetTextWidth(first, last) * scale.x;
+		position.x -= (float)font->GetTextWidth(first, last);
 	}
 
-	//Vector2 origin = pos;
-	Vector2 s =  (float)face_size / (float)font->GetFaceSize();
+	Quad2D quad;
+	quad.SetColorData(color);
 
-	//for( String::const_iterator it = text.begin(); it != text.end(); ++it )
+	if(first != last)
+		CheckRenderState(font->GetTextureID());
+
 	for( ; first != last; ++first )
 	{
 		const Glyph* glyph = &font->GetGlyph(*first);
 		if(*first == '\n')
 		{
-			pos.x = originalPos.x;
-			pos.y += (float)font->GetLineHeight() * s.x;
+			position.x = originalPos.x;
+			position.y += (float)font->GetLineHeight();
 			continue;
 		}
 
 		if(*first != ' ')
 		{
-			Vector2 translation = pos + glyph->translation * s;
-			Vector2 size = glyph->size * s;
+			const Vector2 minPosition = position + glyph->translation;
+			const Vector2 maxPosition = minPosition + glyph->size;
 
-			//if( !scale.Equals(Vector2::One) )
-			//	size *= scale;
-
-			InternalQueueSprite( font->GetTextureID(), 0.f, 1.f, 0.f, Rectf(translation, translation + size), glyph->uv, c, depth );
+			quad.SetVertexUVData(minPosition, maxPosition, glyph->uv);
+			m_queue.Add(quad);
 		}
 
-		pos.x += glyph->advance * s.x;
-		//pos.x += (float(glyph->advance) * scale.x);
+		position.x += glyph->advance;
 	}
 }
 
 
-void SpriteBatch::InternalQueueSprite
-( u32 texture, float rotation, const Vector2& scale, const Vector2& origin, const Rectf& vertices, const Rectf& uv, const Color& c, int depth )
+void SpriteBatch::InternalDraw(u32 textureID, const Rectf& vertices, const Rectf& uv, const Color& color)
 {
-	Vector2 v[4], t[4];
-	vertices.GetCorners( v );
-	uv.GetCorners( t );
+	CheckRenderState(textureID);
 
-	SpriteData & s = *m_queue.push_back_uninitialized();
-	for( u32 i(0); i < 4; ++i )
-	{
-		s.data[i].pos = v[i];
-		s.data[i].uv = t[i];
-		s.data[i].color = c;
-	}
-
-	s.SetTexture(texture);
-	s.SetBlendMode(m_current_blendmode.value);
-	s.SetDepth(depth);
-	s.SetYPosition(v[1].y);
-	TransformSprite( rotation, scale, origin, s );
+	Quad2D* quad = m_queue.AddUninitialized();
+	quad->SetVertexUVColorData((const float*)&vertices, (const float*)&uv, color);
 }
 
 
-void SpriteBatch::InternalQueueSprite
-( u32 texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, u32 numQuads, int depth )
+void SpriteBatch::InternalDrawTransformed
+(u32 textureID, float rotation, const Vector2& scale, const Vector2& origin, const Rectf& vertices, const Rectf& uv, const Color& color)
 {
-	SpriteData * s = m_queue.push_back_uninitialized( numQuads );
+	CheckRenderState(textureID);
 
-	for( u32 i(0); i < numQuads; ++i )
+	Quad2D* quad = m_queue.AddUninitialized();
+	quad->SetVertexUVColorData((const float*)&vertices, (const float*)&uv, color);
+	quad->Transform(rotation, scale, origin);
+}
+
+
+void SpriteBatch::CheckRenderState(u32 textureID)
+{
+	if(m_currentRenderState.textureID != textureID)
 	{
-		for( u32 j(0); j < 4; ++j )
-		{
-			const u32 index = i * 4 + j;
-			s[i].data[j].pos = vtx[ index ];
-			s[i].data[j].uv = uv[ index ];
-			s[i].data[j].color = c[ index ];
-		}
+		CheckQueueRenderState();
 
-		s[i].SetTexture(texture);
-		s[i].SetBlendMode(m_current_blendmode.value);
-		s[i].SetDepth(depth);
-		s[i].SetYPosition(vtx[1].y);
-	}
-
-	if( scale != Vector2::One && rotation != 0.f )
-	{
-		for( u32 i(0); i < numQuads; ++i )
-			TransformSprite( rotation, scale, origin, s[i] );
+		m_currentRenderState.textureID = textureID;
+		m_currentRenderState.stateChangedFlags |= RENDERSTATE_FLAG_TEXTURE;
 	}
 }
 
 
-void SpriteBatch::InternalQueueSprite
-( u32 texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, const u16 *quadsIndices, u32 numQuads, int depth )
+void SpriteBatch::CheckRenderState(BlendMode blendMode)
 {
-	SpriteData * s = m_queue.push_back_uninitialized( numQuads );
-
-	u32 element(0);
-	for( u32 i(0); i < numQuads; ++i )
+	if(m_currentRenderState.blendMode != blendMode)
 	{
-		for( u32 j(0); j < 4; ++j )
-		{
-			s[i].data[j].pos = vtx[ quadsIndices[element] ];
-			s[i].data[j].uv = uv[ quadsIndices[element] ];
-			s[i].data[j].color = c[ quadsIndices[element] ];
-			++element;
-		}
+		CheckQueueRenderState();
 
-		s[i].SetTexture(texture);
-		s[i].SetBlendMode(m_current_blendmode.value);
-		s[i].SetDepth(depth);
-		s[i].SetYPosition(vtx[ quadsIndices[element-3] ].y);
-	}
-
-	if( scale != Vector2::One && rotation != 0.f )
-	{
-		for( u32 i(0); i < numQuads; ++i )
-			TransformSprite( rotation, scale, origin, s[i] );
+		m_currentRenderState.blendMode = blendMode;
+		m_currentRenderState.stateChangedFlags |= RENDERSTATE_FLAG_BLENDMODE;
 	}
 }
 
 
-void SpriteBatch::TransformSprite( float rotation, const Vector2& scale, const Vector2& origin, SpriteData& s )
+void SpriteBatch::CheckQueueRenderState()
 {
-	if( rotation != 0.f )
+	const u32 queueSize = m_queue.Size();
+
+	// If this is not the first render state then queue it
+	if(m_currentOffset != queueSize)
 	{
-		const Vector2 rot = Math::SinCos(rotation);
-		Math::RotateScalePoint( rot, scale, origin, s.data[0].pos );
-		Math::RotateScalePoint( rot, scale, origin, s.data[1].pos );
-		Math::RotateScalePoint( rot, scale, origin, s.data[2].pos );
-		Math::RotateScalePoint( rot, scale, origin, s.data[3].pos );
-	}
-	else if( scale != Vector2::One )
-	{
-		Math::ScalePoint( scale, origin, s.data[0].pos );
-		Math::ScalePoint( scale, origin, s.data[1].pos );
-		Math::ScalePoint( scale, origin, s.data[2].pos );
-		Math::ScalePoint( scale, origin, s.data[3].pos );
+		m_currentRenderState.vertexCount = (queueSize - m_currentOffset) * 4;
+		m_currentOffset = queueSize;
+
+		m_renderStates.Add(m_currentRenderState);
+
+		// Reset flags
+		m_currentRenderState.stateChangedFlags = 0;
+		//m_currentRenderState.clipRectIndex = 0;
 	}
 }
 
 
 void SpriteBatch::Render()
 {
-	if( m_queue.empty() )
-		return;
-
-	//_SortQueue();
-
-	bool used_scissor = false;
-	if( m_enable_clipping && !m_clip_rect.Empty() )
-	{
-		used_scissor = true;
-		const Rect& r = m_clip_rect;
-
-		int viewport[4];
-		glGetIntegerv( GL_VIEWPORT, viewport );
-
-		glEnable( GL_SCISSOR_TEST );
-		glScissor( r.pos.x , viewport[3] - r.pos.y - r.size.y, r.size.x, r.size.y );
-	}
-
-	if(m_attached_shader)
-		m_attached_shader->Bind(); //fixme:
-
-
-	glEnable( GL_TEXTURE_2D );
-	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
-
-	glVertexPointer( 2, GL_FLOAT, sizeof(VertexTextureSpriteData2D), &m_queue[0].data[0].pos );
-	glTexCoordPointer( 2, GL_FLOAT, sizeof(VertexTextureSpriteData2D), &m_queue[0].data[0].uv );
-	glColorPointer( 4, GL_UNSIGNED_BYTE, sizeof(VertexTextureSpriteData2D), &m_queue[0].data[0].color );
-
-	u32	first	= 0,
-			last	= 0,
-			size	= m_queue.size();
-
-	u32 n_batched = 0;
-	u32 current_texture = m_queue[0].GetTexture();
-	u32 current_blender = m_queue[0].GetBlendMode();
-
-	for( ; last < size; ++last )
-	{
-		const SpriteData& spriteData = m_queue[last];
-		const u32 next_texture = spriteData.GetTexture();
-		const u32 next_blender = spriteData.GetBlendMode();
-
-		++n_batched; //todo: optimize this via a prefetch flush (begin, end = m_max_batch_usage)
-		if( current_texture != next_texture || current_blender != next_blender || n_batched > m_max_batch_usage )
-		{
-			InternalFlush( current_texture, current_blender, first, last - first );
-			current_texture = next_texture;
-			current_blender = next_blender;
-			first = last;
-		}
-	}
-
-	//flush the remaining sprites.
-	InternalFlush( current_texture, current_blender, first, last - first );
-
-	if(used_scissor)
-		glDisable( GL_SCISSOR_TEST );
-
-	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
+	// Simply flush the remaining vertices.
+	InternalFlush();
 }
 
 
-void SpriteBatch::InternalFlush( u32 texture, u32 blendmodevalue, u32 first, u32 count )
-{
-	if(count == 0)
-		return;
-
-	BlendMode blendmode = blendmodevalue;
-	blendmode.Apply();
-
-	glBindTexture( GL_TEXTURE_2D, texture );
-	glDrawArrays( GL_QUADS, (first * 4), (count * 4) );
-}
-
-
-void SpriteBatch::Render( const Matrix& transformation )
+void SpriteBatch::Render(const Matrix& transformation )
 {
 	glPushMatrix();
-		glMultMatrixf( &transformation.m[0] );
-		Render();
+	glMultMatrixf(&transformation.m[0]);
+	Render();
 	glPopMatrix();
+}
+
+
+void SpriteBatch::InternalFlush()
+{
+	if(m_queue.Empty() )
+		return;
+
+	bool used_scissor = false;
+	//if(m_clippingEnabled && !m_clipRect.Empty() )
+	//{
+	//	used_scissor = true;
+	//	const Rect& r = m_clipRect;
+
+	//	int viewport[4];
+	//	glGetIntegerv(GL_VIEWPORT, viewport);
+
+	//	glEnable(GL_SCISSOR_TEST);
+	//	glScissor(r.position.x , viewport[3] - r.position.y - r.size.y, r.size.x, r.size.y);
+	//}
+
+	//if(m_shader)
+	//	m_shader->Bind(); //fixme:
+
+	glEnable(GL_TEXTURE_2D);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	const VertexColorTexture2D* vertexPointer = (const VertexColorTexture2D*)&m_queue[0];
+	glVertexPointer(2, GL_FLOAT, sizeof(VertexColorTexture2D), &vertexPointer->position);
+	glTexCoordPointer(2, GL_FLOAT, sizeof(VertexColorTexture2D), &vertexPointer->uv);
+	glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(VertexColorTexture2D), &vertexPointer->color);
+
+
+	// Make sure that we flush the current state if there are vertices pending.
+	CheckQueueRenderState();
+
+	u32 vertexOffset = 0;
+	for(const RenderState2D* renderStates = m_renderStates.begin(); renderStates != m_renderStates.end(); ++renderStates)
+	{
+		const u32 vertexCount = (u32)renderStates->vertexCount;
+		const u32 renderStateFlags = (u32)renderStates->stateChangedFlags;
+
+		if((renderStateFlags & RENDERSTATE_FLAG_TEXTURE) != 0)
+		{
+			glBindTexture(GL_TEXTURE_2D, renderStates->textureID);
+		}
+
+		if((renderStateFlags & RENDERSTATE_FLAG_BLENDMODE) != 0)
+		{
+			renderStates->blendMode.Apply();
+		}
+
+		glDrawArrays(GL_QUADS, vertexOffset, vertexCount);
+
+		vertexOffset += vertexCount;
+	}
+
+	//if(used_scissor)
+	//	glDisable(GL_SCISSOR_TEST);
+
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	// Reset offset to vertex buffer and empty queue.
+	m_currentOffset = 0;
+	m_queue.Clear();
+	m_renderStates.Clear();
+
 }
 
 

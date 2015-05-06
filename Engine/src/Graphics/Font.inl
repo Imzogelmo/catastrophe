@@ -18,12 +18,13 @@
 
 #pragma once
 
-#include <fc/math.h>
-#include <fc/dynamic_array2d.h>
+#include "Catastrophe/Core/Containers/Array2D.h"
+#include "Catastrophe/Core/Math/Color.h"
 
-#include "Graphics/Font.h"
-#include "Graphics/Texture.h"
-#include "Graphics/TextureLoader.h"
+#include "Catastrophe/Graphics/Common.h"
+#include "Catastrophe/Graphics/Font.h"
+#include "Catastrophe/Graphics/Texture.h"
+#include "Catastrophe/Graphics/TextureLoader.h"
 #include "Util/TexturePacker.h"
 
 #if CE_SUPPORT_FREETYPE
@@ -158,18 +159,18 @@ int Font::LoadFromFile( const String& filename, int faceSize, int dpi )
 
 int Font::LoadFromFile( const String& path, const String& filename, int faceSize, int dpi )
 {
-	if( filename.empty() )
+	if( filename.Empty() )
 		return 1;
 
 	SetResourceName(filename);
 
-	if( filename.size() > 3 )
+	//String fileExtension = filename.Substring(filename.size() - 3, 3);
+	String fileExtension = filename.GetFileExtension(true);
+	if( fileExtension == "bmp" || fileExtension == "png" || fileExtension == "tga" )
 	{
-		String fileExtension = filename.substr(filename.size() - 3, 3);
-		if( fileExtension == "bmp" || fileExtension == "png" || fileExtension == "tga" )
-		{
-			return InternalLoadBitmapFont(path + filename);
-		}
+		//return InternalLoadBitmapFont(path + filename);
+		//return InternalLoadShadowedStripFont(path + filename, 32, 2);
+		return InternalLoadAsciiStripFont(path + filename, 32);
 	}
 
 #if CE_SUPPORT_FREETYPE
@@ -185,7 +186,7 @@ int Font::LoadFromFile( const String& path, const String& filename, int faceSize
 	}
 
 	FT_Face face;
-	error = FT_New_Face(library, filename.c_str(), 0, &face);
+	error = FT_New_Face(library, filename.CString(), 0, &face);
 	if( error )
 	{
 		Log("FT_New_Face error (%i)", error);
@@ -231,7 +232,7 @@ int Font::LoadFromFile( const String& path, const String& filename, int faceSize
 
 	while( glyph_index != 0 )
 	{
-		max_glyphs = fc::clamp(max_glyphs, glyph_index + 1, 256);
+		max_glyphs = Clamp(max_glyphs, glyph_index + 1, 256);
 		if( charcode < 256 )
 		{
 			//no unicode or utf-8 support.
@@ -249,10 +250,10 @@ int Font::LoadFromFile( const String& path, const String& filename, int faceSize
 	int tWidth = Math::Min<int>( (int)Math::NextPowerOfTwo(squareDimensions), MaxTextureSize );
 	int tHeight = Math::Min<int>( (int)Math::NextPowerOfTwo(squareDimensions), MaxTextureSize );
 
-	m_glyphs.clear();
-	m_glyphs.reserve(max_glyphs);
-	fc::dynamic_array2d<Color> pixels(tHeight, tWidth);
-	fc::dynamic_array2d<Color> glyphPixels( 128, 128 );
+	m_glyphs.Clear();
+	m_glyphs.Reserve(max_glyphs);
+	Array2D<Color> pixels(tHeight, tWidth);
+	Array2D<Color> glyphPixels( 128, 128 );
 	pixels.fill(Color::Black(0));
 	glyphPixels.fill(Color::White(0));
 
@@ -264,7 +265,7 @@ int Font::LoadFromFile( const String& path, const String& filename, int faceSize
 
 	for( int i(0); i < max_glyphs; ++i )
 	{
-		m_glyphs.push_back();
+		m_glyphs.Add();
 		Glyph & glyph = m_glyphs.back();
 
 		Point size = Point::Zero;
@@ -292,8 +293,8 @@ int Font::LoadFromFile( const String& path, const String& filename, int faceSize
 			//glyph.translation.y = (float)translation.y - faceSize/2; // TEST!!!!!
 			glyph.advance = (float)advance;
 
-			maxGlyphTranslationY = fc::max(translation.y, maxGlyphTranslationY);
-			maxGlyphHeight = fc::max(size.y, maxGlyphHeight);
+			maxGlyphTranslationY = Math::Max(translation.y, maxGlyphTranslationY);
+			maxGlyphHeight = Math::Max(size.y, maxGlyphHeight);
 		}
 
 		error = FT_Render_Glyph(slot, FT_RENDER_MODE_NORMAL);
@@ -367,7 +368,7 @@ int Font::LoadFromFile( const String& path, const String& filename, int faceSize
 
 	// now that we know the final texture size, we can
 	// iterate through the glyphs and calculate the texture coordinates.
-	for( vec_type::iterator it = m_glyphs.begin(); it != m_glyphs.end(); ++it )
+	for( GlyphVectorType::Iterator it = m_glyphs.begin(); it != m_glyphs.end(); ++it )
 	{
 		float x = it->uv.min.x;
 		float y = it->uv.min.y;
@@ -402,12 +403,12 @@ int Font::InternalLoadGenericBitmapFont( const String& filename, int startCode )
 	int h = m_texture.Height();
 	int glyphSize = w / 16;
 	int numRows = h / glyphSize;
-	int numGlyphs = fc::min(numRows * 16, 256 - startCode);
+	int numGlyphs = Math::Min(numRows * 16, 256 - startCode);
 
 	for( int i(startCode); i < numGlyphs + startCode; ++i )
 		m_glyphMap[i] = i - startCode;
 
-	m_glyphs.resize(numGlyphs);
+	m_glyphs.Resize(numGlyphs);
 
 	for( int i(0); i < numGlyphs; ++i )
 	{
@@ -445,43 +446,23 @@ int Font::InternalLoadBitmapFont( const String& filename, int startCode )
 	// top, bottom, left, right. advance is calculated by (right - left + 1).
 
 	Point textureSize;
-	u8* ptr = TextureLoader::LoadFromFile(filename, textureSize);
-	if( !ptr )
+	Array2D<Color> pixels;
+
+	if( !InternalLoadPixelArrayFromFile(filename, pixels, textureSize) )
 	{
 		return -1;
 	}
 
-	// copy ptr to pixel array
-	fc::dynamic_array2d<Color> pixels(textureSize.y, textureSize.x);
-	for( u32 i(0); i < pixels.size(); ++i )
-	{
-		u32 offset = i * 4;
-		pixels[i].r = ptr[offset];
-		pixels[i].g = ptr[offset + 1];
-		pixels[i].b = ptr[offset + 2];
-		pixels[i].a = ptr[offset + 3];
-	}
-
-	TextureLoader::FreePtr(ptr);
-
 	float textureWidth = (float)textureSize.x;
 	float textureHeight = (float)textureSize.y;
-
-	// mask top-left pixel color
-	Color colorToMask = pixels.front();
-	Color maskColor(colorToMask.r, colorToMask.b, colorToMask.g, 0);
-	for( u32 i(0); i < pixels.size(); ++i )
-	{
-		if( pixels[i] == colorToMask )
-			pixels[i] = maskColor;
-	}
+	Color maskColor = pixels[0];
 
 	// calculate bounding rectangles.
 	int numRows = 8 - ((startCode + 15) / 16);
 	int numColumns = 16;
-	int numGlyphs = fc::min(numRows * 16, 128 - startCode);
+	int numGlyphs = Math::Min(numRows * 16, 128 - startCode);
 
-	m_glyphs.resize(numGlyphs);
+	m_glyphs.Resize(numGlyphs);
 
 	// set character map.
 	for( int i(startCode); i < numGlyphs + startCode; ++i )
@@ -511,8 +492,10 @@ int Font::InternalLoadBitmapFont( const String& filename, int startCode )
 
 			// left
 			for( int x(minX); x < maxX; ++x )
+			{
 				for( int y(minY); y < maxY; ++y )
-					if( pixels.at(y, x) != maskColor )
+				{
+					if( pixels.at(y, x).a != 0 || pixels.at(y, x) != maskColor )
 					{
 						left = x;
 
@@ -520,11 +503,15 @@ int Font::InternalLoadBitmapFont( const String& filename, int startCode )
 						x = maxX;
 						y = maxY;
 					}
+				}
+			}
 
 			// right
 			for( int x(maxX - 1); x >= minX; --x )
+			{
 				for( int y(minY); y < maxY; ++y )
-					if( pixels.at(y, x) != maskColor )
+				{
+					if( pixels.at(y, x).a != 0 || pixels.at(y, x) != maskColor )
 					{
 						right = x + 1;
 
@@ -532,11 +519,15 @@ int Font::InternalLoadBitmapFont( const String& filename, int startCode )
 						x = minX;
 						y = maxY;
 					}
+				}
+			}
 
 			// top
 			for( int y(minY); y < maxY; ++y )
+			{
 				for( int x(minX); x < maxX; ++x )
-					if( pixels.at(y, x) != maskColor )
+				{
+					if( pixels.at(y, x).a != 0 || pixels.at(y, x) != maskColor )
 					{
 						top = y;
 
@@ -544,11 +535,15 @@ int Font::InternalLoadBitmapFont( const String& filename, int startCode )
 						x = maxX;
 						y = maxY;
 					}
+				}
+			}
 
 			// bottom
 			for( int y(maxY - 1); y >= minY; --y )
+			{
 				for( int x(minX); x < maxX; ++x )
-					if( pixels.at(y, x) != maskColor )
+				{
+					if( pixels.at(y, x).a != 0 || pixels.at(y, x) != maskColor )
 					{
 						bottom = y + 1;
 
@@ -556,6 +551,8 @@ int Font::InternalLoadBitmapFont( const String& filename, int startCode )
 						x = maxX;
 						y = minY;
 					}
+				}
+			}
 
 			glyph.advance = (float)(right - left + 1);
 			glyph.size.x = (float)(right - left);
@@ -568,7 +565,7 @@ int Font::InternalLoadBitmapFont( const String& filename, int startCode )
 			glyph.uv.max.x = right / textureWidth;
 			glyph.uv.max.y = bottom / textureHeight;
 
-			m_maxAdvance = fc::max(m_maxAdvance, (int)glyph.advance);
+			m_maxAdvance = Math::Max(m_maxAdvance, (int)glyph.advance);
 
 			// Abort if we are out of bounds.
 			if( ++currentChar >= numGlyphs )
@@ -584,21 +581,297 @@ int Font::InternalLoadBitmapFont( const String& filename, int startCode )
 	GetGlyph(' ').advance = float((blockWidth / 2.f) + 1);
 	//m_glyphs[' '].advance /= 2.f;
 
-	m_faceSize = fc::max(blockWidth, blockHeight);
+	m_faceSize = Math::Max(blockWidth, blockHeight);
 	m_lineHeight = blockHeight;
 
 	// create the texture.
 	//m_texture.SetFilterMode( 0x2601 );
-	m_texture.CreateFromData( (void*)pixels.data(), pixels.x(), pixels.y() );
+	m_texture.CreateFromData( (void*)pixels.data(), pixels.Width(), pixels.Height() );
 
 	return 0;
+}
+
+
+int Font::InternalLoadAsciiStripFont( const String& filename, int startCode )
+{
+	Point textureSize;
+	Array2D<Color> pixels;
+	if( !InternalLoadPixelArrayFromFile(filename, pixels, textureSize) )
+	{
+		return -1;
+	}
+
+	m_glyphs.Reserve(127 - startCode); // best guess
+
+	int w = textureSize.x;
+	int h = textureSize.y;
+	int i = 0;
+
+	// Get the mask color to text rows against
+	Color maskColor = pixels[0];
+
+	for( int x(0); x < w; ++x )
+	{
+		for( int y(0); y < h; ++y )
+		{
+			Color color = pixels(y, x);
+			if(color != maskColor) // Found the start of glyph
+			{
+				int x1 = x;
+				int y1 = 0;
+				int x2 = 0;
+				int y2 = 0;
+
+				while(++x < w)
+				{
+					for( y = 0; y < h; ++y )
+						if(pixels(y, x) != maskColor)
+							// Scan next column until we find a break.
+							break;
+
+					if(y == h)
+					{
+						x2 = x;
+						y2 = y;
+						break;
+					}
+
+				}
+
+				if(x == w)
+				{
+					// break loop
+					y = h;
+					break;
+				}
+
+				Glyph glyph;
+				glyph.size.x = (float)(x2 - x1);
+				glyph.size.y = (float)(y2 - y1);
+				glyph.translation.x = 0.f;
+				glyph.translation.y = 0.f;
+				glyph.advance = (float)((x2 - x1) + 1);
+
+				glyph.uv.min.x = x1 / (float)w;
+				glyph.uv.min.y = y1 / (float)h;
+				glyph.uv.max.x = x2 / (float)w;
+				glyph.uv.max.y = y2 / (float)h;
+
+				// Special case:
+				// The space char has no glyph, so we can only accurately extrapolate the advance
+				// by counting the pixels that have been advanced.
+				if(i + startCode == (int)' ')
+				{
+					glyph.advance = (float)x;
+
+					//fixme
+					m_glyphs.Add(glyph);
+					m_glyphMap[i + startCode] = i;
+					++i;
+				}
+
+				m_glyphs.Add(glyph);
+				m_glyphMap[i + startCode] = i;
+				++i;
+
+				// advance column
+				y = h;
+			}
+		}
+
+		// Too many glyphs, break. (...bad font?)
+		if(i + startCode > 255)
+			break;
+	}
+
+	// Free up any unused memory to keep the font lean.
+	m_glyphs.ShrinkToFit();
+
+	m_faceSize = h;
+	m_maxAdvance = 12;
+	m_lineHeight = h;
+
+	// Finally, create the texture from the raw pixel data
+	m_texture.CreateFromData( (void*)pixels.data(), pixels.Width(), pixels.Height() );
+
+	return 0;
+}
+
+
+int Font::InternalLoadShadowedStripFont( const String& filename, int startCode, int shadowOffset )
+{
+	Point textureSize;
+	Array2D<Color> pixels;
+	if( !InternalLoadPixelArrayFromFile(filename, pixels, textureSize) )
+	{
+		return -1;
+	}
+
+	m_glyphs.Reserve(127 - startCode); // best guess
+
+	int w = textureSize.x;
+	int h = textureSize.y / 2; // Upper half contains glyphs
+	int i = 0;
+	int cumulativeOffsetX = shadowOffset;
+
+	Array2D<Color> tile; // temporary array
+
+	// The actual pixel array uploaded to the texture.
+	Array2D<Color> internalPixels(h + shadowOffset, w, Color::TransparentBlack());
+
+	// Get the mask color to text rows against
+	Color maskColor = pixels[0];
+
+	for( int x(0); x < w; ++x )
+	{
+		for( int y(0); y < h; ++y )
+		{
+			Color color = pixels(y, x);
+			if(color != maskColor) // Found the start of glyph
+			{
+				int x1 = x;
+				int y1 = 0;
+				int x2 = 0;
+				int y2 = 0;
+
+				while(++x < w)
+				{
+					for( y = 0; y < h; ++y )
+						if(pixels(y, x) != maskColor)
+							// Scan next column until we find a break.
+							break;
+
+					if(y == h)
+					{
+						x2 = x;
+						y2 = y;
+						break;
+					}
+
+				}
+
+				if(x == w)
+				{
+					// break loop
+					y = h;
+					break;
+				}
+
+				int maxIX = (x2 - x1) + 1;
+				pixels.CopyRegion(x1, y, maxIX, y, tile);
+
+				// Copy the shadow data first
+				internalPixels.WriteRegion(x1 + cumulativeOffsetX, shadowOffset, maxIX, y, tile);
+
+				for( int iy(0); iy < h; ++iy )
+				{
+					for( int ix(0); ix < maxIX; ++ix )
+					{
+						//Color alphaBlendedColor = pixels(iy, x1 + ix).AlphaBlend( tile(iy, ix) );
+						Color alphaBlendedColor = pixels(iy, x1 + ix).AlphaBlend( internalPixels(iy, x1 + ix + cumulativeOffsetX - shadowOffset) );
+						internalPixels(iy, x1 + ix + cumulativeOffsetX - shadowOffset) = alphaBlendedColor;
+					}
+				}
+
+				cumulativeOffsetX += shadowOffset;
+
+				Glyph glyph;
+				glyph.size.x = (float)((x2 - x1) + shadowOffset);
+				glyph.size.y = (float)y;
+				glyph.translation.x = 0.f;
+				glyph.translation.y = 0.f;
+				glyph.advance = (float)((x2 - x1) + shadowOffset + 1);
+
+				glyph.uv.min.x = x1 / (float)internalPixels.Width();
+				glyph.uv.min.y = y1 / (float)internalPixels.Height();
+				glyph.uv.max.x = x2 / (float)internalPixels.Width();
+				glyph.uv.max.y = y2 / (float)internalPixels.Height();
+
+				// Special case:
+				// The space char has no glyph, so we can only accurately extrapolate the advance
+				// by counting the pixels that have been advanced.
+				if(i + startCode == (int)' ')
+				{
+					Glyph g = glyph;
+					g.advance = (float)x;
+
+					//fixme
+					m_glyphs.Add(g);
+					m_glyphMap[i + startCode] = i;
+					++i;
+				}
+
+				m_glyphs.Add(glyph);
+				m_glyphMap[i + startCode] = i;
+				++i;
+
+				// advance column
+				y = h;
+			}
+		}
+
+		// Too many glyphs, break. (...bad font?)
+		if(i + startCode > 127)
+			break;
+	}
+
+	// Free up any unused memory to keep the font lean.
+	m_glyphs.ShrinkToFit();
+
+	m_faceSize = h;
+	m_maxAdvance = 14;
+	m_lineHeight = h;
+
+	//Debug save
+	TextureLoader::SaveToFile("testShadowFont.png", internalPixels.data(), internalPixels.Width(), internalPixels.Height());
+
+	// Finally, create the texture from the raw pixel data
+	m_texture.CreateFromData( (void*)internalPixels.data(), internalPixels.Width(), internalPixels.Height() );
+
+	return 0;
+}
+
+
+bool Font::InternalLoadPixelArrayFromFile(const String& filename, Array2D<Color>& pixels, Point& textureSize, bool maskColor)
+{
+	u8* ptr = TextureLoader::LoadFromFile(filename, textureSize);
+	if( ptr == null || textureSize.IsZero() )
+	{
+		return false;
+	}
+
+	pixels.Resize(textureSize.y, textureSize.x);
+	for( u32 i(0); i < pixels.Size(); ++i )
+	{
+		u32 offset = i * 4;
+		pixels[i].r = ptr[offset];
+		pixels[i].g = ptr[offset + 1];
+		pixels[i].b = ptr[offset + 2];
+		pixels[i].a = ptr[offset + 3];
+	}
+
+	TextureLoader::FreePtr(ptr);
+
+	if(maskColor)
+	{
+		// mask top-left pixel color
+		Color colorToMask = pixels[0];
+		Color maskColor(colorToMask.r, colorToMask.b, colorToMask.g, 0);
+		for( u32 i(0); i < pixels.Size(); ++i )
+		{
+			if( pixels[i] == colorToMask )
+				pixels[i] = maskColor;
+		}
+	}
+
+	return true;
 }
 
 
 void Font::SetAdvance( int advance )
 {
 	float a = (float)advance;
-	for( vec_type::iterator it = m_glyphs.begin(); it != m_glyphs.end(); ++it )
+	for( GlyphVectorType::Iterator it = m_glyphs.begin(); it != m_glyphs.end(); ++it )
 	{
 		it->advance = a;
 	}
@@ -607,7 +880,7 @@ void Font::SetAdvance( int advance )
 
 void Font::SetMaxGlyphHeight( float y )
 {
-	for( vec_type::iterator it = m_glyphs.begin(); it != m_glyphs.end(); ++it )
+	for( GlyphVectorType::Iterator it = m_glyphs.begin(); it != m_glyphs.end(); ++it )
 	{
 		Glyph & g = *it;
 		if( g.size.y > y )
@@ -640,7 +913,7 @@ int Font::GetTextWidth( const char* first, const char* last ) const
 		width += GetGlyph(*first).advance;
 	}
 
-	return fc::iround(width);
+	return Math::Round(width);
 }
 
 

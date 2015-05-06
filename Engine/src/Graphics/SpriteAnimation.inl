@@ -62,28 +62,21 @@ SpriteAnimation::~SpriteAnimation()
 }
 */
 
-void SpriteAnimation::SetTexture( Texture* texturePtr )
+void SpriteAnimation::SetTexture( TexturePtr texturePtr )
 {
-	if( texturePtr && m_texture != texturePtr )
+	if(m_texture != texturePtr)
 	{
-		texturePtr->AddRef();
-
-		if(m_texture)
-			m_texture->ReleaseRef();
-
 		m_texture = texturePtr;
 
 		// recompute out uv coords.
 		SetSourceRect(m_sourceRect);
 	}
-
-	m_texture = texturePtr;
 }
 
 
 void SpriteAnimation::SetNumFrames( int numFrames )
 {
-	m_numFrames = fc::max(numFrames, 1);
+	m_numFrames = Math::Max(numFrames, 1);
 
 	if( m_currentFrame >= m_numFrames )
 		m_currentFrame = 0;
@@ -139,10 +132,11 @@ void SpriteAnimation::SetSourceRect( const Rect& sourceRectangle )
 		m_uv.max.y = (float)sourceRectangle.Bottom() / h;
 
 		if( m_flags & 2 )
-			fc::swap(m_uv.min.y, m_uv.max.y);
+			Swap(m_uv.min.y, m_uv.max.y);
 
-		if( m_currentFrame > 0 )
+		if( m_currentFrame != 0 )
 		{
+			// Calculate the new texture coordinates.
 			SetCurrentFrame(m_currentFrame);
 		}
 		else
@@ -152,7 +146,7 @@ void SpriteAnimation::SetSourceRect( const Rect& sourceRectangle )
 			m_uv.max.x = (float)sourceRectangle.Right() / w;
 
 			if( m_flags & 1 )
-				fc::swap(m_uv.min.x, m_uv.max.x);
+				Swap(m_uv.min.x, m_uv.max.x);
 		}
 	}
 }
@@ -167,21 +161,21 @@ void SpriteAnimation::SetCurrentFrame( u32 index )
 		// texture must be assigned first to generate uv coords.
 		if( m_texture )
 		{
-			int x = m_sourceRect.pos.x + (m_frameOffsetX * (int)m_currentFrame);
+			int x = m_sourceRect.position.x + (m_frameOffsetX * (int)m_currentFrame);
 			int yOffset = x / m_texture->Width();
 
 			// if the row is the same, calculation of top, bottom uv will be the same also.
 			if( yOffset > 0 )
 			{
 				x %= m_texture->Width();
-				int y = m_sourceRect.pos.y + (m_frameOffsetY * yOffset);
+				int y = m_sourceRect.position.y + (m_frameOffsetY * yOffset);
 				float texHeightf = m_texture->Heightf();
 
 				m_uv.min.y = y / texHeightf;
 				m_uv.max.y = (y + m_frameOffsetY) / texHeightf;
 
 				if( m_flags & 2 )
-					fc::swap(m_uv.min.y, m_uv.max.y);
+					Swap(m_uv.min.y, m_uv.max.y);
 			}
 
 			float texWidthf = m_texture->Widthf();
@@ -189,7 +183,7 @@ void SpriteAnimation::SetCurrentFrame( u32 index )
 			m_uv.max.x = (x + m_frameOffsetX) / texWidthf;
 
 			if( m_flags & 1 )
-				fc::swap(m_uv.min.x, m_uv.max.x);
+				Swap(m_uv.min.x, m_uv.max.x);
 		}
 	}
 }

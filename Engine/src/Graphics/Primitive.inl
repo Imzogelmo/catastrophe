@@ -21,9 +21,9 @@
 #include "Graphics/Primitive.h"
 #include "Graphics/OpenGL.h"
 
-#include "Math/Math.h"
-#include "Math/Rectf.h"
-#include "Math/Matrix.h"
+#include "Catastrophe/Core/Math/MathUtil.h"
+#include "Catastrophe/Core/Math/Rectf.h"
+#include "Catastrophe/Core/Math/Matrix.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -49,12 +49,12 @@ Primitive Primitive::operator + ( const Primitive& p )
 Vector2 Primitive::GetCenter() const
 {
 	Vector2 center = Vector2::Zero;
-	for( vec_type::const_iterator it = m_vertices.begin(); it != m_vertices.end(); ++it )
+	for( vec_type::ConstIterator it = m_vertices.begin(); it != m_vertices.end(); ++it )
 	{
-		center += it->pos;
+		center += it->position;
 	}
 
-	if( !m_vertices.empty() )
+	if( !m_vertices.Empty() )
 		center /= float(m_vertices.size());
 
 	return center;
@@ -64,10 +64,10 @@ Vector2 Primitive::GetCenter() const
 Rectf Primitive::GetBoundingRect() const
 {
 	Rectf r = Rectf::Zero;
-	if( !m_vertices.empty() )
+	if( !m_vertices.Empty() )
 	{
-		for( vec_type::const_iterator it = m_vertices.begin(); it != m_vertices.end(); ++it )
-			r.Merge(it->pos.x);
+		for( vec_type::ConstIterator it = m_vertices.begin(); it != m_vertices.end(); ++it )
+			r.Merge(it->position.x);
 	}
 
 	return r;
@@ -76,47 +76,47 @@ Rectf Primitive::GetBoundingRect() const
 
 void Primitive::RotateVertices( float rotation, const Vector2 &origin )
 {
-	Vector2 rot = Math::SinCos(rotation);
-	for( vec_type::iterator it = m_vertices.begin(); it != m_vertices.end(); ++it )
+	Vector2 rot = Math::SinCosf(rotation);
+	for( vec_type::Iterator it = m_vertices.begin(); it != m_vertices.end(); ++it )
 	{
-		Math::RotatePoint( rot, origin, it->pos );
+		Math::RotatePoint( rot, origin, it->position );
 	}
 }
 
 
 void Primitive::ScaleVertices( const Vector2 &scale, const Vector2 &origin )
 {
-	for( vec_type::iterator it = m_vertices.begin(); it != m_vertices.end(); ++it )
+	for( vec_type::Iterator it = m_vertices.begin(); it != m_vertices.end(); ++it )
 	{
-		Math::ScalePoint( scale, origin, it->pos );
+		Math::ScalePoint( scale, origin, it->position );
 	}
 }
 
 
 void Primitive::RotateScaleVertices( float rotation, const Vector2 &scale, const Vector2 &origin )
 {
-	Vector2 rot = Math::SinCos(rotation);
-	for( vec_type::iterator it = m_vertices.begin(); it != m_vertices.end(); ++it )
+	Vector2 rot = Math::SinCosf(rotation);
+	for( vec_type::Iterator it = m_vertices.begin(); it != m_vertices.end(); ++it )
 	{
-		Math::RotateScalePoint( rot, scale, origin, it->pos );
+		Math::RotateScalePoint( rot, scale, origin, it->position );
 	}
 }
 
 
 void Primitive::AddVertex( const Vector2 &pos, const Color &color )
 {
-	VertexColor2D & v = *m_vertices.push_back_uninitialized();
-	v.pos = pos;
+	VertexColor2D & v = *m_vertices.AddUninitialized();
+	v.position = pos;
 	v.color = color;
 }
 
 
 void Primitive::AddVertex( const Vector2 *pos, const Color *color, int num_vertices )
 {
-	VertexColor2D * v = m_vertices.push_back_uninitialized( num_vertices );
+	VertexColor2D * v = m_vertices.AddUninitialized( num_vertices );
 	for( int i(0); i < num_vertices; ++i )
 	{
-		v[i].pos = pos[i];
+		v[i].position = pos[i];
 		v[i].color = color[i];
 	}
 }
@@ -131,7 +131,7 @@ void Primitive::CreateCircle( const Vector2 &center, float radius, const Color &
 void Primitive::CreateEllipse( const Vector2 &center, const Vector2 &radius, float angle, const Color &inner, const Color &outer, bool filled, int detail )
 {
 	Clear();
-	m_vertices.reserve( (u32)(detail + 2) );
+	m_vertices.Reserve( (u32)(detail + 2) );
 
 	if( filled )
 	{
@@ -148,7 +148,7 @@ void Primitive::CreateEllipse( const Vector2 &center, const Vector2 &radius, flo
 
 	for( int i(0); i <= detail; ++i )
 	{
-		const Vector2 v = Math::SinCos(a) * radius;
+		const Vector2 v = Math::SinCosf(a) * radius;
 		a += t;
 
 		AddVertex(v, outer);
@@ -164,7 +164,7 @@ void Primitive::CreateEllipse( const Vector2 &center, const Vector2 &radius, flo
 void Primitive::CreateTriangle( const Vector2 &p1, const Vector2 &p2, const Vector2 &p3, const Color &c1, const Color &c2, const Color &c3, bool filled )
 {
 	Clear();
-	m_vertices.reserve(u32(3));
+	m_vertices.Reserve(u32(3));
 
 	if( filled )
 	{
@@ -184,7 +184,7 @@ void Primitive::CreateTriangle( const Vector2 &p1, const Vector2 &p2, const Vect
 void Primitive::CreateRectangle( const Rectf &rect, const Color &bl, const Color &tl, const Color &tr, const Color &br, bool filled )
 {
 	Clear();
-	m_vertices.reserve(u32(4));
+	m_vertices.Reserve(u32(4));
 
 	if( filled )
 	{
@@ -206,7 +206,7 @@ void Primitive::Render( u32 index, u32 n )
 {
 	m_blendmode.Apply();
 
-	glVertexPointer( 2, GL_FLOAT, sizeof(VertexColor2D), &m_vertices[0].pos );
+	glVertexPointer( 2, GL_FLOAT, sizeof(VertexColor2D), &m_vertices[0].position );
 	glColorPointer( 4, GL_UNSIGNED_BYTE, sizeof(VertexColor2D), &m_vertices[0].color );
 	glDrawArrays( m_primType, index, n );
 }
