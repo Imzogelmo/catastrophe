@@ -18,13 +18,17 @@
 
 #pragma once
 
-#include "../Math/Vector2.h"
-#include "../Math/Color.h"
-#include "../Math/Rectf.h"
-#include "../Math/Rect.h"
+#include "Catastrophe/Core/Math/Vector2.h"
+#include "Catastrophe/Core/Math/Color.h"
+#include "Catastrophe/Core/Math/Rectf.h"
+#include "Catastrophe/Core/Math/Rect.h"
 
-#include "BlendMode.h"
-#include "SpriteAnimation.h"
+#include "Catastrophe/Graphics/BlendMode.h"
+#include "Catastrophe/Graphics/SpriteAnimation.h"
+
+#include "Catastrophe/Graphics/Sprite/StaticSprite.h"
+#include "Catastrophe/Graphics/Sprite/BackgroundSprite.h"
+#include "Catastrophe/Graphics/Sprite/BorderSprite.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -136,5 +140,5 @@ public:
 };
 
 
-
+CE_NAMESPACE_END
 

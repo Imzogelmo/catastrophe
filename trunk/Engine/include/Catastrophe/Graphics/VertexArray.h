@@ -18,13 +18,13 @@
 
 #pragma once
 
-#include "../Common.h"
-#include "../Math/Rectf.h"
+#include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/Math/Rectf.h"
+#include "Catastrophe/Core/Containers/Vector.h"
 
-#include "Vertex.h"
-#include "PrimitiveType.h"
-
-#include <fc/vector.h>
+#include "Catastrophe/Graphics/Common.h"
+#include "Catastrophe/Graphics/Vertex.h"
+#include "Catastrophe/Graphics/PrimitiveType.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -35,7 +35,7 @@ class VertexArray
 public:
 	typedef T						vertex_type;
 	typedef VertexArray<T>			this_type;
-	typedef fc::vector<T>			vec_type;
+	typedef Vector<T>			vec_type;
 
 	VertexArray() : m_vertices() {}
 	VertexArray(const T* vertex, int num_vertices) : m_vertices()
@@ -46,22 +46,22 @@ public:
 	T* GetVertexData() { return m_vertices.data(); }
 	const T* GetVertexData() const { return m_vertices.data(); }
 
-	void Clear() { m_vertices.clear(); }
-	void Reserve( u32 reserve ) { m_vertices.reserve( reserve ); }
+	void Clear() { m_vertices.Clear(); }
+	void Reserve(u32 capacity) { m_vertices.Reserve(capacity); }
 
-	bool Empty() const		{ return m_vertices.empty(); }
+	bool Empty() const		{ return m_vertices.Empty(); }
 	u32 Size() const		{ return m_vertices.size(); }
-	u32 Capacity() const	{ return m_vertices.capacity(); }
+	u32 Capacity() const	{ return m_vertices.Capacity(); }
 	u32 GetVertexCount() const { return m_vertices.size(); }
 
-	this_type& operator += ( const this_type& v ) { return Append(v); }
-	this_type& Append( const this_type& v )
+	this_type& operator += (const this_type& v) { return Append(v); }
+	this_type& Append(const this_type& v)
 	{
-		if( !v.Empty() )
+		if(!v.Empty())
 		{
 			const u32 vSize = v.Size();
-			T* ptr = m_vertices.push_back_uninitialized(vSize);
-			for( u32 i(0); i < vSize; ++i )
+			T* ptr = m_vertices.AddUninitialized(vSize);
+			for(u32 i(0); i < vSize; ++i)
 			{
 				*ptr++ = v.m_vertices[i];
 			}
@@ -70,15 +70,15 @@ public:
 		return *this;
 	}
 
-	void AddVertex( const T& vertex )
+	void AddVertex(const T& vertex)
 	{
-		*m_vertices.push_back_uninitialized() = vertex;
+		*m_vertices.AddUninitialized() = vertex;
 	}
 
-	void AddVertex( const T* vertex, int num_vertices )
+	void AddVertex(const T* vertex, int numVertices)
 	{
-		T * v = m_vertices.push_back_uninitialized( (u32)num_vertices );
-		for( int i(0); i < num_vertices; ++i )
+		T * v = m_vertices.AddUninitialized((u32)numVertices);
+		for(int i(0); i < numVertices; ++i)
 		{
 			v[i] = vertex[i];
 		}

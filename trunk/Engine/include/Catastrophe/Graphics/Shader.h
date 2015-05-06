@@ -18,14 +18,15 @@
 
 #pragma once
 
-#include "../Common.h"
-#include "../Math/Common.h"
+#include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/PlatformMath.h"
+#include "Catastrophe/Core/Containers/String.h"
+#include "Catastrophe/Core/Containers/StaticArrayMap.h"
 
-#include "ShaderObject.h"
+#include "Catastrophe/Graphics/Common.h"
+#include "Catastrophe/Graphics/ShaderObject.h"
 
-#include <fc/string.h>
-#include <fc/static_string.h>
-#include <fc/vector_map.h>
+#define MAX_SHADER_UNIFORM_VARIABLES 16
 
 CE_NAMESPACE_BEGIN
 
@@ -33,7 +34,8 @@ CE_NAMESPACE_BEGIN
 class CE_API Shader
 {
 public:
-	typedef fc::vector_map<u32, int> map_type;
+	//typedef VectorMap< u32, int, Less<u32>, StaticVector<KeyValuePair<u32, int>, 16> > map_type;
+	typedef StaticArrayMap<int, int, MAX_SHADER_UNIFORM_VARIABLES> map_type;
 
 	Shader( VertexShader* vertex_shader = 0, FragmentShader* fragment_shader = 0 );
 

@@ -18,7 +18,8 @@
 
 #pragma once
 
-#include "Texture.h"
+#include "Catastrophe/Graphics/Common.h"
+#include "Catastrophe/Graphics/Texture.h"
 
 CE_NAMESPACE_BEGIN
 

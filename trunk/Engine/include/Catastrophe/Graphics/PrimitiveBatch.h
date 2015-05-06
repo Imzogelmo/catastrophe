@@ -18,10 +18,11 @@
 
 #pragma once
 
-#include "../Common.h"
+#include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/Containers/Vector.h"
+#include "Catastrophe/Graphics/Common.h"
 #include "Primitive.h"
 
-#include <fc/vector.h>
 
 CE_NAMESPACE_BEGIN
 
@@ -29,7 +30,7 @@ CE_NAMESPACE_BEGIN
 class CE_API PrimitiveBatch
 {
 public:
-	typedef fc::vector<Primitive>		vec_type;
+	typedef Vector<Primitive>		vec_type;
 
 	PrimitiveBatch() : m_queue()
 	{}
@@ -38,7 +39,7 @@ public:
 	void Clear();
 
 	u32 Size() const { return m_queue.size(); }
-	u32 Capacity() const { return m_queue.capacity(); }
+	u32 Capacity() const { return m_queue.Capacity(); }
 	u32 GetPrimCount() const { return m_queue.size(); }
 	u32 GetVertexCount() const;
 

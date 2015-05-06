@@ -18,10 +18,9 @@
 
 #pragma once
 
-#include "../Common.h"
-#include "Texture.h"
-
-#include <fc/string.h>
+#include "Catastrophe/Graphics/Common.h"
+#include "Catastrophe/Graphics/Texture.h"
+#include "Catastrophe/Core/Containers/String.h"
 
 
 enum TextureFormat

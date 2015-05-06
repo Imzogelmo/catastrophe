@@ -18,16 +18,17 @@
 
 #pragma once
 
-#include "../Common.h"
-#include "../Math/Vector2.h"
-#include "../Math/Color.h"
-#include "../Math/Rectf.h"
-#include "../Math/Rect.h"
+#include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/Math/Vector2.h"
+#include "Catastrophe/Core/Math/Color.h"
+#include "Catastrophe/Core/Math/Rectf.h"
+#include "Catastrophe/Core/Math/Rect.h"
+#include "Catastrophe/Core/Containers/Vector.h"
 
-#include "Sprite.h"
-#include "SpriteAnimation.h"
+#include "Catastrophe/Graphics/Common.h"
+#include "Catastrophe/Graphics/Sprite.h"
+#include "Catastrophe/Graphics/SpriteAnimation.h"
 
-#include <fc/vector.h>
 
 CE_NAMESPACE_BEGIN
 
@@ -35,7 +36,7 @@ CE_NAMESPACE_BEGIN
 class AnimatedSpriteSet : public SpriteBase
 {
 public:
-	typedef fc::vector<SpriteAnimation> vec_type;
+	typedef Vector<SpriteAnimation> vec_type;
 
 	AnimatedSpriteSet();
 	AnimatedSpriteSet(	const Vector2& size,
@@ -57,15 +58,15 @@ public:
 	void Resize( u32 newSize );
 	void Update();
 
-	inline bool Empty() const { return m_animations.empty(); }
-	inline u32 GetNumAnimations() const { return m_animations.size(); }
+	inline bool Empty() const { return m_animations.Empty(); }
+	inline u32 GetNumAnimations() const { return m_animations.Size(); }
 	inline u32 GetCurrentAnimationIndex() const { return m_currentAnimation; }
 	inline Texture* GetTexture() const { return m_texture; }
 	u32 GetTextureID() const;
 
 	// sprite animation index methods
-	inline SpriteAnimation& operator []( u32 index ) { return m_animations.at(index); }
-	inline const SpriteAnimation& operator []( u32 index ) const { return m_animations.at(index); }
+	inline SpriteAnimation& operator []( u32 index ) { return m_animations.At(index); }
+	inline const SpriteAnimation& operator []( u32 index ) const { return m_animations.At(index); }
 	inline SpriteAnimation& GetAnimation( u32 index ) { return operator[](index); }
 	inline const SpriteAnimation& GetAnimation( u32 index ) const { return operator[](index); }
 	inline SpriteAnimation& GetCurrentAnimation() { return operator[](m_currentAnimation); }

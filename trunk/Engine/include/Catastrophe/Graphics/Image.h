@@ -18,12 +18,12 @@
 
 #pragma once
 
-#include "Texture.h"
+#include "Catastrophe/Graphics/Common.h"
+#include "Catastrophe/Graphics/Texture.h"
 
-#include "../Common.h"
-#include "../Math/Color.h"
-
-#include <fc/dynamic_array2d.h>
+#include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/Containers/Array2D.h"
+#include "Catastrophe/Core/Math/Color.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -31,7 +31,7 @@ CE_NAMESPACE_BEGIN
 class CE_API Image : public Texture
 {
 public:
-	typedef fc::dynamic_array2d<Color> array_type;
+	typedef Array2D<Color> array_type;
 
 	Image();
 	Image( const String& filename );
@@ -51,7 +51,7 @@ public:
 	const array_type& GetPixelArray() const { return m_pixels; }
 	const Color* GetPixelData() const { return m_pixels.data(); }
 
-	u32 Size() const { return m_pixels.size(); }
+	u32 Size() const { return m_pixels.Size(); }
 	Color GetPixel( u32 x, u32 y ) const;
 
 	void SetPixel( u32 x, u32 y, const Color& pixel );
