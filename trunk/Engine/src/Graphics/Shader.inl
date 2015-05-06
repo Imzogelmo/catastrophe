@@ -16,12 +16,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "Math/Vector2.h"
-#include "Math/Vector3.h"
-#include "Math/Vector4.h"
-#include "Math/Color.h"
-#include "Math/Colorf.h"
-#include "Math/Matrix.h"
+
+#include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/Hash.h"
+#include "Catastrophe/Core/Math/Vector2.h"
+#include "Catastrophe/Core/Math/Vector3.h"
+#include "Catastrophe/Core/Math/Vector4.h"
+#include "Catastrophe/Core/Math/Color.h"
+#include "Catastrophe/Core/Math/Colorf.h"
+#include "Catastrophe/Core/Math/Matrix.h"
 
 #include "Graphics/ShaderObject.h"
 #include "Graphics/Shader.h"
@@ -61,7 +64,7 @@ void Shader::Dispose()
 		m_programObject = 0;
 	}
 
-	m_infolog.clear();
+	m_infolog.Clear();
 }
 
 
@@ -118,11 +121,11 @@ void Shader::Unbind()
 
 int Shader::GetUniformLocation(const char* name)
 {
-	u32 stringHash = fc::fnv_hash(name);
-	map_type::iterator it = m_uniformLocations.find(stringHash);
+	int stringHash = (int)Fnv32a(name);
+	map_type::Iterator it = m_uniformLocations.Find(stringHash);
 	if( it != m_uniformLocations.end() )
 	{
-		return it->second;
+		return it->value;
 	}
 
 	int location = glGetUniformLocation( m_programObject, name );
@@ -310,7 +313,7 @@ bool Shader::Link()
 	if( !m_fragmentShader && !m_vertexShader )
 		return false;
 
-	m_infolog.clear();
+	m_infolog.Clear();
 	InternalCreateProgramObject();
 
 	// attach vertex shader
@@ -343,10 +346,10 @@ const String& Shader::GetInfoLog()
 	int infolog_length(0);
 	int length(0);
 
-	if( m_programObject > 0 && m_infolog.empty() && glIsProgram(m_programObject) )
+	if( m_programObject > 0 && m_infolog.Empty() && glIsProgram(m_programObject) )
 	{
 		glGetProgramiv( m_programObject, GL_INFO_LOG_LENGTH, &length );
-		m_infolog.resize( length );
+		m_infolog.Resize( length );
 
 		glGetProgramInfoLog( m_programObject, length, &infolog_length, &m_infolog[0] );
 	}

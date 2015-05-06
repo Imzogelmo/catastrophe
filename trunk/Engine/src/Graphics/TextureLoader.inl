@@ -40,10 +40,10 @@ u8* TextureLoader::LoadFromFile( const String& filename, Point& size, TextureFor
 		return 0;
 
 	int width, height, channels;
-	u8* ptr = stbi_load( filename.c_str(), &width, &height, &channels, STBI_rgb_alpha );
+	u8* ptr = stbi_load( filename.CString(), &width, &height, &channels, STBI_rgb_alpha );
 	if(!ptr)
 	{
-		Log("Error loading file (%s), %s.", filename.c_str(), stbi_failure_reason() );
+		Log("Error loading file (%s), %s.", filename.CString(), stbi_failure_reason() );
 		return 0;
 	}
 
@@ -77,13 +77,13 @@ bool TextureLoader::SaveToFile( const String& filename, const void* data, int w,
 	switch(fFormat)
 	{
 	case Tga:
-		ret = stbi_write_tga(filename.c_str(), w, h, tFormat, data) != 0;
+		ret = stbi_write_tga(filename.CString(), w, h, tFormat, data) != 0;
 		break;
 	case Bmp:
-		ret = stbi_write_bmp(filename.c_str(), w, h, tFormat, data) != 0;
+		ret = stbi_write_bmp(filename.CString(), w, h, tFormat, data) != 0;
 		break;
 	case Png:
-		ret = stbi_write_png(filename.c_str(), w, h, tFormat, data, 0) != 0;
+		ret = stbi_write_png(filename.CString(), w, h, tFormat, data, 0) != 0;
 		break;
 	}
 
@@ -107,7 +107,7 @@ bool TextureLoader::SaveToFile( const String& filename, const Texture& texture, 
 
 bool TextureLoader::SaveToFile( const String& filename, const Image& image, ImageFileFormat fFormat )
 {
-	if( image.GetPixelArray().empty() )
+	if( image.GetPixelArray().Empty() )
 		return false;
 
 	return SaveToFile(filename, image.GetPixelData(), image.Width(), image.Height(), tfRgba, fFormat);

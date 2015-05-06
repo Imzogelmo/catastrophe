@@ -20,7 +20,7 @@
 #include "Graphics/ShaderObject.h"
 #include "Graphics/OpenGL.h"
 
-#include "IO/File.h"
+#include "Catastrophe/Core/IO/File.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -60,9 +60,9 @@ void ShaderObject::Dispose()
 		m_shader_object = 0;
 	}
 
-	m_name.clear();
-	m_source.clear();
-	m_infolog.clear();
+	m_name.Clear();
+	m_source.Clear();
+	m_infolog.Clear();
 }
 
 
@@ -82,12 +82,12 @@ bool ShaderObject::LoadFromFile( const String& filename )
 	File f(filename, FileRead);
 	if(!f.IsOpen())
 	{
-		Log("Shader Object Error: Failed to open %s ", filename.c_str());
+		Log("Shader Object Error: Failed to open %s ", filename.CString());
 		return false;
 	}
 
 	u32 size = f.Size();
-	m_source.resize(size);
+	m_source.Resize(size);
 	if( f.Read(&m_source[0], size) != size )
 	{
 		Log("Failed to load shader program.");
@@ -103,7 +103,7 @@ bool ShaderObject::Compile()
 	InternalCreateShaderObject();
 
 	const int length = (int)m_source.size();
-	const char *source = m_source.c_str();
+	const char *source = m_source.CString();
 	glShaderSource( m_shader_object, 1, &source, &length );
 	glCompileShader( m_shader_object );
 
@@ -114,7 +114,7 @@ bool ShaderObject::Compile()
 	if(!m_is_compiled)
 	{
 		Log("Shader comilation failed.");
-		Log(GetInfoLog().c_str());
+		Log(GetInfoLog().CString());
 	}
 
 	return m_is_compiled;
@@ -126,10 +126,10 @@ const String& ShaderObject::GetInfoLog()
 	int infolog_length(0);
 	int length(0);
 
-	if( m_shader_object > 0 && m_infolog.empty() && glIsShader(m_shader_object) )
+	if( m_shader_object > 0 && m_infolog.Empty() && glIsShader(m_shader_object) )
 	{
 		glGetShaderiv( m_shader_object, GL_INFO_LOG_LENGTH, &length );
-		m_infolog.resize( length );
+		m_infolog.Resize( length );
 
 		glGetShaderInfoLog( m_shader_object, length, &infolog_length, &m_infolog[0] );
 	}

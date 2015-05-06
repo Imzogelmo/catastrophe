@@ -25,11 +25,11 @@ PackedSprite::PackedSprite() :
 	angle(0.f),
 	color(Color::White()),
 	uv(Rectf::Zero),
-	source_rect(PackedRect::Zero),
-	frame_counter(0),
-	current_frame(0),
-	anim_speed(16),
-	num_frames(1)
+	sourceRect(PackedRect::Zero),
+	frameCounter(0),
+	currentFrame(0),
+	animationSpeed(16),
+	numFrames(1)
 {
 }
 
@@ -39,8 +39,8 @@ PackedSprite::PackedSprite( Texture* texturePtr, const PackedRect& sourceRectang
 	angle = 0.f,
 	color = Color::White();
 	size = sourceRectangle.size.ToPoint();
-	frame_counter = 0;
-	current_frame = 0;
+	frameCounter = 0;
+	currentFrame = 0;
 	SetTexture(texturePtr);
 	Create(sourceRectangle, numberOfFrames, frameDelay);
 }
@@ -54,7 +54,7 @@ u32 PackedSprite::GetTextureID() const
 
 void PackedSprite::SetAnimationSpeed( s16 frameDelay )
 {
-	anim_speed = fc::clamp<s16>(frameDelay, 16, 32736);
+	animationSpeed = Clamp<s16>(frameDelay, 16, 32736);
 }
 
 
@@ -69,7 +69,7 @@ void PackedSprite::SetTexture( Texture* texturePtr )
 void PackedSprite::SetSourceRect( const PackedRect& sourceRectangle )
 {
 	CE_ASSERT(texture != 0);
-	source_rect = sourceRectangle;
+	sourceRect = sourceRectangle;
 	size = sourceRectangle.size.ToPoint(); //fixme
 
 	float w = (float)texture->Width();
@@ -79,33 +79,33 @@ void PackedSprite::SetSourceRect( const PackedRect& sourceRectangle )
 	uv.min.y = (float)sourceRectangle.Top() / h;
 	uv.max.y = (float)sourceRectangle.Bottom() / h;
 
-	if( current_frame > 0 )
+	if( currentFrame > 0 )
 	{
-		SetCurrentFrame(current_frame);
+		SetCurrentFrame(currentFrame);
 	}
 }
 
 
 void PackedSprite::Update()
 {
-	if( num_frames > 1 )
+	if( numFrames > 1 )
 	{
 		// animation speed is fixed point 16 : 1. this means
 		// that one second (60 frames) is equal to 960 fixed point.
 		// therefore the longest animation delay we can have is
 		// 34 seconds (2167 - 16 = 2151 frames).
 
-		frame_counter += 16;
-		if( frame_counter >= anim_speed )
+		frameCounter += 16;
+		if( frameCounter >= animationSpeed )
 		{
-			frame_counter -= anim_speed;
-			if( ++current_frame >= num_frames )
+			frameCounter -= animationSpeed;
+			if( ++currentFrame >= numFrames )
 			{
-				current_frame -= num_frames;
+				currentFrame -= numFrames;
 			}
 
 			// only update our uv coords
-			SetCurrentFrame(current_frame);
+			SetCurrentFrame(currentFrame);
 		}
 	}
 }
@@ -116,21 +116,21 @@ void PackedSprite::SetCurrentFrame( s16 index )
 	// texture must be assigned first.
 	CE_ASSERT(texture != 0);
 
-	if( index < num_frames )
+	if( index < numFrames )
 	{
-		current_frame = index;
+		currentFrame = index;
 
 		//float w = (float)texture->Width();
 		//float h = (float)texture->Height();
-		int w = (int)source_rect.Width();
-		int x = (int)source_rect.pos.x + (w * (int)current_frame);
+		int w = (int)sourceRect.Width();
+		int x = (int)sourceRect.position.x + (w * (int)currentFrame);
 		int yOffset = x / texture->Width();
 		if( yOffset > 0 )
 		{
 			x %= texture->Width();
 
-			int h = (int)source_rect.Height();
-			int y = (int)source_rect.pos.y + (h * yOffset);
+			int h = (int)sourceRect.Height();
+			int y = (int)sourceRect.position.y + (h * yOffset);
 			float texHeightf = (float)texture->Width();
 			uv.min.y = y / texHeightf;
 			uv.max.y = (y + h) / texHeightf;
@@ -152,7 +152,7 @@ void PackedSprite::Create( Texture* texturePtr, const PackedRect& sourceRectangl
 
 void PackedSprite::Create( const PackedRect& sourceRectangle, int numberOfFrames, s16 frameDelay )
 {
-	num_frames = (s16)(numberOfFrames > 0 ? numberOfFrames : 1);
+	numFrames = (s16)(numberOfFrames > 0 ? numberOfFrames : 1);
 
 	SetAnimationSpeed(frameDelay);
 	SetSourceRect(sourceRectangle);
