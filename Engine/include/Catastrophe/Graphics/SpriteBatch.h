@@ -18,217 +18,165 @@
 
 #pragma once
 
-#include "../Common.h"
-#include "../Math/Common.h"
-#include "../Math/Vector2.h"
-#include "../Math/Rect.h"
-#include "../Math/Rectf.h"
-#include "../Math/Color.h"
+#include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/PlatformMath.h"
+#include "Catastrophe/Core/Math/MathUtil.h"
+#include "Catastrophe/Core/Math/Vector2.h"
+#include "Catastrophe/Core/Math/Rect.h"
+#include "Catastrophe/Core/Math/Rectf.h"
+#include "Catastrophe/Core/Math/Color.h"
+#include "Catastrophe/Core/Containers/Vector.h"
 
-#include "Blendmode.h"
-#include "SpriteSort.h"
-#include "Shader.h"
-#include "Font.h"
-#include "Vertex.h"
-#include "RenderState.h"
-#include "ClipStack.h"
+#include "Catastrophe/Graphics/TextAlignment.h"
+#include "Catastrophe/Graphics/Common.h"
+#include "Catastrophe/Graphics/Blendmode.h"
+#include "Catastrophe/Graphics/Vertex.h"
+#include "Catastrophe/Graphics/Quad2D.h"
 
-#include <fc/vector.h>
 
 CE_NAMESPACE_BEGIN
 
-
-/*
-class Renderer
-{
-public:
-	virtual void Begin() = 0;
-	virtual void Render() = 0;
-	virtual void End() = 0;
-};
-*/
-
-struct VertexTextureSpriteData2D
-{
-	Vector2 pos, uv;
-	Color color;
-
-	//contains all possible rendering states of a sprite.
-	union
-	{
-		u32	texture;
-		u32	blendmode;
-		int		depth;
-		float	y_pos;
-	};
-};
-
-FC_MAKE_TRAIT(VertexTextureSpriteData2D, is_pod);
-
-
 struct SpriteData
+{};
+
+#define RENDERSTATE_FLAG_TEXTURE	1
+#define RENDERSTATE_FLAG_BLENDMODE	2
+
+struct RenderState2D
 {
-	// aggregate type
-	VertexTextureSpriteData2D data[4];
+	/// The handle of the gpu texture for this batch.
+	u32 textureID;
 
-	inline void SetTexture( u32 texture ) { data[0].texture = texture; }
-	inline void SetBlendMode( const BlendMode& blendmode ) { data[1].blendmode = blendmode.value; }
-	inline void SetDepth( int depth ) { data[2].depth = depth; }
-	inline void SetYPosition( float pos ) { data[3].y_pos = pos; }
+	/// The blending parameters to use for this batch.
+	BlendMode blendMode;
 
-	inline u32 GetTexture() const { return data[0].texture; }
-	inline u32 GetBlendMode() const { return data[1].blendmode; }
-	inline int GetDepth() const { return data[2].depth; }
-	inline float GetYPosition() const { return data[3].y_pos; }
+	/// The number of vertices we are rendering in this batch.
+	u32 vertexCount;
 
-	FC_FORCE_INLINE
-	void SetVertexUVData( const Vector2& minPosition, const Vector2& maxPosition, const Rectf& uv)
+	/// Flags that describe what state changes need to be applied when rendering.
+	u8 stateChangedFlags;
+
+	/// Index of clipping stack.
+	u8 clipRectIndex;
+
+	/// Set all states to default values
+	void SetToDefaultValues()
 	{
-		data[0].pos = minPosition;
-		data[0].uv = uv.min;
-		data[1].pos.x = minPosition.x;
-		data[1].pos.y = maxPosition.y;
-		data[1].uv.x = uv.min.x;
-		data[1].uv.y = uv.max.y;
-		data[2].pos = maxPosition;
-		data[2].uv = uv.max;
-		data[3].pos.x = maxPosition.x;
-		data[3].pos.y = minPosition.y;
-		data[3].uv.x = uv.max.x;
-		data[3].uv.y = uv.min.y;
+		textureID = 0;
+		blendMode = BlendMode::Alpha;
+		vertexCount = 0;
+		stateChangedFlags = 0;
+		clipRectIndex = 0;
 	}
-
-	FC_FORCE_INLINE
-	void SetVertexData( const Rectf& vertices )
-	{
-		data[0].pos = vertices.min;
-		data[1].pos.x = vertices.min.x;
-		data[1].pos.y = vertices.max.y;
-		data[2].pos = vertices.max;
-		data[3].pos.x = vertices.max.x;
-		data[3].pos.y = vertices.min.y;
-	}
-
-	FC_FORCE_INLINE
-	void SetUVData( const Rectf& uv)
-	{
-		data[0].uv = uv.min;
-		data[1].uv.x = uv.min.x;
-		data[1].uv.y = uv.max.y;
-		data[2].uv = uv.max;
-		data[3].uv.x = uv.max.x;
-		data[3].uv.y = uv.min.y;
-	}
-
 };
-
-FC_MAKE_TRAIT(SpriteData, is_pod);
 
 
 class CE_API SpriteBatch
 {
 public:
-	typedef fc::vector<SpriteData>	vec_type;
-	//typedef fc::vector<Rect>		clip_vec_type;
 
-	 SpriteBatch( u32 reserve = 256 );
+	/// Constructs a new spritebatch with default capacity.
+	SpriteBatch(u32 initialCapacity = 256);
+
+	/// Destructor
 	~SpriteBatch();
 
-	void Reserve( u32 reserve );
-	void Clear();
+	/// Sets a blendmode value for all future calls to Draw().
+	/// SpriteBatch is capable of a seperate BlendMode state for each individual element.
+	void SetBlendMode(const BlendMode& blendmode);
 
-	void SetBlendMode( const BlendMode& blendmode = BlendMode() ) { m_current_blendmode = blendmode; }
+	/// Sets a texture id value for all future calls to Draw() that contain no texture ID parameter.
+	void SetTextureID(u32 textureID);
 
-	void PushClipRect( const Rect& clipRect );
+	void PushClipRect(const Rect& clipRect);
 	void PopClipRect();
 
-	void SetSortMode( SpriteSortMode mode = Deferred ) { m_sortmode = mode; }
-	void SetShader( Shader* shader = 0 ) { m_attached_shader = shader; }
-	void SetMaxHardwareBatchSize( u32 maxHardwareBatch = u32(-1) );
+	/// Gets the total number of Quad2D that are currently batched.
+	u32 GetBatchSize() const { return m_queue.Size(); }
 
-	void EnableClipping( bool enable = true ) { m_enable_clipping = enable; }
-	void EnableSorting( bool enable = true ) { m_enable_sorting = enable; }
-	void EnableShader( bool enable = true ) { m_enable_shader = enable; }
+	/// Gets the total number of vertices that are currently batched.
+	u32 GetVertexCount() const { return m_queue.Size() * 4; }
 
-	bool IsClippingEnabled() const { return m_enable_clipping; }
-	bool IsSortingEnabled() const { return m_enable_sorting; }
-	bool IsShaderEnabled() const { return m_enable_shader; }
+	/// The current capacity of the allocated buffer that holds elements of type Quad2D.
+	/// If the capacity becomes too large, it may be a good indication that calls to Flush()
+	/// should be used after rendering each pool of game components to keep memory usage down.
+	u32 GetCapacity() const { return m_queue.Capacity(); }
 
-	BlendMode GetCurrentBlendMode() const { return m_current_blendmode; }
-	Rect GetClippingRect() const { return m_clip_rect; }
-	SpriteSortMode GetSortMode() const { return m_sortmode; }
-	u32 GetMaxHardwareBatchSize() const { return m_max_batch_usage; }
+	/// Set the current capacity of the render queue.
+	/// This does nothing if the input capacity is less than GetQuadCount(). 
+	void SetCapacity(u32 capacity);
 
-	Shader* GetShader() { return m_attached_shader; }
-	const Shader* GetShader() const { return m_attached_shader; }
+	/// Reserves the internal capacity enough to hold number of quads without any reallocation.
+	void Reserve(u32 capacity);
 
-	u32 GetSpriteCount() const { return m_queue.size(); }
-	u32 GetVertexCount() const { return m_queue.size() * 4; }
-	u32 GetCapacity() const { return m_queue.capacity(); }
-
-	//sort usually never needs to be called by the user.
-	void Sort();
+	/// Begins a new batch. This must be called only once for each call to End();
 	void Begin();
 
-	//void Draw( Texture* tex, const Vector2& pos, const Rectf& uv = Rectf(0.f, 0.f, 1.f, 1.f), const Color& c = Color::White(), int depth = 0 );
-	//void Draw( Texture* tex, const Vector2& pos, const Vector2& size, const Rectf& uv = Rectf(0.f, 0.f, 1.f, 1.f), const Color& c = Color::White(), int depth = 0 );
-
-	void Draw( u32 texture, const Rectf& vertices, const Rectf& uv, const Color& c = Color::White(), int depth = 0 );
-	void DrawRotated( u32 texture, float rotation, const Rectf& vertices, const Rectf& uv, const Color& c = Color::White(), int depth = 0 );
-	void DrawRotated( u32 texture, float rotation, const Vector2& origin, const Rectf& vertices, const Rectf& uv, const Color& c = Color::White(), int depth = 0 );
-	void DrawScaled( u32 texture, const Vector2& scale, const Rectf& vertices, const Rectf& uv, const Color& c = Color::White(), int depth = 0 );
-	void DrawScaled( u32 texture, const Vector2& scale, const Vector2& origin, const Rectf& vertices, const Rectf& uv, const Color& c = Color::White(), int depth = 0 );
-	void DrawRotatedScaled( u32 texture, float rotation, const Vector2& scale, const Rectf& vertices, const Rectf& uv, const Color& c = Color::White(), int depth = 0 );
-	void DrawRotatedScaled( u32 texture, float rotation, const Vector2& scale, const Vector2& origin, const Rectf& vertices, const Rectf& uv, const Color& c = Color::White(), int depth = 0 );
-
-	void Draw( u32 texture, const Vector2* vtx, const Vector2* uv, const Color* c, u32 numQuads, int depth = 0 );
-	void DrawRotated( u32 texture, float rotation, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, u32 numQuads, int depth = 0 );
-	void DrawScaled( u32 texture, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, u32 numQuads, int depth = 0 );
-	void DrawRotatedScaled( u32 texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, u32 numQuads, int depth = 0 );
-
-	void Draw( u32 texture, const Vector2* vtx, const Vector2* uv, const Color* c, const u16 *quadsIndices, u32 numQuads, int depth = 0 );
-	void DrawRotated( u32 texture, float rotation, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, const u16 *quadsIndices, u32 numQuads, int depth = 0 );
-	void DrawScaled( u32 texture, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, const u16 *quadsIndices, u32 numQuads, int depth = 0 );
-	void DrawRotatedScaled( u32 texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, const u16 *quadsIndices, u32 numQuads, int depth = 0 );
-
-	void DrawString( Font* font, const String& text, const Vector2& pos, const Color& c = Color::White(), TextAlignment alignment = AlignLeft, int face_size = Font::DefaultFaceSize, int depth = 0 );
-	void DrawString( Font* font, const String& text, u32 textPos, u32 amount, const Vector2& pos, const Color& c = Color::White(), TextAlignment alignment = AlignLeft, int face_size = Font::DefaultFaceSize, int depth = 0 );
-	void DrawString( Font* font, const String& text, const Vector2& scale, const Vector2& pos, const Color& c = Color::White(), TextAlignment alignment = AlignLeft, int face_size = Font::DefaultFaceSize, int depth = 0 );
-
-	void DrawSprite( const Sprite& sprite, const Vector2& pos );
-	void DrawAnimatedSprite( const AnimatedSprite& sprite, const Vector2& pos );
-	void DrawAnimatedSpriteSet( const AnimatedSpriteSet& spriteset, const Vector2& pos );
-	void DrawTexture( const Texture* texture, const Vector2& pos );
-	void DrawTexture( const Texture* texture, const Vector2& pos, const Vector2& size );
-	void DrawSpriteData( const SpriteData& data );
-	void DrawSpriteData( const SpriteData& data, float rotation, const Vector2& scale, const Vector2& origin );
-
-	void Render();
-	void Render( const Matrix& transformation );
+	/// Ends and flushes the current batch. A call to Begin() is then required to render another batch.
 	void End();
+
+	/// Flushes the queue and any reamining vertices to the gpu.
 	void Flush();
 
-	void TransformSprite( float rotation, const Vector2& scale, const Vector2& origin, SpriteData& s );
+	void Draw(u32 textureID, const Vector2& position, const Vector2& size, const Rectf& uv, const Color& color = Color::White());
+	void Draw(u32 textureID, const Rectf& vertices, const Rectf& uv, const Color& color = Color::White());
+	void DrawRotated(u32 textureID, float rotation, const Rectf& vertices, const Rectf& uv, const Color& color = Color::White());
+	void DrawRotated(u32 textureID, float rotation, const Vector2& origin, const Rectf& vertices, const Rectf& uv, const Color& color = Color::White());
+	void DrawScaled(u32 textureID, const Vector2& scale, const Rectf& vertices, const Rectf& uv, const Color& color = Color::White());
+	void DrawScaled(u32 textureID, const Vector2& scale, const Vector2& origin, const Rectf& vertices, const Rectf& uv, const Color& color = Color::White());
+	void DrawRotatedScaled(u32 textureID, float rotation, const Vector2& scale, const Rectf& vertices, const Rectf& uv, const Color& color = Color::White());
+	void DrawRotatedScaled(u32 textureID, float rotation, const Vector2& scale, const Vector2& origin, const Rectf& vertices, const Rectf& uv, const Color& color = Color::White());
+
+	void DrawSprite(const Sprite& sprite, const Vector2& position);
+	void DrawAnimatedSprite(const AnimatedSprite& animatedSprite, const Vector2& position);
+	void DrawAnimatedSpriteSet(const AnimatedSpriteSet& spriteset, const Vector2& position);
+
+	/// Draws a quad using the previously set renderstate.
+	void DrawQuad(const Quad2D& quad);
+
+	/// Add a quad to this batch.
+	void DrawQuad(u32 textureID, const Quad2D& quad);
+
+	/// Add any number of quads to this batch.
+	void DrawQuads(u32 textureID, const Quad2D* quads, u32 numQuads);
+
+	void DrawVertices(const VertexColorTexture2D& tl, const VertexColorTexture2D& bl,
+		const VertexColorTexture2D& br, const VertexColorTexture2D& t);
+
+	void DrawVertices(u32 textureID,
+		const VertexColorTexture2D& tl, const VertexColorTexture2D& bl,
+		const VertexColorTexture2D& br, const VertexColorTexture2D& tr);
+
+	/// Draws part of a quad.
+	//void DrawPartialQuad(u32 textureID, const Quad2D& quad, const Vector2& delta, Align alignment);
+
+	/// Tiles a sprite of size 'tileSize' across a given area defined by position and size.
+	/// If tileSize is not equally divisible by the total size then the last
+	/// tile will be clamped appropriately, and only partially drawn.
+	void DrawTiled(u32 textureID, const Vector2& position, const Vector2& size, const Vector2& tileSize, const Rectf& uv, const Color& color);
+
+	// Font rendering
+	void DrawString(Font* font, const String& text, const Vector2& position, const Color& color, TextAlignment alignment = AlignLeft );
+	void DrawString(Font* font, const String& text, u32 textPos, u32 amount, const Vector2& position, const Color& color, TextAlignment alignment = AlignLeft );
+	void DrawString(Font* font, const char* first, const char* last, Vector2 position, const Color& color, TextAlignment alignment = AlignLeft );
+
+	void Render();
+	void Render(const Matrix& transformation);
 
 private:
-	void InternalQueueSprite( u32 texture, float rotation, const Vector2& scale, const Vector2& origin, const Rectf& vertices, const Rectf& uv, const Color& c, int depth );
-	void InternalQueueSprite( u32 texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, u32 numQuads, int depth );
-	void InternalQueueSprite( u32 texture, float rotation, const Vector2& scale, const Vector2& origin, const Vector2* vtx, const Vector2* uv, const Color* c, const u16 *quadsIndices, u32 numQuads, int depth );
-	void InternalQueueString( Font* font, const char* first, const char* last, const Vector2& scale, Vector2 pos, const Color& c, TextAlignment alignment, int face_size, int depth );
+	void InternalDraw(u32 textureID, const Rectf& vertices, const Rectf& uv, const Color& color);
+	void InternalDrawTransformed(u32 textureID, float rotation, const Vector2& scale, const Vector2& origin, const Rectf& vertices, const Rectf& uv, const Color& color);
+	void CheckRenderState(u32 textureID);
+	void CheckRenderState(BlendMode blendMode);
+	void CheckQueueRenderState();
+	void InternalFlush();
 
-	void InternalFlush( u32 texture, u32 blendmodevalue, u32 first, u32 count );
+	u32						m_currentOffset;
+	RenderState2D			m_currentRenderState;
+	Vector<RenderState2D>	m_renderStates;
+	Vector<Quad2D>			m_queue;
+	Vector<Rect>			m_clipStack;
 
-	vec_type		m_queue;
-	ClipStack		m_clipStack;
-	//clip_vec_type	m_clip_stack;
-	BlendMode		m_current_blendmode;
-	Rect			m_clip_rect;
-	SpriteSortMode	m_sortmode;
-	Shader*			m_attached_shader;
-	u32				m_max_batch_usage;
-	bool			m_enable_clipping;
-	bool			m_enable_sorting;
-	bool			m_enable_shader;
 };
 
 

@@ -18,12 +18,13 @@
 
 #pragma once
 
-#include "../Common.h"
-#include "../Math/Vector2.h"
-#include "../Math/Color.h"
-#include "../Math/Rectf.h"
-#include "../Math/PackedRect.h"
-#include "BlendMode.h"
+#include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/Math/Vector2.h"
+#include "Catastrophe/Core/Math/Color.h"
+#include "Catastrophe/Core/Math/Rectf.h"
+#include "Catastrophe/Core/Math/Packed/PackedRect.h"
+#include "Catastrophe/Graphics/Common.h"
+#include "Catastrophe/Graphics/BlendMode.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -41,11 +42,11 @@ public:
 	Color		color;
 	BlendMode	blendmode;
 	Rectf		uv;
-	PackedRect	source_rect;
-	s16			frame_counter;
-	s16			current_frame;
-	s16			anim_speed;
-	s16			num_frames;
+	PackedRect	sourceRect;
+	s16			frameCounter;
+	s16			currentFrame;
+	s16			animationSpeed;
+	s16			numFrames;
 
 	PackedSprite();
 	PackedSprite( Texture* texturePtr, const PackedRect& sourceRectangle, int numberOfFrames, s16 frameDelay );

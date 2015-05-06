@@ -18,12 +18,13 @@
 
 #pragma once
 
-#include "../Common.h"
-#include "../Math/Rect.h"
-#include "../Math/Vector2.h"
+#include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/Math/Rect.h"
+#include "Catastrophe/Core/Math/Vector2.h"
+#include "Catastrophe/Graphics/Common.h"
 #include "../Resource/GraphicsResource.h"
 
-#include <fc/string.h>
+#include "Catastrophe/Core/Containers/String.h"
 
 CE_NAMESPACE_BEGIN
 

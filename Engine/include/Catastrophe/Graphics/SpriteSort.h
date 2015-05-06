@@ -18,9 +18,7 @@
 
 #pragma once
 
-#include "../Common.h"
-
-#include <fc/sort.h>
+#include "Catastrophe/Core/Common.h"
 
 CE_NAMESPACE_BEGIN
 

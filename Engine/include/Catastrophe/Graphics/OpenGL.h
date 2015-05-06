@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "../Common.h"
+#include "Catastrophe/Core/Common.h"
 
 #define GLEW_STATIC
 #include <GL/glew.h>

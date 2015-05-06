@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "../Common.h"
+#include "Catastrophe/Graphics/Common.h"
 
 #ifdef _MSC_VER
 	#pragma warning ( push )

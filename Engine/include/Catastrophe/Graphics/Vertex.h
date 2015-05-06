@@ -18,13 +18,13 @@
 
 #pragma once
 
-#include "../Common.h"
-#include "../Math/Vector2.h"
-#include "../Math/Vector3.h"
-#include "../Math/Color.h"
-#include "../Math/Math.h"
+#include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/Math/Vector2.h"
+#include "Catastrophe/Core/Math/Vector3.h"
+#include "Catastrophe/Core/Math/Color.h"
+#include "Catastrophe/Core/PlatformMath.h"
 
-#include <fc/type_traits.h>
+#include "Catastrophe/Graphics/Common.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -94,115 +94,109 @@ struct VertexFormat
 
 struct Vertex2D
 {
-	Vector2 pos;
+	Vector2 position;
 
 	Vertex2D() {}
-	Vertex2D( const Vector2 &pos ) : pos(pos) {}
+	Vertex2D( const Vector2 &position ) : position(position) {}
 };
 
 
 struct VertexColor2D
 {
-	Vector2 pos;
+	Vector2 position;
 	Color color;
 
 	VertexColor2D() {}
-	VertexColor2D( const Vector2 &pos, const Color &color ) : pos(pos), color(color) {}
+	VertexColor2D( const Vector2 &position, const Color &color ) : position(position), color(color) {}
 };
 
 
 struct VertexColorTexture2D
 {
-	Vector2 pos, uv;
+	Vector2 position;
+	Vector2 uv;
 	Color color;
 
 	VertexColorTexture2D() {}
-	VertexColorTexture2D( const Vector2 &pos, const Vector2 &uv, const Color &color )
-		: pos(pos), uv(uv), color(color) {}
+	VertexColorTexture2D( const Vector2 &position, const Vector2 &uv, const Color &color )
+		: position(position), uv(uv), color(color) {}
 };
 
 
 struct Vertex3D
 {
-	Vector3 pos;
+	Vector3 position;
 
 	Vertex3D() {}
-	Vertex3D( const Vector2 &pos ) : pos(pos) {}
+	Vertex3D( const Vector2 &position ) : position(position) {}
 };
 
 
 struct VertexColor3D
 {
-	Vector3 pos;
+	Vector3 position;
 	Color color;
 
 	VertexColor3D() {}
-	VertexColor3D( const Vector3 &pos, const Color &color )
-		: pos(pos), color(color) {}
+	VertexColor3D( const Vector3 &position, const Color &color )
+		: position(position), color(color) {}
 
 };
 
 
 struct VertexColorTexture3D
 {
-	Vector3 pos;
+	Vector3 position;
 	Vector2 uv;
 	Color color;
 
 	VertexColorTexture3D() {}
-	VertexColorTexture3D( const Vector3 &pos, const Vector2 &uv, const Color &color )
-		: pos(pos), uv(uv), color(color) {}
+	VertexColorTexture3D( const Vector3 &position, const Vector2 &uv, const Color &color )
+		: position(position), uv(uv), color(color) {}
 
 };
 
 
 struct VertexNormalTexture3D
 {
-	Vector3 pos;
+	Vector3 position;
 	Vector3 normal;
 	Vector2 uv;
 
 	VertexNormalTexture3D() {}
-	VertexNormalTexture3D( const Vector3 &pos, const Vector3 &normal, const Vector2 &uv )
-		: pos(pos), normal(normal), uv(uv) {}
+	VertexNormalTexture3D( const Vector3 &position, const Vector3 &normal, const Vector2 &uv )
+		: position(position), normal(normal), uv(uv) {}
 
 };
 
 
 struct VertexColorNormalTexture3D
 {
-	Vector3 pos;
+	Vector3 position;
 	Vector3 normal;
 	Vector2 uv;
 	Color color;
 
 	VertexColorNormalTexture3D() {}
-	VertexColorNormalTexture3D( const Vector3 &pos, const Vector3 &normal, const Vector2 &uv, const Color &color )
-		: pos(pos), normal(normal), uv(uv), color(color) {}
+	VertexColorNormalTexture3D( const Vector3 &position, const Vector3 &normal, const Vector2 &uv, const Color &color )
+		: position(position), normal(normal), uv(uv), color(color) {}
 
 };
 
 
-
-struct Quad2D
-{
-	VertexColorTexture2D vertices[4];
-};
-
-
-
-// Vertex
-FC_MAKE_TRAIT(Vertex2D, is_pod);
-FC_MAKE_TRAIT(VertexTexture2D, is_pod);
-FC_MAKE_TRAIT(VertexColor2D, is_pod);
-FC_MAKE_TRAIT(VertexColorTexture2D, is_pod);
-FC_MAKE_TRAIT(Vertex3D, is_pod);
-FC_MAKE_TRAIT(VertexTexture3D, is_pod);
-FC_MAKE_TRAIT(VertexNormalTexture3D, is_pod);
-FC_MAKE_TRAIT(VertexColor3D, is_pod);
-FC_MAKE_TRAIT(VertexColorTexture3D, is_pod);
-FC_MAKE_TRAIT(VertexColorNormalTexture3D, is_pod);
-FC_MAKE_TRAIT(Quad2D, is_pod);
+// Make POD types
+MAKE_TRAIT(VertexElement, is_pod);
+MAKE_TRAIT(VertexFormat, is_pod);
+MAKE_TRAIT(Vertex2D, is_pod);
+MAKE_TRAIT(VertexTexture2D, is_pod);
+MAKE_TRAIT(VertexColor2D, is_pod);
+MAKE_TRAIT(VertexColorTexture2D, is_pod);
+MAKE_TRAIT(Vertex3D, is_pod);
+MAKE_TRAIT(VertexTexture3D, is_pod);
+MAKE_TRAIT(VertexNormalTexture3D, is_pod);
+MAKE_TRAIT(VertexColor3D, is_pod);
+MAKE_TRAIT(VertexColorTexture3D, is_pod);
+MAKE_TRAIT(VertexColorNormalTexture3D, is_pod);
 
 
 CE_NAMESPACE_END

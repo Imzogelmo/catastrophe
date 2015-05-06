@@ -18,9 +18,10 @@
 
 #pragma once
 
-#include "../Common.h"
+#include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/Containers/String.h"
 
-#include <fc/string.h>
+#include "Catastrophe/Graphics/Common.h"
 
 CE_NAMESPACE_BEGIN
 

@@ -18,17 +18,18 @@
 
 #pragma once
 
-#include "../Math/Vector2.h"
-#include "../Math/Rectf.h"
-#include "../Math/Color.h"
+#include "Catastrophe/Core/Math/Vector2.h"
+#include "Catastrophe/Core/Math/Rectf.h"
+#include "Catastrophe/Core/Math/Color.h"
 #include "../Resource/GraphicsResource.h"
 
-#include "TextAlignment.h"
-#include "Texture.h"
+#include "Catastrophe/Graphics/Common.h"
+#include "Catastrophe/Graphics/TextAlignment.h"
+#include "Catastrophe/Graphics/Texture.h"
 
-#include <fc/dynamic_array2d.h>
-#include <fc/vector.h>
-#include <fc/string.h>
+#include "Catastrophe/Core/Containers/Array2D.h"
+#include "Catastrophe/Core/Containers/Vector.h"
+#include "Catastrophe/Core/Containers/String.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -49,7 +50,7 @@ struct Glyph
 class CE_API Font : public GraphicsResource
 {
 public:
-	typedef fc::vector<Glyph>	vec_type;
+	typedef Vector<Glyph>	GlyphVectorType;
 
 	enum FontDefaults
 	{
@@ -98,10 +99,14 @@ public:
 
 protected:
 	void InternalInitialize();
+	bool InternalLoadPixelArrayFromFile(const String& filename, Array2D<Color>& pixels, Point& textureSize, bool maskColor = true);
+
 	int InternalLoadGenericBitmapFont( const String& filename, int startCode = 32 );
 	int InternalLoadBitmapFont( const String& filename, int startCode = 32 );
+	int InternalLoadAsciiStripFont( const String& filename, int startCode = 32 );
+	int InternalLoadShadowedStripFont( const String& filename, int startCode, int shadowOffset );
 
-	vec_type	m_glyphs;
+	GlyphVectorType	m_glyphs;
 	int			m_glyphMap[256];
 	Texture		m_texture;
 	int			m_faceSize;

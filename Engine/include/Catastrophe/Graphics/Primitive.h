@@ -18,14 +18,15 @@
 
 #pragma once
 
-#include "../Common.h"
+#include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Graphics/Common.h"
 #include "Vertex.h"
 #include "BlendMode.h"
 #include "PrimitiveType.h"
 #include "VertexArray.h"
 
-#include "../Math/Rectf.h"
-#include "../Math/Matrix.h"
+#include "Catastrophe/Core/Math/Rectf.h"
+#include "Catastrophe/Core/Math/Matrix.h"
 
 CE_NAMESPACE_BEGIN
 
