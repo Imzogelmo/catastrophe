@@ -35,7 +35,7 @@ void StackAllocator::InitializeMemory( void* ptrMemory, u32 nBytes )
 void* StackAllocator::Allocate( u32 nBytes, u32 alignment )
 {
 	u8* p = m_current;
-	nBytes = Align( nBytes, alignment );
+	nBytes = Memory::Align( nBytes, alignment );
 
 	CE_ASSERT(m_current + nBytes <= m_end);
 	if( m_current + nBytes > m_end )
@@ -57,7 +57,7 @@ void StackAllocator::Unwind(const void* ptrStackPosition)
 	CE_ASSERT(ptrStackPosition >= m_begin && ptrStackPosition < m_end);
 	Debug(Memory::Memset(m_current, (u8)0xFE, u32(m_current - (u8*)ptrStackPosition)));
 
-	m_current = ptrStackPosition;
+	m_current = (u8*)ptrStackPosition;
 }
 
 

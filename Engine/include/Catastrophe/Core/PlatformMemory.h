@@ -66,6 +66,19 @@ namespace Memory
 		return ::memchr(first, (int)value, (const char*)last - (const char*)first);
 	}
 
+
+	// align
+
+	FORCEINLINE u32 Align( u32 size, u32 alignment = CE_DEFAULT_ALIGN )
+	{
+		return (alignment > 1) ? ((size + (alignment - 1)) & ~(alignment - 1)) : size;
+	}
+
+	FORCEINLINE void* Align( void* p, u32 alignment = CE_DEFAULT_ALIGN )
+	{
+		return (alignment > 1) ? (void*)(((u32)p + (alignment - 1)) & ~(alignment - 1)) : p;
+	}
+
 	FORCEINLINE bool IsAligned( const void* p, u32 alignment = sizeof(void*) )
 	{
 		return (ptrdiff_t(p) & (alignment - 1)) == 0;
@@ -77,6 +90,7 @@ namespace Memory
 	}
 
 
+	// allocation
 
 	extern int allocationCount;
 	extern int deallocationCount;

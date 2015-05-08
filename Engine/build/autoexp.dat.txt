@@ -1,0 +1,113 @@
+//
+//
+// Visual Studio autoexp.dat debugging visualizers for Catastrophe Engine containers.
+//
+//
+
+
+;------------------------------------------------------------------------------
+;  ce::String
+;------------------------------------------------------------------------------
+String{
+	preview		( #if(($e._s.size) > 0) ( [$e._s.data,s]) #else ( [$e._l.ptr,s]))
+	stringview	( #if(($e._s.size) > 0) ( [$e._s.data,sb]) #else ( [$e._l.ptr,sb]))
+	children
+	(
+		#if(($e._s.size) > 0)
+		(
+			#([actual members]: [$e,!] , #array( expr: $e._s.data[$i], size: ($e._s.size >> 1)))
+		)
+		#else
+		(
+			#([actual members]: [$e,!],  #array( expr: $e._l.ptr[$i], size: ($e._l.end - $e._l.ptr)))
+		)
+	)
+}
+;------------------------------------------------------------------------------
+;  ce::StaticString
+;------------------------------------------------------------------------------
+StaticString<*>{
+	preview		( [$e.m_data,s] )
+	stringview	( [$e.m_data,sb] )
+	children
+	(
+		#([actual members]: [$e,!] , #array( expr: $e.m_data[$i], size: ($e.kMaxCapacity)))
+	)
+}
+;------------------------------------------------------------------------------
+;  ce::Array
+;------------------------------------------------------------------------------
+Array<*>{
+	children
+	(
+		#array
+		(
+			expr :		($e.m_data)[$i],
+			size :		$e.m_size
+		)
+	)
+	preview
+	(
+		#(
+			"[", $e.m_size , "](",
+			#array
+			(
+				expr :	($e.m_data)[$i],
+				size :	$e.m_size
+			),
+			")"
+		)
+	)
+}
+;------------------------------------------------------------------------------
+;  ce::Vector
+;------------------------------------------------------------------------------
+Vector<*>{
+	children
+	(
+		#array
+		(
+			expr :		($e.m_begin)[$i],
+			size :		$e.m_end-$e.m_begin
+		)
+	)
+	preview
+	(
+		#(
+			"[", $e.m_end - $e.m_begin , "](",
+			#array
+			(
+				expr :	($e.m_begin)[$i],
+				size :	$e.m_end-$e.m_begin
+				capacity :	$e.m_capacity-$e.m_begin
+			),
+			")"
+		)
+	)
+}
+;------------------------------------------------------------------------------
+;  ce::StaticVector
+;------------------------------------------------------------------------------
+StaticVector<*>{
+	children
+	(
+		#array
+		(
+			expr :		($e.m_data)[$i],
+			size :		$e.m_size
+		)
+	)
+	preview
+	(
+		#(
+			"[", $e.m_size , "](",
+			#array
+			(
+				expr :	($e.m_data)[$i],
+				size :	$m_size
+				capacity :	$kMaxCapacity
+			),
+			")"
+		)
+	)
+}

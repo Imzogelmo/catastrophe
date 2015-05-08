@@ -192,7 +192,7 @@ typedef unsigned int		uint;
 
 
 /// Assert that the memory is algned to a given alignment.
-#define ASSERT_ALIGNED(memory, alignment) ASSERT(IsAligned(memory, alignment))
+#define ASSERT_ALIGNED(memory, alignment) ASSERT(Memory::IsAligned(memory, alignment))
 
 
 /// STATIC_ASSERT - This could be templated in the future to give better error messages.

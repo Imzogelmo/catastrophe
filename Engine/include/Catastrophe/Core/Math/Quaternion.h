@@ -55,7 +55,7 @@ public:
 	float Length() const { return (*((Vector4*)this)).Length(); }
 	float LengthSquared() const { return (*((Vector4*)this)).LengthSquared(); }
 	Quaternion& Normalize() { (*((Vector4*)this)).Normalize(); return *this;}
-	Quaternion Normal() { return (*((Vector4*)this)).Normal(); }
+	Quaternion Normalized() { return (*((Vector4*)this)).Normalized(); }
 	Vector3 Transform(const Vector3& v);
 
 	static Quaternion Concatenate(const Quaternion &q1, const Quaternion &q2);

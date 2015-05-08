@@ -33,7 +33,7 @@ public:
 	};
 
 	PoolAllocator();
-	PoolAllocator( void* ptrMemory, u32 nBytes, u32 objectSize, u32 alignment = FC_DEFAULT_ALIGN );
+	PoolAllocator( void* ptrMemory, u32 nBytes, u32 objectSize, u32 alignment = CE_DEFAULT_ALIGN );
 
 	/// Initializes the memory pool from raw memory of size nBytes.
 	///
@@ -48,7 +48,7 @@ public:
 	/// 	 if( mPool.InitializeMemory(p, 1024 * sizeof(RoboTron2084), sizeof(RoboTron2084)) != 1024 )
 	/// 	     Assert(false && "Not enough memory for 1024 objects, Make sure object size is at least sizeof(void*)");
 	///
-	u32 InitializeMemory( void* ptrMemory, u32 nBytes, u32 objectSize, u32 alignment = FC_DEFAULT_ALIGN );
+	u32 InitializeMemory( void* ptrMemory, u32 nBytes, u32 objectSize, u32 alignment = CE_DEFAULT_ALIGN );
 
 	/// Allocates raw memory from this allocator.
 	/// If the pool is empty it will return null, or an Assertion will be triggered.
@@ -76,7 +76,7 @@ public:
 
 	u32 GetNumUsedBlocks() { return m_usedBlocks; }
 
-	bool operator ==( const PoolAllocator& a ) const { return &a == this; }
+	bool operator ==( const PoolAllocator& allocator ) const { return &allocator == this; }
 	bool operator ==( const Allocator& ) const { return false; }
 
 protected:

@@ -742,7 +742,7 @@ void String::SetCapacity(u32 newCapacity)
 	//if( newCapacity <= kShortCapacity )
 
 	// Align the memory size to prevent wasted bytes.
-	newCapacity = Align(newCapacity + 1);
+	newCapacity = Memory::Align(newCapacity + 1);
 	if(newCapacity == Capacity())
 		return;
 
@@ -1080,7 +1080,7 @@ String& String::ReplaceAll(const String& regex, const String& replacement)
 void String::InitializeLong(u32 nBytes)
 {
 	// Align capacity to prevent wasted memory.
-	nBytes = Align(nBytes + 1);
+	nBytes = Memory::Align(nBytes + 1);
 	char* ptrMemory = Allocate(nBytes);
 
 	_l.ptr = ptrMemory;
@@ -1096,7 +1096,7 @@ void String::InitializeLong(u32 nBytes)
 void String::GrowShortString(u32 amount)
 {
 	u32 newCapacity = Math::Max<int>(kShortCapacity + amount, kShortCapacity * 2 );
-	newCapacity = Align(newCapacity + 1, CE_DEFAULT_STRING_SIZE_ALIGNMENT);
+	newCapacity = Memory::Align(newCapacity + 1, CE_DEFAULT_STRING_SIZE_ALIGNMENT);
 
 	char* p = Allocate(newCapacity);
 	Memory::Memcpy(p, _s.data, size());

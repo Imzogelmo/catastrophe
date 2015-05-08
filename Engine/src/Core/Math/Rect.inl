@@ -26,51 +26,38 @@
 
 CE_NAMESPACE_BEGIN
 
-Point Point::Zero = Point(0, 0);
 Rect Rect::Zero = Rect(0, 0, 0, 0);
 Rect Rect::One = Rect(0, 0, 1, 1);
 
 
-Point::Point( const Vector2& v ) :
-	x((int)v.x), y((int)v.y)
+Rect::Rect( const PackedRect& value )
 {
+	position.x = (int)value.position.x;
+	position.y = (int)value.position.y;
+	size.x = (int)value.Width();
+	size.y = (int)value.Height();
 }
 
 
-Rect::Rect( const PackedRect& r )
+Rect::Rect( const Rectf& value )
 {
-	position.x = (int)r.position.x;
-	position.y = (int)r.position.y;
-	size.x = (int)r.Width();
-	size.y = (int)r.Height();
+	position.x = Math::Round(value.min.x);
+	position.y = Math::Round(value.min.y);
+	size.x = Math::Round(value.Width());
+	size.y = Math::Round(value.Height());
 }
 
 
-Rect::Rect( const Rectf& r )
+void Rect::Merge( const Rect& rect )
 {
-	position.x = Math::Round(r.min.x);
-	position.y = Math::Round(r.min.y);
-	size.x = Math::Round(r.Width());
-	size.y = Math::Round(r.Height());
-}
+	if(rect.position.x < position.x) position.x = rect.position.x;
+	if(rect.position.y < position.y) position.y = rect.position.y;
 
-
-void Rect::Merge( const Rect& r )
-{
-	if(r.position.x < position.x) position.x = r.position.x;
-	if(r.position.y < position.y) position.y = r.position.y;
-
-	int xoff = r.Right() - Right();
-	int yoff = r.Bottom() - Bottom();
+	int xoff = rect.Right() - Right();
+	int yoff = rect.Bottom() - Bottom();
 	if( xoff > 0 ) size.x += xoff;
 	if( yoff > 0 ) size.y += xoff;
 
-}
-
-
-Rectf Rect::ToRectf() const
-{
-	return Rectf( (float)position.x, (float)position.y, (float)(position.x + size.x), (float)(position.y + size.y) );
 }
 
 

@@ -18,16 +18,30 @@
 
 
 
-#include "Gui/AnimatedIcon.inl"
-#include "Gui/BackgroundImage.inl"
-#include "Gui/Frame.inl"
-#include "Gui/Icon.inl"
-#include "Gui/Label.inl"
-#include "Gui/ListBox.inl"
-#include "Gui/MenuElement.inl"
-//#include "Gui/StyledText.inl"
-#include "Gui/TextBoxBase.inl"
-#include "Gui/TextBox.inl"
-#include "Gui/Widget.inl"
-#include "Gui/Skin.inl"
-#include "Gui/Gui.inl"
+//#include "UI/AnimatedIcon.inl"
+#include "UI/Background.inl"
+#include "UI/Frame.inl"
+#include "UI/Icon.inl"
+#include "UI/Label.inl"
+#include "UI/ListBoxBase.inl"
+#include "UI/TextBoxBase.inl"
+#include "UI/TextBox.inl"
+#include "UI/Widget.inl"
+//#include "UI/Container.inl"
+#include "UI/Skin.inl"
+//#include "UI/Gui.inl"
+
+/*
+#include "UI/BackgroundImage.inl"
+#include "UI/BorderImage.inl"
+#include "UI/Label.inl"
+#include "UI/ListBox.inl"
+#include "UI/MenuElement.inl"
+//#include "UI/StyledText.inl"
+#include "UI/TextBoxBase.inl"
+#include "UI/TextBox.inl"
+#include "UI/Widget.inl"
+#include "UI/Skin.inl"
+#include "UI/Gui.inl"
+*/
+

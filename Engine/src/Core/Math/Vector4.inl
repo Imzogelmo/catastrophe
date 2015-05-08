@@ -95,33 +95,29 @@ void Vector4::Clamp( const Vector4& min, const Vector4& max )
 }
 
 
-Vector4 Vector4::Normal() const
+void Vector4::Normalize()
 {
-	const float length = Length();
-	if( length == 0.f )
-		return Vector4();
-
-	const float inv = 1.f / length;
-	return Vector4(
-		x * inv,
-		y * inv,
-		z * inv,
-		w * inv
-	);
-}
-
-
-Vector4& Vector4::Normalize()
-{
-	const float length = Length();
-	if( length != 0 )
+	const float lengthSquared = LengthSquared();
+	if(lengthSquared != 0.f)
 	{
-		const float inv = 1.f / length;
+		const float inv = 1.f / sqrtf(lengthSquared);
 		x *= inv;
 		y *= inv;
 		z *= inv;
 		w *= inv;
 	}
+}
+
+
+Vector4 Vector4::Normalized() const
+{
+	const float lengthSquared = LengthSquared();
+	if(lengthSquared != 0.f)
+	{
+		const float inv = 1.f / sqrtf(lengthSquared);
+		return Vector4(x * inv, y * inv, z * inv, w * inv);
+	}
+
 	return *this;
 }
 

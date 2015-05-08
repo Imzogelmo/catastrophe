@@ -39,11 +39,11 @@ bool FileSystem::SetCurrentDirectory(const String& path)
 	bool success = _chdir(path.CString()) == 0;
 	if(success)
 	{
-		LogDebug("Changed current directory to " + path);
+		LogDebug("Changed current directory to \"%s\"", path.CString());
 	}
 	else
 	{
-		LogError("Failed to change directory to " + path);
+		LogError("Failed to set current directory to \"%s\"", path.CString());
 	}
 
 	return success;

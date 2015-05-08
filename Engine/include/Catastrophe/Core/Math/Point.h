@@ -31,7 +31,8 @@ public:
 
 	Point() {}
 	Point( int x, int y )	: x(x), y(y) {}
-	Point( const Vector2& v );
+	Point( const PackedPoint& value );
+	Point( const Vector2& value );
 
 	Point &operator = ( int n ) { x = n; y = n; return *this; }
 	Point &operator = ( const Vector2 &v ) { *this = Point(v); return *this; }
@@ -85,6 +86,7 @@ public:
 	}
 
 	static Point Zero;
+	static Point One;
 };
 
 

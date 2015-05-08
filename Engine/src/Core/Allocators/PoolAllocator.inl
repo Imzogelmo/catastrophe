@@ -20,11 +20,11 @@ PoolAllocator::PoolAllocator()
 PoolAllocator::PoolAllocator( void* ptrMemory, u32 nBytes, u32 objectSize, u32 alignment )
 	: Allocator()
 {
-	Initialize( ptrMemory, nBytes, objectSize, alignment );
+	InitializeMemory( ptrMemory, nBytes, objectSize, alignment );
 }
 
 
-u32 PoolAllocator::Initialize( void* ptrMemory, u32 nBytes, u32 objectSize, u32 alignment )
+u32 PoolAllocator::InitializeMemory( void* ptrMemory, u32 nBytes, u32 objectSize, u32 alignment )
 {
 	u32 numBlocksAvailable = 0;
 
@@ -33,8 +33,8 @@ u32 PoolAllocator::Initialize( void* ptrMemory, u32 nBytes, u32 objectSize, u32 
 		objectSize = sizeof(void*);
 
 	// align object size and memory ptr.
-	objectSize = Align( objectSize, alignment );
-	ptrMemory = Align( ptrMemory, alignment );
+	objectSize = Memory::Align( objectSize, alignment );
+	ptrMemory = Memory::Align( ptrMemory, alignment );
 
 	// make sure we have enough room for objects.
 	nBytes = (nBytes - (nBytes % objectSize));

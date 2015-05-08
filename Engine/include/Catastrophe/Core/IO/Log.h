@@ -22,34 +22,36 @@
 
 CE_NAMESPACE_BEGIN
 
-extern void __Internal_Log_Write( const char* format, ... );
-extern void __Internal_Log_Write( const String& message );
 
 
 class CE_API Logger
 {
 public:
 	Logger();
-	Logger( const String& filename, bool create_debug_console = true, bool auto_append_new_line = true );
 	~Logger();
 
-	static Logger& GetInstance();
-	bool Open( const String& filename, bool create_debug_console = true, bool auto_append_new_line = true );
+	static Logger* GetInstance();
+
+	bool Open(const String& filename, bool writeToStdOut);
 	void Close();
 
-	void Write( const String& message );
-	void AppendNewLine( String& str );
+	void Write(int level, const char* message);
 
-	File* GetFile() { return &m_file; }
+	int GetLevel() const { return m_level; }
+	void SetLevel( int value ) { m_level = value; }
+
+	bool GetHasTimestamp() const { return m_hasTimestamp; }
+	void SetHasTimestamp( bool value ) { m_hasTimestamp = value; }
 
 private:
-	void FlushString( const String& str );
+	void FlushString(int level, const String& formattedString);
 
 	File			m_file;
-	bool			m_console;
-	bool			m_append_new_line;
-	static Logger	m_instance;
+	int				m_level;
+	bool			m_printToStdOut;
 	bool			m_hasTimestamp;
+
+	static Logger	m_instance;
 };
 
 

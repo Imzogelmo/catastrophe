@@ -38,7 +38,7 @@ PackedSprite::PackedSprite( Texture* texturePtr, const PackedRect& sourceRectang
 {
 	angle = 0.f,
 	color = Color::White();
-	size = sourceRectangle.size.ToPoint();
+	size = Vector2(sourceRectangle.size);
 	frameCounter = 0;
 	currentFrame = 0;
 	SetTexture(texturePtr);
@@ -70,7 +70,7 @@ void PackedSprite::SetSourceRect( const PackedRect& sourceRectangle )
 {
 	CE_ASSERT(texture != 0);
 	sourceRect = sourceRectangle;
-	size = sourceRectangle.size.ToPoint(); //fixme
+	size = Vector2(sourceRectangle.size); //fixme
 
 	float w = (float)texture->Width();
 	float h = (float)texture->Height();

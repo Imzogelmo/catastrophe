@@ -394,9 +394,9 @@ Matrix Matrix::Multiply( const Matrix& a, const Matrix& b )
 
 Matrix Matrix::CreateLookAt( const Vector3& camera, const Vector3& target, const Vector3& up )
 {
-	Vector3 z = (camera - target).Normal();
-	Vector3 x = Vector3::Cross(up, z).Normal();
-	Vector3 y = Vector3::Cross(z, x).Normal();
+	Vector3 z = (camera - target).Normalized();
+	Vector3 x = Vector3::Cross(up, z).Normalized();
+	Vector3 y = Vector3::Cross(z, x).Normalized();
 
 	float tx = -Vector3::Dot(x, camera);
 	float ty = -Vector3::Dot(y, camera);

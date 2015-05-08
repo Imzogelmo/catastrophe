@@ -23,7 +23,7 @@
 CE_NAMESPACE_BEGIN
 
 
-/// FreeList
+/// @FreeList
 ///
 /// Implements a singly-linked FreeList structure.
 /// The benefits of a FreeList are that it manages used/unused memory chunks in-place, and no
@@ -35,7 +35,12 @@ public:
 	FreeList() : m_next(null) {}
 
 	/// Initializes the FreeList from raw memory of size nBytes.
-	FreeList(void* ptrMemory, u32 nBytes, u32 elementSize, u32 alignment = FC_DEFAULT_ALIGN);
+	FreeList(void* ptrMemory, u32 nBytes, u32 elementSize, u32 alignment = CE_DEFAULT_ALIGN);
+
+	/// Initializes the FreeList from raw memory of size nBytes.
+	///
+	/// @returns the number of elements in the list.
+	u32 Initialize(void* ptrMemory, u32 nBytes, u32 elementSize, u32 alignment = CE_DEFAULT_ALIGN);
 
 	/// Aquire a pointer to the next free block. Returns null if there are no more free blocks.
 	void* Aquire()
@@ -60,6 +65,22 @@ public:
 
 protected:
 	FreeList* m_next;
+
+};
+
+
+template <u32 NBytes, u32 ElementSize>
+class StaticFreeList : public FreeList
+{
+public:
+	StaticFreeList()
+		: FreeList()
+		{
+			FreeList::Initialize(m_stackMemory, NBytes, ElementSize);
+		}
+
+protected:
+	char m_stackMemory[NBytes];
 
 };
 

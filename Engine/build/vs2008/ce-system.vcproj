@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;.\..\..\include\Catastrophe&quot;"
+				AdditionalIncludeDirectories=".\..\..\include\Catastrophe;.\..\..\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;CE_GLFW"
 				MinimalRebuild="true"
 				ExceptionHandling="1"
@@ -110,7 +110,7 @@
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="&quot;.\..\..\include\Catastrophe&quot;"
+				AdditionalIncludeDirectories=".\..\..\include\Catastrophe;.\..\..\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;CE_GLFW"
 				ExceptionHandling="0"
 				RuntimeLibrary="2"
@@ -166,23 +166,23 @@
 				Name="Input"
 				>
 				<File
-					RelativePath=".\..\..\src\Input\Controller.inl"
+					RelativePath="..\..\src\System\Input\Controller.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\..\..\src\Input\Input.inl"
+					RelativePath="..\..\src\System\Input\Input.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\..\..\src\Input\JoystickController.inl"
+					RelativePath="..\..\src\System\Input\JoystickController.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\..\..\src\Input\Keyboard.inl"
+					RelativePath="..\..\src\System\Input\Keyboard.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\..\..\src\Input\KeyboardController.inl"
+					RelativePath="..\..\src\System\Input\KeyboardController.inl"
 					>
 				</File>
 			</Filter>
@@ -244,35 +244,43 @@
 				Name="Input"
 				>
 				<File
-					RelativePath=".\..\..\include\Catastrophe\Input\Controller.h"
+					RelativePath="..\..\include\Catastrophe\System\Input\Common.h"
 					>
 				</File>
 				<File
-					RelativePath=".\..\..\include\Catastrophe\Input\Input.h"
+					RelativePath="..\..\include\Catastrophe\System\Input\Controller.h"
 					>
 				</File>
 				<File
-					RelativePath=".\..\..\include\Catastrophe\Input\Joystick.h"
+					RelativePath="..\..\include\Catastrophe\System\Input\Input.h"
 					>
 				</File>
 				<File
-					RelativePath=".\..\..\include\Catastrophe\Input\JoystickController.h"
+					RelativePath="..\..\include\Catastrophe\System\Input\Joystick.h"
 					>
 				</File>
 				<File
-					RelativePath=".\..\..\include\Catastrophe\Input\Keyboard.h"
+					RelativePath="..\..\include\Catastrophe\System\Input\joystickconstants.h"
 					>
 				</File>
 				<File
-					RelativePath=".\..\..\include\Catastrophe\Input\KeyboardController.h"
+					RelativePath="..\..\include\Catastrophe\System\Input\JoystickController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\..\..\include\Catastrophe\Input\Keys.h"
+					RelativePath="..\..\include\Catastrophe\System\Input\Keyboard.h"
 					>
 				</File>
 				<File
-					RelativePath=".\..\..\include\Catastrophe\Input\Mouse.h"
+					RelativePath="..\..\include\Catastrophe\System\Input\KeyboardController.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Catastrophe\System\Input\Keys.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Catastrophe\System\Input\Mouse.h"
 					>
 				</File>
 			</Filter>

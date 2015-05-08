@@ -20,8 +20,6 @@
 
 #include "Catastrophe/Core/Common.h"
 #include "Catastrophe/Core/Math/Point.h"
-#include "Catastrophe/Core/Math/Rectf.h"
-
 
 CE_NAMESPACE_BEGIN
 
@@ -34,8 +32,8 @@ public:
 	Rect() {}
 	Rect( const Point& position, const Point& size ) : position(position), size(size) {}
 	Rect( int x, int y, int width, int height )	: position(x, y), size(width, height) {}
-	Rect( const PackedRect& r );
-	Rect( const Rectf& r );
+	Rect( const PackedRect& value );
+	Rect( const Rectf& value );
 
 	Point		&operator [] ( const int i )		{ return *( &position + i ); }
 	const Point	&operator [] ( const int i ) const  { return *( &position + i ); }
@@ -67,9 +65,9 @@ public:
 	FORCEINLINE const Point& Position() const { return position; }
 	FORCEINLINE const Point& Size() const { return size; }
 
-	FORCEINLINE int Width()		const { return size.x; }
-	FORCEINLINE int Height()	const { return size.y; }
-	FORCEINLINE int Area()		const { return size.x * size.y;	}
+	FORCEINLINE int Width() const { return size.x; }
+	FORCEINLINE int Height() const { return size.y; }
+	FORCEINLINE int Area() const { return size.x * size.y;	}
 
 	FORCEINLINE bool Empty() const { return size.IsZero(); }
 
@@ -95,8 +93,7 @@ public:
 		return true;
 	}
 
-	void Merge( const Rect& r );
-	Rectf ToRectf() const;
+	void Merge( const Rect& rect );
 
 	static Rect Zero;
 	static Rect One;

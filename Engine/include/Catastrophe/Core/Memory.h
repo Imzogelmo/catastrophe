@@ -248,18 +248,6 @@ namespace Memory
 } //Memory
 
 
-// align
-
-inline u32 Align( u32 size, u32 alignment = CE_DEFAULT_ALIGN )
-{
-	return (alignment > 1) ? ((size + (alignment - 1)) & ~(alignment - 1)) : size;
-}
-
-inline void* Align( void* p, u32 alignment = CE_DEFAULT_ALIGN )
-{
-	return (alignment > 1) ? (void*)(((u32)p + (alignment - 1)) & ~(alignment - 1)) : p;
-}
-
 
 CE_NAMESPACE_END
 

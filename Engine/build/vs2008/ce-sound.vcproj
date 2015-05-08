@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;.\..\..\include\Catastrophe&quot;"
+				AdditionalIncludeDirectories=".\..\..\include\Catastrophe;.\..\..\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				ExceptionHandling="1"
@@ -109,7 +109,7 @@
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="&quot;.\..\..\include\Catastrophe&quot;"
+				AdditionalIncludeDirectories=".\..\..\include\Catastrophe;.\..\..\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				ExceptionHandling="0"
 				RuntimeLibrary="2"

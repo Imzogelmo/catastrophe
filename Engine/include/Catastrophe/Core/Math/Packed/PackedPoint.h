@@ -19,12 +19,10 @@
 #pragma once
 
 #include "Catastrophe/Core/Common.h"
-#include "Catastrophe/Core/Math/Point.h"
 
-//disable nameless struct/union warning
 #ifdef _MSC_VER
 	#pragma warning ( push )
-	#pragma warning ( disable : 4201 )
+	#pragma warning ( disable : 4201 ) // disable nameless struct/union warning
 #endif
 
 
@@ -38,10 +36,10 @@ public:
 
 	PackedPoint() {}
 	PackedPoint( s16 x, s16 y ) : x(x), y(y) {}
-	PackedPoint( const Point &p ) : x((s16)p.x), y((s16)p.y) {}
+	PackedPoint( const Point &p );
 
-	s16		&operator [] ( const s16 i ) { return *( &x + i ); }
-	const s16	&operator [] ( const s16 i ) const { return *( &x + i ); }
+	s16& operator [] ( const s16 i ) { return *( &x + i ); }
+	const s16& operator [] ( const s16 i ) const { return *( &x + i ); }
 
 	PackedPoint operator - () const { return Negate(); }
 	PackedPoint operator + () const { return Abs(); }
@@ -75,7 +73,7 @@ public:
 	PackedPoint &operator -= ( s16 val ) { x -= val; y -= val; return *this; }
 
 	bool operator == ( const PackedPoint &p ) const { return (value == p.value); }
-	bool operator != ( const PackedPoint &p ) const { return !(*this == p); }
+	bool operator != ( const PackedPoint &p ) const { return (value != p.value); }
 
 	PackedPoint Abs() const { return PackedPoint( Math::Abs(x), Math::Abs(y) );	}
 	PackedPoint Negate() const { return PackedPoint(-x, -y); }
@@ -88,12 +86,8 @@ public:
 		Math::FastClamp(y, min.y, max.y);
 	}
 
-	Point ToPoint() const
-	{
-		return Point((int)x, (int)y);
-	}
-
 	static PackedPoint Zero;
+	static PackedPoint One;
 
 };
 

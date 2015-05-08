@@ -16,13 +16,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "Catastrophe/Core/Math/Vector2.h"
-#include "Catastrophe/Core/Math/Vector3.h"
-#include "Catastrophe/Core/Math/Vector4.h"
-#include "Catastrophe/Core/Math/Quaternion.h"
-#include "Catastrophe/Core/Math/Matrix.h"
-#include "Catastrophe/Core/Math/Point.h"
 #include "Catastrophe/Core/PlatformMath.h"
+#include "Catastrophe/Core/Math/Vector2.h"
+#include "Catastrophe/Core/Math/Point.h"
+#include "Catastrophe/Core/Math/Packed/PackedPoint.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -33,25 +30,27 @@ const Vector2 Vector2::UnitY	= Vector2( 0.0f, 1.0f );
 const Vector2 Vector2::One		= Vector2( 1.0f, 1.0f );
 
 
-
-Vector2::Vector2( const Vector3 &v )
+Vector2::Vector2( const Vector3 &value )
+	: x(value.x), y(value.y)
 {
-	x = v.x;
-	y = v.y;
 }
 
 
-Vector2::Vector2( const Vector4 &v )
+Vector2::Vector2( const Vector4 &value )
+	: x(value.x), y(value.y)
 {
-	x = v.x;
-	y = v.y;
 }
 
 
-Vector2::Vector2( const Point &p )
+Vector2::Vector2( const Point &value )
+	: x((float)value.x), y((float)value.y)
 {
-	x = (float)p.x;
-	y = (float)p.y;
+}
+
+
+Vector2::Vector2( const PackedPoint &value )
+	: x((float)value.x), y((float)value.y)
+{
 }
 
 
@@ -61,10 +60,10 @@ Vector3 Vector2::ToVector3() const
 }
 
 
-bool Vector2::Equals( const Vector2 &v, float epsilon ) const
+bool Vector2::Equals( const Vector2 &value, float epsilon ) const
 {
-	return( Math::EpsilonCompare(x, v.x, epsilon) &&
-			Math::EpsilonCompare(y, v.y, epsilon) );
+	return( Math::EpsilonCompare(x, value.x, epsilon) &&
+			Math::EpsilonCompare(y, value.y, epsilon) );
 }
 
 
