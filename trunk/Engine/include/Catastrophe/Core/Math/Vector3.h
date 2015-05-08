@@ -111,31 +111,28 @@ public:
 	Vector3 Round() const { return Vector3(Math::Roundf(x), Math::Roundf(y), Math::Roundf(z));}
 	Vector3 Negate() const { return Vector3(-x, -y, -z); }
 
-	Vector3 Normal() const
+	Vector3 Normalized() const
 	{
-		const float length = Length();
-		if(length == 0.f)
-			return Vector3::Zero;
+		const float lengthSquared = LengthSquared();
+		if(lengthSquared != 0.f)
+		{
+			const float inv = 1.f / sqrtf(lengthSquared);
+			return Vector3(x * inv, y * inv, z * inv);
+		}
 
-		const float inv = 1.f / length;
-		return Vector3(
-		           x * inv,
-		           y * inv,
-		           z * inv
-		       );
+		return *this;
 	}
 
-	Vector3& Normalize()
+	void Normalize()
 	{
-		const float length = Length();
-		if(length != 0.f)
+		const float lengthSquared = LengthSquared();
+		if(lengthSquared != 0.f)
 		{
-			const float inv = 1.f / length;
+			const float inv = 1.f / sqrtf(lengthSquared);
 			x *= inv;
 			y *= inv;
 			z *= inv;
 		}
-		return *this;
 	}
 
 	Vector3 Cross(const Vector3 &v) const

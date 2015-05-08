@@ -16,63 +16,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#pragma once
+#include "Catastrophe/Core/Math/Packed/PackedRect.h"
+#include "Catastrophe/Core/Math/Rect.h"
 
-#include "Catastrophe/Core/Common.h"
-#include "Catastrophe/Core/Math/Vector3.h"
 
 CE_NAMESPACE_BEGIN
 
+PackedRect PackedRect::Zero = PackedRect(0, 0, 0, 0);
+PackedRect PackedRect::One = PackedRect(0, 0, 1, 1);
 
-class CE_API Plane
+
+PackedRect::PackedRect( const Rect& rect )
 {
-public:
-	Vector3 normal;
-	float d;
+	position.x = (s16)rect.position.x;
+	position.y = (s16)rect.position.y;
+	size.x = (s16)rect.size.x;
+	size.y = (s16)rect.size.y;
+}
 
-	Plane() {}
-	Plane( const Vector3& normal, float d ) : normal(normal), d(d) {}
-	Plane( const Vector3& v0, const Vector3& v1, const Vector3& v2 )
-	{
-		normal = ((v1 - v0).Cross(v2 - v0)).Normalized();
-		d = normal.Dot(v0);
-	}
 
-	bool operator == ( const Plane &p ) const { return normal == p.normal && d == p.d; }
-	bool operator != ( const Plane &p ) const { return !(*this == p); }
-	bool Equals( const Plane &p, float epsilon = Math::Epsilon ) const
-	{
-		return (normal.Equals(p.normal) && Math::EpsilonCompare(d, p.d, epsilon));
-	}
 
-	void Normalize()
-	{
-		float length = normal.Length();
-		if( length != 0.f )
-		{
-			const float inv = 1.f / length;
-			normal *= inv;
-		}
-	}
-
-	float Distance( const Vector3& point ) const
-	{
-		return normal.Dot(point) - d;
-	}
- 
-	float Dot( const Vector3& v )
-	{
-		return normal.Dot(v) + d;
-	}
-
-	Vector3 AbsNormal() const
-	{
-		return normal.Abs();
-	}
-
-};
 
 
 CE_NAMESPACE_END
-
 

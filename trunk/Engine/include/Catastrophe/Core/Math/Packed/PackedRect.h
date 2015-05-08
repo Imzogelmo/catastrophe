@@ -35,7 +35,6 @@ public:
 	PackedRect( s16 x, s16 y, s16 width, s16 height ) : position(x,y), size(width,height) {}
 	PackedRect( const Rect& rect );
 
-	// Implicit conversion to Rect.
 	operator Rect() const { return Rect((int)position.x, (int)position.y, (int)size.x, (int)size.y); }
 
 	s16			&operator [] ( int i )			{ return *( &position.x + i ); }

@@ -104,8 +104,8 @@ public:
 	Vector4 Round() const { return Vector4(Math::Roundf(x), Math::Roundf(y), Math::Roundf(z), Math::Roundf(w)); }
 	Vector4 Negate() const { return Vector4(-x, -y, -z, -w);}
 
-	Vector4 Normal() const;
-	Vector4& Normalize();
+	void Normalize();
+	Vector4 Normalized() const;
 	Vector4& Set(float X, float Y, float Z, float W) { x = X; y = Y; z = Z; w = W; return *this; }
 
 	void Clamp(const Vector4& min, const Vector4& max);

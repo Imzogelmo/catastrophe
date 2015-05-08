@@ -33,9 +33,10 @@ public:
 	Vector2(float n) : x(n), y(n) {}
 	Vector2(float x, float y) : x(x), y(y) {}
 	Vector2(const float* p) : x(p[0]), y(p[1]) {}
-	Vector2(const Vector3 &v);
-	Vector2(const Vector4 &v);
-	Vector2(const Point &p);
+	Vector2(const Vector3 &value);
+	Vector2(const Vector4 &value);
+	Vector2(const Point &value);
+	Vector2(const PackedPoint &value);
 
 	Vector2 &operator = (float n) { x = n; y = n; return *this; }
 	Vector2 &operator = (const Point &p) { *this = Vector2(p); return *this; }
@@ -128,16 +129,25 @@ public:
 	Vector2 Unit() const { return Normalized(); }
 	Vector2 Normalized() const
 	{
-		const float length = 1.f / (Length() + 0.0000001f);
-		return Vector2(x * length, y * length);
+		const float lengthSquared = LengthSquared();
+		if(lengthSquared != 0.f)
+		{
+			const float inv = 1.f / sqrtf(lengthSquared);
+			return Vector2(x * inv, y * inv);
+		}
+
+		return *this;
 	}
 
-	Vector2& Normalize()
+	void Normalize()
 	{
-		const float length = 1.f / (Length() + 0.0000001f);
-		x *= length;
-		y *= length;
-		return *this;
+		const float lengthSquared = LengthSquared();
+		if(lengthSquared != 0.f)
+		{
+			const float inv = 1.f / sqrtf(lengthSquared);
+			x *= inv;
+			y *= inv;
+		}
 	}
 
 	Vector2& Set(float X, float Y) { x = X; y = Y; return *this; }

@@ -28,29 +28,28 @@
 #include "Catastrophe/Core/Config.h"
 #include "Catastrophe/Core/TypeTraits.h"
 
-
-#define Log			__Internal_Log_Write
-#define LogInfo		__Internal_Log_Write
-#define LogError	__Internal_Log_Write
-#define LogWarning	__Internal_Log_Write
-
-#ifdef CE_DEBUG
-	#define LogDebug	__Internal_Log_Write
+// todo: name this better...
+#if CE_DEBUG
+	#define Debug(x) x
 #else
-	#define LogDebug(x)
-
-	/* disable "too many actual parameters for macro" */
-	#ifdef _MSC_VER
-		#pragma warning ( disable : 4002 )
-	#endif
+	#define Debug(x)
 #endif
+
+#define LOG_DEBUG	0
+#define LOG_INFO	1
+#define LOG_WARNING	2
+#define LOG_ERROR	3
+
+#define Log(format, ...)		LogWrite(LOG_WARNING, format, __VA_ARGS__)
+#define LogDebug(format, ...)	LogWrite(LOG_DEBUG, format, __VA_ARGS__)
+#define LogInfo(format, ...)	LogWrite(LOG_INFO, format, __VA_ARGS__)
+#define LogError(format, ...)	LogWrite(LOG_ERROR, format, __VA_ARGS__)
+#define LogWarning(format, ...)	LogWrite(LOG_WARNING, format, __VA_ARGS__)
+
+CE_API NOINLINE extern void LogWrite(int level, const char* format, ...);
 
 
 CE_NAMESPACE_BEGIN
-
-
-// Logging functions
-extern NOINLINE CE_API void __Internal_Log_Write( const char* format, ... );
 
 
 // Forward Declarations
@@ -64,9 +63,6 @@ class Allocator;
 class PoolAllocator;
 class StackAllocator;
 
-
-class System;
-class Window;
 
 class Vector2;
 class Vector3;
@@ -84,11 +80,8 @@ class Colorf;
 class HSVColor;
 class HSLColor;
 
-class BoundingBox;
-class Sphere;
 class Line;
 class Plane;
-class Ray;
 class Frustum;
 
 struct TweenValue;
@@ -101,7 +94,6 @@ class Serializer;
 class Deserializer;
 class File;
 class MemoryFile;
-class CompressedFile;
 class ConfigFile;
 class PackFile;
 class XmlReader;
@@ -111,9 +103,6 @@ class XmlDocument;
 class AttributeReader;
 class AttributeWriter;
 
-
-class Sound;
-class SoundEngine;
 
 
 // Math
@@ -129,10 +118,8 @@ MAKE_TRAIT(Quaternion, is_pod);
 MAKE_TRAIT(Matrix, is_pod);
 MAKE_TRAIT(Circle, is_pod);
 MAKE_TRAIT(Line, is_pod);
-MAKE_TRAIT(Ray, is_pod);
 MAKE_TRAIT(Plane, is_pod);
 MAKE_TRAIT(Frustum, is_pod);
-MAKE_TRAIT(BoundingBox, is_pod);
 MAKE_TRAIT(Color, is_pod);
 MAKE_TRAIT(Colorf, is_pod);
 MAKE_TRAIT(HSVColor, is_pod);

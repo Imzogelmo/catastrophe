@@ -17,16 +17,17 @@
 // THE SOFTWARE.
 
 
-
 #include "Graphics/AnimatedSpriteSet.inl"
-#include "Graphics/AnimationFrames.inl"
+
+#include "Graphics/Sprite/StaticSprite.inl"
+#include "Graphics/Sprite/BorderSprite.inl"
+#include "Graphics/Sprite/BackgroundSprite.inl"
+
 #include "Graphics/BlendMode.inl"
 #include "Graphics/FBORenderTarget.inl"
 #include "Graphics/Font.inl"
 #include "Graphics/Image.inl"
 #include "Graphics/PackedSprite.inl"
-#include "Graphics/Primitive.inl"
-#include "Graphics/PrimitiveBatch.inl"
 #include "Graphics/Shader.inl"
 #include "Graphics/ShaderObject.inl"
 #include "Graphics/Sprite.inl"
@@ -34,6 +35,11 @@
 #include "Graphics/SpriteBatch.inl"
 #include "Graphics/Texture.inl"
 #include "Graphics/TextureLoader.inl"
+#include "Graphics/GraphicsDevice.inl"
 
 
-#include "Util/TexturePacker.inl"
+//#include "Util/TexturePacker.inl"
+
+
+//#include "Graphics/Primitive.inl"
+//#include "Graphics/PrimitiveBatch.inl"

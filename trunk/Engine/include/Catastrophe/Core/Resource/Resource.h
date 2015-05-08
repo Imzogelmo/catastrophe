@@ -19,60 +19,39 @@
 #pragma once
 
 #include "Catastrophe/Core/Common.h"
-#include "Catastrophe/Core/Math/Vector3.h"
+#include "Catastrophe/Core/Containers/String.h"
+#include "Catastrophe/Core/RefCounted.h"
 
 CE_NAMESPACE_BEGIN
 
 
-class CE_API Plane
+class Resource : public RefCounted
 {
 public:
-	Vector3 normal;
-	float d;
-
-	Plane() {}
-	Plane( const Vector3& normal, float d ) : normal(normal), d(d) {}
-	Plane( const Vector3& v0, const Vector3& v1, const Vector3& v2 )
-	{
-		normal = ((v1 - v0).Cross(v2 - v0)).Normalized();
-		d = normal.Dot(v0);
-	}
-
-	bool operator == ( const Plane &p ) const { return normal == p.normal && d == p.d; }
-	bool operator != ( const Plane &p ) const { return !(*this == p); }
-	bool Equals( const Plane &p, float epsilon = Math::Epsilon ) const
-	{
-		return (normal.Equals(p.normal) && Math::EpsilonCompare(d, p.d, epsilon));
-	}
-
-	void Normalize()
-	{
-		float length = normal.Length();
-		if( length != 0.f )
+	Resource()
+		: RefCounted(), m_resourceName()
 		{
-			const float inv = 1.f / length;
-			normal *= inv;
 		}
+
+	/// Loads the resource from a file stream.
+	virtual bool Load(Deserializer* deserializer) = 0;
+
+	/// Sets the resource filename or unique name.
+	void SetResourceName( const String& resourceName )
+	{
+		m_resourceName = resourceName;
 	}
 
-	float Distance( const Vector3& point ) const
+	/// Gets the resource filename.
+	const String& GetResourceName() const
 	{
-		return normal.Dot(point) - d;
-	}
- 
-	float Dot( const Vector3& v )
-	{
-		return normal.Dot(v) + d;
+		return m_resourceName;
 	}
 
-	Vector3 AbsNormal() const
-	{
-		return normal.Abs();
-	}
+protected:
+	String m_resourceName;
 
 };
 
 
 CE_NAMESPACE_END
-
-

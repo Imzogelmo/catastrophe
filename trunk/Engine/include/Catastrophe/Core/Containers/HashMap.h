@@ -178,7 +178,17 @@ public:
 			Add(*first);
 	}
 
-	//void Remove( Iterator position ) { m_container.Erase(position); }
+	void Erase( Iterator position )
+	{
+		HashEntryType* node = position.pNode;
+		if(node != null)
+		{
+			Memory::Destroy(&node->data);
+			node->hashIndex = kUnusedIndex;
+			--m_size;
+		}
+	}
+
 	//void RemoveRange( Iterator first, Iterator last ) { m_container.Erase(first, last); }
 
 	/// Erases the key-value pair associated with this key.

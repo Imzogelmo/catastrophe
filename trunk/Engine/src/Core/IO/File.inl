@@ -63,10 +63,10 @@ bool File::Open( const String& fileName, FileMode mode )
 	Close();
 
 	const char* FILE_OPEN_MODE[] = { "rb", "r", "wb", "w", "w+b" };
-	m_handle = fopen(GetNativePath(fileName).CString(), FILE_OPEN_MODE[mode]);
+	m_handle = fopen(fileName.CString(), FILE_OPEN_MODE[mode]);
 	if(!m_handle)
 	{
-		Log("Could not open file " + fileName);
+		Log("Could not open file \"%s\"", fileName.CString());
 		return false;
 	}
 
@@ -103,7 +103,7 @@ u32 File::Read( void* dest, u32 size )
 	if( ret != 1 )
 	{
 		fseek((FILE*)m_handle, m_position + m_offset, SEEK_SET);
-		Log("Error reading from file " + GetFileName());
+		Log("Error reading from file \"%s\"", GetFileName().CString());
 		return 0;
 	}
 
@@ -144,7 +144,7 @@ u32 File::Write( const void* data, u32 size )
 		if(fwrite(data, size, 1, (FILE*)m_handle) != 1)
 		{
 			fseek((FILE*)m_handle, m_position + m_offset, SEEK_SET);
-			Log("Error writing to file " + GetFileName());
+			Log("Error writing to file \"%s\"", m_filename.CString());
 			return 0;
 		}
 

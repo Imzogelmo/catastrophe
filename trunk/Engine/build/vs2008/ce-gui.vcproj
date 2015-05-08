@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;.\..\..\include\Catastrophe&quot;"
+				AdditionalIncludeDirectories=".\..\..\include\Catastrophe;.\..\..\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				ExceptionHandling="1"
@@ -110,7 +110,7 @@
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="&quot;.\..\..\include\Catastrophe&quot;"
+				AdditionalIncludeDirectories=".\..\..\include\Catastrophe;.\..\..\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				ExceptionHandling="0"
 				RuntimeLibrary="2"
@@ -159,46 +159,6 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath=".\..\..\include\Catastrophe\Gui\BackgroundImage.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\Catastrophe\Gui\Gui.h"
-				>
-			</File>
-			<File
-				RelativePath=".\..\..\include\Catastrophe\Gui\Icon.h"
-				>
-			</File>
-			<File
-				RelativePath=".\..\..\include\Catastrophe\Gui\Label.h"
-				>
-			</File>
-			<File
-				RelativePath=".\..\..\include\Catastrophe\Gui\ListBox.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\Catastrophe\Gui\Skin.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\Catastrophe\Gui\StyledText.h"
-				>
-			</File>
-			<File
-				RelativePath=".\..\..\include\Catastrophe\Gui\TextBox.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\Catastrophe\Gui\TextBoxBase.h"
-				>
-			</File>
-			<File
-				RelativePath=".\..\..\include\Catastrophe\Gui\Widget.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
@@ -217,55 +177,47 @@
 				Name="Components"
 				>
 				<File
-					RelativePath="..\..\src\Gui\AnimatedIcon.inl"
+					RelativePath="..\..\src\UI\Background.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\..\..\src\Gui\BackgroundImage.inl"
+					RelativePath="..\..\src\UI\Container.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\..\..\src\Gui\Frame.inl"
+					RelativePath="..\..\src\UI\Frame.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\..\..\src\Gui\Gui.inl"
+					RelativePath="..\..\src\UI\Icon.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\..\..\src\Gui\Icon.inl"
+					RelativePath="..\..\src\UI\Label.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\..\..\src\Gui\Label.inl"
+					RelativePath="..\..\src\UI\ListBoxBase.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\..\..\src\Gui\ListBox.inl"
+					RelativePath="..\..\src\UI\Skin.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\..\..\src\Gui\MenuElement.inl"
+					RelativePath="..\..\src\UI\TextBox.inl"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\Gui\Skin.inl"
+					RelativePath="..\..\src\UI\TextBoxBase.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\..\..\src\Gui\TextBox.inl"
+					RelativePath="..\..\src\UI\Widget.inl"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\Gui\TextBoxBase.inl"
-					>
-				</File>
-				<File
-					RelativePath=".\..\..\src\Gui\TextLine.inl"
-					>
-				</File>
-				<File
-					RelativePath=".\..\..\src\Gui\Widget.inl"
+					RelativePath="..\..\src\UI\Window.inl"
 					>
 				</File>
 			</Filter>

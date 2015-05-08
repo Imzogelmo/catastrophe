@@ -19,7 +19,7 @@
 #pragma once
 
 #include "Catastrophe/Core/Common.h"
-#include "Catastrophe/Core/Math/Vector4.h"
+#include "Catastrophe/Core/Math/Vector2.h"
 
 
 CE_NAMESPACE_BEGIN
@@ -93,22 +93,6 @@ public:
 		float temp = min.y;
 		min.y = max.y;
 		max.y = temp;
-	}
-
-	inline void GetSides( float* ptrTopBotLeftRight ) const
-	{
-		ptrTopBotLeftRight[0] = Top();
-		ptrTopBotLeftRight[1] = Bottom();
-		ptrTopBotLeftRight[2] = Left();
-		ptrTopBotLeftRight[3] = Right();
-	}
-
-	inline void GetCorners( Vector2* ptrToplBotlBotrTopr ) const
-	{
-		ptrToplBotlBotrTopr[0] = TopLeft();
-		ptrToplBotlBotrTopr[1] = BottomLeft();
-		ptrToplBotlBotrTopr[2] = BottomRight();
-		ptrToplBotlBotrTopr[3] = TopRight();
 	}
 
 	inline bool Empty() const

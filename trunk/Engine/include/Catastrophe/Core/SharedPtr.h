@@ -26,40 +26,45 @@
 CE_NAMESPACE_BEGIN
 
 
-/*
- * @Shared Pointer class with intrusive reference counting.
- * (Is not responsible for the lifetime of the pointer)
- * Objects pointed to must inherit from RefCounted class or
- * implement internal reference counting.
- * does not store weak references.
- */
+
+/// @SharedPointer
+///
+/// Shared pointer class with intrusive reference counting.
+/// (Is not responsible for the lifetime of the pointer)
+///
+/// Objects must inherit from RefCounted class or implement
+/// internal reference counting. SharedPointer does not store
+/// weak references and never allocates memory.
+///
+
 template <class T>
 class SharedPtr
 {
 public:
-	typedef SharedPtr<T> this_type;
+	SharedPtr()
+		: m_ptr(null)
+		{
+		}
 
-	SharedPtr() : m_ptr(0)
-	{
-	}
+	SharedPtr( const SharedPtr<T>& rhs )
+		: m_ptr(rhs.m_ptr)
+		{
+			if( m_ptr )
+				m_ptr->AddRef();
+		}
 
-	SharedPtr( const SharedPtr<T>& rhs ) : m_ptr(rhs.m_ptr)
-	{
-		if( m_ptr )
-			m_ptr->AddRef();
-	}
-
-	explicit SharedPtr( T* ptr ) : m_ptr(ptr)
-	{
-		if( m_ptr )
-			m_ptr->AddRef();
-	}
+	explicit SharedPtr( T* ptr )
+		: m_ptr(ptr)
+		{
+			if( m_ptr )
+				m_ptr->AddRef();
+		}
 
 	~SharedPtr()
-	{
-		if( m_ptr )
-			m_ptr->ReleaseRef();
-	}
+		{
+			if( m_ptr )
+				m_ptr->ReleaseRef();
+		}
 
 	SharedPtr<T>& operator =( const SharedPtr<T>& p )
 	{
@@ -84,26 +89,17 @@ public:
 		return *this;
 	}
 
-	operator T* () const { return m_ptr; }
-	operator bool () const { return m_ptr != 0; }
-	T* operator -> () const { CE_PTR_ASSERT(m_ptr); return m_ptr; }
-	T& operator * () const { CE_PTR_ASSERT(m_ptr); return *m_ptr; }
+	operator T*() const { return m_ptr; }
+	operator bool() const { return m_ptr != null; }
+	T* operator ->() const { CE_PTR_ASSERT(m_ptr); return m_ptr; }
+	T& operator *() const { CE_PTR_ASSERT(m_ptr); return *m_ptr; }
 
-	T* Get() const { return m_ptr; }
-
-	void AddRef()
+	T* Get() const
 	{
-		if( m_ptr )
-			m_ptr->AddRef();
+		return m_ptr;
 	}
 
-	void ReleaseRef()
-	{
-		if( m_ptr )
-			m_ptr->ReleaseRef();
-	}
-
-	void Reset( T* ptr = 0 )
+	void Reset( T* ptr = null )
 	{
 		if( m_ptr )
 			m_ptr->ReleaseRef();
@@ -113,11 +109,9 @@ public:
 			m_ptr->AddRef();
 	}
 
-	bool IsValid() const { return m_ptr != 0; }
-
-	void Swap( this_type & p )
+	bool IsValid() const
 	{
-		Swap(_ptr, p._ptr);
+		return m_ptr != null;
 	}
 
 protected:
