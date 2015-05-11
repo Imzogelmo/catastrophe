@@ -9,8 +9,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include <Catastrophe/IO/AttributeWriter.h>
-#include <Catastrophe/IO/AttributeReader.h>
+#include <Catastrophe/Core/IO/AttributeWriter.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
 #include "Buff.h"
 
 
@@ -47,7 +47,7 @@ bool BuffList::Serialize( const String& filename )
 	AttributeWriter xml(filename);
 	if( !xml.IsOpen() )
 	{
-		Log("Could not open file (%s)", filename.c_str());
+		Log("Could not open file (%s)", filename.CString());
 		return false;
 	}
 
@@ -73,25 +73,25 @@ bool BuffList::Deserialize( const String& filename )
 	AttributeReader xml(filename);
 	if( !xml.IsOpen() )
 	{
-		Log("Could not open file (%s)", filename.c_str());
+		Log("Could not open file (%s)", filename.CString());
 		return false;
 	}
 
 	if( xml.GetCurrentNodeName() == "BuffList" )
 	{
 		u32 n = xml.GetUInt("count");
-		m_items.clear();
-		m_items.reserve(n);
+		m_items.Clear();
+		m_items.Reserve(n);
 
 		while( xml.NextChild("Buff") )
 		{
-			m_items.push_back();
+			m_items.Add();
 			m_items.back().Deserialize(&xml);
 		}
 	}
 	else
 	{
-		Log("Error parsing (%s). Root item not found", filename.c_str());
+		Log("Error parsing (%s). Root item not found", filename.CString());
 		return false;
 	}
 

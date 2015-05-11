@@ -9,8 +9,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include <Catastrophe/IO/AttributeWriter.h>
-#include <Catastrophe/IO/AttributeReader.h>
+#include <Catastrophe/Core/IO/AttributeWriter.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
 #include <Catastrophe/Graphics/ShaderObject.h>
 #include <Catastrophe/Graphics/Shader.h>
 #include "ShaderAsset.h"
@@ -40,10 +40,10 @@ Shader* ShaderAsset::LoadShader()
 		VertexShader* vertexShader = 0;
 		FragmentShader* fragmentShader = 0;
 
-		if( !m_vertexFilename.empty() )
+		if( !m_vertexFilename.Empty() )
 			vertexShader = g_shaderObjectManager->LoadVertexShader(m_vertexFilename);
 
-		if( !m_fragmentFilename.empty() )
+		if( !m_fragmentFilename.Empty() )
 			fragmentShader = g_shaderObjectManager->LoadFragmentShader(m_fragmentFilename);
 
 		// there needs to be a valid shader object to create a program.
@@ -89,5 +89,5 @@ void ShaderAsset::Deserialize( AttributeReader* f )
 
 int ShaderAsset::GetMemoryUsage() const
 {
-	return (int)(m_name.capacity() + m_vertexFilename.capacity() + m_fragmentFilename.capacity());
+	return (int)(m_name.Capacity() + m_vertexFilename.Capacity() + m_fragmentFilename.Capacity());
 }

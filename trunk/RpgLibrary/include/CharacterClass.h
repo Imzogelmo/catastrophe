@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <fc/string.h>
+#include "Catastrophe/Core/Containers/String.h"
 
 #include "RpgCommon.h"
 #include "Attributes.h"
@@ -25,24 +25,24 @@ struct LearningData
 	LearningData() : id(0), level(0) {}
 };
 
-
+// CharacterClass
 struct RPG_API CharacterClass
 {
 	StaticString<32>	name;
 	StaticString<32>	script;
 	String				description;
 
-	int				id;
-	int				portraitId;
-	int				mapSpritesetId;
-	int				battleSpritesetId;
+	u16				id;
+	u16				portraitId;
+	u16				mapSpritesetId;
+	u16				battleSpritesetId;
 	int				exp_table_id;
 
 	Attributes		attributes;
 
-	fc::dynamic_array<LearningData>	skills;
-	fc::dynamic_array<LearningData>	passiveSkills;
-	fc::dynamic_array<LearningData>	spells;
+	Array<LearningData>	skills;
+	Array<LearningData>	passiveSkills;
+	Array<LearningData>	spells;
 
 
 	CharacterClass();

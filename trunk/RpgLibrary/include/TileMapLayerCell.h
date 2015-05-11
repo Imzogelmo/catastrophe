@@ -11,9 +11,9 @@
 
 #pragma once
 
-#include <fc/string.h>
-#include <fc/dynamic_array2d.h>
-#include <Catastrophe/Math/Color.h>
+#include "Catastrophe/Core/Containers/String.h"
+#include "Catastrophe/Core/Containers/Array2D.h"
+#include <Catastrophe/Core/Math/Color.h>
 #include <Catastrophe/Graphics/BlendMode.h>
 
 #include "Tile.h"

@@ -63,7 +63,7 @@ ShaderObject* ShaderObjectManager::Load( const String& filename, int type, int* 
 	fn += filename;
 	if( !shaderObject->LoadFromFile(fn) )
 	{
-		LogError("Failed to load shader object (%s)", fn.c_str());
+		LogError("Failed to load shader object (%s)", fn.CString());
 		SAFE_DELETE(shaderObject);
 	}
 	else

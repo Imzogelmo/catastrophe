@@ -11,8 +11,9 @@
 
 #pragma once
 
-#include <fc/static_bit_array.h>
 #include "RpgCommon.h"
+
+#include <Catastrophe/Core/Containers/StaticBitset.h>
 
 
 struct Switches
@@ -22,7 +23,7 @@ struct Switches
 		MaxWords = (((MaxBits - 1) / 32) + 1),
 	};
 
-	typedef fc::static_bit_array<MaxBits> bit_array_type;
+	typedef StaticBitset<MaxBits> bit_array_type;
 	bit_array_type bits;
 
 	Switches();
@@ -30,26 +31,25 @@ struct Switches
 #ifdef EDITOR
 	String strings[MaxBits];
 
-	void SetString( int bit, const String& value )
+	void SetString( u32 position, const String& value )
 	{
-		if( bit < MaxBits )
-			strings[bit] = value;
+		if( position < MaxBits )
+			strings[position] = value;
 	}
 
-	const String& GetString( int bit )
+	String GetString( u32 position )
 	{
-		if( bit < MaxBits )
-			return strings[bit];
+		if( position < MaxBits )
+			return strings[position];
 
 		return String();
 	}
 #endif
 
 	void Reset();
-	void FlipBit( int bit );
-	void SetBit( int bit, bool value );
-
-	bool GetBit( int bit );
+	void ToggleBit( u32 position );
+	void SetBit( u32 position, bool value );
+	bool GetBit( u32 position );
 
 	void Serialize( AttributeWriter* f );
 	void Deserialize( AttributeReader* f );

@@ -10,8 +10,8 @@
 // GNU General Public License for more details.
 
 
-#include <Catastrophe/IO/AttributeWriter.h>
-#include <Catastrophe/IO/AttributeReader.h>
+#include <Catastrophe/Core/IO/AttributeWriter.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
 #include "Synthesis.h"
 #include "Serialization.h"
 
@@ -25,14 +25,14 @@ Synthesis::Synthesis() :
 
 void Synthesis::Serialize( AttributeWriter* f )
 {
-	f->SetInt("item_id", item_id);
+	f->SetAttribute("item_id", item_id);
 
 }
 
 
 void Synthesis::Deserialize( AttributeReader* f )
 {
-	item_id = f->GetInt("item_id");
+	f->GetAttribute("item_id", item_id);
 
 }
 

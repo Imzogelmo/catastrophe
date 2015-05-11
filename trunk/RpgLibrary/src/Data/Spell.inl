@@ -9,8 +9,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include <Catastrophe/IO/AttributeWriter.h>
-#include <Catastrophe/IO/AttributeReader.h>
+#include <Catastrophe/Core/IO/AttributeWriter.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
 #include "Spell.h"
 
 
@@ -21,9 +21,9 @@ Spell::Spell()
 
 void Spell::Serialize( AttributeWriter* f )
 {
-	f->SetString("name", name.c_str());
-	f->SetString("script", script.c_str());
-	f->SetString("description", description.c_str());
+	f->SetString("name", name.CString());
+	f->SetString("script", script.CString());
+	f->SetString("description", description.CString());
 
 	attributes.Serialize(f);
 }
@@ -41,5 +41,5 @@ void Spell::Deserialize( AttributeReader* f )
 
 int Spell::GetMemoryUsage() const
 {
-	return (int)(description.capacity() + levelData.capacity());
+	return (int)(description.Capacity() + levelData.Capacity());
 }

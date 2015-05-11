@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <fc/dynamic_array.h>
+#include "Catastrophe/Core/Containers/Array.h"
 
 #include "RpgCommon.h"
 
@@ -35,6 +35,8 @@ struct RPG_API MonsterFormationCellData
 	void Deserialize( AttributeReader* f );
 };
 
+MAKE_TRAIT(MonsterFormationCellData, is_pod);
+
 
 
 /*
@@ -43,7 +45,7 @@ struct RPG_API MonsterFormationCellData
  */
 struct RPG_API MonsterFormation
 {
-	typedef fc::dynamic_array<MonsterFormationCellData> array_type;
+	typedef Array<MonsterFormationCellData> array_type;
 
 	array_type	formations;
 	u16			id;

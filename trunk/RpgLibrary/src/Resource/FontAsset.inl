@@ -11,9 +11,9 @@
 
 #pragma once
 
-#include <fc/string.h>
-#include <Catastrophe/IO/AttributeWriter.h>
-#include <Catastrophe/IO/AttributeReader.h>
+#include "Catastrophe/Core/Containers/String.h"
+#include <Catastrophe/Core/IO/AttributeWriter.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
 
 #include "FontAsset.h"
 #include "TextureManager.h"
@@ -38,7 +38,7 @@ FontAsset::~FontAsset()
 		// ref count should be 0.
 		// if not, the program did not interface this class correctly.
 		LogError("FontAsset Error: File (%s) : Destructor called with ref count (%i)",
-			m_fontFilename.c_str(), m_refCount);
+			m_fontFilename.CString(), m_refCount);
 	}
 }
 
@@ -49,12 +49,12 @@ Font* FontAsset::LoadFont()
 	if( m_fontResourceId < 0 )
 	{
 		// retrieve by filename
-		font = g_fontManager->Load(m_fontFilename, &m_fontResourceId);
+		font = GetFontManager()->Load(m_fontFilename, &m_fontResourceId);
 	}
 	else
 	{
 		// retrieve by index without increasing count.
-		Resource* resource = g_fontManager->GetResourceCache()->GetResource(m_fontResourceId);
+		Resource* resource = GetFontManager()->GetResourceCache()->GetResource(m_fontResourceId);
 		if( resource )
 		{
 			font = (Font*)resource->ptr;
@@ -65,7 +65,7 @@ Font* FontAsset::LoadFont()
 	{
 		// wtf error.
 		LogError("FontAsset::LoadTexture Error: File (%s) : ref count (%i) : null resource!",
-			m_fontFilename.c_str(), m_refCount);
+			m_fontFilename.CString(), m_refCount);
 		m_refCount--;
 	}
 
@@ -82,7 +82,7 @@ void FontAsset::ReleaseFont()
 	if( m_refCount < 1 )
 	{
 		m_fontResourceId = -1;
-		g_fontManager->Unload(m_fontResourceId);
+		GetFontManager()->Unload(m_fontResourceId);
 	}
 }
 
@@ -97,8 +97,8 @@ void FontAsset::Reset()
 void FontAsset::Serialize( AttributeWriter* f )
 {
 	f->BeginNode("Asset");
-	f->SetString("font", m_fontFilename.c_str());
-	f->SetBool("preload", m_preload);
+	f->SetString("font", m_fontFilename.CString());
+	f->SetAttribute("preload", m_preload);
 	f->EndNode();
 }
 
@@ -107,8 +107,8 @@ void FontAsset::Deserialize( AttributeReader* f )
 {
 	if( f->NextChild("Asset") )
 	{
-		m_fontFilename = f->GetString("font");
-		m_preload = f->GetBool("preload");
+		f->GetString("font", m_fontFilename);
+		f->GetAttribute("preload", m_preload);
 		f->SetToParent();
 	}
 
@@ -118,5 +118,5 @@ void FontAsset::Deserialize( AttributeReader* f )
 
 int FontAsset::GetMemoryUsage() const
 {
-	return (int)(m_fontFilename.capacity());
+	return (int)(m_fontFilename.Capacity());
 }

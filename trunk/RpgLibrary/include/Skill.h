@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include <fc/string.h>
-#include <fc/static_string.h>
+#include "Catastrophe/Core/Containers/String.h"
+#include "Catastrophe/Core/Containers/StaticString.h"
 
 #include "RpgCommon.h"
 #include "Attributes.h"
@@ -51,7 +51,7 @@ struct RPG_API Skill : public Ability
 	int		cost;
 
 	//SkillLevelData levelData[MAX_SKILL_LV]; //should be dynamic
-	fc::vector<SkillLevelData> levelData;
+	Vector<SkillLevelData> levelData;
 
 	//s16	misc[16];
 	//u8 level;

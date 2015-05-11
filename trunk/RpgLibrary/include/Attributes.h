@@ -18,8 +18,12 @@
 
 typedef FixedAttributeTypeArray<s32, MAX_PARAMS>	MaxParamValueArrayType;
 typedef FixedAttributeTypeArray<s16, MAX_STATS>		StatisticsValueArrayType;
-typedef FixedAttributeTypeArray<s16, MAX_ELEMENTS>	ElementalArrayType;
-typedef FixedAttributeTypeArray<s8, MAX_STATUS>		StatusArrayType;
+//typedef FixedAttributeTypeArray<s16, MAX_ELEMENTS>	ElementalArrayType;
+//typedef FixedAttributeTypeArray<s8, MAX_STATUS>		StatusArrayType;
+
+typedef FixedAttributeTypeArray<s8, MAX_ELEMENTS>	ElementalArrayType;
+typedef FixedAttributeTypeArray<s8, MAX_STATS>		StatusArrayType;
+
 //typedef FixedAttributeTypeArray<s16, MAX_MISC>	MiscArrayType;
 
 
@@ -45,31 +49,31 @@ struct RPG_API Attributes
 
 	inline void SetMaxParam( u32 index, int value )
 	{
-		maxParams[index] = fc::clamp<int>
+		maxParams[index] = Clamp<int>
 			(value, -MAX_PARAM_VALUE, MAX_PARAM_VALUE);
 	}
 
 	inline void SetStat( u32 index, s16 value )
 	{
-		stats[index] = (s16)fc::clamp<int>
+		stats[index] = (s16)Clamp<int>
 			(value, -MAX_STAT_VALUE, MAX_STAT_VALUE);
 	}
 
 	inline void SetElementalDef( u32 index, s16 value )
 	{
-		elementalDefense[index] = (char)fc::clamp<int>
+		elementalDefense[index] = (char)Clamp<int>
 			(value, -MAX_ELEMENT_VALUE, MAX_ELEMENT_VALUE);
 	}
 
 	inline void SetStatusAtk( u32 index, int value )
 	{
-		statusAttack[index] = (char)fc::clamp<int>
+		statusAttack[index] = (char)Clamp<int>
 			(value, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
 	}
 
 	inline void SetStatusDef( u32 index, int value )
 	{
-		statusDefense[index] = (char)fc::clamp<int>
+		statusDefense[index] = (char)Clamp<int>
 			(value, -MAX_STATUS_VALUE, MAX_STATUS_VALUE);
 	}
 
@@ -78,7 +82,6 @@ struct RPG_API Attributes
 	void ApplyPercentageModifier(const this_type& modifier);
 	void Clamp(const this_type& min, const this_type& max);
 */
-	static void RegisterObject();
 
 	void Serialize( AttributeWriter* f );
 	void Deserialize( AttributeReader* f );

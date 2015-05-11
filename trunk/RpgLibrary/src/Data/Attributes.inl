@@ -9,9 +9,9 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include <Catastrophe/IO/File.h>
-#include <Catastrophe/IO/AttributeWriter.h>
-#include <Catastrophe/IO/AttributeReader.h>
+#include <Catastrophe/Core/IO/File.h>
+#include <Catastrophe/Core/IO/AttributeWriter.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
 
 #include "Attributes.h"
 
@@ -88,17 +88,6 @@ void Attributes::Clamp(const Attributes& min, const Attributes& max)
 	statusAttack.Clamp(min.statusAttack, max.statusAttack);
 }
 */
-
-void Attributes::RegisterObject()
-{
-	/*
-	REGISTER_ATTRIBUTE_FACTORY_TYPE(Attributes);
-	REGISTER_ATTRIBUTE_ARRAY(Attributes, VAR_TYPE_INT_ARRAY, MAX_PARAMS, "MaxParams", maxParams);
-	REGISTER_ATTRIBUTE_ARRAY(Attributes, VAR_TYPE_SHORT_ARRAY, MAX_STATS, "Stats", stats);
-	REGISTER_ATTRIBUTE_ARRAY(Attributes, VAR_TYPE_BYTE_ARRAY, MAX_STATUS, "StatusAtk", statusAttack);
-	REGISTER_ATTRIBUTE_ARRAY(Attributes, VAR_TYPE_BYTE_ARRAY, MAX_STATUS, "StatusDef", statusDefense);
-	*/
-}
 
 
 void Attributes::Serialize( AttributeWriter* f )

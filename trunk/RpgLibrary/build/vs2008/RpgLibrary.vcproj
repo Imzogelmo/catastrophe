@@ -42,9 +42,12 @@
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\..\Engine\include;..\..\include;..\..\src\Data;..\..\src\Resource;..\..\src\Tile"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
+				StringPooling="true"
 				MinimalRebuild="true"
+				ExceptionHandling="1"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
+				BufferSecurityCheck="false"
 				ProgramDataBaseFileName="$(OutDir)\rpglibd.pdb"
 				WarningLevel="3"
 				DebugInformationFormat="4"
@@ -108,8 +111,12 @@
 				WholeProgramOptimization="false"
 				AdditionalIncludeDirectories="..\..\..\Engine\include;..\..\include;..\..\src\Data;..\..\src\Resource;..\..\src\Tile"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
+				StringPooling="true"
+				ExceptionHandling="0"
 				RuntimeLibrary="2"
+				BufferSecurityCheck="false"
 				EnableFunctionLevelLinking="true"
+				FloatingPointModel="2"
 				ProgramDataBaseFileName="$(OutDir)\rpglib.pdb"
 				WarningLevel="3"
 				DebugInformationFormat="3"
@@ -167,6 +174,10 @@
 			<Filter
 				Name="Data"
 				>
+				<File
+					RelativePath="..\..\src\Data\Ability.inl"
+					>
+				</File>
 				<File
 					RelativePath=".\..\..\src\Data\BattleCommand.inl"
 					>
@@ -345,6 +356,10 @@
 				</File>
 				<File
 					RelativePath=".\..\..\src\Resource\ShaderObjectManager.inl"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\Resource\SkinAsset.inl"
 					>
 				</File>
 				<File
@@ -607,6 +622,10 @@
 				</File>
 				<File
 					RelativePath=".\..\..\include\ShaderObjectManager.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\SkinAsset.h"
 					>
 				</File>
 				<File

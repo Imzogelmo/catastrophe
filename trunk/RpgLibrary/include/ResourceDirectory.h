@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <fc/string.h>
+#include "Catastrophe/Core/Containers/String.h"
 
 
 enum BaseDirectoryType
@@ -42,7 +42,7 @@ static const char* defaultBaseDirectoryStrings[BaseDirectoryType_Max] =
 	"Sfx/",
 	"Maps/",
 	"Tilesets/",
-	"Data/",
+	"Database/",
 	"Scripts/",
 	"Scripts/defs/"
 };

@@ -9,8 +9,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include <Catastrophe/IO/AttributeWriter.h>
-#include <Catastrophe/IO/AttributeReader.h>
+#include <Catastrophe/Core/IO/AttributeWriter.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
 #include "Item.h"
 
 Attributes Item::m_staticAttributes = Attributes();
@@ -18,7 +18,7 @@ Attributes Item::m_staticAttributes = Attributes();
 
 Item::Item() :
 	name(),
-	script(),
+	//script(),
 	description(),
 	type(0),
 	subtype(0),
@@ -30,32 +30,33 @@ Item::Item() :
 
 void Item::Serialize( AttributeWriter* f )
 {
-	f->SetString("name", name.c_str());
-	f->SetString("script", script.c_str());
+	f->SetString("name", name.CString());
+	//f->SetString("script", script.CString());
 	f->SetString("description", description);
 
 	f->BeginNode("Data");
-	f->SetShort("type", type);
-	f->SetShort("subtype", subtype);
-	f->SetInt("price", price);
+	{
+		f->SetAttribute("type", type);
+		f->SetAttribute("subtype", subtype);
+		f->SetAttribute("price", price);
 
-	factors.Serialize(f);
-
+		factors.Serialize(f);
+	}
 	f->EndNode();
 }
 
 
 void Item::Deserialize( AttributeReader* f )
 {
-	name = f->GetString("name", name.c_str());
-	script = f->GetString("script", script.c_str());
-	description = f->GetString("description", description.c_str());
+	name = f->GetString("name", name.CString());
+	//script = f->GetString("script", script.CString());
+	description = f->GetString("description", description.CString());
 
 	if( f->NextChild("Data") )
 	{
-		type = f->GetShort("type");
-		subtype = f->GetShort("subtype");
-		price = f->GetInt("price");
+		f->GetAttribute("type", type);
+		f->GetAttribute("subtype", subtype);
+		f->GetAttribute("price", price);
 
 		factors.Deserialize(f);
 
@@ -66,6 +67,6 @@ void Item::Deserialize( AttributeReader* f )
 
 int Item::GetMemoryUsage() const
 {
-	return (int)description.capacity();
+	return (int)description.Capacity();
 }
 

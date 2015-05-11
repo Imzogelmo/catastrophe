@@ -11,11 +11,11 @@
 
 #pragma once
 
-#include <fc/dynamic_array.h>
-#include <fc/fixed_vector.h>
-#include <fc/string.h>
-
 #include "RpgCommon.h"
+
+#include "Catastrophe/Core/Containers/Array.h"
+#include "Catastrophe/Core/Containers/String.h"
+
 #include "Enums.h"
 #include "Serialization.h"
 
@@ -67,7 +67,7 @@ public:
 	DataArray<Skill>			skills;
 	DataArray<Skill>			passiveSkills;
 	DataArray<Spell>			spells;
-	//DataArray<EncounterGroup>	encounters;
+	DataArray<EncounterGroup>	encounters;
 
 	DataArray<Item>				items;
 	DataArray<EquipmentItem>	weapons;
@@ -139,31 +139,31 @@ public:
 
 	/// Called internally by DataArray. (This also keep the header files clean) ;)
 	template <class T> static bool SerializeDataArray
-		( T& arr, ResourceDirectory* resourceDirectory, const String& filename, const char* root, const char* item );
+		( T& dataArray, ResourceDirectory* resourceDirectory, const String& filename, const char* root, const char* item );
 
 	template <class T> static bool DeserializeDataArray
-		( T& arr, ResourceDirectory* resourceDirectory, const String& filename, const char* root, const char* item );
+		( T& dataArray, ResourceDirectory* resourceDirectory, const String& filename, const char* root, const char* item );
 
 	/// *Safe* lookup of data by id. If the id is invalid it will return null.
-	template <class T> static inline T* GetArrayContent( DataArray<T>& arr, int id ) {
-		return (u32)id < arr.size() ? &arr[id] : (T*)0;
+	template <class T> static inline T* GetArrayContent( DataArray<T>& dataArray, int id ) {
+		return (u32)id < dataArray.Size() ? &dataArray[id] : (T*)null;
 	}
 
 	/// Linear lookup of data by name. If the name is not found it will return null.
-	template <class T> static inline T* GetArrayContentByName( DataArray<T>& arr, const String& name ) {
-		for( u32 i(0); i < arr.size(); ++i )
-			if( arr[i].GetName() == name )
-				return &arr[i];
+	template <class T> static inline T* GetArrayContentByName( DataArray<T>& dataArray, const String& name ) {
+		for( u32 i(0); i < dataArray.Size(); ++i )
+			if( dataArray[i].GetName() == name )
+				return &dataArray[i];
 
-		return (T*)0;
+		return (T*)null;
 	}
 
 	/// Generate IDs from a DataArray. (Types must have an 'int id' property.)
-	template <class T> static void GenerateIds( T& arr );
+	template <class DatabaseArrayType> static void GenerateIds( DatabaseArrayType& dataArray );
 
 	/// Generate script header from array. (must contain T(item).name member).
-	template <class Array> bool GenerateHeader
-		( const Array& arr, ResourceDirectory* resourceDirectory, const String& filename, const String& prependStr );
+	template <class ArrayType> bool GenerateHeader
+		( const ArrayType& dataArray, ResourceDirectory* resourceDirectory, const String& filename, const String& prependStr );
 
 	/*
 	Skill*			GetSkill( int id ) { return GetArrayContent<Skill>(skills, id); }
@@ -172,7 +172,7 @@ public:
 	*/
 
 	// Lookup by id
-	inline Item*				GetItem(ItemID itemId)
+	FORCEINLINE Item* GetItem(ItemID itemId)
 	{
 		const u16 id = itemId.id;
 		switch( itemId.category )
@@ -188,35 +188,36 @@ public:
 	}
 
 
-	inline Skill*				GetSkill(int id) { return GetArrayContent<Skill>(skills, id); }
-	inline Skill*				GetPassiveSkill(int id) { return GetArrayContent<Skill>(passiveSkills, id); }
-	inline Spell*				GetSpell(int id) { return GetArrayContent<Spell>(spells, id); }
+	FORCEINLINE Skill*				GetSkill(int id) { return GetArrayContent<Skill>(skills, id); }
+	FORCEINLINE Skill*				GetPassiveSkill(int id) { return GetArrayContent<Skill>(passiveSkills, id); }
+	FORCEINLINE Spell*				GetSpell(int id) { return GetArrayContent<Spell>(spells, id); }
+	FORCEINLINE EncounterGroup*		GetEncounterGroup(int id) { return GetArrayContent<EncounterGroup>(encounters, id); }
 
-	inline Item*				GetItem(int id) { return GetArrayContent<Item>(items, id); }
-	inline Item*				GetWeapon(int id) { return GetArrayContent<EquipmentItem>(weapons, id); }
-	inline Item*				GetArmor(int id) { return GetArrayContent<EquipmentItem>(armor, id); }
-	inline Item*				GetAccessory(int id) { return GetArrayContent<EquipmentItem>(accessories, id); }
+	FORCEINLINE Item*				GetItem(int id) { return GetArrayContent<Item>(items, id); }
+	FORCEINLINE Item*				GetWeapon(int id) { return GetArrayContent<EquipmentItem>(weapons, id); }
+	FORCEINLINE Item*				GetArmor(int id) { return GetArrayContent<EquipmentItem>(armor, id); }
+	FORCEINLINE Item*				GetAccessory(int id) { return GetArrayContent<EquipmentItem>(accessories, id); }
 
-	inline MonsterData*			GetMonster(int id) { return GetArrayContent<MonsterData>(monsters, id); }
-	inline MonsterTroop*		GetMonsterTroop(int id) { return GetArrayContent<MonsterTroop>(monsterTroops, id); }
-	inline MonsterFormation*	GetMonsterFormation(int id) { return GetArrayContent<MonsterFormation>(monsterFormations, id); }
+	FORCEINLINE MonsterData*		GetMonster(int id) { return GetArrayContent<MonsterData>(monsters, id); }
+	FORCEINLINE MonsterTroop*		GetMonsterTroop(int id) { return GetArrayContent<MonsterTroop>(monsterTroops, id); }
+	FORCEINLINE MonsterFormation*	GetMonsterFormation(int id) { return GetArrayContent<MonsterFormation>(monsterFormations, id); }
 
-	inline CharacterData*		GetCharacter(int id) { return GetArrayContent<CharacterData>(characters, id); }
-	inline CharacterClass*		GetCharacterClass(int id) { return GetArrayContent<CharacterClass>(characterClasses, id); }
-	inline Race*				GetRace(int id) { return GetArrayContent<Race>(races, id); }
-	inline ExperienceTable*		GetExperienceTable(int id) { return GetArrayContent<ExperienceTable>(experienceTables, id); }
+	FORCEINLINE CharacterData*		GetCharacter(int id) { return GetArrayContent<CharacterData>(characters, id); }
+	FORCEINLINE CharacterClass*		GetCharacterClass(int id) { return GetArrayContent<CharacterClass>(characterClasses, id); }
+	FORCEINLINE Race*				GetRace(int id) { return GetArrayContent<Race>(races, id); }
+	FORCEINLINE ExperienceTable*	GetExperienceTable(int id) { return GetArrayContent<ExperienceTable>(experienceTables, id); }
 
-	inline SpriteAsset*				GetBattleBackgroundSpritesAsset(int id) { return GetArrayContent<SpriteAsset>(battleBackgroundSprites, id); }
-	inline SpriteAsset*				GetMiscIconSpriteAsset(int id) { return GetArrayContent<SpriteAsset>(miscIconSprites, id); }
-	inline SpriteAsset*				GetCharacterPortraitSpriteAsset(int id) { return GetArrayContent<SpriteAsset>(characterPortraitSprites, id); }
-	inline AnimatedSpriteSetAsset*	GetCharacterMapSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(characterMapSprites, id); }
-	inline AnimatedSpriteSetAsset*	GetCharacterBattleSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(characterBattleSprites, id); }
-	inline AnimatedSpriteSetAsset*	GetMonsterMapSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(monsterMapSprites, id); }
-	inline AnimatedSpriteSetAsset*	GetMonsterBattleSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(monsterBattleSprites, id); }
-	inline ShaderAsset*				GetShaderAsset(int id) { return GetArrayContent<ShaderAsset>(shaders, id); }
+	FORCEINLINE SpriteAsset*			GetBattleBackgroundSpritesAsset(int id) { return GetArrayContent<SpriteAsset>(battleBackgroundSprites, id); }
+	FORCEINLINE SpriteAsset*			GetMiscIconSpriteAsset(int id) { return GetArrayContent<SpriteAsset>(miscIconSprites, id); }
+	FORCEINLINE SpriteAsset*			GetCharacterPortraitSpriteAsset(int id) { return GetArrayContent<SpriteAsset>(characterPortraitSprites, id); }
+	FORCEINLINE AnimatedSpriteSetAsset*	GetCharacterMapSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(characterMapSprites, id); }
+	FORCEINLINE AnimatedSpriteSetAsset*	GetCharacterBattleSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(characterBattleSprites, id); }
+	FORCEINLINE AnimatedSpriteSetAsset*	GetMonsterMapSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(monsterMapSprites, id); }
+	FORCEINLINE AnimatedSpriteSetAsset*	GetMonsterBattleSpriteSetAsset(int id) { return GetArrayContent<AnimatedSpriteSetAsset>(monsterBattleSprites, id); }
+	FORCEINLINE ShaderAsset*			GetShaderAsset(int id) { return GetArrayContent<ShaderAsset>(shaders, id); }
 
 	// Lookup by name
-	inline ShaderAsset*				GetShaderAsset(const String& name) { return GetArrayContentByName<ShaderAsset>(shaders, name); }
+	FORCEINLINE ShaderAsset*				GetShaderAsset(const String& name) { return GetArrayContentByName<ShaderAsset>(shaders, name); }
 
 	/// Gets the combined memory usage (in bytes) of every object inside the database,
 	/// including the database object itself.
@@ -237,9 +238,9 @@ template <class T>
 bool DataArray<T>::Serialize( const String& name ) {
 	ASSERT(rootName != 0);
 	ASSERT(itemName != 0);
-	ASSERT(!(name.empty() && filename.empty()));
+	ASSERT(!(name.Empty() && filename.Empty()));
 
-	bool ret = Database::SerializeDataArray(*this, resourceDirectory, name.empty() ? filename : name, rootName, itemName);
+	bool ret = Database::SerializeDataArray(*this, resourceDirectory, name.Empty() ? filename : name, rootName, itemName);
 	return ret;
 }
 
@@ -248,9 +249,9 @@ template <class T>
 bool DataArray<T>::Deserialize( const String& name ) {
 	ASSERT(rootName != 0);
 	ASSERT(itemName != 0);
-	ASSERT(!(name.empty() && filename.empty()));
+	ASSERT(!(name.Empty() && filename.Empty()));
 
-	bool ret = Database::DeserializeDataArray(*this, resourceDirectory, name.empty() ? filename : name, rootName, itemName);
+	bool ret = Database::DeserializeDataArray(*this, resourceDirectory, name.Empty() ? filename : name, rootName, itemName);
 	GenerateIds();
 
 	return ret;
@@ -259,7 +260,7 @@ bool DataArray<T>::Deserialize( const String& name ) {
 
 // DataArray constructor overloads
 template <class T> inline
-DataArray<T>::DataArray() : base_type(),
+DataArray<T>::DataArray() : BaseType(),
 		filename(),
 		rootName(0),
 		itemName(0),
@@ -272,6 +273,7 @@ DataArray<T>::DataArray() : base_type(),
 template <class T> inline void DataArray<T>::InitializeType() {}
 template <> inline void DataArray<Skill>::InitializeType() { SetNodeNames("SkillList", "Skill"); }
 template <> inline void DataArray<Spell>::InitializeType() { SetNodeNames("SpellList", "Spell"); }
+template <> inline void DataArray<EncounterGroup>::InitializeType() { SetNodeNames("MonsterEncounters", "Region"); }
 template <> inline void DataArray<Item>::InitializeType() { SetNodeNames("ItemList", "Item"); }
 template <> inline void DataArray<EquipmentItem>::InitializeType() { SetNodeNames("ItemList", "Item"); }
 template <> inline void DataArray<MonsterData>::InitializeType() { SetNodeNames("MonsterList", "Monster"); }

@@ -9,12 +9,12 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include <Catastrophe/IO/AttributeWriter.h>
-#include <Catastrophe/IO/AttributeReader.h>
+#include <Catastrophe/Core/IO/AttributeWriter.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
 #include "Encounter.h"
 
 
-EncounterData::EncounterData( u16 monsterTroopIndex, u16 encounterRate, u16 maxRate ) :
+EncounterData::EncounterData( u16 monsterTroopIndex, u8 encounterRate, u8 maxRate ) :
 	troopId(monsterTroopIndex),
 	rate(encounterRate),
 	maxRate(maxRate)
@@ -32,18 +32,18 @@ void EncounterData::Validate()
 void EncounterData::Serialize( AttributeWriter* f )
 {
 	f->BeginNode("Encounter");
-	f->SetUShort("troopId", troopId);
-	f->SetUShort("rate", rate);
-	f->SetUShort("maxRate", maxRate);
+	f->SetAttribute("troop_id", troopId);
+	f->SetAttribute("rate", rate);
+	f->SetAttribute("max_rate", maxRate);
 	f->EndNode();
 }
 
 
 void EncounterData::Deserialize( AttributeReader* f )
 {
-	troopId = f->GetShort("troopId");
-	rate = f->GetUShort("rate");
-	maxRate = f->GetUShort("maxRate");
+	f->GetAttribute("troop_id", troopId);
+	f->GetAttribute("rate", rate);
+	f->GetAttribute("max_rate", maxRate);
 }
 
 
@@ -59,10 +59,10 @@ EncounterGroup::EncounterGroup() :
 void EncounterGroup::Serialize( AttributeWriter* f )
 {
 	f->BeginNode("Region");
-	f->SetString("name", name.c_str());
-	f->SetUInt("num_encounters", encounters.size());
+	f->SetString("name", name.CString());
+	f->SetAttribute("count", encounters.Size());
 
-	for( vec_type::iterator it = encounters.begin(); it != encounters.end(); ++it )
+	for( VectorType::Iterator it = encounters.begin(); it != encounters.end(); ++it )
 	{
 		it->Serialize(f);
 	}
@@ -73,8 +73,10 @@ void EncounterGroup::Serialize( AttributeWriter* f )
 
 void EncounterGroup::Deserialize( AttributeReader* f )
 {
-	u32 numEncounters = f->GetUInt("num_encounters");
-	encounters.resize(numEncounters);
+	u32 numEncounters = 0;
+	f->GetString("name", name);
+	f->GetAttribute("count", numEncounters);
+	encounters.Resize(numEncounters);
 
 	for( u32 i(0); i < numEncounters; ++i )
 	{
@@ -89,5 +91,8 @@ void EncounterGroup::Deserialize( AttributeReader* f )
 }
 
 
-
+int EncounterGroup::GetMemoryUsage() const
+{
+	return (int)(encounters.Capacity() * sizeof(EncounterData));
+}
 

@@ -10,8 +10,8 @@
 // GNU General Public License for more details.
 
 
-#include <Catastrophe/IO/AttributeWriter.h>
-#include <Catastrophe/IO/AttributeReader.h>
+#include <Catastrophe/Core/IO/AttributeWriter.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
 #include "Switches.h"
 #include "Serialization.h"
 
@@ -24,31 +24,27 @@ Switches::Switches() :
 
 void Switches::Reset()
 {
-	bits.reset();
+	bits.Reset();
 }
 
 
-void Switches::FlipBit( int bit )
+void Switches::ToggleBit( u32 position )
 {
-	if( bit < 4096 )
-		bits.flip(bit);
+	if( position < MaxBits )
+		bits.FlipBit(position);
 }
 
 
-void Switches::SetBit( int bit, bool value )
+void Switches::SetBit( u32 position, bool value )
 {
-	if( bit < 4096 )
-		bits.set(bit, value);
+	if( position < MaxBits )
+		bits.SetBit(position, value);
 }
 
 
-bool Switches::GetBit( int bit )
+bool Switches::GetBit( u32 position )
 {
-	bool ret = false;
-	if( bit < 4096 )
-		ret = bits.get(bit);
-
-	return ret;
+	return (position < MaxBits ? bits.GetBit(position) : false);
 }
 
 

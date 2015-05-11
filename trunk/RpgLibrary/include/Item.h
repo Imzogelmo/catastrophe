@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include <fc/string.h>
-#include <fc/static_string.h>
+#include "Catastrophe/Core/Containers/String.h"
+#include "Catastrophe/Core/Containers/StaticString.h"
 
 #include "RpgCommon.h"
 #include "UsageInfo.h"
@@ -52,7 +52,7 @@ struct ItemID
 struct RPG_API Item
 {
 	StaticString<32>	name;
-	StaticString<32>	script;
+	//StaticString<32>	script;
 	String				description;
 
 	AbilityId	specialAbility;

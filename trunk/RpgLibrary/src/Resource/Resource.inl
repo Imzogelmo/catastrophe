@@ -34,33 +34,33 @@ void ResourceCache::SetManager( ResourceManagerTypeBase* p )
 
 void ResourceCache::SetResourceUsage( u32 maxCapacity )
 {
-	m_resources.reserve(maxCapacity);
-	m_freeStore.reserve(maxCapacity);
+	m_resources.Reserve(maxCapacity);
+	m_freeStore.Reserve(maxCapacity);
 }
 
 
 void ResourceCache::DeleteResources()
 {
-	for( vec_type::iterator it = m_resources.begin(); it != m_resources.end(); ++it )
+	for( vec_type::Iterator it = m_resources.begin(); it != m_resources.end(); ++it )
 	{
 		DeleteResource(it);
 	}
 
-	m_resources.clear();
-	m_freeStore.clear();
+	m_resources.Clear();
+	m_freeStore.Clear();
 }
 
 
 void ResourceCache::DeleteResource( Resource* resource )
 {
-	if( resource && m_resources.iterator_is_valid(resource) )
+	if( resource && m_resources.IteratorIsValid(resource) )
 	{
 		//dont delete previously deleted resources.
 		if( resource->ptr )
 		{
 			m_parent->DisposeResource(resource->ptr);
 			*resource = Resource();
-			m_freeStore.push_back( u32(resource - m_resources.begin()) );
+			m_freeStore.Add( u32(resource - m_resources.begin()) );
 		}
 	}
 }
@@ -68,11 +68,11 @@ void ResourceCache::DeleteResource( Resource* resource )
 
 Resource* ResourceCache::GetResource( const String& name )
 {
-	if( name.empty() )
+	if( name.Empty() )
 		return 0;
 
 	Resource* res = 0;
-	for( vec_type::iterator it = m_resources.begin(); it != m_resources.end(); ++it )
+	for( vec_type::Iterator it = m_resources.begin(); it != m_resources.end(); ++it )
 	{
 		if( it->name == name )
 		{
@@ -91,7 +91,7 @@ Resource* ResourceCache::GetResource( const void* ptr )
 		return 0;
 
 	Resource* res = 0;
-	for( vec_type::iterator it = m_resources.begin(); it != m_resources.end(); ++it )
+	for( vec_type::Iterator it = m_resources.begin(); it != m_resources.end(); ++it )
 	{
 		if( it->ptr == ptr )
 		{
@@ -107,7 +107,7 @@ Resource* ResourceCache::GetResource( const void* ptr )
 Resource* ResourceCache::GetResource( int id )
 {
 	Resource* res = 0;
-	if( (u32)id < m_resources.size() )
+	if( (u32)id < m_resources.Size() )
 	{
 		res = &m_resources[id];
 		if( !res->ptr )
@@ -121,18 +121,18 @@ Resource* ResourceCache::GetResource( int id )
 int ResourceCache::AddResource( const Resource& resource )
 {
 	int id = -1;
-	if( !m_freeStore.empty() )
+	if( !m_freeStore.Empty() )
 	{
-		id = (int)m_freeStore.back();
-		m_resources[ m_freeStore.back() ] = resource;
-		m_freeStore.pop_back();
+		id = (int)m_freeStore.Back();
+		m_resources[ m_freeStore.Back() ] = resource;
+		m_freeStore.PopBack();
 	}
 	else
 	{
-		ASSERT(!m_resources.full());
+		ASSERT(!m_resources.Full());
 
-		id = (int)m_resources.size();
-		m_resources.push_back(resource);
+		id = (int)m_resources.Size();
+		m_resources.Add(resource);
 	}
 
 	return id;
@@ -142,7 +142,7 @@ int ResourceCache::AddResource( const Resource& resource )
 int ResourceCache::GetResourceId( Resource* resource ) const
 {
 	int id = -1;
-	if( resource && m_resources.iterator_is_valid(resource) )
+	if( resource && m_resources.IteratorIsValid(resource) )
 	{
 		id = int(resource - m_resources.begin());
 	}

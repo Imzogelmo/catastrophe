@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include <fc/string.h>
-#include <fc/vector.h>
+#include "Catastrophe/Core/Containers/String.h"
+#include "Catastrophe/Core/Containers/Vector.h"
 #include <fc/fixed_vector.h>
 
 #include "RpgCommon.h"
@@ -91,15 +91,15 @@ void DeserializeObjectArrayXml( T* obj, const char* node, AttributeReader* f )
 template <class T>
 void SerializeObjectArraySizeXml( T* obj, const char* node, AttributeWriter* f )
 {
-	f->SetUInt(node, obj->size());
+	f->SetAttribute(node, obj->size());
 }
 
 
 template <class T>
 void DeserializeObjectArraySizeXml( T* obj, const char* node, AttributeReader* f )
 {
-	u32 n = f->GetUInt(node);
-	obj->resize(n);
+	u32 n = f->GetAttribute(node);
+	obj->Resize(n);
 }
 
 
@@ -166,7 +166,7 @@ public:
 class AttributeAccessorObjectTypeBase
 {
 public:
-	typedef fc::vector<AttributeAccessorInfo>	vec_type;
+	typedef Vector<AttributeAccessorInfo>	vec_type;
 
 	AttributeAccessorObjectTypeBase( const char* className ) : m_className(className) {}
 	virtual ~AttributeAccessorObjectTypeBase()
@@ -174,8 +174,8 @@ public:
 
 	void RegisterAttributeAccessor( const AttributeAccessorInfo& attrInfo );
 
-	NO_INLINE void SerializeObjectAttributesXml( void* obj, AttributeWriter* f );
-	NO_INLINE void DeserializeObjectAttributesXml( void* obj, AttributeReader* f );
+	NOINLINE void SerializeObjectAttributesXml( void* obj, AttributeWriter* f );
+	NOINLINE void DeserializeObjectAttributesXml( void* obj, AttributeReader* f );
 
 	int OnReadAttributeInfoXml( void* obj, AttributeReader* f, const AttributeAccessorInfo& attr );
 	int OnWriteAttributeInfoXml( void* obj, AttributeWriter* f, const AttributeAccessorInfo& attr );
@@ -259,7 +259,7 @@ public:
 
 			AttributeAccessorObjectTypeInfo<T>* p = new (m_buffer.data + m_offset) AttributeAccessorObjectTypeInfo<T>(className);
 			m_offset += sizeof(AttributeAccessorObjectTypeInfo<T>);
-			m_factories.push_back(p);
+			m_factories.Add(p);
 		}
 	}
 
@@ -285,7 +285,7 @@ public:
 
 	void DeleteFactories()
 	{
-		m_factories.clear();
+		m_factories.Clear();
 	}
 
 private:

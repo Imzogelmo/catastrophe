@@ -18,11 +18,11 @@
 void AttributeFlags::Serialize( AttributeWriter* f )
 {
 	f->BeginNode("Flags");
-	f->SetInt("elemAtk", elementAtk);
-	f->SetInt("familyStrong", familyStrong);
-	f->SetInt("familyWeak", familyWeak);
-	f->SetInt("class", classFlags);
-	f->SetInt("misc", miscFlags);
+	f->SetAttribute("elemAtk", elementAtk);
+	f->SetAttribute("familyStrong", familyStrong);
+	f->SetAttribute("familyWeak", familyWeak);
+	f->SetAttribute("class", classFlags);
+	f->SetAttribute("misc", miscFlags);
 	f->EndNode();
 }
 
@@ -31,11 +31,11 @@ void AttributeFlags::Deserialize( AttributeReader* f )
 {
 	if( f->FirstChild("Flags") )
 	{
-		elementAtk = f->GetInt("elem_atk");
-		familyStrong = f->GetInt("familyStrong");
-		familyWeak = f->GetInt("familyWeak");
-		classFlags = f->GetInt("class");
-		miscFlags = f->GetInt("misc");
+		f->GetAttribute("elem_atk", elementAtk);
+		f->GetAttribute("familyStrong", familyStrong);
+		f->GetAttribute("familyWeak", familyWeak);
+		f->GetAttribute("class", classFlags);
+		f->GetAttribute("misc", miscFlags);
 		f->SetToParent();
 	}
 }

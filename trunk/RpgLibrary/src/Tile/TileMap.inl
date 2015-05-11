@@ -9,11 +9,12 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
-#include <Catastrophe/IO/File.h>
-#include <Catastrophe/IO/FileBuffer.h>
-#include <Catastrophe/IO/LZ4.h>
+#include <Catastrophe/Core/IO/XmlWriter.h>
+#include <Catastrophe/Core/IO/XmlReader.h>
+#include <Catastrophe/Core/IO/File.h>
+#include <Catastrophe/Core/IO/MemoryFile.h>
+#include <Catastrophe/Core/IO/Compression.h>
+
 #include "TileMap.h"
 
 
@@ -45,18 +46,18 @@ TileMap::~TileMap()
 
 void TileMap::DeleteLayers()
 {
-	for( vec_type::iterator it = m_layers.begin(); it != m_layers.end(); ++it )
+	for( vec_type::Iterator it = m_layers.begin(); it != m_layers.end(); ++it )
 	{
 		delete *it;
 	}
 
-	m_layers.clear();
+	m_layers.Clear();
 }
 
 
 void TileMap::Clear()
 {
-	for( vec_type::iterator it = m_layers.begin(); it != m_layers.end(); ++it )
+	for( vec_type::Iterator it = m_layers.begin(); it != m_layers.end(); ++it )
 	{
 		(*it)->Clear();
 	}
@@ -84,7 +85,7 @@ void TileMap::Resize( u32 w, u32 h, u32 numLayers )
 			AddLayer();
 	}
 
-	for( vec_type::iterator it = m_layers.begin(); it != m_layers.end(); ++it )
+	for( vec_type::Iterator it = m_layers.begin(); it != m_layers.end(); ++it )
 	{
 		(*it)->Resize(w, h);
 	}
@@ -92,7 +93,7 @@ void TileMap::Resize( u32 w, u32 h, u32 numLayers )
 
 
 
-bool TileMap::AddLayer( TileMapLayer* layer )
+TileMapLayer* TileMap::AddLayer( TileMapLayer* layer )
 {
 	if( NumLayers() >= MaxLayers )
 	{
@@ -100,13 +101,13 @@ bool TileMap::AddLayer( TileMapLayer* layer )
 		return false;
 	}
 
-	if( !layer )
+	if( layer == null )
 	{
 		layer = new TileMapLayer();
 	}
 	else
 	{
-		for( vec_type::iterator it = m_layers.begin(); it != m_layers.end(); ++it )
+		for( vec_type::Iterator it = m_layers.begin(); it != m_layers.end(); ++it )
 		{
 			//if it already exists deep copy it.
 			if( layer == *it )
@@ -118,8 +119,9 @@ bool TileMap::AddLayer( TileMapLayer* layer )
 	}
 
 	layer->Resize(Width(), Height());
-	m_layers.push_back(layer);
-	return true;
+	m_layers.Add(layer);
+
+	return layer;
 }
 
 
@@ -129,7 +131,7 @@ void TileMap::RemoveLayer( u32 index )
 		return;
 
 	delete m_layers[index];
-	m_layers.erase_at(index);
+	m_layers.EraseAt(index);
 
 }
 
@@ -139,7 +141,7 @@ void TileMap::SwapLayer( u32 first, u32 second )
 	if( first == second || first >= NumLayers() || second >= NumLayers() )
 		return;
 
-	fc::swap( m_layers[first], m_layers[second] );
+	Swap( m_layers[first], m_layers[second] );
 }
 
 
@@ -154,115 +156,109 @@ TileMapLayer* TileMap::GetLayer( u32 index ) const
 
 void TileMap::Render( SpriteBatch* spriteBatch, const Rect& viewRect, bool mapWraparound )
 {
-	for( vec_type::iterator it = m_layers.begin(); it != m_layers.end(); ++it )
+	for( vec_type::Iterator it = m_layers.begin(); it != m_layers.end(); ++it )
 	{
 		if( (*it)->IsVisible() )
 			(*it)->Render(spriteBatch, viewRect, mapWraparound);
 	}
 }
 
-/*
-bool TileMap::Serialize( const String& filename )
-{
-	XmlWriter xml(filename);
-	if( !xml.IsOpen() )
-	{
-		Log("Could not open file (%s)", filename.c_str());
-		return false;
-	}
-
-	xml.BeginNode("TileMap");
-	xml.SetString("name", m_name.c_str());
-	xml.SetUInt("num_layers", m_layers.size());
-	xml.SetUInt("width", m_width);
-	xml.SetUInt("height", m_height);
-
-	for( u32 i(0); i < m_layers.size(); ++i )
-	{
-		xml.BeginNode("Layer");
-		m_layers[i]->Serialize(&xml);
-		xml.EndNode();
-	}
-
-	xml.EndNode();
-	xml.Close();
-
-	return true;
-}
-*/
 
 bool TileMap::Save( const String& path )
 {
-	// We write directly to memory so we can compress the data
-	// with our own custom header.
-	FileBuffer fileBuffer;
-
-	File f(path + m_filename, FileWrite);
-	if( !f.IsOpen() )
+	// Try and create the file handle first just in case.
+	File file(path + m_filename, FileWrite);
+	if( !file.IsOpen() )
 	{
-		Log("Could not open file (%s)", (path + m_filename).c_str());
+		Log("Could not open file (%s)", (path + m_filename).CString());
 		return false;
 	}
 
-	fileBuffer.WriteInt(0); //reserved for future use
-	fileBuffer.WriteInt(0); //reserved for future use
+	file.WriteFileID(TILEMAP_FILE_ID, FILE_ID_LENGTH);
+	file.WriteChar(0); // version info
+	file.WriteChar(0);
 
-	fileBuffer.WriteString(m_name);
-	fileBuffer.WriteUInt(m_layers.size());
-	fileBuffer.WriteUInt(m_width);
-	fileBuffer.WriteUInt(m_height);
+	// We write directly to memory so we can compress the data
+	// with our own custom header.
+	MemoryFile f;
+	f.Reserve(m_layers.size() * m_width * m_height * 32); // best guess
+
+	f.WriteString(m_name);
+	f.WriteUInt(m_layers.size());
+	f.WriteUInt(m_width);
+	f.WriteUInt(m_height);
+
+	//f.WriteInt(0); //reserved for future use
+	//f.WriteInt(0); //reserved for future use
 
 	for( u32 i(0); i < m_layers.size(); ++i )
-		m_layers[i]->Serialize(&fileBuffer);
+		m_layers[i]->Serialize(&f);
 
-	u8* p = new u8[ fileBuffer.Size() ];
-	u32 compressedSize = LZ4::CompressData(p, fileBuffer.GetData(), fileBuffer.Size()); 
+	// Now try to compress and close it
+	if( !CompressFromMemoryFile(&file, &f) )
+		return false;
 
-	f.WriteInt(fileBuffer.Size());
-	f.WriteInt(compressedSize);
-	f.Write(p, compressedSize);
-	f.Close();
+	file.Close();
 
 	return true;
 }
-
 
 
 bool TileMap::Load( const String& path, const String& filename )
 {
-	XmlReader xml(filename);
-	if( !xml.IsOpen() )
+	File file(path + filename);
+	if( !file.IsOpen() )
+		return false;
+
+	SetResourceName(filename);
+
+	return Load(&file);
+}
+
+
+bool TileMap::Load(Deserializer* deserializer)
+{
+	Deserializer& file = *deserializer;
+
+	// Make sure the file is actually a tilemap.
+	if( file.ReadFileID(FILE_ID_LENGTH) != TILEMAP_FILE_ID )
 	{
-		Log("Could not open file (%s)", filename.c_str());
+		Log("Could not load file. (%s) is not a valid tilemap", filename);
 		return false;
 	}
+	
+	file.ReadByte(); // version info
+	file.ReadByte();
 
-	if( xml.GetCurrentNodeName() == "TileMap" )
-	{
-		m_name = xml.GetString("name");
-		u32 n = xml.GetUInt("num_layers");
-		m_width = xml.GetUInt("width");
-		m_height = xml.GetUInt("height");
-
-		DeleteLayers();
-		m_layers.reserve( fc::clamp<u32>(n, 0, MaxLayers) );
-
-		while( xml.NextChild("Layer") )
-		{
-			if( AddLayer() )
-			{
-				//only deserialize if the layer was added.
-				m_layers.back()->Deserialize(&xml);
-			}
-		}
-	}
-	else
-	{
-		Log("Error parsing (%s). Root item not found", filename.c_str());
+	MemoryFile f;
+	if( !DecompressToMemoryFile(&f, &file) )
 		return false;
-	}
 
-	xml.Close();
+	u32 numLayers = 0;
+	u32 mapWidth = 0;
+	u32 mapHeight = 0;
+
+	f.ReadString(m_name);
+	f.ReadUInt(numLayers);
+	f.ReadUInt(mapWidth);
+	f.ReadUInt(mapHeight);
+
+	//f.ReadInt(); //reserved for future use
+	//f.ReadInt(); //reserved for future use
+
+	// sanity check
+	ASSERT(numLayers <= MaxLayers);
+	ASSERT(mapWidth < 65536);
+	ASSERT(mapHeight < 65536);
+
+	DeleteLayers();
+	m_layers.Reserve(numLayers);
+
+	for( u32 i(0); i < numLayers; ++i )
+	{
+		TileMapLayer* tileMapLayer = AddLayer();
+		tileMapLayer->Deserialize(&f);
+	}
 
 	return true;
 }

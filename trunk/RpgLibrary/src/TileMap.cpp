@@ -15,6 +15,8 @@
 // allowing you to compile only a single file to build a project.
 // Why would you do this, you ask? -Why not. ;)
 
+// include this first for definitions
+#include <Catastrophe/Core/Common.h>
 
 // tile
 #include "Tile.inl"

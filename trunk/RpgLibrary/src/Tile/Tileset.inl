@@ -9,12 +9,9 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
-#include <Catastrophe/IO/Serializer.h>
-#include <Catastrophe/IO/Deserializer.h>
-#include <Catastrophe/IO/FileBuffer.h>
-#include <Catastrophe/IO/CompressedFile.h>
+#include <Catastrophe/Core/IO/File.h>
+#include <Catastrophe/Core/IO/MemoryFile.h>
+#include <Catastrophe/Core/IO/Compression.h>
 
 #include "Tileset.h"
 #include "TextureManager.h"
@@ -26,7 +23,7 @@ Tileset::Tileset() :
 	m_name(),
 	m_tileSize(16),
 	m_tiles(),
-	m_ptr_animated_tiles()
+	m_pAnimatedTiles()
 {
 }
 
@@ -39,8 +36,8 @@ Tileset::~Tileset()
 
 void Tileset::Clear()
 {
-	m_tiles.resize(0, 0);
-	m_ptr_animated_tiles.clear();
+	m_tiles.Resize(0, 0);
+	m_pAnimatedTiles.Clear();
 }
 
 
@@ -58,9 +55,9 @@ void Tileset::SetTileSize( u32 tileSize )
 }
 
 
-void Tileset::Resize( u32 w, u32 h )
+void Tileset::Resize( u32 width, u32 height )
 {
-	m_tiles.resize(h, w);
+	m_tiles.Resize(height, width);
 
 	ValidateTiles();
 	ReconfigureAnimatedTileList();
@@ -70,7 +67,7 @@ void Tileset::Resize( u32 w, u32 h )
 void Tileset::Update()
 {
 	// we only need to update the animated tiles, not the whole kit 'n kaboodle.
-	for( anim_vec_type::iterator it = m_ptr_animated_tiles.begin(); it != m_ptr_animated_tiles.end(); ++it )
+	for( Vector<Tile*>::Iterator it = m_pAnimatedTiles.begin(); it != m_pAnimatedTiles.end(); ++it )
 	{
 		(*it)->Update();
 	}
@@ -79,18 +76,18 @@ void Tileset::Update()
 
 void Tileset::ReconfigureAnimatedTileList()
 {
-	m_ptr_animated_tiles.clear();
-	for( array_type::iterator it = m_tiles.begin(); it != m_tiles.end(); ++it )
+	m_pAnimatedTiles.Clear();
+	for( ArrayType::Iterator it = m_tiles.begin(); it != m_tiles.end(); ++it )
 	{
 		if( it->NumFrames() > 1 )
-			m_ptr_animated_tiles.push_back(it);
+			m_pAnimatedTiles.Add(it);
 	}
 }
 
 
 void Tileset::ResetAnimations()
 {
-	for( anim_vec_type::iterator it = m_ptr_animated_tiles.begin(); it != m_ptr_animated_tiles.end(); ++it )
+	for( Vector<Tile*>::Iterator it = m_pAnimatedTiles.begin(); it != m_pAnimatedTiles.end(); ++it )
 	{
 		(*it)->SetCurrentFrame(0);
 	}
@@ -103,7 +100,7 @@ void Tileset::ValidateTiles()
 	//since we do no runtime checks on these later 
 	//it's possible to get undefined behavior otherwise.
 
-	u32 size = m_tiles.size();
+	u32 size = m_tiles.Size();
 	for( u32 i(0); i < size; ++i )
 	{
 		Tile &tile = m_tiles[i];
@@ -121,7 +118,7 @@ u32 Tileset::GetTextureId() const
 
 Tile* Tileset::GetTile( u32 index ) const
 {
-	if( index < m_tiles.size() )
+	if( index < m_tiles.Size() )
 		return const_cast<Tile*>(&m_tiles[index]);
 
 	return 0;
@@ -130,101 +127,58 @@ Tile* Tileset::GetTile( u32 index ) const
 
 Tile* Tileset::GetTile( u32 x, u32 y ) const
 {
-	if( x < m_tiles.x() && y < m_tiles.y() )
+	if( x < m_tiles.Width() && y < m_tiles.Height() )
 		return const_cast<Tile*>(&m_tiles(y, x));
 
 	return 0;
 }
 
-/*
-bool Tileset::Serialize( const String& directory )
+
+bool Tileset::Save( const String& path )
 {
-	String filename = directory + m_filename;
-	XmlWriter xml(filename);
-	if( !xml.IsOpen() )
-	{
-		Log("Could not open file (%s)", filename.c_str());
-		return false;
-	}
-
-	String textureFilename;
-	if( !m_texture )
-	{
-		//shouldn't really happen.
-		Log("Tileset::Serialize: (%s) texture is null.", filename.c_str());
-	}
-	else
-	{
-		//textureFilename = m_texture->GetFilename(); //todo:
-		textureFilename = m_texture->GetResourceName();
-	}
-
-
-	xml.BeginNode("Tileset");
-	xml.SetString("name", m_name.c_str());
-	xml.SetString("texture", textureFilename.c_str());
-	xml.SetUInt("width", m_tiles.x());
-	xml.SetUInt("height", m_tiles.y());
-
-	for( u32 i(0); i < m_tiles.size(); ++i )
-	{
-		xml.BeginNode("Tile");
-		m_tiles[i].Serialize(&xml);
-		xml.EndNode();
-	}
-
-	xml.EndNode();
-	xml.Close();
-
-	return true;
-}
-*/
-
-bool Tileset::Save( const String& directory )
-{
-	if( m_filename.empty() )
+	if( m_filename.Empty() )
 	{
 		LogError("Cannot save tileset without a valid filename.");
 		return false;
 	}
 
-	String filename = directory + m_filename;
+	String filename = path + m_filename;
 
-	FileBuffer f;
-	f.Reserve(m_tiles.size() * sizeof(Tile));
-
-	CompressedFile compressedFile(filename, FileWrite);
-	if( !compressedFile.IsOpen() )
+	File file(filename, FileWrite);
+	if( !file.IsOpen() )
 		return false;
 
 	String textureFilename;
 	if( !m_texture )
-	{
-		//shouldn't really happen.
-		Log("Tileset::Serialize: (%s) texture is null.", filename.c_str());
-	}
+		Log("Tileset::Serialize: (%s) texture is null.", filename.CString());
 	else
-	{
-		//textureFilename = m_texture->GetFilename(); //todo:
 		textureFilename = m_texture->GetResourceName();
-	}
 
-	f.WriteInt(0); //reserved for future use
-	f.WriteInt(0); //reserved for future use
+	file.WriteFileID(TILESET_FILE_ID, FILE_ID_LENGTH);
+	file.WriteChar(0); // version info
+	file.WriteChar(0);
+
+	MemoryFile f;
+	f.Reserve(m_tiles.Size() * sizeof(Tile));
 
 	f.WriteString(m_name);
 	f.WriteString(textureFilename);
 	f.WriteUShort((u16)m_tileSize);
-	f.WriteUShort((u16)m_tiles.x());
-	f.WriteUShort((u16)m_tiles.y());
+	f.WriteUShort((u16)m_tiles.Width());
+	f.WriteUShort((u16)m_tiles.Height());
 
-	for( u32 i(0); i < m_tiles.size(); ++i )
+	//f.WriteInt(0); //reserved for future use
+	//f.WriteInt(0); //reserved for future use
+
+	for( u32 i(0); i < m_tiles.Size(); ++i )
 	{
 		m_tiles[i].Serialize(&f);
 	}
 
-	compressedFile.Write(f.GetData(), f.Size());
-	compressedFile.Close();
+	if( !CompressFromMemoryFile(&file, &f) )
+		return false;
+
+	file.Close();
 
 	return true;
 }
@@ -234,9 +188,18 @@ bool Tileset::Load( const String& directory, const String& filename )
 {
 	Clear();
 
-	CompressedFile f(directory + filename, FileRead);
-	if( !f.IsOpen() )
+	File file(directory + filename, FileRead);
+	if( !file.IsOpen() )
 		return false;
+
+	if( file.ReadFileID(FILE_ID_LENGTH) != TILESET_FILE_ID )
+	{
+		Log("Could not load file. (%s) is not a valid tileset", filename);
+		return false;
+	}
+	
+	file.ReadByte(); // version info
+	file.ReadByte();
 
 	m_filename = filename;
 
@@ -245,8 +208,14 @@ bool Tileset::Load( const String& directory, const String& filename )
 	u16 h = 0;
 	u16 tileSize = 16;
 
-	f.ReadInt(); //reserved for future use
-	f.ReadInt(); //reserved for future use
+	MemoryFile f;
+	if( !DecompressToMemoryFile(&f, &file) )
+		return false;
+
+	file.Close();
+
+	//f.ReadInt(); //reserved for future use
+	//f.ReadInt(); //reserved for future use
 
 	f.ReadString(m_name);
 	f.ReadString(textureFilename);
@@ -260,18 +229,18 @@ bool Tileset::Load( const String& directory, const String& filename )
 	// TODO: find a better way to validate filename or path errors...
 	// (Theres no issues as long as everything is nice and neatly stored in the root directory though)
 	if( m_texture == null )
-		GetTextureManager()->Load("", textureFilename);
+		m_texture = GetTextureManager()->Load("", textureFilename);
 
 	if( m_texture == null )
 	{
 		// There's nothing we can do here; just log it.
-		Log("Tileset (%s), could not load texture (%s).", filename.c_str(), textureFilename.c_str());
+		Log("Tileset (%s), could not load texture (%s).", filename.CString(), textureFilename.CString());
 	}
 
-	m_tiles.resize(h, w);
+	m_tiles.Resize((u32)h, (u32)w);
 	ValidateTiles();
 
-	for( array_type::iterator it = m_tiles.begin(); it != m_tiles.end(); ++it )
+	for( ArrayType::Iterator it = m_tiles.begin(); it != m_tiles.end(); ++it )
 	{
 		it->Deserialize(&f);
 	}
@@ -282,74 +251,3 @@ bool Tileset::Load( const String& directory, const String& filename )
 
 	return true;
 }
-
-/*
-bool Tileset::Deserialize( const String& directory, const String& filename )
-{
-	Clear();
-
-	//m_name = 
-	m_filename = filename;
-
-	String filepath = directory + filename;
-	XmlReader xml(filepath);
-	if( !xml.IsOpen() )
-	{
-		Log("Could not open file (%s)", filename.c_str());
-		return false;
-	}
-
-	if( xml.GetCurrentNodeName() == "Tileset" )
-	{
-		String textureFilename;
-
-		m_name = xml.GetString("name");
-		textureFilename = xml.GetString("texture");
-		u32 w = xml.GetUInt("width");
-		u32 h = xml.GetUInt("height");
-
-		//we don't handle this in any good way.
-		if( textureFilename.empty() )
-		{
-			Log("Tileset::Deserialize: unknown texture");
-		}
-		else
-		{
-			SetTexture(0);
-			m_texture = g_textureManager->Load(textureFilename);
-			if( !m_texture )
-			{
-				Log("Tileset::Deserialize: (%s) texture is null.", filename.c_str());
-			}
-		}
-
-		m_tiles.resize(h, w);
-		ValidateTiles();
-
-		for( array_type::iterator it = m_tiles.begin(); it != m_tiles.end(); ++it )
-		{
-			if( xml.NextChild("Tile") )
-			{
-				it->Deserialize(&xml);
-			}
-			else
-			{
-				break;
-			}
-		}
-
-		//ValidateTiles();
-		ReconfigureAnimatedTileList();
-		ResetAnimations();
-	}
-	else
-	{
-		Log("Error parsing (%s). Root item not found", filename.c_str());
-		return false;
-	}
-
-	xml.Close();
-
-	return true;
-}
-*/

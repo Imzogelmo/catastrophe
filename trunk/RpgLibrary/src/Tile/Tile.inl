@@ -11,10 +11,10 @@
 
 
 #include <Catastrophe/Graphics/Texture.h>
-#include <Catastrophe/IO/AttributeWriter.h>
-#include <Catastrophe/IO/AttributeReader.h>
-#include <Catastrophe/IO/Serializer.h>
-#include <Catastrophe/IO/Deserializer.h>
+#include <Catastrophe/Core/IO/AttributeWriter.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
+#include <Catastrophe/Core/IO/Serializer.h>
+#include <Catastrophe/Core/IO/Deserializer.h>
 
 #include "Serialization.h"
 #include "Tile.h"
@@ -62,7 +62,7 @@ void Tile::SetSourceRect( const PackedRect& sourceRectangle )
 		m_uv.max.y = (float)sourceRectangle.Bottom() / h;
 
 		if( flags & FlipVertical )
-			fc::swap(m_uv.min.y, m_uv.max.y);
+			Swap(m_uv.min.y, m_uv.max.y);
 
 		if( frame > 0 )
 		{
@@ -75,7 +75,7 @@ void Tile::SetSourceRect( const PackedRect& sourceRectangle )
 			m_uv.max.x = (float)sourceRectangle.Right() / w;
 
 			if( flags & FlipHorizontal )
-				fc::swap(m_uv.min.x, m_uv.max.x);
+				Swap(m_uv.min.x, m_uv.max.x);
 		}
 	}
 }
@@ -92,20 +92,20 @@ void Tile::SetCurrentFrame( u16 index )
 			return;
 
 		int w = m_sourceRect.Width();
-		int x = m_sourceRect.pos.x + (w * (int)frame);
+		int x = m_sourceRect.position.x + (w * (int)frame);
 		int yOffset = x / texture->Width();
 		if( yOffset > 0 )
 		{
 			x %= texture->Width();
 
 			int h = m_sourceRect.Height();
-			int y = m_sourceRect.pos.y + (h * yOffset);
+			int y = m_sourceRect.position.y + (h * yOffset);
 			float texHeightf = texture->Heightf();
 			m_uv.min.y = y / texHeightf;
 			m_uv.max.y = (y + h) / texHeightf;
 
 			if( flags & FlipVertical )
-				fc::swap(m_uv.min.y, m_uv.max.y);
+				Swap(m_uv.min.y, m_uv.max.y);
 		}
 
 		float texWidthf = (float)texture->Width();
@@ -113,14 +113,14 @@ void Tile::SetCurrentFrame( u16 index )
 		m_uv.max.x = (x + w) / texWidthf;
 
 		if( flags & FlipHorizontal )
-			fc::swap(m_uv.min.x, m_uv.max.x);
+			Swap(m_uv.min.x, m_uv.max.x);
 	}
 }
 
 
 void Tile::SetAnimationSpeed( u16 frameDelay )
 {
-	animSpeed = fc::clamp<u16>(frameDelay, 16, 32767);
+	animSpeed = Clamp<u16>(frameDelay, 16, 32767);
 }
 
 
@@ -188,16 +188,16 @@ void Tile::Update()
 
 void Tile::Serialize( AttributeWriter* f )
 {
-	//set it just in case.
-	f->SetUInt("id", m_tilesetIndex);
+	// Set it just in case.
+	f->SetAttribute("id", m_tilesetIndex);
 
-	f->SetUInt("numFrames", numFrames);
-	f->SetShort("speed", animSpeed);
-	f->SetShort("flags", flags);
+	f->SetAttribute("numFrames", numFrames);
+	f->SetAttribute("speed", animSpeed);
+	f->SetAttribute("flags", flags);
 
 	//Todo: fix this
 	//SerializeObject<Rect>("SouceRect", f, Rect(m_sourceRect));
-	f->SetRect("SouceRect", Rect(m_sourceRect));
+	f->SetAttribute("SouceRect", Rect(m_sourceRect));
 }
 
 
@@ -212,11 +212,11 @@ void Tile::Serialize( Serializer* f )
 
 void Tile::Deserialize( AttributeReader* f )
 {
-	numFrames = f->GetShort("numFrames", 1);
-	animSpeed = f->GetShort("speed", 16);
-	flags = f->GetShort("flags", 0);
+	f->GetAttribute("numFrames", numFrames);
+	f->GetAttribute("speed", animSpeed);
+	f->GetAttribute("flags", flags);
+	//f->GetRect("SouceRect", (PackedRect*)m_sourceRect);
 
-	m_sourceRect = f->GetRect("SouceRect");
 	//DeserializeObject<Rect>("SouceRect", f, m_sourceRect);
 
 	//todo: should have tileset create..?

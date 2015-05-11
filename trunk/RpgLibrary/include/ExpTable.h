@@ -11,14 +11,14 @@
 
 #pragma once
 
-#include <fc/vector.h>
+#include "Catastrophe/Core/Containers/Vector.h"
 
 #include "RpgCommon.h"
 
 
 struct RPG_API ExpCurve
 {
-	typedef fc::vector<int>		vec_type;
+	typedef Vector<int>		vec_type;
 
 	vec_type	values;
 	int			maxLevels;
@@ -41,7 +41,7 @@ struct RPG_API ExperienceTable
 {
 	// Valid exp table indices start at 1, so
 	// zero is equivilent to lv 0. (0 exp).
-	fc::dynamic_array<int> table;
+	Array<int> table;
 
 	int& operator []( u32 lv ) { return table.at(lv); }
 	const int& operator []( u32 lv ) const { return table.at(lv); }

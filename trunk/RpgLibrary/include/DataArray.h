@@ -11,19 +11,19 @@
 
 #pragma once
 
-#include <fc/dynamic_array.h>
-#include <fc/fixed_vector.h>
-#include <fc/string.h>
+#include "Catastrophe/Core/Containers/String.h"
+#include "Catastrophe/Core/Containers/Array.h"
+#include "Catastrophe/Core/Containers/Vector.h"
 
 #include "RpgCommon.h"
 
 
 template <class T>
-class DataArray : public fc::dynamic_array<T>
+class DataArray : public Vector<T>
 {
 public:
-	typedef fc::dynamic_array<T>	base_type;
-	typedef DataArray<T>			this_type;
+	typedef Vector<T>			BaseType;
+	typedef DataArray<T>		ThisType;
 
 	String				filename;
 	const char*			rootName;
@@ -39,7 +39,8 @@ public:
 
 	void Clear()
 	{
-		base_type::resize(0);
+		//base_type::Resize(0);
+		BaseType::Clear();
 	}
 
 	void SetResourceDirectory( ResourceDirectory* resourceDirectory )
@@ -55,8 +56,13 @@ public:
 
 	void SetDefaultNodeNames()
 	{
-		this_type temp;
+		ThisType temp;
 		SetNodeNames(temp.rootName, temp.itemName);
+	}
+
+	void SetFilename( const char* name )
+	{
+		filename = name;
 	}
 
 	void SetFilename( const String& name )
@@ -67,22 +73,22 @@ public:
 	int GetMemoryUsage() const
 	{
 		int memoryUsage = 0;
-		for( u32 i(0); i < base_type::size(); ++i )
-			memoryUsage += base_type::operator[](i).GetMemoryUsage();
+		for( u32 i(0); i < BaseType::Size(); ++i )
+			memoryUsage += BaseType::operator[](i).GetMemoryUsage();
 
-		memoryUsage += (int)(base_type::size() * sizeof(T));
-		memoryUsage += (int)filename.capacity();
+		memoryUsage += (int)(BaseType::Size() * sizeof(T));
+		memoryUsage += (int)filename.Capacity();
 
 		return memoryUsage;
 	}
 
-	NO_INLINE bool Serialize( const String& filename = "" );
-	NO_INLINE bool Deserialize( const String& filename = "" );
+	NOINLINE bool Serialize( const String& filename = "" );
+	NOINLINE bool Deserialize( const String& filename = "" );
 
 };
 
 
-
+/*
 class DatabaseArrayAnyProxyBase
 {
 public:
@@ -146,7 +152,7 @@ public:
 
 		DatabaseArrayAnyProxyType<T>* p = new (m_buffer.data + m_offset) DatabaseArrayAnyProxyType<T>(&arr);
 		m_offset += sizeof(DatabaseArrayAnyProxyType<T>);
-		m_bin.push_back(p);
+		m_bin.Add(p);
 	}
 
 	vec_type& GetVector() { return m_bin; }
@@ -158,5 +164,5 @@ private:
 	u32				m_offset;
 
 };
-
+*/
 

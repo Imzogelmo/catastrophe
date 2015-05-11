@@ -11,12 +11,12 @@
 
 #pragma once
 
-#include <Catastrophe/IO/XmlReader.h>
-#include <Catastrophe/IO/XmlWriter.h>
+#include <Catastrophe/Core/IO/XmlReader.h>
+#include <Catastrophe/Core/IO/XmlWriter.h>
 #include "StringAlias.h"
 
 
-StringAlias::StringAlias( const fc::string& name, const fc::string& alias ) :
+StringAlias::StringAlias( const String& name, const String& alias ) :
 	name(name),
 	alias(alias)
 {
@@ -32,40 +32,40 @@ void StringAlias::SerializeXml( XmlWriter* xml )
 
 void StringAlias::DeserializeXml( XmlReader* xml )
 {
-	name = xml->GetString("name");
-	alias = xml->GetString("alias");
+	xml->GetString("name", name);
+	xml->GetString("alias", alias);
 }
 
 
 
 // StringAliasList
 
-void StringAliasList::AddStringAlias( const fc::string& name, const fc::string& alias )
+void StringAliasList::AddStringAlias( const String& name, const String& alias )
 {
-	m_aliasList.push_back( StringAlias(name, alias) );
+	m_aliasList.Add( StringAlias(name, alias) );
 }
 
-bool StringAliasList::ContainsName( const fc::string& name ) const
+bool StringAliasList::ContainsName( const String& name ) const
 {
-	for( vec_type::const_iterator it = m_aliasList.begin(); it != m_aliasList.end(); ++it )
+	for( vec_type::ConstIterator it = m_aliasList.begin(); it != m_aliasList.end(); ++it )
 		if( it->name == name )
 			return true;
 
 	return false;
 }
 
-bool StringAliasList::ContainsAlias( const fc::string& alias ) const
+bool StringAliasList::ContainsAlias( const String& alias ) const
 {
-	for( vec_type::const_iterator it = m_aliasList.begin(); it != m_aliasList.end(); ++it )
+	for( vec_type::ConstIterator it = m_aliasList.begin(); it != m_aliasList.end(); ++it )
 		if( it->alias == alias )
 			return true;
 
 	return false;
 }
 
-bool StringAliasList::GetAlias( const fc::string& name, fc::string& outAlias ) const
+bool StringAliasList::GetAlias( const String& name, String& outAlias ) const
 {
-	for( vec_type::const_iterator it = m_aliasList.begin(); it != m_aliasList.end(); ++it )
+	for( vec_type::ConstIterator it = m_aliasList.begin(); it != m_aliasList.end(); ++it )
 	{
 		if( it->name == name )
 		{
@@ -77,9 +77,9 @@ bool StringAliasList::GetAlias( const fc::string& name, fc::string& outAlias ) c
 	return false;
 }
 
-bool StringAliasList::GetName( const fc::string& alias, fc::string& outName ) const
+bool StringAliasList::GetName( const String& alias, String& outName ) const
 {
-	for( vec_type::const_iterator it = m_aliasList.begin(); it != m_aliasList.end(); ++it )
+	for( vec_type::ConstIterator it = m_aliasList.begin(); it != m_aliasList.end(); ++it )
 	{
 		if( it->alias == alias )
 		{
@@ -91,7 +91,7 @@ bool StringAliasList::GetName( const fc::string& alias, fc::string& outName ) co
 	return false;
 }
 
-bool StringAliasList::SerializeXml( const fc::string& filename )
+bool StringAliasList::SerializeXml( const String& filename )
 {
 	XmlWriter xml(filename);
 	if( !xml.IsOpen() )
@@ -101,9 +101,9 @@ bool StringAliasList::SerializeXml( const fc::string& filename )
 	}
 
 	xml.BeginNode("StringAliasList");
-	xml.SetUInt("count", m_aliasList.size());
+	xml.SetAttribute("count", m_aliasList.Size());
 
-	for( size_t i(0); i < m_aliasList.size(); ++i )
+	for( size_t i(0); i < m_aliasList.Size(); ++i )
 	{
 		xml.BeginNode("String");
 		m_aliasList[i].SerializeXml(&xml);
@@ -117,7 +117,7 @@ bool StringAliasList::SerializeXml( const fc::string& filename )
 }
 
 
-bool StringAliasList::DeserializeXml( const fc::string& filename )
+bool StringAliasList::DeserializeXml( const String& filename )
 {
 	XmlReader xml(filename);
 	if( !xml.IsOpen() )
@@ -128,14 +128,15 @@ bool StringAliasList::DeserializeXml( const fc::string& filename )
 
 	if( xml.GetCurrentNodeName() == "StringAliasList" )
 	{
-		size_t n = xml.GetUInt("count");
-		m_aliasList.clear();
-		m_aliasList.reserve(n);
+		size_t n = 0;
+		xml.GetAttribute("count", n);
+		m_aliasList.Clear();
+		m_aliasList.Reserve(n);
 
 		while( xml.NextChild("String") )
 		{
-			m_aliasList.push_back();
-			m_aliasList.back().DeserializeXml(&xml);
+			m_aliasList.Add();
+			m_aliasList.Back().DeserializeXml(&xml);
 		}
 	}
 	else

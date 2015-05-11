@@ -13,7 +13,7 @@
 
 #include "TileMapLayer.h"
 
-#include <fc/static_vector.h>
+#include "Catastrophe/Core/Containers/StaticVector.h"
 
 
 struct TileMapInfo
@@ -32,7 +32,7 @@ public:
 		MaxLayers = 16
 	};
 
-	typedef fc::static_vector<TileMapLayer*, MaxLayers>	vec_type;
+	typedef StaticVector<TileMapLayer*, MaxLayers>	vec_type;
 
 	TileMap();
 	TileMap( const String& mapName, u32 numLayers, u32 mapWidth, u32 mapHeight );
@@ -45,7 +45,7 @@ public:
 	u32 Height() const { return m_height; }
 	u32 NumLayers() const { return m_layers.size(); }
 
-	bool AddLayer( TileMapLayer* layer = 0 );
+	TileMapLayer* AddLayer( TileMapLayer* layer = null );
 	void RemoveLayer( u32 index = u32(-1) );
 	void Resize( u32 w, u32 h, u32 numLayers = u32(-1) );
 	void SwapLayer( u32 first, u32 second );
@@ -53,7 +53,7 @@ public:
 	TileMapLayer* GetLayer( u32 index ) const;
 
 	void SetName( const String& name ) { m_name = name; }
-	void SetFileName( const String& filename ) { m_name = filename; }
+	void SetFileName( const String& filename ) { m_filename = filename; }
 
 	const String& GetName() const { return m_name; }
 	const String& GetFileName() const { return m_filename; }
@@ -62,8 +62,8 @@ public:
 	void Render( SpriteBatch* spriteBatch, const Rect& viewRect, bool mapWraparound = false );
 
 
-	NO_INLINE bool Save( const String& path = "" );
-	NO_INLINE bool Load( const String& path, const String& filename );
+	NOINLINE bool Save( const String& path = "" );
+	NOINLINE bool Load( const String& path, const String& filename );
 
 protected:
 	String		m_name;

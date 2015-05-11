@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <fc/vector.h>
+#include "Catastrophe/Core/Containers/Vector.h"
 
 #include "RpgCommon.h"
 
@@ -19,10 +19,10 @@
 struct RPG_API EncounterData
 {
 	u16	troopId;
-	u16	rate;
-	u16	maxRate;
+	u8	rate;
+	u8	maxRate;
 
-	EncounterData( u16 monsterTroopIndex = 0, u16 encounterRate = 0, u16 maxRate = 100 );
+	EncounterData( u16 monsterTroopIndex = 0, u8 encounterRate = 0, u8 maxRate = 128 );
 
 	//simply to ensure data is sane before saving.
 	void Validate();
@@ -38,14 +38,17 @@ struct RPG_API EncounterData
  */
 struct RPG_API EncounterGroup 
 {
-	typedef fc::vector<EncounterData>	vec_type;
+	typedef Vector<EncounterData>	VectorType;
 
 	String		name;
-	vec_type	encounters;
+	VectorType	encounters;
+	u16 id;
 
 	EncounterGroup();
 
 	void Serialize( AttributeWriter* f );
 	void Deserialize( AttributeReader* f );
+
+	int GetMemoryUsage() const;
 };
 

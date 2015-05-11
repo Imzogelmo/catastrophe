@@ -9,8 +9,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include <Catastrophe/IO/AttributeWriter.h>
-#include <Catastrophe/IO/AttributeReader.h>
+#include <Catastrophe/Core/IO/AttributeWriter.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
 #include "AnimatedSpriteSetAsset.h"
 #include "Serialization.h"
 
@@ -50,7 +50,7 @@ void AnimatedSpriteSetAsset::Serialize( AttributeWriter* f )
 	//f->BeginNode("AnimatedSpriteSet");
 
 	u32 count = AnimatedSpriteSet::GetNumAnimations();
-	f->SetUInt("num_animations", count);
+	f->SetAttribute("num_animations", count);
 
 	TextureAsset::Serialize(f);
 	SerializeObject<SpriteBase>("SpriteBase", f, *this);
@@ -112,7 +112,8 @@ void AnimatedSpriteSetAsset::Deserialize( AttributeReader* f )
 
 void AnimatedSpriteSetAsset::Deserialize( AttributeReader* f )
 {
-	u32 count = f->GetUInt("num_animations");
+	u32 count = 0;
+	f->GetAttribute("num_animations", count);
 
 	TextureAsset::Deserialize(f);
 	DeserializeObject<SpriteBase>("SpriteBase", f, *this);
@@ -138,6 +139,6 @@ void AnimatedSpriteSetAsset::Deserialize( AttributeReader* f )
 int AnimatedSpriteSetAsset::GetMemoryUsage() const
 {
 	return (int)(TextureAsset::GetMemoryUsage() +
-		AnimatedSpriteSet::GetAnimationsVector().capacity() * sizeof(SpriteAnimation));
+		AnimatedSpriteSet::GetAnimationsVector().Capacity() * sizeof(SpriteAnimation));
 }
 

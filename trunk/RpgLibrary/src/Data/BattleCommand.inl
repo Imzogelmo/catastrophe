@@ -10,8 +10,8 @@
 // GNU General Public License for more details.
 
 
-#include <Catastrophe/IO/AttributeWriter.h>
-#include <Catastrophe/IO/AttributeReader.h>
+#include <Catastrophe/Core/IO/AttributeWriter.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
 #include "BattleCommand.h"
 
 
@@ -26,11 +26,11 @@ BattleCommand::BattleCommand() :
 
 void BattleCommand::Serialize( AttributeWriter* f )
 {
-	f->SetString("name", name.c_str());
-	f->SetString("description", description.c_str());
-	f->SetInt("id", id);
-	f->SetInt("type", type);
-	f->SetInt("flags", flags);
+	f->SetString("name", name.CString());
+	f->SetString("description", description.CString());
+	f->SetAttribute("id", id);
+	f->SetAttribute("type", type);
+	f->SetAttribute("flags", flags);
 
 }
 
@@ -39,9 +39,9 @@ void BattleCommand::Deserialize( AttributeReader* f )
 {
 	name = f->GetString("name");
 	description = f->GetString("description");
-	id = f->GetInt("id");
-	type = f->GetInt("type");
-	flags = f->GetInt("flags");
+	f->GetAttribute("id", id);
+	f->GetAttribute("type", type);
+	f->GetAttribute("flags", flags);
 
 }
 

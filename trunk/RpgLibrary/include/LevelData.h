@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <fc/vector.h>
+#include "Catastrophe/Core/Containers/Vector.h"
 
 #include "RpgCommon.h"
 #include "AttributeFlags.h"
@@ -36,7 +36,7 @@ struct RPG_API LevelData
  */
 struct RPG_API LevelInfo
 {
-	typedef fc::vector<LevelData>	vec_type;
+	typedef Vector<LevelData>	vec_type;
 
 	vec_type levels;
 	int exp_table_id;
