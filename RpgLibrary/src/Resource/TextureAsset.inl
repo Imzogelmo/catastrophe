@@ -11,9 +11,9 @@
 
 #pragma once
 
-#include <fc/string.h>
-#include <Catastrophe/IO/AttributeWriter.h>
-#include <Catastrophe/IO/AttributeReader.h>
+#include "Catastrophe/Core/Containers/String.h"
+#include <Catastrophe/Core/IO/AttributeWriter.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
 
 #include "TextureAsset.h"
 #include "TextureManager.h"
@@ -37,7 +37,7 @@ TextureAsset::~TextureAsset()
 		// ref count should be 0.
 		// if not, the program did not interface this class correctly.
 		LogError("TextureAsset Error: File (%s) : Destructor called with ref count (%i)",
-			m_textureFilename.c_str(), m_refCount);
+			m_textureFilename.CString(), m_refCount);
 	}
 }
 
@@ -64,7 +64,7 @@ Texture* TextureAsset::LoadTexture()
 	{
 		// wtf error.
 		LogError("TextureAsset::LoadTexture Error: File (%s) : ref count (%i) : null resource!",
-			m_textureFilename.c_str(), m_refCount);
+			m_textureFilename.CString(), m_refCount);
 		m_refCount--;
 	}
 
@@ -96,8 +96,8 @@ void TextureAsset::Reset()
 void TextureAsset::Serialize( AttributeWriter* f )
 {
 	f->BeginNode("Asset");
-	f->SetString("texture", m_textureFilename.c_str());
-	f->SetBool("preload", m_preload);
+	f->SetString("texture", m_textureFilename.CString());
+	f->SetAttribute("preload", m_preload);
 	f->EndNode();
 }
 
@@ -106,8 +106,8 @@ void TextureAsset::Deserialize( AttributeReader* f )
 {
 	if( f->NextChild("Asset") )
 	{
-		m_textureFilename = f->GetString("texture");
-		m_preload = f->GetBool("preload");
+		f->GetString("texture", m_textureFilename);
+		f->GetAttribute("preload", m_preload);
 		f->SetToParent();
 	}
 
@@ -117,5 +117,5 @@ void TextureAsset::Deserialize( AttributeReader* f )
 
 int TextureAsset::GetMemoryUsage() const
 {
-	return (int)(m_textureFilename.capacity());
+	return (int)(m_textureFilename.Capacity());
 }

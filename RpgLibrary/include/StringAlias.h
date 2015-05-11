@@ -11,7 +11,8 @@
 
 #pragma once
 
-#include <fc/string.h>
+#include <Catastrophe/Core/Containers/String.h>
+#include <Catastrophe/Core/Containers/Vector.h>
 #include "RpgCommon.h"
 
 
@@ -22,10 +23,10 @@
 class StringAlias
 {
 public:
-	fc::string name;
-	fc::string alias;
+	String name;
+	String alias;
 
-	StringAlias( const fc::string& name = "", const fc::string& alias = "" );
+	StringAlias( const String& name = "", const String& alias = "" );
 
 	void SerializeXml( XmlWriter* xml );
 	void DeserializeXml( XmlReader* xml );
@@ -37,20 +38,20 @@ public:
 class StringAliasList
 {
 public:
-	typedef fc::vector<StringAlias>		vec_type;
+	typedef Vector<StringAlias>		vec_type;
 
 	vec_type& GetList() { return m_aliasList; }
 	const vec_type& GetList() const { return m_aliasList; }
 
-	void AddStringAlias( const fc::string& name, const fc::string& alias );
+	void AddStringAlias( const String& name, const String& alias );
 
-	bool ContainsName( const fc::string& name ) const;
-	bool ContainsAlias( const fc::string& alias ) const;
-	bool GetAlias( const fc::string& name, fc::string& outAlias ) const;
-	bool GetName( const fc::string& alias, fc::string& outName ) const;
+	bool ContainsName( const String& name ) const;
+	bool ContainsAlias( const String& alias ) const;
+	bool GetAlias( const String& name, String& outAlias ) const;
+	bool GetName( const String& alias, String& outName ) const;
 
-	NO_INLINE bool SerializeXml( const fc::string& filename );
-	NO_INLINE bool DeserializeXml( const fc::string& filename );
+	NOINLINE bool SerializeXml( const String& filename );
+	NOINLINE bool DeserializeXml( const String& filename );
 
 protected:
 	// keep this a simple vector since it's possible

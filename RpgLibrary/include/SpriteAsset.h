@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <fc/string.h>
+#include "Catastrophe/Core/Containers/String.h"
 #include <Catastrophe/Graphics/Sprite.h>
 
 #include "RpgCommon.h"
@@ -28,6 +28,9 @@ public:
 
 	void Serialize( AttributeWriter* f );
 	void Deserialize( AttributeReader* f );
+
+protected:
+	//Sprite m_sprite;
 
 };
 

@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include <fc/vector.h>
-#include <fc/string.h>
+#include "Catastrophe/Core/Containers/Vector.h"
+#include "Catastrophe/Core/Containers/String.h"
 
 #include "Resource.h"
 

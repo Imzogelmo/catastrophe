@@ -9,8 +9,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include <Catastrophe/IO/AttributeWriter.h>
-#include <Catastrophe/IO/AttributeReader.h>
+#include <Catastrophe/Core/IO/AttributeWriter.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
 #include "AttributeSerializer.h"
 
 // static initialization
@@ -23,7 +23,7 @@ ObjectAttributeSerializerFactory ObjectAttributeSerializerFactory::m_instance = 
 
 void AttributeAccessorObjectTypeBase::RegisterAttributeAccessor( const AttributeAccessorInfo& attrInfo )
 {
-	m_attributes.push_back(attrInfo);
+	m_attributes.Add(attrInfo);
 }
 
 
@@ -62,37 +62,37 @@ int AttributeAccessorObjectTypeBase::OnReadAttributeInfoXml( void* obj, Attribut
 	{
 		case VAR_TYPE_BOOL:
 		{
-			*((bool*)dest) = f->GetBool(attr.name);
+			*((bool*)dest) = f->GetAttribute(attr.name);
 			break;
 		}
 		case VAR_TYPE_BYTE:
 		{
-			*((u8*)dest) = f->GetByte(attr.name);
+			*((u8*)dest) = f->GetAttribute(attr.name);
 			break;
 		}
 		case VAR_TYPE_SHORT:
 		{
-			*((s16*)dest) = f->GetShort(attr.name);
+			*((s16*)dest) = f->GetAttribute(attr.name);
 			break;
 		}
 		case VAR_TYPE_INT:
 		{
-			*((int*)dest) = f->GetInt(attr.name);
+			*((int*)dest) = f->GetAttribute(attr.name);
 			break;
 		}
 		case VAR_TYPE_INT64:
 		{
-			*((s64*)dest) = (int)f->GetInt(attr.name);
+			*((s64*)dest) = (int)f->GetAttribute(attr.name);
 			break;
 		}
 		case VAR_TYPE_FLOAT:
 		{
-			*((float*)dest) = f->GetFloat(attr.name);
+			*((float*)dest) = f->GetAttribute(attr.name);
 			break;
 		}
 		case VAR_TYPE_FLOAT64:
 		{
-			*((double*)dest) = (float)f->GetFloat(attr.name);
+			*((double*)dest) = (float)f->GetAttribute(attr.name);
 			break;
 		}
 		case VAR_TYPE_VECTOR2:
@@ -185,37 +185,37 @@ int AttributeAccessorObjectTypeBase::OnWriteAttributeInfoXml( void* obj, Attribu
 	{
 		case VAR_TYPE_BOOL:
 		{
-			f->SetBool(attr.name, *((const bool*)dest));
+			f->SetAttribute(attr.name, *((const bool*)dest));
 			break;
 		}
 		case VAR_TYPE_BYTE:
 		{
-			f->SetByte(attr.name, *((const u8*)dest));
+			f->SetAttribute(attr.name, *((const u8*)dest));
 			break;
 		}
 		case VAR_TYPE_SHORT:
 		{
-			f->SetShort(attr.name, *((const s16*)dest));
+			f->SetAttribute(attr.name, *((const s16*)dest));
 			break;
 		}
 		case VAR_TYPE_INT:
 		{
-			f->SetInt(attr.name, *((const int*)dest));
+			f->SetAttribute(attr.name, *((const int*)dest));
 			break;
 		}
 		case VAR_TYPE_INT64:
 		{
-			f->SetInt(attr.name, (int)*((const s64*)dest));
+			f->SetAttribute(attr.name, (int)*((const s64*)dest));
 			break;
 		}
 		case VAR_TYPE_FLOAT:
 		{
-			f->SetFloat(attr.name, *((const float*)dest));
+			f->SetAttribute(attr.name, *((const float*)dest));
 			break;
 		}
 		case VAR_TYPE_FLOAT64:
 		{
-			f->SetFloat(attr.name, (float)*((const double*)dest));
+			f->SetAttribute(attr.name, (float)*((const double*)dest));
 			break;
 		}
 		case VAR_TYPE_VECTOR2:

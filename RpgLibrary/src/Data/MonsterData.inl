@@ -10,8 +10,8 @@
 // GNU General Public License for more details.
 
 
-#include <Catastrophe/IO/AttributeWriter.h>
-#include <Catastrophe/IO/AttributeReader.h>
+#include <Catastrophe/Core/IO/AttributeWriter.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
 #include "MonsterData.h"
 #include "Serialization.h"
 
@@ -56,18 +56,18 @@ void MonsterData::RegisterObject()
 void MonsterData::Serialize( AttributeWriter* f )
 {
 	//SERIALIZE_OBJECT_ATTRIBUTES_XML(this, xml);
-	f->SetString("name", name.c_str());
-	f->SetString("script", script.c_str());
-	f->SetString("description", description.c_str());
+	f->SetString("name", name.CString());
+	f->SetString("script", script.CString());
+	f->SetString("description", description.CString());
 
 	f->BeginNode("Data");
-	f->SetInt("lv", lv);
-	f->SetInt("exp", exp);
-	f->SetInt("gold", gold);
-	f->SetUShort("portraitId", portraitId);
-	f->SetUShort("mapSpritesetId", mapSpritesetId);
-	f->SetUShort("battleSpritesetId", battleSpritesetId);
-	f->SetUShort("terrain_id", backgroundId);
+	f->SetAttribute("lv", lv);
+	f->SetAttribute("exp", exp);
+	f->SetAttribute("gold", gold);
+	f->SetAttribute("portraitId", portraitId);
+	f->SetAttribute("mapSpritesetId", mapSpritesetId);
+	f->SetAttribute("battleSpritesetId", battleSpritesetId);
+	//f->SetAttribute("terrain_id", backgroundId);
 	f->EndNode();
 
 	attributes.Serialize(f);
@@ -85,13 +85,13 @@ void MonsterData::Deserialize( AttributeReader* f )
 
 	if( f->NextChild("Data") )
 	{
-		lv = f->GetInt("lv", lv);
-		exp = f->GetInt("exp", exp);
-		gold = f->GetInt("gold", gold);
-		portraitId = f->GetUShort("portraitId", portraitId);
-		mapSpritesetId = f->GetUShort("mapSpritesetId", mapSpritesetId);
-		battleSpritesetId = f->GetUShort("battleSpritesetId", battleSpritesetId);
-		backgroundId = f->GetUShort("terrain_id", backgroundId);
+		lv = f->GetAttribute("lv", lv);
+		exp = f->GetAttribute("exp", exp);
+		gold = f->GetAttribute("gold", gold);
+		portraitId = f->GetAttribute("portraitId", portraitId);
+		mapSpritesetId = f->GetAttribute("mapSpritesetId", mapSpritesetId);
+		battleSpritesetId = f->GetAttribute("battleSpritesetId", battleSpritesetId);
+		//backgroundId = f->GetAttribute("terrain_id", backgroundId);
 		f->SetToParent();
 	}
 
@@ -103,7 +103,7 @@ void MonsterData::Deserialize( AttributeReader* f )
 
 int MonsterData::GetMemoryUsage() const
 {
-	return (int)description.capacity();
+	return (int)description.Capacity();
 }
 
 

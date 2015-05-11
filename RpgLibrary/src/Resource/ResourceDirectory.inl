@@ -26,8 +26,8 @@ void ResourceDirectory::SetRootDirectory( const String& directory )
 	m_root = directory;
 
 	// Add trailing slash to the directory if it does not contain one.
-	if( !m_root.empty() && (m_root.back() != '/' && m_root.back() != '\\') )
-		m_root.push_back('/');
+	if( !m_root.Empty() && (m_root.Back() != '/' && m_root.Back() != '\\') )
+		m_root.Add('/');
 }
 
 

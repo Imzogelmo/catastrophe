@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include <Catastrophe/Math/PackedRect.h>
-#include <Catastrophe/Math/Rectf.h>
+#include <Catastrophe/Core/Math/Packed/PackedRect.h>
+#include <Catastrophe/Core/Math/Rectf.h>
 
 #include "RpgCommon.h"
 #include "TileProperties.h"
@@ -55,9 +55,9 @@ public:
 	void SetIndex( u32 index ) { m_tilesetIndex = index; }
 	u32 GetIndex() const { return m_tilesetIndex; }
 
-	NO_INLINE void Serialize( AttributeWriter* f );
+	NOINLINE void Serialize( AttributeWriter* f );
 	void Serialize( Serializer* f );
-	NO_INLINE void Deserialize( AttributeReader* f );
+	NOINLINE void Deserialize( AttributeReader* f );
 	void Deserialize( Deserializer* f );
 
 public:

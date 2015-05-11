@@ -11,9 +11,10 @@
 
 #pragma once
 
-#include <Catastrophe/Math/Math.h>
-#include <Catastrophe/FileIO.h>
-#include <fc/rand.h>
+#include <Catastrophe/Core/PlatformMath.h>
+#include <Catastrophe/Core/Random.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
+#include <Catastrophe/Core/IO/AttributeWriter.h>
 
 #include "ItemDropSet.h"
 
@@ -73,8 +74,8 @@ const ItemDrop& ItemDropSet::operator []( u32 index ) const
 void ItemDropSet::Serialize( AttributeWriter* f )
 {
 	f->BeginNode("ItemDropSet");
-	f->SetUInt("count", m_size);
-	f->SetBool("multiple", m_allowMultipleDrops);
+	f->SetAttribute("count", m_size);
+	f->SetAttribute("multiple", m_allowMultipleDrops);
 
 	for( u32 i(0); i < m_size; ++i )
 	{
@@ -87,8 +88,11 @@ void ItemDropSet::Serialize( AttributeWriter* f )
 
 void ItemDropSet::Deserialize( AttributeReader* f )
 {
-	u32 numDrops = (u32)fc::clamp<int>( f->GetInt("count"), 0, MAX_ITEM_DROPS );
-	m_allowMultipleDrops = f->GetBool("multiple");
+	u32 numDrops = 0;
+
+	f->GetAttribute("count", numDrops);
+	numDrops = (u32)Clamp<int>( numDrops, 0, MAX_ITEM_DROPS );
+	f->GetAttribute("multiple", m_allowMultipleDrops);
 
 	for( u32 i(0); i < numDrops; ++i )
 	{

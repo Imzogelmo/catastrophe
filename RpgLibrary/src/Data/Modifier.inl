@@ -9,8 +9,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include <Catastrophe/IO/AttributeWriter.h>
-#include <Catastrophe/IO/AttributeReader.h>
+#include <Catastrophe/Core/IO/AttributeWriter.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
 #include "Modifier.h"
 
 
@@ -121,18 +121,18 @@ void Modifier::ApplyToAttributes( Attributes& attributes ) const
 
 void Modifier::Serialize( AttributeWriter* f )
 {
-	f->SetInt("value", value);
-	f->SetShort("index", index);
-	f->SetByte("target", target);
-	f->SetByte("type", type);
+	f->SetAttribute("value", value);
+	f->SetAttribute("index", index);
+	f->SetAttribute("target", target);
+	f->SetAttribute("type", type);
 }
 
 
 void Modifier::Deserialize( AttributeReader* f )
 {
-	value = f->GetInt("value");
-	index = f->GetShort("index");
-	target = f->GetByte("target");
-	type = f->GetByte("type");
+	f->GetAttribute("value", value);
+	f->GetAttribute("index", index);
+	f->GetAttribute("target", target);
+	f->GetAttribute("type", type);
 }
 

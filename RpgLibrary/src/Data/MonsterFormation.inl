@@ -10,8 +10,8 @@
 // GNU General Public License for more details.
 
 
-#include <Catastrophe/IO/AttributeWriter.h>
-#include <Catastrophe/IO/AttributeReader.h>
+#include <Catastrophe/Core/IO/AttributeWriter.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
 #include "MonsterFormation.h"
 
 
@@ -40,15 +40,15 @@ void MonsterFormationCellData::RegisterObject()
 
 void MonsterFormationCellData::Serialize( AttributeWriter* f )
 {
-	f->SetShort("x", x);
-	f->SetShort("y", y);
+	f->SetAttribute("x", x);
+	f->SetAttribute("y", y);
 }
 
 
 void MonsterFormationCellData::Deserialize( AttributeReader* f )
 {
-	x = f->GetShort("x", x);
-	y = f->GetShort("y", y);
+	x = f->GetAttribute("x", x);
+	y = f->GetAttribute("y", y);
 }
 
 
@@ -73,8 +73,8 @@ void MonsterFormation::RegisterObject()
 
 void MonsterFormation::Serialize( AttributeWriter* f )
 {
-	f->SetUInt( "max", formations.size() );
-	for( array_type::iterator it = formations.begin(); it < formations.end(); ++it )
+	f->SetAttribute( "max", formations.Size() );
+	for( array_type::Iterator it = formations.begin(); it < formations.end(); ++it )
 	{
 		f->BeginNode("Cell");
 		it->Serialize(f);
@@ -85,8 +85,9 @@ void MonsterFormation::Serialize( AttributeWriter* f )
 
 void MonsterFormation::Deserialize( AttributeReader* f )
 {
-	u32 numFormations = f->GetInt("max");
-	formations.resize(numFormations);
+	u32 numFormations = 0;
+	f->GetAttribute("max", numFormations);
+	formations.Resize(numFormations);
 
 	for( u32 i(0); i < numFormations; ++i )
 	{
@@ -101,7 +102,7 @@ void MonsterFormation::Deserialize( AttributeReader* f )
 
 int MonsterFormation::GetMemoryUsage() const
 {
-	return (int)(formations.size() * sizeof(MonsterFormationCellData));
+	return (int)(formations.Size() * sizeof(MonsterFormationCellData));
 }
 
 

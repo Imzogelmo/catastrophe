@@ -17,14 +17,11 @@
 // include them in header files.
 
 //includes mostly forward declarations and common macros.
-#include <Catastrophe/Common.h>
+#include <Catastrophe/Core/Common.h>
+#include <Catastrophe/Graphics/Common.h>
 
 //It's safe to use this globally withouth causing pollution.
 USING_NAMESPACE_CE
-
-#define FORCE_INLINE	FC_FORCE_INLINE
-#define NO_INLINE		FC_NO_INLINE
-#define ASSERT			CE_ASSERT
 
 #if defined (CE_DEBUG) && !defined (NDEBUG)
 	#define TRACE(cond, message) { if(cond) { Log(message); } }
@@ -121,7 +118,10 @@ class RpgStrings;
 #define MAX_FAMILY_FLAGS	32
 #define MAX_ITEM_FLAGS		32
 
+//these should all be the same
+#define MAX_ABILITY_LV		10
 #define MAX_SKILL_LV		10
+#define MAX_SPELL_LV		10
 
 
 
@@ -144,6 +144,10 @@ class RpgStrings;
 #define MAX_BATTLEGROUP_SIZE		32
 #define MAX_BATTLEFACTION_GROUPS	16
 
+// file id is stored as 8 bytes in string format.
+#define FILE_ID_LENGTH		8
+#define TILEMAP_FILE_ID		"tilemap "
+#define TILESET_FILE_ID		"tileset "
 
 //global
 extern ResourceDirectory*	g_resourceDirectory;

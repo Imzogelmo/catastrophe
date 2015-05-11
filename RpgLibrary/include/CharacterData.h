@@ -11,38 +11,39 @@
 
 #pragma once
 
-#include <fc/string.h>
-//#include <fc/vector.h>
+#include "Catastrophe/Core/Containers/String.h"
+//#include "Catastrophe/Core/Containers/Vector.h"
 
 #include "RpgCommon.h"
 
 
 struct RPG_API CharacterData
 {
-	String		name;
-	String		script;
-	String		description;
+	StaticString<32>	name;
+	StaticString<32>	script;
+	String				description;
 
-	int				id;
-	int				race_id;
-	int				class_id;
+	u16				id;
+	u8				raceId;
+	u8				classId;
+	Gender			gender;
+	Handedness		handedness;
+	Alignment		alignment;
 
-	int				portraitId;
-	int				mapSpritesetId;
-	int				battleSpritesetId;
-	int				flags; //todo
+	u16				portraitId;
+	u16				mapSpritesetId;
+	u16				battleSpritesetId;
+	u32				flags; //todo
 
-	int				lv;
-	int				exp;
-	int				gold;
+	int				startingLv;
+	int				startingExp;
+	int				startingGold;
 	Attributes		attributes;
 
 	//levelupLearning { id, lv } ..?
-	//fc::vector<int>		spells;
+	//Vector<int>		spells;
 
 	CharacterData();
-
-	static void RegisterObject();
 
 	void Serialize( AttributeWriter* f );
 	void Deserialize( AttributeReader* f );

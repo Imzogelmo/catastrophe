@@ -10,8 +10,8 @@
 // GNU General Public License for more details.
 
 
-#include <Catastrophe/IO/AttributeWriter.h>
-#include <Catastrophe/IO/AttributeReader.h>
+#include <Catastrophe/Core/IO/AttributeWriter.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
 #include "LevelData.h"
 #include "Serialization.h"
 
@@ -34,10 +34,10 @@ void LevelData::Deserialize( AttributeReader* f )
 void LevelInfo::Serialize( AttributeWriter* f )
 {
 	f->BeginNode("LevelInfo");
-	f->SetUInt("count", levels.size());
-	f->SetInt("exp_table", exp_table_id);
+	f->SetAttribute("count", levels.Size());
+	f->SetAttribute("exp_table", exp_table_id);
 
-	for( u32 i(0); i < levels.size(); ++i )
+	for( u32 i(0); i < levels.Size(); ++i )
 	{
 		f->BeginNode("LevelData");
 		levels[i].Serialize(f);
@@ -50,15 +50,17 @@ void LevelInfo::Serialize( AttributeWriter* f )
 
 void LevelInfo::Deserialize( AttributeReader* f )
 {
-	u32 n = f->GetUInt("count");
-	exp_table_id = f->GetInt("exp_table");
-	levels.clear();
-	levels.reserve(n);
+	u32 n = 0;
+	f->GetAttribute("count", n);
+
+	f->GetAttribute("exp_table", exp_table_id);
+	levels.Clear();
+	levels.Reserve(n);
 
 	while( f->NextChild("LevelData") )
 	{
-		levels.push_back();
-		levels.back().Deserialize(f);
+		levels.Add();
+		levels.Back().Deserialize(f);
 		f->SetToParent();
 	}
 }

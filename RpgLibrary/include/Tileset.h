@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include <fc/dynamic_array2d.h>
-#include <fc/vector.h>
+#include "Catastrophe/Core/Containers/Array2D.h"
+#include "Catastrophe/Core/Containers/Vector.h"
 
 #include "RpgCommon.h"
 #include "Tile.h"
@@ -21,54 +21,77 @@
 class RPG_API Tileset
 {
 public:
-	typedef fc::dynamic_array2d<Tile>	array_type;
-	typedef fc::vector<Tile*>			anim_vec_type;
+	typedef Array2D<Tile>	ArrayType;
 
 	Tileset();
 	~Tileset();
 
+	/// Clears all the tiles in this tileset to their default state.
 	void Clear();
+
+	/// Update this tilesets state and animations.
 	void Update();
+
+	/// Resize this tileset. Width and Height must both be > 0.
 	void Resize( u32 w, u32 h );
 
+	/// Sets the name of this tileset.
 	void SetName( const String& name ) { m_name = name; }
+
+	/// Gets the name of this tileset.
+	const String& GetName() const { return m_name; }
+
+	/// Sets the filename of this tileset.
 	void SetFileName( const String& filename ) { m_filename = filename; }
+
+	/// Gets the filename of this tileset.
+	const String& GetFileName() const { return m_filename; }
+
+	/// Sets the texture that will be used by all tiles in this tileset.
 	void SetTexture( Texture* texture );
+
+	/// Gets the texture that is used by all the tiles in this tileset.
+	Texture* GetTexture() const { return m_texture; }
+
+	/// Sets the size of the tiles w, h components, in pixels. Should be PO2.
 	void SetTileSize( u32 tileSize );
 
-	bool Empty() const { return m_tiles.empty(); }
-	u32 Size() const { return m_tiles.size(); }
-	u32 Width() const { return m_tiles.x(); }
-	u32 Height() const { return m_tiles.y(); }
-
-	const String& GetName() const { return m_name; }
-	const String& GetFileName() const { return m_filename; }
-	Texture* GetTexture() const { return m_texture; }
-	u32 GetTextureId() const;
+	/// Gets the size of the tiles w, h components.
 	u32 GetTileSize() const { return m_tileSize; }
 
+	bool Empty() const { return m_tiles.Empty(); }
+	u32 Size() const { return m_tiles.Size(); }
+	u32 Width() const { return m_tiles.Width(); }
+	u32 Height() const { return m_tiles.Height(); }
+
+	/// The internal GPU texture id of the assigned texture.
+	u32 GetTextureId() const;
+
+	/// Gets the tile at the specified index.
 	Tile* GetTile( u32 index ) const;
+
+	/// Gets the tile at the specified x, y coordinate.
 	Tile* GetTile( u32 x, u32 y ) const;
 
-	// fast index operators with no error checking.
+	// Fast index operators with no error checking.
 	Tile& operator []( u32 index ) { return m_tiles[index]; }
 	const Tile& operator []( u32 index ) const { return m_tiles[index]; }
 
-	// these are usually only called internally.
+	// These are usually only called internally.
 	void ReconfigureAnimatedTileList();
 	void ResetAnimations();
 	void ValidateTiles();
 
-	NO_INLINE bool Save( const String& directory );
-	NO_INLINE bool Load( const String& directory, const String& filename );
+	NOINLINE bool Save( const String& directory );
+	NOINLINE bool Load( const String& directory, const String& filename );
 
 protected:
 	Texture*		m_texture;
 	String			m_name;
 	String			m_filename;
 	u32				m_tileSize;
-	array_type		m_tiles;
-	anim_vec_type	m_ptr_animated_tiles;
+	ArrayType		m_tiles;
+	Vector<Tile*>	m_pAnimatedTiles;
 
 };
 

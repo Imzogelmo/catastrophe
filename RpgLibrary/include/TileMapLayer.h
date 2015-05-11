@@ -11,10 +11,10 @@
 
 #pragma once
 
-#include <fc/string.h>
-#include <fc/dynamic_array2d.h>
-#include <Catastrophe/Math/Point.h>
-#include <Catastrophe/Math/Color.h>
+#include <Catastrophe/Core/Containers/String.h>
+#include <Catastrophe/Core/Containers/Array2D.h>
+#include <Catastrophe/Core/Math/Point.h>
+#include <Catastrophe/Core/Math/Color.h>
 #include <Catastrophe/Graphics/BlendMode.h>
 
 #include "Tile.h"
@@ -25,35 +25,56 @@
 class RPG_API TileMapLayer
 {
 public:
-	typedef fc::dynamic_array2d<TileMapLayerCell> array_type;
+	typedef Array2D<TileMapLayerCell> array_type;
 
 	TileMapLayer();
 
-	void SetTileSize( u32 tileSize ) { m_tileSize = tileSize; }
+	void SetTileSize( int tileSize ) { m_tileSize = tileSize; }
+	int GetTileSize() const { return m_tileSize; }
+
 	void SetOffset( const Point& offset ) { m_offset = offset; }
+	Point GetOffset() const { return m_offset; }
+
+	/// Set the name of this layer. (Layers are not required to be named)
 	void SetName( const String& name ) { m_name = name; }
-	void SetVisible( bool enable = true ) { m_visible = enable; }
+
+	/// Get the name of this layer.
+	const String& GetName() const { return m_name; }
+
+	/// Sets whether this layer should be rendered.
+	void SetVisible( bool value ) { m_visible = value; }
+
+	/// Gets whether this layer should be rendered.
+	bool IsVisible() const { return m_visible; }
+
+	/// Sets the color used for tinting.
 	void SetColor( const Color& color ) { m_color = color; }
+
+	/// Gets the color used for tinting.
+	const Color& GetColor() const { return m_color; }
+
+	/// Sets the blendmode used when rendering this layer.
 	void SetBlendMode( const BlendMode& blendmode ) { m_blendmode = blendmode; }
+
+	/// Gets the blendmode used when rendering this layer.
+	const BlendMode& GetBlendMode() const { return m_blendmode; }
+
+	/// Set the tileset used by this layer
 	void SetTileset( Tileset* tileset );
 	
+	/// Gets the tileset used by this layer
+	Tileset* GetTileset() const { return m_tileset; }
+
 	void Resize( u32 w, u32 h );
 	void Clear();
 
-	u32 GetTileSize() const { return m_tileSize; }
-	u32 GetSize() const { return m_tiles.size(); }
-	u32 GetWidth() const { return m_tiles.x(); }
-	u32 GetHeight() const { return m_tiles.y(); }
-	Point GetOffset() const { return m_offset; }
+	u32 GetSize() const { return m_tiles.Size(); }
+	u32 GetWidth() const { return m_tiles.Width(); }
+	u32 GetHeight() const { return m_tiles.Height(); }
 	int GetOffsetX() const { return m_offset.x; }
 	int GetOffsetY() const { return m_offset.y; }
 
-	bool IsVisible() const { return m_visible; }
-	const String& GetName() const { return m_name; }
-	const Color& GetColor() const { return m_color; }
-	const BlendMode& GetBlendMode() const { return m_blendmode; }
-	Tileset* GetTileset() const { return m_tileset; }
-	
+
 	TileMapLayerCell& GetCell( u32 index ) { return m_tiles[index]; }
 	TileMapLayerCell& GetCell( u32 x, u32 y ) { return m_tiles.at(y, x); }
 	const TileMapLayerCell& GetCell( u32 index ) const { return m_tiles[index]; }
@@ -69,7 +90,7 @@ public:
 	void Update();
 	void Render( SpriteBatch* spriteBatch, const Rect& viewRect, bool wrap = false );
 
-	void Serialize( AttributeWriter* f );
+	//void Serialize( AttributeWriter* f );
 	void Serialize( Serializer* f );
 	void Deserialize( AttributeReader* f );
 	void Deserialize( Deserializer* f );
@@ -87,7 +108,7 @@ protected:
 	Color			m_color;
 	Point			m_offset;
 	f32				m_parallax;
-	u32				m_tileSize;
+	int				m_tileSize;
 	bool			m_visible;
 	//bool		m_parallax;
 

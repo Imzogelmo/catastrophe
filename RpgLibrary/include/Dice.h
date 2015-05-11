@@ -43,7 +43,7 @@ protected:
 class DiceBag
 {
 public:
-	typedef fc::vector<Die> vec_type;
+	typedef Vector<Die> vec_type;
 
 	DiceBag();
 

@@ -44,7 +44,7 @@ TileMap* TileMapManager::Load( const String& filename, int* id  )
 	String path = g_resourceDirectory->GetMapDirectory();
 	if( !tilemap->Load(path, filename) )
 	{
-		LogError("Failed to load tilemap (%s)", (path + filename).c_str());
+		LogError("Failed to load tilemap (%s)", (path + filename).CString());
 		SAFE_DELETE(tilemap);
 	}
 	else

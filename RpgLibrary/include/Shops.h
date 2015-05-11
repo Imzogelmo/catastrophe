@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include <fc/string.h>
-#include <fc/vector.h>
+#include "Catastrophe/Core/Containers/String.h"
+#include "Catastrophe/Core/Containers/Vector.h"
 
 #include "RpgCommon.h"
 
@@ -39,7 +39,7 @@ struct RPG_API ShopItem
 
 struct RPG_API Shop
 {
-	typedef fc::vector<ShopItem>	vec_type;
+	typedef Vector<ShopItem>	vec_type;
 
 	vec_type		items;
 	String		name;

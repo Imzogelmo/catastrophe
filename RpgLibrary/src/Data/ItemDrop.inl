@@ -11,10 +11,10 @@
 
 #pragma once
 
-#include <Catastrophe/Math/Math.h>
-#include <Catastrophe/IO/AttributeWriter.h>
-#include <Catastrophe/IO/AttributeReader.h>
-#include <fc/rand.h>
+#include <Catastrophe/Core/PlatformMath.h>
+#include <Catastrophe/Core/IO/AttributeWriter.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
+#include "Catastrophe/Core/Random.h"
 
 #include "ItemDrop.h"
 
@@ -33,14 +33,14 @@ ItemDrop::ItemDrop( int itemId, int dropRate, int maxRate, int minAmount, int ma
 
 void ItemDrop::SetRate( int rate )
 {
-	m_dropRate = fc::clamp(rate, 0, m_maxRate);
+	m_dropRate = Clamp(rate, 0, m_maxRate);
 }
 
 
 void ItemDrop::SetMaxRate( int rate )
 {
-	m_maxRate = fc::max(0, rate);
-	m_dropRate = fc::clamp(m_dropRate, 0, m_maxRate);
+	m_maxRate = Math::Max(0, rate);
+	m_dropRate = Clamp(m_dropRate, 0, m_maxRate);
 }
 
 
@@ -66,17 +66,17 @@ bool ItemDrop::TestDrop( float modifier ) const
 {
 	int n = m_dropRate;
 	if( modifier != 1.0f )
-		n = fc::clamp( (int)fc::round((float)m_dropRate * modifier), 0, m_maxRate );
+		n = Clamp( Math::Round((float)m_dropRate * modifier), 0, m_maxRate );
 
-	return fc::probability(n, m_maxRate);
+	return Random::Probability(n, m_maxRate);
 }
 
 
 int ItemDrop::TestAmount( float modifier ) const
 {
-	int n = fc::rand(GetMinAmount(), GetMaxAmount());
+	int n = Random::Int(GetMinAmount(), GetMaxAmount());
 	if( modifier != 1.0f )
-		n = (int)fc::round((float)n * modifier);
+		n = Math::Round((float)n * modifier);
 
 	return n;
 }
@@ -84,10 +84,10 @@ int ItemDrop::TestAmount( float modifier ) const
 
 void ItemDrop::Validate()
 {
-	m_dropRate = fc::clamp(m_dropRate, 0, m_maxRate);
+	m_dropRate = Clamp(m_dropRate, 0, m_maxRate);
 	if( m_max < 0 )
 		m_max = 0;
-	m_min = fc::clamp(m_min, 0, m_max );
+	m_min = Clamp(m_min, 0, m_max );
 }
 
 
@@ -95,22 +95,22 @@ void ItemDrop::Serialize( AttributeWriter* f )
 {
 	Validate();
 	f->BeginNode("ItemDrop");
-	f->SetInt("index", m_itemId);
-	f->SetInt("rate", m_dropRate);
-	f->SetInt("maxRate", m_maxRate);
-	f->SetInt("min", m_min);
-	f->SetInt("max", m_max);
+	f->SetAttribute("index", m_itemId);
+	f->SetAttribute("rate", m_dropRate);
+	f->SetAttribute("maxRate", m_maxRate);
+	f->SetAttribute("min", m_min);
+	f->SetAttribute("max", m_max);
 	f->EndNode();
 }
 
 
 void ItemDrop::Deserialize( AttributeReader* f )
 {
-	m_itemId = f->GetInt("index");
-	m_dropRate = f->GetInt("rate");
-	m_maxRate = f->GetInt("maxRate");
-	m_min = f->GetInt("min");
-	m_max = f->GetInt("max");
+	f->GetAttribute("index", m_itemId);
+	f->GetAttribute("rate", m_dropRate);
+	f->GetAttribute("maxRate", m_maxRate);
+	f->GetAttribute("min", m_min);
+	f->GetAttribute("max", m_max);
 }
 
 

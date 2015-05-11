@@ -50,7 +50,7 @@ Font* FontManager::Load( const String& filename, int* id  )
 	String path = g_resourceDirectory->GetFontDirectory();
 	if( !font->LoadFromFile(path, filename) )
 	{
-		LogError("Failed to load font (%s)", (path + filename).c_str());
+		LogError("Failed to load font (%s)", (path + filename).CString());
 		SAFE_DELETE(font);
 	}
 	else

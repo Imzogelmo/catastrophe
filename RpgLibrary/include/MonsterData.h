@@ -11,13 +11,13 @@
 
 #pragma once
 
-#include <fc/string.h>
-#include <fc/static_string.h>
-
 #include "RpgCommon.h"
 #include "Attributes.h"
 #include "ItemDropSet.h"
 #include "Factor.h"
+
+#include "Catastrophe/Core/Containers/String.h"
+#include "Catastrophe/Core/Containers/StaticString.h"
 
 
 
@@ -31,7 +31,7 @@ struct RPG_API MonsterData
 	u16			portraitId;
 	u16			mapSpritesetId;
 	u16			battleSpritesetId;
-	u16			backgroundId;
+	//u16			backgroundId;
 
 	int				lv;
 	int				exp;
@@ -40,6 +40,7 @@ struct RPG_API MonsterData
 	//FactorSet		factors;
 	FixedFactorList	factors;
 	ItemDropSet		itemDropset;
+	u32				familyFlags;
 
 	MonsterData();
 
@@ -53,4 +54,4 @@ struct RPG_API MonsterData
 };
 
 
-
+typedef MonsterData Monster; //just in case it gets changed...again..

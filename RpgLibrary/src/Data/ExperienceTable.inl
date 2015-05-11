@@ -10,21 +10,21 @@
 // GNU General Public License for more details.
 
 
-#include <fc/math.h>
-#include <Catastrophe/IO/AttributeWriter.h>
-#include <Catastrophe/IO/AttributeReader.h>
-#include "ExperienceTable.h"
+#include <Catastrophe/Core/Common.h>
+#include <Catastrophe/Core/IO/AttributeWriter.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
 
+#include "ExperienceTable.h"
 
 
 void ExpCurve::GenerateCurve()
 {
-	values.resize( (u32)maxLevels + 1 );
+	values.Resize( (u32)maxLevels + 1 );
 	values[0] = 1;
 
-	for( u32 i(1); i < values.size(); i++ )
+	for( u32 i(1); i < values.Size(); i++ )
 	{
-		values[i] = values[i - 1] + fc::iround(39.f * powf((float)fc::min<u32>(i, 29), 2.f));
+		values[i] = values[i - 1] + Math::Round(39.f * powf((float)Math::Min<u32>(i, 29), 2.f));
 	}
 
 	int y = 0;
@@ -35,7 +35,7 @@ void ExpCurve::GenerateCurve()
 int ExperienceTable::GetExpForLevel( int lv )
 {
 	int ret = 0x7fffffff;
-	if( (u32)lv < table.size() )
+	if( (u32)lv < table.Size() )
 		ret = table[lv];
 
 	return ret;
@@ -47,7 +47,7 @@ int ExperienceTable::GetExpDeltaForLevel( int lv )
 	if( lv == 0 )
 		return 0; //special case (0 exp = 0 lv)
 
-	if( (u32)lv < table.size() )
+	if( (u32)lv < table.Size() )
 		return table[lv] - table[lv - 1];
 
 	return 0x7fffffff;
@@ -56,37 +56,38 @@ int ExperienceTable::GetExpDeltaForLevel( int lv )
 
 void ExperienceTable::Resize( u32 maxLv )
 {
-	u32 oldSize = table.size();
-	u32 newSize = fc::min<u32>(maxLv + 1, MAX_LEVEL);
+	u32 oldSize = table.Size();
+	u32 newSize = Math::Min<u32>(maxLv + 1, MAX_LEVEL);
 
-	table.resize(newSize);
-	if( oldSize < table.size() )
+	table.Resize(newSize);
+	if( oldSize < table.Size() )
 	{
 		if( oldSize == 0 )
 			table[0] = 0;
 
-		fc::fill_n(table.begin() + oldSize, table.size() - oldSize, 0x7fffffff);
+		Algorithm::FillValues(table.begin() + oldSize, table.Size() - oldSize, 0x7fffffff);
 	}
 }
 
 
 void ExperienceTable::Serialize( AttributeWriter* f )
 {
-	f->SetUInt("count", table.size());
-	f->WriteIntArray("array", &table[0], table.size());
+	f->SetAttribute("count", table.Size());
+	f->WriteIntArray("array", &table[0], table.Size());
 }
 
 
 void ExperienceTable::Deserialize( AttributeReader* f )
 {
-	u32 n = f->GetUInt("count");
+	u32 n = 0;
+	f->GetAttribute("count", n);
 	Resize(n);
 
-	f->ReadIntArray("array", &table[0], table.size());
+	f->ReadIntArray("array", &table[0], table.Size());
 }
 
 
 int ExperienceTable::GetMemoryUsage() const
 {
-	return (int)(table.size() * sizeof(int));
+	return (int)(table.Size() * sizeof(int));
 }

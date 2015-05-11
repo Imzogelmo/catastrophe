@@ -9,7 +9,7 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include <fc/string.h>
+#include "Catastrophe/Core/Containers/String.h"
 #include "Dice.h"
 
 
@@ -23,7 +23,7 @@ Die::Die( int numSides = 6 ) :
 
 int Die::Roll()
 {
-	value = fc::rand(1, sides);
+	value = Random::Int(1, sides);
 	return value;
 }
 
@@ -83,7 +83,7 @@ DiceBag::DiceBag() :
 int DiceBag::Roll()
 {
 	m_lastRoll = 0;
-	for( vec_type::iterator it = m_dice.begin(); it < m_dice.end(); ++it )
+	for( vec_type::Iterator it = m_dice.begin(); it < m_dice.end(); ++it )
 		m_lastRoll += it->Roll();
 
 	return m_lastRoll;
@@ -92,7 +92,7 @@ int DiceBag::Roll()
 
 void DiceBag::Add( const Die& die )
 {
-	m_dice.push_back(die);
+	m_dice.Add(die);
 }
 
 

@@ -15,6 +15,8 @@
 // allowing you to compile only a single file to build a project.
 // Why would you do this, you ask? -Why not. ;)
 
+// include this first for definitions
+#include <Catastrophe/Core/Common.h>
 
 #include "Database.h"
 
@@ -65,7 +67,6 @@ void RpgLibInit()
 	g_shaderObjectManager = new ShaderObjectManager();
 
 	// register all object types (order does not matter).
-	Attributes::RegisterObject();
 	//Item::RegisterObject();
 	//EquipmentItem::RegisterObject();
 	MonsterData::RegisterObject();
@@ -74,8 +75,6 @@ void RpgLibInit()
 	MonsterFormationCellData::RegisterObject();
 	MonsterFormation::RegisterObject();
 
-	CharacterData::RegisterObject();
-	CharacterClass::RegisterObject();
 	Race::RegisterObject();
 
 }
@@ -83,12 +82,19 @@ void RpgLibInit()
 
 void RpgLibShutdown()
 {
-	SAFE_DELETE(g_resourceDirectory);
-	SAFE_DELETE(g_textureManager);
+	GetFontManager()->DeleteResources();
+	GetTextureManager()->DeleteResources();
+	GetTileMapManager()->DeleteResources();
+	GetTilesetManager()->DeleteResources();
+	GetShaderObjectManager()->DeleteResources();
+	//GetResourceDirectory()->DeleteResources();
+	
 	SAFE_DELETE(g_fontManager);
-	SAFE_DELETE(g_tilesetManager);
+	SAFE_DELETE(g_textureManager);
 	SAFE_DELETE(g_tileMapManager);
+	SAFE_DELETE(g_tilesetManager);
 	SAFE_DELETE(g_shaderObjectManager);
+	SAFE_DELETE(g_resourceDirectory);
 
 	//ObjectAttributeSerializerFactory::GetInstance()->DeleteFactories();
 }

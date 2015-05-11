@@ -11,14 +11,14 @@
 
 #pragma once
 
-#include <Catastrophe/IO/AttributeWriter.h>
-#include <Catastrophe/Math/Point.h>
-#include <Catastrophe/Math/Rect.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
+#include <Catastrophe/Core/IO/AttributeWriter.h>
+#include <Catastrophe/Core/Math/Point.h>
+#include <Catastrophe/Core/Math/Rect.h>
 #include <Catastrophe/Graphics/Texture.h>
 #include <Catastrophe/Graphics/SpriteAnimation.h>
 #include <Catastrophe/Graphics/AnimatedSpriteSet.h>
 #include <Catastrophe/Graphics/Sprite.h>
-#include <fc/math.h>
 
 #include "Serialization.h"
 
@@ -36,31 +36,31 @@ void SerializeObject<T>( const char* nodeName, AttributeWriter* f, const T& val 
 template <>
 void SerializeObject<Point>( AttributeWriter* f, const Point& val )
 {
-	f->SetInt("x", val.x);
-	f->SetInt("y", val.y);
+	f->SetAttribute("x", val.x);
+	f->SetAttribute("y", val.y);
 }
 
 
 template <>
 void SerializeObject<Rect>( AttributeWriter* f, const Rect& val )
 {
-	f->SetInt("x", val.pos.x);
-	f->SetInt("y", val.pos.y);
-	f->SetInt("w", val.size.x);
-	f->SetInt("h", val.size.y);
+	f->SetAttribute("x", val.position.x);
+	f->SetAttribute("y", val.position.y);
+	f->SetAttribute("w", val.size.x);
+	f->SetAttribute("h", val.size.y);
 }
 
 
 template <>
 void SerializeObject<SpriteBase>( AttributeWriter* f, const SpriteBase& s )
 {
-	f->SetInt("width", fc::iround(s.size.x));
-	f->SetInt("height", fc::iround(s.size.y));
-	f->SetFloat("scale_x", s.scale.x);
-	f->SetFloat("scale_y", s.scale.y);
-	f->SetFloat("angle", s.angle);
-	f->SetUInt("color", s.color.packed_value);
-	f->SetUInt("blendmode", s.blendmode.value);
+	f->SetAttribute("width", Math::Round(s.size.x));
+	f->SetAttribute("height", Math::Round(s.size.y));
+	f->SetAttribute("scale_x", s.scale.x);
+	f->SetAttribute("scale_y", s.scale.y);
+	f->SetAttribute("angle", s.angle);
+	f->SetAttribute("color", s.color.packed_value);
+	f->SetAttribute("blendmode", s.blendmode.value);
 }
 
 
@@ -70,11 +70,11 @@ void SerializeObject<SpriteAnimation>( AttributeWriter* f, const SpriteAnimation
 	//f->BeginNode("SpriteAnimation");
 
 	SerializeObject<Rect>(f, a.GetSourceRect());
-	f->SetUInt("frames", a.GetNumFrames());
-	f->SetInt("offset_x", a.GetFrameOffsetX());
-	f->SetInt("offset_y", a.GetFrameOffsetY());
-	f->SetFloat("speed", a.GetAnimationSpeed());
-	f->SetInt("flags", a.GetFlags());
+	f->SetAttribute("frames", a.GetNumFrames());
+	f->SetAttribute("offset_x", a.GetFrameOffsetX());
+	f->SetAttribute("offset_y", a.GetFrameOffsetY());
+	f->SetAttribute("speed", a.GetAnimationSpeed());
+	f->SetAttribute("flags", a.GetFlags());
 
 	//f->EndNode();
 }
@@ -89,8 +89,8 @@ void SerializeObject<AnimatedSpriteSet>( AttributeWriter* f, const AnimatedSprit
 	String texStr = texture ? texture->GetResourceName() : "";
 	u32 count = s.GetNumAnimations();
 
-	f->SetString("texture", texStr.c_str());
-	f->SetUInt("num_animations", count);
+	f->SetString("texture", texStr.CString());
+	f->SetAttribute("num_animations", count);
 	SerializeObject<SpriteBase>("SpriteBase", f, s);
 
 	for( u32 i(0); i < count; ++i )
@@ -121,7 +121,7 @@ void SerializeObject<Sprite>( AttributeWriter* f, const Sprite& s )
 		sourceRect = texture->GetSourceRect(s.GetUVRect());
 	}
 
-	f->SetString("texture", textureName.c_str());
+	f->SetString("texture", textureName.CString());
 	SerializeRect(xml, sourceRect);
 }
 
@@ -178,7 +178,7 @@ void RpgSerializer::SerializeAnimation( AttributeWriter* f, const Animation& a )
 		}
 	}
 
-	f->SetString("texture", textureName.c_str());
+	f->SetString("texture", textureName.CString());
 	f->SetFloat("speed", a.GetAnimSpeed() );
 	f->SetBool("loop", a.IsLooping() );
 	f->SetBool("paused", a.IsPaused() );
@@ -197,12 +197,12 @@ template <class T>
 void SerializeStringArray( AttributeWriter* f, const char* node, const T* stringArray, int n )
 {
 	f->BeginNode(node);
-	f->SetInt("count", n);
+	f->SetAttribute("count", n);
 	for( int i(0); i < n; ++i )
 	{
 		f->BeginNode("String");
-		f->SetInt("id", i);
-		f->SetString("s", stringArray[i].c_str());
+		f->SetAttribute("id", i);
+		f->SetString("s", stringArray[i].CString());
 		f->EndNode();
 	}
 	f->EndNode();

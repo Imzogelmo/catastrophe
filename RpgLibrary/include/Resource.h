@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include <fc/vector.h>
-#include <fc/string.h>
+#include "Catastrophe/Core/Containers/Vector.h"
+#include "Catastrophe/Core/Containers/String.h"
 
 #include "RpgCommon.h"
 #include "RefCounted.h"
@@ -38,8 +38,8 @@ public:
 class RPG_API ResourceCache
 {
 public:
-	typedef	fc::vector<Resource>	vec_type;
-	typedef	fc::vector<u32>			store_type;
+	typedef	Vector<Resource>	vec_type;
+	typedef	Vector<u32>			store_type;
 
 	ResourceCache();
 	~ResourceCache();

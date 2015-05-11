@@ -9,8 +9,9 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
-#include <fc/search.h>
-#include <fc/copy.h>
+// include this first for definitions
+#include <Catastrophe/Core/Common.h>
+
 
 // these are not actually 'inlined'.
 
@@ -49,8 +50,8 @@
 #include "Database.h"
 #include "ResourceDirectory.h"
 
-#include <Catastrophe/IO/XmlWriter.h>
-#include <Catastrophe/IO/XmlReader.h>
+#include <Catastrophe/Core/IO/XmlWriter.h>
+#include <Catastrophe/Core/IO/XmlReader.h>
 
 
 Database::Database() :
@@ -75,6 +76,7 @@ void Database::Initialize()
 	skills.SetResourceDirectory(m_resourceDirectory);
 	passiveSkills.SetResourceDirectory(m_resourceDirectory);
 	spells.SetResourceDirectory(m_resourceDirectory);
+	encounters.SetResourceDirectory(m_resourceDirectory);
 
 	items.SetResourceDirectory(m_resourceDirectory);
 	weapons.SetResourceDirectory(m_resourceDirectory);
@@ -150,29 +152,30 @@ void Database::SetAllDefaultDataArrayFilenames()
 	skills.SetFilename("Skills.xml");
 	passiveSkills.SetFilename("PassiveSkills.xml");
 	spells.SetFilename("Spells.xml");
+	encounters.SetFilename("Encounters.xml");
 
-	items.SetFilename("items.xml");
-	weapons.SetFilename("weapons.xml");
-	armor.SetFilename("armor.xml");
-	accessories.SetFilename("accessories.xml");
+	items.SetFilename("Items.xml");
+	weapons.SetFilename("Weapons.xml");
+	armor.SetFilename("Armor.xml");
+	accessories.SetFilename("Accessories.xml");
 
-	monsters.SetFilename("monsters.xml");
-	monsterTroops.SetFilename("monster_troops.xml");
-	monsterFormations.SetFilename("monster_formations.xml");
-	characters.SetFilename("characters.xml");
-	characterClasses.SetFilename("character_classes.xml");
-	races.SetFilename("races.xml");
-	factors.SetFilename("factors.xml");
+	monsters.SetFilename("Monsters.xml");
+	monsterTroops.SetFilename("MonsterTroops.xml");
+	monsterFormations.SetFilename("MonsterFormations.xml");
+	characters.SetFilename("Characters.xml");
+	characterClasses.SetFilename("CharacterClasses.xml");
+	races.SetFilename("Races.xml");
+	factors.SetFilename("Factors.xml");
 	experienceTables.SetFilename("ExperienceTables.xml");
 
 	battleBackgroundSprites.SetFilename("BattleBackgroundSprites.xml");
-	miscIconSprites.SetFilename("misc_icon_sprites.xml");
-	characterPortraitSprites.SetFilename("character_portrait_sprites.xml");
-	characterMapSprites.SetFilename("character_map_sprites.xml");
-	characterBattleSprites.SetFilename("character_battle_sprites.xml");
-	monsterMapSprites.SetFilename("monster_map_sprites.xml");
-	monsterBattleSprites.SetFilename("monster_battle_sprites.xml");
-	shaders.SetFilename("shaders.xml");
+	miscIconSprites.SetFilename("IconSprites.xml");
+	characterPortraitSprites.SetFilename("CharacterPortraitSprites.xml");
+	characterMapSprites.SetFilename("CharacterMapSprites.xml");
+	characterBattleSprites.SetFilename("CharacterBattleSprites.xml");
+	monsterMapSprites.SetFilename("MonsterMapSprites.xml");
+	monsterBattleSprites.SetFilename("MonsterBattleSprites.xml");
+	shaders.SetFilename("Shaders.xml");
 
 }
 
@@ -182,6 +185,7 @@ void Database::ClearAll()
 	skills.Clear();
 	passiveSkills.Clear();
 	spells.Clear();
+	encounters.Clear();
 
 	items.Clear();
 	weapons.Clear();
@@ -220,6 +224,7 @@ void Database::SetAllDefaultDataArrayNodeNames()
 	skills.SetDefaultNodeNames();
 	passiveSkills.SetDefaultNodeNames();
 	spells.SetDefaultNodeNames();
+	encounters.SetDefaultNodeNames();
 
 	items.SetDefaultNodeNames();
 	weapons.SetDefaultNodeNames();
@@ -258,6 +263,7 @@ bool Database::SerializeAllDataXml()
 	skills.Serialize();
 	passiveSkills.Serialize();
 	spells.Serialize();
+	encounters.Serialize();
 
 	items.Serialize();
 	weapons.Serialize();
@@ -298,6 +304,7 @@ bool Database::DeserializeAllDataXml()
 	skills.Deserialize();
 	passiveSkills.Deserialize();
 	spells.Deserialize();
+	encounters.Deserialize();
 
 	items.Deserialize();
 	weapons.Deserialize();
@@ -345,14 +352,14 @@ ResourceDirectory* Database::GetResourceDirectory() const
 }
 
 
-template <class T>
-void Database::GenerateIds( T& arr )
+template <class DatabaseArrayType>
+void Database::GenerateIds( DatabaseArrayType& dataArray )
 {
-	u16 size = (u16)arr.size();
+	u16 size = (u16)dataArray.Size();
 	for( u16 i(0); i < size; ++i )
 	{
 		//id needs to match the indices.
-		arr[i].id = i;
+		dataArray[i].id = i;
 	}
 }
 
@@ -372,8 +379,8 @@ XmlWriter* SerializeDataArrayBeginImpl
 
 	//xml->CreateRoot(root);
 	xml->BeginNode(root);
-	xml->SetInt("ver", 1);
-	xml->SetUInt("count", size);
+	xml->SetAttribute("ver", 1);
+	xml->SetAttribute("count", size);
 
 	return xml;
 }
@@ -391,15 +398,15 @@ void SerializeDataArrayEndImpl( XmlWriter* xml )
 
 
 template <class T>
-bool Database::SerializeDataArray( T& arr, ResourceDirectory* resourceDirectory, const String& filename, const char* root, const char* item )
+bool Database::SerializeDataArray( T& dataArray, ResourceDirectory* resourceDirectory, const String& filename, const char* root, const char* item )
 {
-	XmlWriter* xml = SerializeDataArrayBeginImpl(resourceDirectory, filename, root, arr.size());
+	XmlWriter* xml = SerializeDataArrayBeginImpl(resourceDirectory, filename, root, dataArray.Size());
 	if( xml )
 	{
-		for( u32 i(0); i < arr.size(); ++i )
+		for( u32 i(0); i < dataArray.Size(); ++i )
 		{
 			xml->BeginNode(item);
-			arr[i].Serialize(xml);
+			dataArray[i].Serialize(xml);
 			xml->EndNode();
 		}
 	}
@@ -417,11 +424,11 @@ bool Database::SerializeDataArray( T& arr, ResourceDirectory* resourceDirectory,
 
 	xml.BeginNode(root);
 	xml.SetInt("ver", 1);
-	xml.SetUInt("count", arr.size());
-	for( u32 i(0); i < arr.size(); ++i )
+	xml.SetUInt("count", dataArray.size());
+	for( u32 i(0); i < dataArray.size(); ++i )
 	{
 		xml.BeginNode(item);
-		arr[i].Serialize(&xml);
+		dataArray[i].Serialize(&xml);
 		xml.EndNode();
 	}
 
@@ -447,7 +454,7 @@ XmlReader* DeserializeDataArrayBeginImpl
 
 		else
 		{
-			Log("Error parsing (%s). Root item not found", filename.c_str());
+			Log("Error parsing (%s). Root item not found", filename.CString());
 		}
 	}
 
@@ -468,16 +475,17 @@ void DeserializeDataArrayEndImpl( XmlReader* xml )
 
 
 template <class T>
-bool Database::DeserializeDataArray( T& arr, ResourceDirectory* resourceDirectory, const String& filename, const char* root, const char* item )
+bool Database::DeserializeDataArray( T& dataArray, ResourceDirectory* resourceDirectory, const String& filename, const char* root, const char* item )
 {
-	XmlReader* xml = DeserializeDataArrayBeginImpl(resourceDirectory, filename, root, arr.size());
+	XmlReader* xml = DeserializeDataArrayBeginImpl(resourceDirectory, filename, root, dataArray.Size());
 	if( xml )
 	{
-		u32 n = xml->GetUInt("count");
-		arr.resize(n);
-		for( u32 i(0); i < n && xml->NextChild(item); ++i )
+		u32 newSize = 0;
+		xml->GetAttribute("count", newSize);
+		dataArray.Resize(newSize);
+		for( u32 i(0); i < newSize && xml->NextChild(item); ++i )
 		{
-			arr[i].Deserialize(xml);
+			dataArray[i].Deserialize(xml);
 		}
 	}
 
@@ -495,16 +503,16 @@ bool Database::DeserializeDataArray( T& arr, ResourceDirectory* resourceDirector
 	{
 		u32 i = 0;
 		u32 n = xml.GetUInt("count");
-		arr.resize(n);
+		dataArray.Resize(n);
 		while( i < n && xml.NextChild(item) )
 		{
-			arr[i].Deserialize(&xml);
+			dataArray[i].Deserialize(&xml);
 			i++;
 		}
 	}
 	else
 	{
-		Log("Error parsing (%s). Root item not found", filename.c_str());
+		Log("Error parsing (%s). Root item not found", filename.CString());
 		return false;
 	}
 
@@ -518,8 +526,8 @@ bool Database::DeserializeDataArray( T& arr, ResourceDirectory* resourceDirector
 //
 // this whole thing is a WIP.
 //
-template <class Array>
-bool Database::GenerateHeader( const Array& arr, ResourceDirectory* resourceDirectory, const String& filename, const String& prependStr )
+template <class ArrayType>
+bool Database::GenerateHeader( const ArrayType& dataArray, ResourceDirectory* resourceDirectory, const String& filename, const String& prependStr )
 {
 	String fn = resourceDirectory ? resourceDirectory->GetScriptDefineDirectory() : "";
 	fn += filename;
@@ -540,15 +548,15 @@ bool Database::GenerateHeader( const Array& arr, ResourceDirectory* resourceDire
 	String name;
 
 	u32 i = 0;
-	for( ; i < arr.size(); ++i )
+	for( ; i < dataArray.Size(); ++i )
 	{
 		name = "\t\t";
-		name += arr[i].name.c_str();
+		name += dataArray[i].name.CString();
 
 		// TODO: just remove anything not a valid char
-		name.erase( fc::remove(name.begin(), name.end(), '\''), name.end() );
-		name.erase( fc::remove(name.begin(), name.end(), '\"'), name.end() );
-		name.erase( fc::remove(name.begin(), name.end(), ' '), name.end() );
+		name.Erase( Algorithm::Remove(name.begin(), name.end(), '\''), name.end() );
+		name.Erase( Algorithm::Remove(name.begin(), name.end(), '\"'), name.end() );
+		name.Erase( Algorithm::Remove(name.begin(), name.end(), ' '), name.end() );
 
 		//name += " = ";
 		//name.append_int(i);
@@ -569,7 +577,7 @@ bool Database::GenerateHeader( const Array& arr, ResourceDirectory* resourceDire
 
 /*
 template <class Array>
-bool Database::GenerateHeader( const Array& arr, ResourceDirectory* resourceDirectory, const String& filename, const String& prependStr )
+bool Database::GenerateHeader( const Array& dataArray, ResourceDirectory* resourceDirectory, const String& filename, const String& prependStr )
 {
 	String fn = resourceDirectory ? resourceDirectory->GetScriptDefineDirectory() : "";
 	fn += filename;
@@ -590,17 +598,17 @@ bool Database::GenerateHeader( const Array& arr, ResourceDirectory* resourceDire
 	String name;
 
 	u32 i = 0;
-	for( ; i < arr.size(); ++i )
+	for( ; i < dataArray.size(); ++i )
 	{
 		str = "#define " + prependStr;
-		name = arr[i].name;
+		name = dataArray[i].name;
 
 		// replace spaces with underscores.
 		fc::replace(name.begin(), name.end(), ' ', '_');
 
 		// TODO: just remove anything not a valid char
-		name.erase( fc::remove(name.begin(), name.end(), '\''), name.end() );
-		name.erase( fc::remove(name.begin(), name.end(), '\"'), name.end() );
+		name.erase( Algorithm::Remove(name.begin(), name.end(), '\''), name.end() );
+		name.erase( Algorithm::Remove(name.begin(), name.end(), '\"'), name.end() );
 
 		name.make_upper();
 		str.append(name);
@@ -634,6 +642,7 @@ int Database::GetMemoryUsage() const
 		skills.GetMemoryUsage() +
 		passiveSkills.GetMemoryUsage() +
 		spells.GetMemoryUsage() +
+		encounters.GetMemoryUsage() +
 
 		items.GetMemoryUsage() +
 		weapons.GetMemoryUsage() +
@@ -667,10 +676,10 @@ void Database::LogMemoryUsage() const
 	LogInfo("[Database memory usage statistics (kilobytes)]");
 
 	LogInfo("    Database total memory usage [%.2f]", GetMemoryUsage() / 1024.f);
-
 	LogInfo("    Skills         [%.2f]", skills.GetMemoryUsage() / 1024.f);
 	LogInfo("    Passive Skills [%.2f]", passiveSkills.GetMemoryUsage() / 1024.f);
 	LogInfo("    Spells         [%.2f]", spells.GetMemoryUsage() / 1024.f);
+	LogInfo("    Encounters     [%.2f]", encounters.GetMemoryUsage() / 1024.f);
 	LogInfo("    Items          [%.2f]", items.GetMemoryUsage() / 1024.f);
 	LogInfo("    Weapons        [%.2f]", weapons.GetMemoryUsage() / 1024.f);
 	LogInfo("    Armor          [%.2f]", armor.GetMemoryUsage() / 1024.f);

@@ -10,8 +10,8 @@
 // GNU General Public License for more details.
 
 
-#include <Catastrophe/IO/AttributeWriter.h>
-#include <Catastrophe/IO/AttributeReader.h>
+#include <Catastrophe/Core/IO/AttributeWriter.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
 #include "Race.h"
 
 
@@ -34,8 +34,8 @@ void Race::RegisterObject()
 
 void Race::Serialize( AttributeWriter* f )
 {
-	f->SetString("name", name.c_str());
-	f->SetString("description", description.c_str());
+	f->SetString("name", name.CString());
+	f->SetString("description", description.CString());
 
 	attributes.Serialize(f);
 }
@@ -43,8 +43,8 @@ void Race::Serialize( AttributeWriter* f )
 
 void Race::Deserialize( AttributeReader* f )
 {
-	name = f->GetString("name", name);
-	description = f->GetString("description", description);
+	name = f->GetString("name");
+	description = f->GetString("description");
 
 	attributes.Deserialize(f);
 }
@@ -52,7 +52,7 @@ void Race::Deserialize( AttributeReader* f )
 
 int Race::GetMemoryUsage() const
 {
-	return (int)(description.capacity());
+	return (int)(description.Capacity());
 }
 
 

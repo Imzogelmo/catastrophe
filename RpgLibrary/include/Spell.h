@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <fc/string.h>
+#include "Catastrophe/Core/Containers/String.h"
 
 #include "RpgCommon.h"
 #include "Attributes.h"
@@ -20,9 +20,10 @@
 
 struct SpellLevelData
 {
-	s16 exp;
-	s16 cost;
+	u16 exp;
+	u16 cost;
 	s16 effectivity;
+	s16 misc;
 	SpellUsageInfo usageInfo;
 
 	SpellLevelData()
@@ -39,7 +40,7 @@ struct RPG_API Spell
 	String				description;
 	Attributes			attributes;
 
-	fc::vector<SpellLevelData> levelData;
+	Vector<SpellLevelData> levelData;
 
 	u16			id;
 	int			cost;

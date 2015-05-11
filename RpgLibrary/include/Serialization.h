@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <fc/string.h>
+#include "Catastrophe/Core/Containers/String.h"
 #include "RpgCommon.h"
 #include "ResourceManager.h"
 

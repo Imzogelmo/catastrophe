@@ -12,8 +12,8 @@
 
 #pragma once
 
-#include <fc/string.h>
-#include <fc/static_string.h>
+#include "Catastrophe/Core/Containers/String.h"
+#include "Catastrophe/Core/Containers/StaticString.h"
 #include "RpgCommon.h"
 
 
@@ -57,8 +57,8 @@ public:
 		Util::SerializeStringArray(xml, "ClassFlags", classFlags, MAX_CLASS_FLAGS);
 		Util::SerializeStringArray(xml, "FamilyFlags", familyFlags, MAX_FAMILY_FLAGS);
 
-		f->SetString("title", title.c_str());
-		f->SetString("gold", gold.c_str());
+		f->SetString("title", title.CString());
+		f->SetString("gold", gold.CString());
 		f->EndNode();
 	}
 

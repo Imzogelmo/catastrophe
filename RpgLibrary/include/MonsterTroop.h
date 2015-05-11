@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include <fc/static_vector.h>
-#include <fc/string.h>
+#include "Catastrophe/Core/Containers/StaticVector.h"
+#include "Catastrophe/Core/Containers/String.h"
 
 #include "RpgCommon.h"
 
@@ -24,18 +24,25 @@
  */
 struct RPG_API MonsterGroup
 {
+	/// The id of the monster in this Group
 	u16	monsterId;
-	u8	min;
-	u8	max;
+
+	/// The minimum number of monsters that may appear in this group.
+	u8	minimum;
+
+	/// The maximum number of monsters that may appear in this group.
+	u8	maximum;
 
 	MonsterGroup();
-	MonsterGroup(u16 monsterId, u8 minNum, u8 maxNum);
+	MonsterGroup( u16 monsterId, u8 minNum, u8 maxNum );
 
 	void Validate();
 	void Serialize( AttributeWriter* f );
 	void Deserialize( AttributeReader* f );
 
 };
+
+CE_MAKE_TRAIT(MonsterGroup, is_pod);
 
 
 
@@ -45,13 +52,13 @@ struct RPG_API MonsterGroup
  */
 struct RPG_API MonsterTroop
 {
-	typedef fc::static_vector<MonsterGroup, 8> vec_type;
+	typedef StaticVector<MonsterGroup, 8> vec_type;
 
 	String	name; //this is editor only....
 	vec_type	groups;
-	int			id;
-	int			formation_id;
-	int			max_monsters;
+	u16			id;
+	u16			formationId;
+	u8			maxMonsters;
 
 	MonsterTroop();
 
@@ -61,6 +68,8 @@ struct RPG_API MonsterTroop
 	int GetMemoryUsage() const;
 
 };
+
+//MAKE_TRAIT(MonsterTroop, is_pod);
 
 
 

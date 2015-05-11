@@ -10,8 +10,8 @@
 // GNU General Public License for more details.
 
 
-#include <Catastrophe/IO/AttributeWriter.h>
-#include <Catastrophe/IO/AttributeReader.h>
+#include <Catastrophe/Core/IO/AttributeWriter.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
 #include "Shops.h"
 
 
@@ -20,8 +20,8 @@ void ShopItem::Serialize( AttributeWriter* f )
 {
 	f->BeginNode("Item");
 
-	f->SetInt("id", item_id);
-	f->SetInt("price", price);
+	f->SetAttribute("id", item_id);
+	f->SetAttribute("price", price);
 
 	f->EndNode();
 }
@@ -29,8 +29,8 @@ void ShopItem::Serialize( AttributeWriter* f )
 
 void ShopItem::Deserialize( AttributeReader* f )
 {
-	item_id = f->GetInt("id");
-	price = f->GetInt("price");
+	f->GetAttribute("id", item_id);
+	f->GetAttribute("price", price);
 }
 
 
@@ -57,16 +57,16 @@ void Shop::Serialize( AttributeWriter* f )
 {
 	f->BeginNode("Shop");
 
-	f->SetUInt("num_items", items.size());
-	f->SetString("name", name.c_str());
-	f->SetString("greeting", greeting.c_str());
-	f->SetString("transaction", greeting.c_str());
-	f->SetString("buy", greeting.c_str());
-	f->SetString("sell", greeting.c_str());
-	f->SetInt("markup", markup_percent);
-	f->SetInt("devaluation", devaluation_percent);
+	f->SetAttribute("num_items", items.Size());
+	f->SetString("name", name.CString());
+	f->SetString("greeting", greeting.CString());
+	f->SetString("transaction", greeting.CString());
+	f->SetString("buy", greeting.CString());
+	f->SetString("sell", greeting.CString());
+	f->SetAttribute("markup", markup_percent);
+	f->SetAttribute("devaluation", devaluation_percent);
 
-	for( vec_type::iterator it = items.begin(); it < items.end(); ++it )
+	for( vec_type::Iterator it = items.begin(); it < items.end(); ++it )
 	{
 		it->Serialize(f);
 	}
@@ -77,20 +77,23 @@ void Shop::Serialize( AttributeWriter* f )
 
 void Shop::Deserialize( AttributeReader* f )
 {
-	u32 n = f->GetUInt("num_items");
+	u32 n = 0;
+	f->GetAttribute("num_items", n);
+
 	name = f->GetString("name");
 	greeting = f->GetString("greeting");
 	transaction = f->GetString("transaction");
 	buy = f->GetString("buy");
 	sell = f->GetString("sell");
-	markup_percent = f->GetInt("markup");
-	devaluation_percent = f->GetInt("devaluation");
 
-	items.reserve(n);
+	f->GetAttribute("markup", markup_percent);
+	f->GetAttribute("devaluation", devaluation_percent);
+
+	items.Reserve(n);
 	while( f->NextChild("Item") )
 	{
-		items.push_back();
-		items.back().Deserialize(f);
+		items.Add();
+		items.Back().Deserialize(f);
 	}
 
 	f->SetToParent();

@@ -11,13 +11,12 @@
 
 #pragma once
 
-#include <Catastrophe/IO/AttributeReader.h>
-#include <Catastrophe/Math/Point.h>
-#include <Catastrophe/Math/Rect.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
+#include <Catastrophe/Core/Math/Point.h>
+#include <Catastrophe/Core/Math/Rect.h>
 #include <Catastrophe/Graphics/SpriteAnimation.h>
 #include <Catastrophe/Graphics/AnimatedSpriteSet.h>
 #include <Catastrophe/Graphics/Sprite.h>
-#include <fc/math.h>
 
 #include "Serialization.h"
 #include "TextureManager.h"
@@ -39,18 +38,18 @@ void DeserializeObject( const char* nodeName, AttributeReader* f, T& value )
 template <>
 void DeserializeObject<Point>( AttributeReader* f, Point& value )
 {
-	value.x = f->GetInt("x", 0);
-	value.y = f->GetInt("y", 0);
+	f->GetAttribute("x", value.x);
+	f->GetAttribute("y", value.y);
 }
 
 
 template <>
 void DeserializeObject<Rect>( AttributeReader* f, Rect& value )
 {
-	value.pos.x = f->GetInt("x", 0);
-	value.pos.y = f->GetInt("y", 0);
-	value.size.x = f->GetInt("w", 0);
-	value.size.y = f->GetInt("h", 0);
+	f->GetAttribute("x", value.position.x);
+	f->GetAttribute("y", value.position.y);
+	f->GetAttribute("w", value.size.x);
+	f->GetAttribute("h", value.size.y);
 }
 
 
@@ -59,13 +58,13 @@ void DeserializeObject<SpriteBase>( AttributeReader* f, SpriteBase& s )
 {
 	//if( f->NextChild("SpriteBase") )
 	{
-		s.size.x = (float)f->GetInt("width");
-		s.size.y = (float)f->GetInt("height");
-		s.scale.x = f->GetFloat("scale_x", 1.f);
-		s.scale.y = f->GetFloat("scale_y", 1.f);
-		s.angle = f->GetFloat("angle");
-		s.color.packed_value = f->GetUInt("color", Color::White().packed_value);
-		s.blendmode.value = f->GetUInt("blendmode", BlendMode::Alpha.value);
+		f->GetAttribute("width", s.size.x);
+		f->GetAttribute("height", s.size.y);
+		f->GetAttribute("scale_x", s.scale.x);
+		f->GetAttribute("scale_y", s.scale.y);
+		f->GetAttribute("angle", s.angle);
+		f->GetAttribute("color", s.color.packed_value);
+		f->GetAttribute("blendmode", s.blendmode.value);
 
 	//	f->SetToParent();
 	}
@@ -79,11 +78,17 @@ void DeserializeObject<SpriteAnimation>( AttributeReader* f, SpriteAnimation& a 
 	{
 		Rect sourceRect = Rect::Zero;
 		DeserializeObject<Rect>(f, sourceRect);
-		int numFrames = f->GetInt("frames", 1);
-		int offsetX = f->GetInt("offset_x");
-		int offsetY = f->GetInt("offset_y");
-		float animSpeed = f->GetFloat("speed", 16.f);
-		int flags = f->GetInt("flags");
+		int numFrames = 1;
+		int offsetX = 0;
+		int offsetY = 0;
+		int flags = 0;
+		float animSpeed = 16.f;
+
+		f->GetAttribute("frames", numFrames);
+		f->GetAttribute("offset_x", offsetX);
+		f->GetAttribute("offset_y", offsetY);
+		f->GetAttribute("speed", animSpeed);
+		f->GetAttribute("flags", flags);
 
 		a.Create( sourceRect, animSpeed, numFrames, offsetX, offsetY );
 	//	f->SetToParent();
@@ -94,12 +99,15 @@ void DeserializeObject<SpriteAnimation>( AttributeReader* f, SpriteAnimation& a 
 template <>
 void DeserializeObject<AnimatedSpriteSet>( AttributeReader* f, AnimatedSpriteSet& s )
 {
-	String str = f->GetString("texture");
-	u32 count = f->GetUInt("num_animations");
+	String textureName;
+	u32 count = 0;
+
+	f->GetString("texture", textureName);
+	f->GetAttribute("num_animations", count);
 	DeserializeObject<SpriteBase>(f, s);
 	s.Resize(count);
 
-	Texture* texture = g_textureManager->Load(str);
+	Texture* texture = GetTextureManager()->Load(textureName);
 	s.SetTexture(texture);
 
 	bool hasAnim = false;
@@ -128,12 +136,12 @@ void RpgSerializer::DeserializeSprite( AttributeReader* f, Sprite& s )
 	if( !textureName.empty() )
 	{
 		ASSERT(g_textureManager != 0);
-		texture = g_textureManager->Load(textureName.c_str());
+		texture = g_textureManager->Load(textureName.CString());
 	}
 
 	if( !texture )
 	{
-		LogError("Error: Texture (%s) not found. Could not load Sprite.", textureName.c_str());
+		LogError("Error: Texture (%s) not found. Could not load Sprite.", textureName.CString());
 	}
 	else
 	{
@@ -194,7 +202,7 @@ void RpgSerializer::DeserializeAnimation( AttributeReader* f, Animation& a )
 		texture = g_textureManager->GetResource(textureName);
 		if( !texture )
 		{
-			texture = g_textureManager->Load(textureName.c_str());
+			texture = g_textureManager->Load(textureName.CString());
 		}
 	}
 
@@ -205,7 +213,7 @@ void RpgSerializer::DeserializeAnimation( AttributeReader* f, Animation& a )
 		// (this would save a lot of extra crap in the long run)..
 
 		//it's not a fatal error, but it's not good either.
-		LogError("Error: Texture (%s) not found. Could not load Animation.", textureName.c_str());
+		LogError("Error: Texture (%s) not found. Could not load Animation.", textureName.CString());
 	}
 	else
 	{
@@ -236,12 +244,12 @@ void DeserializeStringArray( AttributeReader* f, const char* node, T* stringArra
 	if( f->NextChild(node) )
 	{
 		int i = 0;
-		int amount = f->GetInt("count");
+		int amount = f->GetAttribute("count");
 		amount = (amount < n) ? amount : n;
 
 		while( i < amount && f->NextChild("String") )
 		{
-			stringArray[i] = f->GetString("s");
+			f->GetString("s", stringArray[i]);
 			++i;
 		}
 

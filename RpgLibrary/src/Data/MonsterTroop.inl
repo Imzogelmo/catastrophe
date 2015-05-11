@@ -10,24 +10,24 @@
 // GNU General Public License for more details.
 
 
-#include <Catastrophe/IO/AttributeWriter.h>
-#include <Catastrophe/IO/AttributeReader.h>
+#include <Catastrophe/Core/IO/AttributeWriter.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
 #include "MonsterTroop.h"
 
 
 
 MonsterGroup::MonsterGroup() :
 	monsterId(0),
-	min(1),
-	max(1)
+	minimum(1),
+	maximum(1)
 {
 }
 
 
 MonsterGroup::MonsterGroup( u16 monsterIndex, u8 minNum, u8 maxNum ) :
 	monsterId(monsterIndex),
-	min(minNum),
-	max(maxNum)
+	minimum(minNum),
+	maximum(maxNum)
 {
 	Validate();
 }
@@ -35,17 +35,17 @@ MonsterGroup::MonsterGroup( u16 monsterIndex, u8 minNum, u8 maxNum ) :
 
 void MonsterGroup::Validate()
 {
-	if(max < min)
-		max = min;
+	if(maximum < minimum)
+		minimum = maximum;
 }
 
 
 void MonsterGroup::Serialize( AttributeWriter* f )
 {
 	//f->BeginNode("Monster");
-	f->SetShort("index", monsterId);
-	f->SetByte("min", min);
-	f->SetByte("max", max);
+	f->SetAttribute("index", monsterId);
+	f->SetAttribute("min", minimum);
+	f->SetAttribute("max", maximum);
 	//f->EndNode();
 
 }
@@ -53,10 +53,9 @@ void MonsterGroup::Serialize( AttributeWriter* f )
 
 void MonsterGroup::Deserialize( AttributeReader* f )
 {
-	monsterId = f->GetShort("index", monsterId);
-	min = f->GetByte("min", min);
-	max = f->GetByte("max", max);
-
+	f->GetAttribute("index", monsterId);
+	f->GetAttribute("min", minimum);
+	f->GetAttribute("max", maximum);
 }
 
 
@@ -68,8 +67,8 @@ void MonsterGroup::Deserialize( AttributeReader* f )
 MonsterTroop::MonsterTroop() :
 	groups(),
 	id(0),
-	formation_id(0),
-	max_monsters(9)
+	formationId(0),
+	maxMonsters(9)
 {
 }
 
@@ -77,11 +76,11 @@ MonsterTroop::MonsterTroop() :
 void MonsterTroop::Serialize( AttributeWriter* f )
 {
 	f->SetString("name", name);
-	f->SetInt("formation", formation_id);
-	f->SetInt("max", max_monsters);
-	f->SetUInt("num_groups", groups.size());
+	f->SetAttribute("formation", formationId);
+	f->SetAttribute("max", maxMonsters);
+	f->SetAttribute("num_groups", groups.size());
 
-	for( vec_type::iterator it = groups.begin(); it < groups.end(); ++it )
+	for( vec_type::Iterator it = groups.begin(); it < groups.end(); ++it )
 	{
 		f->BeginNode("Monster");
 		it->Serialize(f);
@@ -92,12 +91,13 @@ void MonsterTroop::Serialize( AttributeWriter* f )
 
 void MonsterTroop::Deserialize( AttributeReader* f )
 {
-	name = f->GetString("name", name);
-	formation_id = f->GetInt("formation", formation_id);
-	max_monsters = f->GetInt("max", max_monsters);
+	f->GetString("name", name);
+	f->GetAttribute("formation", formationId);
+	f->GetAttribute("max", maxMonsters);
 
-	u32 numGroups = f->GetInt("num_groups");
-	groups.resize(numGroups);
+	u32 numGroups = 0;
+	f->GetAttribute("num_groups", numGroups);
+	groups.Resize(numGroups);
 
 	for( u32 i(0); i < numGroups; ++i )
 	{
@@ -113,7 +113,7 @@ void MonsterTroop::Deserialize( AttributeReader* f )
 
 int MonsterTroop::GetMemoryUsage() const
 {
-	return (int)(groups.capacity() * sizeof(MonsterGroup));
+	return (int)(groups.Capacity() * sizeof(MonsterGroup));
 }
 
 

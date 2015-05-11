@@ -49,7 +49,7 @@ Texture* TextureManager::Load( const String& path, const String& filename, int* 
 
 	if( !texture->LoadFromFile(path, filename) )
 	{
-		LogError("Failed to load texture (%s)", (path + filename).c_str());
+		LogError("Failed to load texture (%s)", (path + filename).CString());
 		SAFE_DELETE(texture);
 	}
 	else

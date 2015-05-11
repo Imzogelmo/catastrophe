@@ -38,7 +38,7 @@ void TilesetManager::DisposeResource( void* p )
 		if( texture )
 			GetTextureManager()->Unload(texture);
 
-		LogDebug("Tileset (%s) unloaded", tileset->GetName().c_str());
+		LogDebug("Tileset (%s) unloaded", tileset->GetName().CString());
 		delete tileset;
 	}
 }
@@ -53,12 +53,12 @@ Tileset* TilesetManager::Load( const String& path, const String& filename, int* 
 	tileset = new Tileset();
 	if( !tileset->Load(path, filename) )
 	{
-		LogError("Failed to load tileset (%s)", (path + filename).c_str());
+		LogError("Failed to load tileset (%s)", (path + filename).CString());
 		SAFE_DELETE(tileset);
 	}
 	else
 	{
-		LogDebug("Tileset (%s) successfully loaded", (path + filename).c_str());
+		LogDebug("Tileset (%s) successfully loaded", (path + filename).CString());
 		AddResource(tileset, filename, id);
 	}
 

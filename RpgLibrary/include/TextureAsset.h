@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <fc/string.h>
+#include "Catastrophe/Core/Containers/String.h"
 #include "RpgCommon.h"
 
 
@@ -43,8 +43,8 @@ public:
 
 protected:
 	String			m_textureFilename;
-	int					m_textureResourceId;
-	int					m_refCount;
-	bool				m_preload; //todo
+	int				m_textureResourceId;
+	int				m_refCount;
+	bool			m_preload; //todo
 };
 

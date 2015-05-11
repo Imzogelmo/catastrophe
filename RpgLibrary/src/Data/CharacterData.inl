@@ -10,8 +10,8 @@
 // GNU General Public License for more details.
 
 
-#include <Catastrophe/IO/AttributeWriter.h>
-#include <Catastrophe/IO/AttributeReader.h>
+#include <Catastrophe/Core/IO/AttributeWriter.h>
+#include <Catastrophe/Core/IO/AttributeReader.h>
 #include "CharacterData.h"
 
 
@@ -24,49 +24,28 @@ CharacterData::CharacterData() :
 	portraitId(0),
 	mapSpritesetId(0),
 	battleSpritesetId(0),
-	lv(1),
-	exp(0),
-	gold(0),
+	startingLv(1),
+	startingExp(0),
+	startingGold(0),
 	attributes()
 {
 }
 
 
-void CharacterData::RegisterObject()
-{
-	/*
-	REGISTER_ATTRIBUTE_FACTORY_TYPE(CharacterData);
-	REGISTER_ATTRIBUTE(CharacterData, VAR_TYPE_STRING, "name", name);
-	REGISTER_ATTRIBUTE(CharacterData, VAR_TYPE_STRING, "script", script);
-	REGISTER_ATTRIBUTE(CharacterData, VAR_TYPE_STRING, "description", description);
-
-	PUSH_ATTRIBUTE_NODE(CharacterData, "Data");
-	REGISTER_ATTRIBUTE(CharacterData, VAR_TYPE_INT, "lv", lv);
-	REGISTER_ATTRIBUTE(CharacterData, VAR_TYPE_INT, "exp", exp);
-	REGISTER_ATTRIBUTE(CharacterData, VAR_TYPE_INT, "gold", gold);
-	REGISTER_ATTRIBUTE(CharacterData, VAR_TYPE_INT, "class_id", class_id);
-	REGISTER_ATTRIBUTE(CharacterData, VAR_TYPE_INT, "portraitId", portraitId);
-	REGISTER_ATTRIBUTE(CharacterData, VAR_TYPE_INT, "mapSpritesetId", mapSpritesetId);
-	REGISTER_ATTRIBUTE(CharacterData, VAR_TYPE_INT, "battleSpritesetId", battleSpritesetId);
-	POP_ATTRIBUTE_NODE(CharacterData);
-	*/
-}
-
-
 void CharacterData::Serialize( AttributeWriter* f )
 {
-	f->SetString("name", name.c_str());
-	f->SetString("script", script.c_str());
-	f->SetString("description", description.c_str());
+	f->SetString("name", name.CString());
+	f->SetString("script", script.CString());
+	f->SetString("description", description.CString());
 
 	f->BeginNode("Data");
-	f->SetInt("lv", lv);
-	f->SetInt("exp", exp);
-	f->SetInt("gold", gold);
-	f->SetInt("class_id", class_id);
-	f->SetInt("portraitId", portraitId);
-	f->SetInt("mapSpritesetId", mapSpritesetId);
-	f->SetInt("battleSpritesetId", battleSpritesetId);
+	f->SetAttribute("lv", startingLv);
+	f->SetAttribute("exp", startingExp);
+	f->SetAttribute("gold", startingGold);
+	f->SetAttribute("class_id", classId);
+	f->SetAttribute("portraitId", portraitId);
+	f->SetAttribute("mapSpritesetId", mapSpritesetId);
+	f->SetAttribute("battleSpritesetId", battleSpritesetId);
 	f->EndNode();
 
 	attributes.Serialize(f);
@@ -81,13 +60,13 @@ void CharacterData::Deserialize( AttributeReader* f )
 	
 	if( f->NextChild("Data") )
 	{
-		lv = f->GetInt("lv", lv);
-		exp = f->GetInt("exp", exp);
-		gold = f->GetInt("gold", gold);
-		class_id = f->GetInt("class_id", class_id);
-		portraitId = f->GetInt("portraitId", portraitId);
-		mapSpritesetId = f->GetInt("mapSpritesetId", mapSpritesetId);
-		battleSpritesetId = f->GetInt("battleSpritesetId", battleSpritesetId);
+		f->GetAttribute("lv", startingLv);
+		f->GetAttribute("exp", startingExp);
+		f->GetAttribute("gold", startingGold);
+		f->GetAttribute("class_id", classId);
+		f->GetAttribute("portraitId", portraitId);
+		f->GetAttribute("mapSpritesetId", mapSpritesetId);
+		f->GetAttribute("battleSpritesetId", battleSpritesetId);
 		f->SetToParent();
 	}
 
@@ -97,7 +76,7 @@ void CharacterData::Deserialize( AttributeReader* f )
 
 int CharacterData::GetMemoryUsage() const
 {
-	return (int)(description.capacity());
+	return (int)(description.Capacity());
 }
 
 

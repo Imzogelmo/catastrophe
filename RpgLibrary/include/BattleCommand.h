@@ -11,17 +11,17 @@
 
 #pragma once
 
-#include <fc/string.h>
+#include "Catastrophe/Core/Containers/String.h"
 #include "RpgCommon.h"
 
 
 struct BattleCommand
 {
-	String	name;
-	String	description;
-	int			id;
-	int			type;
-	int			flags;
+	StaticString<32>	name;
+	String				description;
+	int		id;
+	int		type;
+	int		flags;
 
 	BattleCommand();
 
