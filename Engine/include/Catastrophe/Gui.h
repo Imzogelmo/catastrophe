@@ -18,15 +18,14 @@
 
 #pragma once
 
-#include "Gui/Widget.h"
-#include "Gui/AnimatedIcon.h"
-#include "Gui/BackgroundImage.h"
-#include "Gui/Frame.h"
-#include "Gui/Gui.h"
-#include "Gui/Icon.h"
-#include "Gui/Label.h"
-#include "Gui/ListBox.h"
-#include "Gui/MenuElement.h"
-#include "Gui/Skin.h"
-#include "Gui/TextBox.h"
+#include "Catastrophe/UI/Gui.h"
+#include "Catastrophe/UI/Skin.h"
+#include "Catastrophe/UI/Widget.h"
+#include "Catastrophe/UI/Window.h"
+#include "Catastrophe/UI/Icon.h"
+#include "Catastrophe/UI/Background.h"
+#include "Catastrophe/UI/Frame.h"
+//#include "Catastrophe/UI/Label.h"
+#include "Catastrophe/UI/ListBox.h"
+#include "Catastrophe/UI/TextBox.h"
 

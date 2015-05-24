@@ -18,7 +18,9 @@
 
 #pragma once
 
-#include "Common.h"
+// Include all graphics headers
+
+#include "Catastrophe/Core/Common.h"
 #include "Graphics/Sprite.h"
 #include "Graphics/SpriteAnimation.h"
 #include "Graphics/AnimatedSpriteSet.h"

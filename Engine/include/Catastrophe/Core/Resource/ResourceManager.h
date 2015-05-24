@@ -28,6 +28,10 @@ public:
 	ResourceManager();
 	~ResourceManager();
 
+	void InitializeResourceManager(u32 numRegisterableResourceTypes)
+	{
+	}
+
 	/// Registers a new resource type that can be managed by the ResourceManager.
 	/// New resource types must inherit from Resource base class and implement
 	/// Resource::Load() handling.
@@ -48,7 +52,7 @@ public:
 	template <class T>
 	ResourceGroup* GetResourceGroup()
 	{
-		ResourceGroup* resourceGroup = m_resourceGroups[Internal::ResourceTypeInfo<T>::typeID];
+		ResourceGroup* resourceGroup = m_resourceGroups[ResourceTypeInfo<T>::typeID];
 		ASSERT(resourceGroup && "Resource type must be registered first");
 		return resourceGroup;
 	}
@@ -57,12 +61,27 @@ public:
 	template <class T>
 	int GetResourceGroupID()
 	{
-		return Internal::ResourceTypeInfo<T>::typeID;
+		return ResourceTypeInfo<T>::typeID;
 	}
 
 	/// Loads a resource from file if it does not exist.
 	template <class T>
-	SharedPtr<T> Load(const String& filename);
+	T* Load(const String& filename)
+	{
+		return (T*)Load(GetResourceGroupID<T>(), filename);
+	}
+
+	template <class T>
+	T* Load(const String& directory, const String& filename)
+	{
+		return (T*)Load(GetResourceGroupID<T>(), directory, filename);
+	}
+
+	/// Loads a resource of type from file if it does not already exist.
+	Resource* Load(int resourceType, const String& filename);
+
+	/// Loads a resource of type from file if it does not already exist.
+	Resource* Load(int resourceType, const String& directory, const String& filename);
 
 	/// Adds an user-created resource to this manager.
 	template <class T>
@@ -91,11 +110,11 @@ int ResourceManager::RegisterResourceType(const char* name, u32 capacity)
 {
 	ASSERT(m_resourceGroupIDGenerator < MAX_RESOURCE_GROUPS);
 
-	int typeID = Internal::ResourceTypeInfo<T>::typeID;
+	int typeID = ResourceTypeInfo<T>::typeID;
 	if(typeID == -1)
 	{
 		typeID = m_resourceGroupIDGenerator++;
-		Internal::ResourceTypeInfo<T>::typeID = typeID;
+		ResourceTypeInfo<T>::typeID = typeID;
 	}
 
 	//void* pFactory = m_factoryPool.Aquire();
@@ -110,15 +129,6 @@ int ResourceManager::RegisterResourceType(const char* name, u32 capacity)
 	return typeID;
 }
 
-
-template <class T>
-SharedPtr<T> ResourceManager::Load(const String& filename)
-{
-	ResourceGroup* resourceGroup = GetResourceGroup<T>();
-	Resource* resource = resourceGroup->LoadResource(filename);
-
-	return SharedPtr<T>(resource);
-}
 
 
 template <class T>

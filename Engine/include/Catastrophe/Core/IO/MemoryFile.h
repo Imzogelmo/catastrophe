@@ -46,7 +46,14 @@ public:
 	virtual void Reserve( u32 capacity );
 	virtual void Resize( u32 size );
 	virtual bool IsEof() const { return m_position >= m_buffer.Size(); }
+
+	/// True if we are reading from memory, and not off disk.
+	virtual bool IsReadFromMemory() const { return true; }
+
+	/// Gets the size of the file buffer, in bytes.
 	virtual u32 Size() const { return m_buffer.Size(); }
+
+	/// Gets the current position inside the file buffer.
 	virtual u32 Position() const { return m_position; }
 
 	const void* GetData() const { return (void*)(m_buffer.Empty() ? null : &m_buffer[0]); }

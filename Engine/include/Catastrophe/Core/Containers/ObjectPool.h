@@ -60,7 +60,8 @@ public:
 
 	/// Resizes the object pool so that it can create a number of objects up to a maximum
 	/// specified by capacity. The pool cannot safely be resized if any objects created by the pool
-	/// remain unreleased, and will assert and fail if GetUsedObjectCount() returns non-zero.
+	/// remain unreleased, as this will mean all 'out of place' objects will be using memory that
+	/// was destroyed. Will assert and fail if GetUsedObjectCount() returns non-zero.
 	void Resize(u32 capacity)
 	{
 		ASSERT(GetUsedObjectCount() == 0);

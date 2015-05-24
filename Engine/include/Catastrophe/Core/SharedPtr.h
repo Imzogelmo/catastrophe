@@ -21,7 +21,7 @@
 #include "Catastrophe/Core/Common.h"
 #include "RefCounted.h"
 
-#define CE_PTR_ASSERT CE_ASSERT
+#define SHAREDPTR_ASSERT(x) CE_ASSERT(x != null)
 
 CE_NAMESPACE_BEGIN
 
@@ -91,8 +91,8 @@ public:
 
 	operator T*() const { return m_ptr; }
 	operator bool() const { return m_ptr != null; }
-	T* operator ->() const { CE_PTR_ASSERT(m_ptr); return m_ptr; }
-	T& operator *() const { CE_PTR_ASSERT(m_ptr); return *m_ptr; }
+	T* operator ->() const { SHAREDPTR_ASSERT(m_ptr); return m_ptr; }
+	T& operator *() const { SHAREDPTR_ASSERT(m_ptr); return *m_ptr; }
 
 	T* Get() const
 	{

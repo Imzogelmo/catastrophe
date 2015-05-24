@@ -97,8 +97,8 @@ public:
 	bool Empty() const { return m_size == 0; }
 	u32 Size() const { return m_size; }
 
-	T* data() { return m_data; }
-	const T* data() const { return m_data; }
+	T* Data() { return m_data; }
+	const T* Data() const { return m_data; }
 
 	Iterator begin()				{ return m_data; }
 	Iterator end()					{ return m_data + m_size; }

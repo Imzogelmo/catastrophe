@@ -13,43 +13,22 @@
 
 #include "Catastrophe/Core/Common.h"
 #include "Catastrophe/Core/Resource/Resource.h"
+#include "Catastrophe/Core/Resource/ResourceFactory.h"
 #include "Catastrophe/Core/Containers/String.h"
 #include "Catastrophe/Core/Containers/HashMap.h"
+#include "Catastrophe/Core/Containers/VectorMap.h"
+#include "Catastrophe/Core/Hash.h"
 
 CE_NAMESPACE_BEGIN
 
-
-//typedef Resource* (*ResourceCreateFunc)();
-//typedef void (*ResourceDeleteFunc)(Resource*);
-
-namespace Internal
-{
-	template <class T> struct ResourceTypeInfo { static int typeID; };
-	template <class T> int ResourceTypeInfo<T>::typeID = -1;
-
-	class ResourceObjectFactory
-	{
-	public:
-		virtual int GetResourceTypeID() = 0;
-		virtual Resource* CreateResource() = 0;
-		virtual void DeleteResource(Resource* resource) { delete resource; }
-	};
-
-	template <class T>
-	class ResourceTypeObjectFactory : public ResourceObjectFactory
-	{
-	public:
-		virtual int GetResourceTypeID() { return ResourceTypeInfo<T>::typeID; }
-		virtual Resource* CreateResource() { return new T(); }
-	};
-}
 
 struct FixMeMakeHash { int operator()(int v) const {return v;} };
 
 class CE_API ResourceGroup
 {
 public:
-	typedef HashMap<int, Resource*, FixMeMakeHash> ResourceMap;
+	//typedef HashMap<int, Resource*, FixMeMakeHash> ResourceMap;
+	typedef VectorMap<u32, Resource*> ResourceMap;
 
 	ResourceGroup(const char* name, u32 capacity);
 	~ResourceGroup();
@@ -57,18 +36,22 @@ public:
 	template <class T>
 	void SetFactoryType()
 	{
-		new (m_factoryBuffer) Internal::ResourceTypeObjectFactory<T>();
-		m_factory = m_factoryBuffer;
-		//new (&m_staticFactory) Internal::ResourceTypeObjectFactory<T>();
+		new (m_factoryBuffer) ResourceTypeObjectFactory<T>();
+		m_factory = (ResourceObjectFactory*)m_factoryBuffer;
+		//new (&m_staticFactory) ResourceTypeObjectFactory<T>();
 	}
 
-	Internal::ResourceObjectFactory* GetResourceFactory() const
+	ResourceObjectFactory* GetResourceFactory() const
 	{
-		return (Internal::ResourceObjectFactory*)m_factoryBuffer;
+		return (ResourceObjectFactory*)m_factoryBuffer;
 	}
 
-	/// Returs a previously loaded resource or creates a new resource if one does not exist.
+	/// Gets a resource or loads it from file if it is not already loaded.
 	Resource* LoadResource(const String& filename);
+
+	/// Returns a previously loaded resource or creates a new resource if one does not exist.
+	/// @param directory - If the resource needs to be loaded, this directory will be checked first.
+	Resource* LoadResource(const String& directory, const String& filename);
 
 	/// Creates a new resource using the supplied CreateResourceFunction type.
 	/// This does not add the resource to the resource map.
@@ -87,21 +70,32 @@ public:
 	/// 
 	void DeleteResource(Resource* resource);
 
-	Resource* FindResource(const String& name)
+	Resource* FindResource(const String& name) const
 	{
-		int hashedName = 0;
-		ResourceMap::Iterator it = m_resourceMap.FindKey(hashedName);
+		const u32 nameHash = MakeHash(name);
+		return FindResource(nameHash);
+	}
+
+	Resource* FindResource(u32 hashValue) const
+	{
+		ResourceMap::ConstIterator it = m_resourceMap.Find(hashValue);
 		if( it != m_resourceMap.end() )
-		{
 			return it->value;
-		}
 
 		return null;
 	}
 
 	void AddResource( Resource* resource )
 	{
-		m_resourceMap.Add(0, resource);
+		if(resource != null)
+		{
+			u32 nameHash = MakeHash(resource->GetResourceName());
+			ResourceMap::Iterator it = m_resourceMap.Find(nameHash);
+			if( it != m_resourceMap.end() )
+			{
+				m_resourceMap.Add(nameHash, resource);
+			}
+		}
 	}
 
 	void SetResourceDirectory(const String& directory)
@@ -118,9 +112,9 @@ protected:
 	const char*				m_resourceName;
 	ResourceMap				m_resourceMap;
 	String					m_directory;
-	Internal::ResourceObjectFactory*	m_factory;
-	char					m_factoryBuffer[sizeof(Internal::ResourceObjectFactory)];
-	//Internal::ResourceObjectFactory	m_staticFactory;
+	ResourceObjectFactory*	m_factory;
+	char					m_factoryBuffer[sizeof(ResourceObjectFactory)];
+	//ResourceObjectFactory	m_staticFactory;
 
 };
 

@@ -19,11 +19,9 @@
 #pragma once
 
 #include "Catastrophe/Core/Common.h"
-#include "Catastrophe/System/Input/Joystick.h"
-#include "Catastrophe/System/Input/Keyboard.h"
-#include "Catastrophe/System/Input/Mouse.h"
-#include "Catastrophe/System/Input/Input.h"
-#include "Catastrophe/System/Input/Controller.h"
-#include "Catastrophe/System/Input/KeyboardController.h"
-#include "Catastrophe/System/Input/JoystickController.h"
-
+#include "Catastrophe/Core/Memory.h"
+#include "Catastrophe/Core/Algorithm.h"
+#include "Catastrophe/Core/Functional.h"
+#include "Catastrophe/Core/PlatformString.h"
+#include "Catastrophe/Core/PlatformMath.h"
+#include "Catastrophe/Core/Random.h"

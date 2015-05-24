@@ -41,9 +41,10 @@ public:
 	typedef typename BaseType::Iterator				Iterator;
 	typedef typename BaseType::ConstIterator		ConstIterator;
 
+	using BaseType::operator [];
 	using BaseType::Size;
 	using BaseType::Empty;
-	using BaseType::data;
+	using BaseType::Data;
 	using BaseType::GetAllocator;
 	using BaseType::SetAllocator;
 	using BaseType::Fill;
