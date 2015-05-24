@@ -245,6 +245,7 @@ namespace Memory
 	/// as pointers to the previous default allocator object remain valid.
 	void CE_API SetDefaultAllocator(Allocator* allocator);
 
+
 } //Memory
 
 

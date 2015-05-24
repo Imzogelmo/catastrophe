@@ -88,6 +88,8 @@ public:
 	bool SetAttribute( const char* name, const Rect& value );
 	bool SetAttribute( const char* name, const Rectf& value );
 	bool SetAttribute( const char* name, const Point& value );
+	bool SetAttribute( const char* name, const PackedPoint& value );
+	bool SetAttribute( const char* name, const PackedRect& value );
 	bool SetAttribute( const char* name, const Vector2& value );
 	bool SetAttribute( const char* name, const Vector3& value );
 	bool SetAttribute( const char* name, const Vector4& value );
@@ -105,6 +107,8 @@ public:
 	bool SetRectElement( const char* name, const Rect& value );
 	bool SetRectfElement( const char* name, const Rectf& value );
 	bool SetPointElement( const char* name, const Point& value );
+	bool SetPackedRectElement( const char* name, const PackedRect& value );
+	bool SetPackedPointElement( const char* name, const PackedPoint& value );
 	bool SetVector2Element( const char* name, const Vector2& value );
 	bool SetVector3Element( const char* name, const Vector3& value );
 	bool SetVector4Element( const char* name, const Vector4& value );
@@ -113,19 +117,19 @@ public:
 
 	bool WriteText( const String& text );
 	bool WriteText( const char* text );
-	bool WriteByteArray( const char* name, const u8* ptr, u32 n );
-	bool WriteShortArray( const char* name, const s16* ptr, u32 n );
-	bool WriteIntArray( const char* name, const int* ptr, u32 n );
-	bool WriteFloatArray( const char* name, const float* ptr, u32 n );
-	bool WriteArray( const char* name, const void* ptr, u32 strideInBytes, u32 n, bool isIntegral = true );
+	bool WriteByteArray( const char* name, const u8* ptr, u32 numElements );
+	bool WriteShortArray( const char* name, const s16* ptr, u32 numElements );
+	bool WriteIntArray( const char* name, const int* ptr, u32 numElements );
+	bool WriteFloatArray( const char* name, const float* ptr, u32 numElements );
+	bool WriteArray( const char* name, const void* ptr, u32 strideInBytes, u32 numElements, bool isIntegral = true );
 
 	bool WriteTextElement( const char* name, const String& text );
 	bool WriteTextElement( const char* name, const char* text );
-	bool WriteByteArrayElement( const char* name, const u8* ptr, u32 n );
-	bool WriteShortArrayElement( const char* name, const s16* ptr, u32 n );
-	bool WriteIntArrayElement( const char* name, const int* ptr, u32 n );
-	bool WriteFloatArrayElement( const char* name, const float* ptr, u32 n );
-	bool WriteArrayElement( const char* name, const void* ptr, u32 strideInBytes, u32 n, bool isIntegral = true );
+	bool WriteByteArrayElement( const char* name, const u8* ptr, u32 numElements );
+	bool WriteShortArrayElement( const char* name, const s16* ptr, u32 numElements );
+	bool WriteIntArrayElement( const char* name, const int* ptr, u32 numElements );
+	bool WriteFloatArrayElement( const char* name, const float* ptr, u32 numElements );
+	bool WriteArrayElement( const char* name, const void* ptr, u32 strideInBytes, u32 numElements, bool isIntegral = true );
 
 
 	const char* GetText() const;
@@ -142,6 +146,8 @@ public:
 	bool GetAttribute( const char* name, Rect& value ) const;
 	bool GetAttribute( const char* name, Rectf& value ) const;
 	bool GetAttribute( const char* name, Point& value ) const;
+	bool GetAttribute( const char* name, PackedPoint& value ) const;
+	bool GetAttribute( const char* name, PackedRect& value ) const;
 	bool GetAttribute( const char* name, Vector2& value ) const;
 	bool GetAttribute( const char* name, Vector3& value ) const;
 	bool GetAttribute( const char* name, Vector4& value ) const;
@@ -158,23 +164,25 @@ public:
 	bool GetRectElement( const char* name, Rect& value ) const;
 	bool GetRectfElement( const char* name, Rectf& value ) const;
 	bool GetPointElement( const char* name, Point& value ) const;
+	bool GetPackedPointElement( const char* name, PackedPoint& value ) const;
+	bool GetPackedRectElement( const char* name, PackedRect& value ) const;
 	bool GetVector2Element( const char* name, Vector2& value ) const;
 	bool GetVector3Element( const char* name, Vector3& value ) const;
 	bool GetVector4Element( const char* name, Vector4& value ) const;
 	bool GetColorElement( const char* name, Color& value ) const;
 	bool GetColorfElement( const char* name, Colorf& value ) const;
 
-	bool ReadByteArray( const char* name, u8* ptr, u32 n ) const;
-	bool ReadShortArray( const char* name, s16* ptr, u32 n ) const;
-	bool ReadIntArray( const char* name, int* ptr, u32 n ) const;
-	bool ReadFloatArray( const char* name, float* ptr, u32 n ) const;
-	bool ReadArray( const char* name, void* ptr, u32 strideInBytes, u32 n, bool isIntegral ) const;
+	bool ReadByteArray( const char* name, u8* ptr, u32 numElements ) const;
+	bool ReadShortArray( const char* name, s16* ptr, u32 numElements ) const;
+	bool ReadIntArray( const char* name, int* ptr, u32 numElements ) const;
+	bool ReadFloatArray( const char* name, float* ptr, u32 numElements ) const;
+	bool ReadArray( const char* name, void* ptr, u32 strideInBytes, u32 numElements, bool isIntegral ) const;
 
-	bool ReadByteArrayElement( const char* name, u8* ptr, u32 n ) const;
-	bool ReadShortArrayElement( const char* name, s16* ptr, u32 n ) const;
-	bool ReadIntArrayElement( const char* name, int* ptr, u32 n ) const;
-	bool ReadFloatArrayElement( const char* name, float* ptr, u32 n ) const;
-	bool ReadArrayElement( const char* name, void* ptr, u32 strideInBytes, u32 n, bool isIntegral ) const;
+	bool ReadByteArrayElement( const char* name, u8* ptr, u32 numElements ) const;
+	bool ReadShortArrayElement( const char* name, s16* ptr, u32 numElements ) const;
+	bool ReadIntArrayElement( const char* name, int* ptr, u32 numElements ) const;
+	bool ReadFloatArrayElement( const char* name, float* ptr, u32 numElements ) const;
+	bool ReadArrayElement( const char* name, void* ptr, u32 strideInBytes, u32 numElements, bool isIntegral ) const;
 
 	static void PrintArray( const void* ptr, String& str, u32 strideInBytes, u32 n, bool isIntegral );
 	static bool ParseArray( void* ptr, const String& str, u32 strideInBytes, u32 n, bool isIntegral );

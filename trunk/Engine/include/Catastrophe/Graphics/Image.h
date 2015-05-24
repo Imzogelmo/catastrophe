@@ -49,7 +49,7 @@ public:
 	bool GetPixels( u8* ) const;
 	array_type& GetPixelArray() { return m_pixels; }
 	const array_type& GetPixelArray() const { return m_pixels; }
-	const Color* GetPixelData() const { return m_pixels.data(); }
+	const Color* GetPixelData() const { return m_pixels.Data(); }
 
 	u32 Size() const { return m_pixels.Size(); }
 	Color GetPixel( u32 x, u32 y ) const;

@@ -21,10 +21,8 @@
 #include "Catastrophe/Core/Common.h"
 #include "Catastrophe/Core/Math/Rect.h"
 #include "Catastrophe/Core/Math/Vector2.h"
+#include "Catastrophe/Core/Resource/Resource.h"
 #include "Catastrophe/Graphics/Common.h"
-#include "../Resource/GraphicsResource.h"
-
-#include "Catastrophe/Core/Containers/String.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -40,7 +38,7 @@ enum eTextureFilter
 };
 */
 
-class CE_API Texture : public GraphicsResource
+class CE_API Texture : public Resource
 {
 public:
 	Texture();
@@ -53,6 +51,9 @@ public:
 
 	bool LoadFromFile( const String& filename );
 	bool LoadFromFile( const String& path, const String& filename );
+
+	bool Load(Deserializer* deserializer) override;
+
 	bool SaveToFile( const String& filename );
 
 	void SetWrapMode( int wrapMode );
@@ -79,11 +80,14 @@ public:
 	u32 GetTextureID() const { return m_texture; }
 
 	/// Gets the normalized uv coords from a point on the texture.
-	Vector2 GetUV( const Point& pos ) const;
+	Vector2 GetUV( const Point& position ) const;
 	Vector2 GetUV( int x, int y ) const;
 
-	/// Gets the normalized uv coords from a source rectangle.
+	/// Gets the texture coordinates coords from a source rectangle.
 	Rectf GetUVRect( const Rect& sourceRect ) const;
+
+	/// Gets the texture coordinates from a source rectangle.
+	Rectf GetUVRect( const PackedRect& sourceRect ) const;
 
 	/// Retrieves the source rect, in pixel size, from a uv rect.
 	Rect GetSourceRect( const Rectf& uv ) const;

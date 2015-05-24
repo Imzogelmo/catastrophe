@@ -38,11 +38,11 @@ CE_NAMESPACE_BEGIN
 class BitReference
 {
 public:
-	BitReference( u32* ptr, u32 position )
+	BitReference(u32* ptr, u32 position)
 		: m_data(*ptr), m_mask(u32(1) << position)
 	{}
 
-	BitReference& flip()
+	BitReference& Flip()
 	{
 		m_data ^= m_mask;
 		return *this;
@@ -53,10 +53,10 @@ public:
 		return (m_data & m_mask) != 0;
 	}
 
-	BitReference& operator =( const BitReference& bitReference ) { return operator =((m_data & m_mask) != 0); }
-	BitReference& operator =( bool value )
+	BitReference& operator =(const BitReference& bitReference) { return operator =((m_data & m_mask) != 0); }
+	BitReference& operator =(bool value)
 	{
-		if( value )
+		if(value)
 		{
 			m_data |= m_mask;
 		}
@@ -97,99 +97,142 @@ public:
 		Reset();
 	}
 
-	StaticBitset( u32 value )
+	StaticBitset(u32 value)
 	{
 		m_bits[0] = value;
 	}
 
-	BitReference operator []( u32 position )
+	BitReference operator [](u32 position)
 	{
 		return BitReference(&m_bits[position >> SizeShift], position & SizeMask);
 	}
 
-	bool operator []( size_t position ) const
+	bool operator [](u32 position) const
 	{
-		return TestBit(position);
+		return (m_bits[position >> SizeShift] & (u32(1) << (position & SizeMask))) != 0;
 	}
 
-	void operator &=( const StaticBitset<NBits>& x )
+	void operator &=(const StaticBitset<NBits>& x)
 	{
-		for( u32 i(0); i < NWords; ++i )
+		for(u32 i(0); i < NWords; ++i)
 			m_bits[i] &= x.m_bits[i];
 	}
 
-	void operator |=( const StaticBitset<NBits>& x )
+	void operator |=(const StaticBitset<NBits>& x)
 	{
-		for( u32 i(0); i < NWords; ++i )
+		for(u32 i(0); i < NWords; ++i)
 			m_bits[i] |= x.m_bits[i];
 	}
 
-	void operator ^=( const StaticBitset<NBits>& x )
+	void operator ^=(const StaticBitset<NBits>& x)
 	{
-		for( u32 i(0); i < NWords; ++i )
+		for(u32 i(0); i < NWords; ++i)
 			m_bits[i] ^= x.m_bits[i];
 	}
 
 	void Flip()
 	{
-		for( u32 i(0); i < NWords; ++i )
+		for(u32 i(0); i < NWords; ++i)
 			m_bits[i] = ~m_bits[i];
 	}
 
-	void FlipBit( u32 position )
+	void FlipBit(u32 position)
 	{
 		m_bits[position >> SizeShift] ^= u32(1) << (position & SizeMask);
 	}
 
 	void Set()
 	{
-		for( u32 i(0); i < NWords; ++i )
+		for(u32 i(0); i < NWords; ++i)
 			m_bits[i] = u32(-1);
 	}
 
-	void SetBit( u32 position, bool value )
+	void SetBit(u32 position, bool value)
 	{
-		BitReference( &m_bits[position >> SizeShift], position ) = value;
+		BitReference(&m_bits[position >> SizeShift], position) = value;
 	}
 
-	bool GetBit( u32 position ) const
+	bool GetBit(u32 position) const
 	{
 		return (m_bits[position >> SizeShift] & (u32(1) << (position & SizeMask))) != 0;
 	}
 
 	void Reset()
 	{
-		for( u32 i(0); i < NWords; ++i )
+		for(u32 i(0); i < NWords; ++i)
 			m_bits[i] = u32(0);
 	}
 
-	bool operator ==( const StaticBitset<NBits>& x ) const
+	bool operator ==(const StaticBitset<NBits>& x) const
 	{
 		return Algorithm::Equal(m_bits, m_bits + NWords, x.m_bits);
 	}
 
 	bool Any() const
 	{
-		for( u32 i(0); i < NWords; ++i )
-			if( m_bits[i] != u32(0) )
+		for(u32 i(0); i < NWords; ++i)
+			if(m_bits[i] != u32(0))
 				return true;
 
 		return false;
 	}
 
-	bool TestBit( u32 position ) const
-	{
-		return (m_bits[position >> SizeShift] & (u32(1) << (position & SizeMask))) != 0;
-	}
-
-	u32* data() { return &m_bits[0]; }
-	const u32* data() const { return &m_bits[0]; }
+	u32* Data() { return &m_bits[0]; }
+	const u32* Data() const { return &m_bits[0]; }
 
 protected:
 	u32 m_bits[NWords];
 
 };
 
+
+
+template<>
+class StaticBitset<32>
+{
+public:
+
+	StaticBitset() : m_bits(0) {}
+	StaticBitset(u32 value) : m_bits(value) {}
+
+	void operator <<=(u32 shift) { m_bits <<= shift; }
+	void operator >>=(u32 shift) { m_bits >>= shift; }
+	void operator &=(const StaticBitset<32>& x) { m_bits &= x.m_bits; }
+	void operator |=(const StaticBitset<32>& x) { m_bits |= x.m_bits; }
+	void operator ^=(const StaticBitset<32>& x) { m_bits ^= x.m_bits; }
+
+	BitReference operator [](u32 position)
+	{
+		return BitReference(&m_bits, position & 31);
+	}
+
+	bool operator [](u32 position) const
+	{
+		return (m_bits & (u32(1) << position)) != 0;
+	}
+
+	void Flip(u32 position) { m_bits ^= u32(1) << position; }
+	void Flip() { m_bits = ~m_bits; }
+	void Reset() { m_bits = u32(0); }
+	void Set() { m_bits = ~u32(0); }
+	void Set(u32 position, bool value)
+	{
+		if(value)
+			m_bits |= (u32(1) << position);
+		else
+			m_bits &= ~(u32(1) << position);
+	}
+
+	bool operator ==(const StaticBitset<32>& x) const { return m_bits == x.m_bits; }
+	bool Any() const { return m_bits != u32(0); }
+
+	u32* Data() { return &m_bits; }
+	const u32* Data() const { return &m_bits; }
+
+protected:
+	u32 m_bits;
+
+};
 
 
 

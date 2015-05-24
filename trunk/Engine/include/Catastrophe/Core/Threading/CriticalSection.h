@@ -1,5 +1,5 @@
 // Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
+// of this software and associated documentation files(the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
@@ -18,37 +18,60 @@
 
 #pragma once
 
+#include "Catastrophe/Core/Common.h"
+
 CE_NAMESPACE_BEGIN
 
 
-/// @RefCounted
-///
-/// Base class for objects that implement intrusive reference counting.
-/// By default the reference count is set to zero when constructed.
-///
-class RefCounted
+class CE_API CriticalSection
 {
 public:
-	RefCounted(int refCount = 0) : m_refCount(refCount) {}
+	CriticalSection();
+	~CriticalSection();
 
-	void AddRef()
+	/// Enters a critical section.
+	void Lock();
+
+	/// Leave the critical section.
+	void Unlock();
+
+private:
+	CriticalSection(const CriticalSection&);
+	CriticalSection& operator = (const CriticalSection&);
+
+	struct InternalMutexTypeBuffer {
+		// This creates a buffer big enough to hold a platform specific mutex object.
+		AlignedBuffer<(sizeof(void*) == 4) ? 24 : 40, sizeof(void*)> m_buffer;
+	};
+
+	InternalMutexTypeBuffer m_criticalSection;
+};
+
+
+class CE_API ScopedLock
+{
+public:
+	typedef CriticalSection CriticalSection;
+
+	/// Constructor which locks the assigned mutex.
+	ScopedLock(CriticalSection* criticalSection) :
+		m_pCriticalSection(criticalSection)
 	{
-		++m_refCount;
+		ASSERT(criticalSection != null);
+		m_pCriticalSection->Lock();
 	}
 
-	void ReleaseRef()
+	/// Destructor which unlocks the assigned mutex.
+	~ScopedLock()
 	{
-		--m_refCount;
+		m_pCriticalSection->Unlock();
 	}
 
-	int GetRefCount()
-	{
-		return m_refCount;
-	}
+private:
+	CriticalSection* m_pCriticalSection;
 
-protected:
-	int m_refCount;
 };
 
 
 CE_NAMESPACE_END
+

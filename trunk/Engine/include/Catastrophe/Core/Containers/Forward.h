@@ -26,9 +26,15 @@ CE_NAMESPACE_BEGIN
 // functional
 template <class T> struct Less;
 
-// string types
+// string
 class String;
 template <u32 N> class StaticString;
+
+// bitset
+class Bitset;
+template <u32 N> class StaticBitset;
+
+typedef StaticBitset<32> StaticBitset32;
 
 // array
 template <class T> class Array;
@@ -36,7 +42,7 @@ template <class T> class Array2D;
 template <class T, u32 N> struct StaticArray;
 template <class T, u32 Y, u32 X> struct StaticArray2D;
 
-// vector types
+// vector
 template <class T> class Vector;
 template <class T, u32 N> class StaticVector;
 

@@ -19,6 +19,8 @@
 #pragma once
 
 #include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/Memory.h"
+#include "Catastrophe/Core/Containers/AlignedBuffer.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -41,6 +43,9 @@ public:
 	typedef Key*			Iterator;
 	typedef const Key*		ConstIterator;
 
+	enum { kMaxCapacity = N };
+	typedef AlignedBuffer<(N * sizeof(Key)), CE_ALIGNOF(Key)> AlignedBufferType;
+
 	StaticArraySet()
 		: m_size(0)
 		{
@@ -52,16 +57,17 @@ public:
 	u32 Size() const { return m_size; }
 	u32 Capacity() const { return N; }
 
-	Iterator begin() { return m_data; }
-	Iterator end() { return m_data + m_size; }
-	ConstIterator begin() const { return m_data; }
-	ConstIterator end() const { return m_data + m_size; }
+	Iterator begin() { return (Key*)&m_buffer; }
+	Iterator end() { return (Key*)&m_buffer + m_size; }
+	ConstIterator begin() const { return (const Key*)&m_buffer; }
+	ConstIterator end() const { return (const Key*)&m_buffer + m_size; }
 
-	Iterator data() { return m_data; }
-	ConstIterator data() const { return m_data; }
+	Iterator Data() { return (Key*)&m_buffer; }
+	ConstIterator Data() const { return (const Key*)&m_buffer; }
 
 	void Clear()
 	{
+		Memory::DestroyValues(begin(), m_size);
 		m_size = 0;
 	}
 
@@ -69,7 +75,7 @@ public:
 	{
 		if(m_size != N && !Contains(key))
 		{
-			Memory::Construct(&m_data[m_size], key);
+			Memory::Construct((Key*)&m_buffer + m_size, key);
 			++m_size;
 		}
 	}
@@ -79,11 +85,13 @@ public:
 		u32 keyIndex = FindIndex(key);
 		if(keyIndex != m_size)	
 		{
+			Key* pData = (Key*)&m_buffer;
+
 			// Elements are unordered, so just swap it for the value at the end.
 			if(keyIndex != --m_size)
-				m_data[keyIndex] = m_data[m_size];
+				pData[keyIndex] = pData[m_size];
 
-			Memory::Destroy(&m_data[m_size]);
+			Memory::Destroy(&pData[m_size]);
 		}
 	}
 
@@ -94,25 +102,27 @@ public:
 
 	ConstIterator Find(const Key& key) const
 	{
-		return m_data + FindIndex(key);
+		return (const Key*)&m_buffer + FindIndex(key);
 	}
 
 	Iterator Find(const Key& key)
 	{
-		return m_data + FindIndex(key);
+		return (Key*)&m_buffer + FindIndex(key);
 	}
 
 	u32 FindIndex(const Key& key) const
 	{
+		const Key* pData = (const Key*)&m_buffer;
+
 		for(u32 i(0); i < m_size; ++i)
-			if(m_data[i] == key)
+			if(pData[i] == key)
 				return i;
 
 		return m_size;
 	}
 
 protected:
-	Key m_data[N];
+	AlignedBufferType m_buffer;
 	u32 m_size;
 
 };
@@ -135,8 +145,11 @@ public:
 	typedef Key*			Iterator;
 	typedef const Key*		ConstIterator;
 
+	enum { kMaxCapacity = N };
+	typedef AlignedBuffer<(N * sizeof(Key)), CE_ALIGNOF(Key)> AlignedBufferType;
+
 	StaticArrayMultiset()
-		: m_size(0)
+		: m_buffer(), m_size(0)
 	{
 	}
 
@@ -146,16 +159,17 @@ public:
 	u32 Size() const { return m_size; }
 	u32 Capacity() const { return N; }
 
-	Iterator begin() { return m_data; }
-	Iterator end() { return m_data + m_size; }
-	ConstIterator begin() const { return m_data; }
-	ConstIterator end() const { return m_data + m_size; }
+	Iterator begin() { return (Key*)&m_buffer; }
+	Iterator end() { return (Key*)&m_buffer + m_size; }
+	ConstIterator begin() const { return (const Key*)&m_buffer; }
+	ConstIterator end() const { return (const Key*)&m_buffer + m_size; }
 
-	Iterator data() { return m_data; }
-	ConstIterator data() const { return m_data; }
+	Iterator Data() { return (Key*)&m_buffer; }
+	ConstIterator Data() const { return (const Key*)&m_buffer; }
 
 	void Clear()
 	{
+		Memory::DestroyValues(begin(), m_size);
 		m_size = 0;
 	}
 
@@ -163,21 +177,25 @@ public:
 	{
 		if(m_size != N)
 		{
-			Memory::Construct(&m_data[m_size], key);
+			Memory::Construct((Key*)&m_buffer + m_size, key);
 			++m_size;
 		}
 	}
 
 	void Remove(const Key& key)
 	{
-		u32 keyIndex = FindIndex(key);
-		if(keyIndex != m_size)	
-		{
-			// Elements are unordered, so just swap it for the value at the end.
-			if(keyIndex != --m_size)
-				m_data[keyIndex] = m_data[m_size];
+		const Key* pData = (const Key*)&m_buffer;
 
-			Memory::Destroy(&m_data[m_size]);
+		for(u32 i(0); i < m_size; ++i)
+		{
+			if(pData[i] == key)
+			{
+				// Elements are unordered, so just swap it for the value at the end.
+				if(i != --m_size)
+					pData[i] = pData[m_size];
+
+				Memory::Destroy(&pData[m_size]);
+			}
 		}
 	}
 
@@ -188,35 +206,41 @@ public:
 
 	ConstIterator Find(const Key& key) const
 	{
-		return m_data + FindIndex(key);
+		return (const Key*)&m_buffer + FindIndex(key);
 	}
 
 	Iterator Find(const Key& key)
 	{
-		return m_data + FindIndex(key);
-	}
-
-	u32 FindIndex(const Key& key) const
-	{
-		for(u32 i(0); i < m_size; ++i)
-			if(m_data[i] == key)
-				return i;
-
-		return m_size;
+		return (Key*)&m_buffer + FindIndex(key);
 	}
 
 	u32 Count(const Key& key) const
 	{
 		u32 count = 0;
+		const Key* pData = (const Key*)&m_buffer;
+
 		for(u32 i(0); i < m_size; ++i)
-			if(m_data[i] == key)
+		{
+			if(pData[i] == key)
 				++count;
+		}
 
 		return count;
 	}
 
 protected:
-	Key m_data[N];
+	u32 FindIndex(const Key& key) const
+	{
+		const Key* pData = (const Key*)&m_buffer;
+
+		for(u32 i(0); i < m_size; ++i)
+			if(pData[i] == key)
+				return i;
+
+		return m_size;
+	}
+
+	AlignedBufferType m_buffer;
 	u32 m_size;
 
 };

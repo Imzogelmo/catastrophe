@@ -1,5 +1,5 @@
 // Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
+// of this software and associated documentation files(the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
@@ -19,11 +19,27 @@
 #pragma once
 
 #include "Catastrophe/Core/Common.h"
-#include "Catastrophe/System/Input/Joystick.h"
-#include "Catastrophe/System/Input/Keyboard.h"
-#include "Catastrophe/System/Input/Mouse.h"
-#include "Catastrophe/System/Input/Input.h"
-#include "Catastrophe/System/Input/Controller.h"
-#include "Catastrophe/System/Input/KeyboardController.h"
-#include "Catastrophe/System/Input/JoystickController.h"
+
+CE_NAMESPACE_BEGIN
+
+
+class ThreadLocalStorage
+{
+public:
+	ThreadLocalStorage();
+	~ThreadLocalStorage();
+
+	void SetValue(void* value);
+
+	void* GetValue() const;
+
+private:
+	ThreadLocalStorage(ThreadLocalStorage&);
+	ThreadLocalStorage& operator =(ThreadLocalStorage&);
+
+	u32 m_index;
+};
+
+
+CE_NAMESPACE_END
 

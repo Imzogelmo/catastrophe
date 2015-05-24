@@ -27,6 +27,7 @@
 // include this for common macros
 #include "Catastrophe/Core/Config.h"
 #include "Catastrophe/Core/TypeTraits.h"
+#include "Catastrophe/Core/Containers/Forward.h"
 
 // todo: name this better...
 #if CE_DEBUG
@@ -48,16 +49,19 @@
 
 CE_API NOINLINE extern void LogWrite(int level, const char* format, ...);
 
+/// Declare a class non-copyable.
+#define NON_COPYABLE(x) \
+	x(const x&); x& operator =(const x&)
+
 
 CE_NAMESPACE_BEGIN
 
 
 // Forward Declarations
 
-class String;
-class StringRef;
-template <u32 N> class StaticString;
-
+template <class T> class SharedPtr;
+template <class T> class ScopedPtr;
+template <class T> class ScopedArrayPtr;
 
 class Allocator;
 class PoolAllocator;
@@ -103,7 +107,10 @@ class XmlDocument;
 class AttributeReader;
 class AttributeWriter;
 
-
+// Resource
+class Resource;
+class ResourceGroup;
+class ResourceManager;
 
 // Math
 MAKE_TRAIT(Vector2, is_pod);

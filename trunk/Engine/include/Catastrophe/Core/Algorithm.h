@@ -42,7 +42,6 @@ CE_NAMESPACE_BEGIN
 // intuitive manner as possible:
 //
 //    "algobase.h"			(most commonly used and low level functions are mitigated here.)
-//    "minmax.h"			(algorithms dealing with minimum and maximum values.)
 //    "Copy.h"				(algorithms that Copy, set, or modify data.)
 //    "search.h"			(algorithms that perform various range-based searches on random data.)
 //    "binary_search.h"		(algorithms that perform searches on sorted data.)

@@ -18,9 +18,13 @@
 
 #pragma once
 
-#include "IO/Serializer.h"
-#include "IO/Deserializer.h"
-#include "IO/File.h"
-#include "IO/XmlWriter.h"
-#include "IO/XmlReader.h"
+// Include all graphics headers
+
+#include "Catastrophe/Core/IO/Serializer.h"
+#include "Catastrophe/Core/IO/Deserializer.h"
+#include "Catastrophe/Core/IO/File.h"
+#include "Catastrophe/Core/IO/MemoryFile.h"
+#include "Catastrophe/Core/IO/Compression.h"
+#include "Catastrophe/Core/IO/XmlWriter.h"
+#include "Catastrophe/Core/IO/XmlReader.h"
 

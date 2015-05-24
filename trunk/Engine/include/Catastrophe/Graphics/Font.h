@@ -21,7 +21,6 @@
 #include "Catastrophe/Core/Math/Vector2.h"
 #include "Catastrophe/Core/Math/Rectf.h"
 #include "Catastrophe/Core/Math/Color.h"
-#include "../Resource/GraphicsResource.h"
 
 #include "Catastrophe/Graphics/Common.h"
 #include "Catastrophe/Graphics/TextAlignment.h"
@@ -30,6 +29,7 @@
 #include "Catastrophe/Core/Containers/Array2D.h"
 #include "Catastrophe/Core/Containers/Vector.h"
 #include "Catastrophe/Core/Containers/String.h"
+#include "Catastrophe/Core/Resource/Resource.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -47,7 +47,7 @@ struct Glyph
 };
 
 
-class CE_API Font : public GraphicsResource
+class CE_API Font : public Resource
 {
 public:
 	typedef Vector<Glyph>	GlyphVectorType;
@@ -72,6 +72,12 @@ public:
 	Font();
 	Font( const String& filename, int faceSize, int dpi = DefaultDpi );
 	~Font();
+
+	virtual bool Load(Deserializer* deserializer)
+	{
+		//todo
+		return !deserializer;
+	}
 
 	int LoadFromFile( const String& filename );
 	int LoadFromFile( const String& path, const String& filename );
