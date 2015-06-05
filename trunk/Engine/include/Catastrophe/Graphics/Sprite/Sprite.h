@@ -18,19 +18,47 @@
 
 #pragma once
 
-#include "Catastrophe/Graphics/Common.h"
-#include "Catastrophe/Graphics/Sprite/SpriteBase.h"
+#include "Catastrophe/Core/Math/Vector2.h"
+#include "Catastrophe/Core/Math/Color.h"
+#include "Catastrophe/Core/Math/Rectf.h"
+
+#include "Catastrophe/Graphics/BlendMode.h"
 #include "Catastrophe/Graphics/Sprite/StaticSprite.h"
-#include "Catastrophe/Graphics/Sprite/Sprite.h"
-#include "Catastrophe/Graphics/Sprite/AnimatedSprite.h"
-#include "Catastrophe/Graphics/Sprite/BackgroundSprite.h"
-#include "Catastrophe/Graphics/Sprite/BorderSprite.h"
-#include "Catastrophe/Graphics/Sprite/SpriteAnimation.h"
-#include "Catastrophe/Graphics/Sprite/PackedSpriteAnimation.h"
-#include "Catastrophe/Graphics/Sprite/SpriteSetAnimation.h"
-#include "Catastrophe/Graphics/Sprite/AnimatedSpriteSet.h"
 
 CE_NAMESPACE_BEGIN
+
+
+/// @Sprite
+///
+class CE_API Sprite : public StaticSprite
+{
+public:
+	/// The scale value of the sprite.
+	Vector2 scale;
+
+	/// The rotation angle of the sprite.
+	float angle;
+
+	Sprite();
+	Sprite(Texture* texturePtr, const Rect& sourceRectangle);
+	Sprite(Texture* texturePtr, const PackedRect& sourceRectangle);
+
+	/// Gets the size of the sprite.
+	FORCEINLINE const Vector2& GetScale() const { return scale; }
+
+	/// Sets the size of the sprite.
+	FORCEINLINE void SetScale(const Vector2& value) { scale = value; }
+
+	/// Gets the angle of this sprite.
+	FORCEINLINE float GetAngle() const { return angle; }
+
+	/// Sets the angle of this sprite.
+	FORCEINLINE void SetAngle(float value) { angle = value; }
+
+	/// Renders the sprite at the given position.
+	void Render(SpriteBatch* spriteBatch, const Vector2& position);
+
+};
 
 
 

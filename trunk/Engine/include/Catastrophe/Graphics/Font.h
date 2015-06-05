@@ -23,7 +23,6 @@
 #include "Catastrophe/Core/Math/Color.h"
 
 #include "Catastrophe/Graphics/Common.h"
-#include "Catastrophe/Graphics/TextAlignment.h"
 #include "Catastrophe/Graphics/Texture.h"
 
 #include "Catastrophe/Core/Containers/Array2D.h"
