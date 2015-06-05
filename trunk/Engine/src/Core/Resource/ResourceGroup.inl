@@ -21,6 +21,8 @@ CE_NAMESPACE_BEGIN
 
 ResourceGroup::ResourceGroup(const char* name, u32 capacity)
 {
+	m_resourceName = name;
+	m_resourceMap.Reserve(capacity);
 }
 
 
@@ -32,7 +34,8 @@ ResourceGroup::~ResourceGroup()
 
 Resource* ResourceGroup::LoadResource(const String& filename)
 {
-	Resource* resource = FindResource(filename);
+	const u32 nameHash = MakeHash(filename);
+	Resource* resource = FindResource(nameHash);
 	if(!resource)
 	{
 		// Try to create and load a new resource.
@@ -49,10 +52,58 @@ Resource* ResourceGroup::LoadResource(const String& filename)
 				resource->AddRef();
 
 				// Add the loaded resource to the map.
-				AddResource(resource);
+				m_resourceMap.Add(nameHash, resource);
+
+				LogInfo("Successfully loaded resource \"%s\".", filename.CString());
 			}
 			else
 			{
+				LogError("Failed to load resource \"%s%s\".",
+					GetResourceDirectory().CString(),
+					filename.CString()
+					);
+
+				GetResourceFactory()->DeleteResource(resource);
+				resource = null;
+			}
+		}
+	}
+
+	return resource;
+}
+
+
+Resource* ResourceGroup::LoadResource(const String& directory, const String& filename)
+{
+	const u32 nameHash = MakeHash(filename);
+	Resource* resource = FindResource(nameHash);
+	if(!resource)
+	{
+		// Try to create and load a new resource.
+		resource = CreateResource();
+		if(resource)
+		{
+			File file(directory + filename);
+			if(!file.IsOpen())
+				return null;
+
+			if(resource->Load(&file))
+			{
+				resource->SetResourceName(filename);
+				resource->AddRef();
+
+				// Add the loaded resource to the map.
+				m_resourceMap.Add(nameHash, resource);
+
+				LogInfo("Successfully loaded resource \"%s\".", filename.CString());
+			}
+			else
+			{
+				LogError("Failed to load resource \"%s%s\".",
+					directory.CString(),
+					filename.CString()
+					);
+
 				GetResourceFactory()->DeleteResource(resource);
 				resource = null;
 			}
@@ -65,28 +116,32 @@ Resource* ResourceGroup::LoadResource(const String& filename)
 
 void ResourceGroup::DeleteUnusedResources()
 {
-	for(ResourceMap::Iterator it = m_resourceMap.begin(); it != m_resourceMap.end(); ++it)
+	for(ResourceMap::Iterator it = m_resourceMap.begin(); it != m_resourceMap.end(); )
 	{
 		Resource* resource = it->value;
 		if(resource != null && resource->GetRefCount() == 1)
 		{
 			DeleteResource(resource);
-			m_resourceMap.Erase(it);
+			m_resourceMap.Remove(it);
 		}
+		else
+			++it;
 	}
 }
 
 
 void ResourceGroup::DeleteAllResources()
 {
-	for(ResourceMap::Iterator it = m_resourceMap.begin(); it != m_resourceMap.end(); ++it)
+	for(ResourceMap::Iterator it = m_resourceMap.begin(); it != m_resourceMap.end(); )
 	{
 		Resource* resource = it->value;
 		if(resource != null)
 		{
 			DeleteResource(resource);
-			m_resourceMap.Erase(it);
+			m_resourceMap.Remove(it);
 		}
+		else
+			++it;
 	}
 }
 

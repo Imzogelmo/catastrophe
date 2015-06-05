@@ -1,7 +1,7 @@
-// Permission is hereby granted, free of charge, to any person obtaining a Copy
-// of this software and associated documentation files (the "Software"), to deal
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files(the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
-// to use, Copy, modify, merge, publish, distribute, sublicense, and/or sell
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
@@ -16,39 +16,46 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "Core/Memory.h"
-#include "Core/Allocators/Allocator.h"
+#pragma once
 
-//#include <string.h> // clib header
-//#include <stdlib.h> // clib header
+#include "Catastrophe/Core/Threading/ThreadLocalStorage.h"
 
 CE_NAMESPACE_BEGIN
 
 
-namespace Memory
+ThreadLocalStorage::ThreadLocalStorage()
 {
+	m_index = (u32)TlsAlloc();
 
-	int allocationCount = 0;
-	int deallocationCount = 0;
-
-	// Default allocator.
-
-	Allocator gDefaultAllocatorInstance;
-	Allocator* gDefaultAllocatorInstancePtr = &gDefaultAllocatorInstance;
-
-	Allocator* GetDefaultAllocator()
+	if(m_index == TLS_OUT_OF_INDEXES) 
 	{
-		return gDefaultAllocatorInstancePtr;
+		LogError("ThreadLocalStorage could not be allocated: Out of indexes.");
 	}
+}
 
-	void SetDefaultAllocator(Allocator* allocator)
+
+ThreadLocalStorage::~ThreadLocalStorage()
+{
+	TlsFree((DWORD)m_index);
+}
+
+
+void ThreadLocalStorage::SetValue(void* value)
+{
+	if(TlsSetValue((DWORD)m_index, value) == FALSE)
 	{
-		CE_ASSERT(allocator != null);
-		if(allocator != null)
-			gDefaultAllocatorInstancePtr = allocator;
+		LogError("ThreadLocalStorage: Value could not be set: Out of indexes.");
 	}
+}
 
-} // Memory
+
+void* ThreadLocalStorage::GetValue() const
+{
+	void* ptr = TlsGetValue((DWORD)m_index);
+	return ptr;
+}
+
+
 
 
 CE_NAMESPACE_END

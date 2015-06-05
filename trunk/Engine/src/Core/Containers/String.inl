@@ -414,7 +414,7 @@ String& String::ReplaceExtension(const char* newExtension)
 
 bool String::StartsWith(const char* str, u32 stringLength, bool caseSensitive) const
 {
-	if(UNLIKELY(u32(length()) < stringLength))
+	if(UNLIKELY(u32(Length()) < stringLength))
 		return false;
 
 	return String::Compare(begin(), begin() + stringLength, str, str + stringLength, caseSensitive) == 0;
@@ -446,7 +446,7 @@ u32 String::FindFirstSubstring(const char* substring, u32 startIndex, u32 string
 {
 	const char* pBegin = begin();
 	const char* pEnd = end();
-	if(LIKELY(startIndex < length()))
+	if(LIKELY(startIndex < Length()))
 	{
 		if(UNLIKELY(!stringLength))
 			return startIndex;
@@ -1069,8 +1069,8 @@ String& String::ReplaceAll(const String& regex, const String& replacement)
 {
 	for(u32 position(0); (position = FindFirstSubstring(regex, position)) != npos; )
 	{
-		ReplaceAt(position, regex.length(), replacement);
-		position += replacement.length();
+		ReplaceAt(position, regex.Length(), replacement);
+		position += replacement.Length();
 	}
 
 	return *this;

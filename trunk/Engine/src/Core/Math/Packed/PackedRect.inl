@@ -28,12 +28,34 @@ PackedRect PackedRect::One = PackedRect(0, 0, 1, 1);
 
 PackedRect::PackedRect( const Rect& rect )
 {
-	position.x = (s16)rect.position.x;
-	position.y = (s16)rect.position.y;
-	size.x = (s16)rect.size.x;
-	size.y = (s16)rect.size.y;
+	x = (s16)rect.x;
+	y = (s16)rect.y;
+	width = (s16)rect.width;
+	height = (s16)rect.height;
 }
 
+
+PackedRect::PackedRect( const Rectf& value )
+{
+	x = (s16)Math::Round(value.min.x);
+	y = (s16)Math::Round(value.min.y);
+	width = (s16)Math::Round(value.Width());
+	height = (s16)Math::Round(value.Height());
+}
+
+
+PackedRect& PackedRect::operator =( const Rect &rect )
+{
+	*this = Rect(rect);
+	return *this;
+}
+
+
+PackedRect& PackedRect::operator =( const Rectf &rectf )
+{
+	*this = Rect(rectf);
+	return *this;
+}
 
 
 

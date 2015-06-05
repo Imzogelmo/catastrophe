@@ -40,6 +40,26 @@ ResourceManager::~ResourceManager()
 }
 
 
+Resource* ResourceManager::Load(int resourceType, const String& filename)
+{
+	ResourceGroup* resourceGroup = m_resourceGroups[resourceType];
+	ASSERT(resourceGroup);
+
+	Resource* resource = resourceGroup->LoadResource(filename);
+	return resource;
+}
+
+
+Resource* ResourceManager::Load(int resourceType, const String& directory, const String& filename)
+{
+	ResourceGroup* resourceGroup = m_resourceGroups[resourceType];
+	ASSERT(resourceGroup);
+
+	Resource* resource = resourceGroup->LoadResource(directory, filename);
+	return resource;
+}
+
+
 void ResourceManager::DeleteAllResources()
 {
 	for(int i(0); i < MAX_RESOURCE_GROUPS; ++i)

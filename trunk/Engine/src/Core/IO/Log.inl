@@ -46,7 +46,7 @@ Logger::Logger() :
 	m_level(0),
 	m_file(),
 	m_printToStdOut(false),
-	m_hasTimestamp(false)
+	m_hasTimestamp(true)
 {
 }
 
@@ -87,7 +87,8 @@ void Logger::Write(int level, const char* message)
 	if(m_level > level)
 		return;
 
-	String formattedString(message);
+	String formattedString;//(message);
+	formattedString.Reserve(Strlen(message) + 16);
 
 	if(m_hasTimestamp)
 	{
@@ -103,8 +104,9 @@ void Logger::Write(int level, const char* message)
 		formattedString += buffer;
 	}
 
-	formattedString += logLevels[level];
+	//formattedString += logLevels[level];
 	formattedString += message;
+	//formattedString += '\n';
 
 	FlushString(level, formattedString);
 }
@@ -120,7 +122,7 @@ void Logger::FlushString(int level, const String& formattedString)
 
 	if( m_printToStdOut )
 	{
-		fprintf((level > LOG_WARNING) ? stderr : stdout, "%s", formattedString.CString());
+		fprintf((level > LOG_WARNING) ? stderr : stdout, "%s\n", formattedString.CString());
 	}
 }
 

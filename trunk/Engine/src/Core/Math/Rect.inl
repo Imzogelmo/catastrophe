@@ -32,19 +32,33 @@ Rect Rect::One = Rect(0, 0, 1, 1);
 
 Rect::Rect( const PackedRect& value )
 {
-	position.x = (int)value.position.x;
-	position.y = (int)value.position.y;
-	size.x = (int)value.Width();
-	size.y = (int)value.Height();
+	x = (int)value.x;
+	y = (int)value.y;
+	width = (int)value.width;
+	height = (int)value.height;
 }
 
 
 Rect::Rect( const Rectf& value )
 {
-	position.x = Math::Round(value.min.x);
-	position.y = Math::Round(value.min.y);
-	size.x = Math::Round(value.Width());
-	size.y = Math::Round(value.Height());
+	x = Math::Round(value.min.x);
+	y = Math::Round(value.min.y);
+	width = Math::Round(value.Width());
+	height = Math::Round(value.Height());
+}
+
+
+Rect& Rect::operator =( const PackedRect &packedRect )
+{
+	*this = Rect(packedRect);
+	return *this;
+}
+
+
+Rect& Rect::operator =( const Rectf &rectf )
+{
+	*this = Rect(rectf);
+	return *this;
 }
 
 
@@ -57,7 +71,6 @@ void Rect::Merge( const Rect& rect )
 	int yoff = rect.Bottom() - Bottom();
 	if( xoff > 0 ) size.x += xoff;
 	if( yoff > 0 ) size.y += xoff;
-
 }
 
 
