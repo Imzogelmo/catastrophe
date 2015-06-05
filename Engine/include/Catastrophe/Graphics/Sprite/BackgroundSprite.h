@@ -19,17 +19,37 @@
 #pragma once
 
 #include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Graphics/Sprite.h"
+#include "Catastrophe/Graphics/Sprite/SpriteBase.h"
 
 CE_NAMESPACE_BEGIN
 
 
-enum TextAlignment
+class CE_API BackgroundSprite : public SpriteBase
 {
-	AlignLeft,
-	AlignCenter,
-	AlignRight
+public:
+	Vector2 borderOffset;
+
+	/// The blendmode of the sprite.
+	BlendMode blendmode;
+
+	/// The gradient colors of the corners.
+	Color cornerColors[4];
+
+	BackgroundSprite();
+	BackgroundSprite(Texture* texturePtr, const Rect& sourceRect, const Vector2& spriteBorderOffset = Vector2::Zero);
+
+	/// Sets the corner color data of this sprite from an array.
+	void SetCornerColors(const Color* colors);
+
+	/// Gets the corner color data of this sprite and copies them into an array.
+	void GetCornerColors(Color* colorArray);
+
+	/// Draws the sprite with the given size at position.
+	void Render(SpriteBatch* spritebatch, const Vector2& position, const Vector2& size);
+
 };
 
 
-CE_NAMESPACE_END
 
+CE_NAMESPACE_END

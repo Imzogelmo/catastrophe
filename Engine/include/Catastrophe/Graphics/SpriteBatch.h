@@ -27,7 +27,6 @@
 #include "Catastrophe/Core/Math/Color.h"
 #include "Catastrophe/Core/Containers/Vector.h"
 
-#include "Catastrophe/Graphics/TextAlignment.h"
 #include "Catastrophe/Graphics/Common.h"
 #include "Catastrophe/Graphics/Blendmode.h"
 #include "Catastrophe/Graphics/Vertex.h"
@@ -127,10 +126,6 @@ public:
 	void DrawRotatedScaled(u32 textureID, float rotation, const Vector2& scale, const Rectf& vertices, const Rectf& uv, const Color& color = Color::White());
 	void DrawRotatedScaled(u32 textureID, float rotation, const Vector2& scale, const Vector2& origin, const Rectf& vertices, const Rectf& uv, const Color& color = Color::White());
 
-	void DrawSprite(const Sprite& sprite, const Vector2& position);
-	void DrawAnimatedSprite(const AnimatedSprite& animatedSprite, const Vector2& position);
-	void DrawAnimatedSpriteSet(const AnimatedSpriteSet& spriteset, const Vector2& position);
-
 	/// Draws a quad using the previously set renderstate.
 	void DrawQuad(const Quad2D& quad);
 
@@ -156,9 +151,9 @@ public:
 	void DrawTiled(u32 textureID, const Vector2& position, const Vector2& size, const Vector2& tileSize, const Rectf& uv, const Color& color);
 
 	// Font rendering
-	void DrawString(Font* font, const String& text, const Vector2& position, const Color& color, TextAlignment alignment = AlignLeft );
-	void DrawString(Font* font, const String& text, u32 textPos, u32 amount, const Vector2& position, const Color& color, TextAlignment alignment = AlignLeft );
-	void DrawString(Font* font, const char* first, const char* last, Vector2 position, const Color& color, TextAlignment alignment = AlignLeft );
+	void DrawString(Font* font, const String& text, const Vector2& position, const Color& color, TextAlignment alignment = TextAlignment_Left );
+	void DrawString(Font* font, const String& text, u32 textPos, u32 amount, const Vector2& position, const Color& color, TextAlignment alignment = TextAlignment_Left );
+	void DrawString(Font* font, const char* first, const char* last, Vector2 position, const Color& color, TextAlignment alignment = TextAlignment_Left );
 
 	void Render();
 	void Render(const Matrix& transformation);

@@ -20,19 +20,44 @@
 
 #include "Catastrophe/Graphics/Common.h"
 #include "Catastrophe/Graphics/Sprite/SpriteBase.h"
-#include "Catastrophe/Graphics/Sprite/StaticSprite.h"
-#include "Catastrophe/Graphics/Sprite/Sprite.h"
-#include "Catastrophe/Graphics/Sprite/AnimatedSprite.h"
-#include "Catastrophe/Graphics/Sprite/BackgroundSprite.h"
-#include "Catastrophe/Graphics/Sprite/BorderSprite.h"
-#include "Catastrophe/Graphics/Sprite/SpriteAnimation.h"
 #include "Catastrophe/Graphics/Sprite/PackedSpriteAnimation.h"
-#include "Catastrophe/Graphics/Sprite/SpriteSetAnimation.h"
-#include "Catastrophe/Graphics/Sprite/AnimatedSpriteSet.h"
 
 CE_NAMESPACE_BEGIN
 
 
+class CE_API SpriteSetAnimation : public SpriteBase, public PackedSpriteAnimation
+{
+public:
+	SpriteSetAnimation();
+	SpriteSetAnimation(Texture* texturePtr, const PackedRect& sourceRectangle, AnimationType type, u16 animationFrameDelay, u8 numberOfFrames);
+
+	/// Set the texture used by this sprite.
+	void SetTexture(Texture* texture);
+
+	/// Sets the source rectangle of this sprite.
+	void SetSourceRect(const PackedRect& sourceRectangle);
+
+	/// Sets the sprite texture coordinates from a source rectangle.
+	FORCEINLINE const PackedRect& GetSourceRect() const { return sourceRect; }
+
+	/// Sets the texture and uv data for this sprite.
+	void SetSpriteData(Texture* texturePtr, const PackedRect& sourceRectangle);
+
+	FORCEINLINE void SetCurrentFrame(u8 frame)
+	{
+		PackedSpriteAnimation::SetCurrentFrame(frame, texture, sourceRect, uv);
+	}
+
+	void Create(Texture* texturePtr, const PackedRect& sourceRectangle, u16 animationFrameDelay, u8 numberOfFrames);
+	void Create(Texture* texturePtr, const PackedRect& sourceRectangle, AnimationType type, u16 animationFrameDelay, u8 numberOfFrames);
+
+	FORCEINLINE void Update()
+	{
+		PackedSpriteAnimation::Update(texture, sourceRect, uv);
+	}
+
+};
+
+
 
 CE_NAMESPACE_END
-
