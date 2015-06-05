@@ -92,6 +92,39 @@ public:
 	String ReadLine();
 	String ReadFileID( u32 length );
 
+	Deserializer& operator >>(bool value) { ReadBool(value); return *this; }
+	Deserializer& operator >>(s8 value) { ReadChar(value); return *this; }
+	Deserializer& operator >>(s16 value) { ReadShort(value); return *this; }
+	Deserializer& operator >>(s32 value) { ReadInt(value); return *this; }
+	Deserializer& operator >>(u8 value) { ReadByte(value); return *this; }
+	Deserializer& operator >>(u16 value) { ReadUShort(value); return *this; }
+	Deserializer& operator >>(u32 value) { ReadUInt(value); return *this; }
+	Deserializer& operator >>(float value) { ReadFloat(value); return *this; }
+
+	Deserializer& operator >>(Rect& value) { ReadRect(value); return *this; }
+	Deserializer& operator >>(Rectf& value) { ReadRectf(value); return *this; }
+	Deserializer& operator >>(Point& value) { ReadPoint(value); return *this; }
+	Deserializer& operator >>(PackedPoint& value) { ReadPackedPoint(value); return *this; }
+	Deserializer& operator >>(PackedRect& value) { ReadPackedRect(value); return *this; }
+	Deserializer& operator >>(Vector2& value) { ReadVector2(value); return *this; }
+	Deserializer& operator >>(Vector3& value) { ReadVector3(value); return *this; }
+	Deserializer& operator >>(Vector4& value) { ReadVector4(value); return *this; }
+	Deserializer& operator >>(Color& value) { ReadColor(value); return *this; }
+	Deserializer& operator >>(Colorf& value) { ReadColorf(value); return *this; }
+
+	template <u32 N>
+	Deserializer& operator >>(StaticString<N>& value)
+	{
+		u32 size;
+		ReadUInt(size);
+		Read(value.Data(), size > N : N : size);
+		value.SetSize(size);
+
+		return *this;
+	}
+
+	Deserializer& operator >>(String& value) { ReadString(value); return *this; }
+
 };
 
 

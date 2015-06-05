@@ -76,7 +76,8 @@ namespace Memory
 		template <class InputIterator, class ForwardIterator> inline
 			ForwardIterator UninitializedCopyImpl( InputIterator first, InputIterator last, ForwardIterator result, true_type )
 			{
-				return (ForwardIterator)Memcpy( (void*)result, (const void*)first, u32((const char*)last - (const char*)first) );
+				const u32 nBytes = u32((const char*)last - (const char*)first);
+				return (ForwardIterator)((char*)Memcpy( (void*)result, (const void*)first, nBytes) + nBytes);
 			}
 
 		template <class InputIterator, class ForwardIterator> inline
@@ -92,7 +93,7 @@ namespace Memory
 			BidirectionalIterator UninitializedCopyBackwardImpl( InputIterator first, InputIterator last, BidirectionalIterator result, true_type )
 			{
 				const u32 nBytes = u32((const char*)last - (const char*)first);
-				return (BidirectionalIterator)(Memmove((void*)((char*)result - nBytes), (void*)first, nBytes) - nBytes);
+				return (BidirectionalIterator)((char*)Memmove((void*)((char*)result - nBytes), (void*)first, nBytes) - nBytes);
 			}
 
 		template <class InputIterator, class BidirectionalIterator> inline

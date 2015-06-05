@@ -123,6 +123,9 @@ public:
 	/// Gets the length of this string.
 	u32 Size() const { return _s.size ? u32(_s.size >> 1) : u32(_l.end - _l.ptr); }
 
+	/// Gets the length of this string.
+	u32 Length() const	{ return _s.size ? u32(_s.size >> 1) : u32(_l.end - _l.ptr); }
+
 	/// Gets the internal buffer size; how many chars the string can hold without a reallocation).
 	u32 Capacity() const { return _s.size ? (kShortCapacity - 1) : (_l.capacity - 1); }
 
