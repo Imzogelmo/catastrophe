@@ -73,7 +73,7 @@ bool XmlElement::SetToParent()
 	if( parent )
 		m_element = parent;
 
-	return parent != 0;
+	return parent != null;
 }
 
 
@@ -322,6 +322,18 @@ bool XmlElement::SetAttribute( const char* name, const Point& value )
 }
 
 
+bool XmlElement::SetAttribute( const char* name, const PackedPoint& value )
+{
+	return SetAttribute(name, ToString(value).CString());
+}
+
+
+bool XmlElement::SetAttribute( const char* name, const PackedRect& value )
+{
+	return SetAttribute(name, ToString(value).CString());
+}
+
+
 bool XmlElement::SetAttribute( const char* name, const Vector2& value )
 {
 	return SetAttribute(name, ToString(value).CString());
@@ -407,6 +419,18 @@ bool XmlElement::SetRectfElement( const char* name, const Rectf& value )
 
 
 bool XmlElement::SetPointElement( const char* name, const Point& value )
+{
+	return SetTextElement(name, ToString(value).CString());
+}
+
+
+bool XmlElement::SetPackedRectElement( const char* name, const PackedRect& value )
+{
+	return SetTextElement(name, ToString(value).CString());
+}
+
+
+bool XmlElement::SetPackedPointElement( const char* name, const PackedPoint& value )
 {
 	return SetTextElement(name, ToString(value).CString());
 }
@@ -716,6 +740,26 @@ bool XmlElement::GetAttribute( const char* name, Point& value ) const
 }
 
 
+bool XmlElement::GetAttribute( const char* name, PackedPoint& value ) const
+{
+	const char* attribute = GetAttribute(name);
+	if( attribute != null )
+		value = ToPackedPoint(attribute);
+
+	return (attribute != null);
+}
+
+
+bool XmlElement::GetAttribute( const char* name, PackedRect& value ) const
+{
+	const char* attribute = GetAttribute(name);
+	if( attribute != null )
+		value = ToPackedRect(attribute);
+
+	return (attribute != null);
+}
+
+
 bool XmlElement::GetAttribute( const char* name, Vector2& value ) const
 {
 	const char* attribute = GetAttribute(name);
@@ -853,6 +897,26 @@ bool XmlElement::GetPointElement( const char* name, Point& value ) const
 	const char* s = FirstChild(name).GetText();
 	if( s != null )
 		value = ToPoint(s);
+
+	return (s != null);
+}
+
+
+bool XmlElement::GetPackedPointElement( const char* name, PackedPoint& value ) const
+{
+	const char* s = FirstChild(name).GetText();
+	if( s != null )
+		value = ToPackedPoint(s);
+
+	return (s != null);
+}
+
+
+bool XmlElement::GetPackedRectElement( const char* name, PackedRect& value ) const
+{
+	const char* s = FirstChild(name).GetText();
+	if( s != null )
+		value = ToPackedRect(s);
 
 	return (s != null);
 }

@@ -117,6 +117,15 @@ TIMER_API tick_t         timer_system();
 CE_NAMESPACE_BEGIN
 
 
+namespace TimeStamp
+{
+	u64 GetCurrent()
+	{
+		return timer_current();
+	}
+};
+
+
 bool Timer::m_timerInit = false;
 
 Timer::Timer()

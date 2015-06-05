@@ -168,18 +168,19 @@ bool Serializer::WriteFloatArray(const float* ptr, u32 numElements)
 
 bool Serializer::WriteString(const String& value)
 {
-	u32 length = value.length();
-	if( Write(&length, sizeof length) != sizeof length )
-		return false;
-
-	return Write(value.CString(), length) == length;
+	return WriteString(value.CString(), value.Length());
 }
 
 
 bool Serializer::WriteString(const char* value)
 {
-	u32 length = strlen(value);
-	if( Write(&length, sizeof length) != sizeof length )
+	return WriteString(value, (u32)strlen(value));
+}
+
+
+bool Serializer::WriteString(const char* value, u32 length)
+{
+	if( !WriteUInt(length) )
 		return false;
 
 	return Write(value, length) == length;
@@ -189,7 +190,7 @@ bool Serializer::WriteString(const char* value)
 bool Serializer::WriteLine(const String& value, bool newline)
 {
 	bool success = true;
-	success = Write(value.CString(), value.length()) == value.length();
+	success = Write(value.CString(), value.Length()) == value.Length();
 	if(newline && success)
 	{
 		success = WriteByte(13) && WriteByte(10);

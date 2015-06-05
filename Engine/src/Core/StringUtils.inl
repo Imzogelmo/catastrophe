@@ -185,6 +185,18 @@ Rectf ToRectf( const char* str, const Rectf& defaultValue )
 }
 
 
+PackedPoint ToPackedPoint( const char* str, const PackedPoint& defaultValue )
+{
+	return PackedPoint( ToPoint(str, Point(defaultValue)) );
+}
+
+
+PackedRect ToPackedRect( const char* str, const PackedRect& defaultValue )
+{
+	return PackedRect( ToRect(str, Rect(defaultValue)) );
+}
+
+
 Vector2 ToVector2( const char* str, const Vector2& defaultValue )
 {
 	Vector2 v = defaultValue;
@@ -331,6 +343,22 @@ String ToString( const Rectf& value )
 {
 	char buf[64];
 	sprintf(buf, "%f %f %f %f", value.min.x, value.min.y, value.max.x, value.max.y);
+	return String(buf);
+}
+
+
+String ToString( const PackedPoint& value )
+{
+	char buf[32];
+	sprintf(buf, "%i %i", (int)value.x, (int)value.y);
+	return String(buf);
+}
+
+
+String ToString( const PackedRect& value )
+{
+	char buf[64];
+	sprintf(buf, "%i %i %i %i", (int)value.position.x, (int)value.position.y, (int)value.size.x, (int)value.size.y);
 	return String(buf);
 }
 
