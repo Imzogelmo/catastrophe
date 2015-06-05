@@ -57,8 +57,39 @@ public:
 
 	bool WriteString( const String& value );
 	bool WriteString( const char* value );
+	bool WriteString(const char* value, u32 length);
 	bool WriteLine( const String& value, bool newline = true );
 	bool WriteFileID( const char* id, u32 length );
+
+	Serializer& operator <<(bool value) { WriteBool(value); return *this; }
+	Serializer& operator <<(s8 value) { WriteByte(value); return *this; }
+	Serializer& operator <<(s16 value) { WriteShort(value); return *this; }
+	Serializer& operator <<(s32 value) { WriteInt(value); return *this; }
+	Serializer& operator <<(u8 value) { WriteByte(value); return *this; }
+	Serializer& operator <<(u16 value) { WriteUShort(value); return *this; }
+	Serializer& operator <<(u32 value) { WriteUInt(value); return *this; }
+	Serializer& operator <<(float value) { WriteFloat(value); return *this; }
+
+	Serializer& operator <<(const Rect& value) { WriteRect(value); return *this; }
+	Serializer& operator <<(const Rectf& value) { WriteRectf(value); return *this; }
+	Serializer& operator <<(const Point& value) { WritePoint(value); return *this; }
+	Serializer& operator <<(const PackedPoint& value) { WritePackedPoint(value); return *this; }
+	Serializer& operator <<(const PackedRect& value) { WritePackedRect(value); return *this; }
+	Serializer& operator <<(const Vector2& value) { WriteVector2(value); return *this; }
+	Serializer& operator <<(const Vector3& value) { WriteVector3(value); return *this; }
+	Serializer& operator <<(const Vector4& value) { WriteVector4(value); return *this; }
+	Serializer& operator <<(const Color& value) { WriteColor(value); return *this; }
+	Serializer& operator <<(const Colorf& value) { WriteColorf(value); return *this; }
+
+	template <u32 N>
+	Serializer& operator <<(const StaticString<N>& value)
+	{
+		WriteString(value.CString(), value.Size());
+		return *this;
+	}
+
+	Serializer& operator <<(const String& value) { WriteString(value.CString(), value.Size()); return *this; }
+	Serializer& operator <<(const char* value) { WriteString(value); return *this; }
 
 };
 

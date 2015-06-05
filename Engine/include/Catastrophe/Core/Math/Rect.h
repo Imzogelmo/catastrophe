@@ -27,13 +27,19 @@ CE_NAMESPACE_BEGIN
 class CE_API Rect
 {
 public:
-	Point position, size;
+	union {
+		struct { Point position, size; };
+		int x, y, width, height;
+	};
 
 	Rect() {}
 	Rect( const Point& position, const Point& size ) : position(position), size(size) {}
 	Rect( int x, int y, int width, int height )	: position(x, y), size(width, height) {}
 	Rect( const PackedRect& value );
 	Rect( const Rectf& value );
+
+	Rect& operator =( const PackedRect &packedRect );
+	Rect& operator =( const Rectf &rectf );
 
 	Point		&operator [] ( const int i )		{ return *( &position + i ); }
 	const Point	&operator [] ( const int i ) const  { return *( &position + i ); }
@@ -55,42 +61,33 @@ public:
 	FORCEINLINE Point BottomRight()	const { return position + size; }
 	FORCEINLINE Point Center()		const { return position + (size / 2); }
 
-	void Expand( const Point& amount ) { size += amount; }
-	void Inflate( const Point& increase ) { position -= increase; size += increase * 2; }
-	void Deflate( const Point& decrease ) { position += decrease; size -= decrease * 2; }
-	void Offset( const Point& amount ) { position += amount; }
-	void Set( const Point& Pos, const Point& Size ) { position = Pos; size = Size; }
-	void Set( int x, int y, int w, int h ) { position.x = x; position.y = y; size.x = w; size.y = h; }
+	FORCEINLINE void Translate( const Point& value ) { position += value; }
+	FORCEINLINE void Offset( const Point& value ) { position += value; }
+	FORCEINLINE void Set( const Point& Pos, const Point& Size ) { position = Pos; size = Size; }
+	FORCEINLINE void Set( int x, int y, int w, int h ) { position.x = x; position.y = y; size.x = w; size.y = h; }
 
 	FORCEINLINE const Point& Position() const { return position; }
 	FORCEINLINE const Point& Size() const { return size; }
 
 	FORCEINLINE int Width() const { return size.x; }
 	FORCEINLINE int Height() const { return size.y; }
-	FORCEINLINE int Area() const { return size.x * size.y;	}
+	FORCEINLINE int Area() const { return size.x * size.y; }
 
-	FORCEINLINE bool Empty() const { return size.IsZero(); }
+	FORCEINLINE bool Empty() const { return width == 0 && height == 0; }
 
 	FORCEINLINE bool Intersects( const Rect& r ) const
 	{
-		return( r.position.x < Right() && position.x < r.Right() && r.position.y < Bottom() && position.y < r.Bottom() );
-	}
-
-	FORCEINLINE bool Intersects( const Point& p ) const
-	{
-		return( p.x < Right() && position.x < p.x && p.y < Bottom() && position.y < p.y );
+		return( r.x < Right() && x < r.Right() && r.y < Bottom() && y < r.Bottom() );
 	}
 
 	FORCEINLINE bool Contains( const Point& p ) const
 	{
-		return Intersects(p);
+		return (x <= p.x && x + width > p.x && y <= p.y && y + height > p.y);
 	}
 
 	FORCEINLINE bool Contains( const Rect& r ) const
 	{
-		if( r.position.x < position.x || r.position.y < position.y ) return false;
-		if( r.Right() > Right() || r.Bottom() > Bottom() ) return false;
-		return true;
+		return (r.x >= x && r.y >= y && r.x + r.width <= x + width && r.y + r.height <= y + height);
 	}
 
 	void Merge( const Rect& rect );

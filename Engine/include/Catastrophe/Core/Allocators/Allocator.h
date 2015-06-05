@@ -28,7 +28,7 @@ CE_NAMESPACE_BEGIN
 /// Simple virtual base Allocator that redirects all Allocate, Deallocate
 /// calls to the equivalent global Allocate, Deallocate functions.
 
-class Allocator
+class CE_API Allocator
 {
 public:
 
@@ -40,7 +40,6 @@ public:
 	///
 	virtual void* Allocate( u32 nBytes, u32 alignment = 0 );
 
-	
 	/// Allows the allocator reclaim memory that was allocated by this allocator.
 	///
 	/// @param  ptr - pointer to block of memory

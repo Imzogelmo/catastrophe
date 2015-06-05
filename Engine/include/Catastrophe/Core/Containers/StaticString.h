@@ -59,13 +59,13 @@ public:
 
 	StaticString(const StaticString<N>& str)
 	{
-		Assign(str.begin(), str.size());
+		Assign(str.begin(), str.Size());
 	}
 
 	template <u32 U>
 	StaticString(const StaticString<U>& str)
 	{
-		Assign(str.begin(), str.size());
+		Assign(str.begin(), str.Size());
 	}
 
 	template <class StringContainerType>
@@ -77,7 +77,7 @@ public:
 	template <u32 U>
 	StaticString<N>& operator =(const StaticString<U>& str)
 	{
-		Assign(str.begin(), str.size());
+		Assign(str.begin(), str.Size());
 		return *this;
 	}
 
@@ -88,7 +88,7 @@ public:
 		return *this;
 	}
 
-	StaticString<N>& operator =(const StaticString<N>& str) { Assign(str.begin(), str.size()); return *this; }
+	StaticString<N>& operator =(const StaticString<N>& str) { Assign(str.begin(), str.Size()); return *this; }
 	StaticString<N>& operator =(const char* str) { Assign(str, Strnlen(str, kMaxCapacity)); return *this; }
 
 	void Assign(const char* str) { Assign(str, Strnlen(str, kMaxCapacity)); }
@@ -106,24 +106,25 @@ public:
 		SetSize(stringLength);
 	}
 
-	constexpr u32 Capacity() const { return kMaxCapacity; }
-	void Clear() { m_data[0] = 0; }
-	bool Empty() const { return m_data[0] == 0; }
-	u32 Size() const { return u32(kMaxCapacity - m_data[kMaxCapacity]); }
-	u32 Length() const { return u32(kMaxCapacity - m_data[kMaxCapacity]); }
-	const char* CString() const { return m_data; }
-
-
 	char* begin() { return m_data; }
 	const char* begin() const { return m_data; }
 	char* end() { return m_data + Size(); }
 	const char* end() const { return m_data + Size(); }
 
-	u32 size() const { return u32(kMaxCapacity - m_data[kMaxCapacity]); }
-	u32 length() const { return u32(kMaxCapacity - m_data[kMaxCapacity]); }
-	char* data() { return m_data; }
-	const char* data() const { return m_data; }
-	const char* c_str() const { return m_data; }
+	void Clear()
+	{
+		SetSize(0);
+	}
+
+	bool Empty() const { return m_data[0] == 0; }
+	bool Full() const { return m_data[kMaxCapacity] == 0; }
+
+	u32 Capacity() const { return kMaxCapacity; }
+	u32 Size() const { return u32(kMaxCapacity - m_data[kMaxCapacity]); }
+	u32 Length() const { return u32(kMaxCapacity - m_data[kMaxCapacity]); }
+	char* Data() { return m_data; }
+	const char* Data() const { return m_data; }
+	const char* CString() const { return m_data; }
 
 	char&		operator [] (u32 index)			{ return m_data[index]; }
 	const char& operator [] (u32 index) const	{ return m_data[index]; }
@@ -142,7 +143,8 @@ protected:
 	void SetSize(u32 newSize)
 	{
 		CE_ASSERT(newSize < N);
-		m_data[newSize] = (char)(kMaxCapacity - newSize);
+		m_data[newSize] = (char)0;
+		m_data[kMaxCapacity] = (char)(kMaxCapacity - newSize);
 	}
 
 	char m_data[N];
@@ -169,7 +171,7 @@ template <u32 N, u32 U> inline
 	bool operator ==(const StaticString<N>& a, const StaticString<U>& b)
 	{
 		const u32 stringLength = N < U ? N : U;
-		return (a.size() == b.size() && Memory::Memcmp(a.CString(), b.CString(), stringLength) == 0);
+		return (a.Size() == b.Size() && Memory::Memcmp(a.CString(), b.CString(), stringLength) == 0);
 	}
 
 template <u32 N, u32 U> inline
@@ -182,7 +184,7 @@ template <u32 N> inline
 	bool operator ==(const StaticString<N>& a, const char* str)
 	{
 		const u32 stringLength = Strnlen(str, N - 1);
-		return (a.size() == stringLength && Memory::Memcmp(a.begin(), str, stringLength) == 0);
+		return (a.Size() == stringLength && Memory::Memcmp(a.begin(), str, stringLength) == 0);
 	}
 
 template <u32 N> inline
@@ -206,21 +208,21 @@ template <u32 N> inline
 template <u32 N, u32 U> inline
 	bool operator <(const StaticString<N>& a, const StaticString<U>& b)
 	{
-		return Memory::Memcmp(a.begin(), a.size(), b.begin(), b.size()) < 0;
+		return Memory::Memcmp(a.begin(), a.Size(), b.begin(), b.Size()) < 0;
 	}
 
 template <u32 N> inline
 	bool operator <(const StaticString<N>& a, const char* str)
 	{
 		const u32 stringLength = Strnlen(str);
-		return Memory::Memcmp(a.begin(), a.size(), str, stringLength) < 0;
+		return Memory::Memcmp(a.begin(), a.Size(), str, stringLength) < 0;
 	}
 
 template <u32 N> inline
 	bool operator <(const char* str, const StaticString<N>& b)
 	{
 		const u32 stringLength = Strnlen(str);
-		return Memory::Memcmp(str, stringLength, b.begin(), b.size()) < 0;
+		return Memory::Memcmp(str, stringLength, b.begin(), b.Size()) < 0;
 	}
 
 

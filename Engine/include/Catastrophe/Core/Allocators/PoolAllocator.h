@@ -24,6 +24,16 @@
 CE_NAMESPACE_BEGIN
 
 
+/// @PoolAllocator
+///
+/// Allocator that pools memory into reusable memory blocks of a given size.
+/// This allocator will never allocate it's own memory and it is required to supply it
+/// with an initial memory chunk upon initialization.
+/// 
+/// This is similar to an object pool except that it is not templated to any type, and only
+/// handles raw memory and will not construct or destruct objects.
+///
+
 class PoolAllocator : public Allocator
 {
 public:

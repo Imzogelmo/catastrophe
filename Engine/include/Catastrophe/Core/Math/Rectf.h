@@ -47,17 +47,17 @@ public:
 	Rectf operator + ( const Vector2 &v ) const { return Rectf( min + v, max + v ); }
 	Rectf& operator += ( const Vector2 &v ) { min += v; max += v; return *this; }
 
-	inline float Top()		const { return min.y; }
-	inline float Bottom()	const { return max.y; }
-	inline float Left()		const { return min.x; }
-	inline float Right()	const { return max.x; }
+	FORCEINLINE float Top() const { return min.y; }
+	FORCEINLINE float Bottom() const { return max.y; }
+	FORCEINLINE float Left() const { return min.x; }
+	FORCEINLINE float Right() const { return max.x; }
 
-	inline Vector2 TopLeft()		const { return min; }
-	inline Vector2 TopRight()		const { return Vector2( max.x, min.y ); }
-	inline Vector2 BottomLeft()		const { return Vector2( min.x, max.y ); }
-	inline Vector2 BottomRight()	const { return max; }
+	FORCEINLINE Vector2 TopLeft() const { return min; }
+	FORCEINLINE Vector2 TopRight() const { return Vector2( max.x, min.y ); }
+	FORCEINLINE Vector2 BottomLeft() const { return Vector2( min.x, max.y ); }
+	FORCEINLINE Vector2 BottomRight() const { return max; }
 
-	inline Vector2 Center()	const
+	FORCEINLINE Vector2 Center()	const
 	{
 		return Vector2( 
 			(min.x + max.x) * 0.5f,
@@ -65,14 +65,12 @@ public:
 			);
 	}
 
-	Vector2 Size() const { return max - min; }
-	Vector2 Extents() const { return (max - min) * 0.5f; }
-	float Width() const { return fabs(max.x - min.x); }
-	float Height() const { return fabs(max.y - min.y); }
-	float Area() const { return Width() * Height();	}
+	FORCEINLINE Vector2 Size() const { return max - min; }
+	FORCEINLINE Vector2 Extents() const { return (max - min) * 0.5f; }
+	FORCEINLINE float Width() const { return fabs(max.x - min.x); }
+	FORCEINLINE float Height() const { return fabs(max.y - min.y); }
+	FORCEINLINE float Area() const { return Width() * Height();	}
 
-	void Inflate( const Vector2& increase ) { min -= increase; max += increase; }
-	void Deflate( const Vector2& decrease ) { min += decrease; max -= decrease; }
 	void Offset( const Vector2& amount ) { min += amount; max += amount; }
 	void Set( const Vector2& minPos, const Vector2& maxPos ) { min = minPos; max = maxPos; }
 	void Set( float x1, float y1, float x2, float y2 ) { min.x = x1; min.y = y1; max.x = x2; max.y = y2; }
@@ -81,41 +79,41 @@ public:
 	void SetHeight( float h ) { max.y = min.y + h; }
 	void Scale( const Vector2& scale );
 
-	void FlipX()
+	FORCEINLINE void FlipX()
 	{
 		float temp = min.x;
 		min.x = max.x;
 		max.x = temp;
 	}
 
-	void FlipY()
+	FORCEINLINE void FlipY()
 	{
 		float temp = min.y;
 		min.y = max.y;
 		max.y = temp;
 	}
 
-	inline bool Empty() const
+	FORCEINLINE bool Empty() const
 	{
 		return min == max;
 	}
 
-	inline bool Intersects( const Rectf& r ) const
+	FORCEINLINE bool Intersects( const Rectf& r ) const
 	{
 		return( r.min.x < max.x && min.x < r.max.x && r.min.y < max.y && min.y < r.max.y );
 	}
 
-	inline bool Intersects( const Vector2& p ) const
+	FORCEINLINE bool Intersects( const Vector2& p ) const
 	{
 		return( p.x < max.x && min.x < p.x && p.y < max.y && min.y < p.y );
 	}
 
-	inline bool Contains( const Rectf& r ) const
+	FORCEINLINE bool Contains( const Rectf& r ) const
 	{
 		return( r.min.x > min.x && r.max.x <= max.x && r.min.y > min.y && r.max.y <= max.y );
 	}
 
-	inline bool Contains( const Vector2& p ) const
+	FORCEINLINE bool Contains( const Vector2& p ) const
 	{
 		return Intersects(p);
 	}
