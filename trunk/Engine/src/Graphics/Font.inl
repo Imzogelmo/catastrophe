@@ -586,7 +586,7 @@ int Font::InternalLoadBitmapFont( const String& filename, int startCode )
 
 	// create the texture.
 	//m_texture.SetFilterMode( 0x2601 );
-	m_texture.CreateFromData( (void*)pixels.data(), pixels.Width(), pixels.Height() );
+	m_texture.CreateFromData( (void*)pixels.Data(), pixels.Width(), pixels.Height() );
 
 	return 0;
 }
@@ -692,7 +692,7 @@ int Font::InternalLoadAsciiStripFont( const String& filename, int startCode )
 	m_lineHeight = h;
 
 	// Finally, create the texture from the raw pixel data
-	m_texture.CreateFromData( (void*)pixels.data(), pixels.Width(), pixels.Height() );
+	m_texture.CreateFromData( (void*)pixels.Data(), pixels.Width(), pixels.Height() );
 
 	return 0;
 }
@@ -823,10 +823,10 @@ int Font::InternalLoadShadowedStripFont( const String& filename, int startCode, 
 	m_lineHeight = h;
 
 	//Debug save
-	TextureLoader::SaveToFile("testShadowFont.png", internalPixels.data(), internalPixels.Width(), internalPixels.Height());
+	TextureLoader::SaveToFile("testShadowFont.png", internalPixels.Data(), internalPixels.Width(), internalPixels.Height());
 
 	// Finally, create the texture from the raw pixel data
-	m_texture.CreateFromData( (void*)internalPixels.data(), internalPixels.Width(), internalPixels.Height() );
+	m_texture.CreateFromData( (void*)internalPixels.Data(), internalPixels.Width(), internalPixels.Height() );
 
 	return 0;
 }

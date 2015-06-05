@@ -21,10 +21,9 @@
 #include "Catastrophe/Core/PlatformMath.h"
 #include "Catastrophe/Core/Math/MathUtil.h"
 
-#include "Graphics/SpriteBatch.h"
-#include "Graphics/Sprite.h"
-#include "Graphics/AnimatedSpriteSet.h"
-#include "Graphics/OpenGL.h"
+#include "Catastrophe/Graphics/SpriteBatch.h"
+#include "Catastrophe/Graphics/Sprite.h"
+#include "Catastrophe/Graphics/OpenGL.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -152,72 +151,6 @@ void SpriteBatch::DrawRotatedScaled(u32 textureID, float rotation, const Vector2
 }
 
 
-void SpriteBatch::DrawSprite(const Sprite& sprite, const Vector2& position )
-{
-	if(sprite.GetTexture() != null)
-	{
-		CheckRenderState(sprite.GetBlendMode());
-
-		const Vector2 halfSize = sprite.size * 0.5f;
-		InternalDrawTransformed(
-			sprite.GetTextureID(),
-			sprite.angle,
-			sprite.scale,
-			position,
-			Rectf(position - halfSize, position + halfSize),
-			sprite.GetUVRect(),
-			sprite.color
-		);
-	}
-}
-
-
-void SpriteBatch::DrawAnimatedSprite(const AnimatedSprite& sprite, const Vector2& position )
-{
-	if(sprite.GetTexture() != null)
-	{
-		Rectf uv = sprite.GetUVRect();
-		if(sprite.GetFlipX() )
-			uv.FlipX();
-		if(sprite.GetFlipY() )
-			uv.FlipY();
-
-		CheckRenderState(sprite.GetBlendMode());
-
-		const Vector2 halfSize = sprite.size * 0.5f;
-		InternalDrawTransformed(
-			sprite.GetTextureID(),
-			sprite.angle,
-			sprite.scale,
-			position,
-			Rectf(position - halfSize, position + halfSize),
-			uv,
-			sprite.color
-		);
-	}
-}
-
-
-void SpriteBatch::DrawAnimatedSpriteSet(const AnimatedSpriteSet& spriteset, const Vector2& position )
-{
-	if(spriteset.Empty() || spriteset.GetTexture() == null)
-		return;
-
-	CheckRenderState(spriteset.GetBlendMode());
-
-	const Vector2 halfSize = spriteset.size * 0.5f;
-	InternalDrawTransformed(
-		spriteset.GetTextureID(),
-		spriteset.angle,
-		spriteset.scale,
-		position,
-		Rectf(position - halfSize, position + halfSize),
-		spriteset.GetCurrentAnimation().GetUVRect(),
-		spriteset.color
-	);
-}
-
-
 void SpriteBatch::DrawQuad(const Quad2D& quad)
 {
 	*m_queue.AddUninitialized() = quad;
@@ -331,11 +264,11 @@ void SpriteBatch::DrawString( Font* font, const char* first, const char* last, V
 
 	Vector2 originalPos = position;
 
-	if(alignment == AlignCenter)
+	if(alignment == TextAlignment_Center)
 	{
 		position.x += (float)(font->GetTextWidth(first, last) / 2.f);
 	}
-	else if(alignment == AlignRight)
+	else if(alignment == TextAlignment_Right)
 	{
 		position.x -= (float)font->GetTextWidth(first, last);
 	}
