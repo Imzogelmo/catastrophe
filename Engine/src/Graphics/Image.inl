@@ -228,13 +228,13 @@ void Image::UpdateRegion( const Rect& r )
 	CE_ASSERT(thisRect.Contains(r));
 
 	array_type temp;
-	Color* ptr = m_pixels.data();
+	Color* ptr = m_pixels.Data();
 
 	//check if we only need to update a portion of the texture
 	if( r != thisRect )
 	{
 		m_pixels.CopyRegion( (u32)r.position.x, (u32)r.position.y, (u32)r.Width(), (u32)r.Height(), temp );
-		ptr = temp.data();
+		ptr = temp.Data();
 	}
 
 	Texture::UpdateTexture(r, (u8*)ptr);

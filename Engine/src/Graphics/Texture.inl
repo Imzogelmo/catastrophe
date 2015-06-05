@@ -18,8 +18,10 @@
 
 #include "Catastrophe/Core/Containers/String.h"
 #include "Catastrophe/Core/Containers/Array2D.h"
-#include "Catastrophe/Core/Math/Rect.h"
 #include "Catastrophe/Core/Math/Color.h"
+#include "Catastrophe/Core/Math/Rect.h"
+#include "Catastrophe/Core/Math/Packed/PackedRect.h"
+#include "Catastrophe/Core/IO/Deserializer.h"
 
 #include "Graphics/Texture.h"
 #include "Graphics/TextureLoader.h"
@@ -116,6 +118,30 @@ bool Texture::LoadFromFile( const String& path, const String& filename )
 }
 
 
+bool Texture::Load(Deserializer* deserializer)
+{
+	const u32 fileSize = deserializer->Size();
+	if(fileSize == 0)
+		return false;
+
+	Point imageSize;
+
+	//todo: find a way to remove this.
+	void* ptrFileMemory = Memory::Allocate(fileSize);
+
+	deserializer->Read(ptrFileMemory, fileSize);
+	u8* ptr = (u8*)TextureLoader::LoadFromMemory(ptrFileMemory, fileSize, imageSize);
+	if(!ptr)
+		return false;
+
+	bool success = CreateFromData(ptr, imageSize.x, imageSize.y);
+
+	Memory::Deallocate(ptrFileMemory, fileSize);
+	TextureLoader::FreePtr(ptr);
+
+	return success;
+}
+
 
 bool Texture::SaveToFile( const String& filename )
 {
@@ -126,7 +152,7 @@ bool Texture::SaveToFile( const String& filename )
 bool Texture::CreateBlank( const Color& backgroundColor, int w, int h )
 {
 	Array2D<Color> p(h, w, backgroundColor);
-	return CreateFromData( (void*)p.data(), w, h );
+	return CreateFromData( (void*)p.Data(), w, h );
 }
 
 
@@ -217,9 +243,9 @@ bool Texture::GetPixels( u8* ptr ) const
 }
 
 
-Vector2 Texture::GetUV( const Point& pos ) const
+Vector2 Texture::GetUV( const Point& position ) const
 {
-	return GetUV(pos.x, pos.y);
+	return GetUV(position.x, position.y);
 }
 
 
@@ -240,6 +266,19 @@ Rectf Texture::GetUVRect( const Rect& sourceRect ) const
 		(float)sourceRect.Right() / m_floatWidth,
 		(float)sourceRect.Bottom() / m_floatHeight
 	);
+}
+
+
+Rectf Texture::GetUVRect( const PackedRect& sourceRect ) const
+{
+	CE_ASSERT(m_width != 0 && m_height != 0);
+
+	return Rectf(
+		(float)sourceRect.Left() / m_floatWidth,
+		(float)sourceRect.Top() / m_floatHeight,
+		(float)sourceRect.Right() / m_floatWidth,
+		(float)sourceRect.Bottom() / m_floatHeight
+		);
 }
 
 

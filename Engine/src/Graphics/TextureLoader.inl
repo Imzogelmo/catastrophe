@@ -61,7 +61,7 @@ u8* TextureLoader::LoadFromMemory( const void* data, u32 sizeBytes, Point& size,
 	u8* ptr = stbi_load_from_memory( (u8*)data, (int)sizeBytes, &width, &height, &channels, STBI_rgb_alpha );
 	if(!ptr)
 	{
-		//Log( "Failed to load image from memory: " + GetErrorMsg() );
+		LogError("Failed to load image from memory: \"%s\".", GetErrorMsg() );
 		return 0;
 	}
 
