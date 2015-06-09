@@ -1,11 +1,11 @@
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
+// f the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in
+// The above copyright notice and this permission notice shall be included f
 // all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -33,7 +33,7 @@ void ParticleManager::AddSystem( ParticleSystem* system )
 	if(!system)
 		return;
 
-//	map_type::iterator it = m_systems.find( effect->GetString() );
+//	map_type::Iterator it = m_systems.find( effect->GetString() );
 //	if( it != m_systems.end() )
 	{
 		//m_systems...
@@ -45,7 +45,7 @@ void ParticleManager::AddSystem( ParticleSystem* system )
 u32 ParticleManager::GetParticleCount()
 {
 	u32 count = 0;
-	for( map_type::iterator it = m_systems.begin(); it != m_systems.end(); ++it )
+	for( map_type::Iterator it = m_systems.begin(); it != m_systems.end(); ++it )
 	{
 		count += it->second->GetParticleCount();
 	}
@@ -56,7 +56,7 @@ u32 ParticleManager::GetParticleCount()
 
 void ParticleManager::Update()
 {
-	for( map_type::iterator it = m_systems.begin(); it != m_systems.end(); ++it )
+	for( map_type::Iterator it = m_systems.begin(); it != m_systems.end(); ++it )
 	{
 		it->second->Update();
 	}
@@ -65,19 +65,19 @@ void ParticleManager::Update()
 
 void ParticleManager::Render()
 {
-	for( map_type::iterator it = m_systems.begin(); it != m_systems.end(); ++it )
+	for( map_type::Iterator it = m_systems.begin(); it != m_systems.end(); ++it )
 	{
 		it->second->Render();
 	}
 }
 
 
-void ParticleManager::Serialize( AttributeWriter* out )
+void ParticleManager::Serialize( AttributeWriter* f )
 {
 }
 
 
-void ParticleManager::Deserialize( AttributeReader* in )
+void ParticleManager::Deserialize( AttributeReader* f )
 {
 }
 

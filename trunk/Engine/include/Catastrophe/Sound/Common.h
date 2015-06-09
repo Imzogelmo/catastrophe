@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "../Common.h"
+#include "Catastrophe/Core/Common.h"
 
 
 #define CE_SOUND_FMOD //todo: make this configurable

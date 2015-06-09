@@ -1,11 +1,11 @@
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
+// f the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in
+// The above copyright notice and this permission notice shall be included f
 // all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -17,9 +17,9 @@
 // THE SOFTWARE.
 
 #include "Particle/Emitters/RectEmitter.h"
-#include "Math/Math.h"
-#include "IO/AttributeWriter.h"
-#include "IO/AttributeReader.h"
+#include "Catastrophe/Core/PlatformMath.h"
+#include "Core/IO/AttributeWriter.h"
+#include "Core/IO/AttributeReader.h"
 
 
 RectEmitter::RectEmitter() : ParticleEmitter()
@@ -45,7 +45,7 @@ void RectEmitter::SetBoundingRect( const Rectf& extentRect )
 void RectEmitter::SetBoundingRectAngle( float angle )
 {
 	m_boundingRectAngle = angle;
-	fc::sincos(angle, m_angleSin, m_angleCos);
+	Math::SinCosf(angle, m_angleSin, m_angleCos);
 }
 
 
@@ -55,7 +55,7 @@ void RectEmitter::SetWireFrame( bool enable )
 }
 
 
-void RectEmitter::Emit( const Vector2& pos, Particle* particles, u32 count )
+void RectEmitter::Emit( const Vector2& position, Particle* particles, u32 count )
 {
 	// This will initialize all basic particle values except emitter-specific values.
 	GenerateInitialValues(particles, count);
@@ -67,29 +67,29 @@ void RectEmitter::Emit( const Vector2& pos, Particle* particles, u32 count )
 
 		if( m_wireFrame )
 		{
-			offset.x = fc::choose(m_boundingRect.min.x, m_boundingRect.max.x);
-			offset.y = fc::choose(m_boundingRect.min.y, m_boundingRect.max.y);
+			offset.x = Random::Choose(m_boundingRect.min.x, m_boundingRect.max.x);
+			offset.y = Random::Choose(m_boundingRect.min.y, m_boundingRect.max.y);
 		}
 		else
 		{
-			offset.x = fc::randf(m_boundingRect.min.x, m_boundingRect.max.x);
-			offset.y = fc::randf(m_boundingRect.min.y, m_boundingRect.max.y);
+			offset.x = Random::Float(m_boundingRect.min.x, m_boundingRect.max.x);
+			offset.y = Random::Float(m_boundingRect.min.y, m_boundingRect.max.y);
 		}
 
-		emitPosition = pos + offset;
+		emitPosition = position + offset;
 
 		if( m_boundingRectAngle != 0.f )
 		{
-			Math::RotatePoint(Vector2(m_angleCos, m_angleSin), pos, emitPosition);
+			Math::RotatePoint(Vector2(m_angleCos, m_angleSin), position, emitPosition);
 		}
 
-		float angle = fc::randf(m_minAngle, m_maxAngle);
-		float speed = fc::randf(m_minSpeed, m_maxSpeed);
+		float angle = Random::Float(m_minAngle, m_maxAngle);
+		float speed = Random::Float(m_minSpeed, m_maxSpeed);
 
 		Vector2 force;
-		fc::fast_sincos(angle, force.y, force.x);
+		Math::ApproximateSinCosf(angle, force.y, force.x);
 
-		p->pos = emitPosition;
+		p->position = emitPosition;
 		p->velocity = force * speed;
 
 		// first check if the particle needs a direction facing angle
@@ -100,28 +100,28 @@ void RectEmitter::Emit( const Vector2& pos, Particle* particles, u32 count )
 }
 
 
-void RectEmitter::Serialize( AttributeWriter* out )
+void RectEmitter::Serialize( AttributeWriter* f )
 {
-	out->BeginNode("RectEmitter");
+	f->BeginNode("RectEmitter");
 
-	out->SetRectfElement("BoundingRect", m_boundingRect);
-	out->SetFloatElement("Angle", m_boundingRectAngle);
-	out->SetBoolElement("WireFrame", m_wireFrame);
-	ParticleEmitter::Serialize(out);
+	f->SetRectfElement("BoundingRect", m_boundingRect);
+	f->SetFloatElement("Angle", m_boundingRectAngle);
+	f->SetBoolElement("WireFrame", m_wireFrame);
+	ParticleEmitter::Serialize(f);
 
-	out->EndNode();
+	f->EndNode();
 }
 
 
-void RectEmitter::Deserialize( AttributeReader* in )
+void RectEmitter::Deserialize( AttributeReader* f )
 {
-	if( in->GetCurrentNodeName() != "RectEmitter" )
+	if( f->GetCurrentNodeName() != "RectEmitter" )
 		return;
 
-	m_boundingRect = in->GetRectfElement("BoundingRect", m_boundingRect);
-	m_boundingRectAngle = in->GetFloatElement("Angle", m_boundingRectAngle);
-	m_wireFrame = in->GetBoolElement("WireFrame", m_wireFrame);
-	ParticleEmitter::Deserialize(in);
+	f->GetRectfElement("BoundingRect", m_boundingRect);
+	f->GetFloatElement("Angle", m_boundingRectAngle);
+	f->GetBoolElement("WireFrame", m_wireFrame);
+	ParticleEmitter::Deserialize(f);
 
 	SetBoundingRectAngle(m_boundingRectAngle);
 }

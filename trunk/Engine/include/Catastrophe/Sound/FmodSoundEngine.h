@@ -18,8 +18,9 @@
 
 #pragma once
 
-#include <fc/vector.h>
-#include <fc/string.h>
+#include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/Containers/Vector.h"
+#include "Catastrophe/Core/Containers/String.h"
 
 #include "SoundEngine.h"
 #include "FmodSound.h"
@@ -31,14 +32,15 @@ CE_NAMESPACE_BEGIN
 class CE_API FmodSoundEngine : public SoundEngine
 {
 public:
-	typedef fc::vector<FmodSound*>	vec_type;
+	typedef Vector<FmodSound*>	vec_type;
 
 	FmodSoundEngine();
 	~FmodSoundEngine()
 	{}
 
-	Sound* LoadFromFile( Sound::Type type, const fc::string& filename );
+	Sound* LoadFromFile( Sound::Type type, const char* filename );
 	Sound* LoadFromData( Sound::Type type, void* data, u32 n_bytes );
+	bool LoadPlugin(const char* filename);
 	void Initialize();
 	void Shutdown();
 	void StopAll();

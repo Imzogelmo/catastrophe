@@ -18,8 +18,8 @@
 
 #pragma once
 
-#include "../Common.h"
-#include "../Math/Color.h"
+#include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/Math/Color.h"
 
 #include "Window.h"
 
@@ -33,7 +33,7 @@ public:
 	static System* GetInstance();
 
 	static bool Init();
-	static bool InitLogging( const fc::string& filename, bool debug_console = false );
+	static bool InitLogging( const String& filename, bool debug_console = false );
 	static void Terminate();
 
 	static void SetOpenGLVersion( int major, int minor );
@@ -63,9 +63,9 @@ protected:
 	virtual void InternalTerminate() = 0;
 
 	Window*			m_window;
-	int				m_gl_major_version;
-	int				m_gl_minor_version;
-	bool			m_has_fbo;
+	int				m_glMajorVersion;
+	int				m_glMinorVersion;
+	bool			m_hasFBO;
 	bool			m_console;
 	bool			mUnused2;
 	bool			mUnused3;

@@ -22,11 +22,11 @@
 #endif
 
 // Input
-#include "Input/Controller.inl"
-#include "Input/Input.inl"
-#include "Input/JoystickController.inl"
-#include "Input/Keyboard.inl"
-#include "Input/KeyboardController.inl"
+#include "System/Input/Controller.inl"
+#include "System/Input/Input.inl"
+#include "System/Input/JoystickController.inl"
+#include "System/Input/Keyboard.inl"
+#include "System/Input/KeyboardController.inl"
 
 
 #include "System/System.inl"

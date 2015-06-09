@@ -1,11 +1,11 @@
 ﻿// Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
+// f the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in
+// The above copyright notice and this permission notice shall be included f
 // all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -23,8 +23,9 @@
 #include "ParticleGroup.h"
 #include "Renderers/ParticleRenderer.h"
 
-#include <fc/vector.h>
-#include <fc/string.h>
+#include "Catastrophe/Core/Resource/Resource.h"
+#include "Catastrophe/Core/Containers/Vector.h"
+#include "Catastrophe/Core/Containers/String.h"
 
 //emitters
 #include "Emitters/ParticleEmitter.h"
@@ -38,44 +39,46 @@
 #include "Modifiers/ColorModifier.h"
 #include "Modifiers/ColorInterpolatorModifier.h"
 
+CE_NAMESPACE_BEGIN
 
-class ParticleSystem : public ParticleSystemEntity
+
+class ParticleSystem : public Resource
 {
 public:
-	typedef fc::vector<ParticleGroup*> group_vec_type;
+	//typedef Vector<ParticleGroup*> Vector<ParticleGroup*>;
 
 	ParticleSystem();
 	~ParticleSystem();
 
-	virtual void AddGroup( ParticleGroup* group );
-	virtual void RemoveGroup( ParticleGroup* group );
+	virtual void AddGroup(ParticleGroup* group);
+	virtual void RemoveGroup(ParticleGroup* group);
 	virtual void DestroyGroups();
 
-	virtual void SetRenderer( ParticleRenderer* renderer );
-	virtual void Create( const Vector2& pos );
+	virtual void SetRenderer(ParticleRenderer* renderer);
+	virtual void Create(const Vector2& position);
 
 	virtual void Update();
 	virtual void Render();
-	virtual void Render( SpriteBatch* spriteBatch );
+	virtual void Render(SpriteBatch* spriteBatch);
 
-	virtual u32 GetNumGroups() const { return m_groups.size(); }
+	virtual u32 GetNumGroups() const { return m_particleGroups.Size(); }
 	virtual u32 GetParticleCount() const;
 
-	CE_NO_INLINE virtual bool Serialize( const fc::string& filename );
-	CE_NO_INLINE virtual bool Deserialize( const fc::string& filename );
+	virtual bool Serialize(const String& filename);
+	virtual bool Deserialize(const String& filename);
 
-	void SetName( const fc::string& name ) { m_name = name; }
-	const fc::string& GetName() const { return m_name; }
+	void SetName(const String& name) { m_name = name; }
+	const String& GetName() const { return m_name; }
 
-	group_vec_type&			GetGroups() { return m_groups; }
-	const group_vec_type&	GetGroups() const { return m_groups; }
+	Vector<ParticleGroup*>& GetParticleGroups() { return m_particleGroups; }
+	const Vector<ParticleGroup*>& GetParticleGroups() const { return m_particleGroups; }
 
 	ParticleRenderer*		GetRenderer() const { return m_renderer; }
 
 protected:
-	fc::string			m_name;
-	group_vec_type		m_groups;
-	ParticleRenderer*	m_renderer;
+	String					m_name;
+	Vector<ParticleGroup*>	m_particleGroups;
+	ParticleRenderer*		m_renderer;
 
 };
 

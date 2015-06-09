@@ -18,9 +18,7 @@
 
 #pragma once
 
-#include "Sound.h"
-
-#include <fc/string.h>
+#include "Catastrophe/Sound.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -32,8 +30,15 @@ public:
 	virtual ~SoundEngine()
 	{}
 
-	virtual Sound* LoadFromFile( Sound::Type type, const fc::string& filename ) = 0;
-	virtual Sound* LoadFromData( Sound::Type type, void* data, u32 n_bytes ) = 0;
+	/// Loads an audio file from disk and returns a pointer to the newly created sound.
+	virtual Sound* LoadFromFile( Sound::Type type, const char* filename ) = 0;
+
+	/// Loads an audio file from memory and returns a pointer to the newly created sound.
+	virtual Sound* LoadFromData( Sound::Type type, void* data, u32 nBytes ) = 0;
+
+	/// Loads a sound plugin, if supported.
+	virtual bool LoadPlugin(const char* filename) = 0;
+
 	virtual void Initialize() = 0;
 	virtual void Shutdown() = 0;
 	virtual void StopAll() = 0;
@@ -43,18 +48,22 @@ public:
 	virtual float GetVolume() = 0;
 	virtual void Update() = 0;
 
-	//creates a sound engine type. returns null if no sound back-end is defined.
-	//the caller is responsible for deleting this pointer when finished with it.
+	/// Creates a sound engine type. returns null if no sound back-end is defined.
+	/// The caller is responsible for deleting this pointer when finished with it.
 	static SoundEngine* CreateSoundEngine();
+
+	/// Deletes a SoundEngine instance and all objects that were created by it.
 	static void DeleteSoundEngine( SoundEngine* instance );
 
-	//all sounds that are created here must be destroyed here.
-	//you should never have to call these, as they are done by the sound engine.
+	// All sounds that are created here must be destroyed here.
+	// You should never have to call these, as they are done by the sound engine.
 	Sound* CreateSound( Sound::Type type );
+
+	/// Destroys a sound instance.
 	void DestroySound( Sound** sound );
 
 protected:
-	float			m_volume;
+	float m_volume;
 
 };
 

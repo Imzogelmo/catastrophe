@@ -21,7 +21,6 @@
 // Math
 #include "Core/Math/Color.inl"
 #include "Core/Math/Colorf.inl"
-//#include "Core/Math/Frustum.inl"
 #include "Core/Math/HSLColor.inl"
 #include "Core/Math/HSVColor.inl"
 #include "Core/Math/Math.inl"
@@ -54,8 +53,10 @@
 #include "Core/IO/XmlReader.inl"
 #include "Core/IO/XmlWriter.inl"
 #include "Core/IO/Compression.inl"
-//#include "Core/IO/CompressedFile.inl"
 
+// Misc
+#include "Core/Misc/RectangleBinPack.inl"
+#include "Core/Misc/MaxRectsBinPack.inl"
 
 // Core
 #include "Core/Memory.inl"
@@ -66,13 +67,15 @@
 
 // Allocators
 #include "Core/Allocators/Allocator.inl"
+#include "Core/Allocators/LinearAllocator.inl"
 #include "Core/Allocators/StackAllocator.inl"
 #include "Core/Allocators/PoolAllocator.inl"
 
-
 // Containers
 #include "Core/Containers/String.inl"
+#include "Core/Containers/StringHash.inl"
 #include "Core/Containers/FreeList.inl"
+#include "Core/Containers/ObjectPool.inl"
 
 // Resource
 #include "Core/Resource/ResourceGroup.inl"

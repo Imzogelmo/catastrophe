@@ -1,11 +1,11 @@
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
+// f the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in
+// The above copyright notice and this permission notice shall be included f
 // all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -17,8 +17,8 @@
 // THE SOFTWARE.
 
 #include "Particle/Emitters/ParticleEmitter.h"
-#include "IO/AttributeWriter.h"
-#include "IO/AttributeReader.h"
+#include "Core/IO/AttributeWriter.h"
+#include "Core/IO/AttributeReader.h"
 
 
 ParticleEmitter::ParticleEmitter() :
@@ -29,8 +29,8 @@ ParticleEmitter::ParticleEmitter() :
 	m_maxSpeed(0.f),
 	m_minFriction(0.f),
 	m_maxFriction(0.f),
-	m_minAngle(-FC_PI),
-	m_maxAngle(FC_PI),
+	m_minAngle(-PI),
+	m_maxAngle(PI),
 	m_minRotationSpeed(0.f),
 	m_maxRotationSpeed(0.f),
 	m_minSize(Vector2::One),
@@ -49,23 +49,23 @@ ParticleEmitter::ParticleEmitter() :
 
 
 ParticleEmitter::ParticleEmitter(
-		float minLife,
-		float maxLife,
-		float minSpeed,
-		float maxSpeed,
-		float minFriction,
-		float maxFriction,
-		float minAngle,
-		float maxAngle,
-		float minRotationSpeed,
-		float maxRotationSpeed,
-		const Vector2& minSize,
-		const Vector2& maxSize,
-		const Vector2& minEndScale,
-		const Vector2& maxEndScale,
-		const Color& minColor,
-		const Color& maxColor
-	) :
+    float minLife,
+    float maxLife,
+    float minSpeed,
+    float maxSpeed,
+    float minFriction,
+    float maxFriction,
+    float minAngle,
+    float maxAngle,
+    float minRotationSpeed,
+    float maxRotationSpeed,
+    const Vector2& minSize,
+    const Vector2& maxSize,
+    const Vector2& minEndScale,
+    const Vector2& maxEndScale,
+    const Color& minColor,
+    const Color& maxColor
+) :
 	ParticleSystemEntity(),
 	m_minLife(minLife),
 	m_maxLife(maxLife),
@@ -93,9 +93,9 @@ void ParticleEmitter::ValidateAttributes()
 {
 	m_hasScaleFactor = !(m_minEndScale.Equals(Vector2::One) && m_minEndScale.Equals(Vector2::One));
 
-	// angles must be in range -pi, pi.
-	m_minAngle = fc::clamp(m_minAngle, -FC_PI, FC_PI);
-	m_maxAngle = fc::clamp(m_maxAngle, -FC_PI, FC_PI);
+	// angles must be f range -pi, pi.
+	m_minAngle = Clamp(m_minAngle, -PI, PI);
+	m_maxAngle = Clamp(m_maxAngle, -PI, PI);
 
 	m_hasSizeVariation = !m_minSize.Equals(m_maxSize);
 	m_hasScaleVariation = !m_minEndScale.Equals(m_maxEndScale);
@@ -103,81 +103,81 @@ void ParticleEmitter::ValidateAttributes()
 }
 
 
-void ParticleEmitter::SetMinLife( float minLife )
+void ParticleEmitter::SetMinLife(float minLife)
 {
 	m_minLife = minLife;
 }
 
 
-void ParticleEmitter::SetMaxLife( float maxLife )
+void ParticleEmitter::SetMaxLife(float maxLife)
 {
 	m_maxLife = maxLife;
 }
 
 
-void ParticleEmitter::SetMinSpeed( float minSpeed )
+void ParticleEmitter::SetMinSpeed(float minSpeed)
 {
 	m_minSpeed = minSpeed;
 }
 
 
-void ParticleEmitter::SetMaxSpeed( float maxSpeed )
+void ParticleEmitter::SetMaxSpeed(float maxSpeed)
 {
 	m_maxSpeed = maxSpeed;
 }
 
 
-void ParticleEmitter::SetMinFriction( float minFriction )
+void ParticleEmitter::SetMinFriction(float minFriction)
 {
-	m_minFriction = fc::clamp(minFriction, 0.f, 1.f);
+	m_minFriction = Clamp(minFriction, 0.f, 1.f);
 }
 
 
-void ParticleEmitter::SetMaxFriction( float maxFriction )
+void ParticleEmitter::SetMaxFriction(float maxFriction)
 {
-	m_maxFriction = fc::clamp(maxFriction, 0.f, 1.f);
+	m_maxFriction = Clamp(maxFriction, 0.f, 1.f);
 }
 
 
-void ParticleEmitter::SetMinAngle( float minAngle )
+void ParticleEmitter::SetMinAngle(float minAngle)
 {
 	m_minAngle = minAngle;
 }
 
 
-void ParticleEmitter::SetMaxAngle( float maxAngle )
+void ParticleEmitter::SetMaxAngle(float maxAngle)
 {
 	m_maxAngle = maxAngle;
 }
 
 
-void ParticleEmitter::SetMinRotationSpeed( float minRotationSpeed )
+void ParticleEmitter::SetMinRotationSpeed(float minRotationSpeed)
 {
 	m_minRotationSpeed = minRotationSpeed;
 }
 
 
-void ParticleEmitter::SetMaxRotationSpeed( float maxRotationSpeed )
+void ParticleEmitter::SetMaxRotationSpeed(float maxRotationSpeed)
 {
 	m_maxRotationSpeed = maxRotationSpeed;
 }
 
 
-void ParticleEmitter::SetMinSize( const Vector2& minSize )
+void ParticleEmitter::SetMinSize(const Vector2& minSize)
 {
 	m_minSize = minSize;
 	m_hasSizeVariation = !m_minSize.Equals(m_maxSize);
 }
 
 
-void ParticleEmitter::SetMaxSize( const Vector2& maxSize )
+void ParticleEmitter::SetMaxSize(const Vector2& maxSize)
 {
 	m_maxSize = maxSize;
 	m_hasSizeVariation = !m_minSize.Equals(m_maxSize);
 }
 
 
-void ParticleEmitter::SetMinEndScale( const Vector2& minScale )
+void ParticleEmitter::SetMinEndScale(const Vector2& minScale)
 {
 	m_minEndScale = minScale;
 	m_hasScaleFactor = !(m_minEndScale.Equals(Vector2::One) && m_minEndScale.Equals(Vector2::One));
@@ -185,7 +185,7 @@ void ParticleEmitter::SetMinEndScale( const Vector2& minScale )
 }
 
 
-void ParticleEmitter::SetMaxEndScale( const Vector2& maxScale )
+void ParticleEmitter::SetMaxEndScale(const Vector2& maxScale)
 {
 	m_maxEndScale = maxScale;
 	m_hasScaleFactor = !(m_minEndScale.Equals(Vector2::One) && m_minEndScale.Equals(Vector2::One));
@@ -193,42 +193,42 @@ void ParticleEmitter::SetMaxEndScale( const Vector2& maxScale )
 }
 
 
-void ParticleEmitter::SetMinColor( const Color& minColor )
+void ParticleEmitter::SetMinColor(const Color& minColor)
 {
 	m_minColor = minColor;
 	m_hasColorVariation = !m_minColor.Equals(m_maxColor);
 }
 
 
-void ParticleEmitter::SetMaxColor( const Color& maxColor )
+void ParticleEmitter::SetMaxColor(const Color& maxColor)
 {
 	m_maxColor = maxColor;
 	m_hasColorVariation = !m_minColor.Equals(m_maxColor);
 }
 
 
-void ParticleEmitter::SetGenerateParticleAngle( bool enable )
+void ParticleEmitter::SetGenerateParticleAngle(bool enable)
 {
 	m_generateParticleAngle = enable;
 }
 
 
-void ParticleEmitter::GenerateInitialValues( Particle* particles, u32 count )
+void ParticleEmitter::GenerateInitialValues(Particle* particles, u32 count)
 {
 	Particle* end = particles + count;
-	for( Particle* p = particles; p != end; ++p )
+	for(Particle* p = particles; p != end; ++p)
 	{
 		// Life
 		p->age = 0.f;
-		p->lifespan = fc::randf(m_minLife, m_maxLife);
-		p->rotationSpeed = fc::randf(m_minRotationSpeed, m_maxRotationSpeed);
-		p->friction = 1.f - fc::randf(m_minFriction, m_maxFriction);
+		p->lifespan = Random::Float(m_minLife, m_maxLife);
+		p->rotationSpeed = Random::Float(m_minRotationSpeed, m_maxRotationSpeed);
+		p->friction = 1.f - Random::Float(m_minFriction, m_maxFriction);
 
 		// Size
-		if( m_hasSizeVariation )
+		if(m_hasSizeVariation)
 		{
-			p->size.x = 0.5f * fc::randf(m_minSize.x, m_maxSize.x);
-			p->size.y = 0.5f * fc::randf(m_minSize.y, m_maxSize.y);
+			p->size.x = 0.5f * Random::Float(m_minSize.x, m_maxSize.x);
+			p->size.y = 0.5f * Random::Float(m_minSize.y, m_maxSize.y);
 		}
 		else
 		{
@@ -236,13 +236,13 @@ void ParticleEmitter::GenerateInitialValues( Particle* particles, u32 count )
 		}
 
 		// Scale
-		if( m_hasScaleFactor )
+		if(m_hasScaleFactor)
 		{
 			float x, y;
-			if( m_hasScaleVariation )
+			if(m_hasScaleVariation)
 			{
-				x = fc::randf(m_minEndScale.x, m_maxEndScale.x);
-				y = fc::randf(m_minEndScale.y, m_maxEndScale.y);
+				x = Random::Float(m_minEndScale.x, m_maxEndScale.x);
+				y = Random::Float(m_minEndScale.y, m_maxEndScale.y);
 			}
 			else
 			{
@@ -263,14 +263,14 @@ void ParticleEmitter::GenerateInitialValues( Particle* particles, u32 count )
 		}
 
 		// Color
-		if( m_hasColorVariation )
+		if(m_hasColorVariation)
 		{
 			p->color = Color(
-				(u8)fc::rand(m_minColor.r, m_maxColor.r),
-				(u8)fc::rand(m_minColor.g, m_maxColor.g),
-				(u8)fc::rand(m_minColor.b, m_maxColor.b),
-				(u8)fc::rand(m_minColor.a, m_maxColor.a)
-			);
+			               (u8)Random::Int(m_minColor.r, m_maxColor.r),
+			               (u8)Random::Int(m_minColor.g, m_maxColor.g),
+			               (u8)Random::Int(m_minColor.b, m_maxColor.b),
+			               (u8)Random::Int(m_minColor.a, m_maxColor.a)
+			           );
 		}
 		else
 		{
@@ -282,135 +282,135 @@ void ParticleEmitter::GenerateInitialValues( Particle* particles, u32 count )
 }
 
 
-void ParticleEmitter::Emit( const Vector2& pos, Particle* particles, u32 count )
+void ParticleEmitter::Emit(const Vector2& position, Particle* particles, u32 count)
 {
 	// This will initialize all basic particle values except emitter-specific values.
 	GenerateInitialValues(particles, count);
 
 	Particle* end = particles + count;
-	for( Particle* p = particles; p != end; ++p )
+	for(Particle* p = particles; p != end; ++p)
 	{
-		float angle = fc::wrap_radians( fc::randf(m_minAngle, m_maxAngle) );
-		float speed = fc::randf(m_minSpeed, m_maxSpeed);
+		float angle = Math::WrapAngle(Random::Float(m_minAngle, m_maxAngle));
+		float speed = Random::Float(m_minSpeed, m_maxSpeed);
 
 		Vector2 force;
-		fc::fast_sincos( angle, force.y, force.x);
+		Math::ApproximateSinCosf(angle, force.y, force.x);
 
-		p->pos = pos;
+		p->position = position;
 		p->velocity = force * speed;
 
 		// first check if the particle needs a direction facing angle
-		if( m_generateParticleAngle ) p->angle = angle;
+		if(m_generateParticleAngle) p->angle = angle;
 		else p->angle = 0.f;
 	}
 }
 
 
-void ParticleEmitter::Serialize( AttributeWriter* out )
+void ParticleEmitter::Serialize(AttributeWriter* f)
 {
-	out->BeginNode("Life");
-	out->SetFloat("min", m_minLife);
-	out->SetFloat("max", m_maxLife);
-	out->EndNode();
+	f->BeginNode("Life");
+	f->SetAttribute("min", m_minLife);
+	f->SetAttribute("max", m_maxLife);
+	f->EndNode();
 
-	out->BeginNode("Speed");
-	out->SetFloat("min", m_minSpeed);
-	out->SetFloat("max", m_maxSpeed);
-	out->EndNode();
+	f->BeginNode("Speed");
+	f->SetAttribute("min", m_minSpeed);
+	f->SetAttribute("max", m_maxSpeed);
+	f->EndNode();
 
-	out->BeginNode("Friction");
-	out->SetFloat("min", m_minFriction);
-	out->SetFloat("max", m_maxFriction);
-	out->EndNode();
+	f->BeginNode("Friction");
+	f->SetAttribute("min", m_minFriction);
+	f->SetAttribute("max", m_maxFriction);
+	f->EndNode();
 
-	out->BeginNode("Angle");
-	out->SetFloat("min", m_minAngle);
-	out->SetFloat("max", m_maxAngle);
-	out->EndNode();
+	f->BeginNode("Angle");
+	f->SetAttribute("min", m_minAngle);
+	f->SetAttribute("max", m_maxAngle);
+	f->EndNode();
 
-	out->BeginNode("RotationSpeed");
-	out->SetFloat("min", m_minRotationSpeed);
-	out->SetFloat("max", m_maxRotationSpeed);
-	out->EndNode();
+	f->BeginNode("RotationSpeed");
+	f->SetAttribute("min", m_minRotationSpeed);
+	f->SetAttribute("max", m_maxRotationSpeed);
+	f->EndNode();
 
-	out->BeginNode("Size");
-	out->SetVector2("min", m_minSize);
-	out->SetVector2("max", m_maxSize);
-	out->EndNode();
+	f->BeginNode("Size");
+	f->SetAttribute("min", m_minSize);
+	f->SetAttribute("max", m_maxSize);
+	f->EndNode();
 
-	out->BeginNode("EndScale");
-	out->SetVector2("min", m_minEndScale);
-	out->SetVector2("max", m_maxEndScale);
-	out->EndNode();
+	f->BeginNode("EndScale");
+	f->SetAttribute("min", m_minEndScale);
+	f->SetAttribute("max", m_maxEndScale);
+	f->EndNode();
 
-	out->BeginNode("Color");
-	out->SetColor("min", m_minColor);
-	out->SetColor("max", m_maxColor);
-	out->EndNode();
+	f->BeginNode("Color");
+	f->SetAttribute("min", m_minColor);
+	f->SetAttribute("max", m_maxColor);
+	f->EndNode();
 
-	out->SetBoolElement("GenerateParticleAngle", m_generateParticleAngle);
+	f->SetBoolElement("GenerateParticleAngle", m_generateParticleAngle);
 }
 
 
-void ParticleEmitter::Deserialize( AttributeReader* in )
+void ParticleEmitter::Deserialize(AttributeReader* f)
 {
-	if( in->SetToChild("Life") )
+	if(f->SetToChild("Life"))
 	{
-		m_minLife = in->GetFloat("min", m_minLife);
-		m_maxLife = in->GetFloat("MaxLife", m_maxLife);
-		in->SetToParent();
+		m_minLife = f->GetAttribute("min", m_minLife);
+		m_maxLife = f->GetAttribute("MaxLife", m_maxLife);
+		f->SetToParent();
 	}
 
-	if( in->SetToChild("Speed") )
+	if(f->SetToChild("Speed"))
 	{
-		m_minSpeed = in->GetFloat("min", m_minSpeed);
-		m_maxSpeed = in->GetFloat("MaxSpeed", m_maxSpeed);
-		in->SetToParent();
+		m_minSpeed = f->GetAttribute("min", m_minSpeed);
+		m_maxSpeed = f->GetAttribute("MaxSpeed", m_maxSpeed);
+		f->SetToParent();
 	}
 
-	if( in->SetToChild("Friction") )
+	if(f->SetToChild("Friction"))
 	{
-		m_minFriction = in->GetFloat("min", m_minFriction);
-		m_maxFriction = in->GetFloat("MaxFriction", m_maxFriction);
-		in->SetToParent();
+		m_minFriction = f->GetAttribute("min", m_minFriction);
+		m_maxFriction = f->GetAttribute("MaxFriction", m_maxFriction);
+		f->SetToParent();
 	}
 
-	if( in->SetToChild("Angle") )
+	if(f->SetToChild("Angle"))
 	{
-		m_minAngle = in->GetFloat("min", m_minAngle);
-		m_maxAngle = in->GetFloat("MaxAngle", m_maxAngle);
-		in->SetToParent();
+		m_minAngle = f->GetAttribute("min", m_minAngle);
+		m_maxAngle = f->GetAttribute("MaxAngle", m_maxAngle);
+		f->SetToParent();
 	}
 
-	if( in->SetToChild("RotationSpeed") )
+	if(f->SetToChild("RotationSpeed"))
 	{
-		m_minRotationSpeed = in->GetFloat("min", m_minRotationSpeed);
-		m_maxRotationSpeed = in->GetFloat("MaxRotationSpeed", m_maxRotationSpeed);
-		in->SetToParent();
+		m_minRotationSpeed = f->GetAttribute("min", m_minRotationSpeed);
+		m_maxRotationSpeed = f->GetAttribute("MaxRotationSpeed", m_maxRotationSpeed);
+		f->SetToParent();
 	}
 
-	if( in->SetToChild("Size") )
+	if(f->SetToChild("Size"))
 	{
-		m_minSize = in->GetVector2("min", m_minSize);
-		m_maxSize = in->GetVector2("MaxSize", m_maxSize);
-		in->SetToParent();
+		m_minSize = f->GetAttribute("min", m_minSize);
+		m_maxSize = f->GetAttribute("MaxSize", m_maxSize);
+		f->SetToParent();
 	}
 
-	if( in->SetToChild("EndScale") )
+	if(f->SetToChild("EndScale"))
 	{
-		m_minEndScale = in->GetVector2("min", m_minEndScale);
-		m_maxEndScale = in->GetVector2("MaxEndScale", m_maxEndScale);
-		in->SetToParent();
+		m_minEndScale = f->GetAttribute("min", m_minEndScale);
+		m_maxEndScale = f->GetAttribute("MaxEndScale", m_maxEndScale);
+		f->SetToParent();
 	}
 
-	if( in->SetToChild("Color") )
+	if(f->SetToChild("Color"))
 	{
-		m_minColor = in->GetColor("min", m_minColor);
-		m_maxColor = in->GetColor("MaxColor", m_maxColor);
-		in->SetToParent();
+		m_minColor = f->GetAttribute("min", m_minColor);
+		m_maxColor = f->GetAttribute("MaxColor", m_maxColor);
+		f->SetToParent();
 	}
 
-	m_generateParticleAngle = in->GetBoolElement("GenerateParticleAngle", m_generateParticleAngle);
+	m_generateParticleAngle = f->GetBoolElement("GenerateParticleAngle", m_generateParticleAngle);
 
 	ValidateAttributes();
 }

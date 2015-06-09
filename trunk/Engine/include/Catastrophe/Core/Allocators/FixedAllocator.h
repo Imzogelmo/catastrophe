@@ -18,14 +18,14 @@
 
 #pragma once
 
-#include "Catastrophe/Common.h"
-#include "Catastrophe/Core/Memory.h"
+#include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/Allocators/Allocator.h"
 
 CE_NAMESPACE_BEGIN
 
 
 
-// FixedAllocator
+// @FixedAllocator
 //
 // Allocator that stores a pointer to a user supplied buffer and can otherwise Allocate
 // and Deallocate memory as a normal Allocator with the exception that if Deallocate
@@ -39,7 +39,7 @@ class FixedAllocator : public Allocator
 public:
 	FixedAllocator() {}
 
-	void* Allocate( u32 nBytes, u32 alignment = 0 )
+	void* Allocate( u32 nBytes, u32 alignment = CE_DEFAULT_ALIGN )
 	{
 		if( m_size == 0 && nBytes <= N )
 		{
@@ -50,18 +50,17 @@ public:
 		return Allocator::Allocate( nBytes, alignment );
 	}
 
-
 	void Deallocate( void* ptr, u32 size = 0 )
 	{
 		// If an object deallocates an internal buffer then it can
 		// be safely assumed that it is no longer in use.
-		if( ptr == m_buffer )
+		if(ptr == m_buffer)
 		{
-			CE_ASSERT(size == 0 || m_size == size);
 			m_size = 0;
+			return;
 		}
 
-		Allocator::Deallocate( ptr, size );
+		Allocator::Deallocate(ptr, size);
 	}
 
 	bool operator ==( const Allocator& ) const

@@ -16,21 +16,46 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#pragma once
+
+#include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/Containers/StringHash.h"
+
+CE_NAMESPACE_BEGIN
 
 
-#include "Math/BoundingBox.inl"
-#include "Math/Color.inl"
-#include "Math/Colorf.inl"
-#include "Math/Frustum.inl"
-#include "Math/HSLColor.inl"
-#include "Math/HSVColor.inl"
-#include "Math/Math.inl"
-#include "Math/Matrix.inl"
-#include "Math/Quaternion.inl"
-#include "Math/Rect.inl"
-#include "Math/Rectf.inl"
-#include "Math/Vector2.inl"
-#include "Math/Vector3.inl"
-#include "Math/Vector4.inl"
+StringHash::StringHash(const char* str)
+{
+	SetString(str);
+}
 
+
+StringHash::StringHash(const String& str)
+{
+	SetString(str.CString());
+}
+
+
+StringHash& StringHash::operator=(const char* str)
+{
+	SetString(str);
+	return *this;
+}
+
+
+StringHash& StringHash::operator=(const String& str)
+{
+	SetString(str.CString());
+	return *this;
+}
+
+
+void StringHash::SetString(const char* str)
+{
+	value = MakeHash(str);
+}
+
+
+
+CE_NAMESPACE_END
 

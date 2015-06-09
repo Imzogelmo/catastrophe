@@ -18,13 +18,13 @@
 
 #pragma once
 
-#include "../Common.h"
-#include "../Math/Point.h"
-#include "../Math/Rect.h"
-#include "../Math/Color.h"
-#include "../Math/Colorf.h"
+#include "Catastrophe/Core/Common.h"
+#include "Catastrophe/Core/Math/Point.h"
+#include "Catastrophe/Core/Math/Rect.h"
+#include "Catastrophe/Core/Math/Color.h"
+#include "Catastrophe/Core/Math/Colorf.h"
 
-#include <fc/string.h>
+#include "Catastrophe/Core/Containers/String.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -43,14 +43,14 @@ public:
 	virtual void Close() = 0;
 	virtual double GetTime() const = 0;
 
-	virtual void SetTitle( const fc::string& title ) = 0;
+	virtual void SetTitle( const String& title ) = 0;
 	virtual void SetSize( int w, int h ) = 0;
 	virtual void SetSize( const Point& size ) { SetSize(size.x, size.y); }
 	virtual void SetPosition( const Point& pos ) = 0;
 
 	virtual void SetVSync( bool vsync = true ) = 0;
 
-	virtual fc::string GetTitle() const { return m_title; }
+	virtual String GetTitle() const { return m_title; }
 	virtual Point GetSize() const = 0;
 	virtual Point GetDesktopSize() const = 0;
 	virtual Point GetPosition() const = 0;
@@ -88,7 +88,7 @@ protected:
 	void InternalResize( const Point& windowSize );
 	void InternalResize( const Rect& windowRect );
 
-	fc::string	m_title;
+	String	m_title;
 	Point		m_position;
 	Point		m_size;
 

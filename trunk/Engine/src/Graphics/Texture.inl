@@ -93,7 +93,7 @@ bool Texture::IsValid() const
 
 void Texture::Bind() const
 {
-	glBindTexture( GL_TEXTURE_2D, m_texture );
+	glBindTexture(GL_TEXTURE_2D, m_texture);
 }
 
 
@@ -179,7 +179,7 @@ bool Texture::CreateFromData( const void* data, int w, int h )
 		glGenTextures( 1, &m_texture );
 	}
 
-	Bind();
+	glBindTexture(GL_TEXTURE_2D, m_texture);
 
 	if( m_mipmaps )
 	{
@@ -205,7 +205,7 @@ void Texture::SetWrapMode( int wrapMode )
 	m_wrapMode = wrapMode;
 	if( m_texture != 0 )
 	{
-		Bind();
+		glBindTexture(GL_TEXTURE_2D, m_texture);
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_wrapMode );
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_wrapMode );
 	}
@@ -217,17 +217,17 @@ void Texture::SetFilterMode( int filterMode )
 	m_filterMode = filterMode;
 	if( m_texture != 0 )
 	{
-		Bind();
+		glBindTexture(GL_TEXTURE_2D, m_texture);
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, m_filterMode );
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, m_filterMode );
 	}
 }
 
 
-void Texture::UpdateTexture( const Rect& r, u8* pixels )
+void Texture::UpdateTexture( const Rect& regionRect, u8* pixels )
 {
-	Bind();
-	glTexSubImage2D( GL_TEXTURE_2D, 0, r.position.x, r.position.y, r.Width(), r.Height(), GL_RGBA, GL_UNSIGNED_BYTE, pixels );
+	glBindTexture(GL_TEXTURE_2D, m_texture);
+	glTexSubImage2D(GL_TEXTURE_2D, 0, regionRect.x, regionRect.y, regionRect.width, regionRect.height, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 }
 
 
@@ -258,11 +258,12 @@ Vector2 Texture::GetUV( int x, int y ) const
 
 Rectf Texture::GetUVRect( const Rect& sourceRect ) const
 {
-	CE_ASSERT(m_width != 0 && m_height != 0);
+	if(m_width == 0)
+		return Rectf::Zero;
 
 	return Rectf(
-		(float)sourceRect.Left() / m_floatWidth,
-		(float)sourceRect.Top() / m_floatHeight,
+		(float)sourceRect.x / m_floatWidth,
+		(float)sourceRect.y / m_floatHeight,
 		(float)sourceRect.Right() / m_floatWidth,
 		(float)sourceRect.Bottom() / m_floatHeight
 	);
@@ -271,30 +272,26 @@ Rectf Texture::GetUVRect( const Rect& sourceRect ) const
 
 Rectf Texture::GetUVRect( const PackedRect& sourceRect ) const
 {
-	CE_ASSERT(m_width != 0 && m_height != 0);
+	if(m_width == 0)
+		return Rectf::Zero;
 
 	return Rectf(
-		(float)sourceRect.Left() / m_floatWidth,
-		(float)sourceRect.Top() / m_floatHeight,
+		(float)sourceRect.x / m_floatWidth,
+		(float)sourceRect.y / m_floatHeight,
 		(float)sourceRect.Right() / m_floatWidth,
 		(float)sourceRect.Bottom() / m_floatHeight
-		);
+	);
 }
 
 
 Rect Texture::GetSourceRect( const Rectf& uv ) const
 {
-	int min_x = Math::Round(m_floatWidth * uv.Left());
-	int min_y = Math::Round(m_floatHeight * uv.Top());
-	int max_x = Math::Round(m_floatWidth * uv.Right());
-	int max_y = Math::Round(m_floatHeight * uv.Bottom());
+	int x = Math::Round(m_floatWidth * uv.Left());
+	int y = Math::Round(m_floatHeight * uv.Top());
+	int width = Math::Round(m_floatWidth * uv.Right()) - x;
+	int height = Math::Round(m_floatHeight * uv.Bottom()) - y;
 
-	return Rect(
-		min_x,
-		min_y,
-		max_x - min_x,
-		max_y - min_y
-	);
+	return Rect(x, y, width, height);
 }
 
 

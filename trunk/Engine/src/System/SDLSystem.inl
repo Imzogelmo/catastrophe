@@ -110,9 +110,9 @@ void SDLWindow::SetVSync( bool vsync )
 }
 
 
-void SDLWindow::SetTitle( const fc::string& title )
+void SDLWindow::SetTitle( const String& title )
 {
-	SDL_SetWindowTitle(m_window, title.c_str());
+	SDL_SetWindowTitle(m_window, title.CString());
 }
 
 
@@ -194,7 +194,7 @@ bool SDLWindow::Open(int w, int h, bool fullscreen, bool resizable,
 	flags |= SDL_WINDOW_SHOWN;
 
 	m_window = SDL_CreateWindow(
-		m_title.c_str(),
+		m_title.CString(),
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 		w,

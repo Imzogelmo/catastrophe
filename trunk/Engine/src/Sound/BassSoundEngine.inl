@@ -43,7 +43,7 @@ void BassSoundEngine::Shutdown()
 }
 
 
-Sound* BassSoundEngine::LoadFromFile( Sound::Type type, const fc::string& filename )
+Sound* BassSoundEngine::LoadFromFile( Sound::Type type, const String& filename )
 {
 		//dword handle(0);
 
@@ -61,9 +61,15 @@ Sound* BassSoundEngine::LoadFromData( Sound::Type type, void* data, u32 n_bytes 
 }
 
 
+bool BassSoundEngine::LoadPlugin(const char* filename)
+{
+	// todo
+}
+
+
 void BassSoundEngine::StopAll()
 {
-	for( vec_type::iterator it = m_sounds.begin(); it != m_sounds.end(); ++it )
+	for( vec_type::Iterator it = m_sounds.begin(); it != m_sounds.end(); ++it )
 	{
 		//(*it)->Stop();
 	}
@@ -86,7 +92,7 @@ void BassSoundEngine::ResumeAll()
 
 void BassSoundEngine::SetVolume( float volume )
 {
-	m_volume = fc::clamp(volume, 0.f, 1.f);
+	m_volume = Clamp(volume, 0.f, 1.f);
 	BASS_SetVolume( m_volume );
 }
 

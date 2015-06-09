@@ -82,7 +82,7 @@ bool BassSound::IsLooping() const
 
 void BassSound::SetVolume( float vol )
 {
-	m_volume = fc::clamp(vol, 0.f, 1.f);
+	m_volume = Clamp(vol, 0.f, 1.f);
 	BASS_ChannelSetAttribute( m_handle, BASS_ATTRIB_VOL, m_volume );
 }
 
@@ -94,7 +94,7 @@ float BassSound::GetVolume() const
 
 void BassSound::SetPan( float pan )
 {
-	pan = fc::clamp(pan, -1.f, 1.f);
+	pan = Clamp(pan, -1.f, 1.f);
 	BASS_ChannelSetAttribute( m_handle, BASS_ATTRIB_PAN, pan );
 }
 

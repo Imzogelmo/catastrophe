@@ -80,15 +80,19 @@ void FmodSound::Play( bool restart )
 			channelID = FMOD_CHANNEL_REUSE;
 		}
 
-		FMOD_RESULT result = m_parent->GetSystem()->playSound(channelID, m_sound, true, &m_channel);
+		m_sound->setLoopCount(-1);
+		m_sound->setMode(FMOD_LOOP_NORMAL);
+		//m_sound->setLoopPoints(0, FMOD_TIMEUNIT_MS, 0, FMOD_TIMEUNIT_MS);
+
+		FMOD_RESULT result = m_parent->GetSystem()->playSound(channelID, m_sound, false, &m_channel);
 		FMOD_ERRCHECK(result);
 
 		//store the pointer to our channel. -evil-
-		m_channel->setUserData((void*)&m_channel);
-		m_channel->setCallback(ChannelCallback);
-		m_channel->setVolume(m_volume);
-		m_channel->setPaused(false);
-		SetLooping(m_loop);
+		//m_channel->setUserData((void*)&m_channel);
+		//m_channel->setCallback(ChannelCallback);
+	//	m_channel->setVolume(m_volume);
+	//	m_channel->setPaused(false);
+		//SetLooping(m_loop);
 	}
 }
 
@@ -168,7 +172,7 @@ bool FmodSound::IsLooping() const
 
 void FmodSound::SetVolume( float vol )
 {
-	m_volume = fc::clamp(vol, 0.f, 1.f);
+	m_volume = Clamp(vol, 0.f, 1.f);
 	if(m_channel)
 	{
 		FMOD_RESULT result = m_channel->setVolume(m_volume);
@@ -185,7 +189,7 @@ float FmodSound::GetVolume() const
 
 void FmodSound::SetPan( float pan )
 {
-	pan = fc::clamp(pan, -1.f, 1.f);
+	pan = Clamp(pan, -1.f, 1.f);
 	if(m_channel)
 	{
 		FMOD_RESULT result = m_channel->setPan(pan);
@@ -211,7 +215,12 @@ void FmodSound::SetLooping( bool enable )
 	m_loop = enable;
 	if(m_channel)
 	{
-		FMOD_RESULT result = m_channel->setLoopCount( (m_loop ? -1 : 0) );
+		FMOD_RESULT result;
+
+		result = m_channel->setMode(enable ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF);
+		FMOD_ERRCHECK(result);
+
+		result = m_channel->setLoopCount( (m_loop ? -1 : 0) );
 		FMOD_ERRCHECK(result);
 	}
 }
@@ -222,7 +231,7 @@ void FmodSound::SetPosition( int pos )
 	if(m_channel)
 	{
 		int length = GetLength();
-		int time = fc::clamp( pos, 0, length );
+		int time = Clamp( pos, 0, length );
 		FMOD_RESULT result = m_channel->setPosition( time, FMOD_TIMEUNIT_MS );
 		FMOD_ERRCHECK(result);
 	}

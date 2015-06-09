@@ -1,11 +1,11 @@
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
+// f the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in
+// The above copyright notice and this permission notice shall be included f
 // all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -24,12 +24,10 @@
 #include "Modifiers/ParticleModifier.h"
 #include "Emitters/ParticleEmitter.h"
 
-#include "../Graphics/Sprite.h"
+#include "Catastrophe/Graphics/Sprite.h"
+#include "Catastrophe/Core/Containers/Vector.h"
+#include "Catastrophe/Core/Random.h"
 
-#include <fc/vector.h>
-#include <fc/parallel.h>
-#include <fc/rand.h>
-#include <fc/math.h>
 
 #define CE_DEFAULT_PARTICLE_CAPACITY	1024
 
@@ -43,9 +41,9 @@
 class ParticleGroup : public ParticleSystemEntity
 {
 public:
-	typedef fc::parallel<Particle>				particle_vec_type;
-	typedef fc::vector<ParticleModifier*>		modifier_vec_type;
-	typedef fc::vector<ParticleDestructor*>		destructor_vec_type;
+	typedef Vector<Particle>				particle_vec_type;
+	typedef Vector<ParticleModifier*>		modifier_vec_type;
+	typedef Vector<ParticleDestructor*>		destructor_vec_type;
 
 	ParticleGroup();
 	virtual ~ParticleGroup();
@@ -65,7 +63,7 @@ public:
 	virtual ParticleEmitter* GetParticleEmitter() const { return m_emitter; }
 	virtual bool IsEnabled() const { return m_enabled; }
 	virtual bool IsVisible() const { return m_visible; }
-	virtual u32 GetParticleCapacity() const { return m_particles.capacity(); }
+	virtual u32 GetParticleCapacity() const { return m_particles.Capacity(); }
 	virtual u32 GetMinEmissionCount() const { return m_minTriggerAmount; }
 	virtual u32 GetMaxEmissionCount() const { return m_maxTriggerAmount; }
 	virtual Texture* GetTexture() const { return 0; }
@@ -75,8 +73,8 @@ public:
 	virtual void RemoveParticleModifier( ParticleModifier* modifier );
 	virtual void RemoveParticleDestructor( ParticleDestructor* destructor );
 
-	virtual void Emit( const Vector2& pos );
-	virtual void Emit( const Vector2& pos, u32 numParticles );
+	virtual void Emit( const Vector2& position );
+	virtual void Emit( const Vector2& position, u32 numParticles );
 
 	virtual void Update();
 	virtual void Render( SpriteBatch* spriteBatch );
@@ -93,14 +91,15 @@ public:
 	particle_vec_type& GetParticles() { return m_particles; }
 	const particle_vec_type& GetParticles() const { return m_particles; }
 
-	CE_NO_INLINE virtual void Serialize( AttributeWriter* out );
-	CE_NO_INLINE virtual void Deserialize( AttributeReader* in );
+	CE_NO_INLINE virtual void Serialize( AttributeWriter* f );
+	CE_NO_INLINE virtual void Deserialize( AttributeReader* f );
 
 protected:
 	ParticleEmitter*		m_emitter;
 	particle_vec_type		m_particles;
 	modifier_vec_type		m_modifiers;
 	destructor_vec_type		m_destructors;
+	Vector<u32>				m_deadParticles;
 
 	//sprite
 	AnimatedSprite			m_sprite;
