@@ -1,11 +1,11 @@
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
+// f the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in
+// The above copyright notice and this permission notice shall be included f
 // all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -16,10 +16,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "Math/Math.h"
+#include "Catastrophe/Core/PlatformMath.h"
 #include "Particle/Modifiers/GravityModifier.h"
-#include "IO/AttributeWriter.h"
-#include "IO/AttributeReader.h"
+#include "Core/IO/AttributeWriter.h"
+#include "Core/IO/AttributeReader.h"
 
 
 
@@ -40,17 +40,17 @@ void GravityModifier::Update( Particle* particles, u32 count )
 }
 
 
-void GravityModifier::Serialize( AttributeWriter* out )
+void GravityModifier::Serialize( AttributeWriter* f )
 {
-	out->BeginNode("GravityModifier");
-	out->SetVector2Element("Gravity", m_gravity);
-	out->EndNode();
+	f->BeginNode("GravityModifier");
+	f->SetVector2Element("Gravity", m_gravity);
+	f->EndNode();
 }
 
 
-void GravityModifier::Deserialize( AttributeReader* in )
+void GravityModifier::Deserialize( AttributeReader* f )
 {
-	m_gravity = in->GetVector2Element("Gravity", Vector2::Zero);
+	f->GetVector2Element("Gravity", m_gravity);
 }
 
 

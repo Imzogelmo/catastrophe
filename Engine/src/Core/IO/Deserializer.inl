@@ -17,7 +17,19 @@
 // THE SOFTWARE.
 
 #include "Catastrophe/Core/IO/Deserializer.h"
-#include "MathTypes.h"
+
+#include "Catastrophe/Core/PlatformMath.h"
+#include "Catastrophe/Core/Math/Vector2.h"
+#include "Catastrophe/Core/Math/Vector3.h"
+#include "Catastrophe/Core/Math/Vector4.h"
+#include "Catastrophe/Core/Math/Point.h"
+#include "Catastrophe/Core/Math/Packed/PackedPoint.h"
+#include "Catastrophe/Core/Math/Rect.h"
+#include "Catastrophe/Core/Math/Packed/PackedRect.h"
+#include "Catastrophe/Core/Math/Rectf.h"
+#include "Catastrophe/Core/Math/Circle.h"
+#include "Catastrophe/Core/Math/Color.h"
+#include "Catastrophe/Core/Math/Colorf.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -199,7 +211,7 @@ bool Deserializer::ReadString( String& value )
 		return false;
 
 	// sanity check
-	CE_ASSERT(size < 0x40000000u);
+	CE_ASSERT(size < 0x80000000u);
 
 	value.Clear();
 	value.Resize(size);

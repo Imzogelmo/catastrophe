@@ -84,7 +84,7 @@ public:
 	/// Returns a pointer to the allocated block of memory used by this pool.
 	void* GetRawMemoryPtr() const { return m_poolBegin; }
 
-	u32 GetNumUsedBlocks() { return m_usedBlocks; }
+	u32 GetNumUsedBlocks() const { return m_usedBlocks; }
 
 	bool operator ==( const PoolAllocator& allocator ) const { return &allocator == this; }
 	bool operator ==( const Allocator& ) const { return false; }

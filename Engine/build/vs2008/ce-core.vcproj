@@ -150,6 +150,75 @@
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
+		<Configuration
+			Name="DebugRelease|Win32"
+			OutputDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="4"
+			CharacterSet="0"
+			WholeProgramOptimization="0"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="2"
+				EnableIntrinsicFunctions="true"
+				WholeProgramOptimization="false"
+				AdditionalIncludeDirectories=".\..\..\include\Catastrophe;.\..\..\include"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
+				StringPooling="true"
+				MinimalRebuild="true"
+				ExceptionHandling="0"
+				RuntimeLibrary="2"
+				BufferSecurityCheck="false"
+				EnableFunctionLevelLinking="true"
+				FloatingPointModel="2"
+				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
+				WarningLevel="3"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLibrarianTool"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
 	</Configurations>
 	<References>
 	</References>
@@ -202,6 +271,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\Core\Containers\ObjectPool.inl"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\Core\Containers\String.inl"
 						>
 					</File>
@@ -211,6 +284,10 @@
 					>
 					<File
 						RelativePath="..\..\src\Core\Allocators\Allocator.inl"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\Core\Allocators\LinearAllocator.inl"
 						>
 					</File>
 					<File
@@ -390,6 +467,18 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="Misc"
+					>
+					<File
+						RelativePath="..\..\src\Core\Misc\MaxRectsBinPack.inl"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\Core\Misc\RectangleBinPack.inl"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
@@ -548,6 +637,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\include\Catastrophe\Core\Containers\FreeList.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\include\Catastrophe\Core\Containers\HashMap.h"
 						>
 					</File>
@@ -557,6 +650,10 @@
 					</File>
 					<File
 						RelativePath="..\..\include\Catastrophe\Core\Containers\KeyValuePair.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\include\Catastrophe\Core\Containers\List.h"
 						>
 					</File>
 					<File
@@ -604,6 +701,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\include\Catastrophe\Core\Containers\StringHash.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\include\Catastrophe\Core\Containers\StringRef.h"
 						>
 					</File>
@@ -633,6 +734,14 @@
 					>
 					<File
 						RelativePath="..\..\include\Catastrophe\Core\Allocators\Allocator.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\include\Catastrophe\Core\Allocators\FixedAllocator.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\include\Catastrophe\Core\Allocators\LinearAllocator.h"
 						>
 					</File>
 					<File
@@ -688,14 +797,6 @@
 					Name="Math"
 					>
 					<File
-						RelativePath="..\..\include\Catastrophe\Core\Math\BoundingBox.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\include\Catastrophe\Core\Math\Circle.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\include\Catastrophe\Core\Math\Color.h"
 						>
 					</File>
@@ -741,10 +842,6 @@
 					</File>
 					<File
 						RelativePath="..\..\include\Catastrophe\Core\Math\Quaternion.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\include\Catastrophe\Core\Math\Ray.h"
 						>
 					</File>
 					<File
@@ -885,6 +982,18 @@
 					</File>
 					<File
 						RelativePath="..\..\include\Catastrophe\Core\Resource\ResourceManager.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Misc"
+					>
+					<File
+						RelativePath="..\..\include\Catastrophe\Core\Misc\MaxRectsBinPack.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\include\Catastrophe\Core\Misc\RectangleBinPack.h"
 						>
 					</File>
 				</Filter>

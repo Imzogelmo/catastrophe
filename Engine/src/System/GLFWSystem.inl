@@ -19,7 +19,7 @@
 #ifdef CE_GLFW
 
 #include "System/GLFWSystem.h"
-#include "Input/Input.h"
+#include "System/Input/Input.h"
 
 #include <GL/glfw.h>
 
@@ -95,9 +95,9 @@ void GLFWWindow::SetVSync( bool vsync )
 }
 
 
-void GLFWWindow::SetTitle( const fc::string& title )
+void GLFWWindow::SetTitle( const String& title )
 {
-	glfwSetWindowTitle(title.c_str());
+	glfwSetWindowTitle(title.CString());
 }
 
 

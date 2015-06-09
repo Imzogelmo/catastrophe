@@ -26,91 +26,27 @@
 CE_NAMESPACE_BEGIN
 
 
-/// @ObjectPool
+
+/// @ObjectPoolBase
 ///
-/// Defines a dynamically-sized object pool using heap memory.
-/// An ObjectPool allows objects of the same type to be 'pooled' together
-/// using the same raw memory buffer which can improve cache coherance
-/// and performance at the cost of some potentially unused memory blocks.
-/// Internally all object memory locations are stored as a free list
-/// and objects have very fast O(1) allocation and deallocation.
+/// Base class for object pools. Holds and manages a pool allocator and backing memory allocator.
+/// Manages memory and related functionality in a non-templated manner to reduce bloat.
 ///
 
-template <class T>
-class ObjectPool
+class ObjectPoolBase
 {
 public:
 
-	ObjectPool()
-		: m_capacity(0), m_allocator(Memory::GetDefaultAllocator()), m_pool()
-	{
-	}
+	ObjectPoolBase();
+	~ObjectPoolBase();
 
-	~ObjectPool()
-	{
-		if(m_capacity != 0)
-		{
-			// Notify of possible memory corruption.
-			if(m_pool.GetNumUsedBlocks() != 0)
-				LogError("ObjectPool was destroyed with %d objects in use.", m_pool.GetNumUsedBlocks());
+	/// Deallocates any memory allocated by this pool.
+	/// This does not destruct any instances of objects using the pool, and will
+	/// warn or assert if there are any unreleased objects.
+	NOINLINE void DeallocateMemory();
 
-			m_allocator->Deallocate(m_pool.GetRawMemoryPtr(), sizeof(T) * m_capacity);
-		}
-	}
-
-	/// Resizes the object pool so that it can create a number of objects up to a maximum
-	/// specified by capacity. The pool cannot safely be resized if any objects created by the pool
-	/// remain unreleased, as this will mean all 'out of place' objects will be using memory that
-	/// was destroyed. Will assert and fail if GetUsedObjectCount() returns non-zero.
-	void Resize(u32 capacity)
-	{
-		ASSERT(GetUsedObjectCount() == 0);
-		if(m_capacity == capacity || GetUsedObjectCount() != 0)
-			return;
-
-		if(m_capacity != 0)
-			m_allocator->Deallocate(m_pool.GetRawMemoryPtr(), sizeof(T) * m_capacity);
-
-		u32 nBytes = 0;
-		void* pMemory = null;
-
-		m_capacity = capacity;
-		if(capacity != 0)
-		{
-			nBytes = Memory::Align(sizeof(T) * capacity, CE_ALIGNOF(T));
-			pMemory = m_allocator->Allocate(nBytes, CE_ALIGNOF(T));
-		}
-
-		// Initialize the pool allocator and let it do all of the work.
-		m_pool.InitializeMemory(pMemory, nBytes, sizeof(T), CE_ALIGNOF(T));
-	}
-
-	/// Creats a default-constructed object and returns a pointer to it.
-	T* CreateObject()
-	{
-		void* object = m_pool.Allocate();
-		if(object != null)
-			new (object) T();
-
-		return (T*)object;
-	}
-
-	/// Creates an object copy-constructed to value and returns a pointer to it.
-	T* CreateObject(const T& value)
-	{
-		void* object = m_pool.Allocate();
-		if(object != null)
-			new (object) value;
-
-		return (T*)object;
-	}
-
-	/// Destroys an object and allows the object pool to reclaim its memory.
-	void ReleaseObject(T* object)
-	{
-		Memory::Destroy(object);
-		m_pool.Deallocate(object);
-	}
+	/// Resizes the object pool. Will deallocate previous memory.
+	NOINLINE void Resize(u32 capacity, u32 objectSize, u32 alignment = CE_DEFAULT_ALIGN);
 
 	/// True if all the objects in this pool are free.
 	bool Empty() const
@@ -143,12 +79,75 @@ public:
 	}
 
 protected:
-	ObjectPool(const ObjectPool&);
-	ObjectPool& operator =(const ObjectPool&);
+	ObjectPoolBase(const ObjectPoolBase&);
+	ObjectPoolBase& operator =(const ObjectPoolBase&);
 
 	u32				m_capacity;
+	u32				m_objectSize;
 	Allocator*		m_allocator;
 	PoolAllocator	m_pool;
+
+};
+
+
+
+/// @ObjectPool
+///
+/// Defines a dynamically-sized object pool using heap memory.
+/// An ObjectPool allows objects of the same type to be 'pooled' together
+/// using the same raw memory buffer which can improve cache coherance
+/// and performance at the cost of some potentially unused memory blocks.
+/// Internally all object memory locations are stored as a free list
+/// and objects have very fast O(1) allocation and deallocation.
+///
+
+template <class T>
+class ObjectPool : public ObjectPoolBase
+{
+public:
+
+	ObjectPool()
+		: ObjectPoolBase()
+	{
+	}
+
+	/// Resizes the object pool so that it can create a number of objects up to a maximum
+	/// specified by capacity. The pool cannot safely be resized if any objects created by the pool
+	/// remain unreleased, as this will mean all unreleased objects will be using memory that
+	/// was destroyed. Will assert if GetUsedObjectCount() returns non-zero.
+	void Resize(u32 capacity)
+	{
+		ObjectPoolBase::Resize(capacity, sizeof(T), CE_ALIGNOF(T));
+	}
+
+	/// Creats a default-constructed object and returns a pointer to it.
+	/// Returns null if there is no free memory in the pool.
+	T* CreateObject()
+	{
+		void* object = m_pool.Allocate();
+		if(object != null)
+			new (object) T();
+
+		return (T*)object;
+	}
+
+	/// Creates an object constructed to value and returns a pointer to it.
+	/// Returns null if there is no free memory in the pool.
+	T* CreateObject(const T& value)
+	{
+		void* object = m_pool.Allocate();
+		if(object != null)
+			new (object) value;
+
+		return (T*)object;
+	}
+
+	/// Destroys an object and allows the object pool to reclaim its memory.
+	void ReleaseObject(T* object)
+	{
+		Memory::Destroy(object);
+		m_pool.Deallocate(object);
+	}
 
 };
 

@@ -22,8 +22,8 @@
 #include "Graphics/OpenGL.h"
 #include "Graphics/BlendMode.h"
 
-#include "Math/Rect.h"
-#include "Math/Matrix.h"
+#include "Catastrophe/Core/Math/Rect.h"
+#include "Catastrophe/Core/Math/Matrix.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -124,7 +124,7 @@ void Window::SetViewport( const Rect& view )
 	if(IsOpen())
 	{
 		m_viewport = view;
-		glViewport( view.pos.x, view.pos.y, view.size.x, view.size.y );
+		glViewport( view.position.x, view.position.y, view.size.x, view.size.y );
 	}
 	else //defer until window creation.
 	{
@@ -184,10 +184,10 @@ void Window::InternalResize( const Rect& windowRect )
 		}
 
 		Rect viewportOffset = Rect::Zero;
-		if( size_offset.x > 0 ) viewportOffset.pos.x = pos_offset.x, viewportOffset.size.x = size_offset.x;
-		if( size_offset.y > 0 ) viewportOffset.pos.y = pos_offset.y, viewportOffset.size.y = size_offset.y;
+		if( size_offset.x > 0 ) viewportOffset.position.x = pos_offset.x, viewportOffset.size.x = size_offset.x;
+		if( size_offset.y > 0 ) viewportOffset.position.y = pos_offset.y, viewportOffset.size.y = size_offset.y;
 
-		view.pos += viewportOffset.pos;
+		view.position += viewportOffset.position;
 		view.size -= viewportOffset.size;
 	}
 	else
@@ -205,7 +205,7 @@ void Window::InternalResize( const Rect& windowRect )
 	glPointSize( point_size );
 
 	m_viewport = view;
-	glViewport( view.pos.x, view.pos.y, view.size.x, view.size.y );
+	glViewport( view.position.x, view.position.y, view.size.x, view.size.y );
 }
 
 

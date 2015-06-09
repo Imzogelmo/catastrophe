@@ -1,11 +1,11 @@
 ﻿// Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
+// f the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in
+// The above copyright notice and this permission notice shall be included f
 // all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -18,13 +18,10 @@
 
 #pragma once
 
-#include "../Math/Vector2.h"
-#include "../Math/Rectf.h"
-#include "../Math/Color.h"
-
-#include <fc/type_traits.h>
-#include <fc/math.h>
-#include <fc/rand.h>
+#include "Catastrophe/Core/Math/Vector2.h"
+#include "Catastrophe/Core/Math/Rectf.h"
+#include "Catastrophe/Core/Math/Color.h"
+#include "Catastrophe/Core/Random.h"
 
 
 #define P_SECONDS_TO_FRAMES(x) (fc::round((x) * 60.f))
@@ -43,7 +40,7 @@ struct Particle
 {
 	float		age;
 	float		lifespan;
-	Vector2		pos;
+	Vector2		position;
 	Vector2		velocity;
 	Vector2		size; //extents
 	Vector2		growth;
@@ -52,6 +49,8 @@ struct Particle
 	float		friction;
 	Color		color;
 	Color		startColor;
+
+	// aggregate 
 
 	inline float GetAgeDelta() const
 	{
@@ -69,11 +68,13 @@ struct Particle
 
 	inline bool Update()
 	{
-		if( ++age > lifespan )
+		if( age >= lifespan )
 			return false;
 
+		++age;
+
 		velocity *= friction;
-		pos += velocity;
+		position += velocity;
 		angle += rotationSpeed;
 		size += growth;
 
@@ -82,10 +83,10 @@ struct Particle
 
 	inline Rectf GetBoundingRect() const
 	{
-		return Rectf(pos - size, pos + size);
+		return Rectf(position - size, position + size);
 	}
 
 };
 
-FC_MAKE_TRAIT(Particle, is_pod);
+CE_MAKE_TRAIT(Particle, is_pod);
 

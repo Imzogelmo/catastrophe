@@ -1,11 +1,11 @@
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
+// f the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in
+// The above copyright notice and this permission notice shall be included f
 // all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -20,8 +20,8 @@
 
 #include "ParticleSystem.h"
 /*
-#include <fc/string.h>
-#include <fc/vector_map.h>
+#include "Catastrophe/Core/Containers/String.h"
+#include "Catastrophe/Core/Containers/VectorMap.h"
 
 CE_NAMESPACE_BEGIN
 
@@ -29,7 +29,7 @@ CE_NAMESPACE_BEGIN
 class ParticleManager
 {
 public:
-	typedef fc::vector_map<fc::string, ParticleSystem*> map_type;
+	typedef fc::vector_map<String, ParticleSystem*> map_type;
 
 	u32 GetParticleCount();
 
@@ -37,8 +37,8 @@ public:
 	void Update();
 	void Render();
 
-	virtual void Serialize( AttributeWriter* out );
-	virtual void Deserialize( AttributeReader* in );
+	virtual void Serialize( AttributeWriter* f );
+	virtual void Deserialize( AttributeReader* f );
 
 protected:
 	map_type m_systems;

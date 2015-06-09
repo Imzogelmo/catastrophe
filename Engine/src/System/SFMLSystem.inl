@@ -110,9 +110,9 @@ void SFMLWindow::SetVSync( bool vsync )
 }
 
 
-void SFMLWindow::SetTitle( const fc::string& title )
+void SFMLWindow::SetTitle( const String& title )
 {
-	m_window->setTitle(title.c_str());
+	m_window->setTitle(title.CString());
 }
 
 
@@ -185,7 +185,7 @@ bool SFMLWindow::Open(int w, int h, bool fullscreen, bool resizable,
 
 	m_window->create(
 		sf::VideoMode( screenWidth, screenHeight, 32 ),
-		m_title.c_str(),
+		m_title.CString(),
 		windowStyle,
 		sf::ContextSettings( depthBits, stencilBits, antialiasLevel, 2, 1 )
 	);

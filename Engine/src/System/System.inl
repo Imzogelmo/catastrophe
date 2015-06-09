@@ -19,8 +19,10 @@
 #pragma once
 
 #include "System/System.h"
-#include "IO/Log.h"
+#include "Core/IO/Log.h"
 #include "Graphics/OpenGL.h"
+
+#include <stdio.h>
 
 
 #if defined CE_SFML
@@ -50,9 +52,9 @@ System* System::m_instance = 0;
 
 System::System() :
 	m_window(0),
-	m_gl_major_version(2),
-	m_gl_minor_version(0),
-	m_has_fbo(false),
+	m_glMajorVersion(2),
+	m_glMinorVersion(0),
+	m_hasFBO(false),
 	m_console(false)
 {
 }
@@ -60,7 +62,7 @@ System::System() :
 
 System* System::GetInstance()
 {
-	CE_ASSERT(m_instance);
+	CE_ASSERT(m_instance != null);
 	return m_instance;
 }
 
@@ -68,14 +70,14 @@ System* System::GetInstance()
 Window* System::CreateWindow(int w, int h, bool fullscreen, bool resizable,
 	int depth_buffer_bits, int stencil_bits, int multisample_level)
 {
-	System* s = GetInstance();
-	s->m_window->Open(w, h, fullscreen, resizable, depth_buffer_bits, stencil_bits, multisample_level);
-	if(s->m_window->IsOpen())
+	System* systemImpl = GetInstance();
+	systemImpl->m_window->Open(w, h, fullscreen, resizable, depth_buffer_bits, stencil_bits, multisample_level);
+	if(systemImpl->m_window->IsOpen())
 	{
-		s->InitOpenGL();
+		systemImpl->InitOpenGL();
 	}
 
-	return s->m_window;
+	return systemImpl->m_window;
 }
 
 
@@ -96,9 +98,9 @@ bool System::Init()
 }
 
 
-bool System::InitLogging( const fc::string& filename, bool debug_console )
+bool System::InitLogging( const String& filename, bool debug_console )
 {
-	bool ret = Logger::GetInstance().Open(filename, debug_console);
+	bool ret = Logger::GetInstance()->Open(filename, debug_console);
 	Log("Logging Initialized");
 
 	if( debug_console )
@@ -113,14 +115,14 @@ bool System::InitLogging( const fc::string& filename, bool debug_console )
 
 void System::Terminate()
 {
-	CE_ASSERT(m_instance);
+	CE_ASSERT(m_instance != null);
 	m_instance->InternalTerminate();
 
 	delete m_instance->m_window;
-	m_instance->m_window = 0;
+	m_instance->m_window = null;
 
 	delete m_instance;
-	m_instance = 0;
+	m_instance = null;
 }
 
 
@@ -132,10 +134,10 @@ void System::InitOpenGL()
 		return;
 	}
 
-	Log("OpenGL Initialized,");
-	Log("Card:    %s", glGetString(GL_RENDERER));
-	Log("Vendor:  %s", glGetString(GL_VENDOR));
-	Log("Version: %s", glGetString(GL_VERSION));
+	LogInfo("OpenGL Initialized,");
+	LogInfo("Card:    %s", glGetString(GL_RENDERER));
+	LogInfo("Vendor:  %s", glGetString(GL_VENDOR));
+	LogInfo("Version: %s", glGetString(GL_VERSION));
 
 	int maj_ver = 1;
 	int min_ver = 1;
@@ -148,13 +150,13 @@ void System::InitOpenGL()
 	else if(!GLEW_VERSION_3_0) maj_ver = 2, min_ver = 1;
 	else maj_ver = 3, min_ver = 0;
 
-	m_gl_major_version = maj_ver;
-	m_gl_minor_version = min_ver;
+	m_glMajorVersion = maj_ver;
+	m_glMinorVersion = min_ver;
 
 	//Log("Glew version: %i, %i", m_gl_major_version, m_gl_minor_version);
 
-	m_has_fbo = GLEW_EXT_framebuffer_object != 0;
-	if(!m_has_fbo)
+	m_hasFBO = GLEW_EXT_framebuffer_object != 0;
+	if(!m_hasFBO)
 		LogWarning("Warning: GL_EXT_framebuffer_object is not supported -- Render to texture will not be available.");
 
 	if(maj_ver < 2)
@@ -165,15 +167,15 @@ void System::InitOpenGL()
 
 void System::SetOpenGLVersion( int major, int minor )
 {
-	GetInstance()->m_gl_major_version = major;
-	GetInstance()->m_gl_minor_version = minor;
+	GetInstance()->m_glMajorVersion = major;
+	GetInstance()->m_glMinorVersion = minor;
 }
 
 
 void System::Sleep(int milliseconds)
 {
-	CE_SYSTEM_TYPE* system = (CE_SYSTEM_TYPE*)m_instance;
-	system->Sleep(milliseconds);
+	CE_SYSTEM_TYPE* systemImpl = (CE_SYSTEM_TYPE*)m_instance;
+	systemImpl->Sleep(milliseconds);
 }
 
 

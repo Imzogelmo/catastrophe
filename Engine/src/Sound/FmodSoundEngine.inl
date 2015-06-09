@@ -50,6 +50,8 @@ void FmodSoundEngine::Initialize()
 
 	result = m_system->init(128, FMOD_INIT_NORMAL, 0);
 	FMOD_ERRCHECK(result);
+
+	FMOD::Debug_SetLevel(FMOD_DEBUG_ALL);
 }
 
 
@@ -59,13 +61,13 @@ void FmodSoundEngine::Shutdown()
 	FMOD_RESULT result;
 
 	//release all
-	for( vec_type::iterator it = m_sounds.begin(); it != m_sounds.end(); ++it )
+	for( vec_type::Iterator it = m_sounds.begin(); it != m_sounds.end(); ++it )
 	{
 		(*it)->Release();
 		DestroySound((Sound**)it);
 	}
 
-	m_sounds.clear();
+	m_sounds.Clear();
 	result = m_system->close();
 	FMOD_ERRCHECK(result);
 
@@ -74,7 +76,7 @@ void FmodSoundEngine::Shutdown()
 }
 
 
-Sound* FmodSoundEngine::LoadFromFile( Sound::Type type, const fc::string& filename )
+Sound* FmodSoundEngine::LoadFromFile( Sound::Type type, const char* filename )
 {
 	FmodSound* sound = 0;
 	FMOD::Sound* fmodSound = 0;
@@ -82,19 +84,24 @@ Sound* FmodSoundEngine::LoadFromFile( Sound::Type type, const fc::string& filena
 
 	if( type == Sound::TypeSfx )
 	{
-		result = m_system->createSound( filename.c_str(), FMOD_DEFAULT, 0, &fmodSound );
+		result = m_system->createSound( filename, FMOD_DEFAULT, 0, &fmodSound );
 	}
 	else //if( type == Sound::TypeMidi || type == Sound::TypeStream )
 	{
-		result = m_system->createStream( filename.c_str(), FMOD_DEFAULT, 0, &fmodSound );
+		result = m_system->createStream( filename, FMOD_DEFAULT, 0, &fmodSound );
 	}
 
 	if( result == FMOD_OK )
 	{
 		sound = (FmodSound*)CreateSound(type);
-		sound->m_sound = fmodSound;
-		sound->m_sound->setUserData(sound);
-		m_sounds.push_back(sound);
+		if(sound != null)
+		{
+			sound->m_sound = fmodSound;
+			sound->m_sound->setUserData(sound);
+
+			//this way fixes a bogus compiler error.
+			*m_sounds.AddUninitialized() = sound;
+		}
 	}
 	else
 	{
@@ -112,9 +119,18 @@ Sound* FmodSoundEngine::LoadFromData( Sound::Type type, void* data, u32 n_bytes 
 }
 
 
+bool FmodSoundEngine::LoadPlugin(const char* filename)
+{
+	FMOD_RESULT result = m_system->loadPlugin("codec_game.dll", 0, 0);
+	FMOD_ERRCHECK(result);
+
+	return result == FMOD_OK;
+}
+
+
 void FmodSoundEngine::StopAll()
 {
-	for( vec_type::iterator it = m_sounds.begin(); it != m_sounds.end(); ++it )
+	for( vec_type::Iterator it = m_sounds.begin(); it != m_sounds.end(); ++it )
 	{
 		(*it)->Stop();
 	}
@@ -123,7 +139,7 @@ void FmodSoundEngine::StopAll()
 
 void FmodSoundEngine::PauseAll()
 {
-	for( vec_type::iterator it = m_sounds.begin(); it != m_sounds.end(); ++it )
+	for( vec_type::Iterator it = m_sounds.begin(); it != m_sounds.end(); ++it )
 	{
 		(*it)->Pause();
 	}
@@ -132,7 +148,7 @@ void FmodSoundEngine::PauseAll()
 
 void FmodSoundEngine::ResumeAll()
 {
-	for( vec_type::iterator it = m_sounds.begin(); it != m_sounds.end(); ++it )
+	for( vec_type::Iterator it = m_sounds.begin(); it != m_sounds.end(); ++it )
 	{
 		(*it)->Resume();
 	}
@@ -141,7 +157,7 @@ void FmodSoundEngine::ResumeAll()
 
 void FmodSoundEngine::SetVolume( float volume )
 {
-	m_volume = fc::clamp(volume, 0.f, 1.f);
+	m_volume = Clamp(volume, 0.f, 1.f);
 	//FMOD_RESULT result = m_system->setVolume(m_volume);
 	//FMOD_ERRCHECK(result);
 }

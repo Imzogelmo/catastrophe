@@ -36,15 +36,15 @@ RectangleBinPack::RectangleBinPack() :
 
 RectangleBinPack::~RectangleBinPack()
 {
-	DestroyNodes(m_rootNode->left);
-	DestroyNodes(m_rootNode->right);
+	DestroyNodes(m_rootNode.left);
+	DestroyNodes(m_rootNode.right);
 }
 
 
 void RectangleBinPack::Init(int width, int height)
 {
-	DestroyNodes(m_rootNode->left);
-	DestroyNodes(m_rootNode->right);
+	DestroyNodes(m_rootNode.left);
+	DestroyNodes(m_rootNode.right);
 
 	m_binWidth = width;
 	m_binHeight = height;

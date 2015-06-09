@@ -59,11 +59,8 @@ struct VertexElement
 
 	VertexElement() : offset(0), count(0), type(0), usage(0) {}
 
-	VertexElement( int offset, int count, int type, int usage ) :
-		offset(offset),
-		count(count),
-		type(type),
-		usage(usage)
+	VertexElement( int offset, int count, int type, int usage )
+		: offset(offset), count(count), type(type), usage(usage)
 	{
 	}
 };

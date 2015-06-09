@@ -46,14 +46,14 @@ PackedRect::PackedRect( const Rectf& value )
 
 PackedRect& PackedRect::operator =( const Rect &rect )
 {
-	*this = Rect(rect);
+	*this = PackedRect(rect);
 	return *this;
 }
 
 
 PackedRect& PackedRect::operator =( const Rectf &rectf )
 {
-	*this = Rect(rectf);
+	*this = PackedRect(rectf);
 	return *this;
 }
 

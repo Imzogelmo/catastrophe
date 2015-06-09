@@ -1,11 +1,11 @@
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
+// f the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in
+// The above copyright notice and this permission notice shall be included f
 // all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -17,8 +17,8 @@
 // THE SOFTWARE.
 
 #include "Particle/Emitters/PointEmitter.h"
-#include "IO/AttributeWriter.h"
-#include "IO/AttributeReader.h"
+#include "Core/IO/AttributeWriter.h"
+#include "Core/IO/AttributeReader.h"
 
 
 PointEmitter::PointEmitter() : ParticleEmitter()
@@ -70,21 +70,21 @@ PointEmitter::PointEmitter(
 }
 
 
-void PointEmitter::Serialize( AttributeWriter* out )
+void PointEmitter::Serialize( AttributeWriter* f )
 {
-	//if( in->GetCurrentNodeName() != "ParticleEmitter" )
+	//if( f->GetCurrentNodeName() != "ParticleEmitter" )
 	//	return;
 
-	out->SetString("type", "PointEmitter");
-	ParticleEmitter::Serialize(out);
+	f->SetString("type", "PointEmitter");
+	ParticleEmitter::Serialize(f);
 }
 
 
-void PointEmitter::Deserialize( AttributeReader* in )
+void PointEmitter::Deserialize( AttributeReader* f )
 {
-	if( in->GetCurrentNodeName() != "PointEmitter" )
+	if( f->GetCurrentNodeName() != "PointEmitter" )
 		return;
 
-	ParticleEmitter::Deserialize(in);
+	ParticleEmitter::Deserialize(f);
 }
 

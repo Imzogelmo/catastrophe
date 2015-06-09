@@ -38,10 +38,8 @@
 #include "Catastrophe/Core/PlatformMath.h"
 
 #include "Catastrophe/Core/Math/Quaternion.h"
-#include "Catastrophe/Core/Math/BoundingBox.h"
-#include "Catastrophe/Core/Math/Ray.h"
-#include "Catastrophe/Core/Math/Plane.h"
-#include "Catastrophe/Core/Math/Frustum.h"
-#include "Catastrophe/Core/Math/Sphere.h"
+//#include "Catastrophe/Core/Math/Plane.h"
+//#include "Catastrophe/Core/Math/Frustum.h"
+//#include "Catastrophe/Core/Math/Sphere.h"
 
 

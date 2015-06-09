@@ -18,44 +18,69 @@
 
 #pragma once
 
-#include "Catastrophe/Core/Containers/Vector.h"
-#include "Catastrophe/Core/Containers/String.h"
-
-#include "BassSound.h"
-#include "SoundEngine.h"
-
+#include "Core/PlatformMemory.h"
+#include "Core/Allocators/LinearAllocator.h"
 
 CE_NAMESPACE_BEGIN
 
 
-class CE_API BassSoundEngine : public SoundEngine
+LinearAllocator::LinearAllocator() :
+	Allocator(),
+	m_begin(null),
+	m_end(null),
+	m_current(null)
 {
-public:
-	typedef Vector<BassSound*>	vec_type;
+}
 
-	BassSoundEngine();
-	~BassSoundEngine()
-	{}
 
-	Sound* LoadFromFile( Sound::Type type, const String& filename );
-	Sound* LoadFromData( Sound::Type type, void* data, u32 n_bytes );
-	bool LoadPlugin(const char* filename);
+LinearAllocator::LinearAllocator(void* pMemory, u32 nBytes) :
+	Allocator(),
+	m_begin(null),
+	m_end(null),
+	m_current(null)
+{
+	InitializeMemory(pMemory, nBytes);
+}
 
-	void Initialize();
-	void Shutdown();
-	void StopAll();
-	void PauseAll();
-	void ResumeAll();
-	void SetVolume( float volume );
-	float GetVolume();
-	void Update();
 
-	//FMOD::System* GetSystem() const { return m_system; }
+void LinearAllocator::InitializeMemory(void* pMemory, u32 nBytes)
+{
+	m_begin = (u8*)pMemory;
+	m_end = (u8*)pMemory + nBytes;
+	m_current = (u8*)pMemory;
+}
 
-protected:
-	vec_type		m_sounds;
 
-};
+void LinearAllocator::Clear()
+{
+	m_current = m_begin;
+}
+
+
+void* LinearAllocator::Allocate(u32 nBytes, u32 alignment /*= CE_DEFAULT_ALIGN */)
+{
+	u8* ptrCurrent = (u8*)Memory::Align(m_current, alignment);
+
+	if(ptrCurrent + nBytes <= m_end)
+	{
+		m_current = ptrCurrent + nBytes;
+		return ptrCurrent;
+	}
+
+	// Out of memory
+	return null;
+}
+
+
+void LinearAllocator::Deallocate(void* ptr, u32 /*= 0 */)
+{
+	ASSERT((u8*)ptr >= m_begin && (u8*)ptr < m_end);
+
+	// Do nothing.
+	// Individual blocks cannot be freed.
+}
 
 
 CE_NAMESPACE_END
+
+

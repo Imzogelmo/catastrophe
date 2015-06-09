@@ -1,11 +1,11 @@
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
+// f the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in
+// The above copyright notice and this permission notice shall be included f
 // all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -18,17 +18,16 @@
 
 #include "Particle/ParticleGroup.h"
 #include "Graphics/SpriteBatch.h"
-#include "IO/AttributeWriter.h"
-#include "IO/AttributeReader.h"
+#include "Core/IO/AttributeWriter.h"
+#include "Core/IO/AttributeReader.h"
 
-#include <fc/rand.h>
-#include <fc/math.h>
+#include "Catastrophe/Core/Random.h"
 
 
 
 ParticleGroup::ParticleGroup() :
 	m_particles(),
-	m_modifiers(), 
+	m_modifiers(),
 	m_minTriggerAmount(1),
 	m_maxTriggerAmount(1),
 	m_capacity(0),
@@ -48,50 +47,50 @@ ParticleGroup::~ParticleGroup()
 
 void ParticleGroup::Dispose()
 {
-	if( m_emitter )
+	if(m_emitter)
 	{
 		m_emitter->ReleaseRef();
 		m_emitter = 0;
 	}
 
-	for( u32 i(0); i < m_modifiers.size(); ++i )
+	for(u32 i(0); i < m_modifiers.Size(); ++i)
 	{
 		m_modifiers[i]->ReleaseRef();
 	}
 
-	for( u32 i(0); i < m_destructors.size(); ++i )
+	for(u32 i(0); i < m_destructors.Size(); ++i)
 	{
 		m_destructors[i]->ReleaseRef();
 	}
 
-	m_modifiers.clear();
-	m_destructors.clear();
+	m_modifiers.Clear();
+	m_destructors.Clear();
 }
 
 
-void ParticleGroup::SetParticleCapacity( u32 cap )
+void ParticleGroup::SetParticleCapacity(u32 capacity)
 {
-	m_capacity = cap;
-	m_particles.set_capacity(cap);
+	m_capacity = capacity;
+	m_particles.SetCapacity(capacity);
 }
 
 
-void ParticleGroup::SetMinEmissionCount( u32 minEmission )
+void ParticleGroup::SetMinEmissionCount(u32 minEmission)
 {
 	m_minTriggerAmount = minEmission;
 }
 
 
-void ParticleGroup::SetMaxEmissionCount( u32 maxEmission )
+void ParticleGroup::SetMaxEmissionCount(u32 maxEmission)
 {
 	m_maxTriggerAmount = maxEmission;
 }
 
 
-void ParticleGroup::SetEmissionCount( u32 minEmission, u32 maxEmission )
+void ParticleGroup::SetEmissionCount(u32 minEmission, u32 maxEmission)
 {
-	if( maxEmission < minEmission )
-		fc::swap( minEmission, maxEmission );
+	if(maxEmission < minEmission)
+		Swap(minEmission, maxEmission);
 
 	m_minTriggerAmount = minEmission;
 	m_maxTriggerAmount = maxEmission;
@@ -100,64 +99,56 @@ void ParticleGroup::SetEmissionCount( u32 minEmission, u32 maxEmission )
 
 u32 ParticleGroup::GetParticleCount() const
 {
-	return m_particles.size();
+	return m_particles.Size();
 }
 
 
-void ParticleGroup::AddParticleModifier( ParticleModifier* modifier )
+void ParticleGroup::AddParticleModifier(ParticleModifier* modifier)
 {
-	if( !modifier )
+	if(modifier == null)
 		return;
 
 	modifier->AddRef();
-	m_modifiers.push_back(modifier);
+	m_modifiers.Add(modifier);
 }
 
 
-void ParticleGroup::RemoveParticleModifier( ParticleModifier* modifier )
+void ParticleGroup::RemoveParticleModifier(ParticleModifier* modifier)
 {
-	if( !modifier )
+	if(modifier == null)
 		return;
 
-	modifier_vec_type::iterator it = fc::find( m_modifiers.begin(), m_modifiers.end(), modifier );
-	if( it != m_modifiers.end() )
-	{
-		(*it)->ReleaseRef();
-		m_modifiers.erase(it);
-	}
+	modifier->ReleaseRef();
+	m_modifiers.RemoveValue(modifier);
 }
 
 
-void ParticleGroup::AddParticleDestructor( ParticleDestructor* destructor )
-{
-	if( !destructor )
-		return;
-
-	destructor->AddRef();
-	m_destructors.push_back(destructor);
-}
-
-
-void ParticleGroup::RemoveParticleDestructor( ParticleDestructor* destructor )
+void ParticleGroup::AddParticleDestructor(ParticleDestructor* destructor)
 {
 	if(!destructor)
 		return;
 
-	destructor_vec_type::iterator it = fc::find( m_destructors.begin(), m_destructors.end(), destructor );
-	if( it != m_destructors.end() )
+	destructor->AddRef();
+	m_destructors.Add(destructor);
+}
+
+
+void ParticleGroup::RemoveParticleDestructor(ParticleDestructor* destructor)
+{
+	if(destructor != null)
 	{
-		(*it)->ReleaseRef();
-		m_destructors.erase(it);
+		destructor->ReleaseRef();
+		m_destructors.RemoveValue(destructor);
 	}
 }
 
 
-void ParticleGroup::SetParticleEmitter( ParticleEmitter* emitter )
+void ParticleGroup::SetParticleEmitter(ParticleEmitter* emitter)
 {
-	if( !emitter )
+	if(!emitter)
 		return;
 
-	if( m_emitter )
+	if(m_emitter)
 		m_emitter->ReleaseRef();
 
 	emitter->AddRef();
@@ -165,42 +156,44 @@ void ParticleGroup::SetParticleEmitter( ParticleEmitter* emitter )
 }
 
 
-void ParticleGroup::Emit( const Vector2& pos )
+void ParticleGroup::Emit(const Vector2& position)
 {
-	Emit(pos, (u32)fc::rand(m_minTriggerAmount, m_maxTriggerAmount));
+	Emit(position, (u32)Random::Int(m_minTriggerAmount, m_maxTriggerAmount));
 }
 
 
-void ParticleGroup::Emit( const Vector2& pos, u32 emitCount )
+void ParticleGroup::Emit(const Vector2& position, u32 emitCount)
 {
 	CE_ASSERT(m_emitter != 0);
 
-	emitCount = fc::min( emitCount, m_particles.unused() );
-
-	if( emitCount > 0 )
+	emitCount = Math::Min(emitCount, m_particles.Unused());
+	if(emitCount > 0)
 	{
-		Particle* p = m_particles.push_back_uninitialized(emitCount);
-		m_emitter->Emit( pos, p, emitCount );
+		Particle* p = m_particles.AddUninitialized(emitCount);
+		m_emitter->Emit(position, p, emitCount);
 	}
 }
 
 
 void ParticleGroup::Update()
 {
-	if( !IsEnabled() )
+	if(!IsEnabled())
 		return;
 
-	u32 particleCount = m_particles.size();
-	for( u32 i(0); i < particleCount; ++i )
+	u32 particleCount = m_particles.Size();
+	for(u32 i(0); i < particleCount; ++i)
 	{
 		Particle& p = m_particles[i];
 
 		float particleAge = ++p.age / p.lifespan;
-		if( particleAge > 1.f )
-			m_particles.bind(i);
+		if(particleAge > 1.f)
+		{
+			// add the particle index to the dead particle list.
+			m_deadParticles.Add(i);
+		}
 
 		p.velocity *= p.friction;
-		p.pos += p.velocity;
+		p.position += p.velocity;
 		p.angle += p.rotationSpeed;
 		p.size += p.growth;
 
@@ -209,127 +202,127 @@ void ParticleGroup::Update()
 
 	}
 
+	// This must be done in Update().
 	RemoveDeadParticles();
 
-	particleCount = m_particles.size();
-	u32 modifierCount = m_modifiers.size();
-
-	for( u32 n (0); n < modifierCount; ++n )
+	// Update modifiers
+	for(u32 n(0); n < m_modifiers.Size(); ++n)
 	{
-		m_modifiers[n]->Update( m_particles.begin(), particleCount );
-	}	
+		m_modifiers[n]->Update(m_particles.begin(), m_particles.Size());
+	}
 }
 
 
 void ParticleGroup::Kill()
 {
-	m_particles.clear();
-	m_particles.vacate();	
+	m_particles.Clear();
+	m_deadParticles.Clear();
 }
 
 
 void ParticleGroup::RemoveDeadParticles()
 {
-	particle_vec_type::cell_type & deadParticlePool = m_particles.get_cells();
+	u32 particleCount = m_particles.Size();
+	u32 deadCount = m_deadParticles.Size();
 
-	u32 particleCount = m_particles.size();
-	u32 deadCount = deadParticlePool.size();
+	CE_ASSERT(deadCount <= particleCount);
 
-	if( !m_destructors.empty() && deadCount > 0 )
+	if(!m_destructors.Empty() && deadCount > 0)
 	{
-		for( u32 i(0); i < deadCount; ++i )
+		for(u32 i(0); i < deadCount; ++i)
 		{
-			for( u32 j(0); j < m_destructors.size(); ++j )
+			for(u32 j(0); j < m_destructors.Size(); ++j)
 			{
-				m_destructors[j]->OnDestroy( &m_particles[ deadParticlePool[i] ] );
+				m_destructors[j]->OnDestroy(&m_particles[ m_deadParticles[i] ]);
 			}
 		}
 	}
 
-	if( m_keepParticleOrder )
+	if(m_keepParticleOrder)
 	{
-		// much faster than erase.
-		m_particles.execute();
+		// Much faster than erase; compact the entire array in O(n) time.
+		m_particles.RemoveIndices(m_deadParticles.begin(), m_deadParticles.Size());
+		m_deadParticles.Clear();
 	}
 	else
 	{
-		// even faster method - simply fill gaps using particles from the back.
-		for( u32 i(0); i < deadCount; ++i )
+		// Even faster method; simply fill removed gaps using particles from the back.
+		for(u32 i(0); i < deadCount; ++i)
 		{
-			m_particles[ deadParticlePool[i] ] = m_particles[--particleCount];
+			m_particles[ m_deadParticles[i] ] = m_particles[--particleCount];
 		}
 
-		m_particles.resize(particleCount);
-		m_particles.vacate();
+		m_particles.PopBackElements(deadCount);
+		m_deadParticles.Clear();
 	}
 }
 
 
-void ParticleGroup::Render( SpriteBatch* spriteBatch )
+void ParticleGroup::Render(SpriteBatch* spriteBatch)
 {
 	u32 textureID = m_sprite.GetTextureID();
 	Rectf uv = m_sprite.GetUVRect();
 
 	spriteBatch->SetBlendMode(m_sprite.GetBlendMode());
 
-	for( particle_vec_type::const_iterator p = m_particles.begin(); p != m_particles.end(); ++p )
+	for(Particle* p = m_particles.begin(); p != m_particles.end(); ++p)
 	{
 		spriteBatch->DrawRotated(
-			textureID,
-			p->angle,
-			p->pos,
-			Rectf(p->pos - p->size, p->pos + p->size),
-			uv,
-			p->color
+		    textureID,
+		    p->angle,
+		    p->position,
+		    Rectf(p->position - p->size, p->position + p->size),
+		    uv,
+		    p->color
 		);
 	}
 }
 
 
-void ParticleGroup::Serialize( AttributeWriter* out )
+void ParticleGroup::Serialize(AttributeWriter* f)
 {
-	out->SetUInt("capacity", m_capacity);
-	out->SetBoolElement("KeepParticleOrder", m_keepParticleOrder);
+	f->SetAttribute("capacity", m_capacity);
+	f->SetBoolElement("KeepParticleOrder", m_keepParticleOrder);
 
-	out->BeginNode("TriggerAmount");
-	out->SetInt("min", m_minTriggerAmount);
-	out->SetInt("max", m_maxTriggerAmount);
-	out->EndNode();
+	f->BeginNode("TriggerAmount");
+	f->SetAttribute("min", m_minTriggerAmount);
+	f->SetAttribute("max", m_maxTriggerAmount);
+	f->EndNode();
 
-	out->BeginNode("ParticleEmitter");
-	if( m_emitter )
-		m_emitter->Serialize(out);
-	out->EndNode();
+	f->BeginNode("ParticleEmitter");
+	if(m_emitter)
+		m_emitter->Serialize(f);
+	f->EndNode();
 
-	out->BeginNode("ParticleModifiers");
-	for( u32 i(0); i < m_modifiers.size(); ++i )
+	f->BeginNode("ParticleModifiers");
+	for(u32 i(0); i < m_modifiers.Size(); ++i)
 	{
-		//out->BeginNode(m_modifiers[i]->GetTypeName());
-		m_modifiers[i]->Serialize(out);
-		//out->EndNode();
+		//f->BeginNode(m_modifiers[i]->GetTypeName());
+		m_modifiers[i]->Serialize(f);
+		//f->EndNode();
 	}
-	out->EndNode();
+	f->EndNode();
 
-	out->BeginNode("ParticleDestructors");
-	for( u32 i(0); i < m_destructors.size(); ++i )
+	f->BeginNode("ParticleDestructors");
+	for(u32 i(0); i < m_destructors.Size(); ++i)
 	{
-		m_destructors[i]->Serialize(out);
+		m_destructors[i]->Serialize(f);
 	}
-	out->EndNode();
+	f->EndNode();
 
 }
 
 
-void ParticleGroup::Deserialize( AttributeReader* in )
+void ParticleGroup::Deserialize(AttributeReader* f)
 {
-	m_capacity = in->GetUInt("capacity", m_capacity);
-	m_keepParticleOrder = in->GetBoolElement("keepParticleOrder", m_keepParticleOrder);
+	m_capacity = f->GetAttribute("capacity", m_capacity);
+	m_keepParticleOrder = f->GetBoolElement("keepParticleOrder", m_keepParticleOrder);
 
-	if( in->SetToChild("TriggerAmount") )
+	if(f->SetToChild("TriggerAmount"))
 	{
-		m_minTriggerAmount = in->GetInt("min", m_minTriggerAmount);
-		m_minTriggerAmount = in->GetInt("max", m_maxTriggerAmount);
-		in->SetToParent();
+		f->GetAttribute("min", m_minTriggerAmount);
+		f->GetAttribute("max", m_maxTriggerAmount);
+		f->SetToParent();
 	}
 
 }

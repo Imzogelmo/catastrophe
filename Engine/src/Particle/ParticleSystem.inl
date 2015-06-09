@@ -1,11 +1,11 @@
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
+// f the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in
+// The above copyright notice and this permission notice shall be included f
 // all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -17,14 +17,14 @@
 // THE SOFTWARE.
 
 #include "Particle/ParticleSystem.h"
-#include "IO/AttributeWriter.h"
-#include "IO/AttributeReader.h"
-#include "IO/XmlWriter.h"
-#include "IO/XmlReader.h"
+#include "Core/IO/AttributeWriter.h"
+#include "Core/IO/AttributeReader.h"
+#include "Core/IO/XmlWriter.h"
+#include "Core/IO/XmlReader.h"
 
 
 ParticleSystem::ParticleSystem() :
-	m_groups(),
+	m_particleGroups(),
 	m_renderer(0)
 {
 }
@@ -40,64 +40,46 @@ void ParticleSystem::DestroyGroups()
 {
 	//m_renderer->Dispose();
 
-	for( group_vec_type::iterator it = m_groups.begin(); it != m_groups.end(); ++it )
+	for(Vector<ParticleGroup*>::Iterator it = m_particleGroups.begin(); it != m_particleGroups.end(); ++it)
 	{
 		(*it)->ReleaseRef();
 	}
 
-	m_groups.clear();
+	m_particleGroups.Clear();
 }
 
 
 u32 ParticleSystem::GetParticleCount() const
 {
 	u32 count(0);
-	for( group_vec_type::const_iterator it = m_groups.begin(); it != m_groups.end(); ++it )
-	{
+	for(const ParticleGroup* const* it = m_particleGroups.begin(); it != m_particleGroups.end(); ++it)
 		count += (*it)->GetParticleCount();
-	}
 
 	return count;
 }
 
 
-void ParticleSystem::AddGroup( ParticleGroup* group )
+void ParticleSystem::AddGroup(ParticleGroup* particleGroup)
 {
-	if(!group)
+	if(!particleGroup)
 		return;
 
-	group->AddRef();
-	m_groups.push_back(group);
+	particleGroup->AddRef();
+	m_particleGroups.Add(particleGroup);
 }
 
 
-void ParticleSystem::RemoveGroup( ParticleGroup* group )
+void ParticleSystem::RemoveGroup(ParticleGroup* particleGroup)
 {
-	if(!group)
-		return;
-
-	group_vec_type::iterator it = fc::find( m_groups.begin(), m_groups.end(), group );
-	if( it != m_groups.end() )
+	if(particleGroup != null)
 	{
-		(*it)->ReleaseRef();
-		m_groups.erase(it);
+		particleGroup->ReleaseRef();
+		m_particleGroups.RemoveValue(particleGroup);
 	}
 }
-/*
-{
-	if(!group)
-		return;
 
-	group_vec_type::iterator it = fc::find( m_groups.begin(), m_groups.end(), group );
-	if( it != m_groups.end() )
-	{
-		(*it)->Dispose();
-		m_groups.erase(it);
-	}
-}
-*/
 
-void ParticleSystem::SetRenderer( ParticleRenderer* renderer )
+void ParticleSystem::SetRenderer(ParticleRenderer* renderer)
 {
 	if(!renderer)
 		return;
@@ -109,20 +91,20 @@ void ParticleSystem::SetRenderer( ParticleRenderer* renderer )
 }
 
 
-void ParticleSystem::Create( const Vector2& pos )
+void ParticleSystem::Create(const Vector2& position)
 {
-	for( group_vec_type::iterator it = m_groups.begin(); it != m_groups.end(); ++it )
+	for(ParticleGroup** it = m_particleGroups.begin(); it != m_particleGroups.end(); ++it)
 	{
-		(*it)->Emit(pos);
+		(*it)->Emit(position);
 	}
 }
 
 
 void ParticleSystem::Update()
 {
-	for( group_vec_type::iterator it = m_groups.begin(); it != m_groups.end(); ++it )
+	for(ParticleGroup** particleGroup = m_particleGroups.begin(); particleGroup != m_particleGroups.end(); ++particleGroup)
 	{
-		(*it)->Update();
+		(*particleGroup)->Update();
 	}
 }
 
@@ -132,23 +114,23 @@ void ParticleSystem::Render()
 	if(!m_renderer)
 		return;
 
-	for( group_vec_type::iterator it = m_groups.begin(); it != m_groups.end(); ++it )
+	for(ParticleGroup** particleGroup = m_particleGroups.begin(); particleGroup != m_particleGroups.end(); ++particleGroup)
 	{
-		m_renderer->Render(*it);
+		m_renderer->Render(*particleGroup);
 	}
 }
 
 
-void ParticleSystem::Render( SpriteBatch* spriteBatch )
+void ParticleSystem::Render(SpriteBatch* spriteBatch)
 {
-	for( group_vec_type::iterator it = m_groups.begin(); it != m_groups.end(); ++it )
+	for(ParticleGroup** particleGroup = m_particleGroups.begin(); particleGroup != m_particleGroups.end(); ++particleGroup)
 	{
-		(*it)->Render(spriteBatch);
+		(*particleGroup)->Render(spriteBatch);
 	}
 }
 
 
-bool ParticleSystem::Serialize( const fc::string& filename )
+bool ParticleSystem::Serialize(const String& filename)
 {
 	XmlWriter xml(filename);
 	//if( !xml.IsOpen() )
@@ -156,8 +138,8 @@ bool ParticleSystem::Serialize( const fc::string& filename )
 
 	xml.CreateRoot("ParticleSystem");
 	xml.SetString("name", m_name);
-	xml.SetUInt("num_groups", m_groups.size());
-	for( group_vec_type::iterator it = m_groups.begin(); it != m_groups.end(); ++it )
+	xml.SetAttribute("num_groups", m_particleGroups.Size());
+	for(ParticleGroup** it = m_particleGroups.begin(); it != m_particleGroups.end(); ++it)
 	{
 		xml.BeginNode("ParticleGroup");
 		(*it)->Serialize(&xml);
@@ -171,32 +153,32 @@ bool ParticleSystem::Serialize( const fc::string& filename )
 }
 
 
-bool ParticleSystem::Deserialize( const fc::string& filename )
+bool ParticleSystem::Deserialize(const String& filename)
 {
 	XmlReader xml(filename);
-	if( !xml.IsOpen() )
+	if(!xml.IsOpen())
 		return false;
 
-	if( xml.GetCurrentNodeName() == "ParticleSystem" )
+	if(xml.GetCurrentNodeName() == "ParticleSystem")
 	{
 		DestroyGroups();
 
-		while( xml.NextChild() )
+		while(xml.NextChild())
 		{
-			if( xml.GetCurrentNodeName() == "ParticleGroup" )
+			if(xml.GetCurrentNodeName() == "ParticleGroup")
 			{
 				ParticleGroup* particleGroup = new ParticleGroup();
 				particleGroup->Deserialize(&xml);
 			}
 			else
 			{
-				Log("Error parsing (%s). expected [ParticleGroup]", filename.c_str());
+				Log("Error parsing (%s). expected [ParticleGroup]", filename.CString());
 			}
 		}
 	}
 	else
 	{
-		Log("Error parsing (%s). Root item not found", filename.c_str());
+		Log("Error parsing (%s). Root item not found", filename.CString());
 		return false;
 	}
 

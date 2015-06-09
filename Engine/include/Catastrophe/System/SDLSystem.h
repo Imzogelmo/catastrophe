@@ -61,7 +61,7 @@ public:
 	virtual void Close();
 	virtual double GetTime() const;
 
-	virtual void SetTitle( const fc::string& title );
+	virtual void SetTitle( const String& title );
 	virtual void SetSize( int w, int h );
 	virtual void SetPosition( const Point& pos );
 
